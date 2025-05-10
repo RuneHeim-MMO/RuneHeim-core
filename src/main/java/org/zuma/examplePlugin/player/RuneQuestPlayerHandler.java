@@ -2,50 +2,91 @@ package org.zuma.examplePlugin.player;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import org.zuma.examplePlugin.interfaces.Callback;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 public class RuneQuestPlayerHandler {
+    private final Plugin plugin;
     private final Map<UUID, RuneQuestPlayer> players;
 
-    public RuneQuestPlayerHandler() {
+
+    public RuneQuestPlayerHandler(Plugin pluginInstance) {
+        plugin = pluginInstance;
         players = new HashMap<>();
     }
 
-    public void handleReload() {
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            try {
-                loadPlayerData(player.getUniqueId());
-                player.sendMessage("Player reloaded 123");
-            } catch (Exception e) {
-                Bukkit.getLogger().warning("Failed to load player data for player " + player.getName() + ": " + e.getMessage());
-                player.kick(Component.text(e.getMessage()));
-            }
-        });
+    public void handleOnEnable() {
+        Bukkit.getOnlinePlayers().forEach(this::loadPlayerData);
     }
 
-    public void loadPlayerData(UUID uuid) throws Exception {
+    public void handleOnDisable() {
+        Bukkit.getOnlinePlayers().forEach(this::savePlayerData);
+    }
+
+    public void loadPlayerData(Player player) {
+        loadPlayerData(player, Callback.noop());
+    }
+
+    public void loadPlayerData(Player player, Callback<RuneQuestPlayer> cb) {
+        UUID uuid = player.getUniqueId();
 
         if (players.containsKey(uuid)) {
-            throw new Exception("Player " + uuid + " is already online.");
+            player.kick(Component.text("Player " + uuid + " is already online."));
         }
 
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            try {
 
-        RuneQuestPlayer player = new RuneQuestPlayer(uuid);
-        players.put(uuid, player);
+                // TODO: Deserialize & initialize player
+                RuneQuestPlayer runeQuestPlayer = new RuneQuestPlayer(uuid);
+
+                Bukkit.getScheduler().runTask(plugin, () -> {
+                    players.put(uuid, runeQuestPlayer);
+                    cb.onComplete(runeQuestPlayer);
+                });
+
+            } catch (Exception e) {
+                Bukkit.getScheduler().runTask(plugin, () -> {
+                    player.kick(Component.text("Failed to load data for player " + player.getName() + " : " + e.getMessage()));
+                });
+            }
+        });
 
     }
 
-    public void savePlayerData(UUID uuid) throws Exception {
+    public void savePlayerData(Player player) {
+        loadPlayerData(player, Callback.noop());
+    }
+
+    public void savePlayerData(Player player, Callback<Void> cb) {
+        UUID uuid = player.getUniqueId();
 
         if (!players.containsKey(uuid)) {
-            throw new Exception("Cannot save player " + uuid + ". RuneQuestPlayer instance was not initialized.");
+            player.kick(Component.text("Cannot save player " + uuid + ". RuneQuestPlayer instance not found."));
         }
 
-        // TODO: Saving
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            try {
 
-        players.remove(uuid);
+                // TODO: Serialize and save player
+
+                Bukkit.getScheduler().runTask(plugin, () -> {
+                    players.remove(uuid);
+                    cb.onComplete(null);
+                });
+
+            } catch (Exception e) {
+                Bukkit.getScheduler().runTask(plugin, () -> {
+                    player.kick(Component.text("Failed to save player data " + player.getName() + " :" + e.getMessage()));
+                });
+            }
+        });
+
+
     }
 }

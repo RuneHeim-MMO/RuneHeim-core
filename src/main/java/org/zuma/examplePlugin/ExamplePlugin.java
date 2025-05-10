@@ -6,20 +6,21 @@ import org.zuma.examplePlugin.player.RuneQuestPlayerHandler;
 import org.zuma.examplePlugin.player.RuneQuestPlayerListener;
 
 public final class ExamplePlugin extends JavaPlugin implements Listener {
+    private RuneQuestPlayerHandler playerHandler;
 
     @Override
     public void onEnable() {
-        RuneQuestPlayerHandler playerHandler = new RuneQuestPlayerHandler();
-        RuneQuestPlayerListener playerListener = new RuneQuestPlayerListener(playerHandler);
+        playerHandler = new RuneQuestPlayerHandler(this);
 
+        RuneQuestPlayerListener playerListener = new RuneQuestPlayerListener(playerHandler);
         getServer().getPluginManager().registerEvents(playerListener, this);
 
-        playerHandler.handleReload();
+        playerHandler.handleOnEnable();
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        playerHandler.handleOnDisable();
     }
 
 }

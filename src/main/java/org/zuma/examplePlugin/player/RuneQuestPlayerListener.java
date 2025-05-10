@@ -1,7 +1,5 @@
 package org.zuma.examplePlugin.player;
 
-import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,26 +17,18 @@ public class RuneQuestPlayerListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        try {
-            playerHandler.loadPlayerData(player.getUniqueId());
-        } catch (Exception e) {
-            Bukkit.getLogger().warning("Failed to load player data for player " + player.getName() + ": " + e.getMessage());
-            player.kick(Component.text(e.getMessage()));
-            return;
-        }
+        playerHandler.loadPlayerData(player, (data) -> {
+            player.sendMessage("Successfully loaded player data.");
+            player.sendMessage("Welcome, " + player.getName() + "!");
+        });
 
-        player.sendMessage(Component.text("Hello, " + player.getName() + "!"));
     }
 
     @EventHandler
     public void onPlayerDisconnect(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        try {
-            playerHandler.savePlayerData(player.getUniqueId());
-        } catch (Exception e) {
-            Bukkit.getLogger().warning("Failed to save player data " + player.getName() + ": " + e.getMessage());
-            return;
-        }
+        playerHandler.savePlayerData(player);
+
     }
 }
