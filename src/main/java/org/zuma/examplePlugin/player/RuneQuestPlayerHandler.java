@@ -1,12 +1,13 @@
 package org.zuma.examplePlugin.player;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.ExamplePlugin;
+import org.zuma.examplePlugin.constants.Colors;
 import org.zuma.examplePlugin.interfaces.Callback;
 import org.zuma.examplePlugin.logger.LogLevel;
+import org.zuma.examplePlugin.utils.TextUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,11 +16,13 @@ import java.util.UUID;
 public class RuneQuestPlayerHandler {
     private final ExamplePlugin plugin;
     private final Map<UUID, RuneQuestPlayer> players;
-
+    private final RuneQuestPlayerLoadingHandler loadingStateHandler;
 
     public RuneQuestPlayerHandler(ExamplePlugin pluginInstance) {
         plugin = pluginInstance;
         players = new HashMap<>();
+
+        loadingStateHandler = new RuneQuestPlayerLoadingHandler(plugin);
     }
 
     public void handleOnEnable() {
@@ -38,23 +41,33 @@ public class RuneQuestPlayerHandler {
         UUID uuid = player.getUniqueId();
 
         if (players.containsKey(uuid)) {
-            player.kick(Component.text("Player " + uuid + " is already online."));
+            player.kick(TextUtils.getErrorKickScreen("Player " + uuid + " is already online."));
+
         }
+
+        loadingStateHandler.setPlayerLoading(player);
 
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             try {
 
+
+                Thread.sleep(3000);
                 // TODO: Deserialize & initialize player
                 RuneQuestPlayer runeQuestPlayer = new RuneQuestPlayer(uuid);
 
                 Bukkit.getScheduler().runTask(plugin, () -> {
+                    if (Bukkit.getPlayer(uuid) == null) {
+                        return;
+                    }
+
                     players.put(uuid, runeQuestPlayer);
+                    loadingStateHandler.setPlayerLoaded(player);
                     cb.onComplete(runeQuestPlayer);
                 });
 
             } catch (Exception e) {
                 Bukkit.getScheduler().runTask(plugin, () -> {
-                    player.kick(Component.text("Failed to load data for player " + player.getName() + " : " + e.getMessage()).color(NamedTextColor.RED));
+                    player.kick(TextUtils.getErrorKickScreen("Failed to load data for player " + player.getName() + "\n" + e.getMessage()));
                     plugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to load data for player " + player.getName() + " : " + e.getMessage());
                 });
             }
@@ -62,15 +75,16 @@ public class RuneQuestPlayerHandler {
 
     }
 
+
     public void savePlayerData(Player player) {
-        loadPlayerData(player, Callback.noop());
+        savePlayerData(player, Callback.noop());
     }
 
     public void savePlayerData(Player player, Callback<Void> cb) {
         UUID uuid = player.getUniqueId();
 
         if (!players.containsKey(uuid)) {
-            player.kick(Component.text("Cannot save player " + uuid + ". RuneQuestPlayer instance not found."));
+            player.kick(TextUtils.getErrorKickScreen("Cannot save player " + uuid + ". RuneQuestPlayer instance not found."));
         }
 
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
@@ -85,12 +99,16 @@ public class RuneQuestPlayerHandler {
 
             } catch (Exception e) {
                 Bukkit.getScheduler().runTask(plugin, () -> {
-                    player.kick(Component.text("Failed to save player data " + player.getName() + " :" + e.getMessage()).color(NamedTextColor.RED));
+                    player.kick(TextUtils.getBrandKickScreen(Component.text("Failed to save player data " + player.getName() + "\n" + e.getMessage()).color(Colors.ERROR.asColor())));
                     plugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to save player data " + player.getName() + " :" + e.getMessage());
                 });
             }
         });
 
 
+    }
+
+    public void handlePlayerDisconnect(Player player) {
+        loadingStateHandler.setPlayerLoaded(player); // Restore effects before disconnection if player disconnected while he was loading.
     }
 }
