@@ -2,15 +2,18 @@ package org.zuma.examplePlugin;
 
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.zuma.examplePlugin.logger.Logger;
 import org.zuma.examplePlugin.player.RuneQuestPlayerHandler;
 import org.zuma.examplePlugin.player.RuneQuestPlayerListener;
 
 public final class ExamplePlugin extends JavaPlugin implements Listener {
+    public final Logger logger = new Logger();
     private RuneQuestPlayerHandler playerHandler;
 
     @Override
     public void onEnable() {
         playerHandler = new RuneQuestPlayerHandler(this);
+
 
         RuneQuestPlayerListener playerListener = new RuneQuestPlayerListener(playerHandler);
         getServer().getPluginManager().registerEvents(playerListener, this);
@@ -21,6 +24,10 @@ public final class ExamplePlugin extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         playerHandler.handleOnDisable();
+    }
+
+    public Logger getRuneLogger() {
+        return logger;
     }
 
 }

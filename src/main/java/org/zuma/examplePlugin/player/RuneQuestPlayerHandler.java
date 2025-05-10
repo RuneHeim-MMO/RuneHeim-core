@@ -1,21 +1,23 @@
 package org.zuma.examplePlugin.player;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
+import org.zuma.examplePlugin.ExamplePlugin;
 import org.zuma.examplePlugin.interfaces.Callback;
+import org.zuma.examplePlugin.logger.LogLevel;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 public class RuneQuestPlayerHandler {
-    private final Plugin plugin;
+    private final ExamplePlugin plugin;
     private final Map<UUID, RuneQuestPlayer> players;
 
 
-    public RuneQuestPlayerHandler(Plugin pluginInstance) {
+    public RuneQuestPlayerHandler(ExamplePlugin pluginInstance) {
         plugin = pluginInstance;
         players = new HashMap<>();
     }
@@ -52,7 +54,8 @@ public class RuneQuestPlayerHandler {
 
             } catch (Exception e) {
                 Bukkit.getScheduler().runTask(plugin, () -> {
-                    player.kick(Component.text("Failed to load data for player " + player.getName() + " : " + e.getMessage()));
+                    player.kick(Component.text("Failed to load data for player " + player.getName() + " : " + e.getMessage()).color(NamedTextColor.RED));
+                    plugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to load data for player " + player.getName() + " : " + e.getMessage());
                 });
             }
         });
@@ -82,7 +85,8 @@ public class RuneQuestPlayerHandler {
 
             } catch (Exception e) {
                 Bukkit.getScheduler().runTask(plugin, () -> {
-                    player.kick(Component.text("Failed to save player data " + player.getName() + " :" + e.getMessage()));
+                    player.kick(Component.text("Failed to save player data " + player.getName() + " :" + e.getMessage()).color(NamedTextColor.RED));
+                    plugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to save player data " + player.getName() + " :" + e.getMessage());
                 });
             }
         });
