@@ -1,4 +1,0 @@
-name: ExamplePlugin
-version: '1.0-SNAPSHOT'
-main: org.zuma.examplePlugin.ExamplePlugin
-api-version: '1.21'
