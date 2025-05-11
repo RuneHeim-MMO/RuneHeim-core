@@ -81,7 +81,7 @@ public abstract class CustomItem {
         }
 
         if (!lore.isEmpty()) {
-            meta.lore(lore);
+            meta.lore(lore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());
         }
 
         if (customModelData != -1) {
