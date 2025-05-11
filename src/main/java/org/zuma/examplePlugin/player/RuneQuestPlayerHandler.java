@@ -14,14 +14,15 @@ import java.util.Map;
 import java.util.UUID;
 
 public class RuneQuestPlayerHandler {
-    private final RuneQuestPlugin plugin;
     private final Map<UUID, RuneQuestPlayer> players = new HashMap<>();
-    
     private final RunePlayerLoadingStateHandler loadingStateHandler;
 
-    public RuneQuestPlayerHandler(RuneQuestPlugin pluginInstance) {
-        plugin = pluginInstance;
-        loadingStateHandler = new RunePlayerLoadingStateHandler(plugin);
+    public RuneQuestPlayerHandler() {
+        loadingStateHandler = new RunePlayerLoadingStateHandler(RuneQuestPlugin.getInstance());
+    }
+
+    public RuneQuestPlayer getRunePlayer(Player player) {
+        return players.get(player.getUniqueId());
     }
 
     public void handleOnEnable() {
@@ -46,13 +47,13 @@ public class RuneQuestPlayerHandler {
 
         loadingStateHandler.setPlayerLoading(player);
 
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
             try {
 
                 // TODO: Deserialize & initialize player
                 RuneQuestPlayer runeQuestPlayer = new RuneQuestPlayer(uuid);
 
-                Bukkit.getScheduler().runTask(plugin, () -> {
+                Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                     if (Bukkit.getPlayer(uuid) == null) {
                         return;
                     }
@@ -63,9 +64,9 @@ public class RuneQuestPlayerHandler {
                 });
 
             } catch (Exception e) {
-                Bukkit.getScheduler().runTask(plugin, () -> {
+                Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                     player.kick(TextUtils.getErrorKickScreen("Failed to load data for player " + player.getName() + "\n" + e.getMessage()));
-                    plugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to load data for player " + player.getName() + " : " + e.getMessage());
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to load data for player " + player.getName() + " : " + e.getMessage());
                 });
             }
         });
@@ -85,20 +86,20 @@ public class RuneQuestPlayerHandler {
             return;
         }
 
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
             try {
 
                 // TODO: Serialize and save player
 
-                Bukkit.getScheduler().runTask(plugin, () -> {
+                Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                     players.remove(uuid);
                     cb.onComplete(null);
                 });
 
             } catch (Exception e) {
-                Bukkit.getScheduler().runTask(plugin, () -> {
+                Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                     player.kick(TextUtils.getBrandKickScreen(Component.text("Failed to save player data " + player.getName() + "\n" + e.getMessage()).color(Colors.ERROR.asColor())));
-                    plugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to save player data " + player.getName() + " :" + e.getMessage());
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to save player data " + player.getName() + " :" + e.getMessage());
                 });
             }
         });

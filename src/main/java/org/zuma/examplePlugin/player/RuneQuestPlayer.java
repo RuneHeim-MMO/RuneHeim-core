@@ -1,5 +1,8 @@
 package org.zuma.examplePlugin.player;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
 import java.util.UUID;
 
 public class RuneQuestPlayer {
@@ -11,6 +14,10 @@ public class RuneQuestPlayer {
 
     public UUID getUUID() {
         return uuid;
+    }
+
+    public Player getPlayer() {
+        return Bukkit.getPlayer(uuid);
     }
 
 }

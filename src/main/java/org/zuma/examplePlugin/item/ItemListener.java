@@ -8,71 +8,105 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.zuma.examplePlugin.player.RuneQuestPlayer;
+import org.zuma.examplePlugin.player.RuneQuestPlayerHandler;
 import org.zuma.examplePlugin.utils.PlayerUtils;
 
 public class ItemListener implements Listener {
+    private final RuneQuestPlayerHandler playerHandler;
     private final ItemHandler itemHandler;
 
-    public ItemListener(ItemHandler handler) {
+    public ItemListener(ItemHandler handler, RuneQuestPlayerHandler playerHandler) {
         this.itemHandler = handler;
+        this.playerHandler = playerHandler;
     }
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        RuneItem item = itemHandler.getRuneItem(PlayerUtils.getItemStackInHand(event.getPlayer()));
+        ScriptedItem item = itemHandler.getRuneItem(PlayerUtils.getItemStackInHand(event.getPlayer()));
 
         if (item == null) {
             return;
         }
 
-        itemHandler.onPlayerInteract(event, item);
+        RuneQuestPlayer player = playerHandler.getRunePlayer(event.getPlayer());
+
+        if (player == null) {
+            return;
+        }
+
+        itemHandler.onPlayerInteract(event, item, player);
     }
 
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
-        RuneItem item = itemHandler.getRuneItem(PlayerUtils.getItemStackInHand(event.getPlayer()));
+        ScriptedItem item = itemHandler.getRuneItem(PlayerUtils.getItemStackInHand(event.getPlayer()));
 
         if (item == null) {
             return;
         }
 
-        itemHandler.onPlayerInteractEntity(event, item);
+        RuneQuestPlayer player = playerHandler.getRunePlayer(event.getPlayer());
+
+        if (player == null) {
+            return;
+        }
+
+        itemHandler.onPlayerInteractEntity(event, item, player);
 
     }
 
     @EventHandler
     public void onPlayerItemDrop(PlayerDropItemEvent event) {
-        RuneItem item = itemHandler.getRuneItem(event.getItemDrop().getItemStack());
+        ScriptedItem item = itemHandler.getRuneItem(event.getItemDrop().getItemStack());
 
         if (item == null) {
             return;
         }
 
-        itemHandler.onPlayerItemDrop(event, item);
+        RuneQuestPlayer player = playerHandler.getRunePlayer(event.getPlayer());
+
+        if (player == null) {
+            return;
+        }
+
+        itemHandler.onPlayerItemDrop(event, item, player);
 
     }
 
     @EventHandler
     public void onPlayerTakeItemInHand(PlayerItemHeldEvent event) {
-        RuneItem item = itemHandler.getRuneItem(PlayerUtils.getItemStackInHand(event.getPlayer()));
+        ScriptedItem item = itemHandler.getRuneItem(PlayerUtils.getItemStackInHand(event.getPlayer()));
 
         if (item == null) {
             return;
         }
 
-        itemHandler.onPlayerTakeItemInHand(event, item);
+        RuneQuestPlayer player = playerHandler.getRunePlayer(event.getPlayer());
+
+        if (player == null) {
+            return;
+        }
+
+        itemHandler.onPlayerTakeItemInHand(event, item, player);
 
     }
 
     @EventHandler
     public void onPlayerDamageEntity(EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Player player)) {
+        if (!(event.getDamager() instanceof Player damager)) {
             return;
         }
 
-        RuneItem item = itemHandler.getRuneItem(PlayerUtils.getItemStackInHand(player));
+        ScriptedItem item = itemHandler.getRuneItem(PlayerUtils.getItemStackInHand(damager));
 
         if (item == null) {
+            return;
+        }
+
+        RuneQuestPlayer player = playerHandler.getRunePlayer(damager);
+
+        if (player == null) {
             return;
         }
 

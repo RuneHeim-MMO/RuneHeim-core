@@ -10,18 +10,26 @@ import org.zuma.examplePlugin.player.RuneQuestPlayerHandler;
 import org.zuma.examplePlugin.player.RuneQuestPlayerListener;
 
 public final class RuneQuestPlugin extends JavaPlugin implements Listener {
-    public final Logger logger = new Logger();
+    public static final Logger logger = new Logger();
+    private static RuneQuestPlugin pluginInstance;
     private RuneQuestPlayerHandler runePlayerHandler;
     private ItemHandler itemHandler;
 
     public void initializePlugin() {
-        runePlayerHandler = new RuneQuestPlayerHandler(this);
-        RuneQuestPlayerListener runePlayerListener = new RuneQuestPlayerListener(runePlayerHandler);
-        getServer().getPluginManager().registerEvents(runePlayerListener, this);
+        pluginInstance = this;
 
-        itemHandler = new ItemHandler(this, runePlayerHandler);
-        ItemListener itemListener = new ItemListener(itemHandler);
-        getServer().getPluginManager().registerEvents(itemListener, this);
+        runePlayerHandler = new RuneQuestPlayerHandler();
+        RuneQuestPlayerListener runePlayerListener = new RuneQuestPlayerListener(runePlayerHandler);
+        getServer().getPluginManager().registerEvents(runePlayerListener, pluginInstance);
+
+        itemHandler = new ItemHandler();
+        ItemListener itemListener = new ItemListener(itemHandler, runePlayerHandler);
+        getServer().getPluginManager().registerEvents(itemListener, pluginInstance);
+
+        Bukkit.getOnlinePlayers().forEach((player) -> {
+
+            player.getInventory().addItem(itemHandler.getRuneItem(0).asItemStack(1));
+        });
     }
 
     @Override
@@ -36,8 +44,12 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         Bukkit.getScheduler().cancelTasks(this);
     }
 
-    public Logger getRuneLogger() {
+    public static Logger getRuneLogger() {
         return logger;
+    }
+
+    public static RuneQuestPlugin getInstance() {
+        return pluginInstance;
     }
 
 }
