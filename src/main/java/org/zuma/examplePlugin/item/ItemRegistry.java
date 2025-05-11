@@ -17,6 +17,12 @@ public class ItemRegistry {
     private final Map<Integer, CustomItem> items = new HashMap<>(); // ID:RuneItem (ID stored in persistent item stack data)
 
     public void registerItem(CustomItem item) {
+        CustomItem existingItem = items.get(item.id);
+
+        if (existingItem != null) {
+            throw new Error("Cannot register " + item.displayName + ". Item with " + item.id + " (" + existingItem.displayName + ") already exists!");
+        }
+
         items.put(item.id, item);
     }
 

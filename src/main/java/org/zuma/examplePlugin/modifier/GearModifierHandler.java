@@ -1,9 +1,11 @@
 package org.zuma.examplePlugin.modifier;
 
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.zuma.examplePlugin.event.GearModifiersRecalculatedEvent;
 import org.zuma.examplePlugin.item.ItemRegistry;
-import org.zuma.examplePlugin.item.base.ItemWithModifiers;
+import org.zuma.examplePlugin.item.base.GearItem;
 import org.zuma.examplePlugin.player.RunePlayer;
 import org.zuma.examplePlugin.utils.ModifierUtils;
 
@@ -11,10 +13,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ItemModifierHandler {
+public class GearModifierHandler {
     private final ItemRegistry itemRegistry;
 
-    public ItemModifierHandler(ItemRegistry registry) {
+    public GearModifierHandler(ItemRegistry registry) {
         this.itemRegistry = registry;
     }
 
@@ -23,6 +25,7 @@ public class ItemModifierHandler {
         List<Modifier> combined = ModifierUtils.combineModifiersByType(gearModifiers);
 
         player.setGearModifiers(combined);
+        Bukkit.getServer().getPluginManager().callEvent(new GearModifiersRecalculatedEvent(player));
     }
 
     private List<Modifier> getGearModifiers(RunePlayer player) {
@@ -34,9 +37,9 @@ public class ItemModifierHandler {
 
         items.stream()
                 .map(itemRegistry::getItem)
-                .filter(item -> item instanceof ItemWithModifiers)
-                .map(item -> (ItemWithModifiers) item)
-                .forEach(itemWithModifiers -> modifiers.addAll(itemWithModifiers.modifiers));
+                .filter(item -> item instanceof GearItem)
+                .map(item -> (GearItem) item)
+                .forEach(gearItem -> modifiers.addAll(gearItem.modifiers));
 
 
         return modifiers;

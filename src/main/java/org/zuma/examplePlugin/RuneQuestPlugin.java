@@ -7,8 +7,8 @@ import org.zuma.examplePlugin.item.ItemHandler;
 import org.zuma.examplePlugin.item.ItemListener;
 import org.zuma.examplePlugin.item.ItemRegistry;
 import org.zuma.examplePlugin.logger.Logger;
-import org.zuma.examplePlugin.modifier.ItemModifierHandler;
-import org.zuma.examplePlugin.modifier.ItemModifierListener;
+import org.zuma.examplePlugin.modifier.GearModifierHandler;
+import org.zuma.examplePlugin.modifier.GearModifierListener;
 import org.zuma.examplePlugin.player.RunePlayerHandler;
 import org.zuma.examplePlugin.player.RunePlayerListener;
 
@@ -31,9 +31,9 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         ItemListener itemListener = new ItemListener(itemHandler, runePlayerHandler);
         getServer().getPluginManager().registerEvents(itemListener, pluginInstance);
 
-        ItemModifierHandler itemModifierHandler = new ItemModifierHandler(itemRegistry);
-        ItemModifierListener itemModifierListener = new ItemModifierListener(itemModifierHandler, runePlayerHandler);
-        getServer().getPluginManager().registerEvents(itemModifierListener, pluginInstance);
+        GearModifierHandler gearModifierHandler = new GearModifierHandler(itemRegistry);
+        GearModifierListener gearModifierListener = new GearModifierListener(gearModifierHandler, runePlayerHandler);
+        getServer().getPluginManager().registerEvents(gearModifierListener, pluginInstance);
 
 
         // TODO: Load inventory from DB & Verify their meta

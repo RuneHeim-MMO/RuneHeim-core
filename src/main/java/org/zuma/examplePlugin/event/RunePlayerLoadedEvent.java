@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.player.events;
+package org.zuma.examplePlugin.event;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;

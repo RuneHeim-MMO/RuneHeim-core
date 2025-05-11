@@ -27,26 +27,18 @@ public abstract class CustomItem {
     public final Material material;
     public final String displayName;
     public final List<Component> lore = new ArrayList<>();
-    public final int customModelData;
+    public int customModelData;
     public final ItemRarity rarity;
 
-    public CustomItem(int id, Material material, ItemRarity rarity) {
-        this(id, material, rarity, null, null, -1);
-    }
-
     public CustomItem(int id, Material material, ItemRarity rarity, String displayName) {
-        this(id, material, rarity, displayName, null, -1);
+        this(id, material, rarity, displayName, null);
     }
 
     public CustomItem(int id, Material material, ItemRarity rarity, String displayName, Component[] lore) {
-        this(id, material, rarity, displayName, lore, -1);
-    }
-
-    public CustomItem(int id, Material material, ItemRarity rarity, String displayName, Component[] lore, int customModelData) {
         this.id = id;
         this.material = material;
         this.displayName = displayName;
-        this.customModelData = customModelData;
+        this.customModelData = -1;
         this.rarity = rarity;
 
         if (lore != null) {
@@ -54,6 +46,10 @@ public abstract class CustomItem {
         }
 
         this.lore.add(rarity.getComponent());
+    }
+
+    public void setCustomModelData(int customModelData) {
+        this.customModelData = customModelData;
     }
 
     public ItemStack asItemStack() {

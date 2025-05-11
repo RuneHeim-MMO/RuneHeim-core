@@ -5,9 +5,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.constants.Colors;
+import org.zuma.examplePlugin.event.RunePlayerLoadedEvent;
+import org.zuma.examplePlugin.event.RunePlayerSavedEvent;
 import org.zuma.examplePlugin.logger.LogLevel;
-import org.zuma.examplePlugin.player.events.RunePlayerLoadedEvent;
-import org.zuma.examplePlugin.player.events.RunePlayerSavedEvent;
 import org.zuma.examplePlugin.utils.TextUtils;
 
 import javax.annotation.Nullable;

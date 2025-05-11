@@ -7,12 +7,12 @@ import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.zuma.examplePlugin.player.RunePlayer;
 import org.zuma.examplePlugin.player.RunePlayerHandler;
 
-public class ItemModifierListener implements Listener {
-    private final ItemModifierHandler handler;
+public class GearModifierListener implements Listener {
+    private final GearModifierHandler gearModifierHandler;
     private final RunePlayerHandler playerHandler;
 
-    public ItemModifierListener(ItemModifierHandler handler, RunePlayerHandler playerHandler) {
-        this.handler = handler;
+    public GearModifierListener(GearModifierHandler gearModifierHandler, RunePlayerHandler playerHandler) {
+        this.gearModifierHandler = gearModifierHandler;
         this.playerHandler = playerHandler;
     }
 
@@ -24,7 +24,7 @@ public class ItemModifierListener implements Listener {
             return;
         }
 
-        handler.recalculatePlayerModifiers(player);
+        gearModifierHandler.recalculatePlayerModifiers(player);
 
     }
 
@@ -43,7 +43,7 @@ public class ItemModifierListener implements Listener {
 
         // Armor slots
         if (slot >= 36 && slot <= 39) {
-            handler.recalculatePlayerModifiers(player);
+            gearModifierHandler.recalculatePlayerModifiers(player);
         }
 
     }
