@@ -23,7 +23,6 @@ public abstract class QuestItem extends CustomItem {
     public void onPlayerItemDrop(PlayerDropItemEvent event, RunePlayer player) {
         event.setCancelled(true);
         player.getPlayer().sendMessage(Component.text(dropMessage).color(Colors.ERROR.asColor()));
-
     }
 
 

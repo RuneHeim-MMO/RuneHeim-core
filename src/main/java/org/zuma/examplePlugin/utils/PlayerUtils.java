@@ -6,6 +6,6 @@ import org.bukkit.inventory.ItemStack;
 public class PlayerUtils {
 
     public static ItemStack getItemStackInHand(Player player) {
-        return player.getInventory().getItem(player.getActiveItemHand());
+        return player.getInventory().getItemInMainHand();
     }
 }

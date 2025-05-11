@@ -28,6 +28,12 @@ public class RunePlayer {
     public void setGearModifiers(List<Modifier> newModifiers) {
         gearModifiers.clear();
         gearModifiers.addAll(newModifiers);
+
+        System.out.println("Recalculated modifiers " + newModifiers);
+    }
+
+    public List<Modifier> getActiveModifiers() {
+        return modifiers;
     }
 
 }

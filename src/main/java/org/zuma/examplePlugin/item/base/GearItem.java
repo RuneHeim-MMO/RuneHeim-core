@@ -19,4 +19,8 @@ public abstract class GearItem extends CustomItem {
         super(id, material, rarity, displayName, lore);
     }
 
+    public void addModifier(Modifier modifier) {
+        modifiers.add(modifier);
+    }
+
 }

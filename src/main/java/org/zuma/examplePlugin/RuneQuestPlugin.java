@@ -3,6 +3,7 @@ package org.zuma.examplePlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.zuma.examplePlugin.constants.ItemId;
 import org.zuma.examplePlugin.item.ItemHandler;
 import org.zuma.examplePlugin.item.ItemListener;
 import org.zuma.examplePlugin.item.ItemRegistry;
@@ -38,7 +39,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
         // TODO: Load inventory from DB & Verify their meta
         Bukkit.getOnlinePlayers().forEach((player) -> {
-            player.getInventory().addItem(itemRegistry.getItem(0).asItemStack(1));
+            player.getInventory().addItem(itemRegistry.getItem(ItemId.HOLY_LOG.asInt()).asItemStack(1));
         });
     }
 

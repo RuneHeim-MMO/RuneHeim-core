@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.item.base.CustomItem;
 import org.zuma.examplePlugin.player.RunePlayer;
 import org.zuma.examplePlugin.player.RunePlayerHandler;
@@ -80,7 +81,13 @@ public class ItemListener implements Listener {
 
     @EventHandler
     public void onPlayerTakeItemInHand(PlayerItemHeldEvent event) {
-        CustomItem item = itemRegistry.getItem(PlayerUtils.getItemStackInHand(event.getPlayer()));
+        ItemStack itemInHand = event.getPlayer().getInventory().getItem(event.getNewSlot());
+
+        if (itemInHand == null) {
+            return;
+        }
+
+        CustomItem item = itemRegistry.getItem(itemInHand);
 
         if (item == null) {
             return;

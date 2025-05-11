@@ -20,22 +20,23 @@ public class GearModifierHandler {
         this.itemRegistry = registry;
     }
 
-    public void recalculatePlayerModifiers(RunePlayer player) {
-        List<Modifier> gearModifiers = getGearModifiers(player);
+    public void recalculatePlayerModifiers(RunePlayer player, ItemStack itemInHand) {
+        List<Modifier> gearModifiers = getGearModifiers(player, itemInHand);
         List<Modifier> combined = ModifierUtils.combineModifiersByType(gearModifiers);
 
         player.setGearModifiers(combined);
         Bukkit.getServer().getPluginManager().callEvent(new GearModifiersRecalculatedEvent(player));
     }
 
-    private List<Modifier> getGearModifiers(RunePlayer player) {
+    private List<Modifier> getGearModifiers(RunePlayer player, ItemStack itemInHand) {
         PlayerInventory inventory = player.getPlayer().getInventory();
         List<Modifier> modifiers = new ArrayList<>();
 
         List<ItemStack> items = new ArrayList<>(Arrays.asList(inventory.getArmorContents()));
-        items.add(inventory.getItemInMainHand());
+        items.add(itemInHand);
 
         items.stream()
+                .filter(item -> item != null)
                 .map(itemRegistry::getItem)
                 .filter(item -> item instanceof GearItem)
                 .map(item -> (GearItem) item)
