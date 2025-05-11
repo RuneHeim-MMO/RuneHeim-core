@@ -33,7 +33,10 @@ public class GearModifierHandler {
         List<Modifier> modifiers = new ArrayList<>();
 
         List<ItemStack> items = new ArrayList<>(Arrays.asList(inventory.getArmorContents()));
-        items.add(itemInHand);
+        
+        if (!itemInHand.isEmpty()) {
+            items.add(itemInHand);
+        }
 
         items.stream()
                 .filter(item -> item != null)

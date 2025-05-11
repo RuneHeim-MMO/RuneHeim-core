@@ -1,8 +1,9 @@
 package org.zuma.examplePlugin.modifier;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.player.RunePlayer;
@@ -31,25 +32,15 @@ public class GearModifierListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerInventoryItemClick(InventoryClickEvent event) {
-        if (event.getClickedInventory() == null || !event.getClickedInventory().equals(event.getWhoClicked().getInventory())) {
-            return;
-        }
+    public void onPlayerInventoryClose(InventoryCloseEvent event) {
+        if (!(event.getPlayer() instanceof Player player)) return;
 
-        RunePlayer player = playerHandler.getRunePlayer(event.getWhoClicked().getUniqueId());
-        int slot = event.getSlot();
+        RunePlayer runePlayer = playerHandler.getRunePlayer(player.getUniqueId());
+        if (runePlayer == null) return;
 
-        if (player == null) {
-            return;
-        }
-
-        ItemStack itemInHand = player.getPlayer().getInventory().getItemInMainHand();
-
-        // Armor slots
-        if (slot >= 36 && slot <= 39 || event.isShiftClick()) {
-            gearModifierHandler.recalculatePlayerModifiers(player, itemInHand);
-        }
-
+        ItemStack itemInHand = player.getInventory().getItemInMainHand();
+        gearModifierHandler.recalculatePlayerModifiers(runePlayer, itemInHand);
     }
+
 
 }
