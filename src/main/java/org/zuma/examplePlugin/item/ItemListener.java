@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.zuma.examplePlugin.item.base.CustomItem;
 import org.zuma.examplePlugin.player.RunePlayer;
 import org.zuma.examplePlugin.player.RunePlayerHandler;
 import org.zuma.examplePlugin.utils.PlayerUtils;
@@ -26,7 +27,7 @@ public class ItemListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        ScriptedItem item = itemRegistry.getItem(PlayerUtils.getItemStackInHand(event.getPlayer()));
+        CustomItem item = itemRegistry.getItem(PlayerUtils.getItemStackInHand(event.getPlayer()));
 
         if (item == null) {
             return;
@@ -43,7 +44,7 @@ public class ItemListener implements Listener {
 
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
-        ScriptedItem item = itemRegistry.getItem(PlayerUtils.getItemStackInHand(event.getPlayer()));
+        CustomItem item = itemRegistry.getItem(PlayerUtils.getItemStackInHand(event.getPlayer()));
 
         if (item == null) {
             return;
@@ -61,7 +62,7 @@ public class ItemListener implements Listener {
 
     @EventHandler
     public void onPlayerItemDrop(PlayerDropItemEvent event) {
-        ScriptedItem item = itemRegistry.getItem(event.getItemDrop().getItemStack());
+        CustomItem item = itemRegistry.getItem(event.getItemDrop().getItemStack());
 
         if (item == null) {
             return;
@@ -79,7 +80,7 @@ public class ItemListener implements Listener {
 
     @EventHandler
     public void onPlayerTakeItemInHand(PlayerItemHeldEvent event) {
-        ScriptedItem item = itemRegistry.getItem(PlayerUtils.getItemStackInHand(event.getPlayer()));
+        CustomItem item = itemRegistry.getItem(PlayerUtils.getItemStackInHand(event.getPlayer()));
 
         if (item == null) {
             return;
@@ -101,7 +102,7 @@ public class ItemListener implements Listener {
             return;
         }
 
-        ScriptedItem item = itemRegistry.getItem(PlayerUtils.getItemStackInHand(damager));
+        CustomItem item = itemRegistry.getItem(PlayerUtils.getItemStackInHand(damager));
 
         if (item == null) {
             return;

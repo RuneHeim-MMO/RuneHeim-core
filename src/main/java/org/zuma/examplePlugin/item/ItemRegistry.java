@@ -7,18 +7,21 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.constants.PersistentDataKey;
+import org.zuma.examplePlugin.item.base.CustomItem;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ItemRegistry {
-    private final Map<Integer, ScriptedItem> items = new HashMap<>(); // ID:RuneItem (ID stored in persistent item stack data)
+    private final Map<Integer, CustomItem> items = new HashMap<>(); // ID:RuneItem (ID stored in persistent item stack data)
 
-    public void registerItem(ScriptedItem item) {
+    public void registerItem(CustomItem item) {
         items.put(item.id, item);
     }
 
-    public ScriptedItem getItem(ItemStack item) {
+    @Nullable
+    public CustomItem getItem(ItemStack item) {
         ItemMeta meta = item.getItemMeta();
 
         if (meta != null) {
@@ -32,8 +35,9 @@ public class ItemRegistry {
         return null;
     }
 
-    public ScriptedItem getItem(int id) {
-        ScriptedItem item = items.get(id);
+    @Nullable
+    public CustomItem getItem(int id) {
+        CustomItem item = items.get(id);
 
         if (item == null) {
             throw new Error("Cannot get rune item. Item with id " + id + " does not exist or is not registered in the registry.");

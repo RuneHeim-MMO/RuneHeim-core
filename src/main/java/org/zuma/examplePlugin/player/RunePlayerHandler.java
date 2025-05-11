@@ -10,6 +10,7 @@ import org.zuma.examplePlugin.player.events.RunePlayerLoadedEvent;
 import org.zuma.examplePlugin.player.events.RunePlayerSavedEvent;
 import org.zuma.examplePlugin.utils.TextUtils;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -22,8 +23,12 @@ public class RunePlayerHandler {
         loadingStateHandler = new RunePlayerLoadingStateHandler(RuneQuestPlugin.getInstance());
     }
 
-    public RunePlayer getRunePlayer(Player player) {
-        return players.get(player.getUniqueId());
+    public @Nullable RunePlayer getRunePlayer(Player player) {
+        return this.getRunePlayer(player.getUniqueId());
+    }
+
+    public @Nullable RunePlayer getRunePlayer(UUID uuid) {
+        return players.get(uuid);
     }
 
     public void handleOnEnable() {

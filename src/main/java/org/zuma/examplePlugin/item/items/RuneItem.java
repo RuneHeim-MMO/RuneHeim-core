@@ -3,10 +3,10 @@ package org.zuma.examplePlugin.item.items;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.zuma.examplePlugin.constants.ItemRarity;
-import org.zuma.examplePlugin.item.ScriptedItem;
+import org.zuma.examplePlugin.item.base.CustomItem;
 import org.zuma.examplePlugin.player.RunePlayer;
 
-public class RuneItem extends ScriptedItem {
+public class RuneItem extends CustomItem {
 
     public RuneItem() {
         super(0, Material.ACACIA_LOG, ItemRarity.EPIC, "Holy Log");

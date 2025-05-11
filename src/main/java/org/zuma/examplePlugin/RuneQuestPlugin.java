@@ -7,6 +7,8 @@ import org.zuma.examplePlugin.item.ItemHandler;
 import org.zuma.examplePlugin.item.ItemListener;
 import org.zuma.examplePlugin.item.ItemRegistry;
 import org.zuma.examplePlugin.logger.Logger;
+import org.zuma.examplePlugin.modifier.ItemModifierHandler;
+import org.zuma.examplePlugin.modifier.ItemModifierListener;
 import org.zuma.examplePlugin.player.RunePlayerHandler;
 import org.zuma.examplePlugin.player.RunePlayerListener;
 
@@ -29,6 +31,12 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         ItemListener itemListener = new ItemListener(itemHandler, runePlayerHandler);
         getServer().getPluginManager().registerEvents(itemListener, pluginInstance);
 
+        ItemModifierHandler itemModifierHandler = new ItemModifierHandler(itemRegistry);
+        ItemModifierListener itemModifierListener = new ItemModifierListener(itemModifierHandler, runePlayerHandler);
+        getServer().getPluginManager().registerEvents(itemModifierListener, pluginInstance);
+
+
+        // TODO: Load inventory from DB & Verify their meta
         Bukkit.getOnlinePlayers().forEach((player) -> {
             player.getInventory().addItem(itemRegistry.getItem(0).asItemStack(1));
         });

@@ -5,6 +5,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.zuma.examplePlugin.item.base.CustomItem;
 import org.zuma.examplePlugin.item.items.RuneItem;
 import org.zuma.examplePlugin.player.RunePlayer;
 
@@ -21,24 +22,23 @@ public class ItemHandler {
         return registry;
     }
 
-
-    public void onPlayerInteract(PlayerInteractEvent event, ScriptedItem itemInHand, RunePlayer player) {
+    public void onPlayerInteract(PlayerInteractEvent event, CustomItem itemInHand, RunePlayer player) {
         itemInHand.onPlayerInteract(event, player);
     }
 
-    public void onPlayerInteractEntity(PlayerInteractEntityEvent event, ScriptedItem itemInHand, RunePlayer player) {
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent event, CustomItem itemInHand, RunePlayer player) {
         itemInHand.onPlayerInteractEntity(event, player);
     }
 
-    public void onPlayerItemDrop(PlayerDropItemEvent event, ScriptedItem droppedItem, RunePlayer player) {
+    public void onPlayerItemDrop(PlayerDropItemEvent event, CustomItem droppedItem, RunePlayer player) {
         droppedItem.onPlayerItemDrop(event, player);
     }
 
-    public void onPlayerTakeItemInHand(PlayerItemHeldEvent event, ScriptedItem itemInHand, RunePlayer player) {
+    public void onPlayerTakeItemInHand(PlayerItemHeldEvent event, CustomItem itemInHand, RunePlayer player) {
         itemInHand.onPlayerTakeItemInHand(event, player);
     }
 
-    public void onPlayerDamageEntity(EntityDamageByEntityEvent event, RunePlayer damager, ScriptedItem damagedWith) {
+    public void onPlayerDamageEntity(EntityDamageByEntityEvent event, RunePlayer damager, CustomItem damagedWith) {
         damagedWith.onPlayerDamageEntity(event, damager);
     }
 }
