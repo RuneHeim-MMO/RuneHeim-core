@@ -8,7 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.zuma.examplePlugin.ExamplePlugin;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.constants.Colors;
 
 import java.time.Duration;
@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class RuneQuestPlayerLoadingHandler {
+public class RunePlayerLoadingStateHandler {
     private static final String[] loadingMessages = {
             "Waking up your character... Please wait.",
             "Your data is being summoned by a wizard.",
@@ -57,9 +57,9 @@ public class RuneQuestPlayerLoadingHandler {
 
     private static final int EFFECT_DURATION_TICKS = 10 * 20;
     private final Map<UUID, Collection<PotionEffect>> loadingPlayers = new HashMap<>();
-    private final ExamplePlugin plugin;
+    private final RuneQuestPlugin plugin;
 
-    public RuneQuestPlayerLoadingHandler(ExamplePlugin plugin) {
+    public RunePlayerLoadingStateHandler(RuneQuestPlugin plugin) {
         this.plugin = plugin;
         startEffectLoop();
     }

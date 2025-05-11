@@ -1,4 +1,4 @@
 name: ExamplePlugin
 version: '1.0-SNAPSHOT'
-main: org.zuma.examplePlugin.ExamplePlugin
+main: org.zuma.examplePlugin.RuneQuestPlugin
 api-version: '1.21'

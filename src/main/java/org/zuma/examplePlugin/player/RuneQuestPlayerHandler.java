@@ -3,7 +3,7 @@ package org.zuma.examplePlugin.player;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.zuma.examplePlugin.ExamplePlugin;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.constants.Colors;
 import org.zuma.examplePlugin.interfaces.Callback;
 import org.zuma.examplePlugin.logger.LogLevel;
@@ -14,15 +14,14 @@ import java.util.Map;
 import java.util.UUID;
 
 public class RuneQuestPlayerHandler {
-    private final ExamplePlugin plugin;
-    private final Map<UUID, RuneQuestPlayer> players;
-    private final RuneQuestPlayerLoadingHandler loadingStateHandler;
+    private final RuneQuestPlugin plugin;
+    private final Map<UUID, RuneQuestPlayer> players = new HashMap<>();
+    
+    private final RunePlayerLoadingStateHandler loadingStateHandler;
 
-    public RuneQuestPlayerHandler(ExamplePlugin pluginInstance) {
+    public RuneQuestPlayerHandler(RuneQuestPlugin pluginInstance) {
         plugin = pluginInstance;
-        players = new HashMap<>();
-
-        loadingStateHandler = new RuneQuestPlayerLoadingHandler(plugin);
+        loadingStateHandler = new RunePlayerLoadingStateHandler(plugin);
     }
 
     public void handleOnEnable() {
@@ -42,7 +41,7 @@ public class RuneQuestPlayerHandler {
 
         if (players.containsKey(uuid)) {
             player.kick(TextUtils.getErrorKickScreen("Player " + uuid + " is already online."));
-
+            return;
         }
 
         loadingStateHandler.setPlayerLoading(player);
@@ -50,8 +49,6 @@ public class RuneQuestPlayerHandler {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             try {
 
-
-                Thread.sleep(3000);
                 // TODO: Deserialize & initialize player
                 RuneQuestPlayer runeQuestPlayer = new RuneQuestPlayer(uuid);
 
@@ -85,6 +82,7 @@ public class RuneQuestPlayerHandler {
 
         if (!players.containsKey(uuid)) {
             player.kick(TextUtils.getErrorKickScreen("Cannot save player " + uuid + ". RuneQuestPlayer instance not found."));
+            return;
         }
 
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
