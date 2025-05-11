@@ -5,10 +5,10 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-public class RuneQuestPlayer {
+public class RunePlayer {
     private final UUID uuid;
 
-    public RuneQuestPlayer(UUID uuid) {
+    public RunePlayer(UUID uuid) {
         this.uuid = uuid;
     }
 

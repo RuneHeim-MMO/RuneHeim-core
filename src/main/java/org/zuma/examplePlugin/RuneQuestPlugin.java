@@ -5,30 +5,32 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.zuma.examplePlugin.item.ItemHandler;
 import org.zuma.examplePlugin.item.ItemListener;
+import org.zuma.examplePlugin.item.ItemRegistry;
 import org.zuma.examplePlugin.logger.Logger;
-import org.zuma.examplePlugin.player.RuneQuestPlayerHandler;
-import org.zuma.examplePlugin.player.RuneQuestPlayerListener;
+import org.zuma.examplePlugin.player.RunePlayerHandler;
+import org.zuma.examplePlugin.player.RunePlayerListener;
 
 public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     public static final Logger logger = new Logger();
     private static RuneQuestPlugin pluginInstance;
-    private RuneQuestPlayerHandler runePlayerHandler;
+    private RunePlayerHandler runePlayerHandler;
     private ItemHandler itemHandler;
+    private ItemRegistry itemRegistry;
 
     public void initializePlugin() {
         pluginInstance = this;
 
-        runePlayerHandler = new RuneQuestPlayerHandler();
-        RuneQuestPlayerListener runePlayerListener = new RuneQuestPlayerListener(runePlayerHandler);
+        runePlayerHandler = new RunePlayerHandler();
+        RunePlayerListener runePlayerListener = new RunePlayerListener(runePlayerHandler);
         getServer().getPluginManager().registerEvents(runePlayerListener, pluginInstance);
 
-        itemHandler = new ItemHandler();
+        itemRegistry = new ItemRegistry();
+        itemHandler = new ItemHandler(itemRegistry);
         ItemListener itemListener = new ItemListener(itemHandler, runePlayerHandler);
         getServer().getPluginManager().registerEvents(itemListener, pluginInstance);
 
         Bukkit.getOnlinePlayers().forEach((player) -> {
-
-            player.getInventory().addItem(itemHandler.getRuneItem(0).asItemStack(1));
+            player.getInventory().addItem(itemRegistry.getItem(0).asItemStack(1));
         });
     }
 

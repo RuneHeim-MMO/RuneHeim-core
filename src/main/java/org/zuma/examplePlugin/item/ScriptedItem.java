@@ -16,7 +16,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.constants.ItemRarity;
 import org.zuma.examplePlugin.constants.PersistentDataKey;
-import org.zuma.examplePlugin.player.RuneQuestPlayer;
+import org.zuma.examplePlugin.player.RunePlayer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -100,23 +100,23 @@ public abstract class ScriptedItem {
     }
 
 
-    public void onPlayerInteract(PlayerInteractEvent event, RuneQuestPlayer player) {
+    public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player) {
     }
 
 
-    public void onPlayerInteractEntity(PlayerInteractEntityEvent event, RuneQuestPlayer player) {
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent event, RunePlayer player) {
     }
 
 
-    public void onPlayerItemDrop(PlayerDropItemEvent event, RuneQuestPlayer player) {
+    public void onPlayerItemDrop(PlayerDropItemEvent event, RunePlayer player) {
     }
 
 
-    public void onPlayerTakeItemInHand(PlayerItemHeldEvent event, RuneQuestPlayer player) {
+    public void onPlayerTakeItemInHand(PlayerItemHeldEvent event, RunePlayer player) {
     }
 
 
-    public void onPlayerDamageEntity(EntityDamageByEntityEvent event, RuneQuestPlayer player) {
+    public void onPlayerDamageEntity(EntityDamageByEntityEvent event, RunePlayer player) {
     }
 
 

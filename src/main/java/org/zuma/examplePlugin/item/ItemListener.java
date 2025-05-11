@@ -8,28 +8,31 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.zuma.examplePlugin.player.RuneQuestPlayer;
-import org.zuma.examplePlugin.player.RuneQuestPlayerHandler;
+import org.zuma.examplePlugin.player.RunePlayer;
+import org.zuma.examplePlugin.player.RunePlayerHandler;
 import org.zuma.examplePlugin.utils.PlayerUtils;
 
 public class ItemListener implements Listener {
-    private final RuneQuestPlayerHandler playerHandler;
+    private final RunePlayerHandler playerHandler;
     private final ItemHandler itemHandler;
+    private final ItemRegistry itemRegistry;
 
-    public ItemListener(ItemHandler handler, RuneQuestPlayerHandler playerHandler) {
+    public ItemListener(ItemHandler handler, RunePlayerHandler playerHandler) {
         this.itemHandler = handler;
         this.playerHandler = playerHandler;
+
+        itemRegistry = handler.getRegistry();
     }
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        ScriptedItem item = itemHandler.getRuneItem(PlayerUtils.getItemStackInHand(event.getPlayer()));
+        ScriptedItem item = itemRegistry.getItem(PlayerUtils.getItemStackInHand(event.getPlayer()));
 
         if (item == null) {
             return;
         }
 
-        RuneQuestPlayer player = playerHandler.getRunePlayer(event.getPlayer());
+        RunePlayer player = playerHandler.getRunePlayer(event.getPlayer());
 
         if (player == null) {
             return;
@@ -40,13 +43,13 @@ public class ItemListener implements Listener {
 
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
-        ScriptedItem item = itemHandler.getRuneItem(PlayerUtils.getItemStackInHand(event.getPlayer()));
+        ScriptedItem item = itemRegistry.getItem(PlayerUtils.getItemStackInHand(event.getPlayer()));
 
         if (item == null) {
             return;
         }
 
-        RuneQuestPlayer player = playerHandler.getRunePlayer(event.getPlayer());
+        RunePlayer player = playerHandler.getRunePlayer(event.getPlayer());
 
         if (player == null) {
             return;
@@ -58,13 +61,13 @@ public class ItemListener implements Listener {
 
     @EventHandler
     public void onPlayerItemDrop(PlayerDropItemEvent event) {
-        ScriptedItem item = itemHandler.getRuneItem(event.getItemDrop().getItemStack());
+        ScriptedItem item = itemRegistry.getItem(event.getItemDrop().getItemStack());
 
         if (item == null) {
             return;
         }
 
-        RuneQuestPlayer player = playerHandler.getRunePlayer(event.getPlayer());
+        RunePlayer player = playerHandler.getRunePlayer(event.getPlayer());
 
         if (player == null) {
             return;
@@ -76,13 +79,13 @@ public class ItemListener implements Listener {
 
     @EventHandler
     public void onPlayerTakeItemInHand(PlayerItemHeldEvent event) {
-        ScriptedItem item = itemHandler.getRuneItem(PlayerUtils.getItemStackInHand(event.getPlayer()));
+        ScriptedItem item = itemRegistry.getItem(PlayerUtils.getItemStackInHand(event.getPlayer()));
 
         if (item == null) {
             return;
         }
 
-        RuneQuestPlayer player = playerHandler.getRunePlayer(event.getPlayer());
+        RunePlayer player = playerHandler.getRunePlayer(event.getPlayer());
 
         if (player == null) {
             return;
@@ -98,13 +101,13 @@ public class ItemListener implements Listener {
             return;
         }
 
-        ScriptedItem item = itemHandler.getRuneItem(PlayerUtils.getItemStackInHand(damager));
+        ScriptedItem item = itemRegistry.getItem(PlayerUtils.getItemStackInHand(damager));
 
         if (item == null) {
             return;
         }
 
-        RuneQuestPlayer player = playerHandler.getRunePlayer(damager);
+        RunePlayer player = playerHandler.getRunePlayer(damager);
 
         if (player == null) {
             return;

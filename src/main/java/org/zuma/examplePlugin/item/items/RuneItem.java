@@ -4,7 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.zuma.examplePlugin.constants.ItemRarity;
 import org.zuma.examplePlugin.item.ScriptedItem;
-import org.zuma.examplePlugin.player.RuneQuestPlayer;
+import org.zuma.examplePlugin.player.RunePlayer;
 
 public class RuneItem extends ScriptedItem {
 
@@ -15,7 +15,7 @@ public class RuneItem extends ScriptedItem {
     }
 
     @Override
-    public void onPlayerInteract(PlayerInteractEvent event, RuneQuestPlayer player) {
+    public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player) {
         System.out.println("Interacted from Scripted Item id:" + super.id + " by RuneQuestPlayer " + player.getUUID());
     }
 }

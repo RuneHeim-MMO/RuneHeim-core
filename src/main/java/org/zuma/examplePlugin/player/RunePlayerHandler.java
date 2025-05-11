@@ -5,23 +5,24 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.constants.Colors;
-import org.zuma.examplePlugin.interfaces.Callback;
 import org.zuma.examplePlugin.logger.LogLevel;
+import org.zuma.examplePlugin.player.events.RunePlayerLoadedEvent;
+import org.zuma.examplePlugin.player.events.RunePlayerSavedEvent;
 import org.zuma.examplePlugin.utils.TextUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class RuneQuestPlayerHandler {
-    private final Map<UUID, RuneQuestPlayer> players = new HashMap<>();
+public class RunePlayerHandler {
+    private final Map<UUID, RunePlayer> players = new HashMap<>();
     private final RunePlayerLoadingStateHandler loadingStateHandler;
 
-    public RuneQuestPlayerHandler() {
+    public RunePlayerHandler() {
         loadingStateHandler = new RunePlayerLoadingStateHandler(RuneQuestPlugin.getInstance());
     }
 
-    public RuneQuestPlayer getRunePlayer(Player player) {
+    public RunePlayer getRunePlayer(Player player) {
         return players.get(player.getUniqueId());
     }
 
@@ -30,14 +31,11 @@ public class RuneQuestPlayerHandler {
     }
 
     public void handleOnDisable() {
-        Bukkit.getOnlinePlayers().forEach(this::savePlayerData);
+        Bukkit.getOnlinePlayers().forEach(player -> savePlayerData(player, true));
     }
+
 
     public void loadPlayerData(Player player) {
-        loadPlayerData(player, Callback.noop());
-    }
-
-    public void loadPlayerData(Player player, Callback<RuneQuestPlayer> cb) {
         UUID uuid = player.getUniqueId();
 
         if (players.containsKey(uuid)) {
@@ -51,16 +49,16 @@ public class RuneQuestPlayerHandler {
             try {
 
                 // TODO: Deserialize & initialize player
-                RuneQuestPlayer runeQuestPlayer = new RuneQuestPlayer(uuid);
+                RunePlayer runePlayer = new RunePlayer(uuid);
 
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                     if (Bukkit.getPlayer(uuid) == null) {
                         return;
                     }
 
-                    players.put(uuid, runeQuestPlayer);
+                    players.put(uuid, runePlayer);
                     loadingStateHandler.setPlayerLoaded(player);
-                    cb.onComplete(runeQuestPlayer);
+                    Bukkit.getServer().getPluginManager().callEvent(new RunePlayerLoadedEvent(runePlayer));
                 });
 
             } catch (Exception e) {
@@ -74,11 +72,7 @@ public class RuneQuestPlayerHandler {
     }
 
 
-    public void savePlayerData(Player player) {
-        savePlayerData(player, Callback.noop());
-    }
-
-    public void savePlayerData(Player player, Callback<Void> cb) {
+    public void savePlayerData(Player player, boolean unmount) {
         UUID uuid = player.getUniqueId();
 
         if (!players.containsKey(uuid)) {
@@ -92,9 +86,12 @@ public class RuneQuestPlayerHandler {
                 // TODO: Serialize and save player
 
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                    players.remove(uuid);
-                    cb.onComplete(null);
+                    if (unmount) {
+                        players.remove(uuid);
+                    }
+                    Bukkit.getServer().getPluginManager().callEvent(new RunePlayerSavedEvent(player));
                 });
+
 
             } catch (Exception e) {
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
