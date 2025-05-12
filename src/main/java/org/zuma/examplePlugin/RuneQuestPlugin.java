@@ -1,9 +1,7 @@
 package org.zuma.examplePlugin;
 
-import cloud.commandframework.execution.ExecutionCoordinator;
-import cloud.commandframework.paper.PaperCommandManager;
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.zuma.examplePlugin.commands.AdminCommand;
@@ -17,16 +15,15 @@ import org.zuma.examplePlugin.modifier.GearModifierListener;
 import org.zuma.examplePlugin.player.RunePlayerHandler;
 import org.zuma.examplePlugin.player.RunePlayerListener;
 
+@SuppressWarnings("UnstableApiUsage")
 public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     public static final Logger logger = new Logger();
-    private static PaperCommandManager<CommandSender> commandManager;
     private static RuneQuestPlugin pluginInstance;
     private RunePlayerHandler runePlayerHandler;
     private ItemHandler itemHandler;
     private ItemRegistry itemRegistry;
 
     public void initializePlugin() {
-        commandManager = PaperCommandManager.createNative(this, ExecutionCoordinator.simpleCoordinator());
         pluginInstance = this;
 
         runePlayerHandler = new RunePlayerHandler();
@@ -50,12 +47,16 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     }
 
     public void registerCommands() {
-        new AdminCommand();
+        this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("admin", new AdminCommand())
+        );
     }
+
 
     @Override
     public void onEnable() {
         initializePlugin();
+        registerCommands();
         runePlayerHandler.handleOnEnable();
     }
 
@@ -71,10 +72,6 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static RuneQuestPlugin getInstance() {
         return pluginInstance;
-    }
-
-    public static PaperCommandManager<CommandSender> getCommandManager() {
-        return commandManager;
     }
 
 

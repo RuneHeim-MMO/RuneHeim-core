@@ -16,18 +16,10 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots/"
-        name "sonatype-snapshots"
-        mavenContent {
-            snapshotsOnly()
-        }
-    }
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
-    implementation("cloud.commandframework:cloud-paper:2.0.0-SNAPSHOT")
 }
 
 jar {

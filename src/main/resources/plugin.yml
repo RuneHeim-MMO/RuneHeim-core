@@ -2,3 +2,8 @@ name: ExamplePlugin
 version: '1.0-SNAPSHOT'
 main: org.zuma.examplePlugin.RuneQuestPlugin
 api-version: '1.21'
+commands:
+  admin:
+    description: "Admin Command"
+    usage: "/admin"
+
