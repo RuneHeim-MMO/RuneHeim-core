@@ -1,8 +1,12 @@
 package org.zuma.examplePlugin;
 
+import cloud.commandframework.execution.ExecutionCoordinator;
+import cloud.commandframework.paper.PaperCommandManager;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.zuma.examplePlugin.commands.AdminCommand;
 import org.zuma.examplePlugin.constants.ItemId;
 import org.zuma.examplePlugin.item.ItemHandler;
 import org.zuma.examplePlugin.item.ItemListener;
@@ -15,12 +19,14 @@ import org.zuma.examplePlugin.player.RunePlayerListener;
 
 public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     public static final Logger logger = new Logger();
+    private static PaperCommandManager<CommandSender> commandManager;
     private static RuneQuestPlugin pluginInstance;
     private RunePlayerHandler runePlayerHandler;
     private ItemHandler itemHandler;
     private ItemRegistry itemRegistry;
 
     public void initializePlugin() {
+        commandManager = PaperCommandManager.createNative(this, ExecutionCoordinator.simpleCoordinator());
         pluginInstance = this;
 
         runePlayerHandler = new RunePlayerHandler();
@@ -43,6 +49,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         });
     }
 
+    public void registerCommands() {
+        new AdminCommand();
+    }
+
     @Override
     public void onEnable() {
         initializePlugin();
@@ -62,5 +72,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     public static RuneQuestPlugin getInstance() {
         return pluginInstance;
     }
+
+    public static PaperCommandManager<CommandSender> getCommandManager() {
+        return commandManager;
+    }
+
 
 }
