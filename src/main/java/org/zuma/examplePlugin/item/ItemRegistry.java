@@ -5,12 +5,15 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.constants.PersistentDataKey;
 import org.zuma.examplePlugin.item.base.CustomItem;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ItemRegistry {
@@ -50,6 +53,11 @@ public class ItemRegistry {
         }
 
         return item;
+    }
+
+    @NotNull
+    public List<CustomItem> getAllItems() {
+        return new ArrayList<>(items.values());
     }
 
 }
