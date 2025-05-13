@@ -75,7 +75,7 @@ public class AdminCommand implements BasicCommand {
 
         List<CustomItem> paginatedRegistryItems = registry.getAllItems().subList(indexStart, indexEnd);
 
-        Inventory inventory = Bukkit.createInventory(null, slots, Component.text("Item Registry Page: " + page));
+        Inventory inventory = Bukkit.createInventory(null, slots, Component.text("Item Registry | Page: " + page + "-" + maxPages));
 
         for (int i = 0; i < paginatedRegistryItems.size(); i++) {
             inventory.setItem(i, paginatedRegistryItems.get(i).asItemStack());
