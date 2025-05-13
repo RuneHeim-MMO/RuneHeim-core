@@ -1,6 +1,6 @@
 package org.zuma.examplePlugin.skill;
 
-import org.zuma.examplePlugin.constants.SkillType;
+import org.zuma.examplePlugin.skill.constants.SkillType;
 
 public class Skill {
     private final SkillType type;

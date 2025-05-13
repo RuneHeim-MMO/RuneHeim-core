@@ -14,8 +14,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.constants.ItemRarity;
-import org.zuma.examplePlugin.constants.PersistentDataKey;
+import org.zuma.examplePlugin.item.constants.ItemRarity;
+import org.zuma.examplePlugin.item.constants.PersistentDataKey;
 import org.zuma.examplePlugin.player.RunePlayer;
 
 import java.util.ArrayList;

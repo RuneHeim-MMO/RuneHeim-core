@@ -7,8 +7,8 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.constants.PersistentDataKey;
 import org.zuma.examplePlugin.item.base.CustomItem;
+import org.zuma.examplePlugin.item.constants.PersistentDataKey;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

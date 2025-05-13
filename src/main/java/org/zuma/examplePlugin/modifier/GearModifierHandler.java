@@ -3,9 +3,9 @@ package org.zuma.examplePlugin.modifier;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.zuma.examplePlugin.event.GearModifiersRecalculatedEvent;
 import org.zuma.examplePlugin.item.ItemRegistry;
 import org.zuma.examplePlugin.item.base.GearItem;
+import org.zuma.examplePlugin.modifier.events.GearModifiersRecalculatedEvent;
 import org.zuma.examplePlugin.player.RunePlayer;
 import org.zuma.examplePlugin.utils.ModifierUtils;
 

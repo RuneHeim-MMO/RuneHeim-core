@@ -4,7 +4,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.zuma.examplePlugin.constants.Colors;
-import org.zuma.examplePlugin.constants.ItemRarity;
+import org.zuma.examplePlugin.item.constants.ItemRarity;
 import org.zuma.examplePlugin.player.RunePlayer;
 
 public abstract class QuestItem extends CustomItem {

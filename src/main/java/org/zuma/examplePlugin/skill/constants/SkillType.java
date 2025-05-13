@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.constants;
+package org.zuma.examplePlugin.skill.constants;
 
 public enum SkillType {
     STRENGTH(1, "Strength", 83),

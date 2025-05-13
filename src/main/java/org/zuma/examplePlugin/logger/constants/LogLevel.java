@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.logger;
+package org.zuma.examplePlugin.logger.constants;
 
 import java.util.logging.Level;
 

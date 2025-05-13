@@ -2,7 +2,7 @@ package org.zuma.examplePlugin.item.base;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
-import org.zuma.examplePlugin.constants.ItemRarity;
+import org.zuma.examplePlugin.item.constants.ItemRarity;
 import org.zuma.examplePlugin.modifier.Modifier;
 
 import java.util.ArrayList;

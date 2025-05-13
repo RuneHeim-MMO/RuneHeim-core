@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.zuma.examplePlugin.constants.Colors;
-import org.zuma.examplePlugin.event.RunePlayerLoadedEvent;
+import org.zuma.examplePlugin.player.events.RunePlayerLoadedEvent;
 import org.zuma.examplePlugin.utils.TextUtils;
 
 public class RunePlayerListener implements Listener {

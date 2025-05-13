@@ -1,13 +1,13 @@
 package org.zuma.examplePlugin.party;
 
 import org.bukkit.Bukkit;
-import org.zuma.examplePlugin.constants.SkillType;
-import org.zuma.examplePlugin.constants.XPSource;
-import org.zuma.examplePlugin.event.PartyOwnerUpdateEvent;
-import org.zuma.examplePlugin.event.PartyPlayerInvited;
-import org.zuma.examplePlugin.event.PartyPlayerJoinedEvent;
-import org.zuma.examplePlugin.event.PartyPlayerKickedEvent;
+import org.zuma.examplePlugin.constants.XpSource;
+import org.zuma.examplePlugin.party.events.PartyOwnerUpdateEvent;
+import org.zuma.examplePlugin.party.events.PartyPlayerInvited;
+import org.zuma.examplePlugin.party.events.PartyPlayerJoinedEvent;
+import org.zuma.examplePlugin.party.events.PartyPlayerKickedEvent;
 import org.zuma.examplePlugin.player.RunePlayer;
+import org.zuma.examplePlugin.skill.constants.SkillType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +110,7 @@ public class Party {
         int equalXp = xp / players.size();
 
         players.forEach(player -> {
-            player.addSkillXp(type, equalXp, XPSource.PARTY);
+            player.addSkillXp(type, equalXp, XpSource.PARTY);
         });
     }
 }

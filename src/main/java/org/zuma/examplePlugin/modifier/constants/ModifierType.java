@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.constants;
+package org.zuma.examplePlugin.modifier.constants;
 
 public enum ModifierType {
     STRENGTH("Strength");

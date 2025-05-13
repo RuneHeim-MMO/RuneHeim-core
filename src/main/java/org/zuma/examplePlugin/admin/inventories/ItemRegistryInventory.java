@@ -1,59 +1,18 @@
-package org.zuma.examplePlugin.commands;
+package org.zuma.examplePlugin.admin.inventories;
 
-
-import io.papermc.paper.command.brigadier.BasicCommand;
-import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.constants.Colors;
 import org.zuma.examplePlugin.item.ItemRegistry;
 import org.zuma.examplePlugin.item.base.CustomItem;
-import org.zuma.examplePlugin.utils.TypeUtils;
 
-import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Objects;
 
-@SuppressWarnings("UnstableApiUsage")
-public class AdminCommand implements BasicCommand {
-    private final ItemRegistry registry;
+public class ItemRegistryInventory {
 
-    public AdminCommand(ItemRegistry registry) {
-        this.registry = registry;
-    }
-
-    @Override
-    public void execute(CommandSourceStack commandSourceStack, String @NotNull [] args) {
-        CommandSender sender = commandSourceStack.getSender();
-
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage("This command can be only run by players.");
-            return;
-        }
-
-        // Items without page
-        if (args.length == 1 && Objects.equals(args[0], "items")) {
-            openItemRegistryInventory(player, 0);
-        }
-
-        // Items with page
-        if (args.length == 2 && Objects.equals(args[0], "items")) {
-            int page = 0;
-
-            if (TypeUtils.isInteger(args[1])) {
-                page = Integer.parseInt(args[1]);
-            }
-
-            openItemRegistryInventory(player, page);
-        }
-
-    }
-
-    public void openItemRegistryInventory(Player player, int page) {
+    public static void open(ItemRegistry registry, Player player, int page) {
         int INVENTORY_ROWS = 6; // Max 6!
         int ITEMS_IN_ROW = 9; // Always 9
 
@@ -85,12 +44,4 @@ public class AdminCommand implements BasicCommand {
 
 
     }
-
-    @Override
-    public @Nullable String permission() {
-        return "rune.admin";
-    }
-
 }
-
-

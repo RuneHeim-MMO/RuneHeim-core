@@ -1,12 +1,12 @@
-package org.zuma.examplePlugin.item.items;
+package org.zuma.examplePlugin.item.impl;
 
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.zuma.examplePlugin.constants.ItemId;
-import org.zuma.examplePlugin.constants.ItemRarity;
-import org.zuma.examplePlugin.constants.ModifierType;
 import org.zuma.examplePlugin.item.base.GearItem;
+import org.zuma.examplePlugin.item.constants.ItemId;
+import org.zuma.examplePlugin.item.constants.ItemRarity;
 import org.zuma.examplePlugin.modifier.Modifier;
+import org.zuma.examplePlugin.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.player.RunePlayer;
 
 public class RuneItem extends GearItem {

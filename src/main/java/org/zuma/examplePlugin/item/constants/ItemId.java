@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.constants;
+package org.zuma.examplePlugin.item.constants;
 
 public enum ItemId {
     HOLY_LOG(0);

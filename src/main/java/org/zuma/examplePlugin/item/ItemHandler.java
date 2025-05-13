@@ -6,7 +6,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.zuma.examplePlugin.item.base.CustomItem;
-import org.zuma.examplePlugin.item.items.RuneItem;
+import org.zuma.examplePlugin.item.impl.RuneItem;
 import org.zuma.examplePlugin.player.RunePlayer;
 
 public class ItemHandler {

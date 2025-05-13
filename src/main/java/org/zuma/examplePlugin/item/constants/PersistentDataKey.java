@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.constants;
+package org.zuma.examplePlugin.item.constants;
 
 public enum PersistentDataKey {
     ITEM_ID("item_id");
@@ -8,7 +8,7 @@ public enum PersistentDataKey {
     PersistentDataKey(String key) {
         this.key = key;
     }
-    
+
     public String asString() {
         return key;
     }

@@ -1,22 +1,22 @@
-package org.zuma.examplePlugin.event;
+package org.zuma.examplePlugin.player.events;
 
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
-import org.zuma.examplePlugin.constants.SkillType;
-import org.zuma.examplePlugin.constants.XPSource;
+import org.zuma.examplePlugin.constants.XpSource;
 import org.zuma.examplePlugin.player.RunePlayer;
+import org.zuma.examplePlugin.skill.constants.SkillType;
 
 public class RunePlayerGainedXPEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
     private final RunePlayer player;
     private final SkillType type;
     private final int amount;
-    private final XPSource source;
+    private final XpSource source;
     private boolean cancelled;
 
-    public RunePlayerGainedXPEvent(RunePlayer player, SkillType type, int amount, XPSource source) {
+    public RunePlayerGainedXPEvent(RunePlayer player, SkillType type, int amount, XpSource source) {
         this.player = player;
         this.type = type;
         this.amount = amount;
@@ -35,7 +35,7 @@ public class RunePlayerGainedXPEvent extends Event implements Cancellable {
         return amount;
     }
 
-    public XPSource getSource() {
+    public XpSource getSource() {
         return source;
     }
 

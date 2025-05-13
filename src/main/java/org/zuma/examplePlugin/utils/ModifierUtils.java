@@ -1,7 +1,7 @@
 package org.zuma.examplePlugin.utils;
 
-import org.zuma.examplePlugin.constants.ModifierType;
 import org.zuma.examplePlugin.modifier.Modifier;
+import org.zuma.examplePlugin.modifier.constants.ModifierType;
 
 import java.util.HashMap;
 import java.util.List;

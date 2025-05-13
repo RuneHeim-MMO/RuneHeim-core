@@ -1,28 +1,20 @@
-package org.zuma.examplePlugin.event;
+package org.zuma.examplePlugin.party.events;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.party.Party;
-import org.zuma.examplePlugin.player.RunePlayer;
 
-public class PartyPlayerKickedEvent extends Event {
+public class PartyDisbandedEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
     private final Party party;
-    private final RunePlayer kickedPlayer;
 
-
-    public PartyPlayerKickedEvent(Party party, RunePlayer kickedPlayer) {
+    public PartyDisbandedEvent(Party party) {
         this.party = party;
-        this.kickedPlayer = kickedPlayer;
     }
 
     public Party getParty() {
         return party;
-    }
-
-    public RunePlayer getKickedPlayer() {
-        return kickedPlayer;
     }
 
     @Override

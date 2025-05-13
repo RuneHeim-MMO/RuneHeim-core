@@ -1,6 +1,6 @@
 package org.zuma.examplePlugin.constants;
 
-public enum XPSource {
+public enum XpSource {
     PARTY,
     QUEST,
     PERSONAL

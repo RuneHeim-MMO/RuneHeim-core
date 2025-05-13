@@ -4,12 +4,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.constants.SkillType;
-import org.zuma.examplePlugin.constants.XPSource;
-import org.zuma.examplePlugin.event.RunePlayerGainedXPEvent;
-import org.zuma.examplePlugin.logger.LogLevel;
+import org.zuma.examplePlugin.constants.XpSource;
+import org.zuma.examplePlugin.logger.constants.LogLevel;
 import org.zuma.examplePlugin.modifier.Modifier;
+import org.zuma.examplePlugin.player.events.RunePlayerGainedXPEvent;
 import org.zuma.examplePlugin.skill.Skill;
+import org.zuma.examplePlugin.skill.constants.SkillType;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -58,7 +58,7 @@ public class RunePlayer {
         return skills.get(type);
     }
 
-    public void addSkillXp(SkillType type, int xp, XPSource source) {
+    public void addSkillXp(SkillType type, int xp, XpSource source) {
         Skill skill = skills.get(type);
 
         RunePlayerGainedXPEvent event = new RunePlayerGainedXPEvent(this, type, xp, source);

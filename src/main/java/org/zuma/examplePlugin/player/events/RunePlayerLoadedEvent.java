@@ -1,27 +1,25 @@
-package org.zuma.examplePlugin.event;
+package org.zuma.examplePlugin.player.events;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
-import org.zuma.examplePlugin.party.Party;
 import org.zuma.examplePlugin.player.RunePlayer;
 
-public class PartyPlayerJoinedEvent extends Event {
+public class RunePlayerLoadedEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
-    private final Party party;
     private final RunePlayer player;
 
-    public PartyPlayerJoinedEvent(Party party, RunePlayer player) {
-        this.party = party;
+    public RunePlayerLoadedEvent(RunePlayer player) {
         this.player = player;
-    }
-
-    public Party getParty() {
-        return party;
     }
 
     public RunePlayer getPlayer() {
         return player;
+    }
+
+    public Player getBukkitPlayer() {
+        return player.getPlayer();
     }
 
     @Override

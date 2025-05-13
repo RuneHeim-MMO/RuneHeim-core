@@ -2,8 +2,8 @@ package org.zuma.examplePlugin.party;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.zuma.examplePlugin.event.PartyCreatedEvent;
-import org.zuma.examplePlugin.event.PartyDisbandedEvent;
+import org.zuma.examplePlugin.party.events.PartyCreatedEvent;
+import org.zuma.examplePlugin.party.events.PartyDisbandedEvent;
 import org.zuma.examplePlugin.player.RunePlayer;
 
 import javax.annotation.Nullable;

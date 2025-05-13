@@ -1,20 +1,25 @@
-package org.zuma.examplePlugin.event;
+package org.zuma.examplePlugin.modifier.events;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
+import org.zuma.examplePlugin.player.RunePlayer;
 
-public class RunePlayerSavedEvent extends Event {
+public class GearModifiersRecalculatedEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
-    private final Player player;
+    private final RunePlayer player;
 
-    public RunePlayerSavedEvent(Player player) {
+    public GearModifiersRecalculatedEvent(RunePlayer player) {
         this.player = player;
     }
 
-    public Player getPlayer() {
+    public RunePlayer getPlayer() {
         return player;
+    }
+
+    public Player getBukkitPlayer() {
+        return player.getPlayer();
     }
 
     @Override
