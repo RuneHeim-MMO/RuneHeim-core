@@ -11,15 +11,15 @@ import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.item.base.CustomItem;
 import org.zuma.examplePlugin.player.RunePlayer;
-import org.zuma.examplePlugin.player.RunePlayerHandler;
+import org.zuma.examplePlugin.player.RunePlayerManager;
 import org.zuma.examplePlugin.utils.PlayerUtils;
 
 public class ItemListener implements Listener {
-    private final RunePlayerHandler playerHandler;
+    private final RunePlayerManager playerHandler;
     private final ItemHandler itemHandler;
     private final ItemRegistry itemRegistry;
 
-    public ItemListener(ItemHandler handler, RunePlayerHandler playerHandler) {
+    public ItemListener(ItemHandler handler, RunePlayerManager playerHandler) {
         this.itemHandler = handler;
         this.playerHandler = playerHandler;
 

@@ -7,13 +7,13 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.player.RunePlayer;
-import org.zuma.examplePlugin.player.RunePlayerHandler;
+import org.zuma.examplePlugin.player.RunePlayerManager;
 
 public class GearModifierListener implements Listener {
     private final GearModifierHandler gearModifierHandler;
-    private final RunePlayerHandler playerHandler;
+    private final RunePlayerManager playerHandler;
 
-    public GearModifierListener(GearModifierHandler gearModifierHandler, RunePlayerHandler playerHandler) {
+    public GearModifierListener(GearModifierHandler gearModifierHandler, RunePlayerManager playerHandler) {
         this.gearModifierHandler = gearModifierHandler;
         this.playerHandler = playerHandler;
     }

@@ -12,31 +12,31 @@ import org.zuma.examplePlugin.item.ItemRegistry;
 import org.zuma.examplePlugin.logger.Logger;
 import org.zuma.examplePlugin.modifier.GearModifierHandler;
 import org.zuma.examplePlugin.modifier.GearModifierListener;
-import org.zuma.examplePlugin.player.RunePlayerHandler;
 import org.zuma.examplePlugin.player.RunePlayerListener;
+import org.zuma.examplePlugin.player.RunePlayerManager;
 
 @SuppressWarnings("UnstableApiUsage")
 public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     public static final Logger logger = new Logger();
     private static RuneQuestPlugin pluginInstance;
-    private RunePlayerHandler runePlayerHandler;
+    private RunePlayerManager runePlayerManager;
     private ItemHandler itemHandler;
     private ItemRegistry itemRegistry;
 
     public void initializePlugin() {
         pluginInstance = this;
 
-        runePlayerHandler = new RunePlayerHandler();
-        RunePlayerListener runePlayerListener = new RunePlayerListener(runePlayerHandler);
+        runePlayerManager = new RunePlayerManager();
+        RunePlayerListener runePlayerListener = new RunePlayerListener(runePlayerManager);
         getServer().getPluginManager().registerEvents(runePlayerListener, pluginInstance);
 
         itemRegistry = new ItemRegistry();
         itemHandler = new ItemHandler(itemRegistry);
-        ItemListener itemListener = new ItemListener(itemHandler, runePlayerHandler);
+        ItemListener itemListener = new ItemListener(itemHandler, runePlayerManager);
         getServer().getPluginManager().registerEvents(itemListener, pluginInstance);
 
         GearModifierHandler gearModifierHandler = new GearModifierHandler(itemRegistry);
-        GearModifierListener gearModifierListener = new GearModifierListener(gearModifierHandler, runePlayerHandler);
+        GearModifierListener gearModifierListener = new GearModifierListener(gearModifierHandler, runePlayerManager);
         getServer().getPluginManager().registerEvents(gearModifierListener, pluginInstance);
 
 
@@ -57,12 +57,12 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     public void onEnable() {
         initializePlugin();
         registerCommands();
-        runePlayerHandler.handleOnEnable();
+        runePlayerManager.handleOnEnable();
     }
 
     @Override
     public void onDisable() {
-        runePlayerHandler.handleOnDisable();
+        runePlayerManager.handleOnDisable();
         Bukkit.getScheduler().cancelTasks(this);
     }
 

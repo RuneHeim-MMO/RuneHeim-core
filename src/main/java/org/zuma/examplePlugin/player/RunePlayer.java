@@ -3,7 +3,11 @@ package org.zuma.examplePlugin.player;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.constants.SkillType;
+import org.zuma.examplePlugin.constants.XPSource;
+import org.zuma.examplePlugin.event.RunePlayerGainedXPEvent;
+import org.zuma.examplePlugin.logger.LogLevel;
 import org.zuma.examplePlugin.modifier.Modifier;
 import org.zuma.examplePlugin.skill.Skill;
 
@@ -45,13 +49,32 @@ public class RunePlayer {
         return List.copyOf(gearModifiers);
     }
 
-    public void setSkill(SkillType type, Skill skill) {
+    protected void setSkill(SkillType type, Skill skill) {
         skills.put(type, skill);
     }
 
     @NotNull
     public Skill getSkill(SkillType type) {
         return skills.get(type);
+    }
+
+    public void addSkillXp(SkillType type, int xp, XPSource source) {
+        Skill skill = skills.get(type);
+
+        RunePlayerGainedXPEvent event = new RunePlayerGainedXPEvent(this, type, xp, source);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
+        if (event.isCancelled()) {
+            return;
+        }
+
+        if (skill == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Tried adding XP for skill " + type.getLabel() + " which does not exist in players instance.");
+            return;
+        }
+
+        skill.addXp(xp);
+
     }
 
 }

@@ -12,9 +12,9 @@ import org.zuma.examplePlugin.event.RunePlayerLoadedEvent;
 import org.zuma.examplePlugin.utils.TextUtils;
 
 public class RunePlayerListener implements Listener {
-    private final RunePlayerHandler playerHandler;
+    private final RunePlayerManager playerHandler;
 
-    public RunePlayerListener(RunePlayerHandler playerHandler) {
+    public RunePlayerListener(RunePlayerManager playerHandler) {
         this.playerHandler = playerHandler;
     }
 

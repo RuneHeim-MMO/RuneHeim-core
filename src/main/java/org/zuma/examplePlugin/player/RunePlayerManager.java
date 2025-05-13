@@ -15,11 +15,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class RunePlayerHandler {
+public class RunePlayerManager {
     private final Map<UUID, RunePlayer> players = new HashMap<>();
     private final RunePlayerLoadingStateHandler loadingStateHandler;
 
-    public RunePlayerHandler() {
+    public RunePlayerManager() {
         loadingStateHandler = new RunePlayerLoadingStateHandler(RuneQuestPlugin.getInstance());
     }
 
