@@ -9,13 +9,19 @@ public enum Colors {
     SUCCESS("#0bd69d");
 
     private final TextColor color;
+    private final String hex;
 
     Colors(String hex) {
         this.color = TextColor.fromHexString(hex);
+        this.hex = hex;
     }
 
     public TextColor asColor() {
         return this.color;
+    }
+
+    public String asHex() {
+        return this.hex;
     }
 
 }

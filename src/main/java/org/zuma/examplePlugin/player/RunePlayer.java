@@ -11,10 +11,7 @@ import org.zuma.examplePlugin.player.events.RunePlayerGainedXPEvent;
 import org.zuma.examplePlugin.skill.Skill;
 import org.zuma.examplePlugin.skill.constants.SkillType;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class RunePlayer {
     private final UUID uuid;
@@ -57,6 +54,12 @@ public class RunePlayer {
     public Skill getSkill(SkillType type) {
         return skills.get(type);
     }
+
+    @NotNull
+    public Collection<Skill> getSkills() {
+        return skills.values();
+    }
+
 
     public void addSkillXp(SkillType type, int xp, XpSource source) {
         Skill skill = skills.get(type);

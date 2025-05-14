@@ -6,4 +6,5 @@ commands:
   admin:
     description: "Admin Command"
     usage: "/admin"
-
+depend:
+  - DecentHolograms

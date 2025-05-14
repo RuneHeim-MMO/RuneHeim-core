@@ -5,10 +5,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.zuma.examplePlugin.admin.commands.AdminCommand;
+import org.zuma.examplePlugin.block.BlockListener;
+import org.zuma.examplePlugin.block.BlockManager;
 import org.zuma.examplePlugin.item.ItemHandler;
 import org.zuma.examplePlugin.item.ItemListener;
 import org.zuma.examplePlugin.item.ItemRegistry;
-import org.zuma.examplePlugin.item.constants.ItemId;
 import org.zuma.examplePlugin.logger.Logger;
 import org.zuma.examplePlugin.modifier.GearModifierHandler;
 import org.zuma.examplePlugin.modifier.GearModifierListener;
@@ -19,9 +20,10 @@ import org.zuma.examplePlugin.player.RunePlayerManager;
 public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     public static final Logger logger = new Logger();
     private static RuneQuestPlugin pluginInstance;
-    private RunePlayerManager runePlayerManager;
+    private static RunePlayerManager runePlayerManager;
     private ItemHandler itemHandler;
     private ItemRegistry itemRegistry;
+    private BlockManager blockManager;
 
     public void initializePlugin() {
         pluginInstance = this;
@@ -39,16 +41,18 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         GearModifierListener gearModifierListener = new GearModifierListener(gearModifierHandler, runePlayerManager);
         getServer().getPluginManager().registerEvents(gearModifierListener, pluginInstance);
 
+        blockManager = new BlockManager();
+        BlockListener blockListener = new BlockListener(blockManager);
+        getServer().getPluginManager().registerEvents(blockListener, pluginInstance);
+
 
         // TODO: Load inventory from DB & Verify their meta
-        Bukkit.getOnlinePlayers().forEach((player) -> {
-            player.getInventory().addItem(itemRegistry.getItem(ItemId.HOLY_LOG.asInt()).asItemStack(1));
-        });
+
     }
 
     public void registerCommands() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> event.registrar().register("admin", new AdminCommand(itemRegistry))
+                event -> event.registrar().register("admin", new AdminCommand(itemRegistry, blockManager))
         );
     }
 
@@ -72,6 +76,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static RuneQuestPlugin getInstance() {
         return pluginInstance;
+    }
+
+    public static RunePlayerManager getPlayerManager() {
+        return runePlayerManager;
     }
 
 
