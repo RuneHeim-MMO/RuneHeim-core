@@ -39,7 +39,7 @@ public enum ItemRarity {
         return Component.text(label).color(TextColor.fromHexString(hexColor));
     }
 
-    public Component getComponent(String slot) {
-        return Component.text(label + " " + slot).color(TextColor.fromHexString(hexColor));
+    public Component getComponent(String prefix) {
+        return Component.text(prefix + " " + label).color(TextColor.fromHexString(hexColor));
     }
 }

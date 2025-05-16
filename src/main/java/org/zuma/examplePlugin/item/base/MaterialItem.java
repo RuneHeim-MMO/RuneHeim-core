@@ -14,7 +14,8 @@ public abstract class MaterialItem extends CustomItem {
 
     public MaterialItem(int id, Material material, ItemRarity rarity, String displayName, List<Component> lore) {
         super(id, material, rarity, displayName, lore);
-        this.setRaritySuffixSlot("Material");
+        this.setRarityPrefixSlot("⚒");
         this.setCustomModelData(id);
+
     }
 }

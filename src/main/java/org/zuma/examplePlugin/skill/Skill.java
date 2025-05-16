@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.skill;
 
 import org.zuma.examplePlugin.skill.constants.SkillType;
+import org.zuma.examplePlugin.utils.XpUtils;
 
 public class Skill {
     private final SkillType type;
@@ -25,5 +26,9 @@ public class Skill {
 
     public void addXp(int xp) {
         this.xp += xp;
+    }
+
+    public int getLevel() {
+        return XpUtils.getLevelFromXp(this.xp);
     }
 }

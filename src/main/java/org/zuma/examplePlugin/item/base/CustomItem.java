@@ -16,6 +16,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.item.constants.ItemRarity;
 import org.zuma.examplePlugin.item.constants.PersistentDataKey;
+import org.zuma.examplePlugin.item.events.PlayerArmorEquipEvent;
 import org.zuma.examplePlugin.player.RunePlayer;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public abstract class CustomItem {
     public final String displayName;
     public final List<Component> lore = new ArrayList<>();
     public final ItemRarity rarity;
-    public String raritySuffixSlot;
+    public String rarityPrefixSlot;
     public int customModelData;
 
     public CustomItem(int id, Material material, ItemRarity rarity, String displayName) {
@@ -40,7 +41,7 @@ public abstract class CustomItem {
         this.displayName = displayName;
         this.customModelData = -1;
         this.rarity = rarity;
-        this.raritySuffixSlot = null;
+        this.rarityPrefixSlot = null;
 
         if (lore != null) {
             this.lore.addAll(lore);
@@ -48,8 +49,8 @@ public abstract class CustomItem {
 
     }
 
-    public void setRaritySuffixSlot(String string) {
-        this.raritySuffixSlot = string;
+    public void setRarityPrefixSlot(String string) {
+        this.rarityPrefixSlot = string;
     }
 
     public void appendToLore(Component component) {
@@ -83,7 +84,7 @@ public abstract class CustomItem {
         Component originalName = meta.displayName();
 
         List<Component> itemLore = new ArrayList<>(lore);
-        itemLore.add(rarity.getComponent(raritySuffixSlot == null ? "" : raritySuffixSlot));
+        itemLore.add(rarity.getComponent(rarityPrefixSlot == null ? "" : rarityPrefixSlot));
 
         if (displayName != null) {
             meta.displayName(Component.text(displayName).color(rarityColor).decoration(TextDecoration.ITALIC, false));
@@ -91,9 +92,9 @@ public abstract class CustomItem {
             meta.displayName(originalName.color(rarityColor).decoration(TextDecoration.ITALIC, false));
         }
 
-        if (!itemLore.isEmpty()) {
-            meta.lore(itemLore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());
-        }
+
+        meta.lore(itemLore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());
+
 
         if (customModelData != -1) {
             meta.setCustomModelData(customModelData);
@@ -126,5 +127,8 @@ public abstract class CustomItem {
     public void onPlayerDamageEntity(EntityDamageByEntityEvent event, RunePlayer player) {
     }
 
+    public void onPlayerWearItem(PlayerArmorEquipEvent event, RunePlayer player) {
+
+    }
 
 }

@@ -6,6 +6,8 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.zuma.examplePlugin.item.base.CustomItem;
+import org.zuma.examplePlugin.item.events.PlayerArmorEquipEvent;
+import org.zuma.examplePlugin.item.impl.RuneItem;
 import org.zuma.examplePlugin.item.impl.bar.*;
 import org.zuma.examplePlugin.item.impl.ore.*;
 import org.zuma.examplePlugin.player.RunePlayer;
@@ -15,6 +17,8 @@ public class ItemHandler {
 
     public ItemHandler(ItemRegistry registry) {
         this.registry = registry;
+
+        registry.registerItem(new RuneItem());
 
         registry.registerItem(new BronzeOre());
         registry.registerItem(new IronOre());
@@ -54,5 +58,9 @@ public class ItemHandler {
 
     public void onPlayerDamageEntity(EntityDamageByEntityEvent event, RunePlayer damager, CustomItem damagedWith) {
         damagedWith.onPlayerDamageEntity(event, damager);
+    }
+
+    public void onPlayerWearItem(PlayerArmorEquipEvent event, RunePlayer player) {
+        event.getItem().onPlayerWearItem(event, player);
     }
 }

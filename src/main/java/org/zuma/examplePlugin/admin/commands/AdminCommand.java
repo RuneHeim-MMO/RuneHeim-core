@@ -18,6 +18,7 @@ import org.zuma.examplePlugin.constants.Colors;
 import org.zuma.examplePlugin.item.ItemRegistry;
 import org.zuma.examplePlugin.player.RunePlayer;
 import org.zuma.examplePlugin.utils.TypeUtils;
+import org.zuma.examplePlugin.utils.XpUtils;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
@@ -52,7 +53,7 @@ public class AdminCommand implements BasicCommand {
         if (Objects.equals(args[0], "skills")) {
             runePlayer.getPlayer().sendMessage(
                     runePlayer.getSkills().stream()
-                            .map(skill -> skill.getType() + ": " + skill.getXp())
+                            .map(skill -> skill.getType() + ": " + XpUtils.getLevelFromXp(skill.getXp()))
                             .collect(Collectors.joining(", "))
             );
         }
