@@ -5,12 +5,13 @@ import net.kyori.adventure.text.format.TextColor;
 
 public enum ItemRarity {
     NOT_APPLICABLE(-1, "", "#000000"),
-    UNCOMMON(0, "Uncommon", "#32cd32"),
-    RARE(1, "Rare", "#1e90ff"),
-    EPIC(2, "Epic", "#800080"),
-    LEGENDARY(3, "Legendary", "#ff8c00"),
-    MYTHIC(4, "Mythic", "#ff1493"),
-    DIVINE(5, "Divine", "#ffd700");;
+    COMMON(0, "Common", "#d1d1d1"),
+    UNCOMMON(1, "Uncommon", "#76e876"),
+    RARE(2, "Rare", "#82c1ff"),
+    EPIC(3, "Epic", "#800080"),
+    LEGENDARY(4, "Legendary", "#ff8c00"),
+    MYTHIC(5, "Mythic", "#ff1493"),
+    DIVINE(6, "Divine", "#ffd700");;
 
     private final int key;
     private final String label;
@@ -36,5 +37,9 @@ public enum ItemRarity {
 
     public Component getComponent() {
         return Component.text(label).color(TextColor.fromHexString(hexColor));
+    }
+
+    public Component getComponent(String slot) {
+        return Component.text(label + " " + slot).color(TextColor.fromHexString(hexColor));
     }
 }

@@ -15,8 +15,9 @@ public abstract class GearItem extends CustomItem {
         this(id, material, rarity, displayName, null);
     }
 
-    public GearItem(int id, Material material, ItemRarity rarity, String displayName, Component[] lore) {
+    public GearItem(int id, Material material, ItemRarity rarity, String displayName, List<Component> lore) {
         super(id, material, rarity, displayName, lore);
+        this.setCustomModelData(id);
     }
 
     public void addModifier(Modifier modifier) {

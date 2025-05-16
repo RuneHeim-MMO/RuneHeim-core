@@ -19,7 +19,6 @@ import org.zuma.examplePlugin.item.constants.PersistentDataKey;
 import org.zuma.examplePlugin.player.RunePlayer;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class CustomItem {
@@ -27,25 +26,34 @@ public abstract class CustomItem {
     public final Material material;
     public final String displayName;
     public final List<Component> lore = new ArrayList<>();
-    public int customModelData;
     public final ItemRarity rarity;
+    public String raritySuffixSlot;
+    public int customModelData;
 
     public CustomItem(int id, Material material, ItemRarity rarity, String displayName) {
         this(id, material, rarity, displayName, null);
     }
 
-    public CustomItem(int id, Material material, ItemRarity rarity, String displayName, Component[] lore) {
+    public CustomItem(int id, Material material, ItemRarity rarity, String displayName, List<Component> lore) {
         this.id = id;
         this.material = material;
         this.displayName = displayName;
         this.customModelData = -1;
         this.rarity = rarity;
+        this.raritySuffixSlot = null;
 
         if (lore != null) {
-            Collections.addAll(this.lore, lore);
+            this.lore.addAll(lore);
         }
 
-        this.lore.add(rarity.getComponent());
+    }
+
+    public void setRaritySuffixSlot(String string) {
+        this.raritySuffixSlot = string;
+    }
+
+    public void appendToLore(Component component) {
+        this.lore.add(component);
     }
 
     public void setCustomModelData(int customModelData) {
@@ -74,14 +82,17 @@ public abstract class CustomItem {
         ItemMeta meta = itemStack.getItemMeta();
         Component originalName = meta.displayName();
 
+        List<Component> itemLore = new ArrayList<>(lore);
+        itemLore.add(rarity.getComponent(raritySuffixSlot == null ? "" : raritySuffixSlot));
+
         if (displayName != null) {
             meta.displayName(Component.text(displayName).color(rarityColor).decoration(TextDecoration.ITALIC, false));
         } else if (originalName != null) {
             meta.displayName(originalName.color(rarityColor).decoration(TextDecoration.ITALIC, false));
         }
 
-        if (!lore.isEmpty()) {
-            meta.lore(lore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());
+        if (!itemLore.isEmpty()) {
+            meta.lore(itemLore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());
         }
 
         if (customModelData != -1) {

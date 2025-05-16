@@ -6,7 +6,9 @@ public enum Colors {
     SERVER_BRAND("#50e6cf"),
     SUBTITLE("#d9d9d9"),
     ERROR("#d60b33"),
-    SUCCESS("#0bd69d");
+    SUCCESS("#0bd69d"),
+
+    ITEM_TYPE("#4f4f4f");
 
     private final TextColor color;
     private final String hex;
