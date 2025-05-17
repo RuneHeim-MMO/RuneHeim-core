@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.item.impl;
+package org.zuma.examplePlugin.item.impl.pickaxe;
 
 import org.bukkit.Material;
 import org.zuma.examplePlugin.item.SkillRequirement;
@@ -9,10 +9,10 @@ import org.zuma.examplePlugin.modifier.Modifier;
 import org.zuma.examplePlugin.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.skill.constants.SkillType;
 
-public class IronPickaxe extends GearItem {
-    public IronPickaxe() {
-        super(ItemId.IRON_PICKAXE.asInt(), Material.STONE_PICKAXE, ItemRarity.COMMON, "Iron Pickaxe");
-        super.addModifier(new Modifier(ModifierType.MINING_BOOST, 4));
+public class BronzePickaxe extends GearItem {
+    public BronzePickaxe() {
+        super(ItemId.BRONZE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.COMMON, "Bronze Pickaxe");
+        super.addModifier(new Modifier(ModifierType.MINING_BOOST, 1));
         super.addRequirement(new SkillRequirement(SkillType.MINING, 1));
     }
 }

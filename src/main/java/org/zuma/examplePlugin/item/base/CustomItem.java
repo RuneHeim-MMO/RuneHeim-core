@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.item.base;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
@@ -29,6 +30,7 @@ public abstract class CustomItem {
     public final Material material;
     public final String displayName;
     public final List<Component> lore = new ArrayList<>();
+    public final List<Component> requirementsLore = new ArrayList<>();
     public final ItemRarity rarity;
     public String rarityPrefixSlot;
     public int customModelData;
@@ -60,6 +62,14 @@ public abstract class CustomItem {
         this.lore.add(component);
     }
 
+    public void addFirstToLore(Component component) {
+        this.lore.addFirst(component);
+    }
+
+    public void appendToRequirementsLore(Component component) {
+        this.requirementsLore.add(component);
+    }
+
     public void setCustomModelData(int customModelData) {
         this.customModelData = customModelData;
     }
@@ -87,6 +97,18 @@ public abstract class CustomItem {
         Component originalName = meta.displayName();
 
         List<Component> itemLore = new ArrayList<>(lore);
+
+        if (!requirementsLore.isEmpty()) {
+            itemLore.add(Component.text(""));
+            itemLore.add(Component.text("Requirements: ", NamedTextColor.DARK_GRAY));
+            Component combined = requirementsLore.stream()
+                    .reduce((comp1, comp2) -> comp1.append(Component.text(", ")).append(comp2))
+                    .orElse(Component.empty());
+
+            itemLore.add(combined);
+        }
+
+        itemLore.add(Component.text(""));
         itemLore.add(rarity.getComponent(rarityPrefixSlot == null ? "" : rarityPrefixSlot));
 
         if (displayName != null) {

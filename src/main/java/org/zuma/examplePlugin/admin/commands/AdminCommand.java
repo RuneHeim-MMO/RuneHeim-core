@@ -53,7 +53,7 @@ public class AdminCommand implements BasicCommand {
         if (Objects.equals(args[0], "skills")) {
             runePlayer.getPlayer().sendMessage(
                     runePlayer.getSkills().stream()
-                            .map(skill -> skill.getType() + ": " + XpUtils.getLevelFromXp(skill.getXp()))
+                            .map(skill -> skill.getType().getLabel() + ": " + XpUtils.getLevelFromXp(skill.getXp()))
                             .collect(Collectors.joining(", "))
             );
         }

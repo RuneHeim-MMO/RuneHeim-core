@@ -7,10 +7,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.zuma.examplePlugin.item.base.CustomItem;
 import org.zuma.examplePlugin.item.events.PlayerArmorEquipEvent;
-import org.zuma.examplePlugin.item.impl.BronzePickaxe;
-import org.zuma.examplePlugin.item.impl.IronPickaxe;
 import org.zuma.examplePlugin.item.impl.bar.*;
 import org.zuma.examplePlugin.item.impl.ore.*;
+import org.zuma.examplePlugin.item.impl.pickaxe.BronzePickaxe;
+import org.zuma.examplePlugin.item.impl.pickaxe.IronPickaxe;
 import org.zuma.examplePlugin.player.RunePlayer;
 
 public class ItemHandler {

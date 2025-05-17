@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.item.base;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.interfaces.WithRequirements;
@@ -53,6 +54,7 @@ public abstract class GearItem extends CustomItem implements WithRequirements {
 
     public void addRequirement(SkillRequirement requirement) {
         requirements.add(requirement);
+        appendToRequirementsLore(Component.text(requirement.getType().getSymbol() + " " + requirement.getMinimumLevel() + " " + requirement.getType().getLabel()).color(NamedTextColor.GRAY));
     }
 
 }

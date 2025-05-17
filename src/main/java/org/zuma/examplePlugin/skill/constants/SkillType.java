@@ -1,18 +1,18 @@
 package org.zuma.examplePlugin.skill.constants;
 
 public enum SkillType {
-    ATTACK(0, "Attack", 0),
-    DEFENCE(1, "Defence", 0),
-    STRENGTH(2, "Strength", 0),
-    HITPOINTS(3, "Hitpoints", 1154),
-    RANGED(4, "Ranged", 0),
-    COOKING(7, "Cooking", 0),
-    WOODCUTTING(8, "Woodcutting", 0),
-    FISHING(9, "Fishing", 0),
-    FIREMAKING(10, "Firemaking", 0),
-    CRAFTING(11, "Crafting", 0),
-    SMITHING(12, "Smithing", 0),
-    MINING(13, "Mining", 0);
+    ATTACK(0, "Attack", 0, "⚔"),
+    DEFENCE(1, "Defence", 0, "🛡"),
+    STRENGTH(2, "Strength", 0, "💪"),
+    HITPOINTS(3, "Hitpoints", 1154, "❤"),
+    RANGED(4, "Ranged", 0, "🏹"),
+    COOKING(7, "Cooking", 0, "🍳"),
+    WOODCUTTING(8, "Woodcutting", 0, "🪓"),
+    FISHING(9, "Fishing", 0, "🎣"),
+    FIREMAKING(10, "Firemaking", 0, "🔥"),
+    CRAFTING(11, "Crafting", 0, "🛠"),
+    SMITHING(12, "Smithing", 0, "⚒"),
+    MINING(13, "Mining", 0, "⛏");
 
     /*
         HERBLORE(15, "Herblore", 0),
@@ -28,11 +28,13 @@ public enum SkillType {
     private final int key;
     private final String label;
     private final int defaultXp;
+    private final String symbol;
 
-    SkillType(int key, String label, int defaultXp) {
+    SkillType(int key, String label, int defaultXp, String symbol) {
         this.key = key;
         this.label = label;
         this.defaultXp = defaultXp;
+        this.symbol = symbol;
     }
 
     public int asNumber() {
@@ -47,4 +49,10 @@ public enum SkillType {
         return defaultXp;
     }
 
+    public String getSymbol() {
+        return symbol;
+    }
 }
+
+
+

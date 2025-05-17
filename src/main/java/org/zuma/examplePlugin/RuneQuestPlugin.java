@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.zuma.examplePlugin.admin.commands.AdminCommand;
 import org.zuma.examplePlugin.block.BlockListener;
 import org.zuma.examplePlugin.block.BlockManager;
+import org.zuma.examplePlugin.core.BlockProtector;
 import org.zuma.examplePlugin.core.OffHandDisabler;
 import org.zuma.examplePlugin.item.ItemHandler;
 import org.zuma.examplePlugin.item.ItemListener;
@@ -30,6 +31,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         pluginInstance = this;
 
         getServer().getPluginManager().registerEvents(new OffHandDisabler(), pluginInstance);
+        getServer().getPluginManager().registerEvents(new BlockProtector(), pluginInstance);
 
         runePlayerManager = new RunePlayerManager();
         RunePlayerListener runePlayerListener = new RunePlayerListener(runePlayerManager);
