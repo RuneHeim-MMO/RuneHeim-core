@@ -39,12 +39,13 @@ public class RunePlayerManager {
         Bukkit.getOnlinePlayers().forEach(player -> savePlayerData(player, true));
     }
 
-
     public void loadPlayerData(Player player) {
         UUID uuid = player.getUniqueId();
 
         if (players.containsKey(uuid)) {
-            player.kick(TextUtils.getErrorKickScreen("Player " + uuid + " is already online."));
+            Component kickScreen = TextUtils.getErrorKickScreen("Player " + uuid + " is already online.");
+            players.get(uuid).getPlayer().kick(kickScreen);
+            player.kick(kickScreen);
             return;
         }
 
@@ -75,7 +76,6 @@ public class RunePlayerManager {
         });
 
     }
-
 
     public void savePlayerData(Player player, boolean unmount) {
         UUID uuid = player.getUniqueId();
@@ -111,5 +111,15 @@ public class RunePlayerManager {
 
     public void handlePlayerDisconnect(Player player) {
         loadingStateHandler.setPlayerLoaded(player); // Restore effects before disconnection if player disconnected while he was loading.
+    }
+
+    public void handleBusyStateInterruption(Player player) {
+        RunePlayer runePlayer = players.get(player.getUniqueId());
+
+        if (runePlayer == null) {
+            return;
+        }
+
+        runePlayer.cancelTask();
     }
 }

@@ -1,8 +1,12 @@
 package org.zuma.examplePlugin.utils;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.title.Title;
 import org.zuma.examplePlugin.constants.Colors;
+
+import java.time.Duration;
 
 public class TextUtils {
 
@@ -43,6 +47,29 @@ public class TextUtils {
                 .decoration(TextDecoration.UNDERLINED, TextDecoration.State.NOT_SET)
                 .decoration(TextDecoration.STRIKETHROUGH, TextDecoration.State.NOT_SET)
                 .color(null) // Resets color, or you can set to a default like TextColor.color(WHITE)
+        );
+    }
+
+    public static Component buildLoadingBar(int totalSteps, int currentStep) {
+        Component bar = Component.text("[ ").color(NamedTextColor.GRAY);
+
+        for (int i = 1; i <= totalSteps; i++) {
+            if (i <= currentStep) {
+                bar = bar.append(Component.text("|||").color(Colors.SUCCESS.asColor()));
+            } else {
+                bar = bar.append(Component.text("|||").color(NamedTextColor.GRAY));
+            }
+        }
+
+        bar = bar.append(Component.text(" ]").color(NamedTextColor.GRAY));
+        return bar;
+    }
+
+    public static Title.Times getGenericDuration() {
+        return Title.Times.times(
+                Duration.ZERO,
+                Duration.ofSeconds(1, 5),
+                Duration.ofMillis(500)
         );
     }
 }

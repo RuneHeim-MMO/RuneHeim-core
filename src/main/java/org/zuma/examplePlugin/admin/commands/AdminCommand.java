@@ -15,6 +15,7 @@ import org.zuma.examplePlugin.admin.inventories.ItemRegistryInventory;
 import org.zuma.examplePlugin.block.BlockManager;
 import org.zuma.examplePlugin.block.constants.BlockType;
 import org.zuma.examplePlugin.constants.Colors;
+import org.zuma.examplePlugin.constants.SoundType;
 import org.zuma.examplePlugin.item.ItemRegistry;
 import org.zuma.examplePlugin.player.RunePlayer;
 import org.zuma.examplePlugin.utils.TypeUtils;
@@ -48,6 +49,13 @@ public class AdminCommand implements BasicCommand {
         if (runePlayer == null) {
             sender.sendMessage(Component.text("Could not find RunePlayer instance!").color(Colors.ERROR.asColor()));
             return;
+        }
+
+        if (Objects.equals(args[0], "busy")) {
+            runePlayer.useBusyState(5000, "Crafting something...", "Crafted something!", SoundType.CRAFT_STEP, (a) -> {
+                runePlayer.getPlayer().sendMessage("Completed task");
+            });
+
         }
 
         if (Objects.equals(args[0], "skills")) {

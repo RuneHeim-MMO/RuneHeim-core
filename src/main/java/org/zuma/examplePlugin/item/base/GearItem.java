@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.interfaces.WithRequirements;
 import org.zuma.examplePlugin.item.SkillRequirement;
 import org.zuma.examplePlugin.item.constants.ItemRarity;
+import org.zuma.examplePlugin.item.constants.ItemType;
 import org.zuma.examplePlugin.modifier.Modifier;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public abstract class GearItem extends CustomItem implements WithRequirements {
     }
 
     public GearItem(int id, Material material, ItemRarity rarity, String displayName, List<Component> lore) {
-        super(id, material, rarity, displayName, lore);
+        super(ItemType.GEAR, id, material, rarity, displayName, lore);
         this.setCustomModelData(id);
         this.setRarityPrefixSlot("⚔");
     }

@@ -15,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.item.constants.ItemRarity;
+import org.zuma.examplePlugin.item.constants.ItemType;
 import org.zuma.examplePlugin.item.constants.PersistentDataKey;
 import org.zuma.examplePlugin.item.events.PlayerArmorEquipEvent;
 import org.zuma.examplePlugin.player.RunePlayer;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CustomItem {
+    public final ItemType type;
     public final int id;
     public final Material material;
     public final String displayName;
@@ -31,11 +33,12 @@ public abstract class CustomItem {
     public String rarityPrefixSlot;
     public int customModelData;
 
-    public CustomItem(int id, Material material, ItemRarity rarity, String displayName) {
-        this(id, material, rarity, displayName, null);
+    public CustomItem(ItemType type, int id, Material material, ItemRarity rarity, String displayName) {
+        this(type, id, material, rarity, displayName, null);
     }
 
-    public CustomItem(int id, Material material, ItemRarity rarity, String displayName, List<Component> lore) {
+    public CustomItem(ItemType type, int id, Material material, ItemRarity rarity, String displayName, List<Component> lore) {
+        this.type = type;
         this.id = id;
         this.material = material;
         this.displayName = displayName;
