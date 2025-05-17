@@ -57,7 +57,7 @@ public class ItemListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         withItemAndPlayer(event.getPlayer(), PlayerUtils.getItemStackInHand(event.getPlayer()), (item, player) -> {
-            if (!PlayerUtils.playerMeetsRequirements(player, item)) {
+            if (!player.meetsRequirements(item)) {
                 requirementsFailCancelEvent(event, item, player);
                 return;
             }
@@ -81,7 +81,7 @@ public class ItemListener implements Listener {
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         withItemAndPlayer(event.getPlayer(), PlayerUtils.getItemStackInHand(event.getPlayer()), (item, player) -> {
-            if (!PlayerUtils.playerMeetsRequirements(player, item)) {
+            if (!player.meetsRequirements(item)) {
                 requirementsFailCancelEvent(event, item, player);
                 return;
             }
@@ -112,7 +112,7 @@ public class ItemListener implements Listener {
         }
 
         withItemAndPlayer(damager, PlayerUtils.getItemStackInHand(damager), (item, player) -> {
-            if (!PlayerUtils.playerMeetsRequirements(player, item)) {
+            if (!player.meetsRequirements(item)) {
                 requirementsFailCancelEvent(event, item, player);
                 return;
             }
@@ -149,7 +149,7 @@ public class ItemListener implements Listener {
                 return;
             }
 
-            if (!PlayerUtils.playerMeetsRequirements(player, item)) {
+            if (!player.meetsRequirements(item)) {
                 requirementsFailCancelEvent(event, item, player);
                 return;
             }
@@ -187,7 +187,7 @@ public class ItemListener implements Listener {
                 return;
             }
 
-            if (!PlayerUtils.playerMeetsRequirements(player, item)) {
+            if (!player.meetsRequirements(item)) {
                 requirementsFailCancelEvent(event, item, player);
                 return;
             }

@@ -3,7 +3,7 @@ package org.zuma.examplePlugin.block.constants;
 import org.bukkit.Material;
 
 public enum BlockType {
-    IRON_ORE(0, org.bukkit.Material.IRON_ORE);
+    ORE(0, Material.IRON_ORE);
 
     private final int id;
     private final Material material;
@@ -20,4 +20,5 @@ public enum BlockType {
     public int getId() {
         return id;
     }
+
 }

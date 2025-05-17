@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.zuma.examplePlugin.admin.commands.AdminCommand;
 import org.zuma.examplePlugin.block.BlockListener;
 import org.zuma.examplePlugin.block.BlockManager;
+import org.zuma.examplePlugin.core.OffHandDisabler;
 import org.zuma.examplePlugin.item.ItemHandler;
 import org.zuma.examplePlugin.item.ItemListener;
 import org.zuma.examplePlugin.item.ItemRegistry;
@@ -21,12 +22,14 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     public static final Logger logger = new Logger();
     private static RuneQuestPlugin pluginInstance;
     private static RunePlayerManager runePlayerManager;
+    private static ItemRegistry itemRegistry;
     private ItemHandler itemHandler;
-    private ItemRegistry itemRegistry;
     private BlockManager blockManager;
 
     public void initializePlugin() {
         pluginInstance = this;
+
+        getServer().getPluginManager().registerEvents(new OffHandDisabler(), pluginInstance);
 
         runePlayerManager = new RunePlayerManager();
         RunePlayerListener runePlayerListener = new RunePlayerListener(runePlayerManager);
@@ -42,7 +45,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(gearModifierListener, pluginInstance);
 
         blockManager = new BlockManager();
-        BlockListener blockListener = new BlockListener(blockManager);
+        BlockListener blockListener = new BlockListener(blockManager, itemRegistry);
         getServer().getPluginManager().registerEvents(blockListener, pluginInstance);
 
 
@@ -82,5 +85,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         return runePlayerManager;
     }
 
+    public static ItemRegistry getItemRegistry() {
+        return itemRegistry;
+    }
 
 }

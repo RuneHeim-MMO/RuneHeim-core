@@ -8,7 +8,11 @@ public enum Colors {
     ERROR("#d60b33"),
     SUCCESS("#0bd69d"),
 
-    ITEM_TYPE("#4f4f4f");
+    ITEM_TYPE("#4f4f4f"),
+
+    INTERACTABLE_ENTITY("#ffe6b8"),
+    DEPLETED_RESOURCE("#636363"),
+    ACCENT("#ebc934");
 
     private final TextColor color;
     private final String hex;
@@ -24,6 +28,14 @@ public enum Colors {
 
     public String asHex() {
         return this.hex;
+    }
+
+    public String asSpigotHex() {
+        StringBuilder builder = new StringBuilder("§x");
+        for (char c : hex.substring(1).toCharArray()) {
+            builder.append('§').append(c);
+        }
+        return builder.toString();
     }
 
 }

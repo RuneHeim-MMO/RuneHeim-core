@@ -1,7 +1,7 @@
 package org.zuma.examplePlugin.modifier.constants;
 
 public enum ModifierType {
-    STRENGTH("Strength");
+    MINING_BOOST("Mining Boost");
 
     private final String label;
 

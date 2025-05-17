@@ -9,6 +9,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.zuma.examplePlugin.block.constants.BlockType;
+import org.zuma.examplePlugin.item.base.CustomItem;
 import org.zuma.examplePlugin.player.RunePlayer;
 
 
@@ -43,7 +44,7 @@ public abstract class InteractableBlock {
         return type;
     }
 
-    public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event) {
+    public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, CustomItem itemInHand) {
 
     }
 

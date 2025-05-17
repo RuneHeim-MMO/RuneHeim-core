@@ -1,15 +1,24 @@
 package org.zuma.examplePlugin.player;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.constants.Colors;
 import org.zuma.examplePlugin.constants.SoundType;
 import org.zuma.examplePlugin.constants.XpSource;
+import org.zuma.examplePlugin.interfaces.WithRequirements;
+import org.zuma.examplePlugin.item.ItemDrop;
+import org.zuma.examplePlugin.item.SkillRequirement;
+import org.zuma.examplePlugin.item.base.CustomItem;
 import org.zuma.examplePlugin.logger.constants.LogLevel;
 import org.zuma.examplePlugin.modifier.Modifier;
 import org.zuma.examplePlugin.player.events.RunePlayerGainedXPEvent;
@@ -70,7 +79,6 @@ public class RunePlayer {
         return skills.values();
     }
 
-
     public void addSkillXp(SkillType type, int xp, XpSource source) {
         Skill skill = skills.get(type);
 
@@ -90,7 +98,7 @@ public class RunePlayer {
 
     }
 
-    public void useBusyState(int durationMs, String action, String successAction, SoundType stepSound, Consumer<Void> consumer) {
+    public void useBusyState(int durationMs, String action, String successAction, SoundType stepSound, SoundType successSound, Consumer<Void> consumer) {
         UUID uuid = this.getUUID();
         int steps = 10;
         long stepDuration = Math.max(1L, (durationMs / 50L) / steps);
@@ -128,7 +136,7 @@ public class RunePlayer {
                     this.cancel();
                     consumer.accept(null);
 
-                    SoundType.SUCCESS_ACTION.play(onlinePlayer);
+                    successSound.play(onlinePlayer);
                     onlinePlayer.showTitle(Title.title(
                             Component.text(""),
                             Component.text(successAction).color(Colors.SUCCESS.asColor()),
@@ -167,5 +175,47 @@ public class RunePlayer {
 
     public void cancelTask() {
         isBusy = false;
+    }
+
+    public boolean meetsRequirements(CustomItem item) {
+        if (item instanceof WithRequirements) {
+            List<SkillRequirement> requirements = ((WithRequirements) item).getRequirements();
+            return requirements.stream().allMatch(req -> req.playerMeetsRequirement(this));
+
+        }
+        return true;
+    }
+
+    public void addItemOrDrop(ItemDrop item) {
+        Component name = item.getItemStack().getItemMeta().displayName();
+        String plainName = name != null ? PlainTextComponentSerializer.plainText().serialize(name) : null;
+
+        addItemOrDrop(item.getItemStack(), "Your inventory is full! " + item.getItemStack().getAmount() + "x " + plainName + " dropped on the ground.");
+    }
+
+    public void addItemOrDrop(ItemDrop item, String dropMessage) {
+        addItemOrDrop(item.getItemStack(), dropMessage);
+    }
+
+    public void addItemOrDrop(ItemStack item, String dropMessage) {
+        Player player = this.getPlayer();
+        HashMap<Integer, ItemStack> leftovers = player.getInventory().addItem(item);
+
+
+        if (!leftovers.isEmpty()) {
+            Location dropLocation = player.getLocation();
+            leftovers.values().forEach(leftover ->
+                    player.getWorld().dropItemNaturally(dropLocation, leftover)
+            );
+
+            if (dropMessage != null && !dropMessage.isEmpty()) {
+                player.sendMessage(Component.text(dropMessage).color(Colors.ERROR.asColor()));
+                SoundType.INVENTORY_FULL.play(player);
+            }
+
+            return;
+        }
+
+        player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 1f, 1f);
     }
 }

@@ -10,13 +10,18 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.block.base.InteractableBlock;
+import org.zuma.examplePlugin.item.ItemRegistry;
+import org.zuma.examplePlugin.item.base.CustomItem;
 import org.zuma.examplePlugin.player.RunePlayer;
+import org.zuma.examplePlugin.utils.PlayerUtils;
 
 public class BlockListener implements Listener {
     private final BlockManager manager;
+    private final ItemRegistry itemRegistry;
 
-    public BlockListener(BlockManager manager) {
+    public BlockListener(BlockManager manager, ItemRegistry itemRegistry) {
         this.manager = manager;
+        this.itemRegistry = itemRegistry;
     }
 
     @EventHandler
@@ -35,7 +40,9 @@ public class BlockListener implements Listener {
             return;
         }
 
-        block.onPlayerInteractEvent(runePlayer, event.getAction(), event);
+        CustomItem itemInHand = itemRegistry.getItem(PlayerUtils.getItemStackInHand(player));
+
+        block.onPlayerInteractEvent(runePlayer, event.getAction(), event, itemInHand);
 
     }
 

@@ -8,7 +8,6 @@ import org.zuma.examplePlugin.item.base.GearItem;
 import org.zuma.examplePlugin.modifier.events.GearModifiersRecalculatedEvent;
 import org.zuma.examplePlugin.player.RunePlayer;
 import org.zuma.examplePlugin.utils.ModifierUtils;
-import org.zuma.examplePlugin.utils.PlayerUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,7 +42,7 @@ public class GearModifierHandler {
                     if (!(item instanceof GearItem gearItem)) {
                         return false;
                     }
-                    return PlayerUtils.playerMeetsRequirements(player, gearItem);
+                    return player.meetsRequirements(gearItem);
                 })
                 .map(item -> (GearItem) item)
                 .forEach(gearItem -> modifiers.addAll(gearItem.getModifiers()));

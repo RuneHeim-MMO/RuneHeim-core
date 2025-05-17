@@ -8,9 +8,11 @@ import org.zuma.examplePlugin.item.SkillRequirement;
 import org.zuma.examplePlugin.item.constants.ItemRarity;
 import org.zuma.examplePlugin.item.constants.ItemType;
 import org.zuma.examplePlugin.modifier.Modifier;
+import org.zuma.examplePlugin.modifier.constants.ModifierType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class GearItem extends CustomItem implements WithRequirements {
     private final List<Modifier> modifiers = new ArrayList<>();
@@ -28,6 +30,17 @@ public abstract class GearItem extends CustomItem implements WithRequirements {
 
     public List<Modifier> getModifiers() {
         return this.modifiers;
+    }
+
+    public List<ModifierType> getModifierTypes() {
+        return this.modifiers.stream().map(Modifier::type).toList();
+    }
+
+
+    public Optional<Modifier> getModifierByType(ModifierType type) {
+        return this.modifiers.stream()
+                .filter(modifier -> modifier.type() == type)
+                .findFirst();
     }
 
     public void addModifier(Modifier modifier) {

@@ -1,7 +1,8 @@
 package org.zuma.examplePlugin.item.constants;
 
 public enum ItemId {
-    HOLY_LOG(0),
+    BRONZE_PICKAXE(0),
+    IRON_PICKAXE(1),
 
     BRONZE_ORE(100),
     IRON_ORE(101),
@@ -26,7 +27,6 @@ public enum ItemId {
     public int asInt() {
         return this.id;
     }
-
 
 
 }

@@ -8,6 +8,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.item.base.CustomItem;
+import org.zuma.examplePlugin.item.constants.ItemId;
 import org.zuma.examplePlugin.item.constants.PersistentDataKey;
 
 import javax.annotation.Nullable;
@@ -42,6 +43,11 @@ public class ItemRegistry {
         }
 
         return null;
+    }
+
+    @Nullable
+    public CustomItem getItem(ItemId id) {
+        return getItem(id.asInt());
     }
 
     @Nullable

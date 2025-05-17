@@ -13,9 +13,8 @@ import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.admin.inventories.ItemRegistryInventory;
 import org.zuma.examplePlugin.block.BlockManager;
-import org.zuma.examplePlugin.block.constants.BlockType;
+import org.zuma.examplePlugin.block.constants.OreType;
 import org.zuma.examplePlugin.constants.Colors;
-import org.zuma.examplePlugin.constants.SoundType;
 import org.zuma.examplePlugin.item.ItemRegistry;
 import org.zuma.examplePlugin.player.RunePlayer;
 import org.zuma.examplePlugin.utils.TypeUtils;
@@ -51,13 +50,6 @@ public class AdminCommand implements BasicCommand {
             return;
         }
 
-        if (Objects.equals(args[0], "busy")) {
-            runePlayer.useBusyState(5000, "Crafting something...", "Crafted something!", SoundType.CRAFT_STEP, (a) -> {
-                runePlayer.getPlayer().sendMessage("Completed task");
-            });
-
-        }
-
         if (Objects.equals(args[0], "skills")) {
             runePlayer.getPlayer().sendMessage(
                     runePlayer.getSkills().stream()
@@ -81,7 +73,7 @@ public class AdminCommand implements BasicCommand {
             }
 
 
-            blockManager.spawnOreBlock(BlockType.IRON_ORE, hitBlock.getLocation(), hitBlock.getLocation().add(hitFace.getDirection()).add(0.5, 0.75, 0.5));
+            blockManager.spawnOreBlock(OreType.IRON_ORE, hitBlock.getLocation(), hitBlock.getLocation().add(hitFace.getDirection()).add(0.5, 1.25, 0.5));
         }
 
 
