@@ -4,19 +4,19 @@ import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.zuma.examplePlugin.admin.commands.AdminCommand;
-import org.zuma.examplePlugin.block.BlockListener;
-import org.zuma.examplePlugin.block.BlockManager;
-import org.zuma.examplePlugin.core.BlockProtector;
-import org.zuma.examplePlugin.core.OffHandDisabler;
-import org.zuma.examplePlugin.item.ItemHandler;
-import org.zuma.examplePlugin.item.ItemListener;
-import org.zuma.examplePlugin.item.ItemRegistry;
-import org.zuma.examplePlugin.logger.Logger;
-import org.zuma.examplePlugin.modifier.GearModifierHandler;
-import org.zuma.examplePlugin.modifier.GearModifierListener;
-import org.zuma.examplePlugin.player.RunePlayerListener;
-import org.zuma.examplePlugin.player.RunePlayerManager;
+import org.zuma.examplePlugin.core.handlers.BlockProtector;
+import org.zuma.examplePlugin.core.handlers.OffHandDisabler;
+import org.zuma.examplePlugin.core.logger.Logger;
+import org.zuma.examplePlugin.domain.block.BlockListener;
+import org.zuma.examplePlugin.domain.block.BlockManager;
+import org.zuma.examplePlugin.domain.item.ItemHandler;
+import org.zuma.examplePlugin.domain.item.ItemListener;
+import org.zuma.examplePlugin.domain.item.ItemRegistry;
+import org.zuma.examplePlugin.domain.modifier.GearModifierHandler;
+import org.zuma.examplePlugin.domain.modifier.GearModifierListener;
+import org.zuma.examplePlugin.domain.player.RunePlayerListener;
+import org.zuma.examplePlugin.domain.player.RunePlayerManager;
+import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
 
 @SuppressWarnings("UnstableApiUsage")
 public final class RuneQuestPlugin extends JavaPlugin implements Listener {

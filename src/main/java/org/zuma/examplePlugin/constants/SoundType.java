@@ -5,8 +5,8 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.logger.constants.LogLevel;
-import org.zuma.examplePlugin.player.RunePlayer;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
 
