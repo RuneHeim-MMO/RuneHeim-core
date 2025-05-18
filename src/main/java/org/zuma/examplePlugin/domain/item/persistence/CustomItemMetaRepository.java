@@ -1,10 +1,11 @@
-package org.zuma.examplePlugin.core.repositories;
+package org.zuma.examplePlugin.domain.item.persistence;
 
 import com.google.gson.Gson;
 import org.bukkit.Material;
 import org.zuma.examplePlugin.domain.item.SkillRequirement;
 import org.zuma.examplePlugin.domain.item.base.CustomItemMeta;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemMeta;
+import org.zuma.examplePlugin.domain.item.base.QuestItemMeta;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
@@ -34,7 +35,8 @@ public class CustomItemMetaRepository {
                 new CustomItemMeta(ItemType.MATERIAL, ItemId.STEEL_BAR.asInt(), Material.COAL, ItemRarity.COMMON, "Steel Bar", null, ""),
                 new CustomItemMeta(ItemType.MATERIAL, ItemId.MITHRIL_BAR.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Mithril Bar", null, ""),
                 new CustomItemMeta(ItemType.MATERIAL, ItemId.ADAMANTITE_BAR.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Adamantite Bar", null, ""),
-                new CustomItemMeta(ItemType.MATERIAL, ItemId.RUNITE_BAR.asInt(), Material.COAL, ItemRarity.RARE, "Runite Bar", null, "")
+                // new CustomItemMeta(ItemType.MATERIAL, ItemId.RUNITE_BAR.asInt(), Material.COAL, ItemRarity.RARE, "Runite Bar", null, "")
+                new CustomItemMeta(ItemType.QUEST, ItemId.RUNITE_BAR.asInt(), Material.COAL, ItemRarity.RARE, "Runite Bar", null, new Gson().toJson(new QuestItemMeta("test")))
         );
     }
 }

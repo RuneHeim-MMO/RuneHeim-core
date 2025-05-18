@@ -20,11 +20,11 @@ import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.item.ItemDrop;
 import org.zuma.examplePlugin.domain.item.SkillRequirement;
 import org.zuma.examplePlugin.domain.item.base.CustomItem;
+import org.zuma.examplePlugin.domain.item.interfaces.Equipable;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.events.player.RunePlayerGainedXPEvent;
-import org.zuma.examplePlugin.interfaces.Equipable;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -187,14 +187,19 @@ public class RunePlayer {
     }
 
     public void addItemOrDrop(ItemDrop item) {
-        Component name = item.getItemStack().getItemMeta().displayName();
+        CustomItem customItem = RuneQuestPlugin.getItemRegistry().getItem(item.getItemId());
+
+        if (customItem == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot add item with id " + item.getItemId() + " to players inventory. Item does not exist in registry.");
+            return;
+        }
+
+
+        ItemStack itemStack = customItem.asItemStack(item.getAmount());
+        Component name = itemStack.getItemMeta().displayName();
         String plainName = name != null ? PlainTextComponentSerializer.plainText().serialize(name) : null;
 
-        addItemOrDrop(item.getItemStack(), "Your inventory is full! " + item.getItemStack().getAmount() + "x " + plainName + " dropped on the ground.");
-    }
-
-    public void addItemOrDrop(ItemDrop item, String dropMessage) {
-        addItemOrDrop(item.getItemStack(), dropMessage);
+        addItemOrDrop(itemStack, "Your inventory is full! " + itemStack.getAmount() + "x " + plainName + " dropped on the ground.");
     }
 
     public void addItemOrDrop(ItemStack item, String dropMessage) {

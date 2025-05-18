@@ -3,6 +3,8 @@ package org.zuma.examplePlugin.domain.item.constants;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 
+import java.util.Objects;
+
 public enum ItemRarity {
     NOT_APPLICABLE(-1, "", "#000000"),
     COMMON(0, "Common", "#d1d1d1"),
@@ -40,6 +42,6 @@ public enum ItemRarity {
     }
 
     public Component getComponent(String prefix) {
-        return Component.text(prefix + " " + label).color(TextColor.fromHexString(hexColor));
+        return Component.text(Objects.equals(prefix, "") ? label : prefix + " " + label).color(TextColor.fromHexString(hexColor));
     }
 }

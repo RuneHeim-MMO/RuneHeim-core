@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.interfaces;
+package org.zuma.examplePlugin.domain.item.interfaces;
 
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.domain.item.SkillRequirement;

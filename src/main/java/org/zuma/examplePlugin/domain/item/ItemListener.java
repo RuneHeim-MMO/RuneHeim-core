@@ -18,10 +18,10 @@ import org.zuma.examplePlugin.constants.Colors;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.base.CustomItem;
 import org.zuma.examplePlugin.domain.item.base.EquipableItem;
+import org.zuma.examplePlugin.domain.item.interfaces.Equipable;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.events.item.PlayerArmorEquipEvent;
-import org.zuma.examplePlugin.interfaces.Equipable;
 
 import java.util.function.BiConsumer;
 

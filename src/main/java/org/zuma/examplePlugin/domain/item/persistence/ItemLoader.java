@@ -1,10 +1,11 @@
-package org.zuma.examplePlugin.domain.item;
+package org.zuma.examplePlugin.domain.item.persistence;
 
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.core.repositories.CustomItemMetaRepository;
+import org.zuma.examplePlugin.domain.item.ItemFactory;
+import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.CustomItem;
-import org.zuma.examplePlugin.interfaces.WithAdditionalMeta;
+import org.zuma.examplePlugin.domain.item.interfaces.WithAdditionalMeta;
 
 public class ItemLoader {
     private final CustomItemMetaRepository customItemMetaRepository;

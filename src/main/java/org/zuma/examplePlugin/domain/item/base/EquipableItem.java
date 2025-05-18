@@ -5,10 +5,10 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.domain.item.SkillRequirement;
+import org.zuma.examplePlugin.domain.item.interfaces.Equipable;
+import org.zuma.examplePlugin.domain.item.interfaces.WithAdditionalMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
-import org.zuma.examplePlugin.interfaces.Equipable;
-import org.zuma.examplePlugin.interfaces.WithAdditionalMeta;
 
 import java.util.ArrayList;
 import java.util.List;

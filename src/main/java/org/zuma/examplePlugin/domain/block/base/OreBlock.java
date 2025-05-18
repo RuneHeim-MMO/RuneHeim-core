@@ -1,9 +1,9 @@
 package org.zuma.examplePlugin.domain.block.base;
 
+import com.google.gson.Gson;
 import eu.decentsoftware.holograms.api.DHAPI;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -12,9 +12,9 @@ import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.constants.Colors;
 import org.zuma.examplePlugin.constants.SoundType;
-import org.zuma.examplePlugin.domain.block.constants.BlockType;
 import org.zuma.examplePlugin.domain.item.base.CustomItem;
 import org.zuma.examplePlugin.domain.item.base.EquipableItem;
+import org.zuma.examplePlugin.domain.item.interfaces.WithAdditionalMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -22,13 +22,12 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.util.Optional;
 
-public class OreBlock extends InteractableBlock {
-    private final OreBlockMeta oreMeta;
+public class OreBlock extends InteractableBlock implements WithAdditionalMeta {
+    private OreBlockMeta oreMeta;
     private boolean isDepleted;
 
-    public OreBlock(OreBlockMeta meta, Location location) {
-        super(BlockType.ORE, location);
-        this.oreMeta = meta;
+    public OreBlock(InteractableBlockMeta meta) {
+        super(meta);
         this.isDepleted = false;
     }
 
@@ -98,5 +97,13 @@ public class OreBlock extends InteractableBlock {
 
     public void onPlayerBlockBreakProgressUpdateEvent(RunePlayer player, BlockBreakEvent event) {
         event.setCancelled(true);
+    }
+
+    public String serializeMeta() {
+        return new Gson().toJson(oreMeta);
+    }
+
+    public void deserializeAndApplyMeta(String meta) {
+        oreMeta = new Gson().fromJson(meta, OreBlockMeta.class);
     }
 }
