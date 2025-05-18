@@ -4,13 +4,13 @@ import com.google.gson.Gson;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.zuma.examplePlugin.constants.Colors;
-import org.zuma.examplePlugin.domain.item.interfaces.WithAdditionalMeta;
+import org.zuma.examplePlugin.domain.item.interfaces.WithMeta;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
-public class QuestItem extends CustomItem implements WithAdditionalMeta {
+public class QuestItem extends AbstractItem implements WithMeta {
     private String questName;
 
-    public QuestItem(CustomItemMeta meta) {
+    public QuestItem(AbstractItemMeta meta) {
         super(meta);
         this.appendToLore(Component.text("Quest Item").color(Colors.ITEM_TYPE.asColor()));
     }

@@ -16,7 +16,7 @@ import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.constants.Colors;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
-import org.zuma.examplePlugin.domain.item.base.CustomItem;
+import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.base.EquipableItem;
 import org.zuma.examplePlugin.domain.item.interfaces.Equipable;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -37,10 +37,10 @@ public class ItemListener implements Listener {
         itemRegistry = handler.getRegistry();
     }
 
-    private void withItemAndPlayer(Player bukkitPlayer, ItemStack itemStack, BiConsumer<CustomItem, RunePlayer> consumer) {
+    private void withItemAndPlayer(Player bukkitPlayer, ItemStack itemStack, BiConsumer<AbstractItem, RunePlayer> consumer) {
         if (itemStack == null || itemStack.getType().isAir()) return;
 
-        CustomItem item = itemRegistry.getItem(itemStack);
+        AbstractItem item = itemRegistry.getItem(itemStack);
         if (item == null) return;
 
         RunePlayer player = playerHandler.getRunePlayer(bukkitPlayer);
@@ -49,7 +49,7 @@ public class ItemListener implements Listener {
         consumer.accept(item, player);
     }
 
-    private void requirementsFailCancelEvent(Cancellable event, CustomItem item, RunePlayer player) {
+    private void requirementsFailCancelEvent(Cancellable event, AbstractItem item, RunePlayer player) {
         player.getPlayer().sendMessage(Component.text("You do not meet requirements to use " + item.displayName + ".").color(Colors.ERROR.asColor()));
         event.setCancelled(true);
     }

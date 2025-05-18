@@ -1,7 +1,7 @@
 package org.zuma.examplePlugin.domain.item.base;
 
-public class MaterialItem extends CustomItem {
-    public MaterialItem(CustomItemMeta meta) {
+public class MaterialItem extends AbstractItem {
+    public MaterialItem(AbstractItemMeta meta) {
         super(meta);
         this.setRarityPrefixSlot("⚒");
 

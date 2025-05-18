@@ -3,7 +3,7 @@ package org.zuma.examplePlugin.domain.item;
 import org.zuma.examplePlugin.domain.item.base.*;
 
 public class ItemFactory {
-    public CustomItem createItem(CustomItemMeta meta) {
+    public AbstractItem createItem(AbstractItemMeta meta) {
         return switch (meta.type()) {
             case GEAR -> new EquipableItem(meta);
             case QUEST -> new QuestItem(meta);

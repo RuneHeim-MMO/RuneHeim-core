@@ -19,7 +19,7 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.item.ItemDrop;
 import org.zuma.examplePlugin.domain.item.SkillRequirement;
-import org.zuma.examplePlugin.domain.item.base.CustomItem;
+import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.interfaces.Equipable;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.skill.Skill;
@@ -177,7 +177,7 @@ public class RunePlayer {
         isBusy = false;
     }
 
-    public boolean meetsRequirements(CustomItem item) {
+    public boolean meetsRequirements(AbstractItem item) {
         if (item instanceof Equipable) {
             List<SkillRequirement> requirements = ((Equipable) item).getRequirements();
             return requirements.stream().allMatch(req -> req.playerMeetsRequirement(this));
@@ -187,7 +187,7 @@ public class RunePlayer {
     }
 
     public void addItemOrDrop(ItemDrop item) {
-        CustomItem customItem = RuneQuestPlugin.getItemRegistry().getItem(item.getItemId());
+        AbstractItem customItem = RuneQuestPlugin.getItemRegistry().getItem(item.getItemId());
 
         if (customItem == null) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot add item with id " + item.getItemId() + " to players inventory. Item does not exist in registry.");

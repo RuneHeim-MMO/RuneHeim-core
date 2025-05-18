@@ -1,7 +1,7 @@
 package org.zuma.examplePlugin.domain.item.base;
 
-public class MiscItem extends CustomItem {
-    public MiscItem(CustomItemMeta meta) {
+public class MiscItem extends AbstractItem {
+    public MiscItem(AbstractItemMeta meta) {
         super(meta);
     }
 }

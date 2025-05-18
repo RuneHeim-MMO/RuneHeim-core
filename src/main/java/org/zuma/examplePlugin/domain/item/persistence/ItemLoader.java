@@ -4,25 +4,25 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.ItemFactory;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
-import org.zuma.examplePlugin.domain.item.base.CustomItem;
-import org.zuma.examplePlugin.domain.item.interfaces.WithAdditionalMeta;
+import org.zuma.examplePlugin.domain.item.base.AbstractItem;
+import org.zuma.examplePlugin.domain.item.interfaces.WithMeta;
 
 public class ItemLoader {
-    private final CustomItemMetaRepository customItemMetaRepository;
+    private final AbstractItemMetaRepository abstractItemMetaRepository;
     private final ItemFactory factory;
     private final ItemRegistry registry;
 
-    public ItemLoader(ItemRegistry registry, ItemFactory factory, CustomItemMetaRepository customItemMetaRepository) {
+    public ItemLoader(ItemRegistry registry, ItemFactory factory, AbstractItemMetaRepository abstractItemMetaRepository) {
         this.registry = registry;
         this.factory = factory;
-        this.customItemMetaRepository = customItemMetaRepository;
+        this.abstractItemMetaRepository = abstractItemMetaRepository;
     }
 
     public void loadItemsFromDatabase() {
-        customItemMetaRepository.getAll().forEach(meta -> {
-            CustomItem item = factory.createItem(meta);
+        abstractItemMetaRepository.getAll().forEach(meta -> {
+            AbstractItem item = factory.createItem(meta);
 
-            if (item instanceof WithAdditionalMeta itemWithAdditionalMeta) {
+            if (item instanceof WithMeta itemWithAdditionalMeta) {
                 try {
                     itemWithAdditionalMeta.deserializeAndApplyMeta();
                 } catch (Exception e) {

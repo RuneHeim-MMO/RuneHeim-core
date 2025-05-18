@@ -6,7 +6,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.domain.item.SkillRequirement;
 import org.zuma.examplePlugin.domain.item.interfaces.Equipable;
-import org.zuma.examplePlugin.domain.item.interfaces.WithAdditionalMeta;
+import org.zuma.examplePlugin.domain.item.interfaces.WithMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 
@@ -14,11 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class EquipableItem extends CustomItem implements Equipable, WithAdditionalMeta {
+public class EquipableItem extends AbstractItem implements Equipable, WithMeta {
     private final List<Modifier> modifiers = new ArrayList<>();
     private final List<SkillRequirement> requirements = new ArrayList<>();
 
-    public EquipableItem(CustomItemMeta meta) {
+    public EquipableItem(AbstractItemMeta meta) {
         super(meta);
         this.setRarityPrefixSlot("⚔");
     }

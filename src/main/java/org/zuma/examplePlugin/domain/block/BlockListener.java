@@ -12,7 +12,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.block.base.InteractableBlock;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
-import org.zuma.examplePlugin.domain.item.base.CustomItem;
+import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class BlockListener implements Listener {
@@ -40,7 +40,7 @@ public class BlockListener implements Listener {
             return;
         }
 
-        CustomItem itemInHand = itemRegistry.getItem(PlayerUtils.getItemStackInHand(player));
+        AbstractItem itemInHand = itemRegistry.getItem(PlayerUtils.getItemStackInHand(player));
 
         block.onPlayerInteractEvent(runePlayer, event.getAction(), event, itemInHand);
 

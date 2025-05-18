@@ -13,16 +13,16 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.constants.Colors;
 import org.zuma.examplePlugin.constants.SoundType;
 import org.zuma.examplePlugin.domain.item.SkillRequirement;
-import org.zuma.examplePlugin.domain.item.base.CustomItem;
+import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.base.EquipableItem;
-import org.zuma.examplePlugin.domain.item.interfaces.WithAdditionalMeta;
+import org.zuma.examplePlugin.domain.item.interfaces.WithMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.List;
 import java.util.Optional;
 
-public class ResourceNode extends InteractableBlock implements WithAdditionalMeta {
+public class ResourceNode extends InteractableBlock implements WithMeta {
     private ResourceNodeMeta meta;
     private boolean isDepleted;
 
@@ -32,7 +32,7 @@ public class ResourceNode extends InteractableBlock implements WithAdditionalMet
     }
 
     @Override
-    public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, CustomItem itemInHand) {
+    public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItem itemInHand) {
         // Cancel interaction if player is busy or the resource is depleted
         if (player.isBusy() || isDepleted) {
             event.setCancelled(true);

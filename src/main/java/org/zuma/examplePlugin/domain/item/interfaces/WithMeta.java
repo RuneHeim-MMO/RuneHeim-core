@@ -1,5 +1,5 @@
 package org.zuma.examplePlugin.domain.item.interfaces;
 
-public interface WithAdditionalMeta {
+public interface WithMeta {
     public void deserializeAndApplyMeta();
 }

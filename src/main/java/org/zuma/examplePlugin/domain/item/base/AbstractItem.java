@@ -25,7 +25,7 @@ import org.zuma.examplePlugin.events.item.PlayerArmorEquipEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class CustomItem implements Serializable {
+public abstract class AbstractItem implements Serializable {
     public final ItemType type;
     public final int id;
     public final Material material;
@@ -38,7 +38,7 @@ public abstract class CustomItem implements Serializable {
     public final String jsonMeta;
 
 
-    public CustomItem(CustomItemMeta meta) {
+    public AbstractItem(AbstractItemMeta meta) {
         this.type = meta.type();
         this.id = meta.id();
         this.material = meta.material();

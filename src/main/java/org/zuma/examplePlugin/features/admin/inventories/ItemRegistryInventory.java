@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.zuma.examplePlugin.constants.Colors;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
-import org.zuma.examplePlugin.domain.item.base.CustomItem;
+import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class ItemRegistryInventory {
             return;
         }
 
-        List<CustomItem> paginatedRegistryItems = registry.getAllItems().subList(indexStart, indexEnd);
+        List<AbstractItem> paginatedRegistryItems = registry.getAllItems().subList(indexStart, indexEnd);
 
         Inventory inventory = Bukkit.createInventory(null, slots, Component.text("Item Registry | Page: " + page + "-" + maxPages));
 
