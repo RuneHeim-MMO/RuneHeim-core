@@ -1,13 +1,9 @@
-package org.zuma.examplePlugin.domain.block.constants;
+package org.zuma.examplePlugin.domain.block.base;
 
 import org.bukkit.Material;
 import org.zuma.examplePlugin.domain.item.ItemDrop;
-import org.zuma.examplePlugin.domain.item.constants.ItemId;
 
-public enum OreType {
-    IRON_ORE(0, "Iron ore", org.bukkit.Material.IRON_ORE, 1, 3000, 5, new ItemDrop(ItemId.IRON_ORE, 1));
-
-    private final int id;
+public class OreBlockMeta {
     private final String label;
     private final Material material;
     private final int minLevel;
@@ -15,8 +11,7 @@ public enum OreType {
     private final int respawnDurationSecs;
     private final ItemDrop drop;
 
-    OreType(int id, String label, Material material, int minLevel, int baseMiningDurationMs, int respawnDurationSecs, ItemDrop drop) {
-        this.id = id;
+    public OreBlockMeta(String label, Material material, int minLevel, int baseMiningDurationMs, int respawnDurationSecs, ItemDrop drop) {
         this.label = label;
         this.material = material;
         this.minLevel = minLevel;
@@ -27,10 +22,6 @@ public enum OreType {
 
     public Material getMaterial() {
         return material;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public int getBaseMiningDuration() {

@@ -1,33 +1,33 @@
 package org.zuma.examplePlugin.domain.item.base;
 
+import com.google.gson.Gson;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Material;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.zuma.examplePlugin.constants.Colors;
-import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
-import org.zuma.examplePlugin.domain.item.constants.ItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.interfaces.WithAdditionalMeta;
 
-import java.util.List;
+public class QuestItem extends CustomItem implements WithAdditionalMeta {
+    private String questName;
 
-public abstract class QuestItem extends CustomItem {
-    private final String dropMessage;
-
-    public QuestItem(int id, String dropMessage, Material material, ItemRarity rarity, String displayName) {
-        this(id, dropMessage, material, rarity, displayName, null);
-    }
-
-    public QuestItem(int id, String dropMessage, Material material, ItemRarity rarity, String displayName, List<Component> lore) {
-        super(ItemType.QUEST, id, material, rarity, displayName, lore);
-        this.dropMessage = dropMessage;
-        this.setCustomModelData(id);
+    public QuestItem(CustomItemMeta meta) {
+        super(meta);
         this.appendToLore(Component.text("Quest Item").color(Colors.ITEM_TYPE.asColor()));
     }
 
     @Override
     public void onPlayerItemDrop(PlayerDropItemEvent event, RunePlayer player) {
         event.setCancelled(true);
-        player.getPlayer().sendMessage(Component.text(dropMessage).color(Colors.ERROR.asColor()));
+        player.getPlayer().sendMessage(Component.text("You cannot drop this item. It is associated with " + questName + " quest.").color(Colors.ERROR.asColor()));
+    }
+
+    public String serializeMeta() {
+        return new Gson().toJson(new QuestItemMeta(questName));
+    }
+
+    public void deserializeAndApplyMeta(String meta) {
+        QuestItemMeta deserialized = new Gson().fromJson(meta, QuestItemMeta.class);
+        questName = deserialized.questName();
     }
 
 

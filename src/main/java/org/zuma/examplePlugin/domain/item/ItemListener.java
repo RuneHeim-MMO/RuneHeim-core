@@ -17,11 +17,11 @@ import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.constants.Colors;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.base.CustomItem;
-import org.zuma.examplePlugin.domain.item.base.GearItem;
+import org.zuma.examplePlugin.domain.item.base.EquipableItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.events.item.PlayerArmorEquipEvent;
-import org.zuma.examplePlugin.interfaces.WithRequirements;
+import org.zuma.examplePlugin.interfaces.Equipable;
 
 import java.util.function.BiConsumer;
 
@@ -62,7 +62,7 @@ public class ItemListener implements Listener {
                 return;
             }
 
-            if (item instanceof GearItem) {
+            if (item instanceof EquipableItem) {
                 if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_AIR) {
                     PlayerArmorEquipEvent newEvent = new PlayerArmorEquipEvent(player, item);
                     Bukkit.getServer().getPluginManager().callEvent(newEvent);
@@ -134,7 +134,7 @@ public class ItemListener implements Listener {
         }
 
         withItemAndPlayer(whoClicked, event.getCursor(), (item, player) -> {
-            if (!(item instanceof WithRequirements)) {
+            if (!(item instanceof Equipable)) {
                 return;
             }
 
@@ -171,7 +171,7 @@ public class ItemListener implements Listener {
         }
 
         withItemAndPlayer(whoClicked, event.getCurrentItem(), (item, player) -> {
-            if (!(item instanceof WithRequirements)) {
+            if (!(item instanceof Equipable)) {
                 return;
             }
 

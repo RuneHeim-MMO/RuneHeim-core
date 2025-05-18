@@ -34,22 +34,21 @@ public abstract class CustomItem {
     public final ItemRarity rarity;
     public String rarityPrefixSlot;
     public int customModelData;
+    public final String jsonMeta;
 
-    public CustomItem(ItemType type, int id, Material material, ItemRarity rarity, String displayName) {
-        this(type, id, material, rarity, displayName, null);
-    }
 
-    public CustomItem(ItemType type, int id, Material material, ItemRarity rarity, String displayName, List<Component> lore) {
-        this.type = type;
-        this.id = id;
-        this.material = material;
-        this.displayName = displayName;
-        this.customModelData = -1;
-        this.rarity = rarity;
+    public CustomItem(CustomItemMeta meta) {
+        this.type = meta.type();
+        this.id = meta.id();
+        this.material = meta.material();
+        this.displayName = meta.displayName();
+        this.customModelData = meta.id();
+        this.rarity = meta.rarity();
+        this.jsonMeta = meta.jsonMeta();
         this.rarityPrefixSlot = null;
 
-        if (lore != null) {
-            this.lore.addAll(lore);
+        if (meta.lore() != null) {
+            this.lore.addAll(meta.lore());
         }
 
     }
@@ -62,16 +61,8 @@ public abstract class CustomItem {
         this.lore.add(component);
     }
 
-    public void addFirstToLore(Component component) {
-        this.lore.addFirst(component);
-    }
-
     public void appendToRequirementsLore(Component component) {
         this.requirementsLore.add(component);
-    }
-
-    public void setCustomModelData(int customModelData) {
-        this.customModelData = customModelData;
     }
 
     public ItemStack asItemStack() {

@@ -24,7 +24,7 @@ import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.events.player.RunePlayerGainedXPEvent;
-import org.zuma.examplePlugin.interfaces.WithRequirements;
+import org.zuma.examplePlugin.interfaces.Equipable;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -178,8 +178,8 @@ public class RunePlayer {
     }
 
     public boolean meetsRequirements(CustomItem item) {
-        if (item instanceof WithRequirements) {
-            List<SkillRequirement> requirements = ((WithRequirements) item).getRequirements();
+        if (item instanceof Equipable) {
+            List<SkillRequirement> requirements = ((Equipable) item).getRequirements();
             return requirements.stream().allMatch(req -> req.playerMeetsRequirement(this));
 
         }

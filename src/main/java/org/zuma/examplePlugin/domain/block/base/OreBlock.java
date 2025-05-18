@@ -13,9 +13,8 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.constants.Colors;
 import org.zuma.examplePlugin.constants.SoundType;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
-import org.zuma.examplePlugin.domain.block.constants.OreType;
 import org.zuma.examplePlugin.domain.item.base.CustomItem;
-import org.zuma.examplePlugin.domain.item.base.GearItem;
+import org.zuma.examplePlugin.domain.item.base.EquipableItem;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -24,12 +23,12 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import java.util.Optional;
 
 public class OreBlock extends InteractableBlock {
-    private final OreType oreType;
+    private final OreBlockMeta oreMeta;
     private boolean isDepleted;
 
-    public OreBlock(OreType type, Location location) {
+    public OreBlock(OreBlockMeta meta, Location location) {
         super(BlockType.ORE, location);
-        this.oreType = type;
+        this.oreMeta = meta;
         this.isDepleted = false;
     }
 
@@ -41,13 +40,13 @@ public class OreBlock extends InteractableBlock {
             return;
         }
 
-        if (oreType.getMinLevel() > player.getSkill(SkillType.MINING).getLevel()) {
+        if (oreMeta.getMinLevel() > player.getSkill(SkillType.MINING).getLevel()) {
             SoundType.UI_FAIL.play(player.getPlayer());
-            player.getPlayer().sendMessage(Component.text("Your need mining level of " + oreType.getMinLevel() + " in order to mine " + oreType.getLabel() + ".").color(Colors.ERROR.asColor()));
+            player.getPlayer().sendMessage(Component.text("Your need mining level of " + oreMeta.getMinLevel() + " in order to mine " + oreMeta.getLabel() + ".").color(Colors.ERROR.asColor()));
             return;
         }
 
-        if (!(itemInHand instanceof GearItem gearItemInHand)) {
+        if (!(itemInHand instanceof EquipableItem gearItemInHand)) {
             SoundType.UI_FAIL.play(player.getPlayer());
             player.getPlayer().sendMessage(Component.text("You need a pickaxe to mine that.").color(Colors.ERROR.asColor()));
             return;
@@ -63,7 +62,7 @@ public class OreBlock extends InteractableBlock {
 
 
         miningBoost.ifPresent(modifier -> {
-            player.useBusyState((int) (oreType.getBaseMiningDuration() / modifier.amount()), "Mining " + oreType.getLabel(),
+            player.useBusyState((int) (oreMeta.getBaseMiningDuration() / modifier.amount()), "Mining " + oreMeta.getLabel(),
                     "Success!", SoundType.MINING_STEP, SoundType.MINING_SUCCESS, (a) -> {
                         onMine(player);
                     });
@@ -76,21 +75,21 @@ public class OreBlock extends InteractableBlock {
             return;
         }
 
-        player.addItemOrDrop(oreType.getDrop());
+        player.addItemOrDrop(oreMeta.getDrop());
         spawn(Material.BEDROCK);
         SoundType.MINING_SUCCESS.play(player.getPlayer().getLocation());
         isDepleted = true;
 
         DHAPI.addHologramLine(this.getHologram(), new ItemStack(Material.BARRIER));
-        DHAPI.setHologramLine(this.getHologram(), 0, Colors.DEPLETED_RESOURCE.asSpigotHex() + "❌ " + oreType.getLabel());
+        DHAPI.setHologramLine(this.getHologram(), 0, Colors.DEPLETED_RESOURCE.asSpigotHex() + "❌ " + oreMeta.getLabel());
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-            spawn(oreType.getMaterial());
+            spawn(oreMeta.getMaterial());
             isDepleted = false;
 
             DHAPI.removeHologramLine(this.getHologram(), this.getHologram().size() + 1);
-            DHAPI.setHologramLine(this.getHologram(), 0, Colors.INTERACTABLE_ENTITY.asSpigotHex() + oreType.getLabel());
-        }, oreType.getRespawnDurationSeconds() * 20L);
+            DHAPI.setHologramLine(this.getHologram(), 0, Colors.INTERACTABLE_ENTITY.asSpigotHex() + oreMeta.getLabel());
+        }, oreMeta.getRespawnDurationSeconds() * 20L);
     }
 
     public void onPlayerBlockBreakEvent(RunePlayer player, BlockBreakEvent event) {

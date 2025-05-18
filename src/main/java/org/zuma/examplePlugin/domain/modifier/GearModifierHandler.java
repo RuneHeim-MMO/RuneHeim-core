@@ -5,7 +5,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.zuma.examplePlugin.core.utils.ModifierUtils;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
-import org.zuma.examplePlugin.domain.item.base.GearItem;
+import org.zuma.examplePlugin.domain.item.base.EquipableItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.modifier.GearModifiersRecalculatedEvent;
 
@@ -39,12 +39,12 @@ public class GearModifierHandler {
                 .filter(item -> item != null)
                 .map(itemRegistry::getItem)
                 .filter(item -> {
-                    if (!(item instanceof GearItem gearItem)) {
+                    if (!(item instanceof EquipableItem gearItem)) {
                         return false;
                     }
                     return player.meetsRequirements(gearItem);
                 })
-                .map(item -> (GearItem) item)
+                .map(item -> (EquipableItem) item)
                 .forEach(gearItem -> modifiers.addAll(gearItem.getModifiers()));
 
 

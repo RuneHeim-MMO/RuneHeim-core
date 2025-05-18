@@ -7,11 +7,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.zuma.examplePlugin.core.handlers.BlockProtector;
 import org.zuma.examplePlugin.core.handlers.OffHandDisabler;
 import org.zuma.examplePlugin.core.logger.Logger;
+import org.zuma.examplePlugin.core.repositories.CustomItemMetaRepository;
+import org.zuma.examplePlugin.core.repositories.OreBlockMetaRepository;
 import org.zuma.examplePlugin.domain.block.BlockListener;
 import org.zuma.examplePlugin.domain.block.BlockManager;
-import org.zuma.examplePlugin.domain.item.ItemHandler;
-import org.zuma.examplePlugin.domain.item.ItemListener;
-import org.zuma.examplePlugin.domain.item.ItemRegistry;
+import org.zuma.examplePlugin.domain.item.*;
 import org.zuma.examplePlugin.domain.modifier.GearModifierHandler;
 import org.zuma.examplePlugin.domain.modifier.GearModifierListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerListener;
@@ -38,6 +38,9 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(runePlayerListener, pluginInstance);
 
         itemRegistry = new ItemRegistry();
+        ItemLoader itemLoader = new ItemLoader(itemRegistry, new ItemFactory(), new CustomItemMetaRepository());
+        itemLoader.loadItemsFromDatabase();
+
         itemHandler = new ItemHandler(itemRegistry);
         ItemListener itemListener = new ItemListener(itemHandler, runePlayerManager);
         getServer().getPluginManager().registerEvents(itemListener, pluginInstance);
@@ -57,7 +60,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public void registerCommands() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> event.registrar().register("admin", new AdminCommand(itemRegistry, blockManager))
+                event -> event.registrar().register("admin", new AdminCommand(itemRegistry, blockManager, new OreBlockMetaRepository()))
         );
     }
 

@@ -12,10 +12,11 @@ import org.bukkit.util.RayTraceResult;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.constants.Colors;
+import org.zuma.examplePlugin.core.repositories.OreBlockMetaRepository;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.block.BlockManager;
-import org.zuma.examplePlugin.domain.block.constants.OreType;
+import org.zuma.examplePlugin.domain.block.base.OreBlockMeta;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.features.admin.inventories.ItemRegistryInventory;
@@ -28,10 +29,12 @@ import java.util.stream.Collectors;
 public class AdminCommand implements BasicCommand {
     private final ItemRegistry registry;
     private final BlockManager blockManager;
+    private final OreBlockMetaRepository oreTypeRepository;
 
-    public AdminCommand(ItemRegistry registry, BlockManager blockManager) {
+    public AdminCommand(ItemRegistry registry, BlockManager blockManager, OreBlockMetaRepository oreTypeRepository) {
         this.registry = registry;
         this.blockManager = blockManager;
+        this.oreTypeRepository = oreTypeRepository;
     }
 
     @Override
@@ -72,8 +75,10 @@ public class AdminCommand implements BasicCommand {
                 return;
             }
 
+            OreBlockMeta meta = oreTypeRepository.getById(0);
 
-            blockManager.spawnOreBlock(OreType.IRON_ORE, hitBlock.getLocation(), hitBlock.getLocation().add(hitFace.getDirection()).add(0.5, 1.25, 0.5));
+            blockManager.spawnOreBlock(meta,
+                    hitBlock.getLocation(), hitBlock.getLocation().add(hitFace.getDirection()).add(0.5, 1.25, 0.5));
         }
 
 

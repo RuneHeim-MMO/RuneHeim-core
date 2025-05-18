@@ -6,10 +6,6 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.zuma.examplePlugin.domain.item.base.CustomItem;
-import org.zuma.examplePlugin.domain.item.impl.bar.*;
-import org.zuma.examplePlugin.domain.item.impl.ore.*;
-import org.zuma.examplePlugin.domain.item.impl.pickaxe.BronzePickaxe;
-import org.zuma.examplePlugin.domain.item.impl.pickaxe.IronPickaxe;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.item.PlayerArmorEquipEvent;
 
@@ -18,24 +14,6 @@ public class ItemHandler {
 
     public ItemHandler(ItemRegistry registry) {
         this.registry = registry;
-
-        registry.registerItem(new BronzePickaxe());
-        registry.registerItem(new IronPickaxe());
-
-        registry.registerItem(new BronzeOre());
-        registry.registerItem(new IronOre());
-        registry.registerItem(new SteelOre());
-        registry.registerItem(new MithrilOre());
-        registry.registerItem(new AdamantiteOre());
-        registry.registerItem(new RuniteOre());
-
-        registry.registerItem(new BronzeBar());
-        registry.registerItem(new IronBar());
-        registry.registerItem(new SteelBar());
-        registry.registerItem(new MithrilBar());
-        registry.registerItem(new AdamantiteBar());
-        registry.registerItem(new RuniteBar());
-
     }
 
     public ItemRegistry getRegistry() {
