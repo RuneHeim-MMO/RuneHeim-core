@@ -37,12 +37,8 @@ public class EquipableItem extends CustomItem implements Equipable, WithAddition
         return requirements;
     }
 
-    public String serializeMeta() {
-        return new Gson().toJson(new EquipableItemMeta(modifiers, requirements));
-    }
-
-    public void deserializeAndApplyMeta(String meta) {
-        EquipableItemMeta deserialized = new Gson().fromJson(meta, EquipableItemMeta.class);
+    public void deserializeAndApplyMeta() {
+        EquipableItemMeta deserialized = new Gson().fromJson(this.jsonMeta, EquipableItemMeta.class);
 
         modifiers.addAll(deserialized.modifiers());
         requirements.addAll(deserialized.requirements());

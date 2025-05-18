@@ -18,13 +18,14 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
 import org.zuma.examplePlugin.domain.item.constants.PersistentDataKey;
+import org.zuma.examplePlugin.domain.item.interfaces.Serializable;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.item.PlayerArmorEquipEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class CustomItem {
+public abstract class CustomItem implements Serializable {
     public final ItemType type;
     public final int id;
     public final Material material;
@@ -123,6 +124,9 @@ public abstract class CustomItem {
 
     }
 
+    public String serialize() {
+        return ""; // TODO
+    }
 
     public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player) {
     }

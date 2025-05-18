@@ -9,7 +9,7 @@ import org.zuma.examplePlugin.core.handlers.OffHandDisabler;
 import org.zuma.examplePlugin.core.logger.Logger;
 import org.zuma.examplePlugin.domain.block.BlockListener;
 import org.zuma.examplePlugin.domain.block.BlockManager;
-import org.zuma.examplePlugin.domain.block.persistence.OreBlockMetaRepository;
+import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeMetaRepository;
 import org.zuma.examplePlugin.domain.item.ItemFactory;
 import org.zuma.examplePlugin.domain.item.ItemHandler;
 import org.zuma.examplePlugin.domain.item.ItemListener;
@@ -64,7 +64,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public void registerCommands() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> event.registrar().register("admin", new AdminCommand(itemRegistry, blockManager, new OreBlockMetaRepository()))
+                event -> event.registrar().register("admin", new AdminCommand(itemRegistry, blockManager, new ResourceNodeMetaRepository()))
         );
     }
 

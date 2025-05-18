@@ -21,12 +21,8 @@ public class QuestItem extends CustomItem implements WithAdditionalMeta {
         player.getPlayer().sendMessage(Component.text("You cannot drop this item. It is associated with " + questName + " quest.").color(Colors.ERROR.asColor()));
     }
 
-    public String serializeMeta() {
-        return new Gson().toJson(new QuestItemMeta(questName));
-    }
-
-    public void deserializeAndApplyMeta(String meta) {
-        QuestItemMeta deserialized = new Gson().fromJson(meta, QuestItemMeta.class);
+    public void deserializeAndApplyMeta() {
+        QuestItemMeta deserialized = new Gson().fromJson(this.jsonMeta, QuestItemMeta.class);
         questName = deserialized.questName();
     }
 

@@ -15,8 +15,8 @@ import org.zuma.examplePlugin.constants.Colors;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.block.BlockManager;
-import org.zuma.examplePlugin.domain.block.base.OreBlockMeta;
-import org.zuma.examplePlugin.domain.block.persistence.OreBlockMetaRepository;
+import org.zuma.examplePlugin.domain.block.base.ResourceNodeMeta;
+import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeMetaRepository;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.features.admin.inventories.ItemRegistryInventory;
@@ -29,9 +29,9 @@ import java.util.stream.Collectors;
 public class AdminCommand implements BasicCommand {
     private final ItemRegistry registry;
     private final BlockManager blockManager;
-    private final OreBlockMetaRepository oreTypeRepository;
+    private final ResourceNodeMetaRepository oreTypeRepository;
 
-    public AdminCommand(ItemRegistry registry, BlockManager blockManager, OreBlockMetaRepository oreTypeRepository) {
+    public AdminCommand(ItemRegistry registry, BlockManager blockManager, ResourceNodeMetaRepository oreTypeRepository) {
         this.registry = registry;
         this.blockManager = blockManager;
         this.oreTypeRepository = oreTypeRepository;
@@ -75,8 +75,8 @@ public class AdminCommand implements BasicCommand {
                 return;
             }
 
-            OreBlockMeta type = oreTypeRepository.getById(0);
-            blockManager.spawnOreBlock(type,
+            ResourceNodeMeta type = oreTypeRepository.getById(0);
+            blockManager.spawnResourceNode(type,
                     hitBlock.getLocation(), hitBlock.getLocation().add(hitFace.getDirection()).add(0.5, 1.25, 0.5));
         }
 

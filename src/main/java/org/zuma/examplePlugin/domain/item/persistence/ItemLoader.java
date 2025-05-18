@@ -24,7 +24,7 @@ public class ItemLoader {
 
             if (item instanceof WithAdditionalMeta itemWithAdditionalMeta) {
                 try {
-                    itemWithAdditionalMeta.deserializeAndApplyMeta(item.jsonMeta);
+                    itemWithAdditionalMeta.deserializeAndApplyMeta();
                 } catch (Exception e) {
                     RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Could not apply jsonMeta to the " + item.displayName + "! " + e.getMessage());
                     return;

@@ -7,10 +7,11 @@ import org.bukkit.block.Block;
 import org.zuma.examplePlugin.constants.Colors;
 import org.zuma.examplePlugin.domain.block.base.InteractableBlock;
 import org.zuma.examplePlugin.domain.block.base.InteractableBlockMeta;
-import org.zuma.examplePlugin.domain.block.base.OreBlock;
-import org.zuma.examplePlugin.domain.block.base.OreBlockMeta;
+import org.zuma.examplePlugin.domain.block.base.ResourceNode;
+import org.zuma.examplePlugin.domain.block.base.ResourceNodeMeta;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -18,18 +19,20 @@ import java.util.UUID;
 public class BlockManager {
     private final HashMap<Location, InteractableBlock> blocks = new HashMap<>();
 
-    public void spawnOreBlock(OreBlockMeta type, Location location, Location hologramLocation) {
+    public void spawnResourceNode(ResourceNodeMeta type, Location location, Location hologramLocation) {
         if (blocks.get(location) != null) {
             return;
         }
 
-        List<String> hologramContent = List.of(
-                Colors.INTERACTABLE_ENTITY.asSpigotHex() + type.getLabel(),
-                Colors.ACCENT.asSpigotHex() + "Req. ⛏ " + type.getMinLevel() + " Level"
-        );
+        List<String> hologramContent = new ArrayList<>(List.of(
+                Colors.INTERACTABLE_ENTITY.asSpigotHex() + type.getLabel()
+        ));
 
-        OreBlock block = new OreBlock(new InteractableBlockMeta(BlockType.ORE, location, new Gson().toJson(type)));
-        block.deserializeAndApplyMeta(block.getJsonMeta());
+        type.getRequirements().forEach(req -> hologramContent.add(Colors.ACCENT.asSpigotHex() +
+                "Req. " + req.getType().getSymbol() + " " + req.getMinimumLevel() + " Level"));
+
+        ResourceNode block = new ResourceNode(new InteractableBlockMeta(BlockType.ResourceNode, location, new Gson().toJson(type)));
+        block.deserializeAndApplyMeta();
 
         block.setHologram(DHAPI.createHologram(UUID.randomUUID().toString(), hologramLocation, hologramContent));
         block.spawn(type.getMaterial());
