@@ -23,6 +23,8 @@ import org.zuma.examplePlugin.domain.item.base.EquipableItem;
 import org.zuma.examplePlugin.domain.item.interfaces.WithMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.events.block.ResourceNodeGatheredEvent;
+import org.zuma.examplePlugin.events.block.ResourceNodeRespawnedEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +62,17 @@ public class ResourceNode extends AbstractInteractableBlock implements WithMeta 
 
         this.blockType = type;
         initializeHologram();
+        respawnBlock();
+    }
+
+    private void respawnBlock() {
+        ResourceNodeRespawnedEvent event = new ResourceNodeRespawnedEvent(this);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
+        if (event.isCancelled()) {
+            return;
+        }
+
         spawn(blockType.getMaterial());
     }
 
@@ -130,8 +143,15 @@ public class ResourceNode extends AbstractInteractableBlock implements WithMeta 
             return;
         }
 
-        player.addItemOrDrop(blockType.getDrop());
+        ResourceNodeGatheredEvent event = new ResourceNodeGatheredEvent(player, this);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
+        if (event.isCancelled()) {
+            return;
+        }
+
         spawn(Material.BEDROCK);
+        player.addItemOrDrop(blockType.getDrop());
         SoundType.MINING_SUCCESS.play(player.getPlayer().getLocation());
         isDepleted = true;
 
@@ -139,7 +159,7 @@ public class ResourceNode extends AbstractInteractableBlock implements WithMeta 
         DHAPI.setHologramLine(this.getHologram(), 0, Colors.DEPLETED_RESOURCE.asSpigotHex() + "❌ " + blockType.getLabel());
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-            spawn(blockType.getMaterial());
+            respawnBlock();
             isDepleted = false;
 
             DHAPI.removeHologramLine(this.getHologram(), this.getHologram().size() + 1);
