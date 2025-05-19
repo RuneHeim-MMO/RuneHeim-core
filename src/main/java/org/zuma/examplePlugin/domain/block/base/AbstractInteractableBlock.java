@@ -9,29 +9,27 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
+import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 
-public abstract class InteractableBlock {
+public abstract class AbstractInteractableBlock {
     private final BlockType type;
-    private final Location location;
+    private final Location location, hologramLocation;
     private Hologram hologram;
     private final String jsonMeta;
 
-    public InteractableBlock(InteractableBlockMeta meta) {
+    public AbstractInteractableBlock(AbstractInteractableBlockMeta meta) {
         this.type = meta.type();
         this.location = meta.location();
+        this.hologramLocation = meta.hologramLocation();
         this.jsonMeta = meta.jsonMeta();
     }
 
     public void spawn(Material material) {
         Block block = location.getBlock();
         block.setType(material);
-    }
-
-    public Location getLocation() {
-        return location;
     }
 
     public Hologram getHologram() {
@@ -46,6 +44,18 @@ public abstract class InteractableBlock {
         return type;
     }
 
+    public String getJsonMeta() {
+        return jsonMeta;
+    }
+
+    public Location getHologramLocation() {
+        return hologramLocation;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
     public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItem itemInHand) {
 
     }
@@ -58,7 +68,4 @@ public abstract class InteractableBlock {
 
     }
 
-    public String getJsonMeta() {
-        return jsonMeta;
-    }
 }

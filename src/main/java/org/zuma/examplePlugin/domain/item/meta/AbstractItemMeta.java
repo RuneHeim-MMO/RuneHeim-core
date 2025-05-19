@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.item.base;
+package org.zuma.examplePlugin.domain.item.meta;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;

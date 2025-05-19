@@ -18,25 +18,22 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
 import org.zuma.examplePlugin.domain.item.constants.PersistentDataKey;
-import org.zuma.examplePlugin.domain.item.interfaces.Serializable;
+import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.item.PlayerArmorEquipEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractItem implements Serializable {
+public abstract class AbstractItem {
+    public final int id, customModelData;
     public final ItemType type;
-    public final int id;
+    public final ItemRarity rarity;
     public final Material material;
     public final String displayName;
     public final List<Component> lore = new ArrayList<>();
     public final List<Component> requirementsLore = new ArrayList<>();
-    public final ItemRarity rarity;
-    public String rarityPrefixSlot;
-    public int customModelData;
-    public final String jsonMeta;
-
+    public String rarityPrefixSlot, jsonMeta;
 
     public AbstractItem(AbstractItemMeta meta) {
         this.type = meta.type();
@@ -124,8 +121,8 @@ public abstract class AbstractItem implements Serializable {
 
     }
 
-    public String serialize() {
-        return ""; // TODO
+    public String getJsonMeta() {
+        return jsonMeta;
     }
 
     public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player) {

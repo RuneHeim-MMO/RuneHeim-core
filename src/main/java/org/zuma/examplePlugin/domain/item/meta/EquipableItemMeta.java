@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.item.base;
+package org.zuma.examplePlugin.domain.item.meta;
 
 import org.zuma.examplePlugin.domain.item.SkillRequirement;
 import org.zuma.examplePlugin.domain.modifier.Modifier;

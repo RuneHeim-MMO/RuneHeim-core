@@ -10,7 +10,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
-import org.zuma.examplePlugin.domain.block.base.InteractableBlock;
+import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -34,7 +34,7 @@ public class BlockListener implements Listener {
         Player player = event.getPlayer();
         Block dumbBlock = event.getClickedBlock() != null ? event.getClickedBlock() : player.getLocation().getBlock();
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
-        InteractableBlock block = manager.getInteractableBlock(dumbBlock);
+        AbstractInteractableBlock block = manager.getAbstractInteractableBlock(dumbBlock);
 
         if (runePlayer == null || block == null) {
             return;
@@ -55,7 +55,7 @@ public class BlockListener implements Listener {
 
         Block dumbBlock = event.getBlock();
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
-        InteractableBlock block = manager.getInteractableBlock(dumbBlock);
+        AbstractInteractableBlock block = manager.getAbstractInteractableBlock(dumbBlock);
 
         if (runePlayer == null || block == null) {
             return;
@@ -69,7 +69,7 @@ public class BlockListener implements Listener {
     public void onPlayerBlockBreakEvent(BlockBreakEvent event) {
         Block dumbBlock = event.getBlock();
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(event.getPlayer());
-        InteractableBlock block = manager.getInteractableBlock(dumbBlock);
+        AbstractInteractableBlock block = manager.getAbstractInteractableBlock(dumbBlock);
 
         if (runePlayer == null || block == null) {
             return;

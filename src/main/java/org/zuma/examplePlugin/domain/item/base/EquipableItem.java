@@ -7,6 +7,8 @@ import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.domain.item.SkillRequirement;
 import org.zuma.examplePlugin.domain.item.interfaces.Equipable;
 import org.zuma.examplePlugin.domain.item.interfaces.WithMeta;
+import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
+import org.zuma.examplePlugin.domain.item.meta.EquipableItemMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 

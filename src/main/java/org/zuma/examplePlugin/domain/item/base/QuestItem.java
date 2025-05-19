@@ -5,6 +5,8 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.zuma.examplePlugin.constants.Colors;
 import org.zuma.examplePlugin.domain.item.interfaces.WithMeta;
+import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
+import org.zuma.examplePlugin.domain.item.meta.QuestItemMeta;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class QuestItem extends AbstractItem implements WithMeta {

@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.block.base;
+package org.zuma.examplePlugin.domain.block.meta;
 
 import org.bukkit.Material;
 import org.zuma.examplePlugin.constants.SoundType;
@@ -9,7 +9,8 @@ import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ResourceNodeMeta {
+public class ResourceNodeType {
+    private final int id;
     private final String label, wrongToolMessage, actionVerb;
     private final Material material;
     private final List<SkillRequirement> requirements;
@@ -20,8 +21,9 @@ public class ResourceNodeMeta {
     @Nullable
     private final ModifierType toolModifier;
 
-    public ResourceNodeMeta(String label, Material material, List<SkillRequirement> requirements, @Nullable ModifierType toolRequiresModifier,
+    public ResourceNodeType(int id, String label, Material material, List<SkillRequirement> requirements, @Nullable ModifierType toolRequiresModifier,
                             int baseGatheringDurationMs, int respawnDurationSecs, ItemDrop drop, String wrongToolMsg, String actionVerb, SoundType stepSound, SoundType gatherSuccessSound) {
+        this.id = id;
         this.label = label;
         this.material = material;
         this.requirements = requirements;
@@ -78,5 +80,9 @@ public class ResourceNodeMeta {
 
     public SoundType getGatherSuccessSound() {
         return gatherSuccessSound;
+    }
+
+    public int getId() {
+        return id;
     }
 }

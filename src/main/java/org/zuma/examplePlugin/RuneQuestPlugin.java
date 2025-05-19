@@ -7,9 +7,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.zuma.examplePlugin.core.handlers.BlockProtector;
 import org.zuma.examplePlugin.core.handlers.OffHandDisabler;
 import org.zuma.examplePlugin.core.logger.Logger;
+import org.zuma.examplePlugin.domain.block.BlockFactory;
 import org.zuma.examplePlugin.domain.block.BlockListener;
+import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
-import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeMetaRepository;
+import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
+import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
 import org.zuma.examplePlugin.domain.item.ItemFactory;
 import org.zuma.examplePlugin.domain.item.ItemHandler;
 import org.zuma.examplePlugin.domain.item.ItemListener;
@@ -57,6 +60,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         BlockListener blockListener = new BlockListener(blockManager, itemRegistry);
         getServer().getPluginManager().registerEvents(blockListener, pluginInstance);
 
+        BlockLoader blockLoader = new BlockLoader(blockManager, new InteractableBlockRepository(), new BlockFactory(), new ResourceNodeTypeRepository());
+        blockLoader.fetchAllResourceNodeTypes();
+        blockLoader.loadInteractableBlocks();
+
 
         // TODO: Load inventory from DB & Verify their meta
 
@@ -64,7 +71,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public void registerCommands() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> event.registrar().register("admin", new AdminCommand(itemRegistry, blockManager, new ResourceNodeMetaRepository()))
+                event -> event.registrar().register("admin", new AdminCommand(itemRegistry, blockManager, new ResourceNodeTypeRepository()))
         );
     }
 
