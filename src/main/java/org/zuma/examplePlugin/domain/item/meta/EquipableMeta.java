@@ -5,5 +5,5 @@ import org.zuma.examplePlugin.domain.modifier.Modifier;
 
 import java.util.List;
 
-public record EquipableItemMeta(List<Modifier> modifiers, List<SkillRequirement> requirements) {
+public record EquipableMeta(List<Modifier> modifiers, List<SkillRequirement> requirements) {
 }

@@ -5,14 +5,14 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.ItemFactory;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
-import org.zuma.examplePlugin.domain.item.interfaces.WithMeta;
+import org.zuma.examplePlugin.domain.item.interfaces.Serializable;
 
 public class ItemLoader {
-    private final AbstractItemMetaRepository abstractItemMetaRepository;
+    private final ItemMetaRepository abstractItemMetaRepository;
     private final ItemFactory factory;
     private final ItemRegistry registry;
 
-    public ItemLoader(ItemRegistry registry, ItemFactory factory, AbstractItemMetaRepository abstractItemMetaRepository) {
+    public ItemLoader(ItemRegistry registry, ItemFactory factory, ItemMetaRepository abstractItemMetaRepository) {
         this.registry = registry;
         this.factory = factory;
         this.abstractItemMetaRepository = abstractItemMetaRepository;
@@ -22,7 +22,7 @@ public class ItemLoader {
         abstractItemMetaRepository.getAll().forEach(meta -> {
             AbstractItem item = factory.createItem(meta);
 
-            if (item instanceof WithMeta itemWithAdditionalMeta) {
+            if (item instanceof Serializable itemWithAdditionalMeta) {
                 try {
                     itemWithAdditionalMeta.deserializeAndApplyMeta();
                 } catch (Exception e) {

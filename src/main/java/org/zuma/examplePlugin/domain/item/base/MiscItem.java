@@ -1,9 +1,9 @@
 package org.zuma.examplePlugin.domain.item.base;
 
-import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
+import org.zuma.examplePlugin.domain.item.meta.AbstractMeta;
 
 public class MiscItem extends AbstractItem {
-    public MiscItem(AbstractItemMeta meta) {
+    public MiscItem(AbstractMeta meta) {
         super(meta);
     }
 }

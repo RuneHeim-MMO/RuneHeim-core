@@ -1,6 +1,4 @@
-package org.zuma.examplePlugin.domain.item.state.base;
-
-import org.zuma.examplePlugin.domain.item.state.StateType;
+package org.zuma.examplePlugin.domain.item.state;
 
 public abstract class AbstractState {
     private final StateType type;

@@ -7,7 +7,7 @@ import org.zuma.examplePlugin.domain.block.base.ResourceNode;
 import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
-import org.zuma.examplePlugin.domain.item.interfaces.WithMeta;
+import org.zuma.examplePlugin.domain.item.interfaces.Serializable;
 
 import java.util.HashMap;
 
@@ -34,7 +34,7 @@ public class BlockLoader {
         this.interactableBlockRepository.getAll().forEach(meta -> {
             AbstractInteractableBlock block = factory.createBlock(meta);
 
-            if (block instanceof WithMeta blockWithAdditionalMeta) {
+            if (block instanceof Serializable blockWithAdditionalMeta) {
                 try {
                     blockWithAdditionalMeta.deserializeAndApplyMeta();
                 } catch (Exception e) {

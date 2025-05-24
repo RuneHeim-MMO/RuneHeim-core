@@ -1,13 +1,12 @@
 package org.zuma.examplePlugin.domain.item.constants;
 
-public enum PersistentDataKey {
+public enum ItemDataKey {
     ITEM_ID("item_id"),
-    STATE_UUID("state_uuid"),
-    STATE_TYPE("state_type");
+    STATE_UUID("state_uuid");
 
     private final String key;
 
-    PersistentDataKey(String key) {
+    ItemDataKey(String key) {
         this.key = key;
     }
 

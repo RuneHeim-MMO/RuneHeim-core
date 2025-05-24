@@ -20,7 +20,7 @@ import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
 import org.zuma.examplePlugin.domain.item.SkillRequirement;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.base.EquipableItem;
-import org.zuma.examplePlugin.domain.item.interfaces.WithMeta;
+import org.zuma.examplePlugin.domain.item.interfaces.Serializable;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.block.ResourceNodeGatheredEvent;
@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class ResourceNode extends AbstractInteractableBlock implements WithMeta {
+public class ResourceNode extends AbstractInteractableBlock implements Serializable {
     private ResourceNodeType blockType;
     private ResourceNodeMetaId meta;
     private boolean isDepleted;

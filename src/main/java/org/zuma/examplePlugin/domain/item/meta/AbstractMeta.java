@@ -7,7 +7,7 @@ import org.zuma.examplePlugin.domain.item.constants.ItemType;
 
 import java.util.List;
 
-public record AbstractItemMeta(ItemType type, int id, Material material, ItemRarity rarity, String displayName,
-                               List<Component> lore,
-                               String jsonMeta) {
+public record AbstractMeta(ItemType type, int id, Material material, ItemRarity rarity, String displayName,
+                           List<Component> lore,
+                           String jsonMeta) {
 }

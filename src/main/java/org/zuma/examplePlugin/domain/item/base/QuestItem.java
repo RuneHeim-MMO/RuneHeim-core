@@ -4,16 +4,16 @@ import com.google.gson.Gson;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.zuma.examplePlugin.constants.Colors;
-import org.zuma.examplePlugin.domain.item.interfaces.WithMeta;
-import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
-import org.zuma.examplePlugin.domain.item.meta.QuestItemMeta;
+import org.zuma.examplePlugin.domain.item.interfaces.Serializable;
+import org.zuma.examplePlugin.domain.item.meta.AbstractMeta;
+import org.zuma.examplePlugin.domain.item.meta.QuestMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
-public class QuestItem extends AbstractItem implements WithMeta {
+public class QuestItem extends AbstractItem implements Serializable {
     private String questName;
 
-    public QuestItem(AbstractItemMeta meta) {
+    public QuestItem(AbstractMeta meta) {
         super(meta);
         this.appendToLore(Component.text("Quest Item").color(Colors.ITEM_TYPE.asColor()));
     }
@@ -25,7 +25,7 @@ public class QuestItem extends AbstractItem implements WithMeta {
     }
 
     public void deserializeAndApplyMeta() {
-        QuestItemMeta deserialized = new Gson().fromJson(this.jsonMeta, QuestItemMeta.class);
+        QuestMeta deserialized = new Gson().fromJson(this.jsonMeta, QuestMeta.class);
         questName = deserialized.questName();
     }
 

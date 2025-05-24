@@ -6,21 +6,21 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.constants.Colors;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
+import org.zuma.examplePlugin.domain.item.interfaces.Serializable;
 import org.zuma.examplePlugin.domain.item.interfaces.Stateful;
-import org.zuma.examplePlugin.domain.item.interfaces.WithMeta;
-import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
-import org.zuma.examplePlugin.domain.item.meta.ConsumableItemMeta;
+import org.zuma.examplePlugin.domain.item.meta.AbstractMeta;
+import org.zuma.examplePlugin.domain.item.meta.ConsumableMeta;
+import org.zuma.examplePlugin.domain.item.state.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.item.state.StateType;
-import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.states.ConsumableState;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
-public class ConsumableItem extends AbstractItem implements Stateful, WithMeta {
+public class ConsumableItem extends AbstractItem implements Stateful, Serializable {
     private int usages;
     private int maxUsages;
 
-    public ConsumableItem(AbstractItemMeta meta) {
+    public ConsumableItem(AbstractMeta meta) {
         super(meta);
         this.setRarityPrefixSlot("CONSUMABLE");
         this.setStateType(StateType.CONSUMABLE);
@@ -34,7 +34,7 @@ public class ConsumableItem extends AbstractItem implements Stateful, WithMeta {
 
     @Override
     public void deserializeAndApplyMeta() {
-        ConsumableItemMeta meta = new Gson().fromJson(super.jsonMeta, ConsumableItemMeta.class);
+        ConsumableMeta meta = new Gson().fromJson(super.jsonMeta, ConsumableMeta.class);
         usages = meta.usages();
         maxUsages = meta.maxUsages();
     }

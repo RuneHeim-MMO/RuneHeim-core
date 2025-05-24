@@ -6,9 +6,9 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.domain.item.SkillRequirement;
 import org.zuma.examplePlugin.domain.item.interfaces.Equipable;
-import org.zuma.examplePlugin.domain.item.interfaces.WithMeta;
-import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
-import org.zuma.examplePlugin.domain.item.meta.EquipableItemMeta;
+import org.zuma.examplePlugin.domain.item.interfaces.Serializable;
+import org.zuma.examplePlugin.domain.item.meta.AbstractMeta;
+import org.zuma.examplePlugin.domain.item.meta.EquipableMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 
@@ -16,11 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class EquipableItem extends AbstractItem implements Equipable, WithMeta {
+public class EquipableItem extends AbstractItem implements Equipable, Serializable {
     private final List<Modifier> modifiers = new ArrayList<>();
     private final List<SkillRequirement> requirements = new ArrayList<>();
 
-    public EquipableItem(AbstractItemMeta meta) {
+    public EquipableItem(AbstractMeta meta) {
         super(meta);
         this.setRarityPrefixSlot("⚔");
     }
@@ -40,7 +40,7 @@ public class EquipableItem extends AbstractItem implements Equipable, WithMeta {
     }
 
     public void deserializeAndApplyMeta() {
-        EquipableItemMeta deserialized = new Gson().fromJson(this.jsonMeta, EquipableItemMeta.class);
+        EquipableMeta deserialized = new Gson().fromJson(this.jsonMeta, EquipableMeta.class);
 
         modifiers.addAll(deserialized.modifiers());
         requirements.addAll(deserialized.requirements());

@@ -15,10 +15,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.domain.item.constants.ItemDataKey;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
-import org.zuma.examplePlugin.domain.item.constants.PersistentDataKey;
-import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
+import org.zuma.examplePlugin.domain.item.meta.AbstractMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -42,7 +42,7 @@ public abstract class AbstractItem {
     @Nullable
     public StateType stateType = null;
 
-    public AbstractItem(AbstractItemMeta meta) {
+    public AbstractItem(AbstractMeta meta) {
         this.type = meta.type();
         this.id = meta.id();
         this.material = meta.material();
@@ -151,15 +151,12 @@ public abstract class AbstractItem {
             meta.setCustomModelData(customModelData);
         }
 
-        NamespacedKey IdKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistentDataKey.ITEM_ID.asString());
+        NamespacedKey IdKey = new NamespacedKey(RuneQuestPlugin.getInstance(), ItemDataKey.ITEM_ID.asString());
         meta.getPersistentDataContainer().set(IdKey, PersistentDataType.INTEGER, id);
 
         if (stateType != null) {
-            NamespacedKey stateUuid = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistentDataKey.STATE_UUID.asString());
+            NamespacedKey stateUuid = new NamespacedKey(RuneQuestPlugin.getInstance(), ItemDataKey.STATE_UUID.asString());
             meta.getPersistentDataContainer().set(stateUuid, PersistentDataType.STRING, UUID.randomUUID().toString());
-
-            NamespacedKey stateType = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistentDataKey.STATE_TYPE.asString());
-            meta.getPersistentDataContainer().set(stateType, PersistentDataType.STRING, stateType.asString());
         }
 
         return meta;

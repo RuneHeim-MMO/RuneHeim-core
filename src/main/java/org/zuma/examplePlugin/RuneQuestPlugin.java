@@ -17,8 +17,8 @@ import org.zuma.examplePlugin.domain.item.ItemFactory;
 import org.zuma.examplePlugin.domain.item.ItemHandler;
 import org.zuma.examplePlugin.domain.item.ItemListener;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
-import org.zuma.examplePlugin.domain.item.persistence.AbstractItemMetaRepository;
 import org.zuma.examplePlugin.domain.item.persistence.ItemLoader;
+import org.zuma.examplePlugin.domain.item.persistence.ItemMetaRepository;
 import org.zuma.examplePlugin.domain.item.state.StateFactory;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.modifier.GearModifierHandler;
@@ -48,7 +48,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(runePlayerListener, pluginInstance);
 
         itemRegistry = new ItemRegistry();
-        ItemLoader itemLoader = new ItemLoader(itemRegistry, new ItemFactory(), new AbstractItemMetaRepository());
+        ItemLoader itemLoader = new ItemLoader(itemRegistry, new ItemFactory(), new ItemMetaRepository());
         itemLoader.loadItemsFromDatabase();
 
         itemHandler = new ItemHandler(itemRegistry);
