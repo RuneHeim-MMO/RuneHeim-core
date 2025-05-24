@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class StateManager {
-    private final HashMap<UUID, AbstractState> itemStates = new HashMap<>();
+    private final HashMap<UUID, AbstractState> itemStates = new HashMap<>(); // TODO: PERSISTENCE!
     private final StateFactory factory;
     private final ItemHandler itemHandler;
 
@@ -30,7 +30,6 @@ public class StateManager {
         ItemMeta meta = item.getItemMeta();
 
         if (meta == null) {
-            System.out.println("ITEM META IZ NULL" + item);
             return null;
         }
 
@@ -50,12 +49,10 @@ public class StateManager {
         AbstractItem abstractItem = itemHandler.getRegistry().getItem(item);
 
         if (uuid == null) {
-            System.out.println("State is null");
             return null;
         }
 
         if (!(abstractItem instanceof Stateful stateful)) {
-            System.out.println(" abstract item is not stateful");
             return null;
         }
 

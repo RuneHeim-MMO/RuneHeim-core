@@ -1,8 +1,10 @@
 package org.zuma.examplePlugin.domain.item.base;
 
 import com.google.gson.Gson;
+import net.kyori.adventure.text.Component;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.inventory.ItemStack;
+import org.zuma.examplePlugin.constants.Colors;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.interfaces.Stateful;
 import org.zuma.examplePlugin.domain.item.interfaces.WithMeta;
@@ -16,6 +18,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class ConsumableItem extends AbstractItem implements Stateful, WithMeta {
     private int usages;
+    private int maxUsages;
 
     public ConsumableItem(AbstractItemMeta meta) {
         super(meta);
@@ -26,21 +29,23 @@ public class ConsumableItem extends AbstractItem implements Stateful, WithMeta {
 
     @Override
     public AbstractState getInitialState() {
-        return new ConsumableState(usages);
+        return new ConsumableState(maxUsages, usages);
     }
 
     @Override
     public void deserializeAndApplyMeta() {
         ConsumableItemMeta meta = new Gson().fromJson(super.jsonMeta, ConsumableItemMeta.class);
         usages = meta.usages();
+        maxUsages = meta.maxUsages();
     }
+
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player, StateManager itemStateManager) {
-        ConsumableState state = (ConsumableState) itemStateManager.getItemState(PlayerUtils.getItemStackInHand(player.getPlayer()));
+        ItemStack itemStack = PlayerUtils.getItemStackInHand(player.getPlayer());
+        ConsumableState state = (ConsumableState) itemStateManager.getItemState(itemStack);
 
         if (state == null) {
-            System.out.println("State is null for item " + PlayerUtils.getItemStackInHand(player.getPlayer()));
             return;
         }
 
@@ -51,18 +56,8 @@ public class ConsumableItem extends AbstractItem implements Stateful, WithMeta {
 
         state.setUsageLeft(state.getUsageLeft() - 1);
         player.getPlayer().sendMessage("Usages left: " + state.getUsageLeft());
-    }
+        this.setDisplayName(itemStack, null, Component.text(" ✦ (" + state.getMaxUsages() + "/" + state.getUsageLeft() + ")", Colors.ITEM_TYPE.asColor()));
 
-    @Override
-    public void onPlayerTakeItemInHand(PlayerItemHeldEvent event, RunePlayer player, StateManager itemStateManager) {
-        ConsumableState state = (ConsumableState) itemStateManager.getItemState(PlayerUtils.getItemStackInHand(player.getPlayer()));
-
-        if (state == null) {
-            return;
-        }
-
-
-        player.getPlayer().sendMessage("Usages left: " + state.getUsageLeft());
     }
 
 

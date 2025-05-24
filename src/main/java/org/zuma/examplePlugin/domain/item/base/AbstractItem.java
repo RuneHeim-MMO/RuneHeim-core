@@ -82,15 +82,52 @@ public abstract class AbstractItem {
 
         ItemStack itemStack = new ItemStack(material);
         itemStack.setItemMeta(generateItemMeta(itemStack));
+        this.setDisplayName(itemStack, null, null);
         itemStack.setAmount(amount);
 
         return itemStack;
     }
 
-    private ItemMeta generateItemMeta(ItemStack itemStack) {
+    public void setDisplayName(ItemStack itemStack, @Nullable Component prefix, @Nullable Component suffix) {
         TextColor rarityColor = TextColor.fromHexString(rarity.getHexColor());
         ItemMeta meta = itemStack.getItemMeta();
         Component originalName = meta.displayName();
+
+        if (displayName != null) {
+            Component base = Component.text(displayName)
+                    .color(rarityColor)
+                    .decoration(TextDecoration.ITALIC, false);
+
+            if (prefix != null) {
+                base = base.append(prefix.color(rarityColor).decoration(TextDecoration.ITALIC, false));
+            }
+            if (suffix != null) {
+                base = base.append(suffix.color(rarityColor).decoration(TextDecoration.ITALIC, false));
+            }
+
+            meta.displayName(base);
+
+        } else if (originalName != null) {
+            Component base = originalName
+                    .color(rarityColor)
+                    .decoration(TextDecoration.ITALIC, false);
+
+            if (prefix != null) {
+                base = base.append(prefix.color(rarityColor).decoration(TextDecoration.ITALIC, false));
+            }
+            if (suffix != null) {
+                base = base.append(suffix.color(rarityColor).decoration(TextDecoration.ITALIC, false));
+            }
+
+            meta.displayName(base);
+        }
+
+        itemStack.setItemMeta(meta);
+    }
+
+
+    private ItemMeta generateItemMeta(ItemStack itemStack) {
+        ItemMeta meta = itemStack.getItemMeta();
 
         List<Component> itemLore = new ArrayList<>(lore);
 
@@ -106,13 +143,6 @@ public abstract class AbstractItem {
 
         itemLore.add(Component.text(""));
         itemLore.add(rarity.getComponent(rarityPrefixSlot == null ? "" : rarityPrefixSlot));
-
-        if (displayName != null) {
-            meta.displayName(Component.text(displayName).color(rarityColor).decoration(TextDecoration.ITALIC, false));
-        } else if (originalName != null) {
-            meta.displayName(originalName.color(rarityColor).decoration(TextDecoration.ITALIC, false));
-        }
-
 
         meta.lore(itemLore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());
 

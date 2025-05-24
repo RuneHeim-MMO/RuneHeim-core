@@ -36,7 +36,7 @@ public class AbstractItemMetaRepository {
                 new AbstractItemMeta(ItemType.MATERIAL, ItemId.MITHRIL_BAR.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Mithril Bar", null, ""),
                 new AbstractItemMeta(ItemType.MATERIAL, ItemId.ADAMANTITE_BAR.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Adamantite Bar", null, ""),
                 // new CustomItemMeta(ItemType.MATERIAL, ItemId.RUNITE_BAR.asInt(), Material.COAL, ItemRarity.RARE, "Runite Bar", null, "")
-                new AbstractItemMeta(ItemType.CONSUMABLE, ItemId.RUNITE_BAR.asInt(), Material.COAL, ItemRarity.RARE, "Consumable Runite Bar", null, new Gson().toJson(new ConsumableItemMeta((3))))
+                new AbstractItemMeta(ItemType.CONSUMABLE, ItemId.RUNITE_BAR.asInt(), Material.COAL, ItemRarity.RARE, "Consumable Runite Bar", null, new Gson().toJson(new ConsumableItemMeta(5, 3)))
         );
     }
 }
