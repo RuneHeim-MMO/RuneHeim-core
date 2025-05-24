@@ -19,11 +19,15 @@ import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
 import org.zuma.examplePlugin.domain.item.constants.PersistentDataKey;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
+import org.zuma.examplePlugin.domain.item.state.StateManager;
+import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.item.PlayerArmorEquipEvent;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class AbstractItem {
     public final int id, customModelData;
@@ -34,6 +38,9 @@ public abstract class AbstractItem {
     public final List<Component> lore = new ArrayList<>();
     public final List<Component> requirementsLore = new ArrayList<>();
     public String rarityPrefixSlot, jsonMeta;
+
+    @Nullable
+    public StateType stateType = null;
 
     public AbstractItem(AbstractItemMeta meta) {
         this.type = meta.type();
@@ -117,6 +124,14 @@ public abstract class AbstractItem {
         NamespacedKey IdKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistentDataKey.ITEM_ID.asString());
         meta.getPersistentDataContainer().set(IdKey, PersistentDataType.INTEGER, id);
 
+        if (stateType != null) {
+            NamespacedKey stateUuid = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistentDataKey.STATE_UUID.asString());
+            meta.getPersistentDataContainer().set(stateUuid, PersistentDataType.STRING, UUID.randomUUID().toString());
+
+            NamespacedKey stateType = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistentDataKey.STATE_TYPE.asString());
+            meta.getPersistentDataContainer().set(stateType, PersistentDataType.STRING, stateType.asString());
+        }
+
         return meta;
 
     }
@@ -125,26 +140,35 @@ public abstract class AbstractItem {
         return jsonMeta;
     }
 
-    public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player) {
+    @Nullable
+    public StateType getStateType() {
+        return stateType;
+    }
+
+    public void setStateType(@Nullable StateType type) {
+        stateType = type;
+    }
+
+    public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player, StateManager itemStateManager) {
     }
 
 
-    public void onPlayerInteractEntity(PlayerInteractEntityEvent event, RunePlayer player) {
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent event, RunePlayer player, StateManager itemStateManager) {
     }
 
 
-    public void onPlayerItemDrop(PlayerDropItemEvent event, RunePlayer player) {
+    public void onPlayerItemDrop(PlayerDropItemEvent event, RunePlayer player, StateManager itemStateManager) {
     }
 
 
-    public void onPlayerTakeItemInHand(PlayerItemHeldEvent event, RunePlayer player) {
+    public void onPlayerTakeItemInHand(PlayerItemHeldEvent event, RunePlayer player, StateManager itemStateManager) {
     }
 
 
-    public void onPlayerDamageEntity(EntityDamageByEntityEvent event, RunePlayer player) {
+    public void onPlayerDamageEntity(EntityDamageByEntityEvent event, RunePlayer player, StateManager itemStateManager) {
     }
 
-    public void onPlayerWearItem(PlayerArmorEquipEvent event, RunePlayer player) {
+    public void onPlayerWearItem(PlayerArmorEquipEvent event, RunePlayer player, StateManager itemStateManager) {
 
     }
 

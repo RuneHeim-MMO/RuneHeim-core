@@ -19,6 +19,8 @@ import org.zuma.examplePlugin.domain.item.ItemListener;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.persistence.AbstractItemMetaRepository;
 import org.zuma.examplePlugin.domain.item.persistence.ItemLoader;
+import org.zuma.examplePlugin.domain.item.state.StateFactory;
+import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.modifier.GearModifierHandler;
 import org.zuma.examplePlugin.domain.modifier.GearModifierListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerListener;
@@ -32,6 +34,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private static RunePlayerManager runePlayerManager;
     private static ItemRegistry itemRegistry;
     private ItemHandler itemHandler;
+    private StateManager itemStateManager;
     private BlockManager blockManager;
 
     public void initializePlugin() {
@@ -49,7 +52,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         itemLoader.loadItemsFromDatabase();
 
         itemHandler = new ItemHandler(itemRegistry);
-        ItemListener itemListener = new ItemListener(itemHandler, runePlayerManager);
+        itemStateManager = new StateManager(new StateFactory(), itemHandler);
+        ItemListener itemListener = new ItemListener(itemHandler, runePlayerManager, itemStateManager);
         getServer().getPluginManager().registerEvents(itemListener, pluginInstance);
 
         GearModifierHandler gearModifierHandler = new GearModifierHandler(itemRegistry);

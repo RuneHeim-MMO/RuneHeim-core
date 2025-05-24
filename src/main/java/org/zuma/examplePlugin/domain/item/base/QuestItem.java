@@ -7,6 +7,7 @@ import org.zuma.examplePlugin.constants.Colors;
 import org.zuma.examplePlugin.domain.item.interfaces.WithMeta;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.QuestItemMeta;
+import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class QuestItem extends AbstractItem implements WithMeta {
@@ -18,7 +19,7 @@ public class QuestItem extends AbstractItem implements WithMeta {
     }
 
     @Override
-    public void onPlayerItemDrop(PlayerDropItemEvent event, RunePlayer player) {
+    public void onPlayerItemDrop(PlayerDropItemEvent event, RunePlayer player, StateManager itemStateManager) {
         event.setCancelled(true);
         player.getPlayer().sendMessage(Component.text("You cannot drop this item. It is associated with " + questName + " quest.").color(Colors.ERROR.asColor()));
     }

@@ -19,6 +19,7 @@ import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.base.EquipableItem;
 import org.zuma.examplePlugin.domain.item.interfaces.Equipable;
+import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.events.item.PlayerArmorEquipEvent;
@@ -29,10 +30,12 @@ public class ItemListener implements Listener {
     private final RunePlayerManager playerHandler;
     private final ItemHandler itemHandler;
     private final ItemRegistry itemRegistry;
+    private final StateManager itemStateManager;
 
-    public ItemListener(ItemHandler handler, RunePlayerManager playerHandler) {
+    public ItemListener(ItemHandler handler, RunePlayerManager playerHandler, StateManager itemStateManager) {
         this.itemHandler = handler;
         this.playerHandler = playerHandler;
+        this.itemStateManager = itemStateManager;
 
         itemRegistry = handler.getRegistry();
     }
@@ -74,7 +77,7 @@ public class ItemListener implements Listener {
                 }
             }
 
-            itemHandler.onPlayerInteract(event, item, player);
+            itemHandler.onPlayerInteract(event, item, player, itemStateManager);
         });
     }
 
@@ -86,7 +89,7 @@ public class ItemListener implements Listener {
                 return;
             }
 
-            itemHandler.onPlayerInteractEntity(event, item, player);
+            itemHandler.onPlayerInteractEntity(event, item, player, itemStateManager);
         });
 
     }
@@ -94,14 +97,14 @@ public class ItemListener implements Listener {
     @EventHandler
     public void onPlayerItemDrop(PlayerDropItemEvent event) {
         withItemAndPlayer(event.getPlayer(), event.getItemDrop().getItemStack(), (item, player) -> {
-            itemHandler.onPlayerItemDrop(event, item, player);
+            itemHandler.onPlayerItemDrop(event, item, player, itemStateManager);
         });
     }
 
     @EventHandler
     public void onPlayerTakeItemInHand(PlayerItemHeldEvent event) {
         withItemAndPlayer(event.getPlayer(), event.getPlayer().getInventory().getItem(event.getNewSlot()), (item, player) -> {
-            itemHandler.onPlayerTakeItemInHand(event, item, player);
+            itemHandler.onPlayerTakeItemInHand(event, item, player, itemStateManager);
         });
     }
 
@@ -117,13 +120,13 @@ public class ItemListener implements Listener {
                 return;
             }
 
-            itemHandler.onPlayerDamageEntity(event, player, item);
+            itemHandler.onPlayerDamageEntity(event, player, item, itemStateManager);
         });
     }
 
     @EventHandler
     public void onPlayerWearItem(PlayerArmorEquipEvent event) {
-        itemHandler.onPlayerWearItem(event, event.getPlayer());
+        itemHandler.onPlayerWearItem(event, event.getPlayer(), itemStateManager);
     }
 
 

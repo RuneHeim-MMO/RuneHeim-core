@@ -7,8 +7,8 @@ import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
+import org.zuma.examplePlugin.domain.item.meta.ConsumableItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.EquipableItemMeta;
-import org.zuma.examplePlugin.domain.item.meta.QuestItemMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -36,7 +36,7 @@ public class AbstractItemMetaRepository {
                 new AbstractItemMeta(ItemType.MATERIAL, ItemId.MITHRIL_BAR.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Mithril Bar", null, ""),
                 new AbstractItemMeta(ItemType.MATERIAL, ItemId.ADAMANTITE_BAR.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Adamantite Bar", null, ""),
                 // new CustomItemMeta(ItemType.MATERIAL, ItemId.RUNITE_BAR.asInt(), Material.COAL, ItemRarity.RARE, "Runite Bar", null, "")
-                new AbstractItemMeta(ItemType.QUEST, ItemId.RUNITE_BAR.asInt(), Material.COAL, ItemRarity.RARE, "Runite Bar", null, new Gson().toJson(new QuestItemMeta("test")))
+                new AbstractItemMeta(ItemType.CONSUMABLE, ItemId.RUNITE_BAR.asInt(), Material.COAL, ItemRarity.RARE, "Consumable Runite Bar", null, new Gson().toJson(new ConsumableItemMeta((3))))
         );
     }
 }

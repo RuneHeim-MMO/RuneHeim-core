@@ -9,6 +9,7 @@ public class ItemFactory {
             case GEAR -> new EquipableItem(meta);
             case QUEST -> new QuestItem(meta);
             case MATERIAL -> new MaterialItem(meta);
+            case CONSUMABLE -> new ConsumableItem(meta);
             default -> new MiscItem(meta);
         };
     }
