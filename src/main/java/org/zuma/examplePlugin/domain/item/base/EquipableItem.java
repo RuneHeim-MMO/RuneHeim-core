@@ -40,11 +40,15 @@ public class EquipableItem extends AbstractItem implements Equipable, Serializab
     }
 
     public void deserializeAndApplyMeta() {
-        EquipableMeta deserialized = new Gson().fromJson(this.jsonMeta, EquipableMeta.class);
+        if (super.getJsonMetaVersion() == 1) {
+            EquipableMeta deserialized = new Gson().fromJson(this.jsonMeta, EquipableMeta.class);
 
-        modifiers.addAll(deserialized.modifiers());
-        requirements.addAll(deserialized.requirements());
-        requirements.forEach(requirement -> appendToRequirementsLore(Component.text(requirement.getType().getSymbol() + " " + requirement.getMinimumLevel() + " " + requirement.getType().getLabel()).color(NamedTextColor.GRAY)));
+            modifiers.addAll(deserialized.modifiers());
+            requirements.addAll(deserialized.requirements());
+            requirements.forEach(requirement -> appendToRequirementsLore(Component.text(requirement.getType().getSymbol() + " " + requirement.getMinimumLevel() + " " + requirement.getType().getLabel()).color(NamedTextColor.GRAY)));
+            return;
+        }
+
+        throw new Error("[" + this.displayName + "] Unsupported JSON meta version! " + super.getJsonMetaVersion());
     }
-
 }

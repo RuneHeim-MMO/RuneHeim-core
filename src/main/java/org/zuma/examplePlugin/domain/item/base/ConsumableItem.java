@@ -34,9 +34,14 @@ public class ConsumableItem extends AbstractItem implements Stateful, Serializab
 
     @Override
     public void deserializeAndApplyMeta() {
-        ConsumableMeta meta = new Gson().fromJson(super.jsonMeta, ConsumableMeta.class);
-        usages = meta.usages();
-        maxUsages = meta.maxUsages();
+        if (super.getJsonMetaVersion() == 1) {
+            ConsumableMeta meta = new Gson().fromJson(super.jsonMeta, ConsumableMeta.class);
+            usages = meta.usages();
+            maxUsages = meta.maxUsages();
+            return;
+        }
+
+        throw new Error("[" + this.displayName + "] Unsupported JSON meta version! " + super.getJsonMetaVersion());
     }
 
 

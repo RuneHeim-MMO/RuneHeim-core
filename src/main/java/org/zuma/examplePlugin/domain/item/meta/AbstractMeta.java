@@ -9,5 +9,5 @@ import java.util.List;
 
 public record AbstractMeta(ItemType type, int id, Material material, ItemRarity rarity, String displayName,
                            List<Component> lore,
-                           String jsonMeta) {
+                           JsonMeta jsonMeta) {
 }

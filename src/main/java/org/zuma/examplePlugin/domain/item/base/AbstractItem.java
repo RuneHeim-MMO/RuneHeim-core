@@ -38,6 +38,7 @@ public abstract class AbstractItem {
     public final List<Component> lore = new ArrayList<>();
     public final List<Component> requirementsLore = new ArrayList<>();
     public String rarityPrefixSlot, jsonMeta;
+    private final int jsonMetaVersion;
 
     @Nullable
     public StateType stateType = null;
@@ -49,8 +50,10 @@ public abstract class AbstractItem {
         this.displayName = meta.displayName();
         this.customModelData = meta.id();
         this.rarity = meta.rarity();
-        this.jsonMeta = meta.jsonMeta();
         this.rarityPrefixSlot = null;
+
+        this.jsonMeta = meta.jsonMeta().meta();
+        this.jsonMetaVersion = meta.jsonMeta().version();
 
         if (meta.lore() != null) {
             this.lore.addAll(meta.lore());
@@ -165,6 +168,10 @@ public abstract class AbstractItem {
 
     public String getJsonMeta() {
         return jsonMeta;
+    }
+
+    public int getJsonMetaVersion() {
+        return jsonMetaVersion;
     }
 
     @Nullable
