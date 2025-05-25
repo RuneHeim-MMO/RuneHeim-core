@@ -4,7 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.Title;
-import org.zuma.examplePlugin.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Colors;
 
 import java.time.Duration;
 

@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.item.interfaces;
+package org.zuma.examplePlugin.core.interfaces;
 
 import org.zuma.examplePlugin.domain.item.state.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.StateType;

@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.item.interfaces;
+package org.zuma.examplePlugin.core.interfaces;
 
 public interface Serializable {
     public void deserializeAndApplyMeta();

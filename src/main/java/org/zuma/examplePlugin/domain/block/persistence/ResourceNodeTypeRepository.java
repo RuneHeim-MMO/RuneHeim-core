@@ -1,7 +1,7 @@
 package org.zuma.examplePlugin.domain.block.persistence;
 
 import org.bukkit.Material;
-import org.zuma.examplePlugin.constants.SoundType;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
 import org.zuma.examplePlugin.domain.item.ItemDrop;
 import org.zuma.examplePlugin.domain.item.SkillRequirement;

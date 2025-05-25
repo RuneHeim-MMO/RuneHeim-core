@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.constants;
+package org.zuma.examplePlugin.core.constants;
 
 import net.kyori.adventure.text.format.TextColor;
 

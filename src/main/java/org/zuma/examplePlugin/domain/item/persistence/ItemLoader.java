@@ -1,11 +1,11 @@
 package org.zuma.examplePlugin.domain.item.persistence;
 
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.interfaces.Serializable;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.ItemFactory;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
-import org.zuma.examplePlugin.domain.item.interfaces.Serializable;
 
 public class ItemLoader {
     private final ItemMetaRepository abstractItemMetaRepository;

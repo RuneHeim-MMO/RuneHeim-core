@@ -21,6 +21,9 @@ import org.zuma.examplePlugin.domain.item.persistence.ItemLoader;
 import org.zuma.examplePlugin.domain.item.persistence.ItemMetaRepository;
 import org.zuma.examplePlugin.domain.item.state.StateFactory;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
+import org.zuma.examplePlugin.domain.mob.MobHandler;
+import org.zuma.examplePlugin.domain.mob.MobListener;
+import org.zuma.examplePlugin.domain.mob.MobRegistry;
 import org.zuma.examplePlugin.domain.modifier.GearModifierHandler;
 import org.zuma.examplePlugin.domain.modifier.GearModifierListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerListener;
@@ -33,9 +36,11 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private static RuneQuestPlugin pluginInstance;
     private static RunePlayerManager runePlayerManager;
     private static ItemRegistry itemRegistry;
+    private static MobRegistry mobRegistry;
     private ItemHandler itemHandler;
     private StateManager itemStateManager;
     private BlockManager blockManager;
+    private MobHandler mobHandler;
 
     public void initializePlugin() {
         pluginInstance = this;
@@ -69,6 +74,12 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         blockLoader.loadInteractableBlocks();
 
 
+        mobRegistry = new MobRegistry();
+        mobHandler = new MobHandler(mobRegistry);
+        MobListener mobListener = new MobListener(runePlayerManager, mobHandler, mobRegistry);
+        getServer().getPluginManager().registerEvents(mobListener, pluginInstance);
+
+
         // TODO: Load inventory from DB & Verify their meta
 
     }
@@ -84,12 +95,14 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     public void onEnable() {
         initializePlugin();
         registerCommands();
+        mobHandler.cleanup();
         runePlayerManager.handleOnEnable();
     }
 
     @Override
     public void onDisable() {
         runePlayerManager.handleOnDisable();
+        mobHandler.cleanup();
         Bukkit.getScheduler().cancelTasks(this);
     }
 
@@ -107,6 +120,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static ItemRegistry getItemRegistry() {
         return itemRegistry;
+    }
+
+    public static MobRegistry getMobRegistry() {
+        return mobRegistry;
     }
 
 }

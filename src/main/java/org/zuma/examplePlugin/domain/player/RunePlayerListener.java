@@ -10,7 +10,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.zuma.examplePlugin.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.events.player.RunePlayerLoadedEvent;
 

@@ -11,13 +11,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.RayTraceResult;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
+import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
+import org.zuma.examplePlugin.domain.mob.constants.MobId;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.features.admin.inventories.ItemRegistryInventory;
 
@@ -59,6 +61,18 @@ public class AdminCommand implements BasicCommand {
                             .map(skill -> skill.getType().getLabel() + ": " + XpUtils.getLevelFromXp(skill.getXp()))
                             .collect(Collectors.joining(", "))
             );
+        }
+
+        if (Objects.equals(args[0], "mob1")) {
+            AbstractMob mob = RuneQuestPlugin.getMobRegistry().getById(MobId.CHESTPLATE_SHOP.asInt());
+
+            mob.spawn(player.getLocation());
+        }
+
+        if (Objects.equals(args[0], "mob2")) {
+            AbstractMob mob = RuneQuestPlugin.getMobRegistry().getById(MobId.CHESTPLATE_SHOP_DUPE.asInt());
+
+            mob.spawn(player.getLocation());
         }
 
         if (Objects.equals(args[0], "ore")) {

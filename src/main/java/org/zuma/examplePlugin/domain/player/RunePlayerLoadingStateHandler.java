@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.utils.LoadingMessage;
 
 import java.time.Duration;

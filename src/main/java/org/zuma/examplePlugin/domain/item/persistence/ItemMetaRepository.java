@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.item.persistence;
 
 import com.google.gson.Gson;
 import org.bukkit.Material;
+import org.zuma.examplePlugin.core.meta.JsonMeta;
 import org.zuma.examplePlugin.domain.item.SkillRequirement;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
@@ -9,7 +10,6 @@ import org.zuma.examplePlugin.domain.item.constants.ItemType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractMeta;
 import org.zuma.examplePlugin.domain.item.meta.ConsumableMeta;
 import org.zuma.examplePlugin.domain.item.meta.EquipableMeta;
-import org.zuma.examplePlugin.domain.item.meta.JsonMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;

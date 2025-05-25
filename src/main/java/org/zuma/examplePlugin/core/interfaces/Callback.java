@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.interfaces;
+package org.zuma.examplePlugin.core.interfaces;
 
 @FunctionalInterface
 public interface Callback<T> {

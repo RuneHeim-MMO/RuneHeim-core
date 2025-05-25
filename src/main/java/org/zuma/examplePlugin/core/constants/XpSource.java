@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.constants;
+package org.zuma.examplePlugin.core.constants;
 
 public enum XpSource {
     PARTY,

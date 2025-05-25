@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.item.meta;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.zuma.examplePlugin.core.meta.JsonMeta;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
 

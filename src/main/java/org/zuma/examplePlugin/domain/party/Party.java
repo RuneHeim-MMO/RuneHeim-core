@@ -1,7 +1,7 @@
 package org.zuma.examplePlugin.domain.party;
 
 import org.bukkit.Bukkit;
-import org.zuma.examplePlugin.constants.XpSource;
+import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.events.party.PartyOwnerUpdateEvent;
