@@ -1,0 +1,50 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "item/leather_chestplate"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 300
+      },
+      "model": "item/custom/bronze_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 301
+      },
+      "model": "item/custom/iron_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 302
+      },
+      "model": "item/custom/steel_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 303
+      },
+      "model": "item/custom/mithril_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 304
+      },
+      "model": "item/custom/adamantite_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 305
+      },
+      "model": "item/custom/runite_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 306
+      },
+      "model": "item/leather_chestplate"
+    }
+  ]
+}

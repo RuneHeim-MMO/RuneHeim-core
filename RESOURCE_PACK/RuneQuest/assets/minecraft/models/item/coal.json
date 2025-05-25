@@ -1,0 +1,92 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "item/coal"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 100
+      },
+      "model": "item/custom/bronze_ore"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 101
+      },
+      "model": "item/custom/iron_ore"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 102
+      },
+      "model": "item/custom/steel_ore"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 103
+      },
+      "model": "item/custom/mithril_ore"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 104
+      },
+      "model": "item/custom/adamantite_ore"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 105
+      },
+      "model": "item/custom/runite_ore"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 106
+      },
+      "model": "item/custom/coal"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 200
+      },
+      "model": "item/custom/bronze_bar"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 201
+      },
+      "model": "item/custom/iron_bar"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 202
+      },
+      "model": "item/custom/steel_bar"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 203
+      },
+      "model": "item/custom/mithril_bar"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 204
+      },
+      "model": "item/custom/adamantite_bar"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 205
+      },
+      "model": "item/custom/runite_bar"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 206
+      },
+      "model": "item/coal"
+    }
+  ]
+}

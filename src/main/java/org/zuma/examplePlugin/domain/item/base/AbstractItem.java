@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -13,8 +14,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.domain.heads.HeadGenerator;
 import org.zuma.examplePlugin.domain.item.constants.ItemDataKey;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
@@ -43,6 +46,12 @@ public abstract class AbstractItem {
     @Nullable
     public StateType stateType = null;
 
+    @Nullable
+    private final String headTexture;
+    @Nullable
+    private final Color leatherColor;
+
+
     public AbstractItem(AbstractMeta meta) {
         this.type = meta.type();
         this.id = meta.id();
@@ -54,6 +63,8 @@ public abstract class AbstractItem {
 
         this.jsonMeta = meta.jsonMeta().meta();
         this.jsonMetaVersion = meta.jsonMeta().version();
+        this.headTexture = meta.headTexture();
+        this.leatherColor = meta.leatherColor();
 
         if (meta.lore() != null) {
             this.lore.addAll(meta.lore());
@@ -85,6 +96,17 @@ public abstract class AbstractItem {
 
         ItemStack itemStack = new ItemStack(material);
         itemStack.setItemMeta(generateItemMeta(itemStack));
+
+        if (material == Material.PLAYER_HEAD && headTexture != null) {
+            HeadGenerator.setHeadMeta(itemStack, headTexture);
+        }
+
+        if (material.name().contains("LEATHER_") && leatherColor != null) {
+            LeatherArmorMeta meta = (LeatherArmorMeta) itemStack.getItemMeta();
+            meta.setColor(leatherColor);
+            itemStack.setItemMeta(meta);
+        }
+
         this.setDisplayName(itemStack, null, null);
         itemStack.setAmount(amount);
 
@@ -128,7 +150,6 @@ public abstract class AbstractItem {
         itemStack.setItemMeta(meta);
     }
 
-
     private ItemMeta generateItemMeta(ItemStack itemStack) {
         ItemMeta meta = itemStack.getItemMeta();
 
@@ -146,9 +167,7 @@ public abstract class AbstractItem {
 
         itemLore.add(Component.text(""));
         itemLore.add(rarity.getComponent(rarityPrefixSlot == null ? "" : rarityPrefixSlot));
-
         meta.lore(itemLore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());
-
 
         if (customModelData != -1) {
             meta.setCustomModelData(customModelData);

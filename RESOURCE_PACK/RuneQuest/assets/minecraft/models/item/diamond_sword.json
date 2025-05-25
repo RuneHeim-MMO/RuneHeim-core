@@ -1,0 +1,14 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "item/diamond_sword"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 101
+      },
+      "model": "item/custom/warped_fungus_on_a_stick"
+    }
+  ]
+}

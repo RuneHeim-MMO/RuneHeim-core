@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.mob.base;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -27,6 +28,7 @@ public abstract class AbstractMob {
 
     @Nullable
     private MobEquipmentMeta mobEquipment = null;
+    private boolean isBaby = false;
 
     public AbstractMob(AbstractMobMeta meta) {
         this.id = meta.id();
@@ -51,10 +53,23 @@ public abstract class AbstractMob {
         this.mobEquipment = equipment;
     }
 
+    public void setBaby(boolean baby) {
+        this.isBaby = baby;
+    }
+
     private void setLivingEntityMeta(LivingEntity entity) {
         entity.customName(displayName);
         entity.setCustomNameVisible(true);
         entity.setAI(ai);
+
+        if (entity instanceof Ageable ageable) {
+            if (isBaby) {
+                ageable.setBaby();
+            } else {
+                ageable.setAdult();
+            }
+        }
+
 
         if (mobEquipment != null && entity.getEquipment() != null) {
             EntityEquipment equipment = entity.getEquipment();
