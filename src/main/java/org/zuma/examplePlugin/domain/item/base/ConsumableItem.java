@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.item.base;
 
 import com.google.gson.Gson;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.constants.Colors;
@@ -15,6 +16,7 @@ import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.states.ConsumableState;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.events.item.PlayerConsumableConsumeEvent;
 
 public class ConsumableItem extends AbstractItem implements Stateful, Serializable {
     private int usages;
@@ -56,6 +58,14 @@ public class ConsumableItem extends AbstractItem implements Stateful, Serializab
 
         if (state.getUsageLeft() == 0) {
             player.getPlayer().sendMessage("Oops! It's consumed already");
+            return;
+        }
+
+        PlayerConsumableConsumeEvent newEvent = new PlayerConsumableConsumeEvent(player, this, itemStack, itemStateManager, state);
+        Bukkit.getServer().getPluginManager().callEvent(newEvent);
+
+        if (newEvent.isCancelled()) {
+            event.setCancelled(true);
             return;
         }
 

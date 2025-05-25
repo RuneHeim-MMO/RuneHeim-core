@@ -10,6 +10,7 @@ public enum SkillType {
     WOODCUTTING(8, "Woodcutting", 0, "🪓"),
     FISHING(9, "Fishing", 0, "🎣"),
     FIREMAKING(10, "Firemaking", 0, "🔥"),
+    
     CRAFTING(11, "Crafting", 0, "🛠"),
     SMITHING(12, "Smithing", 0, "⚒"),
     MINING(13, "Mining", 0, "⛏");
