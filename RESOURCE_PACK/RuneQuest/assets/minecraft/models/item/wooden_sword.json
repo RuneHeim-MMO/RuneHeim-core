@@ -1,0 +1,50 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "item/wooden_sword"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 700
+      },
+      "model": "item/custom/weapons/bronze_sword"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 701
+      },
+      "model": "item/custom/weapons/iron_sword"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 702
+      },
+      "model": "item/custom/weapons/steel_sword"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 703
+      },
+      "model": "item/custom/weapons/mithril_sword"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 704
+      },
+      "model": "item/custom/weapons/adamantite_sword"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 705
+      },
+      "model": "item/custom/weapons/runite_sword"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 706
+      },
+      "model": "item/custom/weapons/wooden_sword"
+    }
+  ]
+}

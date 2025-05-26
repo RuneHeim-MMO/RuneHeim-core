@@ -17,7 +17,7 @@ public enum ItemId {
     MITHRIL_BAR(203),
     ADAMANTITE_BAR(204),
     RUNITE_BAR(205),
-    
+
     BRONZE_HELMET(300),
     IRON_HELMET(301),
     STEEL_HELMET(302),
@@ -44,7 +44,14 @@ public enum ItemId {
     STEEL_BOOTS(602),
     MITHRIL_BOOTS(603),
     ADAMANTITE_BOOTS(604),
-    RUNITE_BOOTS(605);
+    RUNITE_BOOTS(605),
+
+    BRONZE_SWORD(700),
+    IRON_SWORD(701),
+    STEEL_SWORD(702),
+    MITHRIL_SWORD(703),
+    ADAMANTITE_SWORD(704),
+    RUNITE_SWORD(705);
 
 
     private final int id;
