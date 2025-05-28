@@ -17,6 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.domain.heads.HeadGenerator;
 import org.zuma.examplePlugin.domain.item.constants.ItemDataKey;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
@@ -67,7 +68,7 @@ public abstract class AbstractItem {
         this.leatherColor = meta.leatherColor();
 
         if (meta.lore() != null) {
-            this.lore.addAll(meta.lore());
+            this.lore.addAll(meta.lore().stream().map(lore -> Component.text(lore).color(Colors.ITEM_DESCRIPTION.asColor())).toList());
         }
 
     }

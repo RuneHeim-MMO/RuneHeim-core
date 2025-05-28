@@ -9,6 +9,7 @@ public enum Colors {
     SUCCESS("#0bd69d"),
 
     ITEM_TYPE("#4f4f4f"),
+    ITEM_DESCRIPTION("#c9c9c9"),
 
     INTERACTABLE_ENTITY("#ffe6b8"),
     DEPLETED_RESOURCE("#636363"),
