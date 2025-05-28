@@ -2,8 +2,9 @@ package org.zuma.examplePlugin.domain.item.base;
 
 import com.google.gson.Gson;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.NotNull;
+import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.interfaces.Equipable;
 import org.zuma.examplePlugin.core.interfaces.Serializable;
 import org.zuma.examplePlugin.domain.item.SkillRequirement;
@@ -45,7 +46,17 @@ public class EquipableItem extends AbstractItem implements Equipable, Serializab
 
             modifiers.addAll(deserialized.modifiers());
             requirements.addAll(deserialized.requirements());
-            requirements.forEach(requirement -> appendToRequirementsLore(Component.text(requirement.getType().getSymbol() + " " + requirement.getMinimumLevel() + " " + requirement.getType().getLabel()).color(NamedTextColor.GRAY)));
+
+            // Lore
+            requirements.forEach(requirement -> appendToRequirementsLore(Component.text(requirement.getType().getSymbol() + " " + requirement.getMinimumLevel() + " " + requirement.getType().getLabel()).color(Colors.ITEM_REQUIREMENT.asColor())));
+            modifiers.forEach(modifier -> {
+                int amount = Math.toIntExact(Math.round(modifier.amount()));
+                String sign = amount > 0 ? "+" : "";
+                TextColor color = amount > 0 ? Colors.ITEM_BONUS_POSITIVE.asColor() : Colors.ITEM_BONUS_NEGATIVE.asColor();
+
+                appendToBonusesLore(Component.text(modifier.type().getSymbol() + " " + sign + amount + " " + modifier.type().getLabel()).color(color));
+            });
+
             return;
         }
 

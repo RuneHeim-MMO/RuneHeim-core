@@ -1,7 +1,6 @@
 package org.zuma.examplePlugin.domain.item.base;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Color;
@@ -41,6 +40,7 @@ public abstract class AbstractItem {
     public final String displayName;
     public final List<Component> lore = new ArrayList<>();
     public final List<Component> requirementsLore = new ArrayList<>();
+    public final List<Component> bonusesLore = new ArrayList<>();
     public String rarityPrefixSlot, jsonMeta;
     private final int jsonMetaVersion;
 
@@ -83,6 +83,10 @@ public abstract class AbstractItem {
 
     public void appendToRequirementsLore(Component component) {
         this.requirementsLore.add(component);
+    }
+
+    public void appendToBonusesLore(Component component) {
+        this.bonusesLore.add(component);
     }
 
     public ItemStack asItemStack() {
@@ -158,12 +162,18 @@ public abstract class AbstractItem {
 
         if (!requirementsLore.isEmpty()) {
             itemLore.add(Component.text(""));
-            itemLore.add(Component.text("Requirements: ", NamedTextColor.DARK_GRAY));
+            itemLore.add(Component.text("Requirements: ", Colors.ITEM_LABEL.asColor()));
             Component combined = requirementsLore.stream()
                     .reduce((comp1, comp2) -> comp1.append(Component.text(", ")).append(comp2))
                     .orElse(Component.empty());
 
             itemLore.add(combined);
+        }
+
+        if (!bonusesLore.isEmpty()) {
+            itemLore.add(Component.text(""));
+            itemLore.add(Component.text("Modifiers: ", Colors.ITEM_LABEL.asColor()));
+            itemLore.addAll(bonusesLore);
         }
 
         itemLore.add(Component.text(""));
