@@ -21,15 +21,32 @@ import java.util.List;
 public class ItemMetaRepository {
 
     public List<AbstractMeta> getAll() {
-        EquipableMeta pickaxeReqs = new EquipableMeta(List.of(new Modifier(ModifierType.MINING_BOOST, 1)), List.of(new SkillRequirement(SkillType.MINING, 1)));
+        JsonMeta pickaxeReqs = new JsonMeta(new Gson().toJson(new EquipableMeta(List.of(new Modifier(ModifierType.MINING_BOOST, 1)), List.of(new SkillRequirement(SkillType.MINING, 1)))), 1);
+        JsonMeta axeReqs = new JsonMeta(new Gson().toJson(new EquipableMeta(new ArrayList<>(), List.of(new SkillRequirement(SkillType.WOODCUTTING, 1)))), 1);
+
         JsonMeta empty = new JsonMeta("", 1);
         JsonMeta emptyArmorReqs = new JsonMeta(new Gson().toJson(new EquipableMeta(new ArrayList<>(), new ArrayList<>())), 1);
 
         return List.of(
-                new AbstractMeta(ItemType.GEAR, ItemId.BRONZE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.COMMON, "Bronze Pickaxe", null, null, null, new JsonMeta(new Gson().toJson(pickaxeReqs), 1)),
+                // Tools
+                new AbstractMeta(ItemType.GEAR, ItemId.BRONZE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.COMMON, "Bronze Pickaxe", null, null, null, pickaxeReqs),
+                new AbstractMeta(ItemType.GEAR, ItemId.IRON_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.COMMON, "Iron Pickaxe", null, null, null, pickaxeReqs),
+                new AbstractMeta(ItemType.GEAR, ItemId.STEEL_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.COMMON, "Steel Pickaxe", null, null, null, pickaxeReqs),
+                new AbstractMeta(ItemType.GEAR, ItemId.MITHRIL_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.UNCOMMON, "Mithril Pickaxe", null, null, null, pickaxeReqs),
+                new AbstractMeta(ItemType.GEAR, ItemId.ADAMANTITE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.UNCOMMON, "Adamantite Pickaxe", null, null, null, pickaxeReqs),
+                new AbstractMeta(ItemType.GEAR, ItemId.RUNITE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.RARE, "Runite Pickaxe", null, null, null, pickaxeReqs),
 
+                new AbstractMeta(ItemType.GEAR, ItemId.BRONZE_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Bronze axe", null, null, null, axeReqs),
+                new AbstractMeta(ItemType.GEAR, ItemId.IRON_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Iron axe", null, null, null, axeReqs),
+                new AbstractMeta(ItemType.GEAR, ItemId.STEEL_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Steel axe", null, null, null, axeReqs),
+                new AbstractMeta(ItemType.GEAR, ItemId.MITHRIL_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.UNCOMMON, "Mithril axe", null, null, null, axeReqs),
+                new AbstractMeta(ItemType.GEAR, ItemId.ADAMANTITE_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.UNCOMMON, "Adamantite axe", null, null, null, axeReqs),
+                new AbstractMeta(ItemType.GEAR, ItemId.RUNITE_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.RARE, "Runite axe", null, null, null, axeReqs),
+
+
+                // Materials
                 new AbstractMeta(ItemType.MATERIAL, ItemId.BRONZE_ORE.asInt(), Material.COAL, ItemRarity.COMMON, "Bronze Ore", null, null, null, empty),
-                new AbstractMeta(ItemType.MATERIAL, ItemId.IRON_ORE.asInt(), Material.DIAMOND_SWORD, ItemRarity.COMMON, "Iron Ore", null, null, null, empty),
+                new AbstractMeta(ItemType.MATERIAL, ItemId.IRON_ORE.asInt(), Material.COAL, ItemRarity.COMMON, "Iron Ore", null, null, null, empty),
                 new AbstractMeta(ItemType.MATERIAL, ItemId.STEEL_ORE.asInt(), Material.COAL, ItemRarity.COMMON, "Steel Ore", null, null, null, empty),
                 new AbstractMeta(ItemType.MATERIAL, ItemId.MITHRIL_ORE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Mithril Ore", null, null, null, empty),
                 new AbstractMeta(ItemType.MATERIAL, ItemId.ADAMANTITE_ORE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Adamantite Ore", null, null, null, empty),
@@ -42,6 +59,7 @@ public class ItemMetaRepository {
                 new AbstractMeta(ItemType.MATERIAL, ItemId.ADAMANTITE_BAR.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Adamantite Bar", null, null, null, empty),
                 new AbstractMeta(ItemType.MATERIAL, ItemId.RUNITE_BAR.asInt(), Material.COAL, ItemRarity.RARE, "Runite Bar", null, null, null, empty),
 
+                // Armor
                 new AbstractMeta(ItemType.GEAR, ItemId.BRONZE_HELMET.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Bronze Helmet", null, HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(210, 170, 120), emptyArmorReqs),
                 new AbstractMeta(ItemType.GEAR, ItemId.IRON_HELMET.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Iron Helmet", null, HeadTexture.IRON_HELM.asBase64(), null, emptyArmorReqs),
                 new AbstractMeta(ItemType.GEAR, ItemId.STEEL_HELMET.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Steel Helmet", null, HeadTexture.STEEL_HELM.asBase64(), null, emptyArmorReqs),
@@ -70,12 +88,29 @@ public class ItemMetaRepository {
                 new AbstractMeta(ItemType.GEAR, ItemId.ADAMANTITE_BOOTS.asInt(), Material.DIAMOND_BOOTS, ItemRarity.UNCOMMON, "Adamantite Boots", null, null, null, emptyArmorReqs),
                 new AbstractMeta(ItemType.GEAR, ItemId.RUNITE_BOOTS.asInt(), Material.NETHERITE_BOOTS, ItemRarity.RARE, "Runite Boots", null, null, null, emptyArmorReqs),
 
+
+                // Weapons
                 new AbstractMeta(ItemType.GEAR, ItemId.BRONZE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Bronze Sword", null, null, null, emptyArmorReqs),
                 new AbstractMeta(ItemType.GEAR, ItemId.IRON_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Iron Sword", null, null, null, emptyArmorReqs),
                 new AbstractMeta(ItemType.GEAR, ItemId.STEEL_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Steel Sword", null, null, null, emptyArmorReqs),
                 new AbstractMeta(ItemType.GEAR, ItemId.MITHRIL_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Mithril Sword", null, null, null, emptyArmorReqs),
                 new AbstractMeta(ItemType.GEAR, ItemId.ADAMANTITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Sword", null, null, null, emptyArmorReqs),
-                new AbstractMeta(ItemType.GEAR, ItemId.RUNITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Sword", null, null, null, emptyArmorReqs)
+                new AbstractMeta(ItemType.GEAR, ItemId.RUNITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Sword", null, null, null, emptyArmorReqs),
+
+                new AbstractMeta(ItemType.GEAR, ItemId.BRONZE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Bronze Dagger", null, null, null, emptyArmorReqs),
+                new AbstractMeta(ItemType.GEAR, ItemId.IRON_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Iron Dagger", null, null, null, emptyArmorReqs),
+                new AbstractMeta(ItemType.GEAR, ItemId.STEEL_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Steel Dagger", null, null, null, emptyArmorReqs),
+                new AbstractMeta(ItemType.GEAR, ItemId.MITHRIL_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Mithril Dagger", null, null, null, emptyArmorReqs),
+                new AbstractMeta(ItemType.GEAR, ItemId.ADAMANTITE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Dagger", null, null, null, emptyArmorReqs),
+                new AbstractMeta(ItemType.GEAR, ItemId.RUNITE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Dagger", null, null, null, emptyArmorReqs),
+
+                new AbstractMeta(ItemType.GEAR, ItemId.BRONZE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Bronze Battleaxe", null, null, null, emptyArmorReqs),
+                new AbstractMeta(ItemType.GEAR, ItemId.IRON_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Iron Battleaxe", null, null, null, emptyArmorReqs),
+                new AbstractMeta(ItemType.GEAR, ItemId.STEEL_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Steel Battleaxe", null, null, null, emptyArmorReqs),
+                new AbstractMeta(ItemType.GEAR, ItemId.MITHRIL_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Mithril Battleaxe", null, null, null, emptyArmorReqs),
+                new AbstractMeta(ItemType.GEAR, ItemId.ADAMANTITE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Battleaxe", null, null, null, emptyArmorReqs),
+                new AbstractMeta(ItemType.GEAR, ItemId.RUNITE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Battleaxe", null, null, null, emptyArmorReqs)
+
 
 
                 /*new AbstractMeta(ItemType.CONSUMABLE, ItemId.RUNITE_BAR.asInt(), Material.PLAYER_HEAD, ItemRarity.RARE, "Consumable Runite Bar", null, HeadTexture.IRON_HELM.asBase64(), new JsonMeta(

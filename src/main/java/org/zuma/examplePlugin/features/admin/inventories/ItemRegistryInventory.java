@@ -32,7 +32,9 @@ public class ItemRegistryInventory {
             return;
         }
 
-        List<AbstractItem> paginatedRegistryItems = registry.getAllItems().subList(indexStart, indexEnd);
+        List<AbstractItem> paginatedRegistryItems = registry.getAllItems().stream().sorted((a, b) -> {
+            return a.id - b.id;
+        }).toList().subList(indexStart, indexEnd);
 
         Inventory inventory = Bukkit.createInventory(null, slots, Component.text("Item Registry | Page: " + page + "-" + maxPages));
 

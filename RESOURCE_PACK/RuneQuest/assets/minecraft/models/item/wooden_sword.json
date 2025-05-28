@@ -42,9 +42,75 @@
     },
     {
       "predicate": {
-        "custom_model_data": 706
+        "custom_model_data": 800
       },
-      "model": "item/custom/weapons/wooden_sword"
+      "model": "item/custom/weapons/bronze_dagger"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 801
+      },
+      "model": "item/custom/weapons/iron_dagger"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 802
+      },
+      "model": "item/custom/weapons/steel_dagger"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 803
+      },
+      "model": "item/custom/weapons/mithril_dagger"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 804
+      },
+      "model": "item/custom/weapons/adamantite_dagger"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 805
+      },
+      "model": "item/custom/weapons/runite_dagger"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 900
+      },
+      "model": "item/custom/weapons/bronze_battleaxe"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 901
+      },
+      "model": "item/custom/weapons/iron_battleaxe"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 902
+      },
+      "model": "item/custom/weapons/steel_battleaxe"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 903
+      },
+      "model": "item/custom/weapons/mithril_battleaxe"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 904
+      },
+      "model": "item/custom/weapons/adamantite_battleaxe"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 905
+      },
+      "model": "item/custom/weapons/runite_battleaxe"
     }
   ]
 }
