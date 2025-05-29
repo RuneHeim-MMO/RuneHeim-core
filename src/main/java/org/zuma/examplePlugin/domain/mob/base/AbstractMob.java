@@ -3,16 +3,15 @@ package org.zuma.examplePlugin.domain.mob.base;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.Ageable;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.EulerAngle;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.domain.mob.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
 import org.zuma.examplePlugin.domain.mob.meta.MobEquipmentMeta;
@@ -25,6 +24,10 @@ public abstract class AbstractMob {
     private final boolean ai;
     private final Component displayName;
     private final EntityType baseMob;
+    private final boolean silent;
+
+    @Nullable
+    private MobBehavior behavior;
 
     @Nullable
     private MobEquipmentMeta mobEquipment = null;
@@ -36,6 +39,7 @@ public abstract class AbstractMob {
         this.ai = meta.ai();
         this.displayName = meta.displayName();
         this.baseMob = meta.baseEntity();
+        this.silent = meta.silent();
     }
 
     public void spawn(Location location) {
@@ -61,6 +65,7 @@ public abstract class AbstractMob {
         entity.customName(displayName);
         entity.setCustomNameVisible(true);
         entity.setAI(ai);
+        entity.setSilent(silent);
 
         if (entity instanceof Ageable ageable) {
             if (isBaby) {
@@ -76,27 +81,34 @@ public abstract class AbstractMob {
 
             if (mobEquipment.helmet() != null) {
                 equipment.setHelmet(mobEquipment.helmet());
-                equipment.setHelmetDropChance(0f);
             }
 
             if (mobEquipment.chestplate() != null) {
                 equipment.setChestplate(mobEquipment.chestplate());
-                equipment.setChestplateDropChance(0f);
             }
 
             if (mobEquipment.leggings() != null) {
                 equipment.setLeggings(mobEquipment.leggings());
-                equipment.setLeggingsDropChance(0f);
             }
 
             if (mobEquipment.chestplate() != null) {
                 equipment.setChestplate(mobEquipment.chestplate());
-                equipment.setChestplateDropChance(0f);
             }
 
             if (mobEquipment.hand() != null) {
                 equipment.setItemInMainHand(mobEquipment.hand());
+            }
+
+            if (!(entity instanceof ArmorStand armorStand)) {
+                equipment.setHelmetDropChance(0f);
+                equipment.setChestplateDropChance(0f);
+                equipment.setLeggingsDropChance(0f);
+                equipment.setChestplateDropChance(0f);
                 equipment.setItemInMainHandDropChance(0f);
+            } else {
+                armorStand.setArms(true);
+                armorStand.setRightArmPose(new EulerAngle(Math.toRadians(250), 0, 0));
+                armorStand.setLeftArmPose(new EulerAngle(Math.toRadians(250), 0, 0));
             }
 
 
@@ -114,6 +126,27 @@ public abstract class AbstractMob {
 
     public int getId() {
         return this.id;
+    }
+
+    @Nullable
+    public MobBehavior getBehavior() {
+        return behavior;
+    }
+
+    public void setBehavior(@Nullable MobBehavior behavior) {
+        this.behavior = behavior;
+    }
+
+    public void handlePositiveInteraction(PlayerInteractAtEntityEvent event, RunePlayer player) {
+        if (behavior != null) {
+            behavior.handleInteractionSuccess(event, player);
+        }
+    }
+
+    public void handleNegativeInteraction(PlayerInteractAtEntityEvent event, RunePlayer player) {
+        if (behavior != null) {
+            behavior.handleInteractionSuccess(event, player);
+        }
     }
 
     public void onPlayerInteractWithEntity(PlayerInteractAtEntityEvent event, RunePlayer player) {

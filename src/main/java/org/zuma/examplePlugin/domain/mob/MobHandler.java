@@ -14,9 +14,12 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class MobHandler {
     private final MobRegistry registry;
+    private final MobIdleBehaviorHandler idleManager;
 
     public MobHandler(MobRegistry registry) {
         this.registry = registry;
+        this.idleManager = new MobIdleBehaviorHandler(registry);
+        this.idleManager.start();
     }
 
     // Clears all mobs with MOB_ID data keys.
@@ -48,5 +51,9 @@ public class MobHandler {
 
     public void onEntityDamaged(EntityDamageEvent event, AbstractMob mob) {
         mob.onEntityDamaged(event);
+
+        if (mob.getBehavior() != null && !event.isCancelled()) {
+            mob.getBehavior().handleDamage(event);
+        }
     }
 }

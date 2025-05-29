@@ -15,6 +15,7 @@ public abstract class AbstractShopkeeper extends FriendlyStaticImmortalMob {
     @Override
     public void onPlayerInteractWithEntity(PlayerInteractAtEntityEvent event, RunePlayer player) {
         player.getPlayer().sendMessage("Open shop id " + shopId);
+        super.handlePositiveInteraction(event, player);
         event.setCancelled(true);
     }
 
