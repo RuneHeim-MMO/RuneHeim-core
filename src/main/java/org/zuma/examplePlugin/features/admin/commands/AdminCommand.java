@@ -19,7 +19,6 @@ import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
-import org.zuma.examplePlugin.domain.mob.constants.MobId;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.features.admin.inventories.ItemRegistryInventory;
 
@@ -64,16 +63,56 @@ public class AdminCommand implements BasicCommand {
         }
 
         if (Objects.equals(args[0], "mob1")) {
-            AbstractMob mob = RuneQuestPlugin.getMobRegistry().getById(MobId.CHESTPLATE_SHOP.asInt());
+            AbstractMob mob = RuneQuestPlugin.getMobRegistry().getById(1);
 
             mob.spawn(player.getLocation());
         }
-
         if (Objects.equals(args[0], "mob2")) {
-            AbstractMob mob = RuneQuestPlugin.getMobRegistry().getById(MobId.CHESTPLATE_SHOP_DUPE.asInt());
+            AbstractMob mob = RuneQuestPlugin.getMobRegistry().getById(2);
 
             mob.spawn(player.getLocation());
         }
+        if (Objects.equals(args[0], "mob3")) {
+            AbstractMob mob = RuneQuestPlugin.getMobRegistry().getById(3);
+
+            mob.spawn(player.getLocation());
+        }
+        if (Objects.equals(args[0], "mob4")) {
+            AbstractMob mob = RuneQuestPlugin.getMobRegistry().getById(4);
+
+            mob.spawn(player.getLocation());
+        }
+        if (Objects.equals(args[0], "mob5")) {
+            AbstractMob mob = RuneQuestPlugin.getMobRegistry().getById(5);
+
+            mob.spawn(player.getLocation());
+        }
+        if (Objects.equals(args[0], "mob6")) {
+            AbstractMob mob = RuneQuestPlugin.getMobRegistry().getById(6);
+
+            mob.spawn(player.getLocation());
+        }
+        if (Objects.equals(args[0], "mob7")) {
+            AbstractMob mob = RuneQuestPlugin.getMobRegistry().getById(7);
+
+            mob.spawn(player.getLocation());
+        }
+        if (Objects.equals(args[0], "mob8")) {
+            AbstractMob mob = RuneQuestPlugin.getMobRegistry().getById(8);
+
+            mob.spawn(player.getLocation());
+        }
+        if (Objects.equals(args[0], "mob9")) {
+            AbstractMob mob = RuneQuestPlugin.getMobRegistry().getById(9);
+
+            mob.spawn(player.getLocation());
+        }
+        if (Objects.equals(args[0], "mob10")) {
+            AbstractMob mob = RuneQuestPlugin.getMobRegistry().getById(10);
+
+            mob.spawn(player.getLocation());
+        }
+
 
         if (Objects.equals(args[0], "ore")) {
             RayTraceResult result = player.rayTraceBlocks(20);

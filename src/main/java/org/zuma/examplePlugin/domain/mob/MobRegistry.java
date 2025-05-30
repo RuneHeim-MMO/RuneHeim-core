@@ -1,11 +1,11 @@
 package org.zuma.examplePlugin.domain.mob;
 
 import org.bukkit.NamespacedKey;
-import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
+import org.zuma.examplePlugin.domain.mob.behavior.MobBehaviors;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
 import org.zuma.examplePlugin.domain.mob.constants.MobId;
@@ -14,48 +14,25 @@ import org.zuma.examplePlugin.domain.mob.impl.GenericShopkeeper;
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
 public class MobRegistry {
     private final HashMap<Integer, AbstractMob> mobs = new HashMap<>();
 
-    private final MobBehavior testBehavior = new MobBehavior(
-            // Idle sounds - subtle, ambient, or vocal-ish
-            List.of(
-                    Sound.ENTITY_VILLAGER_AMBIENT,
-                    Sound.ENTITY_VILLAGER_TRADE,
-                    Sound.ENTITY_PARROT_AMBIENT,
-                    Sound.BLOCK_NOTE_BLOCK_BELL,
-                    Sound.BLOCK_NOTE_BLOCK_FLUTE
-            ),
-
-            // Interaction success - positive UI or bell-like sounds
-            List.of(
-                    Sound.UI_TOAST_CHALLENGE_COMPLETE,
-                    Sound.UI_BUTTON_CLICK,
-                    Sound.BLOCK_ANVIL_USE,
-                    Sound.BLOCK_BELL_RESONATE
-            ),
-
-            // Interaction fail - negative or subtle rejection sounds
-            List.of(
-                    Sound.BLOCK_CHEST_LOCKED,
-                    Sound.BLOCK_WOODEN_TRAPDOOR_CLOSE,
-                    Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO
-            ),
-
-            // Damage sounds - small "ouch" or clink-like sounds
-            List.of(
-                    Sound.ENTITY_VILLAGER_HURT,
-                    Sound.BLOCK_ANVIL_LAND,
-                    Sound.BLOCK_LANTERN_BREAK,
-                    Sound.ENTITY_ITEM_PICKUP
-            )
-    );
 
     public MobRegistry() {
-        this.registerMob(new GenericShopkeeper(MobId.CHESTPLATE_SHOP.asInt(), "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, testBehavior, 0));
-        this.registerMob(new GenericShopkeeper(MobId.CHESTPLATE_SHOP_DUPE.asInt(), "Chestplate Shop 1", EquipmentSet.SHOPKEEPER_1, testBehavior, 1));
+        this.registerMob(new GenericShopkeeper(1, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_MAN_1.getBehavior(), 0));
+        this.registerMob(new GenericShopkeeper(2, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_MAN_2.getBehavior(), 0));
+        this.registerMob(new GenericShopkeeper(3, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_MAN_3.getBehavior(), 0));
+        this.registerMob(new GenericShopkeeper(4, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_MAN_4.getBehavior(), 0));
+        this.registerMob(new GenericShopkeeper(5, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_MAN_5.getBehavior(), 0));
+
+        this.registerMob(new GenericShopkeeper(6, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_WOMAN_1.getBehavior(), 0));
+        this.registerMob(new GenericShopkeeper(7, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_WOMAN_2.getBehavior(), 0));
+        this.registerMob(new GenericShopkeeper(8, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_WOMAN_3.getBehavior(), 0));
+        this.registerMob(new GenericShopkeeper(9, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_WOMAN_4.getBehavior(), 0));
+        this.registerMob(new GenericShopkeeper(10, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_WOMAN_5.getBehavior(), 0));
+
+
     }
 
     @Nullable

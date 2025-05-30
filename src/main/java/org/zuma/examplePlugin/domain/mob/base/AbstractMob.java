@@ -11,7 +11,7 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.EulerAngle;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.domain.mob.MobBehavior;
+import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
 import org.zuma.examplePlugin.domain.mob.meta.MobEquipmentMeta;

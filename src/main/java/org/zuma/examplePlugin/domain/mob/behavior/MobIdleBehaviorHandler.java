@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.mob;
+package org.zuma.examplePlugin.domain.mob.behavior;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -6,6 +6,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.domain.mob.MobRegistry;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 
 import java.util.*;

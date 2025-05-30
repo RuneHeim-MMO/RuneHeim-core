@@ -19,7 +19,100 @@ public enum SoundType {
     CRAFT_STEP("ITEM_ARMOR_EQUIP_GENERIC", false, 0.8f, 0.8f),
     MINING_STEP("BLOCK_STONE_STEP", false, 1.0f, 1.0f),
     MINING_SUCCESS("BLOCK_STONE_BREAK", false, 1.0f, 1.5f),
-    INVENTORY_FULL("ENTITY_ITEM_PICKUP", false, 1.0f, 0.8f);
+    INVENTORY_FULL("ENTITY_ITEM_PICKUP", false, 1.0f, 0.8f),
+
+    // AMBIENT
+    VILLAGER_MAN_AMBIENT_1("vocal_villagers:entity.villager.ambient", true, 1, 0.75f),
+    VILLAGER_MAN_AMBIENT_2("vocal_villagers:entity.villager.ambient", true, 1, 0.80f),
+    VILLAGER_MAN_AMBIENT_3("vocal_villagers:entity.villager.ambient", true, 1, 0.90f),
+    VILLAGER_MAN_AMBIENT_4("vocal_villagers:entity.villager.ambient", true, 1, 0.95f),
+    VILLAGER_MAN_AMBIENT_5("vocal_villagers:entity.villager.ambient", true, 1, 1.00f),
+
+    VILLAGER_WOMAN_AMBIENT_1("vocal_villagers:entity.villager.ambient", true, 1, 1.05f),
+    VILLAGER_WOMAN_AMBIENT_2("vocal_villagers:entity.villager.ambient", true, 1, 1.10f),
+    VILLAGER_WOMAN_AMBIENT_3("vocal_villagers:entity.villager.ambient", true, 1, 1.15f),
+    VILLAGER_WOMAN_AMBIENT_4("vocal_villagers:entity.villager.ambient", true, 1, 1.20f),
+    VILLAGER_WOMAN_AMBIENT_5("vocal_villagers:entity.villager.ambient", true, 1, 1.25f),
+
+    // CELEBRATE
+    VILLAGER_MAN_CELEBRATE_1("vocal_villagers:entity.villager.celebrate", true, 1, 0.75f),
+    VILLAGER_MAN_CELEBRATE_2("vocal_villagers:entity.villager.celebrate", true, 1, 0.80f),
+    VILLAGER_MAN_CELEBRATE_3("vocal_villagers:entity.villager.celebrate", true, 1, 0.90f),
+    VILLAGER_MAN_CELEBRATE_4("vocal_villagers:entity.villager.celebrate", true, 1, 0.95f),
+    VILLAGER_MAN_CELEBRATE_5("vocal_villagers:entity.villager.celebrate", true, 1, 1.00f),
+
+    VILLAGER_WOMAN_CELEBRATE_1("vocal_villagers:entity.villager.celebrate", true, 1, 1.05f),
+    VILLAGER_WOMAN_CELEBRATE_2("vocal_villagers:entity.villager.celebrate", true, 1, 1.10f),
+    VILLAGER_WOMAN_CELEBRATE_3("vocal_villagers:entity.villager.celebrate", true, 1, 1.15f),
+    VILLAGER_WOMAN_CELEBRATE_4("vocal_villagers:entity.villager.celebrate", true, 1, 1.20f),
+    VILLAGER_WOMAN_CELEBRATE_5("vocal_villagers:entity.villager.celebrate", true, 1, 1.25f),
+
+    // DEATH
+    VILLAGER_MAN_HURT_1("ENTITY_VILLAGER_HURT", false, 1, 0.75f),
+    VILLAGER_MAN_HURT_2("ENTITY_VILLAGER_HURT", false, 1, 0.80f),
+    VILLAGER_MAN_HURT_3("ENTITY_VILLAGER_HURT", false, 1, 0.90f),
+    VILLAGER_MAN_HURT_4("ENTITY_VILLAGER_HURT", false, 1, 0.95f),
+    VILLAGER_MAN_HURT_5("ENTITY_VILLAGER_HURT", false, 1, 1.00f),
+
+    VILLAGER_WOMAN_HURT_1("ENTITY_VILLAGER_HURT", false, 1, 1.05f),
+    VILLAGER_WOMAN_HURT_2("ENTITY_VILLAGER_HURT", false, 1, 1.10f),
+    VILLAGER_WOMAN_HURT_3("ENTITY_VILLAGER_HURT", false, 1, 1.15f),
+    VILLAGER_WOMAN_HURT_4("ENTITY_VILLAGER_HURT", false, 1, 1.20f),
+    VILLAGER_WOMAN_HURT_5("ENTITY_VILLAGER_HURT", false, 1, 1.25f),
+
+    // NO
+    VILLAGER_MAN_NO_1("ENTITY_VILLAGER_NO", false, 1, 0.75f),
+    VILLAGER_MAN_NO_2("ENTITY_VILLAGER_NO", false, 1, 0.80f),
+    VILLAGER_MAN_NO_3("ENTITY_VILLAGER_NO", false, 1, 0.90f),
+    VILLAGER_MAN_NO_4("ENTITY_VILLAGER_NO", false, 1, 0.95f),
+    VILLAGER_MAN_NO_5("ENTITY_VILLAGER_NO", false, 1, 1.00f),
+
+    VILLAGER_WOMAN_NO_1("ENTITY_VILLAGER_NO", false, 1, 1.05f),
+    VILLAGER_WOMAN_NO_2("ENTITY_VILLAGER_NO", false, 1, 1.10f),
+    VILLAGER_WOMAN_NO_3("ENTITY_VILLAGER_NO", false, 1, 1.15f),
+    VILLAGER_WOMAN_NO_4("ENTITY_VILLAGER_NO", false, 1, 1.20f),
+    VILLAGER_WOMAN_NO_5("ENTITY_VILLAGER_NO", false, 1, 1.25f),
+
+    // Villager Man Death variants
+    VILLAGER_MAN_DEATH_1("ENTITY_VILLAGER_DEATH", true, 1, 0.75f),
+    VILLAGER_MAN_DEATH_2("ENTITY_VILLAGER_DEATH", true, 1, 0.80f),
+    VILLAGER_MAN_DEATH_3("ENTITY_VILLAGER_DEATH", true, 1, 0.90f),
+    VILLAGER_MAN_DEATH_4("ENTITY_VILLAGER_DEATH", true, 1, 0.95f),
+    VILLAGER_MAN_DEATH_5("ENTITY_VILLAGER_DEATH", true, 1, 1.00f),
+
+    // Villager Woman Death variants
+    VILLAGER_WOMAN_DEATH_1("ENTITY_VILLAGER_DEATH", true, 1, 1.05f),
+    VILLAGER_WOMAN_DEATH_2("ENTITY_VILLAGER_DEATH", true, 1, 1.10f),
+    VILLAGER_WOMAN_DEATH_3("ENTITY_VILLAGER_DEATH", true, 1, 1.15f),
+    VILLAGER_WOMAN_DEATH_4("ENTITY_VILLAGER_DEATH", true, 1, 1.20f),
+    VILLAGER_WOMAN_DEATH_5("ENTITY_VILLAGER_DEATH", true, 1, 1.25f),
+
+    // TRADE
+    VILLAGER_MAN_TRADE_1("vocal_villagers:entity.villager.trade", true, 1, 0.75f),
+    VILLAGER_MAN_TRADE_2("vocal_villagers:entity.villager.trade", true, 1, 0.80f),
+    VILLAGER_MAN_TRADE_3("vocal_villagers:entity.villager.trade", true, 1, 0.90f),
+    VILLAGER_MAN_TRADE_4("vocal_villagers:entity.villager.trade", true, 1, 0.95f),
+    VILLAGER_MAN_TRADE_5("vocal_villagers:entity.villager.trade", true, 1, 1.00f),
+
+    VILLAGER_WOMAN_TRADE_1("vocal_villagers:entity.villager.trade", true, 1, 1.05f),
+    VILLAGER_WOMAN_TRADE_2("vocal_villagers:entity.villager.trade", true, 1, 1.10f),
+    VILLAGER_WOMAN_TRADE_3("vocal_villagers:entity.villager.trade", true, 1, 1.15f),
+    VILLAGER_WOMAN_TRADE_4("vocal_villagers:entity.villager.trade", true, 1, 1.20f),
+    VILLAGER_WOMAN_TRADE_5("vocal_villagers:entity.villager.trade", true, 1, 1.25f),
+
+    // YES
+    VILLAGER_MAN_YES_1("vocal_villagers:entity.villager.yes", true, 1, 0.75f),
+    VILLAGER_MAN_YES_2("vocal_villagers:entity.villager.yes", true, 1, 0.80f),
+    VILLAGER_MAN_YES_3("vocal_villagers:entity.villager.yes", true, 1, 0.90f),
+    VILLAGER_MAN_YES_4("vocal_villagers:entity.villager.yes", true, 1, 0.95f),
+    VILLAGER_MAN_YES_5("vocal_villagers:entity.villager.yes", true, 1, 1.00f),
+
+    VILLAGER_WOMAN_YES_1("vocal_villagers:entity.villager.yes", true, 1, 1.05f),
+    VILLAGER_WOMAN_YES_2("vocal_villagers:entity.villager.yes", true, 1, 1.10f),
+    VILLAGER_WOMAN_YES_3("vocal_villagers:entity.villager.yes", true, 1, 1.15f),
+    VILLAGER_WOMAN_YES_4("vocal_villagers:entity.villager.yes", true, 1, 1.20f),
+    VILLAGER_WOMAN_YES_5("vocal_villagers:entity.villager.yes", true, 1, 1.25f);
+
 
     private final String soundKey;
     private final boolean isCustom;
