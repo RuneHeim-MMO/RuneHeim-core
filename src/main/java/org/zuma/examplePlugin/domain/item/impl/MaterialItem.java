@@ -1,11 +1,11 @@
-package org.zuma.examplePlugin.domain.item.base;
+package org.zuma.examplePlugin.domain.item.impl;
 
+import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 
 public class MaterialItem extends AbstractItem {
     public MaterialItem(AbstractItemMeta meta) {
         super(meta);
         this.setRarityPrefixSlot("⚒");
-
     }
 }

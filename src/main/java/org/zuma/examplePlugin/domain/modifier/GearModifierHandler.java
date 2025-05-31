@@ -5,7 +5,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.zuma.examplePlugin.core.utils.ModifierUtils;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
-import org.zuma.examplePlugin.domain.item.base.EquipableItem;
+import org.zuma.examplePlugin.domain.item.impl.EquipableItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.modifier.GearModifiersRecalculatedEvent;
 

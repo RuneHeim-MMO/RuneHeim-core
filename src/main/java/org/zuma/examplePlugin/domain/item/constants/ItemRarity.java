@@ -6,7 +6,7 @@ import net.kyori.adventure.text.format.TextColor;
 import java.util.Objects;
 
 public enum ItemRarity {
-    NOT_APPLICABLE(-1, "", "#000000"),
+    NOT_APPLICABLE(-1, "", "#8c8c8c"),
     COMMON(0, "Common", "#d1d1d1"),
     UNCOMMON(1, "Uncommon", "#76e876"),
     RARE(2, "Rare", "#82c1ff"),

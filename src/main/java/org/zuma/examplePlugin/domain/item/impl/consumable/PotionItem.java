@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.item.consumable.base;
+package org.zuma.examplePlugin.domain.item.impl.consumable;
 
 import com.google.gson.Gson;
 import net.kyori.adventure.text.Component;
@@ -9,8 +9,9 @@ import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.interfaces.Serializable;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
+import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
-import org.zuma.examplePlugin.domain.item.meta.MultiConsumableMeta;
+import org.zuma.examplePlugin.domain.item.meta.PotionMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
@@ -18,11 +19,12 @@ import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.item.PlayerConsumableConsumeEvent;
 
-public class MultiConsumableItem extends SingleConsumableItem implements Stateful, Serializable {
+public class PotionItem extends AbstractItem implements Stateful, Serializable {
     private int usages;
     private int maxUsages;
+    private String someEffect;
 
-    public MultiConsumableItem(AbstractItemMeta meta) {
+    public PotionItem(AbstractItemMeta meta) {
         super(meta);
         this.setRarityPrefixSlot("CONSUMABLE");
         this.setStateType(StateType.MULTI_CONSUMABLE);
@@ -37,9 +39,10 @@ public class MultiConsumableItem extends SingleConsumableItem implements Statefu
     @Override
     public void deserializeAndApplyMeta() {
         if (super.getJsonMetaVersion() == 1) {
-            MultiConsumableMeta meta = new Gson().fromJson(super.jsonMeta, MultiConsumableMeta.class);
+            PotionMeta meta = new Gson().fromJson(super.jsonMeta, PotionMeta.class);
             usages = meta.usages();
             maxUsages = meta.maxUsages();
+            someEffect = meta.someEffect();
             return;
         }
 
@@ -61,7 +64,7 @@ public class MultiConsumableItem extends SingleConsumableItem implements Statefu
             return;
         }
 
-        PlayerConsumableConsumeEvent newEvent = new PlayerConsumableConsumeEvent(player, this, itemStack, itemStateManager, state);
+        PlayerConsumableConsumeEvent newEvent = new PlayerConsumableConsumeEvent(player, this, itemStack, itemStateManager);
         Bukkit.getServer().getPluginManager().callEvent(newEvent);
 
         if (newEvent.isCancelled()) {

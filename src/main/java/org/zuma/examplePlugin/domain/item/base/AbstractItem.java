@@ -157,7 +157,6 @@ public abstract class AbstractItem {
 
     private ItemMeta generateItemMeta(ItemStack itemStack) {
         ItemMeta meta = itemStack.getItemMeta();
-
         List<Component> itemLore = new ArrayList<>(lore);
 
         if (!requirementsLore.isEmpty()) {

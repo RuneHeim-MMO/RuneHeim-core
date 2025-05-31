@@ -1,10 +1,11 @@
-package org.zuma.examplePlugin.domain.item.base;
+package org.zuma.examplePlugin.domain.item.impl;
 
 import com.google.gson.Gson;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.interfaces.Serializable;
+import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.QuestMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;

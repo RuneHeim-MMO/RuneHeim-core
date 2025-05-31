@@ -10,7 +10,7 @@ import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.EquipableMeta;
-import org.zuma.examplePlugin.domain.item.meta.MultiConsumableMeta;
+import org.zuma.examplePlugin.domain.item.meta.FoodMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
@@ -37,8 +37,65 @@ public class ItemRepository {
                 new AbstractItemMeta(ItemType.MATERIAL, ItemId.STEEL_BAR.asInt(), Material.COAL, ItemRarity.COMMON, "Steel Bar", List.of("Refined steel bar, favored by seasoned blacksmiths."), null, null, empty),
                 new AbstractItemMeta(ItemType.MATERIAL, ItemId.MITHRIL_BAR.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Mithril Bar", List.of("Light yet strong mithril bar, perfect for advanced gear."), null, null, empty),
                 new AbstractItemMeta(ItemType.MATERIAL, ItemId.ADAMANTITE_BAR.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Adamantite Bar", List.of("Durable adamantite bar, for crafting superior items."), null, null, empty),
-                // new AbstractItemMeta(ItemType.MATERIAL, ItemId.RUNITE_BAR.asInt(), Material.COAL, ItemRarity.RARE, "Runite Bar", List.of("Runite bar pulsing with arcane energy, highly prized."), null, null, empty),
+                new AbstractItemMeta(ItemType.MATERIAL, ItemId.RUNITE_BAR.asInt(), Material.COAL, ItemRarity.RARE, "Runite Bar", List.of("Runite bar pulsing with arcane energy, highly prized."), null, null, empty),
 
+                new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_HERRING.asInt(), Material.SALMON, ItemRarity.COMMON, "Raw Herring", List.of("A slim, slippery river fish."), null, null, empty),
+                new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_MINNOW.asInt(), Material.SALMON, ItemRarity.COMMON, "Raw Minnow", List.of("A tiny fish, barely worth a bite."), null, null, empty),
+                new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_TROUT.asInt(), Material.SALMON, ItemRarity.COMMON, "Raw Trout", List.of("Caught fresh from the stream."), null, null, empty),
+                new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_SALMON.asInt(), Material.SALMON, ItemRarity.COMMON, "Raw Salmon", List.of("Firm and pink, ready to roast."), null, null, empty),
+                new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_TUNA.asInt(), Material.SALMON, ItemRarity.COMMON, "Raw Tuna", List.of("Heavy and dense sea catch."), null, null, empty),
+                new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_CRAWLER.asInt(), Material.SALMON, ItemRarity.COMMON, "Raw Crawler", List.of("Squirmy shelled creature from the reef."), null, null, empty),
+                new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_PIKE.asInt(), Material.SALMON, ItemRarity.COMMON, "Raw Pike", List.of("Aggressive lake fish with sharp bones."), null, null, empty),
+                new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_EEL.asInt(), Material.SALMON, ItemRarity.UNCOMMON, "Raw Eel", List.of("Slippery and tough to handle."), null, null, empty),
+                new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_SHARK.asInt(), Material.SALMON, ItemRarity.UNCOMMON, "Raw Shark", List.of("Muscle-bound predator, not to be eaten raw."), null, null, empty),
+                new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_TURTLE.asInt(), Material.SALMON, ItemRarity.RARE, "Raw Turtle", List.of("Its thick shell guards rich meat inside."), null, null, empty),
+                new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_RAY.asInt(), Material.SALMON, ItemRarity.RARE, "Raw Ray", List.of("Soft flesh beneath leathery wings."), null, null, empty),
+                new AbstractItemMeta(ItemType.MISC, ItemId.BURNT_FISH.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Charred Remains", List.of("All that's left after fire claims its meal."), null, null, empty),
+
+                // Food
+                new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_HERRING.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Cooked Herring",
+                        List.of("Lightly roasted river fish, a quick meal."), null, null, new JsonMeta(
+                        new Gson().toJson(new FoodMeta(3)), 1)),
+
+                new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_MINNOW.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Cooked Minnow",
+                        List.of("Tiny fish, crisped over a fire."), null, null, new JsonMeta(
+                        new Gson().toJson(new FoodMeta(1)), 1)),
+
+                new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_TROUT.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Cooked Trout",
+                        List.of("Flaky and rich, a river-dweller's feast."), null, null, new JsonMeta(
+                        new Gson().toJson(new FoodMeta(7)), 1)),
+
+                new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_SALMON.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Cooked Salmon",
+                        List.of("Bold flavor, pink flesh, campfire ready."), null, null, new JsonMeta(
+                        new Gson().toJson(new FoodMeta(9)), 1)),
+
+                new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_TUNA.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Cooked Tuna",
+                        List.of("Dense meat, satisfying and nutritious."), null, null, new JsonMeta(
+                        new Gson().toJson(new FoodMeta(10)), 1)),
+
+                new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_CRAWLER.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Cooked Crawler",
+                        List.of("Charred crustacean, crunchy and filling."), null, null, new JsonMeta(
+                        new Gson().toJson(new FoodMeta(12)), 1)),
+
+                new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_PIKE.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Cooked Pike",
+                        List.of("A sharp-finned delicacy from cold waters."), null, null, new JsonMeta(
+                        new Gson().toJson(new FoodMeta(14)), 1)),
+
+                new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_EEL.asInt(), Material.COOKED_SALMON, ItemRarity.UNCOMMON, "Cooked Eel",
+                        List.of("Grilled serpent of the deep marshes."), null, null, new JsonMeta(
+                        new Gson().toJson(new FoodMeta(16)), 1)),
+
+                new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_SHARK.asInt(), Material.COOKED_SALMON, ItemRarity.UNCOMMON, "Cooked Shark",
+                        List.of("Meaty apex predator, expertly seared."), null, null, new JsonMeta(
+                        new Gson().toJson(new FoodMeta(20)), 1)),
+
+                new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_TURTLE.asInt(), Material.COOKED_SALMON, ItemRarity.RARE, "Cooked Turtle",
+                        List.of("Tender shellbeast meat, slow-cooked to perfection."), null, null, new JsonMeta(
+                        new Gson().toJson(new FoodMeta(21)), 1)),
+
+                new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_RAY.asInt(), Material.COOKED_SALMON, ItemRarity.RARE, "Cooked Ray",
+                        List.of("Wings of the deep skyfish, rich in nutrients."), null, null, new JsonMeta(
+                        new Gson().toJson(new FoodMeta(22)), 1)),
 
                 // Tools
                 new AbstractItemMeta(ItemType.GEAR, ItemId.BRONZE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.COMMON, "Bronze Pickaxe", List.of("Bronze pickaxe, basic mining tool."), null, null,
@@ -621,12 +678,9 @@ public class ItemRepository {
                                         List.of(new SkillRequirement(SkillType.ATTACK, 40))
                                 )
                         ), 1)
-                ),
+                )
 
 
-                new AbstractItemMeta(ItemType.MULTI_CONSUMABLE, ItemId.RUNITE_BAR.asInt(), Material.PLAYER_HEAD, ItemRarity.RARE, "Consumable Runite Bar", null, HeadTexture.IRON_HELM.asBase64(), null, new JsonMeta(
-                        new Gson().toJson(new MultiConsumableMeta(5, 3)),
-                        1))
         );
     }
 }
