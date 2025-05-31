@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.item;
+package org.zuma.examplePlugin.domain.skill;
 
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;

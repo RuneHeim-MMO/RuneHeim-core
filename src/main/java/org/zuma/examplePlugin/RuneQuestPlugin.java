@@ -28,6 +28,7 @@ import org.zuma.examplePlugin.domain.modifier.GearModifierHandler;
 import org.zuma.examplePlugin.domain.modifier.GearModifierListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
+import org.zuma.examplePlugin.domain.recipes.RecipeRegistry;
 import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -41,6 +42,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private StateManager itemStateManager;
     private BlockManager blockManager;
     private MobHandler mobHandler;
+    private RecipeRegistry recipeRegistry;
 
     public void initializePlugin() {
         pluginInstance = this;
@@ -73,12 +75,12 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         blockLoader.fetchAllResourceNodeTypes();
         blockLoader.loadInteractableBlocks();
 
-
         mobRegistry = new MobRegistry();
         mobHandler = new MobHandler(mobRegistry);
         MobListener mobListener = new MobListener(runePlayerManager, mobHandler, mobRegistry);
         getServer().getPluginManager().registerEvents(mobListener, pluginInstance);
 
+        recipeRegistry = new RecipeRegistry(itemRegistry);
 
         // TODO: Load inventory from DB & Verify their meta
 

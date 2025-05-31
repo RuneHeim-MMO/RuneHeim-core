@@ -2,9 +2,9 @@ package org.zuma.examplePlugin.domain.block.meta;
 
 import org.bukkit.Material;
 import org.zuma.examplePlugin.core.constants.SoundType;
-import org.zuma.examplePlugin.domain.item.ItemDrop;
-import org.zuma.examplePlugin.domain.item.SkillRequirement;
+import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
+import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -15,14 +15,14 @@ public class ResourceNodeType {
     private final Material material;
     private final List<SkillRequirement> requirements;
     private final int baseGatheringDurationMs, respawnDurationSecs;
-    private final ItemDrop drop;
+    private final ItemRecord drop;
     private final SoundType stepSound, gatherSuccessSound;
 
     @Nullable
     private final ModifierType toolModifier;
 
     public ResourceNodeType(int id, String label, Material material, List<SkillRequirement> requirements, @Nullable ModifierType toolRequiresModifier,
-                            int baseGatheringDurationMs, int respawnDurationSecs, ItemDrop drop, String wrongToolMsg, String actionVerb, SoundType stepSound, SoundType gatherSuccessSound) {
+                            int baseGatheringDurationMs, int respawnDurationSecs, ItemRecord drop, String wrongToolMsg, String actionVerb, SoundType stepSound, SoundType gatherSuccessSound) {
         this.id = id;
         this.label = label;
         this.material = material;
@@ -53,7 +53,7 @@ public class ResourceNodeType {
         return respawnDurationSecs;
     }
 
-    public ItemDrop getDrop() {
+    public ItemRecord getDrop() {
         return drop;
     }
 

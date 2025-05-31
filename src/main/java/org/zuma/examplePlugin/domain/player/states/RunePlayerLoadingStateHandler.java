@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.player;
+package org.zuma.examplePlugin.domain.player.states;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;

@@ -3,8 +3,8 @@ package org.zuma.examplePlugin.core.utils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import org.zuma.examplePlugin.domain.item.SkillRequirement;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.util.ArrayList;

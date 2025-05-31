@@ -9,36 +9,35 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
-import org.zuma.examplePlugin.core.interfaces.Equipable;
+import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.TextUtils;
-import org.zuma.examplePlugin.domain.item.ItemDrop;
-import org.zuma.examplePlugin.domain.item.SkillRequirement;
+import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
+import org.zuma.examplePlugin.domain.player.states.RunePlayerBusyStateHandler;
 import org.zuma.examplePlugin.domain.skill.Skill;
+import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.events.player.RunePlayerGainedXPEvent;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 public class RunePlayer {
     private final UUID uuid;
     private final List<Modifier> gearModifiers = new ArrayList<>();
     private final EnumMap<SkillType, Skill> skills = new EnumMap<>(SkillType.class);
-    private boolean isBusy;
+    private final RunePlayerBusyStateHandler busyStateHandler;
 
     public RunePlayer(UUID uuid) {
         this.uuid = uuid;
-        this.isBusy = false;
+        this.busyStateHandler = new RunePlayerBusyStateHandler(this);
 
         // Each player starts with default XP in all skill types.
         for (SkillType type : SkillType.values()) {
@@ -98,67 +97,6 @@ public class RunePlayer {
 
     }
 
-    public void useBusyState(int durationMs, String action, String successAction, SoundType stepSound, SoundType successSound, Consumer<Void> consumer) {
-        UUID uuid = this.getUUID();
-        int steps = 10;
-        long stepDuration = Math.max(1L, (durationMs / 50L) / steps);
-        AtomicInteger currentSteps = new AtomicInteger();
-
-        if (isBusy) {
-            showFailTitle("You are already busy with something else!");
-            return;
-        }
-
-        isBusy = true;
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                Player onlinePlayer = Bukkit.getPlayer(uuid);
-
-
-                if (onlinePlayer == null || !onlinePlayer.isOnline()) {
-                    isBusy = false;
-                    this.cancel();
-                    return;
-                }
-
-                if (!isBusy) {
-                    isBusy = false;
-                    showFailTitle("Task cancelled.");
-                    this.cancel();
-                    return;
-                }
-
-
-                if (currentSteps.incrementAndGet() >= steps) {
-                    isBusy = false;
-                    this.cancel();
-                    consumer.accept(null);
-
-                    successSound.play(onlinePlayer);
-                    onlinePlayer.showTitle(Title.title(
-                            Component.text(""),
-                            Component.text(successAction).color(Colors.SUCCESS.asColor()),
-                            TextUtils.getGenericDuration()
-                    ));
-                }
-
-                // Progress bar
-                int secondsLeft = (int) Math.ceil(((durationMs / (double) steps) * (steps - currentSteps.get())) / 1000.0);
-
-                stepSound.play(onlinePlayer);
-                onlinePlayer.showTitle(Title.title(
-                        TextUtils.buildLoadingBar(steps, currentSteps.get()),
-                        Component.text("[" + secondsLeft + "s] ").color(Colors.SUCCESS.asColor())
-                                .append(Component.text(action).color(Colors.SUBTITLE.asColor())),
-                        TextUtils.getGenericDuration()
-                ));
-
-
-            }
-        }.runTaskTimer(RuneQuestPlugin.getInstance(), 0L, stepDuration);
-    }
 
     public void showFailTitle(String text) {
         this.getPlayer().showTitle(Title.title(
@@ -169,28 +107,37 @@ public class RunePlayer {
         SoundType.FAIL_ACTION.play(this.getPlayer());
     }
 
+    public void showFailedMessage(Component text) {
+        getPlayer().sendMessage(text.color(Colors.ERROR.asColor()));
+        SoundType.FAIL_ACTION.play(this.getPlayer());
+    }
+
+    public void useBusyState(int durationMs, String action, String successAction, SoundType stepSound, SoundType successSound, Consumer<Void> consumer) {
+        this.busyStateHandler.useBusyState(durationMs, action, successAction, stepSound, successSound, consumer);
+    }
+
     public boolean isBusy() {
-        return isBusy;
+        return busyStateHandler.isBusy();
     }
 
     public void cancelTask() {
-        isBusy = false;
+        busyStateHandler.cancelTask();
     }
 
-    public boolean meetsRequirements(AbstractItem item) {
-        if (item instanceof Equipable) {
-            List<SkillRequirement> requirements = ((Equipable) item).getRequirements();
+    public boolean meetsRequirements(Object item) {
+        if (item instanceof SkillRestrictable) {
+            List<SkillRequirement> requirements = ((SkillRestrictable) item).getRequirements();
             return requirements.stream().allMatch(req -> req.playerMeetsRequirement(this));
 
         }
         return true;
     }
 
-    public void addItemOrDrop(ItemDrop item) {
+    public void addItemOrDrop(ItemRecord item) {
         AbstractItem customItem = RuneQuestPlugin.getItemRegistry().getItem(item.getItemId());
 
         if (customItem == null) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot add item with id " + item.getItemId() + " to players inventory. Item does not exist in registry.");
+            RuneQuestPlugin.getRuneLogger().logWithStack(LogLevel.WARN, "Cannot add item with id " + item.getItemId() + " to players inventory. Item does not exist in registry.");
             return;
         }
 

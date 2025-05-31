@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.core.constants.Colors;
-import org.zuma.examplePlugin.core.interfaces.Equipable;
+import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.base.EquipableItem;
@@ -137,7 +137,7 @@ public class ItemListener implements Listener {
         }
 
         withItemAndPlayer(whoClicked, event.getCursor(), (item, player) -> {
-            if (!(item instanceof Equipable)) {
+            if (!(item instanceof SkillRestrictable)) {
                 return;
             }
 
@@ -174,7 +174,7 @@ public class ItemListener implements Listener {
         }
 
         withItemAndPlayer(whoClicked, event.getCurrentItem(), (item, player) -> {
-            if (!(item instanceof Equipable)) {
+            if (!(item instanceof SkillRestrictable)) {
                 return;
             }
 

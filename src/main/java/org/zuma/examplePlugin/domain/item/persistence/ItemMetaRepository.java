@@ -5,7 +5,6 @@ import org.bukkit.Color;
 import org.bukkit.Material;
 import org.zuma.examplePlugin.core.meta.JsonMeta;
 import org.zuma.examplePlugin.domain.heads.HeadTexture;
-import org.zuma.examplePlugin.domain.item.SkillRequirement;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
@@ -13,6 +12,7 @@ import org.zuma.examplePlugin.domain.item.meta.AbstractMeta;
 import org.zuma.examplePlugin.domain.item.meta.EquipableMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
+import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.util.List;

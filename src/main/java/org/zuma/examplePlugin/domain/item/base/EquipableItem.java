@@ -5,19 +5,19 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.core.constants.Colors;
-import org.zuma.examplePlugin.core.interfaces.Equipable;
 import org.zuma.examplePlugin.core.interfaces.Serializable;
-import org.zuma.examplePlugin.domain.item.SkillRequirement;
+import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.domain.item.meta.AbstractMeta;
 import org.zuma.examplePlugin.domain.item.meta.EquipableMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
+import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class EquipableItem extends AbstractItem implements Equipable, Serializable {
+public class EquipableItem extends AbstractItem implements SkillRestrictable, Serializable {
     private final List<Modifier> modifiers = new ArrayList<>();
     private final List<SkillRequirement> requirements = new ArrayList<>();
 
