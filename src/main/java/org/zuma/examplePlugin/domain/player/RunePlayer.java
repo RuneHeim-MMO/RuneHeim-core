@@ -10,6 +10,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.constants.SoundType;
@@ -20,6 +21,7 @@ import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
+import org.zuma.examplePlugin.domain.party.Party;
 import org.zuma.examplePlugin.domain.player.states.RunePlayerBusyStateHandler;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
@@ -34,6 +36,7 @@ public class RunePlayer {
     private final List<Modifier> gearModifiers = new ArrayList<>();
     private final EnumMap<SkillType, Skill> skills = new EnumMap<>(SkillType.class);
     private final RunePlayerBusyStateHandler busyStateHandler;
+    private @Nullable Party party;
 
     public RunePlayer(UUID uuid) {
         this.uuid = uuid;
@@ -97,6 +100,13 @@ public class RunePlayer {
 
     }
 
+    public void addShareableXp(SkillType type, int xp) {
+        if (party != null) {
+            party.splitXPBetweenMembers(type, xp);
+        } else {
+            addSkillXp(type, xp, XpSource.PERSONAL);
+        }
+    }
 
     public void showFailTitle(String text) {
         this.getPlayer().showTitle(Title.title(
@@ -169,5 +179,13 @@ public class RunePlayer {
         }
 
         player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 1f, 1f);
+    }
+
+    public @Nullable Party getParty() {
+        return party;
+    }
+
+    public void setParty(@Nullable Party party) {
+        this.party = party;
     }
 }

@@ -14,9 +14,11 @@ import org.zuma.examplePlugin.domain.recipes.base.SmeltingRecipe;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeId;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
+import org.zuma.examplePlugin.domain.skill.SkillXpRecord;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,7 +33,7 @@ public class RecipeRegistry {
                 List.of(new SkillRequirement(SkillType.COOKING, 1)),
                 List.of(new ItemRecord(ItemId.IRON_ORE, 1)),
                 new ItemRecord(ItemId.IRON_BAR, 1),
-                null);
+                null, List.of(new SkillXpRecord(SkillType.SMITHING, 5000)));
     }
 
     public List<AbstractRecipe> getRecipesByType(RecipeType type) {
@@ -42,7 +44,11 @@ public class RecipeRegistry {
         return recipes.get(id);
     }
 
-    public void registerRecipe(int id, RecipeType type, int craftTimeMs, List<SkillRequirement> requirements, List<ItemRecord> ingredients, ItemRecord successResult, @Nullable ItemRecord failResult) {
+    public Collection<AbstractRecipe> getAllRecipes() {
+        return recipes.values();
+    }
+
+    public void registerRecipe(int id, RecipeType type, int craftTimeMs, List<SkillRequirement> requirements, List<ItemRecord> ingredients, ItemRecord successResult, @Nullable ItemRecord failResult, List<SkillXpRecord> successXp) {
         AbstractItem item = this.itemRegistry.getItem(successResult.getItemId());
 
         if (item == null) {
@@ -57,6 +63,6 @@ public class RecipeRegistry {
         itemStack.setItemMeta(meta);
 
         this.recipes.put(id,
-                new SmeltingRecipe(id, itemStack, craftTimeMs, requirements, ingredients, successResult, failResult));
+                new SmeltingRecipe(id, itemStack, craftTimeMs, requirements, ingredients, successResult, failResult, successXp));
     }
 }

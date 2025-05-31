@@ -85,10 +85,15 @@ public class Party {
 
         invites.remove(player.getUUID());
         players.add(player);
+        player.setParty(this);
         Bukkit.getServer().getPluginManager().callEvent(new PartyPlayerJoinedEvent(this, player));
     }
 
-    public void kickPlayer(RunePlayer player) {
+    public void kickPlayer(RunePlayer whoKicked, RunePlayer player) {
+        if (ownerUuid != whoKicked.getUUID()) {
+            throw new IllegalStateException(whoKicked.getPlayer().getName() + " is not party owner.");
+        }
+
         if (!players.contains(player)) {
             throw new IllegalArgumentException("The player is not in this party.");
         }
@@ -98,6 +103,7 @@ public class Party {
         }
 
         players.remove(player);
+        player.setParty(null);
         Bukkit.getServer().getPluginManager().callEvent(new PartyPlayerKickedEvent(this, player));
 
     }

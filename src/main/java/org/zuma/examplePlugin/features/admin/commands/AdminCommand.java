@@ -20,7 +20,9 @@ import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepositor
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.recipes.RecipeRegistry;
 import org.zuma.examplePlugin.features.admin.inventories.ItemRegistryInventory;
+import org.zuma.examplePlugin.features.admin.inventories.RecipesInventory;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
@@ -28,12 +30,14 @@ import java.util.stream.Collectors;
 
 @SuppressWarnings("UnstableApiUsage")
 public class AdminCommand implements BasicCommand {
-    private final ItemRegistry registry;
+    private final ItemRegistry itemRegistry;
+    private final RecipeRegistry recipeRegistry;
     private final BlockManager blockManager;
     private final ResourceNodeTypeRepository oreTypeRepository;
 
-    public AdminCommand(ItemRegistry registry, BlockManager blockManager, ResourceNodeTypeRepository oreTypeRepository) {
-        this.registry = registry;
+    public AdminCommand(ItemRegistry itemRegistry, RecipeRegistry recipeRegistry, BlockManager blockManager, ResourceNodeTypeRepository oreTypeRepository) {
+        this.itemRegistry = itemRegistry;
+        this.recipeRegistry = recipeRegistry;
         this.blockManager = blockManager;
         this.oreTypeRepository = oreTypeRepository;
     }
@@ -136,7 +140,7 @@ public class AdminCommand implements BasicCommand {
 
         // Items without page
         if (args.length == 1 && Objects.equals(args[0], "items")) {
-            ItemRegistryInventory.open(registry, player, 0);
+            ItemRegistryInventory.open(itemRegistry, player, 0);
         }
 
         // Items with page
@@ -147,7 +151,23 @@ public class AdminCommand implements BasicCommand {
                 page = Integer.parseInt(args[1]);
             }
 
-            ItemRegistryInventory.open(registry, player, page);
+            ItemRegistryInventory.open(itemRegistry, player, page);
+        }
+
+        // Items without page
+        if (args.length == 1 && Objects.equals(args[0], "recipes")) {
+            RecipesInventory.open(recipeRegistry, itemRegistry, runePlayer, 0);
+        }
+
+        // Items with page
+        if (args.length == 2 && Objects.equals(args[0], "recipes")) {
+            int page = 0;
+
+            if (TypeUtils.isInteger(args[1])) {
+                page = Integer.parseInt(args[1]);
+            }
+
+            RecipesInventory.open(recipeRegistry, itemRegistry, runePlayer, page);
         }
 
     }

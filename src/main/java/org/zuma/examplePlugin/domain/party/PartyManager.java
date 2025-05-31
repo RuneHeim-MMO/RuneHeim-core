@@ -26,6 +26,7 @@ public class PartyManager {
         UUID partyUuid = UUID.randomUUID();
         Party party = new Party(partyUuid, creator, PartyManager.MAX_MEMBERS);
         parties.put(partyUuid, party);
+        creator.setParty(party);
 
         Bukkit.getServer().getPluginManager().callEvent(new PartyCreatedEvent(party));
     }
@@ -41,6 +42,7 @@ public class PartyManager {
             throw new IllegalStateException(disbander.getPlayer().getName() + " is not party owner.");
         }
 
+        existingParty.getMembers().forEach(member -> member.setParty(null));
         parties.remove(existingParty.getUuid());
         Bukkit.getServer().getPluginManager().callEvent(new PartyDisbandedEvent(existingParty));
 

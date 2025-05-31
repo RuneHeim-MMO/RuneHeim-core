@@ -85,14 +85,16 @@ public class RecipeHandler {
 
             if (successCrafts > 0) {
                 player.addItemOrDrop(new ItemRecord(recipe.getSuccessResult().getItemId(), recipe.getSuccessResult().getAmount() * successCrafts));
+                recipe.onCraft(player, successCrafts);
+                player.getPlayer().sendMessage(Component.text("Successfully " + type.getPastTenseVerb() + " " + successCrafts + "x ").append(resultComponent).color(Colors.SUCCESS.asColor()));
+                type.getFinishSound().play(player);
             }
 
             if (failedCrafts > 0 && recipe.getFailResult() != null) {
                 player.addItemOrDrop(new ItemRecord(recipe.getFailResult().getItemId(), recipe.getSuccessResult().getAmount() * failedCrafts));
             }
 
-            player.getPlayer().sendMessage(Component.text("Successfully " + type.getPastTenseVerb() + " " + successCrafts + "x ").append(resultComponent).color(Colors.SUCCESS.asColor()));
-            type.getFinishSound().play(player);
+
         });
     }
 

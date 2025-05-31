@@ -43,4 +43,23 @@ public enum Colors {
         return builder.toString();
     }
 
+    public static TextColor coloredProgressValue(int current, int min, int max, boolean invert) {
+        // Clamp current between min and max
+        int clamped = Math.max(min, Math.min(current, max));
+
+        // Normalize to 0.0 - 1.0
+        float progress = (float) (clamped - min) / (max - min);
+
+        // If inverted, flip the progress
+        if (invert) {
+            progress = 1.0f - progress;
+        }
+
+        // Linear interpolate between red and green
+        int red = (int) (255 * (1 - progress));
+        int green = (int) (255 * progress);
+
+        return TextColor.color(red, green, 0);
+    }
+
 }

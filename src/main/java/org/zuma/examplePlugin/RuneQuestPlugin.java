@@ -88,7 +88,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public void registerCommands() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> event.registrar().register("admin", new AdminCommand(itemRegistry, blockManager, new ResourceNodeTypeRepository()))
+                event -> event.registrar().register("admin", new AdminCommand(itemRegistry, recipeRegistry, blockManager, new ResourceNodeTypeRepository()))
         );
     }
 

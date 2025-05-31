@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.recipes.base;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -16,6 +17,7 @@ import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
+import org.zuma.examplePlugin.domain.skill.SkillXpRecord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +33,12 @@ public abstract class AbstractRecipe implements SkillRestrictable {
 
     @Nullable
     private final ItemRecord failResult;
+    private final List<SkillXpRecord> successXp;
 
 
-    public AbstractRecipe(int id, ItemStack displayItemstack, RecipeType type, int craftTimeMs, List<SkillRequirement> requirements, List<ItemRecord> ingredients, ItemRecord successResult, @Nullable ItemRecord failResult) {
+    public AbstractRecipe(int id, ItemStack displayItemstack,
+                          RecipeType type, int craftTimeMs, List<SkillRequirement> requirements,
+                          List<ItemRecord> ingredients, ItemRecord successResult, @Nullable ItemRecord failResult, List<SkillXpRecord> successXp) {
         this.id = id;
         this.displayItemstack = displayItemstack;
         this.type = type;
@@ -42,6 +47,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         this.craftTimeMs = craftTimeMs;
         this.successResult = successResult;
         this.failResult = failResult;
+        this.successXp = successXp;
     }
 
     public @NotNull List<SkillRequirement> getRequirements() {
@@ -68,10 +74,21 @@ public abstract class AbstractRecipe implements SkillRestrictable {
 
     public abstract int getChanceOfSuccess(RunePlayer player);
 
+    public void onCraft(RunePlayer player, int craftAmount) {
+        this.successXp.forEach(skill -> {
+            player.addShareableXp(skill.type(), skill.xp());
+        });
+    }
+
     public ItemStack getDisplayItemstack(RunePlayer player, ItemRegistry registry) {
         ItemStack newItem = new ItemStack(displayItemstack);
         ItemMeta meta = newItem.getItemMeta();
         List<Component> itemLore = new ArrayList<>();
+        int chanceOfSuccess = Math.toIntExact(getChanceOfSuccess(player));
+        int craftTimeSeconds = Math.toIntExact(craftTimeMs / 1000);
+
+        itemLore.add(Component.text("✔ " + craftTimeSeconds + " sec crafting time", Colors.coloredProgressValue(craftTimeSeconds, 0, 120, true)));
+        itemLore.add(Component.text("⏱ " + chanceOfSuccess + "% chance of success", Colors.coloredProgressValue(chanceOfSuccess, 0, 100, false)));
 
         if (!ingredients.isEmpty()) {
             itemLore.add(Component.text(""));
@@ -106,15 +123,13 @@ public abstract class AbstractRecipe implements SkillRestrictable {
 
         }
 
+
         itemLore.add(Component.text(""));
         itemLore.add(Component.text("Result: ", Colors.ITEM_LABEL.asColor()));
-        itemLore.add(Component.text(successResult.getAmount() + "x ").append(displayItemstack.displayName()).color(Colors.ITEM_LABEL.asColor()));
+        itemLore.add(Component.text(successResult.getAmount() + "x ", Colors.ITEM_LABEL.asColor()).append(displayItemstack.displayName()));
         itemLore.add(Component.text(""));
-        itemLore.add(Component.text("Chance of success: " + Math.toIntExact(getChanceOfSuccess(player)) + "%", Colors.ITEM_LABEL.asColor()));
-        itemLore.add(Component.text("Crafting time: " + Math.toIntExact(craftTimeMs / 1000) + " seconds.", Colors.ITEM_LABEL.asColor()));
 
-
-        meta.lore(itemLore);
+        meta.lore(itemLore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());
         newItem.setItemMeta(meta);
 
         return newItem;
