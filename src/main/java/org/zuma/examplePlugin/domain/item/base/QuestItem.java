@@ -5,7 +5,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.interfaces.Serializable;
-import org.zuma.examplePlugin.domain.item.meta.AbstractMeta;
+import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.QuestMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -13,7 +13,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 public class QuestItem extends AbstractItem implements Serializable {
     private String questName;
 
-    public QuestItem(AbstractMeta meta) {
+    public QuestItem(AbstractItemMeta meta) {
         super(meta);
         this.appendToLore(Component.text("Quest Item").color(Colors.ITEM_TYPE.asColor()));
     }

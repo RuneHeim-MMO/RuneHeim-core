@@ -11,19 +11,24 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.ItemHandler;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.constants.ItemDataKey;
+import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
+import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class StateManager {
     private final HashMap<UUID, AbstractState> itemStates = new HashMap<>(); // TODO: PERSISTENCE! delete states on item despawn & handle lifecycle properly
     private final StateFactory factory;
     private final ItemHandler itemHandler;
+    private final StateRepository repository;
 
-    public StateManager(StateFactory factory, ItemHandler itemHandler) {
+    public StateManager(StateFactory factory, ItemHandler itemHandler, StateRepository repository) {
         this.factory = factory;
         this.itemHandler = itemHandler;
+        this.repository = repository;
     }
 
     @Nullable
@@ -61,8 +66,18 @@ public class StateManager {
         AbstractState result = itemStates.get(uuid);
 
         if (result == null) {
+
+            // Try to load state
+            AbstractState stateFromDb = this.initializeState(uuid);
+            if (stateFromDb != null) {
+                return stateFromDb;
+            }
+
+
+            // Create new if it doesn't exist.
             AbstractState newState = stateful.getInitialState();
             itemStates.put(uuid, newState);
+            repository.create(uuid, newState.getStateType(), serializeState(uuid));
             return newState;
         }
 
@@ -80,19 +95,38 @@ public class StateManager {
         return new Gson().toJson(matchingState);
     }
 
-    public void initializeState(UUID uuid) {
-        // TODO: Repo fetching stuff here
-        String result = "";
-        StateType resultType = StateType.CONSUMABLE;
-        // Temp ^
+    @Nullable
+    public AbstractState initializeState(UUID uuid) {
+        AbstractStateMeta result = this.repository.getByUUID(uuid);
 
-        AbstractState newState = this.factory.createState(resultType, result);
+        if (result == null) {
+            return null;
+        }
+
+        AbstractState newState = this.factory.createState(result);
 
         if (newState == null) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Cannot initialize state " + uuid.toString() + ". Invalid state type! Received: " + resultType.toString());
-            return;
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Cannot initialize state " + uuid.toString() + ". Invalid state type! Received: " + result.type().toString());
+            return null;
         }
 
         itemStates.put(uuid, newState);
+        return newState;
+    }
+
+    public void saveUpdatedState(AbstractState state) {
+        UUID matchingKey = this.itemStates.entrySet().stream()
+                .filter(entry -> entry.getValue().equals(state))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(null);
+
+        if (matchingKey == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Cannot save state " + state.getStateType() + "! State is not in the registry.");
+            return;
+        }
+
+        this.repository.update(matchingKey, serializeState(matchingKey));
+
     }
 }

@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.domain.block.constants.BlockType;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 public class BlockManager {
@@ -28,6 +29,10 @@ public class BlockManager {
 
     public AbstractInteractableBlock getAbstractInteractableBlock(Block block) {
         return blocks.get(block.getLocation().toBlockLocation());
+    }
+    
+    public Collection<AbstractInteractableBlock> getAllBlocks() {
+        return blocks.values();
     }
 
     public void registerBlock(AbstractInteractableBlock block) {

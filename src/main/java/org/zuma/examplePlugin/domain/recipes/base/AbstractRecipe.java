@@ -16,6 +16,7 @@ import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
+import org.zuma.examplePlugin.domain.recipes.meta.AbstractRecipeMeta;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.SkillXpRecord;
 
@@ -36,18 +37,16 @@ public abstract class AbstractRecipe implements SkillRestrictable {
     private final List<SkillXpRecord> successXp;
 
 
-    public AbstractRecipe(int id, ItemStack displayItemstack,
-                          RecipeType type, int craftTimeMs, List<SkillRequirement> requirements,
-                          List<ItemRecord> ingredients, ItemRecord successResult, @Nullable ItemRecord failResult, List<SkillXpRecord> successXp) {
-        this.id = id;
+    public AbstractRecipe(ItemStack displayItemstack, AbstractRecipeMeta meta) {
+        this.id = meta.id();
         this.displayItemstack = displayItemstack;
-        this.type = type;
-        this.requirements = requirements;
-        this.ingredients = ingredients;
-        this.craftTimeMs = craftTimeMs;
-        this.successResult = successResult;
-        this.failResult = failResult;
-        this.successXp = successXp;
+        this.type = meta.type();
+        this.requirements = meta.requirements();
+        this.ingredients = meta.ingredients();
+        this.craftTimeMs = meta.craftTimeMs();
+        this.successResult = meta.successResult();
+        this.failResult = meta.failResult();
+        this.successXp = meta.successXp();
     }
 
     public @NotNull List<SkillRequirement> getRequirements() {

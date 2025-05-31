@@ -5,7 +5,8 @@ public enum ItemType {
     GEAR(1),
     MATERIAL(2),
     QUEST(3),
-    CONSUMABLE(4);
+    MULTI_CONSUMABLE(4),
+    SINGLE_CONSUMABLE(5);
 
     private final int key;
 

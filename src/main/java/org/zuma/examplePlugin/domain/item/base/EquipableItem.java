@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.interfaces.Serializable;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
-import org.zuma.examplePlugin.domain.item.meta.AbstractMeta;
+import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.EquipableMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
@@ -21,7 +21,7 @@ public class EquipableItem extends AbstractItem implements SkillRestrictable, Se
     private final List<Modifier> modifiers = new ArrayList<>();
     private final List<SkillRequirement> requirements = new ArrayList<>();
 
-    public EquipableItem(AbstractMeta meta) {
+    public EquipableItem(AbstractItemMeta meta) {
         super(meta);
         this.setRarityPrefixSlot("⚔");
     }

@@ -7,21 +7,21 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
-import org.zuma.examplePlugin.domain.item.base.ConsumableItem;
+import org.zuma.examplePlugin.domain.item.consumable.base.MultiConsumableItem;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
-import org.zuma.examplePlugin.domain.item.state.states.ConsumableState;
+import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class PlayerConsumableConsumeEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
     private final RunePlayer player;
-    private final ConsumableItem item;
+    private final MultiConsumableItem item;
     private final ItemStack itemStack;
     private final StateManager itemStateManager;
-    private final ConsumableState previousState;
+    private final MultiConsumableState previousState;
     private boolean cancelled;
 
-    public PlayerConsumableConsumeEvent(RunePlayer player, ConsumableItem item, ItemStack itemStack, StateManager itemStateManager, ConsumableState previousState) {
+    public PlayerConsumableConsumeEvent(RunePlayer player, MultiConsumableItem item, ItemStack itemStack, StateManager itemStateManager, MultiConsumableState previousState) {
         this.player = player;
         this.item = item;
         this.itemStack = itemStack;
@@ -69,7 +69,7 @@ public class PlayerConsumableConsumeEvent extends Event implements Cancellable {
         return itemStateManager;
     }
 
-    public ConsumableState getPreviousState() {
+    public MultiConsumableState getPreviousState() {
         return previousState;
     }
 }

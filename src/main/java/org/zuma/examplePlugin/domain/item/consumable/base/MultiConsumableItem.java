@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.item.base;
+package org.zuma.examplePlugin.domain.item.consumable.base;
 
 import com.google.gson.Gson;
 import net.kyori.adventure.text.Component;
@@ -9,35 +9,35 @@ import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.interfaces.Serializable;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
-import org.zuma.examplePlugin.domain.item.meta.AbstractMeta;
-import org.zuma.examplePlugin.domain.item.meta.ConsumableMeta;
-import org.zuma.examplePlugin.domain.item.state.AbstractState;
+import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
+import org.zuma.examplePlugin.domain.item.meta.MultiConsumableMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.item.state.StateType;
-import org.zuma.examplePlugin.domain.item.state.states.ConsumableState;
+import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
+import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.item.PlayerConsumableConsumeEvent;
 
-public class ConsumableItem extends AbstractItem implements Stateful, Serializable {
+public class MultiConsumableItem extends SingleConsumableItem implements Stateful, Serializable {
     private int usages;
     private int maxUsages;
 
-    public ConsumableItem(AbstractMeta meta) {
+    public MultiConsumableItem(AbstractItemMeta meta) {
         super(meta);
         this.setRarityPrefixSlot("CONSUMABLE");
-        this.setStateType(StateType.CONSUMABLE);
+        this.setStateType(StateType.MULTI_CONSUMABLE);
     }
 
 
     @Override
     public AbstractState getInitialState() {
-        return new ConsumableState(maxUsages, usages);
+        return new MultiConsumableState(maxUsages, usages);
     }
 
     @Override
     public void deserializeAndApplyMeta() {
         if (super.getJsonMetaVersion() == 1) {
-            ConsumableMeta meta = new Gson().fromJson(super.jsonMeta, ConsumableMeta.class);
+            MultiConsumableMeta meta = new Gson().fromJson(super.jsonMeta, MultiConsumableMeta.class);
             usages = meta.usages();
             maxUsages = meta.maxUsages();
             return;
@@ -50,13 +50,13 @@ public class ConsumableItem extends AbstractItem implements Stateful, Serializab
     @Override
     public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player, StateManager itemStateManager) {
         ItemStack itemStack = PlayerUtils.getItemStackInHand(player.getPlayer());
-        ConsumableState state = (ConsumableState) itemStateManager.getItemState(itemStack);
+        MultiConsumableState state = (MultiConsumableState) itemStateManager.getItemState(itemStack);
 
         if (state == null) {
             return;
         }
 
-        if (state.getUsageLeft() == 0) {
+        if (state.isConsumed()) {
             player.getPlayer().sendMessage("Oops! It's consumed already");
             return;
         }
@@ -69,9 +69,11 @@ public class ConsumableItem extends AbstractItem implements Stateful, Serializab
             return;
         }
 
-        state.setUsageLeft(state.getUsageLeft() - 1);
-        player.getPlayer().sendMessage("Usages left: " + state.getUsageLeft());
-        this.setDisplayName(itemStack, null, Component.text(" ✦ (" + state.getMaxUsages() + "/" + state.getUsageLeft() + ")", Colors.ITEM_TYPE.asColor()));
+        if (state.consume()) {
+            player.getPlayer().sendMessage("Usages left: " + state.getUsageLeft());
+            this.setDisplayName(itemStack, null, Component.text(" ✦ (" + state.getMaxUsages() + "/" + state.getUsageLeft() + ")", Colors.ITEM_TYPE.asColor()));
+            itemStateManager.saveUpdatedState(state);
+        }
 
     }
 

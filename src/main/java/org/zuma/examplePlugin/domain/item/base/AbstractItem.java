@@ -21,7 +21,7 @@ import org.zuma.examplePlugin.domain.heads.HeadGenerator;
 import org.zuma.examplePlugin.domain.item.constants.ItemDataKey;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
-import org.zuma.examplePlugin.domain.item.meta.AbstractMeta;
+import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -53,7 +53,7 @@ public abstract class AbstractItem {
     private final Color leatherColor;
 
 
-    public AbstractItem(AbstractMeta meta) {
+    public AbstractItem(AbstractItemMeta meta) {
         this.type = meta.type();
         this.id = meta.id();
         this.material = meta.material();

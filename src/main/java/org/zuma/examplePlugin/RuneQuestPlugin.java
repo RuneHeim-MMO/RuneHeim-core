@@ -18,9 +18,10 @@ import org.zuma.examplePlugin.domain.item.ItemHandler;
 import org.zuma.examplePlugin.domain.item.ItemListener;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.persistence.ItemLoader;
-import org.zuma.examplePlugin.domain.item.persistence.ItemMetaRepository;
+import org.zuma.examplePlugin.domain.item.persistence.ItemRepository;
 import org.zuma.examplePlugin.domain.item.state.StateFactory;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
+import org.zuma.examplePlugin.domain.item.state.StateRepository;
 import org.zuma.examplePlugin.domain.mob.MobHandler;
 import org.zuma.examplePlugin.domain.mob.MobListener;
 import org.zuma.examplePlugin.domain.mob.MobRegistry;
@@ -28,7 +29,10 @@ import org.zuma.examplePlugin.domain.modifier.GearModifierHandler;
 import org.zuma.examplePlugin.domain.modifier.GearModifierListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
+import org.zuma.examplePlugin.domain.recipes.RecipeFactory;
 import org.zuma.examplePlugin.domain.recipes.RecipeRegistry;
+import org.zuma.examplePlugin.domain.recipes.persistence.RecipeLoader;
+import org.zuma.examplePlugin.domain.recipes.persistence.RecipeRepository;
 import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -55,11 +59,11 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(runePlayerListener, pluginInstance);
 
         itemRegistry = new ItemRegistry();
-        ItemLoader itemLoader = new ItemLoader(itemRegistry, new ItemFactory(), new ItemMetaRepository());
+        ItemLoader itemLoader = new ItemLoader(itemRegistry, new ItemFactory(), new ItemRepository());
         itemLoader.loadItemsFromDatabase();
 
         itemHandler = new ItemHandler(itemRegistry);
-        itemStateManager = new StateManager(new StateFactory(), itemHandler);
+        itemStateManager = new StateManager(new StateFactory(), itemHandler, new StateRepository());
         ItemListener itemListener = new ItemListener(itemHandler, runePlayerManager, itemStateManager);
         getServer().getPluginManager().registerEvents(itemListener, pluginInstance);
 
@@ -80,7 +84,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         MobListener mobListener = new MobListener(runePlayerManager, mobHandler, mobRegistry);
         getServer().getPluginManager().registerEvents(mobListener, pluginInstance);
 
-        recipeRegistry = new RecipeRegistry(itemRegistry);
+
+        recipeRegistry = new RecipeRegistry();
+        RecipeLoader recipeLoader = new RecipeLoader(itemRegistry, recipeRegistry, new RecipeRepository(), new RecipeFactory());
+        recipeLoader.loadAllRecipes();
 
         // TODO: Load inventory from DB & Verify their meta
 
