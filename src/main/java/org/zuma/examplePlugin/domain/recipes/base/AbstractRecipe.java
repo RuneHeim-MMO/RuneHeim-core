@@ -5,12 +5,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 
 import java.util.List;
 
-public class Recipe implements SkillRestrictable {
+public abstract class AbstractRecipe implements SkillRestrictable {
     private final int id;
     private final RecipeType type;
     private final ItemStack displayItemstack;
@@ -23,7 +24,7 @@ public class Recipe implements SkillRestrictable {
     private final ItemRecord failResult;
 
 
-    public Recipe(int id, ItemStack displayItemstack, RecipeType type, int craftTimeMs, List<SkillRequirement> requirements, List<ItemRecord> ingredients, ItemRecord successResult, @Nullable ItemRecord failResult) {
+    public AbstractRecipe(int id, ItemStack displayItemstack, RecipeType type, int craftTimeMs, List<SkillRequirement> requirements, List<ItemRecord> ingredients, ItemRecord successResult, @Nullable ItemRecord failResult) {
         this.id = id;
         this.displayItemstack = displayItemstack;
         this.type = type;
@@ -54,11 +55,17 @@ public class Recipe implements SkillRestrictable {
         return successResult;
     }
 
+    public abstract boolean isCraftSuccessful(RunePlayer player);
+
     public ItemStack getDisplayItemstack() {
         return displayItemstack; // TODO: lore crap
     }
 
     public int getId() {
         return id;
+    }
+
+    public @Nullable ItemRecord getFailResult() {
+        return failResult;
     }
 }

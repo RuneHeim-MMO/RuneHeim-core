@@ -9,7 +9,8 @@ import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
-import org.zuma.examplePlugin.domain.recipes.base.Recipe;
+import org.zuma.examplePlugin.domain.recipes.base.AbstractRecipe;
+import org.zuma.examplePlugin.domain.recipes.base.SmeltingRecipe;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeId;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class RecipeRegistry {
     private final ItemRegistry itemRegistry;
-    private final HashMap<Integer, Recipe> recipes = new HashMap<>();
+    private final HashMap<Integer, AbstractRecipe> recipes = new HashMap<>();
 
     public RecipeRegistry(ItemRegistry itemRegistry) {
         this.itemRegistry = itemRegistry;
@@ -33,11 +34,11 @@ public class RecipeRegistry {
                 null);
     }
 
-    public List<Recipe> getRecipesByType(RecipeType type) {
+    public List<AbstractRecipe> getRecipesByType(RecipeType type) {
         return recipes.values().stream().filter(recipe -> recipe.getType() == type).toList();
     }
 
-    public @Nullable Recipe getRecipeById(int id) {
+    public @Nullable AbstractRecipe getRecipeById(int id) {
         return recipes.get(id);
     }
 
@@ -56,6 +57,6 @@ public class RecipeRegistry {
         itemStack.setItemMeta(meta);
 
         this.recipes.put(id,
-                new Recipe(id, itemStack, type, craftTimeMs, requirements, ingredients, successResult, failResult));
+                new SmeltingRecipe(id, itemStack, craftTimeMs, requirements, ingredients, successResult, failResult));
     }
 }

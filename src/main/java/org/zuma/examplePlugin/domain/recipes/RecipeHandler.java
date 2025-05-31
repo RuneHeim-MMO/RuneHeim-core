@@ -6,10 +6,12 @@ import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.recipes.base.Recipe;
+import org.zuma.examplePlugin.domain.recipes.base.AbstractRecipe;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
+import org.zuma.examplePlugin.events.recipe.PlayerRecipeCraftingFinish;
 import org.zuma.examplePlugin.events.recipe.PlayerRecipeCraftingStart;
-import org.zuma.examplePlugin.events.recipe.PlayerRecipeCraftingSuccess;
+
+import java.util.List;
 
 import static org.zuma.examplePlugin.core.utils.ItemUtils.multiplyItemRecords;
 
@@ -20,13 +22,15 @@ public class RecipeHandler {
         this.registry = registry;
     }
 
-    public void craftRecipe(RunePlayer player, Recipe recipe, int times) {
+    public void craftRecipe(RunePlayer player, AbstractRecipe recipe, int times) {
         if (times <= 0) {
             return;
         }
 
         RecipeType type = recipe.getType();
         Component resultComponent = recipe.getDisplayItemstack().displayName();
+        List<ItemRecord> totalIngredients = multiplyItemRecords(recipe.getIngredients(), times);
+
 
         if (player.isBusy()) {
             player.showFailedMessage(Component.text("You are already busy with something else!"));
@@ -38,7 +42,7 @@ public class RecipeHandler {
             return;
         }
 
-        if (!PlayerUtils.hasItems(player, multiplyItemRecords(recipe.getIngredients(), times))) {
+        if (!PlayerUtils.hasItems(player, totalIngredients)) {
             player.showFailedMessage(Component.text("You do not have required ingredients to " + type.getVerb() + " " + times + "x ").append(resultComponent));
             return;
         }
@@ -51,30 +55,54 @@ public class RecipeHandler {
         }
 
         player.useBusyState(recipe.getCraftTimeMs() * times, type.getContinuousVerb(), type.getPastTenseVerb(), type.getStepSound(), type.getFinishSound(), (consumer) -> {
-            if (!PlayerUtils.hasItems(player, multiplyItemRecords(recipe.getIngredients(), times))) {
+
+            // If players inventory gets modified during waitting for the craft (e.g player drops item)
+            if (!PlayerUtils.hasItems(player, totalIngredients)) {
                 player.showFailedMessage(Component.text("You do not have required ingredients to " + type.getVerb() + " " + times + "x ").append(resultComponent));
                 return;
             }
 
-            boolean itemsRemoveSuccess = PlayerUtils.removeItems(player, multiplyItemRecords(recipe.getIngredients(), times));
+            boolean itemsRemoveSuccess = PlayerUtils.removeItems(player, totalIngredients);
 
             if (!itemsRemoveSuccess) {
                 player.showFailedMessage(Component.text("Failed removing items from player inventory."));
                 return;
             }
 
-            // TODO: success/fail logic
-            PlayerRecipeCraftingSuccess successEvent = new PlayerRecipeCraftingSuccess(player, recipe, times);
+
+            int successCrafts = getSuccessCraftsAmount(player, recipe, times);
+            int failedCrafts = times - successCrafts;
+
+            PlayerRecipeCraftingFinish successEvent = new PlayerRecipeCraftingFinish(player, recipe, successCrafts, failedCrafts);
             Bukkit.getServer().getPluginManager().callEvent(successEvent);
 
             if (successEvent.isCancelled()) {
                 return;
             }
 
-            player.addItemOrDrop(new ItemRecord(recipe.getSuccessResult().getItemId(), recipe.getSuccessResult().getAmount() * times));
-            player.getPlayer().sendMessage(Component.text("Successfully " + type.getPastTenseVerb() + " ").append(resultComponent).color(Colors.SUCCESS.asColor()));
+            if (successCrafts > 0) {
+                player.addItemOrDrop(new ItemRecord(recipe.getSuccessResult().getItemId(), recipe.getSuccessResult().getAmount() * successCrafts));
+            }
+
+            if (failedCrafts > 0 && recipe.getFailResult() != null) {
+                player.addItemOrDrop(new ItemRecord(recipe.getFailResult().getItemId(), recipe.getSuccessResult().getAmount() * failedCrafts));
+            }
+
+            player.getPlayer().sendMessage(Component.text("Successfully " + type.getPastTenseVerb() + " " + successCrafts + "x ").append(resultComponent).color(Colors.SUCCESS.asColor()));
             type.getFinishSound().play(player);
         });
+    }
+
+    private int getSuccessCraftsAmount(RunePlayer player, AbstractRecipe recipe, int craftAmount) {
+        int successCrafts = 0;
+
+        for (int i = 0; i < craftAmount; i++) {
+            if (recipe.isCraftSuccessful(player)) {
+                successCrafts++;
+            }
+        }
+
+        return successCrafts;
     }
 
 

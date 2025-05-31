@@ -5,19 +5,20 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.recipes.base.Recipe;
+import org.zuma.examplePlugin.domain.recipes.base.AbstractRecipe;
 
-public class PlayerRecipeCraftingFail extends Event implements Cancellable {
+public class PlayerRecipeCraftingFinish extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
     private final RunePlayer player;
-    private final Recipe recipe;
-    private final int multiplier;
+    private final AbstractRecipe recipe;
+    private final int successCrafts, failedCrafts;
     private boolean cancelled;
 
-    public PlayerRecipeCraftingFail(RunePlayer player, Recipe recipe, int multiplier) {
+    public PlayerRecipeCraftingFinish(RunePlayer player, AbstractRecipe recipe, int successCrafts, int failedCrafts) {
         this.player = player;
         this.recipe = recipe;
-        this.multiplier = multiplier;
+        this.successCrafts = successCrafts;
+        this.failedCrafts = failedCrafts;
     }
 
     public RunePlayer getPlayer() {
@@ -45,11 +46,15 @@ public class PlayerRecipeCraftingFail extends Event implements Cancellable {
         return HANDLERS;
     }
 
-    public Recipe getRecipe() {
+    public AbstractRecipe getRecipe() {
         return recipe;
     }
 
-    public int getMultiplier() {
-        return multiplier;
+    public int getFailedCrafts() {
+        return failedCrafts;
+    }
+
+    public int getSuccessCrafts() {
+        return successCrafts;
     }
 }
