@@ -5,11 +5,12 @@ import org.bukkit.Bukkit;
 import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
+import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipes.base.AbstractRecipe;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
-import org.zuma.examplePlugin.events.recipe.PlayerRecipeCraftingFinish;
-import org.zuma.examplePlugin.events.recipe.PlayerRecipeCraftingStart;
+import org.zuma.examplePlugin.events.recipe.PlayerCraftingFinish;
+import org.zuma.examplePlugin.events.recipe.PlayerCraftingStart;
 
 import java.util.List;
 
@@ -17,9 +18,11 @@ import static org.zuma.examplePlugin.core.utils.ItemUtils.multiplyItemRecords;
 
 public class RecipeHandler {
     private final RecipeRegistry registry;
+    private final ItemRegistry itemRegistry;
 
-    public RecipeHandler(RecipeRegistry registry) {
+    public RecipeHandler(RecipeRegistry registry, ItemRegistry itemRegistry) {
         this.registry = registry;
+        this.itemRegistry = itemRegistry;
     }
 
     public void craftRecipe(RunePlayer player, AbstractRecipe recipe, int times) {
@@ -28,7 +31,7 @@ public class RecipeHandler {
         }
 
         RecipeType type = recipe.getType();
-        Component resultComponent = recipe.getDisplayItemstack().displayName();
+        Component resultComponent = recipe.getDisplayItemstack(player, itemRegistry).displayName();
         List<ItemRecord> totalIngredients = multiplyItemRecords(recipe.getIngredients(), times);
 
 
@@ -47,7 +50,7 @@ public class RecipeHandler {
             return;
         }
 
-        PlayerRecipeCraftingStart event = new PlayerRecipeCraftingStart(player, recipe, times);
+        PlayerCraftingStart event = new PlayerCraftingStart(player, recipe, times);
         Bukkit.getServer().getPluginManager().callEvent(event);
 
         if (event.isCancelled()) {
@@ -73,7 +76,7 @@ public class RecipeHandler {
             int successCrafts = getSuccessCraftsAmount(player, recipe, times);
             int failedCrafts = times - successCrafts;
 
-            PlayerRecipeCraftingFinish successEvent = new PlayerRecipeCraftingFinish(player, recipe, successCrafts, failedCrafts);
+            PlayerCraftingFinish successEvent = new PlayerCraftingFinish(player, recipe, successCrafts, failedCrafts);
             Bukkit.getServer().getPluginManager().callEvent(successEvent);
 
             if (successEvent.isCancelled()) {

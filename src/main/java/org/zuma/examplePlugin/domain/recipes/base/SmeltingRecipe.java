@@ -18,4 +18,9 @@ public class SmeltingRecipe extends AbstractRecipe {
     public boolean isCraftSuccessful(RunePlayer player) {
         return true;
     }
+
+    @Override
+    public int getChanceOfSuccess(RunePlayer player) {
+        return 123;
+    }
 }

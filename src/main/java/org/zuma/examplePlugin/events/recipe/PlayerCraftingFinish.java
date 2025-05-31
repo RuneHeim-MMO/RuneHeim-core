@@ -7,17 +7,18 @@ import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipes.base.AbstractRecipe;
 
-public class PlayerRecipeCraftingStart extends Event implements Cancellable {
+public class PlayerCraftingFinish extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
     private final RunePlayer player;
     private final AbstractRecipe recipe;
-    private final int multiplier;
+    private final int successCrafts, failedCrafts;
     private boolean cancelled;
 
-    public PlayerRecipeCraftingStart(RunePlayer player, AbstractRecipe recipe, int multiplier) {
+    public PlayerCraftingFinish(RunePlayer player, AbstractRecipe recipe, int successCrafts, int failedCrafts) {
         this.player = player;
         this.recipe = recipe;
-        this.multiplier = multiplier;
+        this.successCrafts = successCrafts;
+        this.failedCrafts = failedCrafts;
     }
 
     public RunePlayer getPlayer() {
@@ -49,7 +50,11 @@ public class PlayerRecipeCraftingStart extends Event implements Cancellable {
         return recipe;
     }
 
-    public int getMultiplier() {
-        return multiplier;
+    public int getFailedCrafts() {
+        return failedCrafts;
+    }
+
+    public int getSuccessCrafts() {
+        return successCrafts;
     }
 }
