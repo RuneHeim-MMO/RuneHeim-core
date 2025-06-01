@@ -4,7 +4,7 @@ import org.zuma.examplePlugin.core.constants.SoundType;
 
 public enum RecipeType {
     INVENTORY_RECIPE("Craft", "Crafting", "Crafted", SoundType.CRAFT_STEP, SoundType.MINING_SUCCESS),
-    SMELTING_RECIPE("Smelt", "Smelting", "Smelted", SoundType.CRAFT_STEP, SoundType.MINING_SUCCESS),
+    SMELTING_RECIPE("Smelt", "Smelting", "Smelted", SoundType.SMELT_STEP, SoundType.SMELT_SUCCESS),
     SMITHING_RECIPE("Smith", "Smithing", "Smithed", SoundType.CRAFT_STEP, SoundType.MINING_SUCCESS),
     COOKING_RECIPE("Cook", "Cooking", "Cooked", SoundType.CRAFT_STEP, SoundType.MINING_SUCCESS);
 

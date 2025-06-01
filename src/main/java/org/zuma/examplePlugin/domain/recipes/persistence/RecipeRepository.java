@@ -15,7 +15,7 @@ public class RecipeRepository {
 
     public List<AbstractRecipeMeta> getAll() {
         return List.of(
-                new AbstractRecipeMeta(RecipeId.TEST_RECIPE.getId(), RecipeType.INVENTORY_RECIPE, 3000,
+                new AbstractRecipeMeta(RecipeId.TEST_RECIPE.getId(), RecipeType.SMELTING_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.COOKING, 1)),
                         List.of(new ItemRecord(ItemId.IRON_ORE, 1)),
                         new ItemRecord(ItemId.IRON_BAR, 1),

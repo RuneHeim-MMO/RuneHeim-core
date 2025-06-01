@@ -133,7 +133,7 @@ public class ResourceNode extends AbstractInteractableBlock implements Serializa
 
     private void startPlayerMiningAction(RunePlayer player, double modifier) {
         player.useBusyState((int) (blockType.getBaseGatheringDurationMillis() / modifier), blockType.getActionVerb() + " " + blockType.getLabel(),
-                "Success!", blockType.getStepSound(), blockType.getGatherSuccessSound(), (a) -> {
+                "", blockType.getStepSound(), blockType.getGatherSuccessSound(), (a) -> {
                     onMine(player);
                 });
     }

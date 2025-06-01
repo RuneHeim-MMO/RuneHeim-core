@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
+import java.time.Duration;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
@@ -59,7 +60,6 @@ public class RunePlayerBusyStateHandler {
                 if (currentSteps.incrementAndGet() >= steps) {
                     isBusy = false;
                     this.cancel();
-                    consumer.accept(null);
 
                     successSound.play(onlinePlayer);
                     onlinePlayer.showTitle(Title.title(
@@ -67,6 +67,10 @@ public class RunePlayerBusyStateHandler {
                             Component.text(successAction).color(Colors.SUCCESS.asColor()),
                             TextUtils.getGenericDuration()
                     ));
+
+                    consumer.accept(null);
+                    return;
+
                 }
 
                 // Progress bar
@@ -77,7 +81,11 @@ public class RunePlayerBusyStateHandler {
                         TextUtils.buildLoadingBar(steps, currentSteps.get()),
                         Component.text("[" + secondsLeft + "s] ").color(Colors.SUCCESS.asColor())
                                 .append(Component.text(action).color(Colors.SUBTITLE.asColor())),
-                        TextUtils.getGenericDuration()
+                        Title.Times.times(
+                                Duration.ZERO,
+                                Duration.ofSeconds(stepDuration),
+                                Duration.ofMillis(500)
+                        )
                 ));
 
 

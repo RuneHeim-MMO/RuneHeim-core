@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.core.utils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.kyori.adventure.title.Title;
 import org.zuma.examplePlugin.core.constants.Colors;
 
@@ -71,5 +72,9 @@ public class TextUtils {
                 Duration.ofSeconds(1, 5),
                 Duration.ofMillis(500)
         );
+    }
+    
+    public static String extractPlainText(Component component) {
+        return PlainTextComponentSerializer.plainText().serialize(component);
     }
 }

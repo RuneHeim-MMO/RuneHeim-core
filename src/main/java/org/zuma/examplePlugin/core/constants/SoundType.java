@@ -11,7 +11,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import javax.annotation.Nullable;
 
 public enum SoundType {
-    FAIL_ACTION("ENTITY_VILLAGER_HURT", false, 1.0f, 1.0f),
+    FAIL_ACTION("ENTITY_VILLAGER_NO", false, 1.0f, 1.0f),
     SUCCESS_ACTION("BLOCK_BEACON_POWER_SELECT", false, 1.0f, 1.2f),
     LEVEL_UP("UI_TOAST_CHALLENGE_COMPLETE", false, 1.0f, 1.2f),
     UI_FAIL("ENTITY_VILLAGER_NO", false, 1.0f, 1.0f),
@@ -20,6 +20,8 @@ public enum SoundType {
     MINING_STEP("BLOCK_STONE_STEP", false, 1.0f, 1.0f),
     MINING_SUCCESS("BLOCK_STONE_BREAK", false, 1.0f, 1.5f),
     INVENTORY_FULL("ENTITY_ITEM_PICKUP", false, 1.0f, 0.8f),
+    SMELT_STEP("BLOCK_FURNACE_FIRE_CRACKLE", false, 1.0f, 1.0f),
+    SMELT_SUCCESS("BLOCK_FIRE_EXTINGUISH", false, 1.0f, 1.5f),
 
     // AMBIENT
     VILLAGER_MAN_AMBIENT_1("vocal_villagers:entity.villager.ambient", true, 1, 0.75f),

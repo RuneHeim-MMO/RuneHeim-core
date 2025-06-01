@@ -73,9 +73,9 @@ public abstract class AbstractRecipe implements SkillRestrictable {
 
     public abstract int getChanceOfSuccess(RunePlayer player);
 
-    public void onCraft(RunePlayer player, int craftAmount) {
+    public void onCraftFinish(RunePlayer player, int craftAmount) {
         this.successXp.forEach(skill -> {
-            player.addShareableXp(skill.type(), skill.xp());
+            player.addShareableXp(skill.type(), skill.xp() * craftAmount);
         });
     }
 
