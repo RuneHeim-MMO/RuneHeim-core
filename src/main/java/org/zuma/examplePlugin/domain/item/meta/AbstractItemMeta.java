@@ -13,5 +13,5 @@ public record AbstractItemMeta(ItemType type, int id, Material material, ItemRar
                                List<String> lore,
                                @Nullable String headTexture,
                                @Nullable Color leatherColor,
-                               JsonMeta jsonMeta) {
+                               @Nullable JsonMeta jsonMeta) {
 }

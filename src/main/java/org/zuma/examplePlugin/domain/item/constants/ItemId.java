@@ -102,7 +102,15 @@ public enum ItemId {
     RAW_TURTLE(1309),
     RAW_RAY(1310),
 
-    BURNT_FOOD(1311);
+    BURNT_FOOD(1311),
+
+    EMPTY_POTION_BOTTLE(1400),
+
+    ATTACK_POTION_I(1401),
+    STRENGTH_POTION_I(1402),
+    DEFENCE_POTION_I(1403),
+    HEALTH_POTION_I(1404),
+    MAGIC_POTION_I(1405);
 
 
     private final int id;

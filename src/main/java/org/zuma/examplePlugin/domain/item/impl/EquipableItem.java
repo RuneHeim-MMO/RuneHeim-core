@@ -42,6 +42,10 @@ public class EquipableItem extends AbstractItem implements SkillRestrictable, Se
     }
 
     public void deserializeAndApplyMeta() {
+        if (jsonMeta == null) {
+            return;
+        }
+
         if (super.getJsonMetaVersion() == 1) {
             EquipableMeta deserialized = new Gson().fromJson(this.jsonMeta, EquipableMeta.class);
 

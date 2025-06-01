@@ -3,7 +3,7 @@ package org.zuma.examplePlugin.domain.item.impl.consumable;
 import com.google.gson.Gson;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.interfaces.Serializable;
@@ -26,6 +26,10 @@ public class FoodItem extends AbstractItem implements Serializable {
 
     @Override
     public void deserializeAndApplyMeta() {
+        if (jsonMeta == null) {
+            return;
+        }
+        
         if (super.getJsonMetaVersion() == 1) {
             FoodMeta deserialized = new Gson().fromJson(this.jsonMeta, FoodMeta.class);
             this.healAmount = deserialized.healAmount();
@@ -38,8 +42,7 @@ public class FoodItem extends AbstractItem implements Serializable {
         throw new Error("[" + this.displayName + "] Unsupported JSON meta version! " + super.getJsonMetaVersion());
     }
 
-    @Override
-    public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player, StateManager itemStateManager) {
+    public void onPlayerConsumeItem(PlayerItemConsumeEvent event, RunePlayer player, StateManager itemStateManager) {
         ItemStack itemStack = PlayerUtils.getItemStackInHand(player.getPlayer());
 
         PlayerConsumableConsumeEvent newEvent = new PlayerConsumableConsumeEvent(player, this, itemStack, itemStateManager);
@@ -52,6 +55,8 @@ public class FoodItem extends AbstractItem implements Serializable {
 
 
         player.getPlayer().sendMessage("You ate " + super.displayName + "! Health +" + healAmount);
-
+        PlayerUtils.subtractOneFromMainHand(player);
     }
+
+
 }

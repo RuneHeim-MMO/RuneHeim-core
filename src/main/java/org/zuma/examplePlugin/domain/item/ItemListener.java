@@ -9,10 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
@@ -106,6 +103,14 @@ public class ItemListener implements Listener {
         withItemAndPlayer(event.getPlayer(), event.getPlayer().getInventory().getItem(event.getNewSlot()), (item, player) -> {
             itemHandler.onPlayerTakeItemInHand(event, item, player, itemStateManager);
         });
+    }
+
+    @EventHandler
+    public void onPlayerConsume(PlayerItemConsumeEvent event) {
+        withItemAndPlayer(event.getPlayer(), event.getItem(), (item, player) -> {
+            itemHandler.onPlayerConsumeItem(event, item, player, itemStateManager);
+        });
+
     }
 
     @EventHandler

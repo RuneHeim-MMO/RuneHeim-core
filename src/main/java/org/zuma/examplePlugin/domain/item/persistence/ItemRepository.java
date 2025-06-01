@@ -5,12 +5,14 @@ import org.bukkit.Color;
 import org.bukkit.Material;
 import org.zuma.examplePlugin.core.meta.JsonMeta;
 import org.zuma.examplePlugin.domain.heads.HeadTexture;
+import org.zuma.examplePlugin.domain.item.constants.CustomModelId;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.EquipableMeta;
 import org.zuma.examplePlugin.domain.item.meta.FoodMeta;
+import org.zuma.examplePlugin.domain.item.meta.PotionMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
@@ -50,7 +52,11 @@ public class ItemRepository {
                 new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_SHARK.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Raw Shark", List.of("Muscle-bound predator, not to be eaten raw."), null, null, empty),
                 new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_TURTLE.asInt(), Material.COAL, ItemRarity.RARE, "Raw Turtle", List.of("Its thick shell guards rich meat inside."), null, null, empty),
                 new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_RAY.asInt(), Material.COAL, ItemRarity.RARE, "Raw Ray", List.of("Soft flesh beneath leathery wings."), null, null, empty),
+
+                // Misc
                 new AbstractItemMeta(ItemType.MISC, ItemId.BURNT_FOOD.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Charred Remains", List.of("All that's left after fire claims its meal."), null, null, empty),
+                new AbstractItemMeta(ItemType.MISC, ItemId.EMPTY_POTION_BOTTLE.asInt(), Material.GLASS_BOTTLE, ItemRarity.NOT_APPLICABLE, "Empty Potion Bottle",
+                        List.of("It smells... unpleasant."), null, null, null),
 
                 // Food
                 new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_HERRING.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Cooked Herring",
@@ -90,12 +96,34 @@ public class ItemRepository {
                         new Gson().toJson(new FoodMeta(20)), 1)),
 
                 new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_TURTLE.asInt(), Material.COOKED_SALMON, ItemRarity.RARE, "Cooked Turtle",
-                        List.of("Tender shellbeast meat, slow-cooked to perfection."), null, null, new JsonMeta(
+                        List.of("Tender shell beast meat, slow-cooked to perfection."), null, null, new JsonMeta(
                         new Gson().toJson(new FoodMeta(21)), 1)),
 
                 new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_RAY.asInt(), Material.COOKED_SALMON, ItemRarity.RARE, "Cooked Ray",
                         List.of("Wings of the deep skyfish, rich in nutrients."), null, null, new JsonMeta(
                         new Gson().toJson(new FoodMeta(22)), 1)),
+
+                // Potions
+                new AbstractItemMeta(ItemType.POTION, ItemId.DEFENCE_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Defence Potion I",
+                        List.of("Increases your defense temporarily.", "Brewed by skilled alchemists."), null, null, new JsonMeta(
+                        new Gson().toJson(new PotionMeta(3, 3, "Potion effects...", CustomModelId.GREEN_POTION)), 1)),
+
+                new AbstractItemMeta(ItemType.POTION, ItemId.ATTACK_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Attack Potion I",
+                        List.of("Boosts your attack power.", "Unleash your fury in battle."), null, null, new JsonMeta(
+                        new Gson().toJson(new PotionMeta(3, 3, "Potion effects...", CustomModelId.BLUE_POTION)), 1)),
+
+                new AbstractItemMeta(ItemType.POTION, ItemId.MAGIC_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Magic Potion I",
+                        List.of("Enhances your magical abilities.", "A favorite among mages."), null, null, new JsonMeta(
+                        new Gson().toJson(new PotionMeta(3, 3, "Potion effects...", CustomModelId.CYAN_POTION)), 1)),
+
+                new AbstractItemMeta(ItemType.POTION, ItemId.HEALTH_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Health Potion I",
+                        List.of("Restores a small amount of health.", "Always good to have a few."), null, null, new JsonMeta(
+                        new Gson().toJson(new PotionMeta(3, 3, "Potion effects...", CustomModelId.RED_POTION)), 1)),
+
+                new AbstractItemMeta(ItemType.POTION, ItemId.STRENGTH_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Strength Potion I",
+                        List.of("Temporarily increases strength.", "Tear through enemies with ease."), null, null, new JsonMeta(
+                        new Gson().toJson(new PotionMeta(3, 3, "Potion effects...", CustomModelId.YELLOW_POTION)), 1)),
+
 
                 // Tools
                 new AbstractItemMeta(ItemType.GEAR, ItemId.BRONZE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.COMMON, "Bronze Pickaxe", List.of("Bronze pickaxe, basic mining tool."), null, null,

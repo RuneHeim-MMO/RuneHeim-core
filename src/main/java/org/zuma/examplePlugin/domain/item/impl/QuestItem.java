@@ -26,6 +26,10 @@ public class QuestItem extends AbstractItem implements Serializable {
     }
 
     public void deserializeAndApplyMeta() {
+        if (jsonMeta == null) {
+            return;
+        }
+
         QuestMeta deserialized = new Gson().fromJson(this.jsonMeta, QuestMeta.class);
         questName = deserialized.questName();
     }

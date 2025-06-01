@@ -1,0 +1,12 @@
+{
+  "providers": [
+    {
+      "type": "ttf",
+      "file": "lato.ttf",
+      "shift": [0, 0],
+      "size": 9,
+      "oversample": 10
+    }
+  ]
+}
+

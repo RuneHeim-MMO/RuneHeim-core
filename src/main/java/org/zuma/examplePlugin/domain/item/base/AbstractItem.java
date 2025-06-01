@@ -7,10 +7,7 @@ import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -18,6 +15,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.domain.heads.HeadGenerator;
+import org.zuma.examplePlugin.domain.item.constants.CustomModelId;
 import org.zuma.examplePlugin.domain.item.constants.ItemDataKey;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
@@ -33,7 +31,7 @@ import java.util.List;
 import java.util.UUID;
 
 public abstract class AbstractItem {
-    public final int id, customModelData;
+    public final int id, jsonMetaVersion;
     public final ItemType type;
     public final ItemRarity rarity;
     public final Material material;
@@ -41,8 +39,11 @@ public abstract class AbstractItem {
     public final List<Component> lore = new ArrayList<>();
     public final List<Component> requirementsLore = new ArrayList<>();
     public final List<Component> bonusesLore = new ArrayList<>();
-    public String rarityPrefixSlot, jsonMeta;
-    private final int jsonMetaVersion;
+    public String rarityPrefixSlot;
+    public int customModelData;
+
+    @Nullable
+    public final String jsonMeta;
 
     @Nullable
     public StateType stateType = null;
@@ -62,8 +63,13 @@ public abstract class AbstractItem {
         this.rarity = meta.rarity();
         this.rarityPrefixSlot = null;
 
-        this.jsonMeta = meta.jsonMeta().meta();
-        this.jsonMetaVersion = meta.jsonMeta().version();
+        if (meta.jsonMeta() != null) {
+            this.jsonMeta = meta.jsonMeta().meta();
+            this.jsonMetaVersion = meta.jsonMeta().version();
+        } else {
+            this.jsonMeta = null;
+            this.jsonMetaVersion = -1;
+        }
         this.headTexture = meta.headTexture();
         this.leatherColor = meta.leatherColor();
 
@@ -195,6 +201,7 @@ public abstract class AbstractItem {
 
     }
 
+    @Nullable
     public String getJsonMeta() {
         return jsonMeta;
     }
@@ -210,6 +217,10 @@ public abstract class AbstractItem {
 
     public void setStateType(@Nullable StateType type) {
         stateType = type;
+    }
+
+    public void setCustomModelData(CustomModelId id) {
+        customModelData = id.asInt();
     }
 
     public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player, StateManager itemStateManager) {
@@ -232,6 +243,10 @@ public abstract class AbstractItem {
     }
 
     public void onPlayerWearItem(PlayerArmorEquipEvent event, RunePlayer player, StateManager itemStateManager) {
+
+    }
+
+    public void onPlayerConsumeItem(PlayerItemConsumeEvent event, RunePlayer player, StateManager itemStateManager) {
 
     }
 

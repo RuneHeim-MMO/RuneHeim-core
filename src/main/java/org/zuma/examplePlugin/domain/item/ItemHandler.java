@@ -1,10 +1,7 @@
 package org.zuma.examplePlugin.domain.item;
 
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.event.player.*;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -43,5 +40,10 @@ public class ItemHandler {
 
     public void onPlayerWearItem(PlayerArmorEquipEvent event, RunePlayer player, StateManager itemStateManager) {
         event.getItem().onPlayerWearItem(event, player, itemStateManager);
+    }
+
+    public void onPlayerConsumeItem(PlayerItemConsumeEvent event, AbstractItem consumedItem, RunePlayer player, StateManager itemStateManager) {
+        consumedItem.onPlayerConsumeItem(event, player, itemStateManager);
+        event.setCancelled(true); // Prevent vanilla items consumption.
     }
 }

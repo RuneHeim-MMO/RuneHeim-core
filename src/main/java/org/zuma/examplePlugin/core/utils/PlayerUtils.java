@@ -104,4 +104,24 @@ public class PlayerUtils {
 
         return true;
     }
+
+
+    public static void subtractOneFromMainHand(RunePlayer player) {
+        ItemStack item = player.getPlayer().getInventory().getItemInMainHand();
+
+        if (item.getType().isAir()) {
+            return;
+        }
+
+        int amount = item.getAmount();
+
+        if (amount <= 1) {
+            player.getPlayer().getInventory().setItemInMainHand(null);
+            return;
+        }
+
+        item.setAmount(amount - 1);
+        player.getPlayer().getInventory().setItemInMainHand(item);
+
+    }
 }
