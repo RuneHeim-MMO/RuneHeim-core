@@ -26,7 +26,7 @@ public class PotionItem extends AbstractItem implements Stateful, Serializable {
 
     public PotionItem(AbstractItemMeta meta) {
         super(meta);
-        this.setRarityPrefixSlot("CONSUMABLE");
+        this.setRarityPrefixSlot("^");
         this.setStateType(StateType.MULTI_CONSUMABLE);
     }
 

@@ -21,6 +21,7 @@ public class FoodItem extends AbstractItem implements Serializable {
 
     public FoodItem(AbstractItemMeta meta) {
         super(meta);
+        this.setRarityPrefixSlot("♥");
     }
 
     @Override

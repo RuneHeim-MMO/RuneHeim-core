@@ -102,7 +102,7 @@ public enum ItemId {
     RAW_TURTLE(1309),
     RAW_RAY(1310),
 
-    BURNT_FISH(1311);
+    BURNT_FOOD(1311);
 
 
     private final int id;

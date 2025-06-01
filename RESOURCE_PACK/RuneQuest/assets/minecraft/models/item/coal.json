@@ -87,6 +87,84 @@
         "custom_model_data": 206
       },
       "model": "item/coal"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1300
+      },
+      "model": "item/custom/food/raw_herring"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1301
+      },
+      "model": "item/custom/food/raw_minnow"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1302
+      },
+      "model": "item/custom/food/raw_trout"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1303
+      },
+      "model": "item/custom/food/raw_salmon"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1304
+      },
+      "model": "item/custom/food/raw_tuna"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1305
+      },
+      "model": "item/custom/food/raw_crawler"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1306
+      },
+      "model": "item/custom/food/raw_pike"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1307
+      },
+      "model": "item/custom/food/raw_eel"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1308
+      },
+      "model": "item/custom/food/raw_shark"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1309
+      },
+      "model": "item/custom/food/raw_turtle"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1310
+      },
+      "model": "item/custom/food/raw_ray"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1311
+      },
+      "model": "item/custom/food/burnt_food"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1312
+      },
+      "model": "item/coal"
     }
   ]
 }
