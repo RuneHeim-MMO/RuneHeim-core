@@ -12,11 +12,11 @@ public class RunePlayerGainedXPEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
     private final RunePlayer player;
     private final SkillType type;
-    private final int amount;
+    private final double amount;
     private final XpSource source;
     private boolean cancelled;
 
-    public RunePlayerGainedXPEvent(RunePlayer player, SkillType type, int amount, XpSource source) {
+    public RunePlayerGainedXPEvent(RunePlayer player, SkillType type, double amount, XpSource source) {
         this.player = player;
         this.type = type;
         this.amount = amount;
@@ -31,7 +31,7 @@ public class RunePlayerGainedXPEvent extends Event implements Cancellable {
         return type;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 

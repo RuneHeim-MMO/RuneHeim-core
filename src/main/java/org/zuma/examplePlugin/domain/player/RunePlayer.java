@@ -81,7 +81,7 @@ public class RunePlayer {
         return skills.values();
     }
 
-    public void addSkillXp(SkillType type, int xp, XpSource source) {
+    public void addSkillXp(SkillType type, double xp, XpSource source) {
         Skill skill = skills.get(type);
 
         RunePlayerGainedXPEvent event = new RunePlayerGainedXPEvent(this, type, xp, source);
@@ -100,7 +100,7 @@ public class RunePlayer {
 
     }
 
-    public void addShareableXp(SkillType type, int xp) {
+    public void addShareableXp(SkillType type, double xp) {
         if (party != null) {
             party.splitXPBetweenMembers(type, xp);
         } else {

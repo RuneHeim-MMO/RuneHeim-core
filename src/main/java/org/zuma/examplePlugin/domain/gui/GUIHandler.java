@@ -32,7 +32,7 @@ public class GUIHandler {
     public void initializeInventories() {
         this.registry.registerGUI(new FurnaceInventory("Smelting Furnace", InventoryId.BASIC_FURNACE.asInt(), 1));
 
-        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventories() + " inventories.");
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventories().size() + " inventories.");
     }
 
     public void openInventory(InventoryId id, RunePlayer player) {

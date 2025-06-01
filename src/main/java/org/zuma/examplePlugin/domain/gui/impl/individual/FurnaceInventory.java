@@ -13,6 +13,9 @@ import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
 import java.util.List;
 
 public class FurnaceInventory extends IndividualGUI {
+    private static final int LEFT_CLICK_SMELT_AMOUNT = 1;
+    private static final int SHIFT_CLICK_SMELT_AMOUNT = 5;
+
     public FurnaceInventory(String title, int id, int rows) {
         super(title, id, rows);
     }
@@ -32,6 +35,7 @@ public class FurnaceInventory extends IndividualGUI {
             AbstractRecipe recipe = recipes.get(i);
             ItemStack item = recipe.getDisplayItemstack(player, RuneQuestPlugin.getItemRegistry());
             super.assignMenuValue(item, recipe.getId());
+            super.setActionsLore(item, "Smelt x" + LEFT_CLICK_SMELT_AMOUNT, "Smelt x" + SHIFT_CLICK_SMELT_AMOUNT);
 
             inventory.setItem(i, item);
         }
@@ -55,7 +59,8 @@ public class FurnaceInventory extends IndividualGUI {
             return;
         }
 
-        boolean craftStarted = RuneQuestPlugin.getRecipeHandler().craftRecipe(player, RuneQuestPlugin.getRecipeRegistry().getRecipeById(menuValue), 1);
+        int times = event.isShiftClick() ? SHIFT_CLICK_SMELT_AMOUNT : LEFT_CLICK_SMELT_AMOUNT;
+        boolean craftStarted = RuneQuestPlugin.getRecipeHandler().craftRecipe(player, RuneQuestPlugin.getRecipeRegistry().getRecipeById(menuValue), times);
 
         if (craftStarted) {
             player.getPlayer().closeInventory();

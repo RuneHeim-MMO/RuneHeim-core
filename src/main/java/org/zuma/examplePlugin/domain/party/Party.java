@@ -112,8 +112,8 @@ public class Party {
         return invites.contains(player.getUUID());
     }
 
-    public void splitXPBetweenMembers(SkillType type, int xp) {
-        int equalXp = xp / players.size();
+    public void splitXPBetweenMembers(SkillType type, double xp) {
+        double equalXp = xp / players.size();
 
         players.forEach(player -> {
             player.addSkillXp(type, equalXp, XpSource.PARTY);

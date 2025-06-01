@@ -19,7 +19,7 @@ public class XpUtils {
         return XP_TABLE[level];
     }
 
-    public static int getLevelFromXp(int xp) {
+    public static int getLevelFromXp(double xp) {
         if (xp < 0) throw new IllegalArgumentException();
 
         for (int level = 2; level <= 99; level++) {

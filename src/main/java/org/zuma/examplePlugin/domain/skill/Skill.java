@@ -5,7 +5,7 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 public class Skill {
     private final SkillType type;
-    private int xp;
+    private double xp;
 
     public Skill(SkillType type, int xp) {
         this.type = type;
@@ -16,15 +16,15 @@ public class Skill {
         return type;
     }
 
-    public int getXp() {
+    public double getXp() {
         return xp;
     }
 
-    public void setXp(int xp) {
+    public void setXp(double xp) {
         this.xp = xp;
     }
 
-    public void addXp(int xp) {
+    public void addXp(double xp) {
         this.xp += xp;
     }
 
