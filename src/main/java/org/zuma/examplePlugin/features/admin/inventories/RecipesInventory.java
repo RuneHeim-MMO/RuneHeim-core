@@ -37,7 +37,7 @@ public class RecipesInventory {
             return a.getId() - b.getId();
         }).toList().subList(indexStart, indexEnd);
 
-        Inventory inventory = Bukkit.createInventory(null, slots, Component.text("Item Registry | Page: " + page + "-" + maxPages));
+        Inventory inventory = Bukkit.createInventory(null, slots, Component.text("Recipe Registry | Page: " + page + "-" + maxPages));
 
         for (int i = 0; i < paginatedRegistryItems.size(); i++) {
             inventory.setItem(i, paginatedRegistryItems.get(i).getDisplayItemstack(player, itemRegistry));

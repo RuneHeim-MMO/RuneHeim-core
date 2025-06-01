@@ -4,17 +4,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.InventoryHolder;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.gui.base.AbstractGUI;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
+import org.zuma.examplePlugin.domain.gui.impl.individual.CookingInventory;
 import org.zuma.examplePlugin.domain.gui.impl.individual.FurnaceInventory;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class GUIHandler {
     private final GUIRegistry registry;
@@ -30,7 +28,9 @@ public class GUIHandler {
     }
 
     public void initializeInventories() {
-        this.registry.registerGUI(new FurnaceInventory("Smelting Furnace", InventoryId.BASIC_FURNACE.asInt(), 1));
+        this.registry.registerGUI(new FurnaceInventory("Furnace", InventoryId.BASIC_FURNACE.asInt()));
+        this.registry.registerGUI(new CookingInventory("Stove", InventoryId.STOVE.asInt()));
+        this.registry.registerGUI(new CookingInventory("Campfire", InventoryId.FIRE.asInt()));
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventories().size() + " inventories.");
     }
@@ -48,15 +48,21 @@ public class GUIHandler {
 
 
     public void onInventoryClick(InventoryClickEvent event) {
+        InventoryHolder holder = event.getInventory().getHolder();
+
         if (!(event.getWhoClicked() instanceof Player bukkitPlayer)) {
             return;
         }
 
-        RunePlayer player = playerManager.getRunePlayer(bukkitPlayer);
-        String title = TextUtils.extractPlainText(event.getView().title());
-        Integer inventoryId = extractInventoryId(title);
+        if (!(holder instanceof IDHolder idHolder)) {
+            return;
+        }
 
-        if (player == null || inventoryId == null) {
+
+        RunePlayer player = playerManager.getRunePlayer(bukkitPlayer);
+        int inventoryId = idHolder.id();
+
+        if (player == null) {
             return;
         }
 
@@ -69,15 +75,5 @@ public class GUIHandler {
         matchingGUI.onInventoryClick(event, event.getRawSlot(), player);
     }
 
-    public Integer extractInventoryId(String input) {
-        Pattern pattern = Pattern.compile("\\[(\\d+)]");
-        Matcher matcher = pattern.matcher(input);
-
-        if (matcher.find()) {
-            return Integer.parseInt(matcher.group(1));
-        }
-
-        return null;
-    }
 
 }

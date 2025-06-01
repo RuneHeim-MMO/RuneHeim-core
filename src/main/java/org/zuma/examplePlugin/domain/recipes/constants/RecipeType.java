@@ -6,7 +6,7 @@ public enum RecipeType {
     INVENTORY_RECIPE("Craft", "Crafting", "Crafted", SoundType.CRAFT_STEP, SoundType.MINING_SUCCESS),
     SMELTING_RECIPE("Smelt", "Smelting", "Smelted", SoundType.SMELT_STEP, SoundType.SMELT_SUCCESS),
     SMITHING_RECIPE("Smith", "Smithing", "Smithed", SoundType.CRAFT_STEP, SoundType.MINING_SUCCESS),
-    COOKING_RECIPE("Cook", "Cooking", "Cooked", SoundType.CRAFT_STEP, SoundType.MINING_SUCCESS);
+    COOKING_RECIPE("Cook", "Cooking", "Cooked", SoundType.COOKING_STEP, SoundType.COOKING_SUCCESS);
 
     private final String verb;
     private final String continuousVerb;
@@ -14,7 +14,6 @@ public enum RecipeType {
     private final SoundType stepSound;
     private final SoundType finishSound;
 
-    // Constructor
     RecipeType(String verb, String continuousVerb, String pastTenseVerb, SoundType stepSound, SoundType finishSound) {
         this.verb = verb;
         this.continuousVerb = continuousVerb;

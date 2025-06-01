@@ -15,6 +15,7 @@ public class RecipeRepository {
 
     public List<AbstractRecipeMeta> getAll() {
         return List.of(
+                // Bars
                 new AbstractRecipeMeta(RecipeId.BRONZE_BAR.getId(), RecipeType.SMELTING_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 1)),
                         List.of(
@@ -25,7 +26,7 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 6.2))
                 ),
 
-                new AbstractRecipeMeta(RecipeId.IRON_BAR.getId(), RecipeType.SMELTING_RECIPE, 3000,
+                new AbstractRecipeMeta(RecipeId.IRON_BAR.getId(), RecipeType.SMELTING_RECIPE, 4000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 15)),
                         List.of(new ItemRecord(ItemId.IRON_ORE, 1)),
                         new ItemRecord(ItemId.IRON_BAR, 1),
@@ -33,7 +34,7 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 12.5))
                 ),
 
-                new AbstractRecipeMeta(RecipeId.STEEL_BAR.getId(), RecipeType.SMELTING_RECIPE, 3000,
+                new AbstractRecipeMeta(RecipeId.STEEL_BAR.getId(), RecipeType.SMELTING_RECIPE, 5000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 30)),
                         List.of(
                                 new ItemRecord(ItemId.IRON_ORE, 1)
@@ -44,7 +45,7 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 17.5))
                 ),
 
-                new AbstractRecipeMeta(RecipeId.MITHRIL_BAR.getId(), RecipeType.SMELTING_RECIPE, 3000,
+                new AbstractRecipeMeta(RecipeId.MITHRIL_BAR.getId(), RecipeType.SMELTING_RECIPE, 8000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 50)),
                         List.of(
                                 new ItemRecord(ItemId.MITHRIL_ORE, 1)
@@ -55,7 +56,7 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 30.0))
                 ),
 
-                new AbstractRecipeMeta(RecipeId.ADAMANTITE_BAR.getId(), RecipeType.SMELTING_RECIPE, 3000,
+                new AbstractRecipeMeta(RecipeId.ADAMANTITE_BAR.getId(), RecipeType.SMELTING_RECIPE, 10000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 70)),
                         List.of(
                                 new ItemRecord(ItemId.ADAMANTITE_ORE, 1)
@@ -66,7 +67,7 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 37.5))
                 ),
 
-                new AbstractRecipeMeta(RecipeId.RUNITE_BAR.getId(), RecipeType.SMELTING_RECIPE, 3000,
+                new AbstractRecipeMeta(RecipeId.RUNITE_BAR.getId(), RecipeType.SMELTING_RECIPE, 15000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 85)),
                         List.of(
                                 new ItemRecord(ItemId.RUNITE_ORE, 1)
@@ -75,7 +76,98 @@ public class RecipeRepository {
                         new ItemRecord(ItemId.RUNITE_BAR, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 50.0))
+                ),
+
+                // Food
+
+                new AbstractRecipeMeta(RecipeId.COOKED_HERRING.getId(), RecipeType.COOKING_RECIPE, 2200,
+                        List.of(new SkillRequirement(SkillType.COOKING, 5)),
+                        List.of(new ItemRecord(ItemId.RAW_HERRING, 1)),
+                        new ItemRecord(ItemId.COOKED_HERRING, 1),
+                        new ItemRecord(ItemId.BURNT_FOOD, 1),
+                        List.of(new SkillXpRecord(SkillType.COOKING, 50))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.COOKED_MINNOW.getId(), RecipeType.COOKING_RECIPE, 2000,
+                        List.of(new SkillRequirement(SkillType.COOKING, 1)),
+                        List.of(new ItemRecord(ItemId.RAW_MINNOW, 1)),
+                        new ItemRecord(ItemId.COOKED_MINNOW, 1),
+                        new ItemRecord(ItemId.BURNT_FOOD, 1),
+                        List.of(new SkillXpRecord(SkillType.COOKING, 10))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.COOKED_TROUT.getId(), RecipeType.COOKING_RECIPE, 4000,
+                        List.of(new SkillRequirement(SkillType.COOKING, 15)),
+                        List.of(new ItemRecord(ItemId.RAW_TROUT, 1)),
+                        new ItemRecord(ItemId.COOKED_TROUT, 1),
+                        new ItemRecord(ItemId.BURNT_FOOD, 1),
+                        List.of(new SkillXpRecord(SkillType.COOKING, 70))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.COOKED_SALMON.getId(), RecipeType.COOKING_RECIPE, 4000,
+                        List.of(new SkillRequirement(SkillType.COOKING, 25)),
+                        List.of(new ItemRecord(ItemId.RAW_SALMON, 1)),
+                        new ItemRecord(ItemId.COOKED_SALMON, 1),
+                        new ItemRecord(ItemId.BURNT_FOOD, 1),
+                        List.of(new SkillXpRecord(SkillType.COOKING, 90))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.COOKED_TUNA.getId(), RecipeType.COOKING_RECIPE, 6000,
+                        List.of(new SkillRequirement(SkillType.COOKING, 30)),
+                        List.of(new ItemRecord(ItemId.RAW_TUNA, 1)),
+                        new ItemRecord(ItemId.COOKED_TUNA, 1),
+                        new ItemRecord(ItemId.BURNT_FOOD, 1),
+                        List.of(new SkillXpRecord(SkillType.COOKING, 100))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.COOKED_CRAWLER.getId(), RecipeType.COOKING_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.COOKING, 20)),
+                        List.of(new ItemRecord(ItemId.RAW_CRAWLER, 1)),
+                        new ItemRecord(ItemId.COOKED_CRAWLER, 1),
+                        new ItemRecord(ItemId.BURNT_FOOD, 1),
+                        List.of(new SkillXpRecord(SkillType.COOKING, 85))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.COOKED_PIKE.getId(), RecipeType.COOKING_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.COOKING, 20)),
+                        List.of(new ItemRecord(ItemId.RAW_PIKE, 1)),
+                        new ItemRecord(ItemId.COOKED_PIKE, 1),
+                        new ItemRecord(ItemId.BURNT_FOOD, 1),
+                        List.of(new SkillXpRecord(SkillType.COOKING, 80))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.COOKED_EEL.getId(), RecipeType.COOKING_RECIPE, 4000,
+                        List.of(new SkillRequirement(SkillType.COOKING, 28)),
+                        List.of(new ItemRecord(ItemId.RAW_EEL, 1)),
+                        new ItemRecord(ItemId.COOKED_EEL, 1),
+                        new ItemRecord(ItemId.BURNT_FOOD, 1),
+                        List.of(new SkillXpRecord(SkillType.COOKING, 95))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.COOKED_SHARK.getId(), RecipeType.COOKING_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.COOKING, 80)),
+                        List.of(new ItemRecord(ItemId.RAW_SHARK, 1)),
+                        new ItemRecord(ItemId.COOKED_SHARK, 1),
+                        new ItemRecord(ItemId.BURNT_FOOD, 1),
+                        List.of(new SkillXpRecord(SkillType.COOKING, 210))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.COOKED_TURTLE.getId(), RecipeType.COOKING_RECIPE, 8000,
+                        List.of(new SkillRequirement(SkillType.COOKING, 90)),
+                        List.of(new ItemRecord(ItemId.RAW_TURTLE, 1)),
+                        new ItemRecord(ItemId.COOKED_TURTLE, 1),
+                        new ItemRecord(ItemId.BURNT_FOOD, 1),
+                        List.of(new SkillXpRecord(SkillType.COOKING, 250))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.COOKED_RAY.getId(), RecipeType.COOKING_RECIPE, 6000,
+                        List.of(new SkillRequirement(SkillType.COOKING, 95)),
+                        List.of(new ItemRecord(ItemId.RAW_RAY, 1)),
+                        new ItemRecord(ItemId.COOKED_RAY, 1),
+                        new ItemRecord(ItemId.BURNT_FOOD, 1),
+                        List.of(new SkillXpRecord(SkillType.COOKING, 300))
                 )
+
         );
     }
 }

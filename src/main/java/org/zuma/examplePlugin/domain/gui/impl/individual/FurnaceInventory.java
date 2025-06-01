@@ -16,8 +16,8 @@ public class FurnaceInventory extends IndividualGUI {
     private static final int LEFT_CLICK_SMELT_AMOUNT = 1;
     private static final int SHIFT_CLICK_SMELT_AMOUNT = 5;
 
-    public FurnaceInventory(String title, int id, int rows) {
-        super(title, id, rows);
+    public FurnaceInventory(String title, int id) {
+        super(title, id, 1);
     }
 
     @Override

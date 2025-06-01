@@ -17,7 +17,8 @@ import java.util.List;
 public class InteractableBlockRepository {
 
     public List<AbstractInteractableBlockMeta> getAll() {
-        return List.of(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
+        return List.of(
+                new AbstractInteractableBlockMeta(BlockType.ResourceNode,
                         new Location(Bukkit.getWorld("world"), -22.5, 93, -101.5),
                         new Location(Bukkit.getWorld("world"), -22.5, 94.5, -101.5),
                         new Gson().toJson(new ResourceNodeMetaId(0))),
@@ -25,11 +26,22 @@ public class InteractableBlockRepository {
                 new AbstractInteractableBlockMeta(BlockType.InventoryOpener,
                         new Location(Bukkit.getWorld("world"), -14, 94, -101),
                         new Location(Bukkit.getWorld("world"), -13.5, 94.5, -101),
-                        new Gson().toJson(new InventoryOpenerMeta(InventoryId.BASIC_FURNACE, Material.BARRIER, null, "Dark furnace"))),
+                        new Gson().toJson(new InventoryOpenerMeta(InventoryId.BASIC_FURNACE, Material.BARRIER, null, "Furnace"))),
 
                 new AbstractInteractableBlockMeta(BlockType.InventoryOpener,
                         new Location(Bukkit.getWorld("world"), -14, 93, -103),
                         new Location(Bukkit.getWorld("world"), -13.5, 94, -103),
-                        new Gson().toJson(new InventoryOpenerMeta(InventoryId.BASIC_FURNACE, Material.ANVIL, List.of(new SkillRequirement(SkillType.SMITHING, 50)), "Anvil"))));
+                        new Gson().toJson(new InventoryOpenerMeta(InventoryId.BASIC_FURNACE, Material.ANVIL, List.of(new SkillRequirement(SkillType.SMITHING, 50)), "Anvil"))),
+
+
+                new AbstractInteractableBlockMeta(BlockType.InventoryOpener,
+                        new Location(Bukkit.getWorld("world"), -11, 93, -101),
+                        new Location(Bukkit.getWorld("world"), -10.5, 94, -101.5),
+                        new Gson().toJson(new InventoryOpenerMeta(InventoryId.STOVE, Material.FURNACE, null, "Stove"))
+                )
+
+        );
+
+
     }
 }

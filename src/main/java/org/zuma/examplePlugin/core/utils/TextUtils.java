@@ -10,6 +10,35 @@ import org.zuma.examplePlugin.core.constants.Colors;
 import java.time.Duration;
 
 public class TextUtils {
+    private static final char ZWSP = '\u200B'; // zero-width space = 0
+    private static final char ZWNJ = '\u200C'; // zero-width non-joiner = 1
+
+    public static String encodeInvisibleId(int id) {
+        String binary = Integer.toBinaryString(id);
+        StringBuilder encoded = new StringBuilder();
+        for (char c : binary.toCharArray()) {
+            encoded.append(c == '0' ? ZWSP : ZWNJ);
+        }
+        return encoded.toString();
+    }
+
+    public static Integer decodeInvisibleId(String title) {
+        StringBuilder binary = new StringBuilder();
+        for (char c : title.toCharArray()) {
+            if (c == ZWSP) binary.append('0');
+            else if (c == ZWNJ) binary.append('1');
+        }
+        if (binary.isEmpty()) return null;
+        return Integer.parseInt(binary.toString(), 2);
+    }
+
+    public static String appendInvisibleId(String title, int id) {
+        return title + encodeInvisibleId(id);
+    }
+
+    public static Integer extractInvisibleId(String title) {
+        return decodeInvisibleId(title);
+    }
 
     public static Component centerText(String text, int width) {
         // Calculate how much padding is needed on the left to center the text
@@ -73,7 +102,7 @@ public class TextUtils {
                 Duration.ofMillis(500)
         );
     }
-    
+
     public static String extractPlainText(Component component) {
         return PlainTextComponentSerializer.plainText().serialize(component);
     }

@@ -20,8 +20,12 @@ public enum SoundType {
     MINING_STEP("BLOCK_STONE_STEP", false, 1.0f, 1.0f),
     MINING_SUCCESS("BLOCK_STONE_BREAK", false, 1.0f, 1.5f),
     INVENTORY_FULL("ENTITY_ITEM_PICKUP", false, 1.0f, 0.8f),
+
     SMELT_STEP("BLOCK_FURNACE_FIRE_CRACKLE", false, 1.0f, 1.0f),
     SMELT_SUCCESS("BLOCK_FIRE_EXTINGUISH", false, 1.0f, 1.5f),
+
+    COOKING_STEP("BLOCK_CAMPFIRE_CRACKLE", false, 1.0f, 1.0f),
+    COOKING_SUCCESS("BLOCK_FIRE_EXTINGUISH", false, 1.0f, 1.3f),
 
     // AMBIENT
     VILLAGER_MAN_AMBIENT_1("vocal_villagers:entity.villager.ambient", true, 1, 0.75f),

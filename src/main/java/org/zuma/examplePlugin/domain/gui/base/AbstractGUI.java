@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.gui.base;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -11,6 +12,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.domain.gui.IDHolder;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
@@ -24,7 +26,7 @@ public abstract class AbstractGUI {
     protected final int id, rows;
 
     public AbstractGUI(String title, int id, int rows) {
-        this.title = "[" + id + "] " + title;
+        this.title = title;
         this.id = id;
         this.rows = rows;
     }
@@ -60,9 +62,11 @@ public abstract class AbstractGUI {
         List<Component> appendLore = new ArrayList<>();
 
         appendLore.add(Component.text(""));
-        appendLore.add(Component.text(leftClickAction + " - Left Click", Colors.ACCENT.asColor()));
-        if (shiftClickAction != null)
-            appendLore.add(Component.text(shiftClickAction + " - Shift Click", Colors.ACCENT.asColor()));
+        appendLore.add(Component.text(leftClickAction + " - Left Click", Colors.ACCENT.asColor()).decoration(TextDecoration.ITALIC, false));
+
+        if (shiftClickAction != null) {
+            appendLore.add(Component.text(shiftClickAction + " - Shift Click", Colors.ACCENT.asColor()).decoration(TextDecoration.ITALIC, false));
+        }
 
         if (lore != null) {
             lore.addAll(appendLore);
@@ -76,7 +80,7 @@ public abstract class AbstractGUI {
 
 
     public Inventory getBaseInventory() {
-        return Bukkit.createInventory(null, getSlots(), getTitle());
+        return Bukkit.createInventory(new IDHolder(id), getSlots(), getTitle());
     }
 
     public abstract void openInventory(RunePlayer player);
