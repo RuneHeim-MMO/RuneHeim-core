@@ -30,7 +30,7 @@ public class BlockManager {
     public AbstractInteractableBlock getAbstractInteractableBlock(Block block) {
         return blocks.get(block.getLocation().toBlockLocation());
     }
-    
+
     public Collection<AbstractInteractableBlock> getAllBlocks() {
         return blocks.values();
     }

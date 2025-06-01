@@ -171,14 +171,6 @@ public class ResourceNode extends AbstractInteractableBlock implements Serializa
         event.setCancelled(true);
     }
 
-    public void onPlayerBlockBreakProgressUpdateEvent(RunePlayer player, BlockBreakEvent event) {
-        event.setCancelled(true);
-    }
-
-    public String serializeMeta() {
-        return new Gson().toJson(this.getJsonMeta());
-    }
-
     public void deserializeAndApplyMeta() {
         this.meta = new Gson().fromJson(this.getJsonMeta(), ResourceNodeMetaId.class);
     }

@@ -3,7 +3,8 @@ package org.zuma.examplePlugin.domain.block.constants;
 import org.bukkit.Material;
 
 public enum BlockType {
-    ResourceNode(0, Material.IRON_ORE);
+    ResourceNode(0, Material.IRON_ORE),
+    InventoryOpener(1, Material.BARRIER);
 
     private final int id;
     private final Material material;
