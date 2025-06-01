@@ -26,9 +26,9 @@ public class RecipeHandler {
         this.itemRegistry = itemRegistry;
     }
 
-    public void craftRecipe(RunePlayer player, AbstractRecipe recipe, int times) {
+    public boolean craftRecipe(RunePlayer player, AbstractRecipe recipe, int times) {
         if (times <= 0) {
-            return;
+            return false;
         }
 
         RecipeType type = recipe.getType();
@@ -39,24 +39,24 @@ public class RecipeHandler {
 
         if (player.isBusy()) {
             player.showFailedMessage(Component.text("You are already busy with something else!"));
-            return;
+            return false;
         }
 
         if (!player.meetsRequirements(recipe)) {
             player.showFailedMessage(Component.text("You do not meet requirements to " + type.getVerb() + " ").append(resultComponent));
-            return;
+            return false;
         }
 
         if (!PlayerUtils.hasItems(player, totalIngredients)) {
             player.showFailedMessage(Component.text("You do not have required ingredients to " + type.getVerb() + " " + times + "x ").append(resultComponent));
-            return;
+            return false;
         }
 
         PlayerCraftingStart event = new PlayerCraftingStart(player, recipe, times);
         Bukkit.getServer().getPluginManager().callEvent(event);
 
         if (event.isCancelled()) {
-            return;
+            return false;
         }
 
         player.useBusyState(recipe.getCraftTimeMs() * times,
@@ -100,6 +100,8 @@ public class RecipeHandler {
 
 
                 });
+
+        return true;
     }
 
     private int getSuccessCraftsAmount(RunePlayer player, AbstractRecipe recipe, int craftAmount) {

@@ -6,11 +6,13 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.interfaces.Serializable;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.InventoryOpenerMeta;
+import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
@@ -20,7 +22,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class InventoryOpenerBlock extends AbstractInteractableBlock implements Serializable, SkillRestrictable {
-    private int inventoryId;
+    private InventoryId inventoryId;
     private List<SkillRequirement> requirements;
     private String label;
 
@@ -50,8 +52,7 @@ public class InventoryOpenerBlock extends AbstractInteractableBlock implements S
             return;
         }
 
-        player.getPlayer().sendMessage("Opened " + inventoryId);
-
+        RuneQuestPlugin.getGUIHandler().openInventory(inventoryId, player);
     }
 
     public void deserializeAndApplyMeta() {

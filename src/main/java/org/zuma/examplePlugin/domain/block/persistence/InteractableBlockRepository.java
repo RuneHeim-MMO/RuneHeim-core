@@ -8,6 +8,7 @@ import org.zuma.examplePlugin.domain.block.constants.BlockType;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.InventoryOpenerMeta;
 import org.zuma.examplePlugin.domain.block.meta.ResourceNodeMetaId;
+import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
@@ -24,11 +25,11 @@ public class InteractableBlockRepository {
                 new AbstractInteractableBlockMeta(BlockType.InventoryOpener,
                         new Location(Bukkit.getWorld("world"), -14, 94, -101),
                         new Location(Bukkit.getWorld("world"), -13.5, 94.5, -101),
-                        new Gson().toJson(new InventoryOpenerMeta(0, Material.BARRIER, null, "Dark furnace"))),
+                        new Gson().toJson(new InventoryOpenerMeta(InventoryId.BASIC_FURNACE, Material.BARRIER, null, "Dark furnace"))),
 
                 new AbstractInteractableBlockMeta(BlockType.InventoryOpener,
                         new Location(Bukkit.getWorld("world"), -14, 93, -103),
                         new Location(Bukkit.getWorld("world"), -13.5, 94, -103),
-                        new Gson().toJson(new InventoryOpenerMeta(0, Material.ANVIL, List.of(new SkillRequirement(SkillType.SMITHING, 50)), "Anvil"))));
+                        new Gson().toJson(new InventoryOpenerMeta(InventoryId.BASIC_FURNACE, Material.ANVIL, List.of(new SkillRequirement(SkillType.SMITHING, 50)), "Anvil"))));
     }
 }

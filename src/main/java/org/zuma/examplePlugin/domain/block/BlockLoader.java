@@ -29,7 +29,7 @@ public class BlockLoader {
 
     public void fetchAllResourceNodeTypes() {
         resourceNodeTypeRepository.getAll().forEach(type -> resourceNodeTypes.put(type.getId(), type));
-        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Loaded " + resourceNodeTypes.size() + " interactable block types.");
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Loaded " + resourceNodeTypes.size() + " resource node types.");
     }
 
     public void loadInteractableBlocks() {

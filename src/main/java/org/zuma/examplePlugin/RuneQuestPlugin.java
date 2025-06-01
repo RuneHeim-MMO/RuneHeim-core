@@ -13,6 +13,9 @@ import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
+import org.zuma.examplePlugin.domain.gui.GUIHandler;
+import org.zuma.examplePlugin.domain.gui.GUIListener;
+import org.zuma.examplePlugin.domain.gui.GUIRegistry;
 import org.zuma.examplePlugin.domain.item.ItemFactory;
 import org.zuma.examplePlugin.domain.item.ItemHandler;
 import org.zuma.examplePlugin.domain.item.ItemListener;
@@ -30,6 +33,7 @@ import org.zuma.examplePlugin.domain.modifier.GearModifierListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.recipes.RecipeFactory;
+import org.zuma.examplePlugin.domain.recipes.RecipeHandler;
 import org.zuma.examplePlugin.domain.recipes.RecipeRegistry;
 import org.zuma.examplePlugin.domain.recipes.persistence.RecipeLoader;
 import org.zuma.examplePlugin.domain.recipes.persistence.RecipeRepository;
@@ -42,11 +46,12 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private static RunePlayerManager runePlayerManager;
     private static ItemRegistry itemRegistry;
     private static MobRegistry mobRegistry;
-    private ItemHandler itemHandler;
-    private StateManager itemStateManager;
+    private static GUIHandler guiHandler;
+    private static RecipeRegistry recipeRegistry;
+    private static RecipeHandler recipeHandler;
+
     private BlockManager blockManager;
     private MobHandler mobHandler;
-    private RecipeRegistry recipeRegistry;
 
     public void initializePlugin() {
         pluginInstance = this;
@@ -62,8 +67,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         ItemLoader itemLoader = new ItemLoader(itemRegistry, new ItemFactory(), new ItemRepository());
         itemLoader.loadItemsFromDatabase();
 
-        itemHandler = new ItemHandler(itemRegistry);
-        itemStateManager = new StateManager(new StateFactory(), itemHandler, new StateRepository());
+        ItemHandler itemHandler = new ItemHandler(itemRegistry);
+        StateManager itemStateManager = new StateManager(new StateFactory(), itemHandler, new StateRepository());
         ItemListener itemListener = new ItemListener(itemHandler, runePlayerManager, itemStateManager);
         getServer().getPluginManager().registerEvents(itemListener, pluginInstance);
 
@@ -88,6 +93,12 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         recipeRegistry = new RecipeRegistry();
         RecipeLoader recipeLoader = new RecipeLoader(itemRegistry, recipeRegistry, new RecipeRepository(), new RecipeFactory());
         recipeLoader.loadAllRecipes();
+        recipeHandler = new RecipeHandler(recipeRegistry, itemRegistry);
+
+        guiHandler = new GUIHandler(new GUIRegistry(), runePlayerManager);
+        GUIListener guiListener = new GUIListener(guiHandler);
+        getServer().getPluginManager().registerEvents(guiListener, pluginInstance);
+        guiHandler.initializeInventories();
 
         // TODO: Load inventory from DB & Verify their meta
 
@@ -112,6 +123,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     public void onDisable() {
         runePlayerManager.handleOnDisable();
         mobHandler.cleanup();
+        guiHandler.closeAllInventories();
         Bukkit.getScheduler().cancelTasks(this);
     }
 
@@ -133,6 +145,18 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static MobRegistry getMobRegistry() {
         return mobRegistry;
+    }
+
+    public static GUIHandler getGUIHandler() {
+        return guiHandler;
+    }
+
+    public static RecipeRegistry getRecipeRegistry() {
+        return recipeRegistry;
+    }
+
+    public static RecipeHandler getRecipeHandler() {
+        return recipeHandler;
     }
 
 }
