@@ -17,7 +17,7 @@ public class AnvilInventory extends IndividualGUI {
     private static final int SHIFT_CLICK_SMELT_AMOUNT = 5;
 
     public AnvilInventory(String title, int id) {
-        super(title, id, 2);
+        super(title, id, 6);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class AnvilInventory extends IndividualGUI {
 
         for (int i = 0; i < recipes.size(); i++) {
 
-            if (i > super.getSlots()) {
+            if (i >= super.getSlots()) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, title + " inventory is overflowing.");
                 continue;
             }

@@ -169,7 +169,614 @@ public class RecipeRepository {
                         new ItemRecord(ItemId.COOKED_RAY, 1),
                         new ItemRecord(ItemId.BURNT_FOOD, 1),
                         List.of(new SkillXpRecord(SkillType.COOKING, 300))
+                ),
+
+
+                // Helmets
+                new AbstractRecipeMeta(RecipeId.BRONZE_HELMET.getId(), RecipeType.SMITHING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 1)),
+                        List.of(
+                                new IngredientRecord(ItemId.BRONZE_BAR, 2, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.BRONZE_HELMET, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 12.5))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.IRON_HELMET.getId(), RecipeType.SMITHING_RECIPE, 4000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 15)),
+                        List.of(
+                                new IngredientRecord(ItemId.IRON_BAR, 2, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.IRON_HELMET, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 25.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.STEEL_HELMET.getId(), RecipeType.SMELTING_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 30)),
+                        List.of(
+                                new IngredientRecord(ItemId.STEEL_BAR, 2, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.STEEL_HELMET, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 37.5))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.MITHRIL_HELMET.getId(), RecipeType.SMELTING_RECIPE, 6000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 50)),
+                        List.of(
+                                new IngredientRecord(ItemId.MITHRIL_BAR, 2, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.MITHRIL_HELMET, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 50.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.ADAMANTITE_HELMET.getId(), RecipeType.SMELTING_RECIPE, 7000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 70)),
+                        List.of(
+                                new IngredientRecord(ItemId.ADAMANTITE_BAR, 2, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.ADAMANTITE_HELMET, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 62.5))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.RUNITE_HELMET.getId(), RecipeType.SMELTING_RECIPE, 8000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 85)),
+                        List.of(
+                                new IngredientRecord(ItemId.RUNITE_BAR, 2, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.RUNITE_HELMET, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 75.0))
+                ),
+
+                // Platebody
+                new AbstractRecipeMeta(RecipeId.BRONZE_BODY.getId(), RecipeType.SMITHING_RECIPE, 4000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 4)),
+                        List.of(
+                                new IngredientRecord(ItemId.BRONZE_BAR, 3, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.BRONZE_BODY, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 18.8))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.IRON_BODY.getId(), RecipeType.SMITHING_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 20)),
+                        List.of(
+                                new IngredientRecord(ItemId.IRON_BAR, 3, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.IRON_BODY, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 37.5))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.STEEL_BODY.getId(), RecipeType.SMITHING_RECIPE, 7000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 52)),
+                        List.of(
+                                new IngredientRecord(ItemId.STEEL_BAR, 5, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.STEEL_BODY, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 75.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.MITHRIL_BODY.getId(), RecipeType.SMITHING_RECIPE, 8000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 70)),
+                        List.of(
+                                new IngredientRecord(ItemId.MITHRIL_BAR, 5, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.MITHRIL_BODY, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 112.5))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.ADAMANTITE_BODY.getId(), RecipeType.SMITHING_RECIPE, 9000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 80)),
+                        List.of(
+                                new IngredientRecord(ItemId.ADAMANTITE_BAR, 6, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.ADAMANTITE_BODY, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 150.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.RUNITE_BODY.getId(), RecipeType.SMITHING_RECIPE, 12000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 99)),
+                        List.of(
+                                new IngredientRecord(ItemId.RUNITE_BAR, 8, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.RUNITE_BODY, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 187.5))
+                ),
+
+
+                // Platelegs
+
+                new AbstractRecipeMeta(RecipeId.BRONZE_PLATELEGS.getId(), RecipeType.SMITHING_RECIPE, 4000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 7)),
+                        List.of(
+                                new IngredientRecord(ItemId.BRONZE_BAR, 3, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.BRONZE_PLATELEGS, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 18.8))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.IRON_PLATELEGS.getId(), RecipeType.SMITHING_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 25)),
+                        List.of(
+                                new IngredientRecord(ItemId.IRON_BAR, 3, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.IRON_PLATELEGS, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 37.5))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.STEEL_PLATELEGS.getId(), RecipeType.SMITHING_RECIPE, 7000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 55)),
+                        List.of(
+                                new IngredientRecord(ItemId.STEEL_BAR, 4, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.STEEL_PLATELEGS, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 75.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.MITHRIL_PLATELEGS.getId(), RecipeType.SMITHING_RECIPE, 8000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 72)),
+                        List.of(
+                                new IngredientRecord(ItemId.MITHRIL_BAR, 5, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.MITHRIL_PLATELEGS, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 112.5))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.ADAMANTITE_PLATELEGS.getId(), RecipeType.SMITHING_RECIPE, 9000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 85)),
+                        List.of(
+                                new IngredientRecord(ItemId.ADAMANTITE_BAR, 7, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.ADAMANTITE_PLATELEGS, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 150.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.RUNITE_PLATELEGS.getId(), RecipeType.SMITHING_RECIPE, 12000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 99)),
+                        List.of(
+                                new IngredientRecord(ItemId.RUNITE_BAR, 8, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.RUNITE_PLATELEGS, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 187.5))
+                ),
+
+                // Boots
+
+                new AbstractRecipeMeta(RecipeId.BRONZE_BOOTS.getId(), RecipeType.SMITHING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 7)),
+                        List.of(
+                                new IngredientRecord(ItemId.BRONZE_BAR, 1, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.BRONZE_BOOTS, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 13.8))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.IRON_BOOTS.getId(), RecipeType.SMITHING_RECIPE, 3500,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 21)),
+                        List.of(
+                                new IngredientRecord(ItemId.IRON_BAR, 1, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.IRON_BOOTS, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 25.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.STEEL_BOOTS.getId(), RecipeType.SMITHING_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 55)),
+                        List.of(
+                                new IngredientRecord(ItemId.STEEL_BAR, 2, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.STEEL_BOOTS, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 50.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.MITHRIL_BOOTS.getId(), RecipeType.SMITHING_RECIPE, 6000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 73)),
+                        List.of(
+                                new IngredientRecord(ItemId.MITHRIL_BAR, 2, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.MITHRIL_BOOTS, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 75.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.ADAMANTITE_BOOTS.getId(), RecipeType.SMITHING_RECIPE, 7000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 85)),
+                        List.of(
+                                new IngredientRecord(ItemId.ADAMANTITE_BAR, 3, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.ADAMANTITE_BOOTS, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 100.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.RUNITE_BOOTS.getId(), RecipeType.SMITHING_RECIPE, 9000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 99)),
+                        List.of(
+                                new IngredientRecord(ItemId.RUNITE_BAR, 3, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.RUNITE_BOOTS, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 125.0))
+                ),
+
+                // Swords
+                new AbstractRecipeMeta(RecipeId.BRONZE_SWORD.getId(), RecipeType.SMITHING_RECIPE, 2500,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 1)),
+                        List.of(
+                                new IngredientRecord(ItemId.BRONZE_BAR, 1, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.BRONZE_SWORD, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 12.5))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.IRON_SWORD.getId(), RecipeType.SMITHING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 10)),
+                        List.of(
+                                new IngredientRecord(ItemId.IRON_BAR, 1, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.IRON_SWORD, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 25.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.STEEL_SWORD.getId(), RecipeType.SMITHING_RECIPE, 3500,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 22)),
+                        List.of(
+                                new IngredientRecord(ItemId.STEEL_BAR, 2, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.STEEL_SWORD, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 37.5))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.MITHRIL_SWORD.getId(), RecipeType.SMITHING_RECIPE, 4000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 30)),
+                        List.of(
+                                new IngredientRecord(ItemId.MITHRIL_BAR, 2, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.MITHRIL_SWORD, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 50.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.ADAMANTITE_SWORD.getId(), RecipeType.SMITHING_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 50)),
+                        List.of(
+                                new IngredientRecord(ItemId.ADAMANTITE_BAR, 3, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.ADAMANTITE_SWORD, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 62.5))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.RUNITE_SWORD.getId(), RecipeType.SMITHING_RECIPE, 6000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 70)),
+                        List.of(
+                                new IngredientRecord(ItemId.RUNITE_BAR, 3, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.RUNITE_SWORD, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 75.0))
+                ),
+
+// Daggers
+                new AbstractRecipeMeta(RecipeId.BRONZE_DAGGER.getId(), RecipeType.SMITHING_RECIPE, 2500,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 1)),
+                        List.of(
+                                new IngredientRecord(ItemId.BRONZE_BAR, 1, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.BRONZE_DAGGER, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 12.5))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.IRON_DAGGER.getId(), RecipeType.SMITHING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 10)),
+                        List.of(
+                                new IngredientRecord(ItemId.IRON_BAR, 1, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.IRON_DAGGER, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 25.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.STEEL_DAGGER.getId(), RecipeType.SMITHING_RECIPE, 3500,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 22)),
+                        List.of(
+                                new IngredientRecord(ItemId.STEEL_BAR, 1, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.STEEL_DAGGER, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 37.5))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.MITHRIL_DAGGER.getId(), RecipeType.SMITHING_RECIPE, 4000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 30)),
+                        List.of(
+                                new IngredientRecord(ItemId.MITHRIL_BAR, 1, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.MITHRIL_DAGGER, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 50.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.ADAMANTITE_DAGGER.getId(), RecipeType.SMITHING_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 50)),
+                        List.of(
+                                new IngredientRecord(ItemId.ADAMANTITE_BAR, 1, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.ADAMANTITE_DAGGER, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 62.5))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.RUNITE_DAGGER.getId(), RecipeType.SMITHING_RECIPE, 6000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 70)),
+                        List.of(
+                                new IngredientRecord(ItemId.RUNITE_BAR, 1, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.RUNITE_DAGGER, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 75.0))
+                ),
+
+                // Battleaxes
+                new AbstractRecipeMeta(RecipeId.BRONZE_BATTLEAXE.getId(), RecipeType.SMITHING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 6)),
+                        List.of(
+                                new IngredientRecord(ItemId.BRONZE_BAR, 1, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.BRONZE_BATTLEAXE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 13.8))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.IRON_BATTLEAXE.getId(), RecipeType.SMITHING_RECIPE, 3500,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 22)),
+                        List.of(
+                                new IngredientRecord(ItemId.IRON_BAR, 1, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.IRON_BATTLEAXE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 25.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.STEEL_BATTLEAXE.getId(), RecipeType.SMITHING_RECIPE, 4000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 33)),
+                        List.of(
+                                new IngredientRecord(ItemId.STEEL_BAR, 2, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.STEEL_BATTLEAXE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 37.5))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.MITHRIL_BATTLEAXE.getId(), RecipeType.SMITHING_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 46)),
+                        List.of(
+                                new IngredientRecord(ItemId.MITHRIL_BAR, 2, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.MITHRIL_BATTLEAXE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 50.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.ADAMANTITE_BATTLEAXE.getId(), RecipeType.SMITHING_RECIPE, 6000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 61)),
+                        List.of(
+                                new IngredientRecord(ItemId.ADAMANTITE_BAR, 3, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.ADAMANTITE_BATTLEAXE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 62.5))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.RUNITE_BATTLEAXE.getId(), RecipeType.SMITHING_RECIPE, 7000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 75)),
+                        List.of(
+                                new IngredientRecord(ItemId.RUNITE_BAR, 3, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.RUNITE_BATTLEAXE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 75.0))
+                ),
+
+                // Axes
+                new AbstractRecipeMeta(RecipeId.BRONZE_AXE.getId(), RecipeType.SMITHING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 1)),
+                        List.of(
+                                new IngredientRecord(ItemId.BRONZE_BAR, 1, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.BRONZE_AXE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 13.8))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.IRON_AXE.getId(), RecipeType.SMITHING_RECIPE, 3500,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 10)),
+                        List.of(
+                                new IngredientRecord(ItemId.IRON_BAR, 1, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.IRON_AXE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 25.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.STEEL_AXE.getId(), RecipeType.SMITHING_RECIPE, 4000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 22)),
+                        List.of(
+                                new IngredientRecord(ItemId.STEEL_BAR, 2, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.STEEL_AXE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 37.5))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.MITHRIL_AXE.getId(), RecipeType.SMITHING_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 33)),
+                        List.of(
+                                new IngredientRecord(ItemId.MITHRIL_BAR, 2, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.MITHRIL_AXE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 50.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.ADAMANTITE_AXE.getId(), RecipeType.SMITHING_RECIPE, 6000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 46)),
+                        List.of(
+                                new IngredientRecord(ItemId.ADAMANTITE_BAR, 3, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.ADAMANTITE_AXE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 62.5))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.RUNITE_AXE.getId(), RecipeType.SMITHING_RECIPE, 7000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 61)),
+                        List.of(
+                                new IngredientRecord(ItemId.RUNITE_BAR, 3, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.RUNITE_AXE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 75.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.BRONZE_PICKAXE.getId(), RecipeType.SMITHING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 1)),
+                        List.of(
+                                new IngredientRecord(ItemId.BRONZE_BAR, 1, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.BRONZE_PICKAXE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 13.8))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.IRON_PICKAXE.getId(), RecipeType.SMITHING_RECIPE, 3500,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 10)),
+                        List.of(
+                                new IngredientRecord(ItemId.IRON_BAR, 1, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.IRON_PICKAXE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 25.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.STEEL_PICKAXE.getId(), RecipeType.SMITHING_RECIPE, 4000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 22)),
+                        List.of(
+                                new IngredientRecord(ItemId.STEEL_BAR, 2, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.STEEL_PICKAXE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 37.5))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.MITHRIL_PICKAXE.getId(), RecipeType.SMITHING_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 33)),
+                        List.of(
+                                new IngredientRecord(ItemId.MITHRIL_BAR, 2, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.MITHRIL_PICKAXE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 50.0))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.ADAMANTITE_PICKAXE.getId(), RecipeType.SMITHING_RECIPE, 6000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 46)),
+                        List.of(
+                                new IngredientRecord(ItemId.ADAMANTITE_BAR, 3, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.ADAMANTITE_PICKAXE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 62.5))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.RUNITE_PICKAXE.getId(), RecipeType.SMITHING_RECIPE, 7000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 61)),
+                        List.of(
+                                new IngredientRecord(ItemId.RUNITE_BAR, 3, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                        ),
+                        new ItemRecord(ItemId.RUNITE_PICKAXE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 75.0))
                 )
+
 
         );
     }
