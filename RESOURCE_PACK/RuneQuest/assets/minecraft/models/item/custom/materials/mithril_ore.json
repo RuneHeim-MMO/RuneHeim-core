@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "item/bronze_bar"
+    "layer0": "item/materials/mithril_ore"
   }
 }

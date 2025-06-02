@@ -8,79 +8,85 @@
       "predicate": {
         "custom_model_data": 100
       },
-      "model": "item/custom/bronze_ore"
+      "model": "item/custom/materials/bronze_ore"
     },
     {
       "predicate": {
         "custom_model_data": 101
       },
-      "model": "item/custom/iron_ore"
+      "model": "item/custom/materials/iron_ore"
     },
     {
       "predicate": {
         "custom_model_data": 102
       },
-      "model": "item/custom/steel_ore"
+      "model": "item/custom/materials/steel_ore"
     },
     {
       "predicate": {
         "custom_model_data": 103
       },
-      "model": "item/custom/mithril_ore"
+      "model": "item/custom/materials/mithril_ore"
     },
     {
       "predicate": {
         "custom_model_data": 104
       },
-      "model": "item/custom/adamantite_ore"
+      "model": "item/custom/materials/adamantite_ore"
     },
     {
       "predicate": {
         "custom_model_data": 105
       },
-      "model": "item/custom/runite_ore"
+      "model": "item/custom/materials/runite_ore"
     },
     {
       "predicate": {
         "custom_model_data": 106
       },
-      "model": "item/custom/coal"
+      "model": "item/custom/materials/tin_ore"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 107
+      },
+      "model": "item/custom/materials/coal_ore"
     },
     {
       "predicate": {
         "custom_model_data": 200
       },
-      "model": "item/custom/bronze_bar"
+      "model": "item/custom/materials/bronze_bar"
     },
     {
       "predicate": {
         "custom_model_data": 201
       },
-      "model": "item/custom/iron_bar"
+      "model": "item/custom/materials/iron_bar"
     },
     {
       "predicate": {
         "custom_model_data": 202
       },
-      "model": "item/custom/steel_bar"
+      "model": "item/custom/materials/steel_bar"
     },
     {
       "predicate": {
         "custom_model_data": 203
       },
-      "model": "item/custom/mithril_bar"
+      "model": "item/custom/materials/mithril_bar"
     },
     {
       "predicate": {
         "custom_model_data": 204
       },
-      "model": "item/custom/adamantite_bar"
+      "model": "item/custom/materials/adamantite_bar"
     },
     {
       "predicate": {
         "custom_model_data": 205
       },
-      "model": "item/custom/runite_bar"
+      "model": "item/custom/materials/runite_bar"
     },
     {
       "predicate": {

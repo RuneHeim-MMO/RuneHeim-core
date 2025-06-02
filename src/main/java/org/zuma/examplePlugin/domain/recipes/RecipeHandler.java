@@ -43,12 +43,12 @@ public class RecipeHandler {
         }
 
         if (!player.meetsRequirements(recipe)) {
-            player.showFailedMessage(Component.text("You do not meet requirements to " + type.getVerb() + " ").append(resultComponent));
+            player.showFailedMessage(Component.text("You do not meet requirements to " + type.getVerb().toLowerCase() + " ").append(resultComponent));
             return false;
         }
 
         if (!PlayerUtils.hasItems(player, totalIngredients)) {
-            player.showFailedMessage(Component.text("You do not have required ingredients to " + type.getVerb() + " " + times + "x ").append(resultComponent));
+            player.showFailedMessage(Component.text("You do not have required ingredients to " + type.getVerb().toLowerCase() + " " + times + "x ").append(resultComponent));
             return false;
         }
 
@@ -65,7 +65,7 @@ public class RecipeHandler {
 
                     // If players inventory gets modified during waiting for the craft (e.g player drops item)
                     if (!PlayerUtils.hasItems(player, totalIngredients)) {
-                        player.showFailedMessage(Component.text("You do not have required ingredients to " + type.getVerb() + " " + times + "x ").append(resultComponent));
+                        player.showFailedMessage(Component.text("You do not have required ingredients to " + type.getVerb().toLowerCase() + " " + times + "x ").append(resultComponent));
                         return;
                     }
 
@@ -90,7 +90,7 @@ public class RecipeHandler {
                     if (successCrafts > 0) {
                         player.addItemOrDrop(new ItemRecord(recipe.getSuccessResult().getItemId(), recipe.getSuccessResult().getAmount() * successCrafts));
                         recipe.onCraftFinish(player, successCrafts);
-                        player.getPlayer().sendMessage(Component.text("Successfully " + type.getPastTenseVerb() + " " + successCrafts + "x ").append(resultComponent).color(Colors.SUCCESS.asColor()));
+                        player.getPlayer().sendMessage(Component.text("Successfully " + type.getPastTenseVerb().toLowerCase() + " " + successCrafts + "x ").append(resultComponent).color(Colors.SUCCESS.asColor()));
                         type.getFinishSound().play(player);
                     }
 
