@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.recipes;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
@@ -32,7 +33,7 @@ public class RecipeHandler {
         }
 
         RecipeType type = recipe.getType();
-        Component resultComponent = recipe.getDisplayItemstack(player, itemRegistry).displayName();
+        Component resultComponent = recipe.getDisplayItemstack(player, itemRegistry).displayName().color(NamedTextColor.WHITE);
         String recipeResultNameString = times + "x " + TextUtils.extractPlainText(resultComponent);
 
         List<ItemRecord> requiredTools = recipe.getIngredients().stream()

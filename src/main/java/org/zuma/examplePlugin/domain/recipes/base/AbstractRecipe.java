@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.recipes.base;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -11,6 +12,7 @@ import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
+import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
@@ -95,11 +97,18 @@ public abstract class AbstractRecipe implements SkillRestrictable {
     }
 
     public ItemStack getDisplayItemstack(RunePlayer player, ItemRegistry registry) {
-        ItemStack newItem = new ItemStack(displayItemstack);
+        boolean playerMeetsSkillRequirements = player.meetsRequirements(this);
+
+        ItemStack newItem = playerMeetsSkillRequirements ? new ItemStack(displayItemstack) : new ItemStack(Material.BARRIER);
         ItemMeta meta = newItem.getItemMeta();
         List<Component> itemLore = new ArrayList<>();
         int chanceOfSuccess = Math.toIntExact(getChanceOfSuccess(player));
         int craftTimeSeconds = Math.toIntExact(craftTimeMs / 1000);
+
+        if (!playerMeetsSkillRequirements) {
+            meta.displayName(Component.text(TextUtils.extractPlainText(displayItemstack.displayName()).replace("[", "").replace("]", ""), Colors.ERROR_LIGHT.asColor()).decoration(TextDecoration.ITALIC, false));
+
+        }
 
         itemLore.add(Component.text("✔ " + craftTimeSeconds + " sec crafting time", Colors.coloredProgressValue(craftTimeSeconds, 0, 120, true)));
         itemLore.add(Component.text("⏱ " + chanceOfSuccess + "% chance of success", Colors.coloredProgressValue(chanceOfSuccess, 0, 100, false)));
