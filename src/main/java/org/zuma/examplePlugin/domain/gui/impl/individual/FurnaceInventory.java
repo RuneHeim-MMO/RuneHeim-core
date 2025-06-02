@@ -23,7 +23,7 @@ public class FurnaceInventory extends IndividualGUI {
     @Override
     public void openInventory(RunePlayer player) {
         Inventory inventory = getBaseInventory();
-        List<AbstractRecipe> recipes = RuneQuestPlugin.getRecipeRegistry().getRecipesByType(RecipeType.SMELTING_RECIPE);
+        List<AbstractRecipe> recipes = RuneQuestPlugin.getRecipeRegistry().getRecipesByType(RecipeType.SMELTING_RECIPE, true);
 
         for (int i = 0; i < recipes.size(); i++) {
 

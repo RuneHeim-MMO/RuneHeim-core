@@ -146,7 +146,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
                 boolean playMeetsReq = requirement.playerMeetsRequirement(player);
                 Colors color = playMeetsReq ? Colors.SUCCESS : Colors.ERROR;
 
-                itemLore.add(Component.text(requirement.getType().getSymbol() + " " + requirement.getMinimumLevel() + " " + requirement.getType().getLabel()).color(color.asColor()));
+                itemLore.add(Component.text(requirement.type().getSymbol() + " " + requirement.minimumLevel() + " " + requirement.type().getLabel()).color(color.asColor()));
             });
 
         }

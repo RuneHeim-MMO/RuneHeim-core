@@ -37,7 +37,7 @@ public class InventoryOpenerBlock extends AbstractInteractableBlock implements S
 
         if (requirements != null) {
             requirements.forEach(req -> hologramContent.add(Colors.ACCENT.asSpigotHex() +
-                    "Req. " + req.getType().getSymbol() + " " + req.getMinimumLevel() + " Level"));
+                    "Req. " + req.type().getSymbol() + " " + req.minimumLevel() + " Level"));
         }
 
         setHologram(DHAPI.createHologram(UUID.randomUUID().toString(), getHologramLocation(), hologramContent));

@@ -26,8 +26,8 @@ public class LoreUtils {
         lore.add(Component.text("⛏ Required Skills", NamedTextColor.GOLD, TextDecoration.BOLD));
 
         for (SkillRequirement req : requirements) {
-            SkillType skill = req.getType();
-            int neededLevel = req.getMinimumLevel();
+            SkillType skill = req.type();
+            int neededLevel = req.minimumLevel();
 
             // Check if player meets requirement (if player is null, just show in neutral color)
             boolean meets = player != null && player.getSkill(skill).getLevel() >= neededLevel;

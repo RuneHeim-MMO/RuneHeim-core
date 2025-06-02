@@ -47,7 +47,7 @@ public class ResourceNode extends AbstractInteractableBlock implements Serializa
         ));
 
         blockType.getRequirements().forEach(req -> hologramContent.add(Colors.ACCENT.asSpigotHex() +
-                "Req. " + req.getType().getSymbol() + " " + req.getMinimumLevel() + " Level"));
+                "Req. " + req.type().getSymbol() + " " + req.minimumLevel() + " Level"));
 
         setHologram(DHAPI.createHologram(UUID.randomUUID().toString(), getHologramLocation(), hologramContent));
     }
@@ -94,7 +94,7 @@ public class ResourceNode extends AbstractInteractableBlock implements Serializa
             SoundType.UI_FAIL.play(player.getPlayer());
             missingRequirements.forEach(req -> {
                 player.getPlayer().sendMessage(Component.text(
-                        "You need " + req.getType().getLabel() + " in order to gather " + blockType.getLabel() + "."
+                        "You need " + req.type().getLabel() + " in order to gather " + blockType.getLabel() + "."
                 ).color(Colors.ERROR.asColor()));
             });
 

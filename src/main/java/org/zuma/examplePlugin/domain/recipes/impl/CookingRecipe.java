@@ -25,13 +25,13 @@ public class CookingRecipe extends AbstractRecipe {
     @Override
     public int getChanceOfSuccess(RunePlayer player) {
         SkillRequirement cookingReq = super.getRequirements().stream()
-                .filter(req -> req.getType() == SkillType.COOKING)
+                .filter(req -> req.type() == SkillType.COOKING)
                 .findFirst()
                 .orElse(null);
 
         if (cookingReq == null) return 100; // No cooking requirement? Always succeed
 
-        int requiredLevel = cookingReq.getMinimumLevel();
+        int requiredLevel = cookingReq.minimumLevel();
         int playerLevel = player.getSkill(SkillType.COOKING).getLevel();
 
         if (playerLevel >= MAX_LEVEL || playerLevel >= requiredLevel + SAFE_OFFSET) {

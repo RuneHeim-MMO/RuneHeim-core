@@ -54,9 +54,9 @@ public class EquipableItem extends AbstractItem implements SkillRestrictable, Se
             if (deserialized.requirements() != null) {
                 requirements.addAll(deserialized.requirements());
             }
-            
+
             // Lore
-            requirements.forEach(requirement -> appendToRequirementsLore(Component.text(requirement.getType().getSymbol() + " " + requirement.getMinimumLevel() + " " + requirement.getType().getLabel()).color(Colors.ITEM_REQUIREMENT.asColor())));
+            requirements.forEach(requirement -> appendToRequirementsLore(Component.text(requirement.type().getSymbol() + " " + requirement.minimumLevel() + " " + requirement.type().getLabel()).color(Colors.ITEM_REQUIREMENT.asColor())));
             modifiers.forEach(modifier -> {
                 int amount = Math.toIntExact(Math.round(modifier.amount()));
                 String sign = amount > 0 ? "+" : "";

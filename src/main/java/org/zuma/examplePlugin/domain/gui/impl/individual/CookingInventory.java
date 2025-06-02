@@ -23,7 +23,7 @@ public class CookingInventory extends IndividualGUI {
     @Override
     public void openInventory(RunePlayer player) {
         Inventory inventory = getBaseInventory();
-        List<AbstractRecipe> recipes = RuneQuestPlugin.getRecipeRegistry().getRecipesByType(RecipeType.COOKING_RECIPE);
+        List<AbstractRecipe> recipes = RuneQuestPlugin.getRecipeRegistry().getRecipesByType(RecipeType.COOKING_RECIPE, true);
 
         for (int i = 0; i < recipes.size(); i++) {
 
