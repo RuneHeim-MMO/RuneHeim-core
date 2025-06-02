@@ -34,7 +34,14 @@ public class RecipeHandler {
         RecipeType type = recipe.getType();
         Component resultComponent = recipe.getDisplayItemstack(player, itemRegistry).displayName();
         String recipeResultNameString = times + "x " + TextUtils.extractPlainText(resultComponent);
-        List<ItemRecord> totalIngredients = multiplyItemRecords(recipe.getIngredients(), times);
+
+        List<ItemRecord> requiredTools = recipe.getIngredients().stream()
+                .filter(record -> !record.isConsumedOnCraft())
+                .map(record -> new ItemRecord(record.itemId(), record.amount())).toList();
+
+        List<ItemRecord> totalIngredients = multiplyItemRecords(recipe.getIngredients().stream()
+                .filter(IngredientRecord::isConsumedOnCraft)
+                .map(record -> new ItemRecord(record.itemId(), record.amount())).toList(), times);
 
 
         if (player.isBusy()) {
@@ -51,6 +58,12 @@ public class RecipeHandler {
             player.showFailedMessage(Component.text("You do not have required ingredients to " + type.getVerb().toLowerCase() + " " + times + "x ").append(resultComponent));
             return false;
         }
+
+        if (!PlayerUtils.hasItems(player, requiredTools)) {
+            player.showFailedMessage(Component.text("You do not have required tools to " + type.getVerb().toLowerCase() + " " + times + "x ").append(resultComponent));
+            return false;
+        }
+
 
         PlayerCraftingStart event = new PlayerCraftingStart(player, recipe, times);
         Bukkit.getServer().getPluginManager().callEvent(event);

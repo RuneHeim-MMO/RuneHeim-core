@@ -9,6 +9,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.gui.base.AbstractGUI;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
+import org.zuma.examplePlugin.domain.gui.impl.individual.AnvilInventory;
 import org.zuma.examplePlugin.domain.gui.impl.individual.CookingInventory;
 import org.zuma.examplePlugin.domain.gui.impl.individual.FurnaceInventory;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -31,6 +32,7 @@ public class GUIHandler {
         this.registry.registerGUI(new FurnaceInventory("Furnace", InventoryId.BASIC_FURNACE.asInt()));
         this.registry.registerGUI(new CookingInventory("Stove", InventoryId.STOVE.asInt()));
         this.registry.registerGUI(new CookingInventory("Campfire", InventoryId.FIRE.asInt()));
+        this.registry.registerGUI(new AnvilInventory("Anvil", InventoryId.ANVIL.asInt()));
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventories().size() + " inventories.");
     }

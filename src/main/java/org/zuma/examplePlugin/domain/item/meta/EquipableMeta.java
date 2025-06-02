@@ -3,7 +3,8 @@ package org.zuma.examplePlugin.domain.item.meta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
-public record EquipableMeta(List<Modifier> modifiers, List<SkillRequirement> requirements) {
+public record EquipableMeta(List<Modifier> modifiers, @Nullable List<SkillRequirement> requirements) {
 }

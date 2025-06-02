@@ -50,8 +50,11 @@ public class EquipableItem extends AbstractItem implements SkillRestrictable, Se
             EquipableMeta deserialized = new Gson().fromJson(this.jsonMeta, EquipableMeta.class);
 
             modifiers.addAll(deserialized.modifiers());
-            requirements.addAll(deserialized.requirements());
 
+            if (deserialized.requirements() != null) {
+                requirements.addAll(deserialized.requirements());
+            }
+            
             // Lore
             requirements.forEach(requirement -> appendToRequirementsLore(Component.text(requirement.getType().getSymbol() + " " + requirement.getMinimumLevel() + " " + requirement.getType().getLabel()).color(Colors.ITEM_REQUIREMENT.asColor())));
             modifiers.forEach(modifier -> {

@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.recipes.persistence;
 
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
+import org.zuma.examplePlugin.domain.recipes.IngredientRecord;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeId;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
 import org.zuma.examplePlugin.domain.recipes.meta.AbstractRecipeMeta;
@@ -19,8 +20,9 @@ public class RecipeRepository {
                 new AbstractRecipeMeta(RecipeId.BRONZE_BAR.getId(), RecipeType.SMELTING_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 1)),
                         List.of(
-                                new ItemRecord(ItemId.COPPER_ORE, 1),
-                                new ItemRecord(ItemId.TIN_ORE, 1)
+                                new IngredientRecord(ItemId.COPPER_ORE, 1, true),
+                                new IngredientRecord(ItemId.TIN_ORE, 1, true),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
                         ),
                         new ItemRecord(ItemId.BRONZE_BAR, 1),
                         null,
@@ -29,7 +31,7 @@ public class RecipeRepository {
 
                 new AbstractRecipeMeta(RecipeId.IRON_BAR.getId(), RecipeType.SMELTING_RECIPE, 4000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 15)),
-                        List.of(new ItemRecord(ItemId.IRON_ORE, 1)),
+                        List.of(new IngredientRecord(ItemId.IRON_ORE, 1, true)),
                         new ItemRecord(ItemId.IRON_BAR, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 12.5))
@@ -38,8 +40,8 @@ public class RecipeRepository {
                 new AbstractRecipeMeta(RecipeId.STEEL_BAR.getId(), RecipeType.SMELTING_RECIPE, 5000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 30)),
                         List.of(
-                                new ItemRecord(ItemId.IRON_ORE, 1),
-                                new ItemRecord(ItemId.COAL_ORE, 2)
+                                new IngredientRecord(ItemId.IRON_ORE, 1, true),
+                                new IngredientRecord(ItemId.COAL_ORE, 2, true)
                         ),
                         new ItemRecord(ItemId.STEEL_BAR, 1),
                         null,
@@ -49,8 +51,8 @@ public class RecipeRepository {
                 new AbstractRecipeMeta(RecipeId.MITHRIL_BAR.getId(), RecipeType.SMELTING_RECIPE, 8000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 50)),
                         List.of(
-                                new ItemRecord(ItemId.MITHRIL_ORE, 1),
-                                new ItemRecord(ItemId.COAL_ORE, 4)
+                                new IngredientRecord(ItemId.MITHRIL_ORE, 1, true),
+                                new IngredientRecord(ItemId.COAL_ORE, 4, true)
                         ),
                         new ItemRecord(ItemId.MITHRIL_BAR, 1),
                         null,
@@ -60,8 +62,8 @@ public class RecipeRepository {
                 new AbstractRecipeMeta(RecipeId.ADAMANTITE_BAR.getId(), RecipeType.SMELTING_RECIPE, 10000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 70)),
                         List.of(
-                                new ItemRecord(ItemId.ADAMANTITE_ORE, 1),
-                                new ItemRecord(ItemId.COAL_ORE, 6)
+                                new IngredientRecord(ItemId.ADAMANTITE_ORE, 1, true),
+                                new IngredientRecord(ItemId.COAL_ORE, 6, true)
                         ),
                         new ItemRecord(ItemId.ADAMANTITE_BAR, 1),
                         null,
@@ -71,8 +73,8 @@ public class RecipeRepository {
                 new AbstractRecipeMeta(RecipeId.RUNITE_BAR.getId(), RecipeType.SMELTING_RECIPE, 15000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 85)),
                         List.of(
-                                new ItemRecord(ItemId.RUNITE_ORE, 1),
-                                new ItemRecord(ItemId.COAL_ORE, 8)
+                                new IngredientRecord(ItemId.RUNITE_ORE, 1, true),
+                                new IngredientRecord(ItemId.COAL_ORE, 8, true)
                         ),
                         new ItemRecord(ItemId.RUNITE_BAR, 1),
                         null,
@@ -83,7 +85,7 @@ public class RecipeRepository {
 
                 new AbstractRecipeMeta(RecipeId.COOKED_HERRING.getId(), RecipeType.COOKING_RECIPE, 2200,
                         List.of(new SkillRequirement(SkillType.COOKING, 5)),
-                        List.of(new ItemRecord(ItemId.RAW_HERRING, 1)),
+                        List.of(new IngredientRecord(ItemId.RAW_HERRING, 1, true)),
                         new ItemRecord(ItemId.COOKED_HERRING, 1),
                         new ItemRecord(ItemId.BURNT_FOOD, 1),
                         List.of(new SkillXpRecord(SkillType.COOKING, 50))
@@ -91,7 +93,7 @@ public class RecipeRepository {
 
                 new AbstractRecipeMeta(RecipeId.COOKED_MINNOW.getId(), RecipeType.COOKING_RECIPE, 2000,
                         List.of(new SkillRequirement(SkillType.COOKING, 1)),
-                        List.of(new ItemRecord(ItemId.RAW_MINNOW, 1)),
+                        List.of(new IngredientRecord(ItemId.RAW_MINNOW, 1, true)),
                         new ItemRecord(ItemId.COOKED_MINNOW, 1),
                         new ItemRecord(ItemId.BURNT_FOOD, 1),
                         List.of(new SkillXpRecord(SkillType.COOKING, 10))
@@ -99,7 +101,7 @@ public class RecipeRepository {
 
                 new AbstractRecipeMeta(RecipeId.COOKED_TROUT.getId(), RecipeType.COOKING_RECIPE, 4000,
                         List.of(new SkillRequirement(SkillType.COOKING, 15)),
-                        List.of(new ItemRecord(ItemId.RAW_TROUT, 1)),
+                        List.of(new IngredientRecord(ItemId.RAW_TROUT, 1, true)),
                         new ItemRecord(ItemId.COOKED_TROUT, 1),
                         new ItemRecord(ItemId.BURNT_FOOD, 1),
                         List.of(new SkillXpRecord(SkillType.COOKING, 70))
@@ -107,7 +109,7 @@ public class RecipeRepository {
 
                 new AbstractRecipeMeta(RecipeId.COOKED_SALMON.getId(), RecipeType.COOKING_RECIPE, 4000,
                         List.of(new SkillRequirement(SkillType.COOKING, 25)),
-                        List.of(new ItemRecord(ItemId.RAW_SALMON, 1)),
+                        List.of(new IngredientRecord(ItemId.RAW_SALMON, 1, true)),
                         new ItemRecord(ItemId.COOKED_SALMON, 1),
                         new ItemRecord(ItemId.BURNT_FOOD, 1),
                         List.of(new SkillXpRecord(SkillType.COOKING, 90))
@@ -115,7 +117,7 @@ public class RecipeRepository {
 
                 new AbstractRecipeMeta(RecipeId.COOKED_TUNA.getId(), RecipeType.COOKING_RECIPE, 6000,
                         List.of(new SkillRequirement(SkillType.COOKING, 30)),
-                        List.of(new ItemRecord(ItemId.RAW_TUNA, 1)),
+                        List.of(new IngredientRecord(ItemId.RAW_TUNA, 1, true)),
                         new ItemRecord(ItemId.COOKED_TUNA, 1),
                         new ItemRecord(ItemId.BURNT_FOOD, 1),
                         List.of(new SkillXpRecord(SkillType.COOKING, 100))
@@ -123,7 +125,7 @@ public class RecipeRepository {
 
                 new AbstractRecipeMeta(RecipeId.COOKED_CRAWLER.getId(), RecipeType.COOKING_RECIPE, 5000,
                         List.of(new SkillRequirement(SkillType.COOKING, 20)),
-                        List.of(new ItemRecord(ItemId.RAW_CRAWLER, 1)),
+                        List.of(new IngredientRecord(ItemId.RAW_CRAWLER, 1, true)),
                         new ItemRecord(ItemId.COOKED_CRAWLER, 1),
                         new ItemRecord(ItemId.BURNT_FOOD, 1),
                         List.of(new SkillXpRecord(SkillType.COOKING, 85))
@@ -131,7 +133,7 @@ public class RecipeRepository {
 
                 new AbstractRecipeMeta(RecipeId.COOKED_PIKE.getId(), RecipeType.COOKING_RECIPE, 5000,
                         List.of(new SkillRequirement(SkillType.COOKING, 20)),
-                        List.of(new ItemRecord(ItemId.RAW_PIKE, 1)),
+                        List.of(new IngredientRecord(ItemId.RAW_PIKE, 1, true)),
                         new ItemRecord(ItemId.COOKED_PIKE, 1),
                         new ItemRecord(ItemId.BURNT_FOOD, 1),
                         List.of(new SkillXpRecord(SkillType.COOKING, 80))
@@ -139,7 +141,7 @@ public class RecipeRepository {
 
                 new AbstractRecipeMeta(RecipeId.COOKED_EEL.getId(), RecipeType.COOKING_RECIPE, 4000,
                         List.of(new SkillRequirement(SkillType.COOKING, 28)),
-                        List.of(new ItemRecord(ItemId.RAW_EEL, 1)),
+                        List.of(new IngredientRecord(ItemId.RAW_EEL, 1, true)),
                         new ItemRecord(ItemId.COOKED_EEL, 1),
                         new ItemRecord(ItemId.BURNT_FOOD, 1),
                         List.of(new SkillXpRecord(SkillType.COOKING, 95))
@@ -147,7 +149,7 @@ public class RecipeRepository {
 
                 new AbstractRecipeMeta(RecipeId.COOKED_SHARK.getId(), RecipeType.COOKING_RECIPE, 5000,
                         List.of(new SkillRequirement(SkillType.COOKING, 80)),
-                        List.of(new ItemRecord(ItemId.RAW_SHARK, 1)),
+                        List.of(new IngredientRecord(ItemId.RAW_SHARK, 1, true)),
                         new ItemRecord(ItemId.COOKED_SHARK, 1),
                         new ItemRecord(ItemId.BURNT_FOOD, 1),
                         List.of(new SkillXpRecord(SkillType.COOKING, 210))
@@ -155,7 +157,7 @@ public class RecipeRepository {
 
                 new AbstractRecipeMeta(RecipeId.COOKED_TURTLE.getId(), RecipeType.COOKING_RECIPE, 8000,
                         List.of(new SkillRequirement(SkillType.COOKING, 90)),
-                        List.of(new ItemRecord(ItemId.RAW_TURTLE, 1)),
+                        List.of(new IngredientRecord(ItemId.RAW_TURTLE, 1, true)),
                         new ItemRecord(ItemId.COOKED_TURTLE, 1),
                         new ItemRecord(ItemId.BURNT_FOOD, 1),
                         List.of(new SkillXpRecord(SkillType.COOKING, 250))
@@ -163,7 +165,7 @@ public class RecipeRepository {
 
                 new AbstractRecipeMeta(RecipeId.COOKED_RAY.getId(), RecipeType.COOKING_RECIPE, 6000,
                         List.of(new SkillRequirement(SkillType.COOKING, 95)),
-                        List.of(new ItemRecord(ItemId.RAW_RAY, 1)),
+                        List.of(new IngredientRecord(ItemId.RAW_RAY, 1, true)),
                         new ItemRecord(ItemId.COOKED_RAY, 1),
                         new ItemRecord(ItemId.BURNT_FOOD, 1),
                         List.of(new SkillXpRecord(SkillType.COOKING, 300))

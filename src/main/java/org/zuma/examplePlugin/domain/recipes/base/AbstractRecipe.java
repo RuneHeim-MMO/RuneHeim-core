@@ -15,6 +15,7 @@ import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.recipes.IngredientRecord;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
 import org.zuma.examplePlugin.domain.recipes.meta.AbstractRecipeMeta;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
@@ -28,7 +29,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
     private final RecipeType type;
     private final ItemStack displayItemstack;
     private final List<SkillRequirement> requirements;
-    private final List<ItemRecord> ingredients;
+    private final List<IngredientRecord> ingredients;
     private final int craftTimeMs;
     private final ItemRecord successResult;
 
@@ -57,7 +58,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         return type;
     }
 
-    public List<ItemRecord> getIngredients() {
+    public List<IngredientRecord> getIngredients() {
         return ingredients;
     }
 
@@ -79,6 +80,20 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         });
     }
 
+    private Component getLoreForRequiredItem(ItemRegistry registry, ItemRecord record, RunePlayer player) {
+        AbstractItem ingredient = registry.getItem(record.getItemId());
+
+        if (ingredient == null) {
+            RuneQuestPlugin.getRuneLogger().logWithStack(LogLevel.WARN, "Unknown item id! ID: " + record.getItemId());
+            return null;
+        }
+
+        boolean playHasInInventory = PlayerUtils.hasItems(player, List.of(record));
+        Colors color = playHasInInventory ? Colors.SUCCESS : Colors.ERROR;
+
+        return Component.text(record.getAmount() + "x " + ingredient.displayName).color(color.asColor());
+    }
+
     public ItemStack getDisplayItemstack(RunePlayer player, ItemRegistry registry) {
         ItemStack newItem = new ItemStack(displayItemstack);
         ItemMeta meta = newItem.getItemMeta();
@@ -89,22 +104,36 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         itemLore.add(Component.text("✔ " + craftTimeSeconds + " sec crafting time", Colors.coloredProgressValue(craftTimeSeconds, 0, 120, true)));
         itemLore.add(Component.text("⏱ " + chanceOfSuccess + "% chance of success", Colors.coloredProgressValue(chanceOfSuccess, 0, 100, false)));
 
-        if (!ingredients.isEmpty()) {
+        List<ItemRecord> recipeIngredients = !ingredients.isEmpty() ? ingredients.stream()
+                .filter(IngredientRecord::isConsumedOnCraft)
+                .map(record -> new ItemRecord(record.itemId(), record.amount())).toList() : new ArrayList<>();
+
+        List<ItemRecord> requiredTools = !ingredients.isEmpty() ? ingredients.stream()
+                .filter(record -> !record.isConsumedOnCraft())
+                .map(record -> new ItemRecord(record.itemId(), record.amount())).toList() : new ArrayList<>();
+
+
+        if (!requiredTools.isEmpty()) {
+            itemLore.add(Component.text(""));
+            itemLore.add(Component.text("Tools: ", Colors.ITEM_LABEL.asColor()));
+
+            requiredTools.forEach(record -> {
+                Component loreItem = getLoreForRequiredItem(registry, record, player);
+
+                if (loreItem != null)
+                    itemLore.add(loreItem);
+            });
+        }
+
+        if (!recipeIngredients.isEmpty()) {
             itemLore.add(Component.text(""));
             itemLore.add(Component.text("Ingredients: ", Colors.ITEM_LABEL.asColor()));
 
-            ingredients.forEach(record -> {
-                AbstractItem ingredient = registry.getItem(record.getItemId());
+            recipeIngredients.forEach(record -> {
+                Component loreItem = getLoreForRequiredItem(registry, record, player);
 
-                if (ingredient == null) {
-                    RuneQuestPlugin.getRuneLogger().logWithStack(LogLevel.WARN, "Unknown item id! ID: " + record.getItemId());
-                    return;
-                }
-
-                boolean playHasInInventory = PlayerUtils.hasItems(player, List.of(record));
-                Colors color = playHasInInventory ? Colors.SUCCESS : Colors.ERROR;
-
-                itemLore.add(Component.text(record.getAmount() + "x " + ingredient.displayName).color(color.asColor()));
+                if (loreItem != null)
+                    itemLore.add(loreItem);
             });
         }
 

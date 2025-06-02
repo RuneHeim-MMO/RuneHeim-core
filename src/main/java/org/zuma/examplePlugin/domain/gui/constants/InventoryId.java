@@ -3,7 +3,8 @@ package org.zuma.examplePlugin.domain.gui.constants;
 public enum InventoryId {
     BASIC_FURNACE(0),
     STOVE(1),
-    FIRE(2);
+    FIRE(2),
+    ANVIL(3);
 
     private final int id;
 
