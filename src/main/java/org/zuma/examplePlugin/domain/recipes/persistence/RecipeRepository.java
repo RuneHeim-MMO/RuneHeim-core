@@ -21,8 +21,7 @@ public class RecipeRepository {
                         List.of(new SkillRequirement(SkillType.SMITHING, 1)),
                         List.of(
                                 new IngredientRecord(ItemId.COPPER_ORE, 1, true),
-                                new IngredientRecord(ItemId.TIN_ORE, 1, true),
-                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false)
+                                new IngredientRecord(ItemId.TIN_ORE, 1, true)
                         ),
                         new ItemRecord(ItemId.BRONZE_BAR, 1),
                         null,
@@ -195,7 +194,7 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 25.0))
                 ),
 
-                new AbstractRecipeMeta(RecipeId.STEEL_HELMET.getId(), RecipeType.SMELTING_RECIPE, 5000,
+                new AbstractRecipeMeta(RecipeId.STEEL_HELMET.getId(), RecipeType.SMITHING_RECIPE, 5000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 30)),
                         List.of(
                                 new IngredientRecord(ItemId.STEEL_BAR, 2, true),
@@ -206,7 +205,7 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 37.5))
                 ),
 
-                new AbstractRecipeMeta(RecipeId.MITHRIL_HELMET.getId(), RecipeType.SMELTING_RECIPE, 6000,
+                new AbstractRecipeMeta(RecipeId.MITHRIL_HELMET.getId(), RecipeType.SMITHING_RECIPE, 6000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 50)),
                         List.of(
                                 new IngredientRecord(ItemId.MITHRIL_BAR, 2, true),
@@ -217,7 +216,7 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 50.0))
                 ),
 
-                new AbstractRecipeMeta(RecipeId.ADAMANTITE_HELMET.getId(), RecipeType.SMELTING_RECIPE, 7000,
+                new AbstractRecipeMeta(RecipeId.ADAMANTITE_HELMET.getId(), RecipeType.SMITHING_RECIPE, 7000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 70)),
                         List.of(
                                 new IngredientRecord(ItemId.ADAMANTITE_BAR, 2, true),
@@ -228,7 +227,7 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 62.5))
                 ),
 
-                new AbstractRecipeMeta(RecipeId.RUNITE_HELMET.getId(), RecipeType.SMELTING_RECIPE, 8000,
+                new AbstractRecipeMeta(RecipeId.RUNITE_HELMET.getId(), RecipeType.SMITHING_RECIPE, 8000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 85)),
                         List.of(
                                 new IngredientRecord(ItemId.RUNITE_BAR, 2, true),

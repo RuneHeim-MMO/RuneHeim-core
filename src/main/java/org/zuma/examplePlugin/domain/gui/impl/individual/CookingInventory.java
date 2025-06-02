@@ -27,7 +27,7 @@ public class CookingInventory extends IndividualGUI {
 
         for (int i = 0; i < recipes.size(); i++) {
 
-            if (i > super.getSlots()) {
+            if (i >= super.getSlots()) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, title + " inventory is overflowing.");
                 continue;
             }
