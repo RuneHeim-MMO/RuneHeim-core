@@ -5,6 +5,7 @@ import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
+import org.zuma.examplePlugin.domain.skill.SkillXpRecord;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -17,12 +18,13 @@ public class ResourceNodeType {
     private final int baseGatheringDurationMs, respawnDurationSecs;
     private final ItemRecord drop;
     private final SoundType stepSound, gatherSuccessSound;
+    private final List<SkillXpRecord> xpReward;
 
     @Nullable
     private final ModifierType toolModifier;
 
     public ResourceNodeType(int id, String label, Material material, List<SkillRequirement> requirements, @Nullable ModifierType toolRequiresModifier,
-                            int baseGatheringDurationMs, int respawnDurationSecs, ItemRecord drop, String wrongToolMsg, String actionVerb, SoundType stepSound, SoundType gatherSuccessSound) {
+                            int baseGatheringDurationMs, int respawnDurationSecs, ItemRecord drop, String wrongToolMsg, String actionVerb, SoundType stepSound, SoundType gatherSuccessSound, List<SkillXpRecord> xpReward) {
         this.id = id;
         this.label = label;
         this.material = material;
@@ -35,6 +37,7 @@ public class ResourceNodeType {
         this.actionVerb = actionVerb;
         this.stepSound = stepSound;
         this.gatherSuccessSound = gatherSuccessSound;
+        this.xpReward = xpReward;
     }
 
     public Material getMaterial() {
@@ -84,5 +87,9 @@ public class ResourceNodeType {
 
     public int getId() {
         return id;
+    }
+
+    public List<SkillXpRecord> getXpReward() {
+        return xpReward;
     }
 }

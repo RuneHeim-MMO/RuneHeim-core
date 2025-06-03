@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.modifier.constants;
 
 public enum ModifierType {
     MINING_BOOST("Mining Boost", "⛏"),
+    FISHING_BOOST("Fishing Boost", "\uD83C\uDFA3"),
     WOODCUTTING_BOOST("Woodcutting Boost", "🪓"),
 
     ATTACK_STAB("Stab Attack", "🗡"),

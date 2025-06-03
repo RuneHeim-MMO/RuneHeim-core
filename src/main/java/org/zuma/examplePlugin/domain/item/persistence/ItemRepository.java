@@ -34,6 +34,14 @@ public class ItemRepository {
                                 ), null)
                 ), 1)),
 
+                new AbstractItemMeta(ItemType.GEAR, ItemId.FISHING_NET.asInt(), Material.POTATO, ItemRarity.COMMON, "Fishing net", List.of("A sturdy hammer used for refining and forging equipment."), null, null, new JsonMeta(new Gson().toJson(
+                        new EquipableMeta(
+                                List.of(
+                                        new Modifier(ModifierType.FISHING_BOOST, 1)
+                                ), null)
+                ), 1)),
+
+
                 // Materials
                 new AbstractItemMeta(ItemType.MATERIAL, ItemId.COPPER_ORE.asInt(), Material.COAL, ItemRarity.COMMON, "Copper Ore", List.of("Raw copper ore, ready to be smelted into metal."), null, null, empty),
                 new AbstractItemMeta(ItemType.MATERIAL, ItemId.TIN_ORE.asInt(), Material.COAL, ItemRarity.COMMON, "Tin Ore", List.of("Raw tin ore, ready to be smelted into metal."), null, null, empty),

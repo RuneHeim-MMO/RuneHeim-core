@@ -27,6 +27,9 @@ public enum SoundType {
     COOKING_STEP("BLOCK_CAMPFIRE_CRACKLE", false, 1.0f, 1.0f),
     COOKING_SUCCESS("BLOCK_FIRE_EXTINGUISH", false, 1.0f, 1.3f),
 
+    FISHING_STEP("BLOCK_BUBBLE_COLUMN_UPWARDS_AMBIENT", false, 0.2f, 1.0f),
+    FISHING_SUCCESS("ENTITY_FISH_SWIM", false, 1.0f, 1.4f),
+
     // AMBIENT
     VILLAGER_MAN_AMBIENT_1("vocal_villagers:entity.villager.ambient", true, 1, 0.75f),
     VILLAGER_MAN_AMBIENT_2("vocal_villagers:entity.villager.ambient", true, 1, 0.80f),

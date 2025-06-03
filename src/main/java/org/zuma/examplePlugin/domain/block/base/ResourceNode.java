@@ -94,7 +94,7 @@ public class ResourceNode extends AbstractInteractableBlock implements Serializa
             SoundType.UI_FAIL.play(player.getPlayer());
             missingRequirements.forEach(req -> {
                 player.getPlayer().sendMessage(Component.text(
-                        "You need " + req.type().getLabel() + " in order to gather " + blockType.getLabel() + "."
+                        "You need " + req.minimumLevel() + " " + req.type().getLabel() + " in order to gather from " + blockType.getLabel() + "."
                 ).color(Colors.ERROR.asColor()));
             });
 
@@ -149,6 +149,8 @@ public class ResourceNode extends AbstractInteractableBlock implements Serializa
         if (event.isCancelled()) {
             return;
         }
+
+        blockType.getXpReward().forEach(reward -> player.addShareableXp(reward.type(), reward.xp()));
 
         spawn(Material.BEDROCK);
         player.addItemOrDrop(blockType.getDrop());

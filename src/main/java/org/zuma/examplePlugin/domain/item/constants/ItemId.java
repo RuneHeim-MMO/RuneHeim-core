@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.item.constants;
 
 public enum ItemId {
     SMITHING_HAMMER(0),
+    FISHING_NET(1),
 
     COPPER_ORE(100),
     IRON_ORE(101),

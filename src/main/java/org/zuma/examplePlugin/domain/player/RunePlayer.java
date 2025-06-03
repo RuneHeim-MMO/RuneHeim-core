@@ -96,6 +96,7 @@ public class RunePlayer {
             return;
         }
 
+        getPlayer().sendMessage(type.getLabel() + " +" + xp + "xp!");
         skill.addXp(xp);
 
     }

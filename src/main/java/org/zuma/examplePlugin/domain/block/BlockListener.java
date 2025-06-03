@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.block;
 import io.papermc.paper.event.block.BlockBreakProgressUpdateEvent;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -26,6 +27,11 @@ public class BlockListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.useInteractedBlock() == Event.Result.DENY ||
+                event.useItemInHand() == Event.Result.DENY) {
+            return;
+        }
+
 
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_AIR) {
             return;
@@ -49,6 +55,7 @@ public class BlockListener implements Listener {
     @EventHandler
     public void onPlayerBlockBreakProgressUpdateEvent(BlockBreakProgressUpdateEvent event) {
 
+
         if (!(event.getEntity() instanceof Player player)) {
             return;
         }
@@ -67,6 +74,10 @@ public class BlockListener implements Listener {
 
     @EventHandler
     public void onPlayerBlockBreakEvent(BlockBreakEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
+
         Block dumbBlock = event.getBlock();
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(event.getPlayer());
         AbstractInteractableBlock block = manager.getAbstractInteractableBlock(dumbBlock);
