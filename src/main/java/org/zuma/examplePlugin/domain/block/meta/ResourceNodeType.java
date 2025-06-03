@@ -17,14 +17,14 @@ public class ResourceNodeType {
     private final List<SkillRequirement> requirements;
     private final int baseGatheringDurationMs, respawnDurationSecs;
     private final ItemRecord drop;
-    private final SoundType stepSound, gatherSuccessSound;
+    private final SoundType startSound, stepSound, gatherSuccessSound;
     private final List<SkillXpRecord> xpReward;
 
     @Nullable
     private final ModifierType toolModifier;
 
     public ResourceNodeType(int id, String label, Material material, List<SkillRequirement> requirements, @Nullable ModifierType toolRequiresModifier,
-                            int baseGatheringDurationMs, int respawnDurationSecs, ItemRecord drop, String wrongToolMsg, String actionVerb, SoundType stepSound, SoundType gatherSuccessSound, List<SkillXpRecord> xpReward) {
+                            int baseGatheringDurationMs, int respawnDurationSecs, ItemRecord drop, String wrongToolMsg, String actionVerb, SoundType startSound, SoundType stepSound, SoundType gatherSuccessSound, List<SkillXpRecord> xpReward) {
         this.id = id;
         this.label = label;
         this.material = material;
@@ -35,6 +35,7 @@ public class ResourceNodeType {
         this.drop = drop;
         this.wrongToolMessage = wrongToolMsg;
         this.actionVerb = actionVerb;
+        this.startSound = startSound;
         this.stepSound = stepSound;
         this.gatherSuccessSound = gatherSuccessSound;
         this.xpReward = xpReward;
@@ -91,5 +92,9 @@ public class ResourceNodeType {
 
     public List<SkillXpRecord> getXpReward() {
         return xpReward;
+    }
+
+    public SoundType getStartSound() {
+        return startSound;
     }
 }

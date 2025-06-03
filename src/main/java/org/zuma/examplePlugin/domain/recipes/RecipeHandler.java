@@ -73,6 +73,8 @@ public class RecipeHandler {
             return false;
         }
 
+        type.getStartSound().play(player);
+
         player.useBusyState(recipe.getCraftTimeMs() * times,
                 type.getContinuousVerb() + " " + recipeResultNameString,
                 type.getPastTenseVerb() + "  " + recipeResultNameString, type.getStepSound(), type.getFinishSound(), (consumer) -> {

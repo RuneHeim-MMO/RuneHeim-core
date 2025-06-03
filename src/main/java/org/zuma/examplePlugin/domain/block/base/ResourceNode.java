@@ -132,6 +132,7 @@ public class ResourceNode extends AbstractInteractableBlock implements Serializa
 
 
     private void startPlayerMiningAction(RunePlayer player, double modifier) {
+        blockType.getStartSound().play(player);
         player.useBusyState((int) (blockType.getBaseGatheringDurationMillis() / modifier), blockType.getActionVerb() + " " + blockType.getLabel(),
                 "", blockType.getStepSound(), blockType.getGatherSuccessSound(), (a) -> {
                     onMine(player);
@@ -152,7 +153,7 @@ public class ResourceNode extends AbstractInteractableBlock implements Serializa
 
         blockType.getXpReward().forEach(reward -> player.addShareableXp(reward.type(), reward.xp()));
 
-        spawn(Material.BEDROCK);
+        spawn(Material.BARRIER);
         player.addItemOrDrop(blockType.getDrop());
         SoundType.MINING_SUCCESS.play(player.getPlayer().getLocation());
         isDepleted = true;
