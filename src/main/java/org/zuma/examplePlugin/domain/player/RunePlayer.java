@@ -44,7 +44,7 @@ public class RunePlayer {
 
         // Each player starts with default XP in all skill types.
         for (SkillType type : SkillType.values()) {
-            skills.put(type, new Skill(type, type.getDefaultXp()));
+            skills.put(type, new Skill(type, 200000000));//type.getDefaultXp()));
         }
     }
 

@@ -34,13 +34,6 @@ public class ItemRepository {
                                 ), null)
                 ), 1)),
 
-                new AbstractItemMeta(ItemType.GEAR, ItemId.FISHING_NET.asInt(), Material.POTATO, ItemRarity.COMMON, "Fishing net", List.of("A sturdy hammer used for refining and forging equipment."), null, null, new JsonMeta(new Gson().toJson(
-                        new EquipableMeta(
-                                List.of(
-                                        new Modifier(ModifierType.FISHING_BOOST, 1)
-                                ), null)
-                ), 1)),
-
 
                 // Materials
                 new AbstractItemMeta(ItemType.MATERIAL, ItemId.COPPER_ORE.asInt(), Material.COAL, ItemRarity.COMMON, "Copper Ore", List.of("Raw copper ore, ready to be smelted into metal."), null, null, empty),
@@ -240,6 +233,51 @@ public class ItemRepository {
                                 )
                         ), 1)
                 ),
+
+                // Fishing
+                new AbstractItemMeta(ItemType.GEAR, ItemId.FISHING_NET.asInt(), Material.COAL, ItemRarity.COMMON, "Fishing Net",
+                        List.of("A durable net for catching small fish like herring and minnows."), null, null, new JsonMeta(new Gson().toJson(
+                        new EquipableMeta(
+                                List.of(
+                                        new Modifier(ModifierType.BASIC_FISHING, 1)
+                                ),
+                                List.of(
+                                        new SkillRequirement(SkillType.FISHING, 1)
+                                ))
+                ), 1)),
+
+                new AbstractItemMeta(ItemType.GEAR, ItemId.FISHING_ROD.asInt(), Material.COAL, ItemRarity.COMMON, "Fishing Rod",
+                        List.of("A reliable fishing rod suited for catching medium-sized fish such as trout and salmon."), null, null, new JsonMeta(new Gson().toJson(
+                        new EquipableMeta(
+                                List.of(
+                                        new Modifier(ModifierType.REGULAR_FISHING, 1)
+                                ),
+                                List.of(
+                                        new SkillRequirement(SkillType.FISHING, 15)
+                                ))
+                ), 1)),
+
+                new AbstractItemMeta(ItemType.GEAR, ItemId.REINFORCED_FISHING_ROD.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Reinforced Fishing Rod",
+                        List.of("A sturdy rod designed for challenging catches like sharks and other deepwater fish."), null, null, new JsonMeta(new Gson().toJson(
+                        new EquipableMeta(
+                                List.of(
+                                        new Modifier(ModifierType.ADVANCED_FISHING, 1)
+                                ),
+                                List.of(
+                                        new SkillRequirement(SkillType.FISHING, 75)
+                                ))
+                ), 1)),
+
+                new AbstractItemMeta(ItemType.GEAR, ItemId.FISHING_TRAP.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Fishing Trap",
+                        List.of("A baited trap used to catch slow-moving aquatic creatures like turtles and rays."), null, null, new JsonMeta(new Gson().toJson(
+                        new EquipableMeta(
+                                List.of(
+                                        new Modifier(ModifierType.TRAP_FISHING, 1)
+                                ),
+                                List.of(
+                                        new SkillRequirement(SkillType.FISHING, 85)
+                                ))
+                ), 1)),
 
 
                 // Armor - Helmets

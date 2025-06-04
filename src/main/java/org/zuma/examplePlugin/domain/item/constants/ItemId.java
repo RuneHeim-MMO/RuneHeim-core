@@ -2,7 +2,6 @@ package org.zuma.examplePlugin.domain.item.constants;
 
 public enum ItemId {
     SMITHING_HAMMER(0),
-    FISHING_NET(1),
 
     COPPER_ORE(100),
     IRON_ORE(101),
@@ -114,7 +113,12 @@ public enum ItemId {
     STRENGTH_POTION_I(1402),
     DEFENCE_POTION_I(1403),
     HEALTH_POTION_I(1404),
-    MAGIC_POTION_I(1405);
+    MAGIC_POTION_I(1405),
+
+    FISHING_NET(1500),
+    FISHING_ROD(1501),
+    REINFORCED_FISHING_ROD(1502),
+    FISHING_TRAP(1503);
 
 
     private final int id;

@@ -6,6 +6,12 @@
   "overrides": [
     {
       "predicate": {
+        "custom_model_data": 0
+      },
+      "model": "item/custom/tools/hammer"
+    },
+    {
+      "predicate": {
         "custom_model_data": 1000
       },
       "model": "item/custom/tools/bronze_axe"

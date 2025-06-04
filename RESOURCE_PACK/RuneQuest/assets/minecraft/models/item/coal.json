@@ -165,10 +165,35 @@
         "custom_model_data": 1311
       },
       "model": "item/custom/food/burnt_food"
+    },   
+    {
+      "predicate": {
+        "custom_model_data": 1500
+      },
+      "model": "item/custom/tools/fishing_net"
     },
     {
       "predicate": {
-        "custom_model_data": 1312
+        "custom_model_data": 1501
+      },
+      "model": "item/custom/tools/fishing_rod"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1502
+      },
+      "model": "item/custom/tools/reinforced_fishing_rod"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1503
+      },
+      "model": "item/custom/tools/fishing_trap"
+    },
+
+    {
+      "predicate": {
+        "custom_model_data": 1504
       },
       "model": "item/coal"
     }
