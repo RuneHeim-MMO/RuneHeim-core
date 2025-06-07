@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.block.base;
 import eu.decentsoftware.holograms.api.DHAPI;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -13,6 +14,8 @@ import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
+import org.zuma.examplePlugin.domain.block.BlockManager;
+import org.zuma.examplePlugin.domain.block.ResourceNodeSchematicHandler;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
@@ -23,6 +26,7 @@ import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.events.block.ResourceNodeGatheredEvent;
 import org.zuma.examplePlugin.events.block.ResourceNodeRespawnedEvent;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,10 +35,18 @@ import java.util.UUID;
 public class ResourceNode extends AbstractInteractableBlock {
     private ResourceNodeType blockType;
     private boolean isDepleted;
+    private final BlockManager manager;
+    private final Location origin;
 
-    public ResourceNode(AbstractInteractableBlockMeta meta) {
+    @Nullable
+    private ResourceNodeSchematicHandler schematicHandler = null;
+
+
+    public ResourceNode(BlockManager manager, AbstractInteractableBlockMeta meta) {
         super(meta);
         this.isDepleted = false;
+        this.origin = meta.location();
+        this.manager = manager;
     }
 
     private void initializeHologram() {
@@ -57,8 +69,9 @@ public class ResourceNode extends AbstractInteractableBlock {
         }
 
         this.blockType = type;
+        this.spawn(type.getMaterial());
         initializeHologram();
-        respawnBlock();
+
     }
 
     private void respawnBlock() {
@@ -69,7 +82,81 @@ public class ResourceNode extends AbstractInteractableBlock {
             return;
         }
 
-        spawn(blockType.getMaterial());
+
+        this.spawn(blockType.getMaterial());
+
+    }
+
+
+    private void startGatheringAction(RunePlayer player, double modifier) {
+        blockType.getStartSound().play(player);
+        player.useBusyState((int) (blockType.getBaseGatheringDurationMillis() / modifier), blockType.getActionVerb() + " " + blockType.getLabel(),
+                "", blockType.getStepSound(), blockType.getGatherSuccessSound(), (a) -> {
+                    onGather(player);
+                });
+    }
+
+    private void onGather(RunePlayer player) {
+        if (isDepleted) {
+            return;
+        }
+
+        ResourceNodeGatheredEvent event = new ResourceNodeGatheredEvent(player, this);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
+        if (event.isCancelled()) {
+            return;
+        }
+
+        depleteResource();
+        player.addItemOrDrop(blockType.getDrop());
+        blockType.getXpReward().forEach(reward -> player.addShareableXp(reward.type(), reward.xp()));
+
+
+    }
+
+    public void depleteResource() {
+        isDepleted = true;
+        this.spawn(Material.BARRIER);
+
+        DHAPI.addHologramLine(this.getHologram(), new ItemStack(Material.BARRIER));
+        DHAPI.setHologramLine(this.getHologram(), 0, Colors.DEPLETED_RESOURCE.asSpigotHex() + "❌ " + blockType.getLabel());
+
+        Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+            isDepleted = false;
+            respawnBlock();
+
+            DHAPI.removeHologramLine(this.getHologram(), this.getHologram().size() + 1);
+            DHAPI.setHologramLine(this.getHologram(), 0, Colors.INTERACTABLE_ENTITY.asSpigotHex() + blockType.getLabel());
+        }, blockType.getRespawnDurationSeconds() * 20L);
+    }
+
+    public void onPlayerBlockBreakEvent(RunePlayer player, BlockBreakEvent event) {
+        event.setCancelled(true);
+    }
+
+    public void setSchematics(@Nullable String schematicName, @Nullable String depletedSchematic) {
+        this.schematicHandler = new ResourceNodeSchematicHandler(schematicName, depletedSchematic);
+    }
+
+    public boolean isDepleted() {
+        return this.isDepleted;
+    }
+
+    public Location getOrigin() {
+        return origin;
+    }
+
+    public BlockManager getManager() {
+        return manager;
+    }
+
+    @Override
+    public void spawn(Material material) {
+        if (schematicHandler != null) {
+            schematicHandler.updateNodeModel(this);
+        }
+        super.spawn(material);
     }
 
     @Override
@@ -118,56 +205,12 @@ public class ResourceNode extends AbstractInteractableBlock {
         // Start the mining action, using the modifier amount if present
         if (hasRequiredModifier) {
             requiredToolModifier.ifPresent(modifier -> {
-                startPlayerMiningAction(player, modifier.amount());
+                startGatheringAction(player, modifier.amount());
             });
             return;
         } else {
-            startPlayerMiningAction(player, 0);
+            startGatheringAction(player, 0);
         }
-    }
-
-
-    private void startPlayerMiningAction(RunePlayer player, double modifier) {
-        blockType.getStartSound().play(player);
-        player.useBusyState((int) (blockType.getBaseGatheringDurationMillis() / modifier), blockType.getActionVerb() + " " + blockType.getLabel(),
-                "", blockType.getStepSound(), blockType.getGatherSuccessSound(), (a) -> {
-                    onMine(player);
-                });
-    }
-
-    private void onMine(RunePlayer player) {
-        if (isDepleted) {
-            return;
-        }
-
-        ResourceNodeGatheredEvent event = new ResourceNodeGatheredEvent(player, this);
-        Bukkit.getServer().getPluginManager().callEvent(event);
-
-        if (event.isCancelled()) {
-            return;
-        }
-
-        blockType.getXpReward().forEach(reward -> player.addShareableXp(reward.type(), reward.xp()));
-
-        spawn(Material.BARRIER);
-        player.addItemOrDrop(blockType.getDrop());
-        SoundType.MINING_SUCCESS.play(player.getPlayer().getLocation());
-        isDepleted = true;
-
-        DHAPI.addHologramLine(this.getHologram(), new ItemStack(Material.BARRIER));
-        DHAPI.setHologramLine(this.getHologram(), 0, Colors.DEPLETED_RESOURCE.asSpigotHex() + "❌ " + blockType.getLabel());
-
-        Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-            respawnBlock();
-            isDepleted = false;
-
-            DHAPI.removeHologramLine(this.getHologram(), this.getHologram().size() + 1);
-            DHAPI.setHologramLine(this.getHologram(), 0, Colors.INTERACTABLE_ENTITY.asSpigotHex() + blockType.getLabel());
-        }, blockType.getRespawnDurationSeconds() * 20L);
-    }
-
-    public void onPlayerBlockBreakEvent(RunePlayer player, BlockBreakEvent event) {
-        event.setCancelled(true);
     }
 
 }

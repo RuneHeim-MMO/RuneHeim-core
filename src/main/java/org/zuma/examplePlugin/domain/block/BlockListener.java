@@ -47,7 +47,6 @@ public class BlockListener implements Listener {
         }
 
         AbstractItem itemInHand = itemRegistry.getItem(PlayerUtils.getItemStackInHand(player));
-
         block.onPlayerInteractEvent(runePlayer, event.getAction(), event, itemInHand);
 
     }

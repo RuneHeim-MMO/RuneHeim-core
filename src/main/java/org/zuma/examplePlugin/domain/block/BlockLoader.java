@@ -32,12 +32,12 @@ public class BlockLoader {
     }
 
     public void loadInteractableBlocks() {
-        this.interactableBlockRepository.getAll().forEach(entity -> registerBlock(entity.meta(), entity.json()));
+        this.interactableBlockRepository.getAll().forEach(entity -> registerBlock(manager, entity.meta(), entity.json()));
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Spawned " + this.manager.getAllBlocks().size() + " interactable blocks.");
     }
 
-    private void registerBlock(AbstractInteractableBlockMeta meta, VersionedJson json) {
-        AbstractInteractableBlock block = factory.createBlock(meta, json, this);
+    private void registerBlock(BlockManager manager, AbstractInteractableBlockMeta meta, VersionedJson json) {
+        AbstractInteractableBlock block = factory.createBlock(manager, meta, json, this);
         this.manager.registerBlock(block);
     }
 

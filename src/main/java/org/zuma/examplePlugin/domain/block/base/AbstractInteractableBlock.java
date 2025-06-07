@@ -16,7 +16,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public abstract class AbstractInteractableBlock {
     private final BlockType type;
-    private final Location location, hologramLocation;
+    private Location location, hologramLocation;
     private Hologram hologram;
 
     public AbstractInteractableBlock(AbstractInteractableBlockMeta meta) {
@@ -28,6 +28,17 @@ public abstract class AbstractInteractableBlock {
     public void spawn(Material material) {
         Block block = location.getBlock();
         block.setType(material);
+    }
+
+    public void setLocation(Location location) {
+        this.location.getBlock().setType(Material.AIR);
+        this.location = location;
+    }
+
+    public void setHologramLocation(Location location) {
+        this.hologramLocation = location;
+        if (this.hologram != null)
+            this.hologram.setLocation(location);
     }
 
     public Hologram getHologram() {

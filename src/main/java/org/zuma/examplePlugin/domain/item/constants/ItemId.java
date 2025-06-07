@@ -106,7 +106,6 @@ public enum ItemId {
     RAW_RAY(1310),
 
     BURNT_FOOD(1311),
-
     EMPTY_POTION_BOTTLE(1400),
 
     ATTACK_POTION_I(1401),

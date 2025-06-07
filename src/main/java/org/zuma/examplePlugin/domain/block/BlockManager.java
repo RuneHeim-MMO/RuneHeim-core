@@ -12,6 +12,15 @@ import java.util.HashMap;
 public class BlockManager {
     private final HashMap<Location, AbstractInteractableBlock> blocks = new HashMap<>();
 
+    public void replaceBlockLocation(Location oldLocation, Location newLocation) {
+        AbstractInteractableBlock block = blocks.remove(oldLocation);
+
+        if (block != null) {
+            blocks.put(newLocation, block);
+        }
+    }
+
+
     public AbstractInteractableBlock getAbstractInteractableBlock(Block block) {
         return blocks.get(block.getLocation().toBlockLocation());
     }

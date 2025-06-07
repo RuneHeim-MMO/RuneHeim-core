@@ -1,4 +1,7 @@
 package org.zuma.examplePlugin.domain.block.meta.v1;
 
-public record ResourceNodeMeta(int resourceMetaId) {
+import javax.annotation.Nullable;
+
+public record ResourceNodeMeta(int resourceMetaId, @Nullable String schematicName,
+                               @Nullable String depletedSchematicName) {
 }

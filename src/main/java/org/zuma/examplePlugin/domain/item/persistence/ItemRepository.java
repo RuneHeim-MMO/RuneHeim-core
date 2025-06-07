@@ -168,7 +168,7 @@ public class ItemRepository {
 
                 // Misc
                 new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.BURNT_FOOD.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Charred Remains", List.of("All that's left after fire claims its meal."), null, null), null),
-                new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.EMPTY_POTION_BOTTLE.asInt(), Material.GLASS_BOTTLE, ItemRarity.NOT_APPLICABLE, "Empty Potion Bottle",
+                new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.EMPTY_POTION_BOTTLE.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Empty Potion Bottle",
                         List.of("It smells... unpleasant."), null, null), null),
 
                 // Food

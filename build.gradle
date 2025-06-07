@@ -21,13 +21,18 @@ repositories {
         name = "jitpack"
         url = "https://jitpack.io/"
     }
+    maven {
+        name = 'enginehub'
+        url = 'https://maven.enginehub.org/repo/'
+    }
 }
 
 build.dependsOn shadowJar
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
-    compileOnly 'com.github.decentsoftware-eu:decentholograms:2.8.17'
+    compileOnly("com.github.decentsoftware-eu:decentholograms:2.8.17")
+    compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.2.10'
     implementation 'com.google.code.gson:gson:2.13.1'
     implementation 'io.github.cdimascio:dotenv-java:3.2.0'
     implementation 'com.zaxxer:HikariCP:5.1.0'
