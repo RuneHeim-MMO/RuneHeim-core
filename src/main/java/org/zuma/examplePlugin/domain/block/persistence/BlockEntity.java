@@ -1,7 +1,7 @@
 package org.zuma.examplePlugin.domain.block.persistence;
 
-import org.zuma.examplePlugin.core.meta.JsonMeta;
+import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 
-public record BlockEntity(AbstractInteractableBlockMeta meta, JsonMeta json) {
+public record BlockEntity(AbstractInteractableBlockMeta meta, VersionedJson json) {
 }

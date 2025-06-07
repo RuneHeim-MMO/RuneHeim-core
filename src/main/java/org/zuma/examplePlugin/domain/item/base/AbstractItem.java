@@ -16,9 +16,9 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.domain.heads.HeadGenerator;
 import org.zuma.examplePlugin.domain.item.constants.CustomModelId;
-import org.zuma.examplePlugin.domain.item.constants.ItemDataKey;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
+import org.zuma.examplePlugin.domain.item.constants.PersistanceDataKey;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.item.state.StateType;
@@ -178,11 +178,11 @@ public abstract class AbstractItem {
             meta.setCustomModelData(customModelData);
         }
 
-        NamespacedKey IdKey = new NamespacedKey(RuneQuestPlugin.getInstance(), ItemDataKey.ITEM_ID.asString());
+        NamespacedKey IdKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistanceDataKey.ITEM_ID.asString());
         meta.getPersistentDataContainer().set(IdKey, PersistentDataType.INTEGER, id);
 
         if (stateType != null) {
-            NamespacedKey stateUuid = new NamespacedKey(RuneQuestPlugin.getInstance(), ItemDataKey.STATE_UUID.asString());
+            NamespacedKey stateUuid = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistanceDataKey.STATE_UUID.asString());
             meta.getPersistentDataContainer().set(stateUuid, PersistentDataType.STRING, UUID.randomUUID().toString());
         }
 

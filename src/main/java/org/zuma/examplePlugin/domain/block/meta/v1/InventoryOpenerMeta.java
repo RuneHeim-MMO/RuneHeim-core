@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.block.meta;
+package org.zuma.examplePlugin.domain.block.meta.v1;
 
 import org.bukkit.Material;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;

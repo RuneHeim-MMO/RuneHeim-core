@@ -17,7 +17,8 @@ public class ResourceNodeTypeRepository {
 
     public List<ResourceNodeType> getAll() {
         return List.of(
-                new ResourceNodeType(ResourceNodeTypeId.IRON_ORE.asInt(), "Iron Ore Vein", Material.IRON_ORE,
+                new ResourceNodeType(ResourceNodeTypeId.IRON_ORE.asInt(),
+                        "Iron Ore Vein", Material.IRON_ORE,
                         List.of(new SkillRequirement(SkillType.MINING, 1)),
                         ModifierType.MINING_BOOST, 3000, 5,
                         new ItemRecord(ItemId.IRON_ORE, 1),

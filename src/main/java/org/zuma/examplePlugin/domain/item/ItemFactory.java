@@ -2,7 +2,7 @@ package org.zuma.examplePlugin.domain.item;
 
 import com.google.gson.Gson;
 import org.zuma.examplePlugin.core.exception.UnsupportedJsonVersionException;
-import org.zuma.examplePlugin.core.meta.JsonMeta;
+import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.impl.EquipableItem;
 import org.zuma.examplePlugin.domain.item.impl.MaterialItem;
@@ -19,7 +19,7 @@ import org.zuma.examplePlugin.domain.item.meta.v1.QuestItemMeta;
 import javax.annotation.Nullable;
 
 public class ItemFactory {
-    public AbstractItem createItem(AbstractItemMeta meta, @Nullable JsonMeta json) {
+    public AbstractItem createItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
         return switch (meta.type()) {
             case GEAR -> createEquipableItem(meta, json);
             case QUEST -> createQuestItem(meta, json);
@@ -31,7 +31,7 @@ public class ItemFactory {
         };
     }
 
-    private EquipableItem createEquipableItem(AbstractItemMeta meta, @Nullable JsonMeta json) {
+    private EquipableItem createEquipableItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {
             throw new UnsupportedOperationException("Cannot create equipable item " + meta.displayName() + " required json is null!");
         }
@@ -50,7 +50,7 @@ public class ItemFactory {
 
     }
 
-    private QuestItem createQuestItem(AbstractItemMeta meta, @Nullable JsonMeta json) {
+    private QuestItem createQuestItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {
             throw new UnsupportedOperationException("Cannot create quest item " + meta.displayName() + " required json is null!");
         }
@@ -71,7 +71,7 @@ public class ItemFactory {
         return new MaterialItem(meta);
     }
 
-    private PotionItem createPotionItem(AbstractItemMeta meta, @Nullable JsonMeta json) {
+    private PotionItem createPotionItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {
             throw new UnsupportedOperationException("Cannot create potion item " + meta.displayName() + " required json is null!");
         }
@@ -90,7 +90,7 @@ public class ItemFactory {
 
     }
 
-    private FoodItem createFoodItem(AbstractItemMeta meta, @Nullable JsonMeta json) {
+    private FoodItem createFoodItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {
             throw new UnsupportedOperationException("Cannot create food item " + meta.displayName() + " required json is null!");
         }

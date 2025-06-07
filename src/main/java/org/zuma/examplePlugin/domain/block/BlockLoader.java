@@ -2,7 +2,7 @@ package org.zuma.examplePlugin.domain.block;
 
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.core.meta.JsonMeta;
+import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
@@ -36,7 +36,7 @@ public class BlockLoader {
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Spawned " + this.manager.getAllBlocks().size() + " interactable blocks.");
     }
 
-    private void registerBlock(AbstractInteractableBlockMeta meta, JsonMeta json) {
+    private void registerBlock(AbstractInteractableBlockMeta meta, VersionedJson json) {
         AbstractInteractableBlock block = factory.createBlock(meta, json, this);
         this.manager.registerBlock(block);
     }

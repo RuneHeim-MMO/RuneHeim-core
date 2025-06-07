@@ -10,7 +10,7 @@ import org.zuma.examplePlugin.core.interfaces.Stateful;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.ItemHandler;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
-import org.zuma.examplePlugin.domain.item.constants.ItemDataKey;
+import org.zuma.examplePlugin.domain.item.constants.PersistanceDataKey;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
 
@@ -39,7 +39,7 @@ public class StateManager {
             return null;
         }
 
-        NamespacedKey stateType = new NamespacedKey(RuneQuestPlugin.getInstance(), ItemDataKey.STATE_UUID.asString());
+        NamespacedKey stateType = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistanceDataKey.STATE_UUID.asString());
         String uuidStr = meta.getPersistentDataContainer().get(stateType, PersistentDataType.STRING);
 
         if (uuidStr == null) {
@@ -106,7 +106,7 @@ public class StateManager {
         AbstractState newState = this.factory.createState(result);
 
         if (newState == null) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Cannot initialize state " + uuid.toString() + ". Invalid state type! Received: " + result.type().toString());
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Cannot initialize state " + uuid + ". Invalid state type! Received: " + result.type().toString());
             return null;
         }
 

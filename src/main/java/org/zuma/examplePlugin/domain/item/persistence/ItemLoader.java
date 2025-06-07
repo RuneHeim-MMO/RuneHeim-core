@@ -2,7 +2,7 @@ package org.zuma.examplePlugin.domain.item.persistence;
 
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.core.meta.JsonMeta;
+import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.item.ItemFactory;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
@@ -26,7 +26,7 @@ public class ItemLoader {
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllItems().size() + " custom items.");
     }
 
-    private void registerItem(AbstractItemMeta meta, @Nullable JsonMeta json) {
+    private void registerItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
         AbstractItem item = factory.createItem(meta, json);
         this.registry.registerItem(item);
     }
