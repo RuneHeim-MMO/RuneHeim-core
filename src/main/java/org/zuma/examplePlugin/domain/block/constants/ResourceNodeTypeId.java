@@ -1,7 +1,14 @@
 package org.zuma.examplePlugin.domain.block.constants;
 
 public enum ResourceNodeTypeId {
-    IRON_ORE(100),
+    COPPER_ORE(100),
+    IRON_ORE(101),
+    MITHRIL_ORE(103),
+    ADAMANTITE_ORE(104),
+    RUNITE_ORE(105),
+    TIN_ORE(106),
+    COAL_ORE(107),
+
     HERRING_POOL(1),
     MINNOW_POOL(2),
     TROUT_STREAM(3),

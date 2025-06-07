@@ -250,7 +250,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.GEAR, ItemId.IRON_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.COMMON, "Iron Pickaxe", List.of("Iron pickaxe, mines ores with ease."), null, null),
                         new VersionedJson(new Gson().toJson(
                                 new EquipableMeta(
-                                        List.of(new Modifier(ModifierType.MINING_BOOST, 2)),
+                                        List.of(new Modifier(ModifierType.MINING_BOOST, 1.1)),
                                         List.of(new SkillRequirement(SkillType.MINING, 1))
                                 )
                         ), 1)
@@ -258,7 +258,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.GEAR, ItemId.STEEL_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.COMMON, "Steel Pickaxe", List.of("Steel pickaxe, efficient and strong."), null, null),
                         new VersionedJson(new Gson().toJson(
                                 new EquipableMeta(
-                                        List.of(new Modifier(ModifierType.MINING_BOOST, 3)),
+                                        List.of(new Modifier(ModifierType.MINING_BOOST, 1.2)),
                                         List.of(new SkillRequirement(SkillType.MINING, 6))
                                 )
                         ), 1)
@@ -266,7 +266,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.GEAR, ItemId.MITHRIL_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.UNCOMMON, "Mithril Pickaxe", List.of("Mithril pickaxe, fast and durable."), null, null),
                         new VersionedJson(new Gson().toJson(
                                 new EquipableMeta(
-                                        List.of(new Modifier(ModifierType.MINING_BOOST, 4)),
+                                        List.of(new Modifier(ModifierType.MINING_BOOST, 1.3)),
                                         List.of(new SkillRequirement(SkillType.MINING, 21))
                                 )
                         ), 1)
@@ -274,7 +274,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.GEAR, ItemId.ADAMANTITE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.UNCOMMON, "Adamantite Pickaxe", List.of("Adamantite pickaxe, mines the hardest ores."), null, null),
                         new VersionedJson(new Gson().toJson(
                                 new EquipableMeta(
-                                        List.of(new Modifier(ModifierType.MINING_BOOST, 5)),
+                                        List.of(new Modifier(ModifierType.MINING_BOOST, 1.5)),
                                         List.of(new SkillRequirement(SkillType.MINING, 31))
                                 )
                         ), 1)
@@ -282,7 +282,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.GEAR, ItemId.RUNITE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.RARE, "Runite Pickaxe", List.of("Runite pickaxe, enchanted for maximum yield."), null, null),
                         new VersionedJson(new Gson().toJson(
                                 new EquipableMeta(
-                                        List.of(new Modifier(ModifierType.MINING_BOOST, 6)),
+                                        List.of(new Modifier(ModifierType.MINING_BOOST, 1.8)),
                                         List.of(new SkillRequirement(SkillType.MINING, 41))
                                 )
                         ), 1)

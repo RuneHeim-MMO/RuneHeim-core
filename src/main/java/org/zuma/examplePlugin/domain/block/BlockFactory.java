@@ -33,7 +33,6 @@ public class BlockFactory {
                 ResourceNode block = new ResourceNode(manager, meta);
                 block.setSchematics(deserialized.schematicName(), deserialized.depletedSchematicName());
                 block.initializeBlock(deserialized.resourceMetaId(), loader);
-                block.spawn(meta.type().getMaterial());
                 return block;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());

@@ -165,7 +165,13 @@
         "custom_model_data": 1311
       },
       "model": "item/custom/food/burnt_food"
-    },   
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1400
+      },
+      "model": "item/custom/potions/empty_potion_bottle"
+    },
     {
       "predicate": {
         "custom_model_data": 1500

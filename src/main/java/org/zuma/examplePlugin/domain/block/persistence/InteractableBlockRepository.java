@@ -3,11 +3,14 @@ package org.zuma.examplePlugin.domain.block.persistence;
 import com.google.gson.Gson;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
 import org.zuma.examplePlugin.domain.block.constants.ResourceNodeTypeId;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
+import org.zuma.examplePlugin.domain.block.meta.v1.InventoryOpenerMeta;
 import org.zuma.examplePlugin.domain.block.meta.v1.ResourceNodeMeta;
+import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 
 import java.util.List;
 
@@ -15,12 +18,43 @@ public class InteractableBlockRepository {
 
     public List<BlockEntity> getAll() {
         return List.of(
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), -22.5, 93, -101.5),
-                        new Location(Bukkit.getWorld("world"), -22.5, 94.5, -101.5)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.IRON_ORE.asInt(), "tree", "tree_depleted")), 1))
 
-/*
+                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
+                        new Location(Bukkit.getWorld("world"), -26.5, 93, -98.5),
+                        new Location(Bukkit.getWorld("world"), -26.5, 94.5, -98.5)),
+                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TIN_ORE.asInt(), null, null)), 1)),
+
+                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
+                        new Location(Bukkit.getWorld("world"), -26.5, 93, -96.5),
+                        new Location(Bukkit.getWorld("world"), -26.5, 94.5, -96.5)),
+                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.COPPER_ORE.asInt(), null, null)), 1)),
+
+                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
+                        new Location(Bukkit.getWorld("world"), -26.5, 93, -94.5),
+                        new Location(Bukkit.getWorld("world"), -26.5, 94.5, -94.5)),
+                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.IRON_ORE.asInt(), null, null)), 1)),
+
+                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
+                        new Location(Bukkit.getWorld("world"), -26.5, 93, -92.5),
+                        new Location(Bukkit.getWorld("world"), -26.5, 94.5, -92.5)),
+                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.COAL_ORE.asInt(), null, null)), 1)),
+
+                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
+                        new Location(Bukkit.getWorld("world"), -26.5, 93, -90.5),
+                        new Location(Bukkit.getWorld("world"), -26.5, 94.5, -90.5)),
+                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.MITHRIL_ORE.asInt(), null, null)), 1)),
+
+                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
+                        new Location(Bukkit.getWorld("world"), -26.5, 93, -88.5),
+                        new Location(Bukkit.getWorld("world"), -26.5, 94.5, -88.5)),
+                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.ADAMANTITE_ORE.asInt(), null, null)), 1)),
+
+                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
+                        new Location(Bukkit.getWorld("world"), -26.5, 93, -86.5),
+                        new Location(Bukkit.getWorld("world"), -26.5, 94.5, -86.5)),
+                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.RUNITE_ORE.asInt(), null, null)), 1)),
+
+
                 new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
                         new Location(Bukkit.getWorld("world"), -22.5, 94, -98.5),
                         new Location(Bukkit.getWorld("world"), -22.5, 95.5, -98.5)),
@@ -33,8 +67,8 @@ public class InteractableBlockRepository {
                         new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.MINNOW_POOL.asInt(), null, null)), 1)),
 
                 new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), -22.5, 94, -95.5),
-                        new Location(Bukkit.getWorld("world"), -22.5, 95.5, -95.5)),
+                        new Location(Bukkit.getWorld("world"), -22.5, 94, -94.5),
+                        new Location(Bukkit.getWorld("world"), -22.5, 95.5, -94.5)),
                         new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TROUT_STREAM.asInt(), null, null)), 1)),
 
                 new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
@@ -94,7 +128,7 @@ public class InteractableBlockRepository {
                 new BlockEntity(new AbstractInteractableBlockMeta(BlockType.InventoryOpener,
                         new Location(Bukkit.getWorld("world"), -11, 94, -101),
                         new Location(Bukkit.getWorld("world"), -10.5, 94, -101.5)),
-                        new VersionedJson(new Gson().toJson(new InventoryOpenerMeta(InventoryId.STOVE.asInt(), Material.FURNACE, null, "Stove")), 1))*/
+                        new VersionedJson(new Gson().toJson(new InventoryOpenerMeta(InventoryId.STOVE.asInt(), Material.FURNACE, null, "Stove")), 1))
 
         );
 
