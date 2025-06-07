@@ -26,7 +26,8 @@ public class ItemFactory {
             case MATERIAL -> createMaterialItem(meta);
             case POTION -> createPotionItem(meta, json);
             case FOOD -> createFoodItem(meta, json);
-            default -> createMiscItem(meta);
+            case MISC -> createMiscItem(meta);
+            default -> throw new IllegalArgumentException("Unknown item type: " + meta.type());
         };
     }
 
@@ -44,14 +45,14 @@ public class ItemFactory {
                 item.addRequirements(deserialized.requirements());
                 return item;
             }
-            default -> throw new UnsupportedJsonVersionException(meta.type(), json.version());
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
         }
 
     }
 
     private QuestItem createQuestItem(AbstractItemMeta meta, @Nullable JsonMeta json) {
         if (json == null) {
-            throw new UnsupportedOperationException("Cannot create equipable item " + meta.displayName() + " required json is null!");
+            throw new UnsupportedOperationException("Cannot create quest item " + meta.displayName() + " required json is null!");
         }
 
         switch (json.version()) {
@@ -62,7 +63,7 @@ public class ItemFactory {
                 item.setQuestName(deserialized.questName());
                 return item;
             }
-            default -> throw new UnsupportedJsonVersionException(meta.type(), json.version());
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
         }
     }
 
@@ -72,7 +73,7 @@ public class ItemFactory {
 
     private PotionItem createPotionItem(AbstractItemMeta meta, @Nullable JsonMeta json) {
         if (json == null) {
-            throw new UnsupportedOperationException("Cannot create equipable item " + meta.displayName() + " required json is null!");
+            throw new UnsupportedOperationException("Cannot create potion item " + meta.displayName() + " required json is null!");
         }
 
         switch (json.version()) {
@@ -84,14 +85,14 @@ public class ItemFactory {
                 item.setCustomModelData(deserialized.potionModel());
                 return item;
             }
-            default -> throw new UnsupportedJsonVersionException(meta.type(), json.version());
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
         }
 
     }
 
     private FoodItem createFoodItem(AbstractItemMeta meta, @Nullable JsonMeta json) {
         if (json == null) {
-            throw new UnsupportedOperationException("Cannot create equipable item " + meta.displayName() + " required json is null!");
+            throw new UnsupportedOperationException("Cannot create food item " + meta.displayName() + " required json is null!");
         }
 
         switch (json.version()) {
@@ -102,7 +103,7 @@ public class ItemFactory {
                 item.setHealAmount(deserialized.healAmount());
                 return item;
             }
-            default -> throw new UnsupportedJsonVersionException(meta.type(), json.version());
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
         }
     }
 

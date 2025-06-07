@@ -18,13 +18,11 @@ public abstract class AbstractInteractableBlock {
     private final BlockType type;
     private final Location location, hologramLocation;
     private Hologram hologram;
-    private final String jsonMeta;
 
     public AbstractInteractableBlock(AbstractInteractableBlockMeta meta) {
         this.type = meta.type();
         this.location = meta.location();
         this.hologramLocation = meta.hologramLocation();
-        this.jsonMeta = meta.jsonMeta();
     }
 
     public void spawn(Material material) {
@@ -42,10 +40,6 @@ public abstract class AbstractInteractableBlock {
 
     public BlockType getType() {
         return type;
-    }
-
-    public String getJsonMeta() {
-        return jsonMeta;
     }
 
     public Location getHologramLocation() {

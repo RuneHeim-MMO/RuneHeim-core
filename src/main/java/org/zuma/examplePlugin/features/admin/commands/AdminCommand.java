@@ -4,18 +4,14 @@ package org.zuma.examplePlugin.features.admin.commands;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.util.RayTraceResult;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.block.BlockManager;
-import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
@@ -118,7 +114,7 @@ public class AdminCommand implements BasicCommand {
         }
 
 
-        if (Objects.equals(args[0], "ore")) {
+       /* if (Objects.equals(args[0], "ore")) {
             RayTraceResult result = player.rayTraceBlocks(20);
 
             if (result == null) {
@@ -135,7 +131,7 @@ public class AdminCommand implements BasicCommand {
             ResourceNodeType type = oreTypeRepository.getAll().getFirst();
             blockManager.spawnResourceNode(type,
                     hitBlock.getLocation(), hitBlock.getLocation().add(hitFace.getDirection()).add(0.5, 1.25, 0.5));
-        }
+        }*/
 
 
         // Items without page

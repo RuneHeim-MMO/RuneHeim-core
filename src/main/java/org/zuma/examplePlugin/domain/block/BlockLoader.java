@@ -1,10 +1,9 @@
 package org.zuma.examplePlugin.domain.block;
 
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.interfaces.Serializable;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.meta.JsonMeta;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
-import org.zuma.examplePlugin.domain.block.base.ResourceNode;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
@@ -33,26 +32,12 @@ public class BlockLoader {
     }
 
     public void loadInteractableBlocks() {
-        this.interactableBlockRepository.getAll().forEach(this::registerBlock);
+        this.interactableBlockRepository.getAll().forEach(entity -> registerBlock(entity.meta(), entity.json()));
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Spawned " + this.manager.getAllBlocks().size() + " interactable blocks.");
     }
 
-    private void registerBlock(AbstractInteractableBlockMeta meta) {
-        AbstractInteractableBlock block = factory.createBlock(meta);
-
-        if (block instanceof Serializable blockWithAdditionalMeta) {
-            try {
-                blockWithAdditionalMeta.deserializeAndApplyMeta();
-            } catch (Exception e) {
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Could not apply jsonMeta to the " + block.getType() + " block at " + block.getLocation() + "! " + e.getMessage());
-                return;
-            }
-        }
-
-        if (block instanceof ResourceNode) {
-            ((ResourceNode) block).initializeBlockTypeFromManager(this);
-        }
-
+    private void registerBlock(AbstractInteractableBlockMeta meta, JsonMeta json) {
+        AbstractInteractableBlock block = factory.createBlock(meta, json, this);
         this.manager.registerBlock(block);
     }
 

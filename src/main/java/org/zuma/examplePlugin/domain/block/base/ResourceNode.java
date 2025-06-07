@@ -1,6 +1,5 @@
 package org.zuma.examplePlugin.domain.block.base;
 
-import com.google.gson.Gson;
 import eu.decentsoftware.holograms.api.DHAPI;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -12,11 +11,9 @@ import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.constants.SoundType;
-import org.zuma.examplePlugin.core.interfaces.Serializable;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
-import org.zuma.examplePlugin.domain.block.meta.ResourceNodeMetaId;
 import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.impl.EquipableItem;
@@ -31,9 +28,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class ResourceNode extends AbstractInteractableBlock implements Serializable {
+public class ResourceNode extends AbstractInteractableBlock {
     private ResourceNodeType blockType;
-    private ResourceNodeMetaId meta;
     private boolean isDepleted;
 
     public ResourceNode(AbstractInteractableBlockMeta meta) {
@@ -52,11 +48,11 @@ public class ResourceNode extends AbstractInteractableBlock implements Serializa
         setHologram(DHAPI.createHologram(UUID.randomUUID().toString(), getHologramLocation(), hologramContent));
     }
 
-    public void initializeBlockTypeFromManager(BlockLoader loader) {
-        ResourceNodeType type = loader.getResourceNodeTypes().get(meta.resourceMetaId());
+    public void initializeBlock(int resourceTypeId, BlockLoader loader) {
+        ResourceNodeType type = loader.getResourceNodeTypes().get(resourceTypeId);
 
         if (type == null) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Could not initialize resource node! ResourceNodeType with ID " + meta.resourceMetaId() + " does not exist.");
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Could not initialize resource node! ResourceNodeType with ID " + resourceTypeId + " does not exist.");
             return;
         }
 
@@ -174,7 +170,4 @@ public class ResourceNode extends AbstractInteractableBlock implements Serializa
         event.setCancelled(true);
     }
 
-    public void deserializeAndApplyMeta() {
-        this.meta = new Gson().fromJson(this.getJsonMeta(), ResourceNodeMetaId.class);
-    }
 }
