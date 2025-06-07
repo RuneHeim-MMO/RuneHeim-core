@@ -117,7 +117,14 @@ public enum ItemId {
     FISHING_NET(1500),
     FISHING_ROD(1501),
     REINFORCED_FISHING_ROD(1502),
-    FISHING_TRAP(1503);
+    FISHING_TRAP(1503),
+
+    LOG(1600),
+    BIRCH_LOG(1601),
+    MAPLE_LOG(1602),
+    YEW_LOG(1603),
+    MAHOGANY_LOG(1604),
+    MAGIC_LOG(1605);
 
 
     private final int id;

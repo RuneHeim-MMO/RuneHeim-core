@@ -166,6 +166,13 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_TURTLE.asInt(), Material.COAL, ItemRarity.RARE, "Raw Turtle", List.of("Its thick shell guards rich meat inside."), null, null), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_RAY.asInt(), Material.COAL, ItemRarity.RARE, "Raw Ray", List.of("Soft flesh beneath leathery wings."), null, null), null),
 
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.LOG.asInt(), Material.OAK_LOG, ItemRarity.COMMON, "Log", List.of("A basic log used for crafting and building."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BIRCH_LOG.asInt(), Material.BIRCH_LOG, ItemRarity.COMMON, "Birch Log", List.of("A pale and smooth type of wood."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAPLE_LOG.asInt(), Material.ACACIA_LOG, ItemRarity.UNCOMMON, "Maple Log", List.of("A strong and versatile log with a reddish hue."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.YEW_LOG.asInt(), Material.DARK_OAK_LOG, ItemRarity.UNCOMMON, "Yew Log", List.of("A dense and durable wood prized in crafting."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAHOGANY_LOG.asInt(), Material.MANGROVE_LOG, ItemRarity.RARE, "Mahogany Log", List.of("A rich, dark wood valued for fine construction."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_LOG.asInt(), Material.CHERRY_LOG, ItemRarity.LEGENDARY, "Magic Log", List.of("Glows faintly with arcane energy, rare and powerful."), null, null), null),
+
                 // Misc
                 new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.BURNT_FOOD.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Charred Remains", List.of("All that's left after fire claims its meal."), null, null), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.EMPTY_POTION_BOTTLE.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Empty Potion Bottle",
@@ -299,7 +306,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.GEAR, ItemId.IRON_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Iron axe", List.of("Iron axe, sturdy and reliable."), null, null),
                         new VersionedJson(new Gson().toJson(
                                 new EquipableMeta(
-                                        List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 2)),
+                                        List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.1)),
                                         List.of(new SkillRequirement(SkillType.WOODCUTTING, 1))
                                 )
                         ), 1)
@@ -307,7 +314,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.GEAR, ItemId.STEEL_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Steel axe", List.of("Steel axe, stronger and more durable."), null, null),
                         new VersionedJson(new Gson().toJson(
                                 new EquipableMeta(
-                                        List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 3)),
+                                        List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.2)),
                                         List.of(new SkillRequirement(SkillType.WOODCUTTING, 6))
                                 )
                         ), 1)
@@ -315,7 +322,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.GEAR, ItemId.MITHRIL_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.UNCOMMON, "Mithril axe", List.of("Mithril axe, light and efficient."), null, null),
                         new VersionedJson(new Gson().toJson(
                                 new EquipableMeta(
-                                        List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 4)),
+                                        List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.3)),
                                         List.of(new SkillRequirement(SkillType.WOODCUTTING, 21))
                                 )
                         ), 1)
@@ -323,7 +330,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.GEAR, ItemId.ADAMANTITE_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.UNCOMMON, "Adamantite axe", List.of("Adamantite axe, built to last."), null, null),
                         new VersionedJson(new Gson().toJson(
                                 new EquipableMeta(
-                                        List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 5)),
+                                        List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.5)),
                                         List.of(new SkillRequirement(SkillType.WOODCUTTING, 31))
                                 )
                         ), 1)
@@ -331,7 +338,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.GEAR, ItemId.RUNITE_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.RARE, "Runite axe", List.of("Runite axe glowing with magical energy."), null, null),
                         new VersionedJson(new Gson().toJson(
                                 new EquipableMeta(
-                                        List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 6)),
+                                        List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.8)),
                                         List.of(new SkillRequirement(SkillType.WOODCUTTING, 41))
                                 )
                         ), 1)

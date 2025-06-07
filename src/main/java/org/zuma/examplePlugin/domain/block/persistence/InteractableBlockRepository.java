@@ -19,6 +19,44 @@ public class InteractableBlockRepository {
     public List<BlockEntity> getAll() {
         return List.of(
 
+                // Trees
+
+                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
+                        new Location(Bukkit.getWorld("world"), -92, 93, -145),
+                        new Location(Bukkit.getWorld("world"), -40.5, 94.5, -98.5)),
+                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
+
+
+                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
+                        new Location(Bukkit.getWorld("world"), -71, 93, -145),
+                        new Location(Bukkit.getWorld("world"), -40.5, 94.5, -98.5)),
+                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.BIRCH_TREE.asInt(), "birch_tree", "birch_tree_depleted")), 1)),
+
+                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
+                        new Location(Bukkit.getWorld("world"), -45, 93, -146),
+                        new Location(Bukkit.getWorld("world"), -40.5, 94.5, -98.5)),
+                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.MAPLE_TREE.asInt(), "maple_tree", "maple_tree_depleted")), 1)),
+
+
+                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
+                        new Location(Bukkit.getWorld("world"), -1, 93, -153),
+                        new Location(Bukkit.getWorld("world"), -40.5, 94.5, -98.5)),
+                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.YEW_TREE.asInt(), "yew_tree", "yew_tree_depleted")), 1)),
+
+                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
+                        new Location(Bukkit.getWorld("world"), -21, 93, -140),
+                        new Location(Bukkit.getWorld("world"), -40.5, 94.5, -98.5)),
+                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.MAHOGANY_TREE.asInt(), "mahogany_tree", "mahogany_tree_depleted")), 1)),
+
+                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
+                        new Location(Bukkit.getWorld("world"), -35, 93, -126),
+                        new Location(Bukkit.getWorld("world"), -40.5, 94.5, -98.5)),
+                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.MAGIC_TREE.asInt(), "magic_tree", "magic_tree_depleted")), 1)),
+
+
+                // Ores
+
+
                 new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
                         new Location(Bukkit.getWorld("world"), -26.5, 93, -98.5),
                         new Location(Bukkit.getWorld("world"), -26.5, 94.5, -98.5)),

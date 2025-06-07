@@ -1,6 +1,14 @@
 package org.zuma.examplePlugin.domain.block.constants;
 
 public enum ResourceNodeTypeId {
+
+    TREE(200),
+    BIRCH_TREE(201),
+    MAPLE_TREE(203),
+    YEW_TREE(204),
+    MAHOGANY_TREE(205),
+    MAGIC_TREE(206),
+
     COPPER_ORE(100),
     IRON_ORE(101),
     MITHRIL_ORE(103),
@@ -20,6 +28,7 @@ public enum ResourceNodeTypeId {
     SHARK_DEPTHS(9),
     TURTLE_BAY(10),
     RAY_SANDBANK(11);
+
 
     private final int id;
 

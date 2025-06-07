@@ -54,12 +54,12 @@ public class ResourceNodeSchematicHandler {
                         newHologramLocation.add(-0.5, 1.0, 0);
                     }
                     case BlockFace.WEST -> {
-                        newLocation.subtract(1, 0, 0);
-                        newHologramLocation.add(0, 1.0, 0.5);
+                        newLocation.subtract(-1, 0, 0);
+                        newHologramLocation.add(-1, 1.0, 0.5);
                     }
                     case BlockFace.EAST -> {
-                        newLocation.add(1, 0, 0);
-                        newHologramLocation.add(0, 1.0, -0.5);
+                        newLocation.subtract(1, 0, 0);
+                        newHologramLocation.add(1, 1.0, 0.5);
                     }
                 }
 

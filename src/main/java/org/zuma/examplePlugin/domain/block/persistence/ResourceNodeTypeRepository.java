@@ -18,6 +18,63 @@ public class ResourceNodeTypeRepository {
     public List<ResourceNodeType> getAll() {
         return List.of(
 
+                // Trees
+                new ResourceNodeType(ResourceNodeTypeId.TREE.asInt(),
+                        "Tree", Material.OAK_LOG,
+                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 1)),
+                        ModifierType.WOODCUTTING_BOOST, 10000, 30,
+                        new ItemRecord(ItemId.LOG, 1),
+                        "You need a hatchet to cut that!", "Woodcutting",
+                        SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
+                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 25.0))),
+
+                new ResourceNodeType(ResourceNodeTypeId.BIRCH_TREE.asInt(),
+                        "Birch Tree", Material.BIRCH_LOG,
+                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 15)),
+                        ModifierType.WOODCUTTING_BOOST, 12000, 40,
+                        new ItemRecord(ItemId.BIRCH_LOG, 1),
+                        "You need a hatchet to cut that!", "Woodcutting",
+                        SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
+                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 37.5))),
+
+                new ResourceNodeType(ResourceNodeTypeId.MAPLE_TREE.asInt(),
+                        "Maple Tree", Material.ACACIA_LOG,
+                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 45)),
+                        ModifierType.WOODCUTTING_BOOST, 15000, 50,
+                        new ItemRecord(ItemId.MAPLE_LOG, 1),
+                        "You need a hatchet to cut that!", "Woodcutting",
+                        SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
+                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 100.0))),
+
+                new ResourceNodeType(ResourceNodeTypeId.MAHOGANY_TREE.asInt(),
+                        "Mahogany Tree", Material.MANGROVE_LOG,
+                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 50)),
+                        ModifierType.WOODCUTTING_BOOST, 16000, 55,
+                        new ItemRecord(ItemId.MAHOGANY_LOG, 1),
+                        "You need a hatchet to cut that!", "Woodcutting",
+                        SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
+                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 125.0))),
+
+                new ResourceNodeType(ResourceNodeTypeId.YEW_TREE.asInt(),
+                        "Yew", Material.DARK_OAK_LOG,
+                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 60)),
+                        ModifierType.WOODCUTTING_BOOST, 18000, 60,
+                        new ItemRecord(ItemId.YEW_LOG, 1),
+                        "You need a hatchet to cut that!", "Woodcutting",
+                        SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
+                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 175.0))),
+
+                new ResourceNodeType(ResourceNodeTypeId.MAGIC_TREE.asInt(),
+                        "Magic Tree", Material.CHERRY_LOG,
+                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 75)),
+                        ModifierType.WOODCUTTING_BOOST, 20000, 70,
+                        new ItemRecord(ItemId.MAGIC_LOG, 1),
+                        "You need a hatchet to cut that!", "Woodcutting",
+                        SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
+                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 250.0))),
+
+
+                // Ores
                 new ResourceNodeType(ResourceNodeTypeId.TIN_ORE.asInt(),
                         "Tin Ore Vein", Material.DEEPSLATE_GOLD_ORE,
                         List.of(new SkillRequirement(SkillType.MINING, 1)),

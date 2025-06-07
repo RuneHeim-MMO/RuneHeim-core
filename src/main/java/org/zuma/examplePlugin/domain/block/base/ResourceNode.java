@@ -68,6 +68,9 @@ public class ResourceNode extends AbstractInteractableBlock {
             return;
         }
 
+        if (schematicHandler != null) {
+            schematicHandler.updateNodeModel(this);
+        }
         this.blockType = type;
         this.spawn(type.getMaterial());
         initializeHologram();
@@ -117,6 +120,7 @@ public class ResourceNode extends AbstractInteractableBlock {
 
     public void depleteResource() {
         isDepleted = true;
+
         this.spawn(Material.BARRIER);
 
         DHAPI.addHologramLine(this.getHologram(), new ItemStack(Material.BARRIER));
@@ -155,6 +159,10 @@ public class ResourceNode extends AbstractInteractableBlock {
     public void spawn(Material material) {
         if (schematicHandler != null) {
             schematicHandler.updateNodeModel(this);
+
+            if (material.equals(Material.BARRIER)) {
+                return;
+            }
         }
         super.spawn(material);
     }
