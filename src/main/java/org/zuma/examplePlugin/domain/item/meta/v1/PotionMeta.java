@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.item.meta;
+package org.zuma.examplePlugin.domain.item.meta.v1;
 
 import org.zuma.examplePlugin.domain.item.constants.CustomModelId;
 

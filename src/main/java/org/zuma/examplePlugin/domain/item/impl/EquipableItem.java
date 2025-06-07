@@ -1,15 +1,12 @@
 package org.zuma.examplePlugin.domain.item.impl;
 
-import com.google.gson.Gson;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.core.constants.Colors;
-import org.zuma.examplePlugin.core.interfaces.Serializable;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
-import org.zuma.examplePlugin.domain.item.meta.EquipableMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
@@ -18,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class EquipableItem extends AbstractItem implements SkillRestrictable, Serializable {
+public class EquipableItem extends AbstractItem implements SkillRestrictable {
     private final List<Modifier> modifiers = new ArrayList<>();
     private final List<SkillRequirement> requirements = new ArrayList<>();
 
@@ -41,22 +38,17 @@ public class EquipableItem extends AbstractItem implements SkillRestrictable, Se
         return requirements;
     }
 
-    public void deserializeAndApplyMeta() {
-        if (jsonMeta == null) {
-            return;
-        }
-
-        if (super.getJsonMetaVersion() == 1) {
-            EquipableMeta deserialized = new Gson().fromJson(this.jsonMeta, EquipableMeta.class);
-
-            modifiers.addAll(deserialized.modifiers());
-
-            if (deserialized.requirements() != null) {
-                requirements.addAll(deserialized.requirements());
-            }
-
-            // Lore
+    public void addRequirements(List<SkillRequirement> requirements) {
+        if (requirements != null) {
+            this.requirements.addAll(requirements);
             requirements.forEach(requirement -> appendToRequirementsLore(Component.text(requirement.type().getSymbol() + " " + requirement.minimumLevel() + " " + requirement.type().getLabel()).color(Colors.ITEM_REQUIREMENT.asColor())));
+        }
+    }
+
+    public void addModifiers(List<Modifier> modifiers) {
+        if (modifiers != null) {
+            this.modifiers.addAll(modifiers);
+
             modifiers.forEach(modifier -> {
                 int amount = Math.toIntExact(Math.round(modifier.amount()));
                 String sign = amount > 0 ? "+" : "";
@@ -64,10 +56,7 @@ public class EquipableItem extends AbstractItem implements SkillRestrictable, Se
 
                 appendToBonusesLore(Component.text(modifier.type().getSymbol() + " " + sign + amount + " " + modifier.type().getLabel()).color(color));
             });
-
-            return;
         }
-
-        throw new Error("[" + this.displayName + "] Unsupported JSON meta version! " + super.getJsonMetaVersion());
     }
+
 }

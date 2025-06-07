@@ -1,19 +1,16 @@
 package org.zuma.examplePlugin.domain.item.impl.consumable;
 
-import com.google.gson.Gson;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.core.constants.Colors;
-import org.zuma.examplePlugin.core.interfaces.Serializable;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
-import org.zuma.examplePlugin.domain.item.meta.PotionMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
@@ -21,39 +18,24 @@ import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.item.PlayerConsumableConsumeEvent;
 
-public class PotionItem extends AbstractItem implements Stateful, Serializable {
+public class PotionItem extends AbstractItem implements Stateful {
     private int usages;
     private int maxUsages;
-    private String someEffect;
 
     public PotionItem(AbstractItemMeta meta) {
         super(meta);
         this.setRarityPrefixSlot("\uD83E\uDDEA");
         this.setStateType(StateType.MULTI_CONSUMABLE);
     }
-
-
+    
     @Override
     public AbstractState getInitialState() {
         return new MultiConsumableState(maxUsages, usages);
     }
 
-    @Override
-    public void deserializeAndApplyMeta() {
-        if (jsonMeta == null) {
-            return;
-        }
-
-        if (super.getJsonMetaVersion() == 1) {
-            PotionMeta meta = new Gson().fromJson(super.jsonMeta, PotionMeta.class);
-            usages = meta.usages();
-            maxUsages = meta.maxUsages();
-            someEffect = meta.someEffect();
-            setCustomModelData(meta.potionModel());
-            return;
-        }
-
-        throw new Error("[" + this.displayName + "] Unsupported JSON meta version! " + super.getJsonMetaVersion());
+    public void setUsages(int currentUsages, int maxUsages) {
+        this.usages = currentUsages;
+        this.maxUsages = maxUsages;
     }
 
     @Override

@@ -1,9 +1,11 @@
 package org.zuma.examplePlugin;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.handlers.BlockProtector;
 import org.zuma.examplePlugin.core.handlers.OffHandDisabler;
 import org.zuma.examplePlugin.core.logger.Logger;
@@ -41,6 +43,7 @@ import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
 
 @SuppressWarnings("UnstableApiUsage")
 public final class RuneQuestPlugin extends JavaPlugin implements Listener {
+    private static final Dotenv dotenv = Dotenv.configure().directory("plugins").load();
     public static final Logger logger = new Logger();
     private static RuneQuestPlugin pluginInstance;
     private static RunePlayerManager runePlayerManager;
@@ -52,6 +55,12 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     private BlockManager blockManager;
     private MobHandler mobHandler;
+    private HikariPool pool;
+
+    public void initializeMySQL() {
+        pool = new HikariPool();
+        pool.initialize(dotenv);
+    }
 
     public void initializePlugin() {
         pluginInstance = this;
@@ -64,8 +73,14 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(runePlayerListener, pluginInstance);
 
         itemRegistry = new ItemRegistry();
-        ItemLoader itemLoader = new ItemLoader(itemRegistry, new ItemFactory(), new ItemRepository());
+        ItemRepository itemRepository = new ItemRepository();
+        //List<AbstractItemMeta> items = itemRepository.loadItems(pool.getDataSource());
+        //itemRepository.setCache(items);
+
+
+        ItemLoader itemLoader = new ItemLoader(itemRegistry, new ItemFactory(), itemRepository);
         itemLoader.loadItemsFromDatabase();
+
 
         ItemHandler itemHandler = new ItemHandler(itemRegistry);
         StateManager itemStateManager = new StateManager(new StateFactory(), itemHandler, new StateRepository());
@@ -113,6 +128,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        initializeMySQL();
         initializePlugin();
         registerCommands();
         mobHandler.cleanup();
@@ -121,6 +137,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
+        pool.closeConnection();
         runePlayerManager.handleOnDisable();
         mobHandler.cleanup();
         guiHandler.closeAllInventories();

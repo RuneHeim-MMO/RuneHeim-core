@@ -2,7 +2,6 @@ package org.zuma.examplePlugin.domain.item.meta;
 
 import org.bukkit.Color;
 import org.bukkit.Material;
-import org.zuma.examplePlugin.core.meta.JsonMeta;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
 
@@ -12,6 +11,5 @@ import java.util.List;
 public record AbstractItemMeta(ItemType type, int id, Material material, ItemRarity rarity, String displayName,
                                List<String> lore,
                                @Nullable String headTexture,
-                               @Nullable Color leatherColor,
-                               @Nullable JsonMeta jsonMeta) {
+                               @Nullable Color leatherColor) {
 }

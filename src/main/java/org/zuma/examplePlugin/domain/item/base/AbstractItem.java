@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.UUID;
 
 public abstract class AbstractItem {
-    public final int id, jsonMetaVersion;
+    public final int id;
     public final ItemType type;
     public final ItemRarity rarity;
     public final Material material;
@@ -41,9 +41,6 @@ public abstract class AbstractItem {
     public final List<Component> bonusesLore = new ArrayList<>();
     public String rarityPrefixSlot;
     public int customModelData;
-
-    @Nullable
-    public final String jsonMeta;
 
     @Nullable
     public StateType stateType = null;
@@ -62,14 +59,6 @@ public abstract class AbstractItem {
         this.customModelData = meta.id();
         this.rarity = meta.rarity();
         this.rarityPrefixSlot = null;
-
-        if (meta.jsonMeta() != null) {
-            this.jsonMeta = meta.jsonMeta().meta();
-            this.jsonMetaVersion = meta.jsonMeta().version();
-        } else {
-            this.jsonMeta = null;
-            this.jsonMetaVersion = -1;
-        }
         this.headTexture = meta.headTexture();
         this.leatherColor = meta.leatherColor();
 
@@ -199,15 +188,6 @@ public abstract class AbstractItem {
 
         return meta;
 
-    }
-
-    @Nullable
-    public String getJsonMeta() {
-        return jsonMeta;
-    }
-
-    public int getJsonMetaVersion() {
-        return jsonMetaVersion;
     }
 
     @Nullable

@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id("xyz.jpenilla.run-paper") version "2.3.1"
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'org.zuma'
@@ -22,17 +23,22 @@ repositories {
     }
 }
 
+build.dependsOn shadowJar
+
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
     compileOnly 'com.github.decentsoftware-eu:decentholograms:2.8.17'
     implementation 'com.google.code.gson:gson:2.13.1'
+    implementation 'io.github.cdimascio:dotenv-java:3.2.0'
+    implementation 'com.zaxxer:HikariCP:5.1.0'
 }
 
-jar {
-    destinationDirectory = file("/home/sp/Desktop/Servert/plugins")
-}
 
 tasks {
+    tasks.named("shadowJar", com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar).configure {
+        archiveFileName.set("RuneQuestCore.jar")
+        destinationDirectory.set(file("/home/sp/Desktop/Servert/plugins"))
+    }
     runServer {
         // Configure the Minecraft version for our task.
         // This is the only required configuration besides applying the plugin.
