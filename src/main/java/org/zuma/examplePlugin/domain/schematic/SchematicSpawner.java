@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.schematic;
 
 import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.MaxChangedBlocksException;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
@@ -10,8 +11,10 @@ import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
 import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.World;
+import com.sk89q.worldedit.world.block.BlockTypes;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -20,42 +23,18 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.block.sign.Side;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 
+import javax.annotation.Nullable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SchematicSpawner {
+    @Nullable
+    private CuboidRegion lastPaste = null;
 
-    private BlockVector3 getCenterBottomPosition(Clipboard clipboard, Location targetLocation) {
-        var region = clipboard.getRegion();
-        BlockVector3 min = region.getMinimumPoint();
-        BlockVector3 max = region.getMaximumPoint();
-
-        int centerX = (min.getX() + max.getX()) / 2;
-        int centerZ = (min.getZ() + max.getZ()) / 2;
-
-        int targetX = targetLocation.getBlockX();
-        int targetY = targetLocation.getBlockY();
-        int targetZ = targetLocation.getBlockZ();
-
-        int offsetX = centerX - min.getX();
-        int offsetZ = centerZ - min.getZ();
-
-        int pasteX = targetX - offsetX;
-        int pasteZ = targetZ - offsetZ;
-
-        int pasteY = targetY;
-
-        System.out.println("Pasting schematic at: " + pasteX + ", " + pasteY + ", " + pasteZ);
-
-        return BlockVector3.at(pasteX, pasteY, pasteZ);
-    }
-
-
-    public List<InteractiveElement> pasteSchematic(Location location, File schematicFile) {
-        List<InteractiveElement> elements = new ArrayList<>();
-
+    @Nullable
+    public Clipboard pasteSchematic(Location location, File schematicFile, boolean ignoreAirBlocks) {
         try {
             ClipboardFormat format = ClipboardFormats.findByFile(schematicFile);
             if (format == null) {
@@ -68,7 +47,6 @@ public class SchematicSpawner {
             }
 
             World weWorld = BukkitAdapter.adapt(location.getWorld());
-            BlockVector3 pastePosition = getCenterBottomPosition(clipboard, location);
             BlockVector3 origin = BlockVector3.at(
                     location.getBlockX(),
                     location.getBlockY() - 2, // Player offset
@@ -79,35 +57,72 @@ public class SchematicSpawner {
                 Operation operation = new ClipboardHolder(clipboard)
                         .createPaste(editSession)
                         .to(origin)
-                        .ignoreAirBlocks(false)
+                        .ignoreAirBlocks(ignoreAirBlocks)
                         .build();
 
                 Operations.complete(operation);
             }
 
-            // Loop through the clipboard region to find sign blocks
-            clipboard.getRegion().forEach(blockPos -> {
-                BlockVector3 worldBlockPos = blockPos.add(pastePosition.subtract(clipboard.getRegion().getMinimumPoint()));
-                Block block = location.getWorld().getBlockAt(worldBlockPos.getBlockX(), worldBlockPos.getBlockY(), worldBlockPos.getBlockZ());
+            BlockVector3 offset = origin.subtract(clipboard.getOrigin());
+            BlockVector3 worldMin = clipboard.getRegion().getMinimumPoint().add(offset);
+            BlockVector3 worldMax = clipboard.getRegion().getMaximumPoint().add(offset);
+            lastPaste = new CuboidRegion(weWorld, worldMin, worldMax);
 
-                if (block.getState() instanceof Sign sign && block.getBlockData() instanceof Directional directional) {
-                    String firstLine = TextUtils.extractPlainText(sign.getSide(Side.FRONT).line(0));
-                    try {
-                        InteractiveElType type = InteractiveElType.valueOf(firstLine);
-                        elements.add(new InteractiveElement(block.getLocation(), directional.getFacing(), type));
-                        block.setType(Material.AIR);
-                    } catch (IllegalArgumentException e) {
-                        // No enum constant found for firstLine
-                    }
+            System.out.println(lastPaste);
+            return clipboard;
 
-
-                }
-            });
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        return null;
+    }
+
+    public List<InteractiveElement> extractInteractiveElements() {
+        List<InteractiveElement> elements = new ArrayList<>();
+
+        if (lastPaste == null) {
+            return elements;
+        }
+
+        World weWorld = lastPaste.getWorld();
+
+        lastPaste.forEach(pos -> {
+            Location loc = new Location(BukkitAdapter.asBukkitWorld(weWorld).getWorld(), pos.getX(), pos.getY() + 1, pos.getZ());
+            Block block = loc.getBlock();
+
+            if (block.getState() instanceof Sign sign && block.getBlockData() instanceof Directional directional) {
+                String firstLine = TextUtils.extractPlainText(sign.getSide(Side.FRONT).line(0));
+                try {
+                    InteractiveElType type = InteractiveElType.valueOf(firstLine);
+                    elements.add(new InteractiveElement(block.getLocation(), directional.getFacing(), type));
+                    block.setType(Material.AIR); // Remove the sign block
+                } catch (IllegalArgumentException e) {
+                    // Not a valid enum constant, ignore
+                }
+            }
+        });
+
         return elements;
+    }
+
+    public void clearLastPaste() {
+        if (lastPaste == null) {
+            return;
+        }
+
+        World weWorld = lastPaste.getWorld();
+        try (EditSession editSession = WorldEdit.getInstance()
+                .newEditSessionBuilder()
+                .world(weWorld)
+                .maxBlocks(-1)
+                .build()) {
+
+            editSession.setBlocks(lastPaste, BlockTypes.AIR.getDefaultState());
+        } catch (MaxChangedBlocksException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

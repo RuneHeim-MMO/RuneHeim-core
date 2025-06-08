@@ -137,11 +137,12 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
+        Bukkit.getScheduler().cancelTasks(this);
+        blockManager.onDisable();
         pool.closeConnection();
         runePlayerManager.handleOnDisable();
         mobHandler.cleanup();
         guiHandler.closeAllInventories();
-        Bukkit.getScheduler().cancelTasks(this);
     }
 
     public static Logger getRuneLogger() {

@@ -31,7 +31,6 @@ public abstract class AbstractInteractableBlock {
     }
 
     public void setLocation(Location location) {
-        this.location.getBlock().setType(Material.AIR);
         this.location = location;
     }
 
@@ -59,6 +58,10 @@ public abstract class AbstractInteractableBlock {
 
     public Location getLocation() {
         return location;
+    }
+
+    public void onDisable() {
+
     }
 
     public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItem itemInHand) {

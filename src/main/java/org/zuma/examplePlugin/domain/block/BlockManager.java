@@ -40,4 +40,8 @@ public class BlockManager {
         blocks.put(blockLocation, block);
     }
 
+    public void onDisable() {
+        this.blocks.values().forEach(AbstractInteractableBlock::onDisable);
+    }
+
 }

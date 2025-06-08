@@ -140,6 +140,9 @@ public class ResourceNode extends AbstractInteractableBlock {
     }
 
     public void setSchematics(@Nullable String schematicName, @Nullable String depletedSchematic) {
+        if (schematicName == null && depletedSchematic == null) {
+            return;
+        }
         this.schematicHandler = new ResourceNodeSchematicHandler(schematicName, depletedSchematic);
     }
 
@@ -153,6 +156,10 @@ public class ResourceNode extends AbstractInteractableBlock {
 
     public BlockManager getManager() {
         return manager;
+    }
+
+    public ResourceNodeType getNodeType() {
+        return blockType;
     }
 
     @Override
@@ -218,6 +225,13 @@ public class ResourceNode extends AbstractInteractableBlock {
             return;
         } else {
             startGatheringAction(player, 0);
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        if (this.schematicHandler != null && this.blockType != null) {
+            this.schematicHandler.cleanUp();
         }
     }
 

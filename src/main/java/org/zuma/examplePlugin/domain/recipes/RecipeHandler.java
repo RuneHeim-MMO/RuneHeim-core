@@ -11,8 +11,8 @@ import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipes.base.AbstractRecipe;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
-import org.zuma.examplePlugin.events.recipe.PlayerCraftingFinish;
-import org.zuma.examplePlugin.events.recipe.PlayerCraftingStart;
+import org.zuma.examplePlugin.events.recipe.PlayerCraftingFinishEvent;
+import org.zuma.examplePlugin.events.recipe.PlayerCraftingStartEvent;
 
 import java.util.List;
 
@@ -66,7 +66,7 @@ public class RecipeHandler {
         }
 
 
-        PlayerCraftingStart event = new PlayerCraftingStart(player, recipe, times);
+        PlayerCraftingStartEvent event = new PlayerCraftingStartEvent(player, recipe, times);
         Bukkit.getServer().getPluginManager().callEvent(event);
 
         if (event.isCancelled()) {
@@ -96,7 +96,7 @@ public class RecipeHandler {
                     int successCrafts = getSuccessCraftsAmount(player, recipe, times);
                     int failedCrafts = times - successCrafts;
 
-                    PlayerCraftingFinish successEvent = new PlayerCraftingFinish(player, recipe, successCrafts, failedCrafts);
+                    PlayerCraftingFinishEvent successEvent = new PlayerCraftingFinishEvent(player, recipe, successCrafts, failedCrafts);
                     Bukkit.getServer().getPluginManager().callEvent(successEvent);
 
                     if (successEvent.isCancelled()) {

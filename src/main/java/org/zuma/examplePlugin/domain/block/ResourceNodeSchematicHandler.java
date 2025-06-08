@@ -1,7 +1,10 @@
 package org.zuma.examplePlugin.domain.block;
 
+import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
+import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.base.ResourceNode;
 import org.zuma.examplePlugin.domain.schematic.InteractiveElType;
 import org.zuma.examplePlugin.domain.schematic.InteractiveElement;
@@ -13,27 +16,40 @@ import java.util.List;
 import java.util.Objects;
 
 public class ResourceNodeSchematicHandler {
-    private String schematicName;
+    private final String schematicName;
     @Nullable
-    private String depletedSchematic;
+    private final String depletedSchematic;
+    private final SchematicSpawner spawner;
 
     public ResourceNodeSchematicHandler(String schematicName, @Nullable String depletedSchematic) {
         this.schematicName = schematicName;
         this.depletedSchematic = depletedSchematic;
+        this.spawner = new SchematicSpawner();
     }
 
     public void updateNodeModel(ResourceNode node) {
-        if (node.isDepleted() && this.depletedSchematic != null) {
-            List<InteractiveElement> result = new SchematicSpawner().pasteSchematic(node.getOrigin(), new File("plugins/RuneQuest/schematics/" + this.depletedSchematic + ".schem"));
-            handleElementReassignation(result, node);
+        if (node.getNodeType() == null || this.depletedSchematic == null && node.isDepleted()) {
             return;
         }
 
-        if (this.schematicName != null) {
-            List<InteractiveElement> result = new SchematicSpawner().pasteSchematic(node.getOrigin(), new File("plugins/RuneQuest/schematics/" + this.schematicName + ".schem"));
-            handleElementReassignation(result, node);
+        Location location = node.getOrigin().clone(); // Player offset (during schematic creation he should be under the center point)
+        String schematicName = node.isDepleted() && this.depletedSchematic != null ? this.depletedSchematic : this.schematicName;
+
+        if (schematicName == null) {
             return;
         }
+
+        spawner.clearLastPaste();
+        Clipboard spawnClipboard = spawner.pasteSchematic(location, new File("plugins/RuneQuest/schematics/" + schematicName + ".schem"), true);
+
+
+        if (spawnClipboard == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed spawning schematic for " + node.getNodeType().getLabel() + "! File: " + "plugins/RuneQuest/schematics/" + this.depletedSchematic + ".schem");
+            return;
+        }
+
+        List<InteractiveElement> result = spawner.extractInteractiveElements();
+        handleElementReassignation(result, node);
     }
 
     // Update interactive elements (e.g action block, holograms) positions according to schematic
@@ -69,6 +85,10 @@ public class ResourceNodeSchematicHandler {
             }
 
         });
+    }
+
+    public void cleanUp() {
+        this.spawner.clearLastPaste();
     }
 
 }
