@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.domain.hud;
 
+import eu.decentsoftware.holograms.api.DHAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
@@ -9,6 +10,8 @@ import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.entity.Firework;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.constants.SoundType;
@@ -21,10 +24,18 @@ import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 public class HudService {
+    private static final Random random = new Random();
 
     public static void showXpGainMessage(RunePlayer player, SkillType type, double xp, XpSource source) {
+        String xpStr = type.getSymbol() + " " + xp + " XP";
+        boolean isPartySource = source == XpSource.PARTY;
+
+        spawnVerticalHologramBubble(player, Colors.SUCCESS.asSpigotHex() + "+ " + xpStr + " " + (isPartySource ? "[Party]" : ""));
         player.getPlayer().sendMessage(type.getLabel() + " +" + xp + "xp! Type: " + source.name());
     }
 
@@ -44,7 +55,7 @@ public class HudService {
 
     public static void showPlayerLevelUpTitle(RunePlayer player, Skill skill) {
         boolean isMaxedSkill = XpUtils.isMaxLevel(skill.getLevel());
-        int count = isMaxedSkill ? 35 : 5;
+        int count = isMaxedSkill ? 50 : 5;
         int delayBetween = 5;
         SkillType type = skill.getType();
 
@@ -90,7 +101,7 @@ public class HudService {
                     Component.text("No way! You have MAXED your " + type.getSymbol() + " " + type.getLabel() + " level!", Colors.SUCCESS.asColor()),
                     Title.Times.times(
                             Duration.ofSeconds(1),
-                            Duration.ofSeconds(8, 5),
+                            Duration.ofSeconds(10),
                             Duration.ofSeconds(3)
                     )
             ));
@@ -103,7 +114,7 @@ public class HudService {
                 Firework firework = loc.getWorld().spawn(loc, Firework.class);
 
                 FireworkMeta meta = firework.getFireworkMeta();
-                meta.setPower(0);
+                meta.setPower(isMaxedSkill ? 2 : 0);
 
                 if (isMaxedSkill) {
                     meta.addEffect(FireworkUtils.getRandomEffect());
@@ -122,5 +133,52 @@ public class HudService {
         }
 
 
+    }
+
+    private static void spawnVerticalHologramBubble(RunePlayer player, String content) {
+        spawnVerticalHologramBubble(player.getPlayer().getLocation().clone().add(0, 1, 0), player.getPlayer().getLocation().getDirection().clone().normalize(), content);
+    }
+
+    private static void spawnVerticalHologramBubble(Location start, Vector direction, String content) {
+        UUID holoId = UUID.randomUUID();
+        DHAPI.createHologram(holoId.toString(), start, List.of(content));
+
+        new BukkitRunnable() {
+            double t = 0;
+            final double duration = 20;
+            final double maxVerticalHeight = 0.3;
+            final double baseHorizontalOffset = 0.2;
+            final double horizontalRandomness = 0.1;
+
+            @Override
+            public void run() {
+                if (t > duration) {
+                    DHAPI.removeHologram(holoId.toString());
+                    this.cancel();
+                    return;
+                }
+
+                double progress = t / duration;
+
+                // Vertical parabola
+                double verticalOffset = (-4 * Math.pow(progress - 0.5, 2) + 1) * maxVerticalHeight;
+
+                // Calculate forward position
+                Location loc = start.clone().add(direction.clone().multiply(baseHorizontalOffset));
+
+                // Add random horizontal side offset perpendicular to direction vector
+                Vector perp = new Vector(-direction.getZ(), 0, direction.getX()).normalize(); // perpendicular vector on XZ plane
+
+                // Random offset between -horizontalRandomness and +horizontalRandomness
+                double randomOffset = (random.nextDouble() * 2 - 1) * horizontalRandomness;
+
+                loc.add(perp.multiply(randomOffset));
+                loc.add(0, verticalOffset, 0);
+
+                DHAPI.moveHologram(holoId.toString(), loc);
+
+                t++;
+            }
+        }.runTaskTimer(RuneQuestPlugin.getInstance(), 0L, 2L);
     }
 }
