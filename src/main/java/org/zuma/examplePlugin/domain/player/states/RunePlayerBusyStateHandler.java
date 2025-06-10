@@ -9,6 +9,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.TextUtils;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.time.Duration;
@@ -31,7 +32,7 @@ public class RunePlayerBusyStateHandler {
         AtomicInteger currentSteps = new AtomicInteger();
 
         if (isBusy) {
-            player.showFailTitle("You are already busy with something else!");
+            HudService.showFailTitle(player, "You are already busy with something else!");
             return;
         }
 
@@ -51,7 +52,7 @@ public class RunePlayerBusyStateHandler {
 
                 if (!isBusy) {
                     isBusy = false;
-                    player.showFailTitle("Task cancelled.");
+                    HudService.showFailTitle(player, "Task cancelled.");
                     this.cancel();
                     return;
                 }

@@ -21,6 +21,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.sign.Side;
+import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 
 import javax.annotation.Nullable;
@@ -73,7 +75,7 @@ public class SchematicSpawner {
 
 
         } catch (Exception e) {
-            e.printStackTrace();
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Unable to paste schematic " + schematicFile.getAbsolutePath() + "! " + e.getMessage());
         }
 
         return null;

@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.core.utils;
 
 public class XpUtils {
+    private static final int MAX_LEVEL = 99;
     private static final int[] XP_TABLE = new int[100]; // index 1-99 used
 
     static {
@@ -26,5 +27,38 @@ public class XpUtils {
             if (XP_TABLE[level] > xp) return level - 1;
         }
         return 99;
+    }
+
+    public static int getXpIntoCurrentLevel(int totalXp, int currentLevel) {
+        int xpAtCurrentLevel = getXpForLevel(currentLevel);
+        return totalXp - xpAtCurrentLevel;
+    }
+
+    public static int getXpToNextLevel(int currentLevel) {
+        if (isMaxLevel(currentLevel)) {
+            return 0;
+        }
+
+        int xpAtCurrentLevel = getXpForLevel(currentLevel);
+        int xpAtNextLevel = getXpForLevel(currentLevel + 1);
+        return xpAtNextLevel - xpAtCurrentLevel;
+    }
+
+    public static int getCappedLevel(int level) {
+        return isMaxLevel(level) ? MAX_LEVEL : level;
+    }
+
+    public static boolean isMaxLevel(int level) {
+        return level >= MAX_LEVEL;
+    }
+
+    public static int getProgressPercent(int totalXp, int currentLevel) {
+        if (isMaxLevel(currentLevel)) {
+            return 100;
+        }
+
+        int xpIntoLevel = getXpIntoCurrentLevel(totalXp, currentLevel);
+        int xpToNextLevel = getXpToNextLevel(currentLevel);
+        return (int) Math.round((xpIntoLevel / (double) xpToNextLevel) * 100);
     }
 }

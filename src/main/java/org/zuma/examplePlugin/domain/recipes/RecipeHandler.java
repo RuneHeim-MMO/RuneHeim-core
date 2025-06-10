@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -46,22 +47,22 @@ public class RecipeHandler {
 
 
         if (player.isBusy()) {
-            player.showFailedMessage(Component.text("You are already busy with something else!"));
+            HudService.sendFailMessage(player, Component.text("You are already busy with something else!"));
             return false;
         }
 
         if (!player.meetsRequirements(recipe)) {
-            player.showFailedMessage(Component.text("You do not meet requirements to " + type.getVerb().toLowerCase() + " ").append(resultComponent));
+            HudService.sendFailMessage(player, Component.text("You do not meet requirements to " + type.getVerb().toLowerCase() + " ").append(resultComponent));
             return false;
         }
 
         if (!PlayerUtils.hasItems(player, totalIngredients)) {
-            player.showFailedMessage(Component.text("You do not have required ingredients to " + type.getVerb().toLowerCase() + " " + times + "x ").append(resultComponent));
+            HudService.sendFailMessage(player, Component.text("You do not have required ingredients to " + type.getVerb().toLowerCase() + " " + times + "x ").append(resultComponent));
             return false;
         }
 
         if (!PlayerUtils.hasItems(player, requiredTools)) {
-            player.showFailedMessage(Component.text("You do not have required tools to " + type.getVerb().toLowerCase() + " " + times + "x ").append(resultComponent));
+            HudService.sendFailMessage(player, Component.text("You do not have required tools to " + type.getVerb().toLowerCase() + " " + times + "x ").append(resultComponent));
             return false;
         }
 
@@ -79,16 +80,16 @@ public class RecipeHandler {
                 type.getContinuousVerb() + " " + recipeResultNameString,
                 type.getPastTenseVerb() + "  " + recipeResultNameString, type.getStepSound(), type.getFinishSound(), (consumer) -> {
 
-                    // If players inventory gets modified during waiting for the craft (e.g player drops item)
+                    // If players inventory gets modified during waiting for the craft (e.g. player drops item)
                     if (!PlayerUtils.hasItems(player, totalIngredients)) {
-                        player.showFailedMessage(Component.text("You do not have required ingredients to " + type.getVerb().toLowerCase() + " " + times + "x ").append(resultComponent));
+                        HudService.sendFailMessage(player, Component.text("You do not have required ingredients to " + type.getVerb().toLowerCase() + " " + times + "x ").append(resultComponent));
                         return;
                     }
 
                     boolean itemsRemoveSuccess = PlayerUtils.removeItems(player, totalIngredients);
 
                     if (!itemsRemoveSuccess) {
-                        player.showFailedMessage(Component.text("Failed removing items from player inventory."));
+                        HudService.sendFailMessage(player, Component.text("Failed removing items from player inventory."));
                         return;
                     }
 

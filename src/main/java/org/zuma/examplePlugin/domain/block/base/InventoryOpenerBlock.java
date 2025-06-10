@@ -9,6 +9,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
@@ -45,7 +46,7 @@ public class InventoryOpenerBlock extends AbstractInteractableBlock implements S
         event.setCancelled(true);
 
         if (requirements != null && !player.meetsRequirements(this)) {
-            player.showFailedMessage(Component.text("You do not meet requirements to use this!"));
+            HudService.sendFailMessage(player, Component.text("You do not meet requirements to use this!"));
             return;
         }
 

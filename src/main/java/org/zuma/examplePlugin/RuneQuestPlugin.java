@@ -15,6 +15,7 @@ import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
+import org.zuma.examplePlugin.domain.commands.SkillsCommand;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
 import org.zuma.examplePlugin.domain.gui.GUIListener;
 import org.zuma.examplePlugin.domain.gui.GUIRegistry;
@@ -123,6 +124,9 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("admin", new AdminCommand(itemRegistry, recipeRegistry, blockManager, new ResourceNodeTypeRepository()))
         );
+        this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("skills", new SkillsCommand()));
+
     }
 
 

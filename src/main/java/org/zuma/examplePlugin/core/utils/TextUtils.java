@@ -81,10 +81,19 @@ public class TextUtils {
     }
 
     public static Component buildLoadingBar(int totalSteps, int currentStep) {
+        final int BAR_LENGTH = 10; // fixed segments in bar
+
+        // Calculate how many segments to fill (scale currentStep to BAR_LENGTH)
+        int filledSegments = (int) Math.round(((double) currentStep / totalSteps) * BAR_LENGTH);
+
+        // Clamp values for safety
+        filledSegments = Math.min(filledSegments, BAR_LENGTH);
+        filledSegments = Math.max(filledSegments, 0);
+
         Component bar = Component.text("[ ").color(NamedTextColor.GRAY);
 
-        for (int i = 1; i <= totalSteps; i++) {
-            if (i <= currentStep) {
+        for (int i = 1; i <= BAR_LENGTH; i++) {
+            if (i <= filledSegments) {
                 bar = bar.append(Component.text("|||").color(Colors.SUCCESS.asColor()));
             } else {
                 bar = bar.append(Component.text("|||").color(NamedTextColor.GRAY));
@@ -94,6 +103,7 @@ public class TextUtils {
         bar = bar.append(Component.text(" ]").color(NamedTextColor.GRAY));
         return bar;
     }
+
 
     public static Title.Times getGenericDuration() {
         return Title.Times.times(

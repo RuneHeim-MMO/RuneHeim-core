@@ -2,7 +2,6 @@ package org.zuma.examplePlugin.domain.player;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
-import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -17,7 +16,8 @@ import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.core.utils.TextUtils;
+import org.zuma.examplePlugin.core.utils.XpUtils;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
@@ -27,6 +27,7 @@ import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.events.player.RunePlayerGainedXPEvent;
+import org.zuma.examplePlugin.events.player.RunePlayerLevelUpEvent;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -44,7 +45,7 @@ public class RunePlayer {
 
         // Each player starts with default XP in all skill types.
         for (SkillType type : SkillType.values()) {
-            skills.put(type, new Skill(type, 200000000));//type.getDefaultXp()));
+            skills.put(type, new Skill(type, 250));//type.getDefaultXp()));
         }
     }
 
@@ -96,8 +97,26 @@ public class RunePlayer {
             return;
         }
 
-        getPlayer().sendMessage(type.getLabel() + " +" + xp + "xp!");
+        double nextXp = skill.getXp() + xp;
+        boolean leveledUp = false;
+
+        if (nextXp >= XpUtils.getXpForLevel(skill.getLevel() + 1)) {
+            leveledUp = true;
+
+            RunePlayerLevelUpEvent levelUpEvent = new RunePlayerLevelUpEvent(this, type, XpUtils.getCappedLevel(skill.getLevel() + 1), source);
+            Bukkit.getServer().getPluginManager().callEvent(levelUpEvent);
+
+            if (levelUpEvent.isCancelled()) {
+                return;
+            }
+        }
+
+        HudService.showXpGainMessage(this, type, xp, source);
         skill.addXp(xp);
+
+        if (leveledUp) {
+            HudService.showPlayerLevelUpTitle(this, skill);
+        }
 
     }
 
@@ -107,20 +126,6 @@ public class RunePlayer {
         } else {
             addSkillXp(type, xp, XpSource.PERSONAL);
         }
-    }
-
-    public void showFailTitle(String text) {
-        this.getPlayer().showTitle(Title.title(
-                Component.text(""),
-                Component.text(text).color(Colors.ERROR.asColor()),
-                TextUtils.getGenericDuration()
-        ));
-        SoundType.FAIL_ACTION.play(this.getPlayer());
-    }
-
-    public void showFailedMessage(Component text) {
-        getPlayer().sendMessage(text.color(Colors.ERROR.asColor()));
-        SoundType.FAIL_ACTION.play(this.getPlayer());
     }
 
     public void useBusyState(int durationMs, String action, String successAction, SoundType stepSound, SoundType successSound, Consumer<Void> consumer) {
