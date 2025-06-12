@@ -1,4 +1,4 @@
-name: ExamplePlugin
+name: RuneQuest-Core
 version: '1.0-SNAPSHOT'
 main: org.zuma.examplePlugin.RuneQuestPlugin
 api-version: '1.21'
@@ -8,3 +8,5 @@ commands:
     usage: "/admin"
 depend:
   - DecentHolograms
+  - ProtocolLib
+  - LibsDisguises

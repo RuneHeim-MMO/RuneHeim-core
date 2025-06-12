@@ -17,22 +17,30 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
-    maven {
-        name = "jitpack"
-        url = "https://jitpack.io/"
-    }
+    maven { url = 'https://jitpack.io' }
     maven {
         name = 'enginehub'
         url = 'https://maven.enginehub.org/repo/'
     }
+    maven {
+        name = 'ProtocolLib Repo'
+        url = 'https://repo.dmulloy2.net/repository/public/'
+    }
+    maven {
+        url "https://repo.md-5.net/content/groups/public/"
+    }
+
 }
 
 build.dependsOn shadowJar
 
 dependencies {
+    compileOnly 'com.comphenix.protocol:ProtocolLib:5.1.0'
+    compileOnly group: 'me.libraryaddict.disguises', name: 'libsdisguises', version: '11.0.0'
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
     compileOnly("com.github.decentsoftware-eu:decentholograms:2.8.17")
     compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.2.10'
+    compileOnly files('libs/packetevents-spigot-2.8.0.jar')
     implementation 'com.google.code.gson:gson:2.13.1'
     implementation 'io.github.cdimascio:dotenv-java:3.2.0'
     implementation 'com.zaxxer:HikariCP:5.1.0'

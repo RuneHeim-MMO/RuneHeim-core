@@ -1,5 +1,8 @@
 package org.zuma.examplePlugin.domain.mob.base;
 
+import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.disguisetypes.Disguise;
+import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -11,6 +14,7 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.EulerAngle;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
@@ -27,7 +31,10 @@ public abstract class AbstractMob {
     private final boolean silent;
 
     @Nullable
-    private MobBehavior behavior;
+    private Disguise disguise = null;
+
+    @Nullable
+    private MobBehavior behavior = null;
 
     @Nullable
     private MobEquipmentMeta mobEquipment = null;
@@ -49,6 +56,10 @@ public abstract class AbstractMob {
 
         if (entity instanceof LivingEntity livingEntity) {
             this.setLivingEntityMeta(livingEntity);
+
+            if (this.disguise != null) {
+                DisguiseAPI.disguiseToAll(entity, disguise);
+            }
         }
 
     }
@@ -61,11 +72,20 @@ public abstract class AbstractMob {
         this.isBaby = baby;
     }
 
+    public void setPlayerDisguise(String username) {
+        PlayerDisguise disguise = new PlayerDisguise(username);
+        disguise.setDisplayedInTab(false);
+        disguise.setReplaceSounds(true);
+        disguise.setName(TextUtils.extractPlainText(displayName));
+        this.disguise = disguise;
+    }
+
     private void setLivingEntityMeta(LivingEntity entity) {
         entity.customName(displayName);
         entity.setCustomNameVisible(true);
         entity.setAI(ai);
         entity.setSilent(silent);
+
 
         if (entity instanceof Ageable ageable) {
             if (isBaby) {
