@@ -33,4 +33,16 @@ public class ItemUtils {
                 .map(record -> new ItemRecord(record.getItemId(), record.getAmount() * multiplier))
                 .collect(Collectors.toList());
     }
+
+    public static boolean isWearableGear(ItemStack item) {
+        if (item == null) return false;
+
+        String name = item.getType().name();
+        return name.endsWith("_HELMET")
+                || name.equals("PLAYER_HEAD")
+                || name.endsWith("_CHESTPLATE")
+                || name.endsWith("_LEGGINGS")
+                || name.endsWith("_BOOTS");
+    }
+
 }

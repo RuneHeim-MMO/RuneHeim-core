@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.modifier;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.zuma.examplePlugin.core.utils.ItemUtils;
 import org.zuma.examplePlugin.core.utils.ModifierUtils;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.impl.EquipableItem;
@@ -33,7 +34,10 @@ public class GearModifierHandler {
         List<Modifier> modifiers = new ArrayList<>();
 
         List<ItemStack> items = new ArrayList<>(Arrays.asList(inventory.getArmorContents()));
-        items.add(itemInHand);
+
+        if (!ItemUtils.isWearableGear(itemInHand)) {
+            items.add(itemInHand);
+        }
 
         items.stream()
                 .filter(item -> item != null)
