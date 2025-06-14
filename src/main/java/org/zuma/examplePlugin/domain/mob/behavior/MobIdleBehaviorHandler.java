@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.mob.behavior;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -14,6 +15,7 @@ import java.util.*;
 public class MobIdleBehaviorHandler {
     private final MobRegistry registry;
     private final Random random = new Random();
+    private final HashMap<Integer, Location> mobLocations = new HashMap<>();
     private final List<World> worlds = Bukkit.getWorlds();
 
     // Stores next allowed idle sound play time per mob UUID
@@ -27,7 +29,7 @@ public class MobIdleBehaviorHandler {
     }
 
     public void start() {
-        final int delay = 100; // ticks between runs (~5 times per second)
+        final int delay = 50;
 
         Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), () -> {
             long now = System.currentTimeMillis();
@@ -40,6 +42,12 @@ public class MobIdleBehaviorHandler {
                     AbstractMob mob = this.registry.getMob(entity);
                     if (mob == null) continue;
 
+                    if (!mob.canWalk() && !mobLocations.containsKey(mob.getId())) {
+                        mobLocations.put(mob.getId(), entity.getLocation());
+                    } else if (!mob.canWalk() && entity.getLocation().distanceSquared(mobLocations.get(mob.getId())) > 1) {
+                        entity.teleport(mobLocations.get(mob.getId()));
+                    }
+
                     var behavior = mob.getBehavior();
                     if (behavior == null) continue;
 
@@ -50,7 +58,7 @@ public class MobIdleBehaviorHandler {
                         continue; // cooldown active for this mob
                     }
 
-                    if (random.nextDouble() < 0.3) {
+                    if (random.nextDouble() < 0.15) {
                         behavior.handleIdleBehavior(living);
 
                         // Schedule next allowed sound time with base cooldown + random jitter

@@ -20,19 +20,7 @@ public class MobRegistry {
 
 
     public MobRegistry() {
-        this.registerMob(new GenericShopkeeper(1, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_MAN_1.getBehavior(), 0));
-        this.registerMob(new GenericShopkeeper(2, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_MAN_2.getBehavior(), 0));
-        this.registerMob(new GenericShopkeeper(3, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_MAN_3.getBehavior(), 0));
-        this.registerMob(new GenericShopkeeper(4, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_MAN_4.getBehavior(), 0));
-        this.registerMob(new GenericShopkeeper(5, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_MAN_5.getBehavior(), 0));
-
-        this.registerMob(new GenericShopkeeper(6, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_WOMAN_1.getBehavior(), 0));
-        this.registerMob(new GenericShopkeeper(7, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_WOMAN_2.getBehavior(), 0));
-        this.registerMob(new GenericShopkeeper(8, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_WOMAN_3.getBehavior(), 0));
-        this.registerMob(new GenericShopkeeper(9, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_WOMAN_4.getBehavior(), 0));
-        this.registerMob(new GenericShopkeeper(10, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_WOMAN_5.getBehavior(), 0));
-
-
+        this.registerMob(new GenericShopkeeper(1, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_MAN_1.getBehavior(), "shopkeeper", 0, false));
     }
 
     @Nullable

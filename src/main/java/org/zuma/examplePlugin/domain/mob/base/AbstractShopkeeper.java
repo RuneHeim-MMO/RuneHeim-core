@@ -1,15 +1,17 @@
 package org.zuma.examplePlugin.domain.mob.base;
 
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.zuma.examplePlugin.domain.mob.meta.FriendlyStaticImmortalMobMeta;
+import org.zuma.examplePlugin.domain.mob.meta.FriendlyImmortalMobMeta;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
-public abstract class AbstractShopkeeper extends FriendlyStaticImmortalMob {
+public abstract class AbstractShopkeeper extends FriendlyImmortalMob {
     private final int shopId;
 
-    public AbstractShopkeeper(FriendlyStaticImmortalMobMeta meta, int shopId) {
+    public AbstractShopkeeper(FriendlyImmortalMobMeta meta, int shopId, String skin, boolean canWalk) {
         super(meta);
         this.shopId = shopId;
+        setPlayerDisguise(skin);
+        setCanWalk(canWalk);
     }
 
     @Override

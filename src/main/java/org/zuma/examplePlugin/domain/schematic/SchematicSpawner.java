@@ -70,7 +70,6 @@ public class SchematicSpawner {
             BlockVector3 worldMax = clipboard.getRegion().getMaximumPoint().add(offset);
             lastPaste = new CuboidRegion(weWorld, worldMin, worldMax);
 
-            System.out.println(lastPaste);
             return clipboard;
 
 

@@ -12,6 +12,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.EulerAngle;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.utils.TextUtils;
@@ -39,6 +41,7 @@ public abstract class AbstractMob {
     @Nullable
     private MobEquipmentMeta mobEquipment = null;
     private boolean isBaby = false;
+    private boolean isWalking = true;
 
     public AbstractMob(AbstractMobMeta meta) {
         this.id = meta.id();
@@ -72,6 +75,14 @@ public abstract class AbstractMob {
         this.isBaby = baby;
     }
 
+    public void setCanWalk(boolean canWalk) {
+        this.isWalking = canWalk;
+    }
+
+    public boolean canWalk() {
+        return this.isWalking;
+    }
+
     public void setPlayerDisguise(String username) {
         PlayerDisguise disguise = new PlayerDisguise(username);
         disguise.setDisplayedInTab(false);
@@ -79,6 +90,24 @@ public abstract class AbstractMob {
         disguise.setName(TextUtils.extractPlainText(displayName));
         this.disguise = disguise;
     }
+
+    public int getTypeId() {
+        return this.typeId;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    @Nullable
+    public MobBehavior getBehavior() {
+        return behavior;
+    }
+
+    public void setBehavior(@Nullable MobBehavior behavior) {
+        this.behavior = behavior;
+    }
+
 
     private void setLivingEntityMeta(LivingEntity entity) {
         entity.customName(displayName);
@@ -95,6 +124,10 @@ public abstract class AbstractMob {
             }
         }
 
+
+        if (!this.isWalking) {
+            entity.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, Integer.MAX_VALUE, 255, false, false, false));
+        }
 
         if (mobEquipment != null && entity.getEquipment() != null) {
             EntityEquipment equipment = entity.getEquipment();
@@ -138,23 +171,6 @@ public abstract class AbstractMob {
     private void setEntityPersistenceKey(Entity entity) {
         NamespacedKey key = new NamespacedKey(RuneQuestPlugin.getInstance(), MobDataKey.MOB_ID.asString());
         entity.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, id);
-    }
-
-    public int getTypeId() {
-        return this.typeId;
-    }
-
-    public int getId() {
-        return this.id;
-    }
-
-    @Nullable
-    public MobBehavior getBehavior() {
-        return behavior;
-    }
-
-    public void setBehavior(@Nullable MobBehavior behavior) {
-        this.behavior = behavior;
     }
 
     public void handlePositiveInteraction(PlayerInteractAtEntityEvent event, RunePlayer player) {

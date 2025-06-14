@@ -4,12 +4,12 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
-import org.zuma.examplePlugin.domain.mob.meta.FriendlyStaticImmortalMobMeta;
+import org.zuma.examplePlugin.domain.mob.meta.FriendlyImmortalMobMeta;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
-public abstract class FriendlyStaticImmortalMob extends AbstractMob {
-    public FriendlyStaticImmortalMob(FriendlyStaticImmortalMobMeta meta) {
-        super(new AbstractMobMeta(meta.id(), meta.typeId(), false, meta.silent(), meta.displayName(), meta.baseEntity()));
+public abstract class FriendlyImmortalMob extends AbstractMob {
+    public FriendlyImmortalMob(FriendlyImmortalMobMeta meta) {
+        super(new AbstractMobMeta(meta.id(), meta.typeId(), true, meta.silent(), meta.displayName(), meta.baseEntity()));
     }
 
     @Override

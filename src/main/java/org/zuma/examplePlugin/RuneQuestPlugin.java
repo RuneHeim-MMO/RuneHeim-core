@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.handlers.BlockProtector;
+import org.zuma.examplePlugin.core.handlers.DefaultMobDisabler;
 import org.zuma.examplePlugin.core.handlers.OffHandDisabler;
 import org.zuma.examplePlugin.core.logger.Logger;
 import org.zuma.examplePlugin.domain.block.BlockFactory;
@@ -69,6 +70,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
         getServer().getPluginManager().registerEvents(new OffHandDisabler(), pluginInstance);
         getServer().getPluginManager().registerEvents(new BlockProtector(), pluginInstance);
+        getServer().getPluginManager().registerEvents(new DefaultMobDisabler(), pluginInstance);
 
         ConfigManager configManager = new ConfigManager();
         configManager.initializeFolders();
