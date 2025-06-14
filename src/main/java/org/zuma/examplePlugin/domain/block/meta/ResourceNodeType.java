@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.block.meta;
 import org.bukkit.Material;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
+import org.zuma.examplePlugin.domain.map.MarkerType;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.SkillXpRecord;
@@ -19,13 +20,15 @@ public class ResourceNodeType {
     private final ItemRecord drop;
     private final SoundType startSound, stepSound, gatherSuccessSound;
     private final List<SkillXpRecord> xpReward;
+    private final MarkerType markerType;
 
     @Nullable
     private final ModifierType toolModifier;
 
-    public ResourceNodeType(int id, String label, Material material, List<SkillRequirement> requirements, @Nullable ModifierType toolRequiresModifier,
+    public ResourceNodeType(int id, MarkerType markerType, String label, Material material, List<SkillRequirement> requirements, @Nullable ModifierType toolRequiresModifier,
                             int baseGatheringDurationMs, int respawnDurationSecs, ItemRecord drop, String wrongToolMsg, String actionVerb, SoundType startSound, SoundType stepSound, SoundType gatherSuccessSound, List<SkillXpRecord> xpReward) {
         this.id = id;
+        this.markerType = markerType;
         this.label = label;
         this.material = material;
         this.requirements = requirements;
@@ -96,5 +99,9 @@ public class ResourceNodeType {
 
     public SoundType getStartSound() {
         return startSound;
+    }
+
+    public MarkerType getMarkerType() {
+        return markerType;
     }
 }

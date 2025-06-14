@@ -11,7 +11,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
+import org.zuma.examplePlugin.domain.map.MarkerType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+
+import javax.annotation.Nullable;
 
 
 public abstract class AbstractInteractableBlock {
@@ -19,10 +22,18 @@ public abstract class AbstractInteractableBlock {
     private Location location, hologramLocation;
     private Hologram hologram;
 
-    public AbstractInteractableBlock(AbstractInteractableBlockMeta meta) {
+    @Nullable
+    private MarkerType markerType;
+    @Nullable
+    private String markerLabel;
+
+    public AbstractInteractableBlock(AbstractInteractableBlockMeta meta, @Nullable MarkerType markerType, @Nullable String markerLabel) {
         this.type = meta.type();
         this.location = meta.location();
         this.hologramLocation = meta.hologramLocation();
+        this.markerType = markerType;
+        this.markerLabel = markerLabel;
+
     }
 
     public void spawn(Material material) {
@@ -61,7 +72,7 @@ public abstract class AbstractInteractableBlock {
     }
 
     public void onDisable() {
-
+        location.getBlock().setType(Material.AIR);
     }
 
     public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItem itemInHand) {
@@ -76,4 +87,21 @@ public abstract class AbstractInteractableBlock {
 
     }
 
+    @Nullable
+    public MarkerType getMarkerType() {
+        return markerType;
+    }
+
+    public void setMarkerType(@Nullable MarkerType type) {
+        this.markerType = type;
+    }
+
+    @Nullable
+    public String getMarkerLabel() {
+        return markerLabel;
+    }
+
+    public void setMarkerLabel(@Nullable String markerLabel) {
+        this.markerLabel = markerLabel;
+    }
 }

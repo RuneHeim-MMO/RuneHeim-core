@@ -30,6 +30,7 @@ import org.zuma.examplePlugin.domain.item.persistence.ItemRepository;
 import org.zuma.examplePlugin.domain.item.state.StateFactory;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.item.state.StateRepository;
+import org.zuma.examplePlugin.domain.map.MapMarkerHandler;
 import org.zuma.examplePlugin.domain.mob.MobHandler;
 import org.zuma.examplePlugin.domain.mob.MobListener;
 import org.zuma.examplePlugin.domain.mob.MobRegistry;
@@ -111,7 +112,6 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         MobListener mobListener = new MobListener(runePlayerManager, mobHandler, mobRegistry);
         getServer().getPluginManager().registerEvents(mobListener, pluginInstance);
 
-
         recipeRegistry = new RecipeRegistry();
         RecipeLoader recipeLoader = new RecipeLoader(itemRegistry, recipeRegistry, new RecipeRepository(), new RecipeFactory());
         recipeLoader.loadAllRecipes();
@@ -121,6 +121,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         GUIListener guiListener = new GUIListener(guiHandler);
         getServer().getPluginManager().registerEvents(guiListener, pluginInstance);
         guiHandler.initializeInventories();
+
+        MapMarkerHandler markerHandler = new MapMarkerHandler();
+        markerHandler.initializeMarkerSets();
+        markerHandler.initResourceNodes(blockManager);
 
         // TODO: Load inventory from DB & Verify their meta
 

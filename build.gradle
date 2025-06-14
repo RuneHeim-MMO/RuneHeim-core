@@ -29,7 +29,7 @@ repositories {
     maven {
         url "https://repo.md-5.net/content/groups/public/"
     }
-
+    maven { url 'https://repo.bluecolored.de/releases' }
 }
 
 build.dependsOn shadowJar
@@ -41,6 +41,7 @@ dependencies {
     compileOnly("com.github.decentsoftware-eu:decentholograms:2.8.17")
     compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.2.10'
     compileOnly files('libs/packetevents-spigot-2.8.0.jar')
+    compileOnly 'de.bluecolored:bluemap-api:2.7.4'
     implementation 'com.google.code.gson:gson:2.13.1'
     implementation 'io.github.cdimascio:dotenv-java:3.2.0'
     implementation 'com.zaxxer:HikariCP:5.1.0'

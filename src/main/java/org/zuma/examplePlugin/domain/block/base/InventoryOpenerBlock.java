@@ -24,7 +24,7 @@ public class InventoryOpenerBlock extends AbstractInteractableBlock implements S
     private String label;
 
     public InventoryOpenerBlock(AbstractInteractableBlockMeta meta) {
-        super(meta);
+        super(meta, null, null);
     }
 
 

@@ -1,6 +1,8 @@
 package org.zuma.examplePlugin.core.handlers;
 
+import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -10,7 +12,7 @@ import org.bukkit.inventory.EquipmentSlot;
 public class OffHandDisabler implements Listener {
 
     @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent event) {
+    public void onPlayerInteractOffhand(PlayerInteractEvent event) {
         if (event.getHand() == EquipmentSlot.OFF_HAND) {
             event.setCancelled(true);
         }
@@ -25,5 +27,15 @@ public class OffHandDisabler implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         event.getPlayer().getInventory().setItemInOffHand(null);
     }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.getPlayer().isOp() && event.getPlayer().getGameMode() == GameMode.CREATIVE) {
+            return;
+        }
+
+        event.setCancelled(true);
+    }
+
 
 }

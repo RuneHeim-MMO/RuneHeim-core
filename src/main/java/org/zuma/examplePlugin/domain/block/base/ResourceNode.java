@@ -37,13 +37,14 @@ public class ResourceNode extends AbstractInteractableBlock {
     private boolean isDepleted;
     private final BlockManager manager;
     private final Location origin;
+    private ItemStack dropItemStack = new ItemStack(Material.AIR);
 
     @Nullable
     private ResourceNodeSchematicHandler schematicHandler = null;
 
 
     public ResourceNode(BlockManager manager, AbstractInteractableBlockMeta meta) {
-        super(meta);
+        super(meta, null, null);
         this.isDepleted = false;
         this.origin = meta.location();
         this.manager = manager;
@@ -57,7 +58,10 @@ public class ResourceNode extends AbstractInteractableBlock {
         blockType.getRequirements().forEach(req -> hologramContent.add(Colors.ACCENT.asSpigotHex() +
                 "Req. " + req.type().getSymbol() + " " + req.minimumLevel() + " Level"));
 
+
         setHologram(DHAPI.createHologram(UUID.randomUUID().toString(), getHologramLocation(), hologramContent));
+        DHAPI.addHologramLine(this.getHologram(), dropItemStack);
+
     }
 
     public void initializeBlock(int resourceTypeId, BlockLoader loader) {
@@ -68,13 +72,25 @@ public class ResourceNode extends AbstractInteractableBlock {
             return;
         }
 
+        AbstractItem drop = RuneQuestPlugin.getItemRegistry().getItem(type.getDrop().getItemId());
+
+        if (drop == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Could not initialize resource node! ResourceNodeType with ID " + resourceTypeId + " has an invalid drop item id.");
+            return;
+        }
+
+
         if (schematicHandler != null) {
             schematicHandler.updateNodeModel(this);
         }
-        this.blockType = type;
-        this.spawn(type.getMaterial());
-        initializeHologram();
 
+        this.blockType = type;
+        this.dropItemStack = drop.asItemStack();
+        super.setMarkerType(type.getMarkerType());
+        super.setMarkerLabel(type.getLabel());
+        this.spawn(type.getMaterial());
+
+        initializeHologram();
     }
 
     private void respawnBlock() {
@@ -123,14 +139,14 @@ public class ResourceNode extends AbstractInteractableBlock {
 
         this.spawn(Material.BARRIER);
 
-        DHAPI.addHologramLine(this.getHologram(), new ItemStack(Material.BARRIER));
+        DHAPI.setHologramLine(this.getHologram(), this.getHologram().size() + 1, "");
         DHAPI.setHologramLine(this.getHologram(), 0, Colors.DEPLETED_RESOURCE.asSpigotHex() + "❌ " + blockType.getLabel());
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
             isDepleted = false;
             respawnBlock();
 
-            DHAPI.removeHologramLine(this.getHologram(), this.getHologram().size() + 1);
+            DHAPI.setHologramLine(this.getHologram(), this.getHologram().size() + 1, dropItemStack);
             DHAPI.setHologramLine(this.getHologram(), 0, Colors.INTERACTABLE_ENTITY.asSpigotHex() + blockType.getLabel());
         }, blockType.getRespawnDurationSeconds() * 20L);
     }
@@ -232,6 +248,8 @@ public class ResourceNode extends AbstractInteractableBlock {
     public void onDisable() {
         if (this.schematicHandler != null && this.blockType != null) {
             this.schematicHandler.cleanUp();
+        } else {
+            super.getLocation().getBlock().setType(Material.AIR);
         }
     }
 
