@@ -8,6 +8,7 @@ import org.bukkit.block.Block;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
@@ -17,7 +18,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import javax.annotation.Nullable;
 
 
-public abstract class AbstractInteractableBlock {
+public abstract class AbstractInteractableBlock implements POIMarkerable {
     private final BlockType type;
     private Location location, hologramLocation;
     private Hologram hologram;

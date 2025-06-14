@@ -8,4 +8,5 @@ public interface Callback<T> {
         return result -> {
         };
     }
+
 }

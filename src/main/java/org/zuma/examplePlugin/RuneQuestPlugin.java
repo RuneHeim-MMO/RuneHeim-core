@@ -10,6 +10,7 @@ import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.handlers.BlockProtector;
 import org.zuma.examplePlugin.core.handlers.DefaultMobDisabler;
 import org.zuma.examplePlugin.core.handlers.OffHandDisabler;
+import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
 import org.zuma.examplePlugin.core.logger.Logger;
 import org.zuma.examplePlugin.domain.block.BlockFactory;
 import org.zuma.examplePlugin.domain.block.BlockListener;
@@ -45,6 +46,9 @@ import org.zuma.examplePlugin.domain.recipes.persistence.RecipeLoader;
 import org.zuma.examplePlugin.domain.recipes.persistence.RecipeRepository;
 import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 @SuppressWarnings("UnstableApiUsage")
 public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private static final Dotenv dotenv = Dotenv.configure().directory(ConfigManager.ENVIRONMENT_CONFIG.toString()).load();
@@ -61,12 +65,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private MobHandler mobHandler;
     private HikariPool pool;
 
-    public void initializeMySQL() {
-        pool = new HikariPool();
-        pool.initialize(dotenv);
-    }
 
-    public void initializePlugin() {
+    private void initializePlugin() {
         pluginInstance = this;
 
         getServer().getPluginManager().registerEvents(new OffHandDisabler(), pluginInstance);
@@ -122,15 +122,29 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(guiListener, pluginInstance);
         guiHandler.initializeInventories();
 
-        MapMarkerHandler markerHandler = new MapMarkerHandler();
-        markerHandler.initializeMarkerSets();
-        markerHandler.initResourceNodes(blockManager);
+        initializeMap();
+
 
         // TODO: Load inventory from DB & Verify their meta
 
     }
 
-    public void registerCommands() {
+    private void initializeMySQL() {
+        pool = new HikariPool();
+        pool.initialize(dotenv);
+    }
+
+    private void initializeMap() {
+        MapMarkerHandler markerHandler = new MapMarkerHandler();
+        markerHandler.initializeMarkerSets();
+
+        Collection<POIMarkerable> poiMarkers = new ArrayList<>();
+        poiMarkers.addAll(blockManager.getAllBlocks());
+
+        markerHandler.renderMarkers(poiMarkers);
+    }
+
+    private void registerCommands() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("admin", new AdminCommand(itemRegistry, recipeRegistry, blockManager, new ResourceNodeTypeRepository()))
         );

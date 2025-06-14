@@ -6,10 +6,11 @@ import de.bluecolored.bluemap.api.markers.MarkerSet;
 import de.bluecolored.bluemap.api.markers.POIMarker;
 import org.bukkit.Bukkit;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.domain.block.BlockManager;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -41,19 +42,19 @@ public class MapMarkerHandler {
                 }
             });
 
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + markerSets.values().toArray().length + " marker sets for BlueMap.");
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + markerSets.size() + " marker sets for BlueMap.");
         });
     }
 
-    public void initResourceNodes(BlockManager blockManager) {
-        blockManager.getAllBlocks().stream().filter(block -> block.getMarkerType() != null).forEach(block -> {
-            MarkerType markerType = block.getMarkerType();
+    public void renderMarkers(Collection<POIMarkerable> entities) {
+        entities.stream().filter(entity -> entity.getMarkerType() != null).forEach(entity -> {
+            MarkerType markerType = entity.getMarkerType();
 
             POIMarker marker = POIMarker.builder()
-                    .label(block.getMarkerLabel())
                     .icon(markerType.getIconURL(), 24, 24)
-                    .position(block.getLocation().x(), block.getLocation().y(), block.getLocation().z())
+                    .position(entity.getLocation().x(), entity.getLocation().y(), entity.getLocation().z())
                     .maxDistance(500)
+                    .label(entity.getMarkerLabel() != null ? entity.getMarkerLabel() : markerType.getLabel())
                     .build();
 
 
@@ -62,6 +63,8 @@ public class MapMarkerHandler {
             if (set != null) {
                 set.getMarkers()
                         .put(UUID.randomUUID().toString(), marker);
+            } else {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "MarkerSet for " + markerType.getLabel() + " is missing");
             }
 
         });
