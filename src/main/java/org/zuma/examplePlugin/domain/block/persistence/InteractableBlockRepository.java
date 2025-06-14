@@ -1,215 +1,102 @@
 package org.zuma.examplePlugin.domain.block.persistence;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
+import org.zuma.examplePlugin.core.adapters.LocationAdapter;
+import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
-import org.zuma.examplePlugin.domain.block.constants.ResourceNodeTypeId;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
-import org.zuma.examplePlugin.domain.block.meta.v1.ResourceNodeMeta;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 public class InteractableBlockRepository {
+    private static final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(Location.class, new LocationAdapter())
+            .create();
+    private final HikariPool pool;
+
+    public InteractableBlockRepository(HikariPool pool) {
+        this.pool = pool;
+    }
+
+    public void insertBlocks(List<BlockEntity> entities) {
+        String sql = "INSERT INTO blocks (block_type, world_name, x, y, z, hologram_location, json) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = pool.getDataSource().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            for (BlockEntity entity : entities) {
+                // stmt.setInt(1, entity.getId());
+                stmt.setString(1, entity.getType().toString());
+                stmt.setString(2, entity.getLocation().getWorld().getName());
+                stmt.setDouble(3, entity.getLocation().x());
+                stmt.setDouble(4, entity.getLocation().y());
+                stmt.setDouble(5, entity.getLocation().z());
+                stmt.setString(6, entity.getHologramLocation() != null ? gson.toJson(entity.getHologramLocation()) : null);
+                stmt.setString(7, gson.toJson(entity.getJson()));
+                stmt.addBatch();
+            }
+
+            stmt.executeBatch();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to insert block entities", e);
+        }
+    }
 
     public List<BlockEntity> getAll() {
-        return List.of(
+        String sql = "SELECT id, block_type, world_name, x, y, z, hologram_location, json FROM blocks";
+        List<BlockEntity> result = new ArrayList<>();
 
-                // Trees
+        try (Connection conn = pool.getDataSource().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 93, 68, -80), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String blockTypeStr = rs.getString("block_type");
+                String worldName = rs.getString("world_name");
+                double x = rs.getDouble("x");
+                double y = rs.getDouble("y");
+                double z = rs.getDouble("z");
+                String holoJson = rs.getString("hologram_location");
+                String json = rs.getString("json");
 
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 98, 67, -91), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
+                BlockType blockType = BlockType.valueOf(blockTypeStr);
+                World world = Bukkit.getWorld(worldName);
+                Location location = new Location(world, x, y, z);
 
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 92, 68, -109), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
+                Location hologramLocation = null;
+                if (holoJson != null) {
+                    hologramLocation = gson.fromJson(holoJson, Location.class);
+                }
 
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 113, 68, -138), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
+                VersionedJson versionedJson = gson.fromJson(json, VersionedJson.class);
 
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 93, 68, -134), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
+                BlockEntity entity = new BlockEntity(
+                        new AbstractInteractableBlockMeta(id, blockType, location, hologramLocation),
+                        versionedJson
+                );
+                result.add(entity);
+            }
 
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 73, 67, -114), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to fetch block entities", e);
+        }
 
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 61, 67, -100), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 92, 67, -59), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 112, 67, -51), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 121, 67, -38), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 107, 67, -22), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 77, 66, -44), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 62, 66, -27), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 59, 66, -63), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 46, 67, -117), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 56, 68, -128), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 65, 68, -154), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 77, 68, -167), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 112, 68, -178), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 90, 69, -192), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 137, 68, -172), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 138, 69, -212), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 177, 68, -225), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 165, 69, -225), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 162, 69, -216), null),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 50, 66, -78)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.HERRING_POOL.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 49, 66, -70)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.HERRING_POOL.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 41, 66, -61)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.HERRING_POOL.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 39, 66, -56)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.HERRING_POOL.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 19, 66, -64)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.HERRING_POOL.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 10, 66, -64)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.HERRING_POOL.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 5, 66, -66)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.HERRING_POOL.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), -1, 66, -69)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.HERRING_POOL.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), -1, 66, -80)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.HERRING_POOL.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), -1, 66, -90)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.HERRING_POOL.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 12, 66, -102)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.HERRING_POOL.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 31, 66, -98)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.HERRING_POOL.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 49, 66, -87)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.HERRING_POOL.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 4, 66, -97)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.MINNOW_POOL.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 5, 66, -98)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.MINNOW_POOL.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 19, 66, -101)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.MINNOW_POOL.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 21, 66, -101)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.MINNOW_POOL.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 19, 67, -113)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.MINNOW_POOL.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 19, 67, -115)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.MINNOW_POOL.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 13, 79, 59)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TROUT_STREAM.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 16, 72, 39)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TROUT_STREAM.asInt(), null, null)), 1)),
-
-                new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
-                        new Location(Bukkit.getWorld("world"), 22, 71, 31)),
-                        new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TROUT_STREAM.asInt(), null, null)), 1))
+        return result;
+    }
+}
 
 
-
-
-
+/*
 
               /*  new BlockEntity(new AbstractInteractableBlockMeta(BlockType.ResourceNode,
                         new Location(Bukkit.getWorld("world"), -92, 93, -145),
@@ -357,9 +244,3 @@ public class InteractableBlockRepository {
                         new Location(Bukkit.getWorld("world"), -11, 94, -101),
                         new Location(Bukkit.getWorld("world"), -10.5, 94, -101.5)),
                         new VersionedJson(new Gson().toJson(new InventoryOpenerMeta(InventoryId.STOVE.asInt(), Material.FURNACE, null, "Stove")), 1))*/
-
-        );
-
-
-    }
-}

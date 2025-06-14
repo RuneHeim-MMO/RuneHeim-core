@@ -2,10 +2,7 @@ package org.zuma.examplePlugin.domain.player;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -141,6 +138,11 @@ public class RunePlayer {
     }
 
     public boolean meetsRequirements(Object item) {
+
+        if (getPlayer().getGameMode() == GameMode.CREATIVE) {
+            return true;
+        }
+
         if (item instanceof SkillRestrictable) {
             List<SkillRequirement> requirements = ((SkillRestrictable) item).getRequirements();
             return requirements.stream().allMatch(req -> req.playerMeetsRequirement(this));

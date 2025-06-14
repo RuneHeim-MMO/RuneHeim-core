@@ -53,7 +53,7 @@ public class MapMarkerHandler {
             POIMarker marker = POIMarker.builder()
                     .icon(markerType.getIconURL(), 24, 24)
                     .position(entity.getLocation().x(), entity.getLocation().y(), entity.getLocation().z())
-                    .maxDistance(500)
+                    .maxDistance(1500)
                     .label(entity.getMarkerLabel() != null ? entity.getMarkerLabel() : markerType.getLabel())
                     .build();
 

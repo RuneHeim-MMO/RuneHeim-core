@@ -29,7 +29,7 @@ public class ResourceNodeTypeRepository {
                         SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
                         List.of(new SkillXpRecord(SkillType.WOODCUTTING, 25.0))),
 
-                new ResourceNodeType(ResourceNodeTypeId.BIRCH_TREE.asInt(), MarkerType.TREE,
+                new ResourceNodeType(ResourceNodeTypeId.BIRCH_TREE.asInt(), MarkerType.BIRCH,
                         "Birch Tree", Material.BIRCH_LOG,
                         List.of(new SkillRequirement(SkillType.WOODCUTTING, 15)),
                         ModifierType.WOODCUTTING_BOOST, 12000, 40,
@@ -57,7 +57,7 @@ public class ResourceNodeTypeRepository {
                         List.of(new SkillXpRecord(SkillType.WOODCUTTING, 125.0))),
 
                 new ResourceNodeType(ResourceNodeTypeId.YEW_TREE.asInt(), MarkerType.TREE,
-                        "Yew", Material.DARK_OAK_LOG,
+                        "Yew Tree", Material.DARK_OAK_LOG,
                         List.of(new SkillRequirement(SkillType.WOODCUTTING, 60)),
                         ModifierType.WOODCUTTING_BOOST, 18000, 60,
                         new ItemRecord(ItemId.YEW_LOG, 1),

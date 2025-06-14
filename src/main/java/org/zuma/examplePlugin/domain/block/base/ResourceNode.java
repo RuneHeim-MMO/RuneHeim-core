@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.block.base;
 import eu.decentsoftware.holograms.api.DHAPI;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.block.Action;
@@ -204,7 +205,7 @@ public class ResourceNode extends AbstractInteractableBlock {
                 .toList();
 
         // If any requirements are missing, notify player and cancel interaction
-        if (!missingRequirements.isEmpty()) {
+        if (!missingRequirements.isEmpty() && player.getPlayer().getGameMode() != GameMode.CREATIVE) {
             SoundType.UI_FAIL.play(player.getPlayer());
             missingRequirements.forEach(req -> {
                 player.getPlayer().sendMessage(Component.text(

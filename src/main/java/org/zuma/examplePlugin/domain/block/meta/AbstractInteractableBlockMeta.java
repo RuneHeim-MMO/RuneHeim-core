@@ -5,13 +5,27 @@ import org.zuma.examplePlugin.domain.block.constants.BlockType;
 
 import javax.annotation.Nullable;
 
-public record AbstractInteractableBlockMeta(BlockType type, Location location, @Nullable Location hologramLocation) {
 
-    public AbstractInteractableBlockMeta(BlockType type, Location location) {
-        this(type, location, computeHologramLocation(location));
+public record AbstractInteractableBlockMeta(int id, BlockType type, Location location,
+                                            @Nullable Location hologramLocation) {
+
+    public AbstractInteractableBlockMeta(int id, BlockType type, Location location, HologramSide hologramSide) {
+        this(id, type, location, computeHologramLocation(location, hologramSide));
     }
 
-    private static Location computeHologramLocation(Location location) {
-        return location.clone().add(0.5, 2, 0.5);
+    private static Location computeHologramLocation(Location location, HologramSide side) {
+        Location hologramLocation = location.clone().add(0.5, 0.5, 0.5);
+
+        switch (side) {
+            case TOP -> hologramLocation.add(0, 2, 0);
+            case BOTTOM -> hologramLocation.add(0, -1, 0);
+            case FRONT -> hologramLocation.add(0, 1, -1);
+            case BACK -> hologramLocation.add(0, 1, 1);
+            case LEFT -> hologramLocation.add(-1, 1, 0);
+            case RIGHT -> hologramLocation.add(1, 1, 0);
+        }
+
+        return hologramLocation;
     }
+
 }

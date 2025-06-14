@@ -35,17 +35,15 @@ public class ResourceNodeSchematicHandler {
 
         Location location = node.getOrigin().clone(); // Player offset (during schematic creation he should be under the center point)
         String schematicName = node.isDepleted() && this.depletedSchematic != null ? this.depletedSchematic : this.schematicName;
+        Path schematicPath = ConfigManager.SCHEMATICS_PATH.resolve(schematicName + ".schem");
 
         if (schematicName == null) {
             return;
         }
 
         spawner.clearLastPaste();
-
-        Path schematicPath = ConfigManager.SCHEMATICS_PATH.resolve(schematicName + ".schem");
         Clipboard spawnClipboard = spawner.pasteSchematic(location, schematicPath.toFile(), true);
-
-
+        
         if (spawnClipboard == null) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed spawning schematic for " + node.getNodeType().getLabel() + "! File: " + schematicPath);
             return;
@@ -53,6 +51,8 @@ public class ResourceNodeSchematicHandler {
 
         List<InteractiveElement> result = spawner.extractInteractiveElements();
         handleElementReassignation(result, node);
+
+
     }
 
     // Update interactive elements (e.g action block, holograms) positions according to schematic

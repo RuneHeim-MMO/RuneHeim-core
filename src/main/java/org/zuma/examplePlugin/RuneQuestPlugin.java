@@ -60,6 +60,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private static GUIHandler guiHandler;
     private static RecipeRegistry recipeRegistry;
     private static RecipeHandler recipeHandler;
+    private static InteractableBlockRepository blockRepository;
 
     private BlockManager blockManager;
     private MobHandler mobHandler;
@@ -103,7 +104,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         BlockListener blockListener = new BlockListener(blockManager, itemRegistry);
         getServer().getPluginManager().registerEvents(blockListener, pluginInstance);
 
-        BlockLoader blockLoader = new BlockLoader(blockManager, new InteractableBlockRepository(), new BlockFactory(), new ResourceNodeTypeRepository());
+        blockRepository = new InteractableBlockRepository(pool);
+        BlockLoader blockLoader = new BlockLoader(blockManager, blockRepository, new BlockFactory(), new ResourceNodeTypeRepository());
         blockLoader.fetchAllResourceNodeTypes();
         blockLoader.loadInteractableBlocks();
 
@@ -146,7 +148,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     private void registerCommands() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> event.registrar().register("admin", new AdminCommand(itemRegistry, recipeRegistry, blockManager, new ResourceNodeTypeRepository()))
+                event -> event.registrar().register("admin", new AdminCommand(blockRepository, itemRegistry, recipeRegistry, blockManager, new ResourceNodeTypeRepository()))
         );
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("skills", new SkillsCommand()));
