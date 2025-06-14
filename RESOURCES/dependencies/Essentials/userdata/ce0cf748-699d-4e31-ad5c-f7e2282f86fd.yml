@@ -1,0 +1,30 @@
+teleportenabled: true
+teleportauto: false
+godmode: false
+muted: false
+jailed: false
+ip-address: 127.0.0.1
+afk: false
+socialspy: false
+npc: false
+powertoolsenabled: true
+accepting-pay: true
+baltop-exempt: false
+timestamps:
+  lastteleport: 0
+  lastheal: 0
+  mute: 0
+  jail: 0
+  onlinejail: 0
+  logout: 1749837026398
+  login: 1749836664318
+money: '0'
+logoutlocation:
+  world: 753eb757-b82d-4f7a-9905-174ecb6a8d92
+  world-name: world
+  x: 3030.097517524151
+  y: 84.76755704848624
+  z: 2047.1470298229356
+  yaw: 118.94976806640625
+  pitch: 21.14992904663086
+last-account-name: killas291

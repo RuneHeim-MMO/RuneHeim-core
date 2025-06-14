@@ -4,6 +4,7 @@ import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.base.ResourceNode;
 import org.zuma.examplePlugin.domain.schematic.InteractiveElType;
@@ -11,7 +12,7 @@ import org.zuma.examplePlugin.domain.schematic.InteractiveElement;
 import org.zuma.examplePlugin.domain.schematic.SchematicSpawner;
 
 import javax.annotation.Nullable;
-import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,11 +41,13 @@ public class ResourceNodeSchematicHandler {
         }
 
         spawner.clearLastPaste();
-        Clipboard spawnClipboard = spawner.pasteSchematic(location, new File("plugins/RuneQuest/schematics/" + schematicName + ".schem"), true);
+
+        Path schematicPath = ConfigManager.SCHEMATICS_PATH.resolve(schematicName + ".schem");
+        Clipboard spawnClipboard = spawner.pasteSchematic(location, schematicPath.toFile(), true);
 
 
         if (spawnClipboard == null) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed spawning schematic for " + node.getNodeType().getLabel() + "! File: " + "plugins/RuneQuest/schematics/" + this.depletedSchematic + ".schem");
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed spawning schematic for " + node.getNodeType().getLabel() + "! File: " + schematicPath);
             return;
         }
 
