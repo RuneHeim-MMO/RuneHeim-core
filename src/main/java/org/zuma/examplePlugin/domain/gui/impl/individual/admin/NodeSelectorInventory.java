@@ -2,12 +2,15 @@ package org.zuma.examplePlugin.domain.gui.impl.individual.admin;
 
 import com.google.gson.Gson;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.RayTraceResult;
+import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Colors;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
@@ -115,17 +118,38 @@ public class NodeSelectorInventory extends IndividualGUI {
 
         RayTraceResult result = player.getPlayer().rayTraceBlocks(20);
 
-        if (result == null || result.getHitBlock() == null) {
+        if (result == null || result.getHitBlock() == null || result.getHitPosition() == null) {
             return;
         }
+
+        Block block = result.getHitBlock();
+        Vector hitPos = result.getHitPosition();
+        Location blockLoc = block.getLocation();
+
+        // Determine the face based on where the hit position is relative to block center
+        double dx = hitPos.getX() - blockLoc.getX();
+        double dy = hitPos.getY() - blockLoc.getY();
+        double dz = hitPos.getZ() - blockLoc.getZ();
+
+        HologramSide side;
+
+        if (Math.abs(dx - 0.5) > Math.abs(dy - 0.5) && Math.abs(dx - 0.5) > Math.abs(dz - 0.5)) {
+            side = dx < 0.5 ? HologramSide.LEFT : HologramSide.RIGHT;
+        } else if (Math.abs(dz - 0.5) > Math.abs(dy - 0.5)) {
+            side = dz < 0.5 ? HologramSide.FRONT : HologramSide.BACK;
+        } else {
+            side = dy < 0.5 ? HologramSide.BOTTOM : HologramSide.TOP;
+        }
+
 
         List<ResourceNodeType> types = loader.getResourceNodeTypes().values().stream().toList();
         ResourceNodeType type = types.get(menuValue);
         SchematicsRecord schematics = SCHEMATIC_MAP.get(type.getId());
 
+
         loader.insertNewNode(new BlockEntity(
-                new AbstractInteractableBlockMeta(0, BlockType.ResourceNode, result.getHitBlock().getLocation(), HologramSide.TOP),
-                new VersionedJson(new Gson().toJson(new ResourceNodeMeta(type.getId(), schematics.intact(), schematics.depleted())), 1)));
+                new AbstractInteractableBlockMeta(0, BlockType.ResourceNode, result.getHitBlock().getLocation(), side),
+                new VersionedJson(new Gson().toJson(new ResourceNodeMeta(type.getId(), schematics != null ? schematics.intact() : null, schematics != null ? schematics.depleted() : null)), 1)));
 
     }
 }

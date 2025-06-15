@@ -39,6 +39,7 @@ public class ResourceNode extends AbstractInteractableBlock {
     private final BlockManager manager;
     private final Location origin;
     private ItemStack dropItemStack = new ItemStack(Material.AIR);
+    private boolean isRemoved = false;
 
     @Nullable
     private ResourceNodeSchematicHandler schematicHandler = null;
@@ -181,6 +182,10 @@ public class ResourceNode extends AbstractInteractableBlock {
 
     @Override
     public void spawn(Material material) {
+        if (isRemoved) {
+            return;
+        }
+        
         if (schematicHandler != null) {
             schematicHandler.updateNodeModel(this);
 
@@ -247,6 +252,8 @@ public class ResourceNode extends AbstractInteractableBlock {
 
     @Override
     public void onDisable() {
+        isRemoved = true;
+
         if (this.schematicHandler != null && this.blockType != null) {
             this.schematicHandler.cleanUp();
         } else {
