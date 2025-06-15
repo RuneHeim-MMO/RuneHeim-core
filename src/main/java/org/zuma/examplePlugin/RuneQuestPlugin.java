@@ -61,8 +61,9 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private static RecipeRegistry recipeRegistry;
     private static RecipeHandler recipeHandler;
     private static InteractableBlockRepository blockRepository;
+    private static MapMarkerHandler markerHandler;
+    private static BlockManager blockManager;
 
-    private BlockManager blockManager;
     private MobHandler mobHandler;
     private HikariPool pool;
 
@@ -83,9 +84,6 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
         itemRegistry = new ItemRegistry();
         ItemRepository itemRepository = new ItemRepository();
-        //List<AbstractItemMeta> items = itemRepository.loadItems(pool.getDataSource());
-        //itemRepository.setCache(items);
-
 
         ItemLoader itemLoader = new ItemLoader(itemRegistry, new ItemFactory(), itemRepository);
         itemLoader.loadItemsFromDatabase();
@@ -122,7 +120,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         guiHandler = new GUIHandler(new GUIRegistry(), runePlayerManager);
         GUIListener guiListener = new GUIListener(guiHandler);
         getServer().getPluginManager().registerEvents(guiListener, pluginInstance);
-        guiHandler.initializeInventories();
+        guiHandler.initializeInventories(blockLoader);
 
         initializeMap();
 
@@ -137,12 +135,17 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     }
 
     private void initializeMap() {
-        MapMarkerHandler markerHandler = new MapMarkerHandler();
+        markerHandler = new MapMarkerHandler();
         markerHandler.initializeMarkerSets();
 
+        reloadMarkers();
+    }
+
+    public static void reloadMarkers() {
         Collection<POIMarkerable> poiMarkers = new ArrayList<>();
         poiMarkers.addAll(blockManager.getAllBlocks());
 
+        markerHandler.clearMarkers();
         markerHandler.renderMarkers(poiMarkers);
     }
 

@@ -5,15 +5,19 @@ import com.google.gson.GsonBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.adapters.LocationAdapter;
 import org.zuma.examplePlugin.core.database.HikariPool;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 
+import javax.annotation.Nullable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,14 +31,13 @@ public class InteractableBlockRepository {
         this.pool = pool;
     }
 
-    public void insertBlocks(List<BlockEntity> entities) {
+    public List<Long> insertBlocks(List<BlockEntity> entities) {
         String sql = "INSERT INTO blocks (block_type, world_name, x, y, z, hologram_location, json) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = pool.getDataSource().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             for (BlockEntity entity : entities) {
-                // stmt.setInt(1, entity.getId());
                 stmt.setString(1, entity.getType().toString());
                 stmt.setString(2, entity.getLocation().getWorld().getName());
                 stmt.setDouble(3, entity.getLocation().x());
@@ -46,10 +49,21 @@ public class InteractableBlockRepository {
             }
 
             stmt.executeBatch();
+
+            List<Long> insertedIds = new ArrayList<>();
+            ResultSet rs = stmt.getGeneratedKeys();
+
+            while (rs.next()) {
+                insertedIds.add(rs.getLong(1));
+            }
+
+            return insertedIds;
+
         } catch (Exception e) {
             throw new RuntimeException("Failed to insert block entities", e);
         }
     }
+
 
     public List<BlockEntity> getAll() {
         String sql = "SELECT id, block_type, world_name, x, y, z, hologram_location, json FROM blocks";
@@ -60,32 +74,10 @@ public class InteractableBlockRepository {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                int id = rs.getInt("id");
-                String blockTypeStr = rs.getString("block_type");
-                String worldName = rs.getString("world_name");
-                double x = rs.getDouble("x");
-                double y = rs.getDouble("y");
-                double z = rs.getDouble("z");
-                String holoJson = rs.getString("hologram_location");
-                String json = rs.getString("json");
-
-                BlockType blockType = BlockType.valueOf(blockTypeStr);
-                World world = Bukkit.getWorld(worldName);
-                Location location = new Location(world, x, y, z);
-
-                Location hologramLocation = null;
-                if (holoJson != null) {
-                    hologramLocation = gson.fromJson(holoJson, Location.class);
-                }
-
-                VersionedJson versionedJson = gson.fromJson(json, VersionedJson.class);
-
-                BlockEntity entity = new BlockEntity(
-                        new AbstractInteractableBlockMeta(id, blockType, location, hologramLocation),
-                        versionedJson
-                );
+                BlockEntity entity = deserializeBlockEntity(rs);
                 result.add(entity);
             }
+
 
         } catch (Exception e) {
             throw new RuntimeException("Failed to fetch block entities", e);
@@ -93,7 +85,85 @@ public class InteractableBlockRepository {
 
         return result;
     }
+
+    @Nullable
+    public BlockEntity getById(long id) {
+        String sql = "SELECT id, block_type, world_name, x, y, z, hologram_location, json FROM blocks WHERE id = ?";
+
+        try (Connection conn = pool.getDataSource().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return deserializeBlockEntity(rs);
+                }
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to fetch block entity", e);
+        }
+
+        return null;
+    }
+
+    public void deleteByIds(List<Long> ids) {
+        if (ids == null || ids.isEmpty()) return;
+
+        String sql = "DELETE FROM blocks WHERE id = ?";
+
+        try (Connection conn = pool.getDataSource().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            for (Long id : ids) {
+                stmt.setLong(1, id);
+                stmt.addBatch();
+            }
+
+            stmt.executeBatch();
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to delete block entities by IDs", e);
+        }
+    }
+
+    @Nullable
+    private BlockEntity deserializeBlockEntity(ResultSet rs) {
+        try {
+            int id = rs.getInt("id");
+            String blockTypeStr = rs.getString("block_type");
+            String worldName = rs.getString("world_name");
+            double x = rs.getDouble("x");
+            double y = rs.getDouble("y");
+            double z = rs.getDouble("z");
+            String holoJson = rs.getString("hologram_location");
+            String json = rs.getString("json");
+
+            BlockType blockType = BlockType.valueOf(blockTypeStr);
+            World world = Bukkit.getWorld(worldName);
+            Location location = new Location(world, x, y, z);
+
+            Location hologramLocation = null;
+            if (holoJson != null) {
+                hologramLocation = gson.fromJson(holoJson, Location.class);
+            }
+
+            VersionedJson versionedJson = gson.fromJson(json, VersionedJson.class);
+
+            return new BlockEntity(
+                    new AbstractInteractableBlockMeta(id, blockType, location, hologramLocation),
+                    versionedJson
+            );
+
+        } catch (Exception e) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to deserialize block entity! " + e);
+            return null;
+        }
+    }
 }
+
+
 
 
 /*

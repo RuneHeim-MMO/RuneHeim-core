@@ -12,6 +12,7 @@ import java.util.HashMap;
 public class BlockManager {
     private final HashMap<Location, AbstractInteractableBlock> blocks = new HashMap<>();
 
+
     public void replaceBlockLocation(Location oldLocation, Location newLocation) {
         AbstractInteractableBlock block = blocks.remove(oldLocation);
 
@@ -40,8 +41,23 @@ public class BlockManager {
         blocks.put(blockLocation, block);
     }
 
+    public void unregisterBlock(AbstractInteractableBlock block) {
+        Location blockLocation = block.getLocation().toBlockLocation();
+
+        if (!blocks.containsKey(blockLocation)) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot unregister " + block.getType() + " at " + block.getLocation() + ". Block does not exist.");
+            return;
+        }
+
+        blocks.get(blockLocation).onDisable();
+        blocks.remove(blockLocation, block);
+    }
+
     public void onDisable() {
-        this.blocks.values().forEach(AbstractInteractableBlock::onDisable);
+        synchronized (this.blocks) {
+            this.blocks.values().forEach(AbstractInteractableBlock::onDisable);
+            this.blocks.clear();
+        }
     }
 
 }

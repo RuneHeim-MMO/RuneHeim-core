@@ -7,11 +7,13 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.gui.base.AbstractGUI;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.gui.impl.individual.AnvilInventory;
 import org.zuma.examplePlugin.domain.gui.impl.individual.CookingInventory;
 import org.zuma.examplePlugin.domain.gui.impl.individual.FurnaceInventory;
+import org.zuma.examplePlugin.domain.gui.impl.individual.admin.NodeSelectorInventory;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 
@@ -28,11 +30,12 @@ public class GUIHandler {
         Bukkit.getOnlinePlayers().forEach(HumanEntity::closeInventory);
     }
 
-    public void initializeInventories() {
+    public void initializeInventories(BlockLoader blockLoader) {
         this.registry.registerGUI(new FurnaceInventory("Furnace", InventoryId.BASIC_FURNACE.asInt()));
         this.registry.registerGUI(new CookingInventory("Stove", InventoryId.STOVE.asInt()));
         this.registry.registerGUI(new CookingInventory("Campfire", InventoryId.FIRE.asInt()));
         this.registry.registerGUI(new AnvilInventory("Anvil", InventoryId.ANVIL.asInt()));
+        this.registry.registerGUI(new NodeSelectorInventory("[A] Create Resource Node", InventoryId.ADMIN_NODE_CREATE.asInt(), blockLoader));
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventories().size() + " inventories.");
     }

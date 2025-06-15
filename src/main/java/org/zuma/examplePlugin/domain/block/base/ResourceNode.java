@@ -252,6 +252,11 @@ public class ResourceNode extends AbstractInteractableBlock {
         } else {
             super.getLocation().getBlock().setType(Material.AIR);
         }
+
+        if (super.getHologram() != null) {
+            DHAPI.removeHologram(super.getHologram().getId());
+        }
+
     }
 
 }

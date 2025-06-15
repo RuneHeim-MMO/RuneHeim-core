@@ -1,28 +1,20 @@
 package org.zuma.examplePlugin.features.admin.commands;
 
 
-import com.google.gson.Gson;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.util.RayTraceResult;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Colors;
-import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.block.BlockManager;
-import org.zuma.examplePlugin.domain.block.constants.BlockType;
-import org.zuma.examplePlugin.domain.block.constants.ResourceNodeTypeId;
-import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
-import org.zuma.examplePlugin.domain.block.meta.HologramSide;
-import org.zuma.examplePlugin.domain.block.meta.v1.ResourceNodeMeta;
-import org.zuma.examplePlugin.domain.block.persistence.BlockEntity;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
+import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -31,7 +23,6 @@ import org.zuma.examplePlugin.features.admin.inventories.ItemRegistryInventory;
 import org.zuma.examplePlugin.features.admin.inventories.RecipesInventory;
 
 import javax.annotation.Nullable;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -81,86 +72,10 @@ public class AdminCommand implements BasicCommand {
             mob.spawn(player.getLocation());
         }
 
-        if (Objects.equals(args[0], "tree")) {
-            RayTraceResult result = player.rayTraceBlocks(20);
-
-            if (result == null || result.getHitBlock() == null) {
-                return;
-            }
-
-
-            BlockEntity entity = new BlockEntity(new AbstractInteractableBlockMeta(0, BlockType.ResourceNode, result.getHitBlock().getLocation(), HologramSide.TOP),
-                    new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.TREE.asInt(), "tree", "tree_depleted")), 1));
-
-
-            blockRepo.insertBlocks(List.of(entity));
-            player.sendMessage("OK!");
+        if (Objects.equals(args[0], "node")) {
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_NODE_CREATE.asInt(), runePlayer);
         }
 
-        if (Objects.equals(args[0], "birch")) {
-            RayTraceResult result = player.rayTraceBlocks(20);
-
-            if (result == null || result.getHitBlock() == null) {
-                return;
-            }
-
-
-            BlockEntity entity = new BlockEntity(new AbstractInteractableBlockMeta(0, BlockType.ResourceNode, result.getHitBlock().getLocation(), HologramSide.TOP),
-                    new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.BIRCH_TREE.asInt(), "birch_tree", "birch_tree_depleted")), 1));
-
-
-            blockRepo.insertBlocks(List.of(entity));
-            player.sendMessage("OK!");
-        }
-
-        if (Objects.equals(args[0], "maple")) {
-            RayTraceResult result = player.rayTraceBlocks(20);
-
-            if (result == null || result.getHitBlock() == null) {
-                return;
-            }
-
-
-            BlockEntity entity = new BlockEntity(new AbstractInteractableBlockMeta(0, BlockType.ResourceNode, result.getHitBlock().getLocation(), HologramSide.TOP),
-                    new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.MAPLE_TREE.asInt(), "maple_tree", "maple_tree_depleted")), 1));
-
-
-            blockRepo.insertBlocks(List.of(entity));
-            player.sendMessage("OK!");
-        }
-
-
-        if (Objects.equals(args[0], "yew")) {
-            RayTraceResult result = player.rayTraceBlocks(20);
-
-            if (result == null || result.getHitBlock() == null) {
-                return;
-            }
-
-
-            BlockEntity entity = new BlockEntity(new AbstractInteractableBlockMeta(0, BlockType.ResourceNode, result.getHitBlock().getLocation(), HologramSide.TOP),
-                    new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.YEW_TREE.asInt(), "yew_tree", "yew_tree_depleted")), 1));
-
-
-            blockRepo.insertBlocks(List.of(entity));
-            player.sendMessage("OK!");
-        }
-
-        if (Objects.equals(args[0], "mahogany")) {
-            RayTraceResult result = player.rayTraceBlocks(20);
-
-            if (result == null || result.getHitBlock() == null) {
-                return;
-            }
-
-
-            BlockEntity entity = new BlockEntity(new AbstractInteractableBlockMeta(0, BlockType.ResourceNode, result.getHitBlock().getLocation(), HologramSide.TOP),
-                    new VersionedJson(new Gson().toJson(new ResourceNodeMeta(ResourceNodeTypeId.MAHOGANY_TREE.asInt(), "mahogany_tree", "mahogany_tree_depleted")), 1));
-
-
-            blockRepo.insertBlocks(List.of(entity));
-            player.sendMessage("OK!");
-        }
 
 
 

@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.gui.constants;
 
 public enum InventoryId {
+    ADMIN_NODE_CREATE(-100),
     BASIC_FURNACE(0),
     STOVE(1),
     FIRE(2),

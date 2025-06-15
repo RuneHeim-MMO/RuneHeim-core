@@ -72,5 +72,11 @@ public class MapMarkerHandler {
 
     }
 
+    public void clearMarkers() {
+        this.markerSets.forEach((type, set) -> {
+            set.getMarkers().clear();
+        });
+    }
+
 
 }

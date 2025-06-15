@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.domain.block.base;
 
+import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
 import io.papermc.paper.event.block.BlockBreakProgressUpdateEvent;
 import org.bukkit.Location;
@@ -73,10 +74,16 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
     }
 
     public void onDisable() {
+        if (hologram != null) {
+            DHAPI.removeHologram(hologram.getId());
+        }
+
         location.getBlock().setType(Material.AIR);
+
     }
 
-    public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItem itemInHand) {
+    public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItem
+            itemInHand) {
 
     }
 
