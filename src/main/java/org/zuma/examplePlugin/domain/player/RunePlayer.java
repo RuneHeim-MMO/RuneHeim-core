@@ -14,6 +14,7 @@ import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.XpUtils;
+import org.zuma.examplePlugin.domain.hud.ActionBarManager;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
@@ -33,12 +34,14 @@ public class RunePlayer {
     private final UUID uuid;
     private final List<Modifier> gearModifiers = new ArrayList<>();
     private final EnumMap<SkillType, Skill> skills = new EnumMap<>(SkillType.class);
+    private final ActionBarManager actionBarManager;
     private final RunePlayerBusyStateHandler busyStateHandler;
     private @Nullable Party party;
 
     public RunePlayer(UUID uuid) {
         this.uuid = uuid;
         this.busyStateHandler = new RunePlayerBusyStateHandler(this);
+        this.actionBarManager = new ActionBarManager(this);
 
         // Each player starts with default XP in all skill types.
         for (SkillType type : SkillType.values()) {
@@ -113,6 +116,7 @@ public class RunePlayer {
 
         if (leveledUp) {
             HudService.showPlayerLevelUpTitle(this, skill);
+            actionBarManager.showLevelUp();
         }
 
     }

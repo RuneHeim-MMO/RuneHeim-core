@@ -8,6 +8,7 @@ public enum Colors {
     ERROR("#d60b33"),
     ERROR_LIGHT("#fc5677"),
     SUCCESS("#0bd69d"),
+    HEALTH("#c20037"),
 
     ITEM_TYPE("#4f4f4f"),
     ITEM_DESCRIPTION("#c9c9c9"),
