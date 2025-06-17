@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
@@ -24,10 +25,12 @@ public class PotionItem extends AbstractItem implements Stateful {
 
     public PotionItem(AbstractItemMeta meta) {
         super(meta);
-        this.setRarityPrefixSlot("\uD83E\uDDEA");
+        this.setRarityPrefixSlot(Icon.POTION.get());
+        super.appendToLore(Component.text(""));
+        super.appendToLore(Component.text("Potion", Colors.ITEM_TYPE.asColor()));
         this.setStateType(StateType.MULTI_CONSUMABLE);
     }
-    
+
     @Override
     public AbstractState getInitialState() {
         return new MultiConsumableState(maxUsages, usages);

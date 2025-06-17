@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.item.base;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Color;
@@ -171,8 +172,10 @@ public abstract class AbstractItem {
         }
 
         itemLore.add(Component.text(""));
-        itemLore.add(rarity.getComponent(rarityPrefixSlot == null ? "" : rarityPrefixSlot));
-        meta.lore(itemLore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());
+        
+        List<Component> loreComponents = new ArrayList<>(itemLore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());
+        loreComponents.add(Component.text(rarityPrefixSlot == null ? "" : rarityPrefixSlot + " ", NamedTextColor.WHITE).append(rarity.getComponent()).decoration(TextDecoration.ITALIC, false));
+        meta.lore(loreComponents);
 
         if (customModelData != -1) {
             meta.setCustomModelData(customModelData);

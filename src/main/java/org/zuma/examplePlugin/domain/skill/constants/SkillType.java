@@ -1,19 +1,21 @@
 package org.zuma.examplePlugin.domain.skill.constants;
 
+import org.zuma.examplePlugin.core.constants.Icon;
+
 public enum SkillType {
-    ATTACK(0, "Attack", 0, "⚔"),
-    DEFENCE(1, "Defence", 0, "🛡"),
-    STRENGTH(2, "Strength", 0, "💪"),
-    HITPOINTS(3, "Hitpoints", 1154, "❤"),
-    RANGED(4, "Ranged", 0, "🏹"),
-    COOKING(7, "Cooking", 0, "🍳"),
-    WOODCUTTING(8, "Woodcutting", 0, "🪓"),
-    FISHING(9, "Fishing", 0, "🎣"),
-    FIREMAKING(10, "Firemaking", 0, "🔥"),
-    
-    CRAFTING(11, "Crafting", 0, "🛠"),
-    SMITHING(12, "Smithing", 0, "⚒"),
-    MINING(13, "Mining", 0, "⛏");
+    ATTACK(0, "Attack", 0, Icon.SWORD.get()),
+    DEFENCE(1, "Defence", 0, Icon.SHIELD.get()),
+    STRENGTH(2, "Strength", 0, Icon.STRENGTH.get()),
+    HITPOINTS(3, "Hitpoints", 1154, Icon.HEART.get()),
+    RANGED(4, "Ranged", 0, Icon.ARROW.get()),
+    COOKING(7, "Cooking", 0, Icon.EGGS.get()),
+    WOODCUTTING(8, "Woodcutting", 0, Icon.AXE.get()),
+    FISHING(9, "Fishing", 0, Icon.FISH.get()),
+    FIREMAKING(10, "Firemaking", 0, Icon.FIRE.get()),
+
+    CRAFTING(11, "Crafting", 0, Icon.CRAFTING.get()),
+    SMITHING(12, "Smithing", 0, Icon.ANVIL.get()),
+    MINING(13, "Mining", 0, Icon.PICKAXE.get());
 
     /*
         HERBLORE(15, "Herblore", 0),

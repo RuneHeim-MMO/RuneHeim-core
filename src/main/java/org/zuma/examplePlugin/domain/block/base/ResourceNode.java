@@ -58,7 +58,7 @@ public class ResourceNode extends AbstractInteractableBlock {
         ));
 
         blockType.getRequirements().forEach(req -> hologramContent.add(Colors.ACCENT.asSpigotHex() +
-                "Req. " + req.type().getSymbol() + " " + req.minimumLevel() + " Level"));
+                "Req. §f" + req.type().getSymbol() + Colors.ACCENT.asSpigotHex() + " " + req.minimumLevel() + " Level"));
 
 
         setHologram(DHAPI.createHologram(UUID.randomUUID().toString(), getHologramLocation(), hologramContent));
@@ -185,7 +185,7 @@ public class ResourceNode extends AbstractInteractableBlock {
         if (isRemoved) {
             return;
         }
-        
+
         if (schematicHandler != null) {
             schematicHandler.updateNodeModel(this);
 

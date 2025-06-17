@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.item.impl;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
@@ -13,6 +14,7 @@ public class QuestItem extends AbstractItem {
 
     public QuestItem(AbstractItemMeta meta) {
         super(meta);
+        super.appendToLore(Component.text(Icon.BOOK.get()));
         this.appendToLore(Component.text("Quest Item").color(Colors.ITEM_TYPE.asColor()));
     }
 

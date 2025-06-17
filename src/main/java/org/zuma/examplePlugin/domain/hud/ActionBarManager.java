@@ -1,11 +1,13 @@
 package org.zuma.examplePlugin.domain.hud;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.ArrayList;
@@ -34,12 +36,9 @@ public class ActionBarManager {
     }
 
     private Component getDefaultElement() {
-        // ● ○
-        if (tick) {
-            return Component.text("HP 10/99" + " ".repeat(50), Colors.ERROR.asColor()).append(Component.text("● You have 3 notifications!", Colors.ACCENT.asColor()));
-        }
 
-        return Component.text("HP 10/99" + " ".repeat(80), Colors.ERROR.asColor());
+
+        return Component.text(tick ? Icon.HEART_BIG.get() : Icon.HEART.get(), NamedTextColor.WHITE).append(Component.text(" 10/99" + " ".repeat(80), Colors.ERROR.asColor()));
     }
 
     public void showLevelUp() {

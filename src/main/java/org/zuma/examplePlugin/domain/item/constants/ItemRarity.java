@@ -13,7 +13,7 @@ public enum ItemRarity {
     EPIC(3, "Epic", "#800080"),
     LEGENDARY(4, "Legendary", "#ff8c00"),
     MYTHIC(5, "Mythic", "#ff1493"),
-    DIVINE(6, "Divine", "#ffd700");;
+    DIVINE(6, "Divine", "#ffd700");
 
     private final int key;
     private final String label;

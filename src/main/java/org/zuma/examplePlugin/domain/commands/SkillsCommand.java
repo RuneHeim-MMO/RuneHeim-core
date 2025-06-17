@@ -32,13 +32,12 @@ public class SkillsCommand implements BasicCommand {
 
             Component progressBar = TextUtils.buildLoadingBar(100, isMaxed ? 100 : percentToNextLevel);
 
-            result = result.append(progressBar).
-                    append(Component.text(" - " +
-                                    skill.getType().getSymbol() + " " +
-                                    skill.getType().getLabel() + ": " +
-                                    skill.getLevel() + " - ",
-                            NamedTextColor.GRAY
-                    )).append(Component.text(formattedXp + " XP" + "/" + formattedNextLevelXp + " XP", Colors.ACCENT.asColor())).append(Component.text("\n"));
+            result = result.append(progressBar)
+                    .append(Component.text(" - ", NamedTextColor.GRAY))
+                    .append(Component.text(skill.getType().getSymbol(), NamedTextColor.WHITE))
+                    .append(Component.text(" " + skill.getType().getLabel() + ": " + skill.getLevel() + " - ", NamedTextColor.GRAY))
+                    .append(Component.text(formattedXp + " XP" + "/" + formattedNextLevelXp + " XP", Colors.ACCENT.asColor()))
+                    .append(Component.text("\n"));
 
         }
 

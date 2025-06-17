@@ -1,11 +1,193 @@
 {
   "providers": [
     {
-      "type": "ttf",
-      "file": "lato.ttf",
-      "shift": [0, 0],
-      "size": 9,
-      "oversample": 10
+      "type": "bitmap",
+      "file": "minecraft:font/icons/anvil.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⮯"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/armor.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⛨"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/arrow.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⇶"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/axe.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["🪓"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/coin_many.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["①"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/coin_one.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["②"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/coin_two.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["③"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/crafting.png",
+      "ascent": 9,
+      "height": 10,
+      "chars": ["҂"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/crossed_swords.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⃇"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/eggs.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["𓅿"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/fire.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["𓊈"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/fish.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["𓆝"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/fruit.png",
+      "ascent": 9,
+      "height": 10,
+      "chars": ["✿"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/heart.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["❤"]
+    },
+   {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/heart.png",
+      "ascent": 11,
+      "height": 16,
+      "chars": ["↮"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/helmet.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⛑"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/material.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⑧"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/pickaxe.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⛏"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/potion.png",
+      "ascent": 9,
+      "height": 10,
+      "chars": ["☀"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/shield_2.png",
+      "ascent": 8,
+      "height": 10,
+      "chars": ["▒"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/shield.png",
+      "ascent": 8,
+      "height": 10,
+      "chars": ["▓"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/stab_attack.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["ᗧ"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/stab_defence.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["◑"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/strength.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⻖"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/sword.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["†"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/book.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["ↁ"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/rock.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⋍"]
     }
   ]
 }

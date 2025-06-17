@@ -1,10 +1,12 @@
 package org.zuma.examplePlugin.domain.item.impl.consumable;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
@@ -18,7 +20,7 @@ public class FoodItem extends AbstractItem {
 
     public FoodItem(AbstractItemMeta meta) {
         super(meta);
-        this.setRarityPrefixSlot("♥");
+        this.setRarityPrefixSlot(Icon.FRUIT.get());
     }
 
     public void setHealAmount(int amount) {
@@ -26,7 +28,9 @@ public class FoodItem extends AbstractItem {
 
         super.appendToLore(Component.text(""));
         super.appendToLore(Component.text("Food", Colors.ITEM_TYPE.asColor()));
-        super.appendToLore(Component.text("Heals " + SkillType.HITPOINTS.getSymbol() + " " + healAmount + " " + SkillType.HITPOINTS.getLabel(), Colors.SUCCESS.asColor()));
+        super.appendToLore(Component.text("Heals ", Colors.SUCCESS.asColor()).append(Component.text(SkillType.HITPOINTS.getSymbol(), NamedTextColor.WHITE))
+                .append(Component.text(" " + healAmount + " " + SkillType.HITPOINTS.getLabel(), Colors.SUCCESS.asColor())));
+
     }
 
     public void onPlayerConsumeItem(PlayerItemConsumeEvent event, RunePlayer player, StateManager itemStateManager) {

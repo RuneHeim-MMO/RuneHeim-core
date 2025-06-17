@@ -1,24 +1,26 @@
 package org.zuma.examplePlugin.domain.modifier.constants;
 
+import org.zuma.examplePlugin.core.constants.Icon;
+
 public enum ModifierType {
-    MINING_BOOST("Mining Boost", "⛏"),
-    WOODCUTTING_BOOST("Woodcutting Boost", "🪓"),
-    BASIC_FISHING("Basic Fishing", "\uD83C\uDFA3"),
-    REGULAR_FISHING("Regular Fishing", "\uD83C\uDFA3"),
-    ADVANCED_FISHING("Advanced Fishing", "\uD83C\uDFA3"),
-    TRAP_FISHING("Trap Fishing", "\uD83C\uDFA3"),
+    MINING_BOOST("Mining Boost", Icon.PICKAXE.get()),
+    WOODCUTTING_BOOST("Woodcutting Boost", Icon.AXE.get()),
+    BASIC_FISHING("Basic Fishing", Icon.FISH.get()),
+    REGULAR_FISHING("Regular Fishing", Icon.FISH.get()),
+    ADVANCED_FISHING("Advanced Fishing", Icon.FISH.get()),
+    TRAP_FISHING("Trap Fishing", Icon.FISH.get()),
 
 
-    ATTACK_STAB("Stab Attack", "🗡"),
-    ATTACK_SLASH("Slash Attack", "⚔"),
-    ATTACK_CRUSH("Crush Attack", "🔨"),
+    ATTACK_STAB("Stab Attack", Icon.STAB_ATTACK.get()),
+    ATTACK_SLASH("Slash Attack", Icon.SWORD.get()),
+    ATTACK_CRUSH("Crush Attack", Icon.ROCK.get()),
 
-    DEFENCE_STAB("Stab Defence", "🛡"),
-    DEFENCE_SLASH("Slash Defence", "🔰"),
-    DEFENCE_CRUSH("Crush Defence", "🪖"),
+    DEFENCE_STAB("Stab Defence", Icon.STAB_DEFENCE.get()),
+    DEFENCE_SLASH("Slash Defence", Icon.ARMOR.get()),
+    DEFENCE_CRUSH("Crush Defence", Icon.HELMET.get()),
 
-    STRENGTH_BONUS("Strength Bonus", "💪"),
-    RANGED_STRENGTH("Ranged Strength", "🏹");
+    STRENGTH_BONUS("Strength Bonus", Icon.STRENGTH.get()),
+    RANGED_STRENGTH("Ranged Strength", Icon.ARROW.get());
 
     private final String label, symbol;
 
