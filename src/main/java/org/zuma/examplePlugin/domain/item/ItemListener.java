@@ -11,7 +11,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
@@ -50,7 +50,7 @@ public class ItemListener implements Listener {
     }
 
     private void requirementsFailCancelEvent(Cancellable event, AbstractItem item, RunePlayer player) {
-        player.getPlayer().sendMessage(Component.text("You do not meet requirements to use " + item.displayName + ".").color(Colors.ERROR.asColor()));
+        player.getPlayer().sendMessage(Component.text("You do not meet requirements to use " + item.displayName + ".").color(Color.ERROR.asColor()));
         event.setCancelled(true);
     }
 

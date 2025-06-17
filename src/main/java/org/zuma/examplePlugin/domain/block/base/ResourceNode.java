@@ -11,7 +11,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
@@ -54,11 +54,11 @@ public class ResourceNode extends AbstractInteractableBlock {
 
     private void initializeHologram() {
         List<String> hologramContent = new ArrayList<>(List.of(
-                Colors.INTERACTABLE_ENTITY.asSpigotHex() + blockType.getLabel()
+                Color.INTERACTABLE_ENTITY.asSpigotHex() + blockType.getLabel()
         ));
 
-        blockType.getRequirements().forEach(req -> hologramContent.add(Colors.ACCENT.asSpigotHex() +
-                "Req. §f" + req.type().getSymbol() + Colors.ACCENT.asSpigotHex() + " " + req.minimumLevel() + " Level"));
+        blockType.getRequirements().forEach(req -> hologramContent.add(Color.ACCENT.asSpigotHex() +
+                "Req. §f" + req.type().getSymbol() + Color.ACCENT.asSpigotHex() + " " + req.minimumLevel() + " Level"));
 
 
         setHologram(DHAPI.createHologram(UUID.randomUUID().toString(), getHologramLocation(), hologramContent));
@@ -142,14 +142,14 @@ public class ResourceNode extends AbstractInteractableBlock {
         this.spawn(Material.BARRIER);
 
         DHAPI.setHologramLine(this.getHologram(), this.getHologram().size() + 1, "");
-        DHAPI.setHologramLine(this.getHologram(), 0, Colors.DEPLETED_RESOURCE.asSpigotHex() + "❌ " + blockType.getLabel());
+        DHAPI.setHologramLine(this.getHologram(), 0, Color.DEPLETED_RESOURCE.asSpigotHex() + "❌ " + blockType.getLabel());
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
             isDepleted = false;
             respawnBlock();
 
             DHAPI.setHologramLine(this.getHologram(), this.getHologram().size() + 1, dropItemStack);
-            DHAPI.setHologramLine(this.getHologram(), 0, Colors.INTERACTABLE_ENTITY.asSpigotHex() + blockType.getLabel());
+            DHAPI.setHologramLine(this.getHologram(), 0, Color.INTERACTABLE_ENTITY.asSpigotHex() + blockType.getLabel());
         }, blockType.getRespawnDurationSeconds() * 20L);
     }
 
@@ -215,7 +215,7 @@ public class ResourceNode extends AbstractInteractableBlock {
             missingRequirements.forEach(req -> {
                 player.getPlayer().sendMessage(Component.text(
                         "You need " + req.minimumLevel() + " " + req.type().getLabel() + " in order to gather from " + blockType.getLabel() + "."
-                ).color(Colors.ERROR.asColor()));
+                ).color(Color.ERROR.asColor()));
             });
 
             return;
@@ -224,7 +224,7 @@ public class ResourceNode extends AbstractInteractableBlock {
         // Ensure the item in hand is equipable and valid for gathering
         if (!(itemInHand instanceof EquipableItem gearItemInHand)) {
             SoundType.UI_FAIL.play(player.getPlayer());
-            player.getPlayer().sendMessage(Component.text(blockType.getWrongToolMessage()).color(Colors.ERROR.asColor()));
+            player.getPlayer().sendMessage(Component.text(blockType.getWrongToolMessage()).color(Color.ERROR.asColor()));
             return;
         }
 
@@ -235,7 +235,7 @@ public class ResourceNode extends AbstractInteractableBlock {
         // If a required modifier exists but the item lacks it, fail the interaction
         if (hasRequiredModifier && requiredToolModifier.isEmpty()) {
             SoundType.UI_FAIL.play(player.getPlayer());
-            player.getPlayer().sendMessage(Component.text(blockType.getWrongToolMessage()).color(Colors.ERROR.asColor()));
+            player.getPlayer().sendMessage(Component.text(blockType.getWrongToolMessage()).color(Color.ERROR.asColor()));
             return;
         }
 

@@ -4,7 +4,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -14,7 +13,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.domain.heads.HeadGenerator;
 import org.zuma.examplePlugin.domain.item.constants.CustomModelId;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
@@ -49,7 +48,7 @@ public abstract class AbstractItem {
     @Nullable
     private final String headTexture;
     @Nullable
-    private final Color leatherColor;
+    private final org.bukkit.Color leatherColor;
 
 
     public AbstractItem(AbstractItemMeta meta) {
@@ -64,7 +63,7 @@ public abstract class AbstractItem {
         this.leatherColor = meta.leatherColor();
 
         if (meta.lore() != null) {
-            this.lore.addAll(meta.lore().stream().map(lore -> Component.text(lore).color(Colors.ITEM_DESCRIPTION.asColor())).toList());
+            this.lore.addAll(meta.lore().stream().map(lore -> Component.text(lore).color(Color.ITEM_DESCRIPTION.asColor())).toList());
         }
 
     }
@@ -157,7 +156,7 @@ public abstract class AbstractItem {
 
         if (!requirementsLore.isEmpty()) {
             itemLore.add(Component.text(""));
-            itemLore.add(Component.text("Requirements: ", Colors.ITEM_LABEL.asColor()));
+            itemLore.add(Component.text("Requirements: ", Color.ITEM_LABEL.asColor()));
             Component combined = requirementsLore.stream()
                     .reduce((comp1, comp2) -> comp1.append(Component.text(", ")).append(comp2))
                     .orElse(Component.empty());
@@ -167,12 +166,12 @@ public abstract class AbstractItem {
 
         if (!bonusesLore.isEmpty()) {
             itemLore.add(Component.text(""));
-            itemLore.add(Component.text("Modifiers: ", Colors.ITEM_LABEL.asColor()));
+            itemLore.add(Component.text("Modifiers: ", Color.ITEM_LABEL.asColor()));
             itemLore.addAll(bonusesLore);
         }
 
         itemLore.add(Component.text(""));
-        
+
         List<Component> loreComponents = new ArrayList<>(itemLore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());
         loreComponents.add(Component.text(rarityPrefixSlot == null ? "" : rarityPrefixSlot + " ", NamedTextColor.WHITE).append(rarity.getComponent()).decoration(TextDecoration.ITALIC, false));
         meta.lore(loreComponents);

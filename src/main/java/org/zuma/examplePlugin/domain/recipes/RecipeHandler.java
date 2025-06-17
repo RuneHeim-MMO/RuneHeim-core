@@ -3,7 +3,7 @@ package org.zuma.examplePlugin.domain.recipes;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
@@ -107,7 +107,7 @@ public class RecipeHandler {
                     if (successCrafts > 0) {
                         player.addItemOrDrop(new ItemRecord(recipe.getSuccessResult().getItemId(), recipe.getSuccessResult().getAmount() * successCrafts));
                         recipe.onCraftFinish(player, successCrafts);
-                        player.getPlayer().sendMessage(Component.text("Successfully " + type.getPastTenseVerb().toLowerCase() + " " + successCrafts + "x ").append(resultComponent).color(Colors.SUCCESS.asColor()));
+                        player.getPlayer().sendMessage(Component.text("Successfully " + type.getPastTenseVerb().toLowerCase() + " " + successCrafts + "x ").append(resultComponent).color(Color.SUCCESS.asColor()));
                         type.getFinishSound().play(player);
                     }
 

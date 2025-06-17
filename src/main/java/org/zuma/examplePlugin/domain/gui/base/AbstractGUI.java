@@ -11,7 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.domain.gui.IDHolder;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
@@ -62,10 +62,10 @@ public abstract class AbstractGUI {
         List<Component> appendLore = new ArrayList<>();
 
         appendLore.add(Component.text(""));
-        appendLore.add(Component.text(leftClickAction + " - Left Click", Colors.ACCENT.asColor()).decoration(TextDecoration.ITALIC, false));
+        appendLore.add(Component.text(leftClickAction + " - Left Click", Color.ACCENT.asColor()).decoration(TextDecoration.ITALIC, false));
 
         if (shiftClickAction != null) {
-            appendLore.add(Component.text(shiftClickAction + " - Shift Click", Colors.ACCENT.asColor()).decoration(TextDecoration.ITALIC, false));
+            appendLore.add(Component.text(shiftClickAction + " - Shift Click", Color.ACCENT.asColor()).decoration(TextDecoration.ITALIC, false));
         }
 
         if (lore != null) {

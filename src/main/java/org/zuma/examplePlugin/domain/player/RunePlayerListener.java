@@ -10,7 +10,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.events.player.RunePlayerLoadedEvent;
 
@@ -40,9 +40,9 @@ public class RunePlayerListener implements Listener {
 
     @EventHandler
     public void onRunePlayerLoaded(RunePlayerLoadedEvent event) {
-        event.getBukkitPlayer().sendMessage(Component.text(TextUtils.repeatString("-", 53)).color(Colors.SUCCESS.asColor()).decorate(TextDecoration.STRIKETHROUGH));
-        event.getBukkitPlayer().sendMessage(TextUtils.centerText("Players data successfully loaded!", 72).color(Colors.SUCCESS.asColor()));
-        event.getBukkitPlayer().sendMessage(Component.text(TextUtils.repeatString("-", 53)).color(Colors.SUCCESS.asColor()).decorate(TextDecoration.STRIKETHROUGH));
+        event.getBukkitPlayer().sendMessage(Component.text(TextUtils.repeatString("-", 53)).color(Color.SUCCESS.asColor()).decorate(TextDecoration.STRIKETHROUGH));
+        event.getBukkitPlayer().sendMessage(TextUtils.centerText("Players data successfully loaded!", 72).color(Color.SUCCESS.asColor()));
+        event.getBukkitPlayer().sendMessage(Component.text(TextUtils.repeatString("-", 53)).color(Color.SUCCESS.asColor()).decorate(TextDecoration.STRIKETHROUGH));
     }
 
     @EventHandler

@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.block.BlockManager;
@@ -47,14 +47,14 @@ public class AdminCommand implements BasicCommand {
         CommandSender sender = commandSourceStack.getSender();
 
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(Component.text("This command can be only used by players").color(Colors.ERROR.asColor()));
+            sender.sendMessage(Component.text("This command can be only used by players").color(Color.ERROR.asColor()));
             return;
         }
 
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
 
         if (runePlayer == null) {
-            sender.sendMessage(Component.text("Could not find RunePlayer instance!").color(Colors.ERROR.asColor()));
+            sender.sendMessage(Component.text("Could not find RunePlayer instance!").color(Color.ERROR.asColor()));
             return;
         }
 

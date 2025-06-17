@@ -4,7 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.NotNull;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
@@ -25,7 +25,7 @@ public class EquipableItem extends AbstractItem implements SkillRestrictable {
         super(meta);
         this.setRarityPrefixSlot(Icon.SHIELD.get());
         super.appendToLore(Component.text(""));
-        super.appendToLore(Component.text("Equipment", Colors.ITEM_TYPE.asColor()));
+        super.appendToLore(Component.text("Equipment", Color.ITEM_TYPE.asColor()));
     }
 
     public List<Modifier> getModifiers() {
@@ -46,7 +46,7 @@ public class EquipableItem extends AbstractItem implements SkillRestrictable {
         if (requirements != null) {
             this.requirements.addAll(requirements);
             requirements.forEach(requirement -> appendToRequirementsLore(Component.text(requirement.type().getSymbol(), NamedTextColor.WHITE)
-                    .append(Component.text(" " + requirement.minimumLevel() + " " + requirement.type().getLabel(), Colors.ITEM_REQUIREMENT.asColor()))));
+                    .append(Component.text(" " + requirement.minimumLevel() + " " + requirement.type().getLabel(), Color.ITEM_REQUIREMENT.asColor()))));
         }
     }
 
@@ -57,7 +57,7 @@ public class EquipableItem extends AbstractItem implements SkillRestrictable {
             modifiers.forEach(modifier -> {
                 int amount = Math.toIntExact(Math.round(modifier.amount()));
                 String sign = amount > 0 ? "+" : "";
-                TextColor color = amount > 0 ? Colors.ITEM_BONUS_POSITIVE.asColor() : Colors.ITEM_BONUS_NEGATIVE.asColor();
+                TextColor color = amount > 0 ? Color.ITEM_BONUS_POSITIVE.asColor() : Color.ITEM_BONUS_NEGATIVE.asColor();
 
                 appendToBonusesLore(Component.text(modifier.type().getSymbol(), NamedTextColor.WHITE)
                         .append(Component.text(" " + sign + amount + " " + modifier.type().getLabel()).color(color)));

@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.utils.LoadingMessage;
 
 import java.time.Duration;
@@ -84,7 +84,7 @@ public class RunePlayerLoadingStateHandler {
 
         player.showTitle(Title.title(
                 Component.text("Loading...").color(NamedTextColor.GOLD).decorate(TextDecoration.BOLD),
-                Component.text(funFact).color(Colors.SUBTITLE.asColor()).decorate(TextDecoration.ITALIC).append(Component.text(" @ RuneQuest").color(Colors.SERVER_BRAND.asColor())),
+                Component.text(funFact).color(Color.SUBTITLE.asColor()).decorate(TextDecoration.ITALIC).append(Component.text(" @ RuneQuest").color(Color.SERVER_BRAND.asColor())),
                 Title.Times.times(Duration.ofSeconds(EFFECT_DURATION_TICKS / 20 / 3), Duration.ofSeconds(EFFECT_DURATION_TICKS / 20 / 3), Duration.ofSeconds(EFFECT_DURATION_TICKS / 20 / 3))
         ));
     }

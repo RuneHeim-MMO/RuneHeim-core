@@ -4,7 +4,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 
@@ -17,7 +17,7 @@ public class ItemRegistryInventory {
         int ITEMS_IN_ROW = 9; // Always 9
 
         if (!player.hasPermission("rune.admin.item_registry")) {
-            player.sendMessage(Component.text("Missing rune.admin.item_registry permission.").color(Colors.ERROR.asColor()));
+            player.sendMessage(Component.text("Missing rune.admin.item_registry permission.").color(Color.ERROR.asColor()));
             return;
         }
 
@@ -28,7 +28,7 @@ public class ItemRegistryInventory {
         int maxPages = ((totalItems + slots - 1) / slots) - 1;
 
         if (indexStart >= totalItems) {
-            player.sendMessage(Component.text("No items to display on page " + page + ". Total pages: 0-" + maxPages).color(Colors.ERROR.asColor()));
+            player.sendMessage(Component.text("No items to display on page " + page + ". Total pages: 0-" + maxPages).color(Color.ERROR.asColor()));
             return;
         }
 

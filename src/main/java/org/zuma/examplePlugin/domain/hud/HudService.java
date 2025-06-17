@@ -5,7 +5,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.entity.Firework;
@@ -13,7 +12,7 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.utils.FireworkUtils;
@@ -35,19 +34,19 @@ public class HudService {
         String xpStr = type.getSymbol() + " " + xp + " XP";
         boolean isPartySource = source == XpSource.PARTY;
 
-        spawnVerticalHologramBubble(player, Colors.SUCCESS.asSpigotHex() + "+ " + xpStr + " " + (isPartySource ? "[Party]" : ""));
+        spawnVerticalHologramBubble(player, Color.SUCCESS.asSpigotHex() + "+ " + xpStr + " " + (isPartySource ? "[Party]" : ""));
         player.getPlayer().sendMessage(type.getLabel() + " +" + xp + "xp! Type: " + source.name());
     }
 
     public static void sendFailMessage(RunePlayer player, Component text) {
-        player.getPlayer().sendMessage(text.color(Colors.ERROR.asColor()));
+        player.getPlayer().sendMessage(text.color(Color.ERROR.asColor()));
         SoundType.FAIL_ACTION.play(player.getPlayer());
     }
 
     public static void showFailTitle(RunePlayer player, String text) {
         player.getPlayer().showTitle(Title.title(
                 Component.text(""),
-                Component.text(text).color(Colors.ERROR.asColor()),
+                Component.text(text).color(Color.ERROR.asColor()),
                 TextUtils.getGenericDuration()
         ));
         SoundType.FAIL_ACTION.play(player.getPlayer());
@@ -64,8 +63,8 @@ public class HudService {
 
         if (!isMaxedSkill) {
             player.getPlayer().showTitle(Title.title(
-                    Component.text("Congratulations!", Colors.SERVER_BRAND.asColor()),
-                    Component.text("Your " + type.getSymbol() + " " + type.getLabel() + " level is now " + skill.getLevel() + "!", Colors.SUCCESS.asColor()),
+                    Component.text("Congratulations!", Color.SERVER_BRAND.asColor()),
+                    Component.text("Your " + type.getSymbol() + " " + type.getLabel() + " level is now " + skill.getLevel() + "!", Color.SUCCESS.asColor()),
                     Title.Times.times(
                             Duration.ofSeconds(1),
                             Duration.ofSeconds(8, 5),
@@ -98,7 +97,7 @@ public class HudService {
 
             player.getPlayer().showTitle(Title.title(
                     congrats,
-                    Component.text("No way! You have MAXED your " + type.getSymbol() + " " + type.getLabel() + " level!", Colors.SUCCESS.asColor()),
+                    Component.text("No way! You have MAXED your " + type.getSymbol() + " " + type.getLabel() + " level!", Color.SUCCESS.asColor()),
                     Title.Times.times(
                             Duration.ofSeconds(1),
                             Duration.ofSeconds(10),
@@ -120,8 +119,8 @@ public class HudService {
                     meta.addEffect(FireworkUtils.getRandomEffect());
                 } else {
                     meta.addEffect(FireworkEffect.builder()
-                            .withColor(Color.AQUA)
-                            .withFade(Color.WHITE)
+                            .withColor(org.bukkit.Color.AQUA)
+                            .withFade(org.bukkit.Color.WHITE)
                             .with(FireworkEffect.Type.BURST)
                             .flicker(true)
                             .trail(true)

@@ -30,24 +30,31 @@
     },
     {
       "type": "bitmap",
-      "file": "minecraft:font/icons/coin_many.png",
-      "ascent": 9,
+      "file": "minecraft:font/icons/coin_handful.png",
+      "ascent": 10,
       "height": 12,
       "chars": ["①"]
     },
     {
       "type": "bitmap",
       "file": "minecraft:font/icons/coin_one.png",
-      "ascent": 9,
+      "ascent": 10,
       "height": 12,
       "chars": ["②"]
     },
     {
       "type": "bitmap",
       "file": "minecraft:font/icons/coin_two.png",
-      "ascent": 9,
+      "ascent": 10,
       "height": 12,
       "chars": ["③"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/coin_pile.png",
+      "ascent": 10,
+      "height": 12,
+      "chars": ["◬"]
     },
     {
       "type": "bitmap",
@@ -188,6 +195,62 @@
       "ascent": 9,
       "height": 12,
       "chars": ["⋍"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/progress_start.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["┉"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/progress_gem_start.png",
+      "ascent": 11,
+      "height": 16,
+      "chars": ["⢽"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/progress_skull_end.png",
+      "ascent": 11,
+      "height": 16,
+      "chars": ["ⶡ"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/progress_end.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["▨"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/progress_segment.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["↕"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/progress_start.png",
+      "ascent": 6,
+      "height": 7,
+      "chars": ["⸉"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/progress_end.png",
+      "ascent": 6,
+      "height": 7,
+      "chars": ["≖"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/progress_segment.png",
+      "ascent": 6,
+      "height": 7,
+      "chars": ["⌨"]
     }
   ]
 }

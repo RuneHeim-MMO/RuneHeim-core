@@ -2,7 +2,7 @@ package org.zuma.examplePlugin.core.constants;
 
 import net.kyori.adventure.text.format.TextColor;
 
-public enum Colors {
+public enum Color {
     SERVER_BRAND("#50e6cf"),
     SUBTITLE("#d9d9d9"),
     ERROR("#d60b33"),
@@ -19,12 +19,28 @@ public enum Colors {
 
     INTERACTABLE_ENTITY("#ffe6b8"),
     DEPLETED_RESOURCE("#636363"),
-    ACCENT("#ebc934");
+    ACCENT("#ebc934"),
+
+    CURRENCY_LOW("#FFFF00"),
+    CURRENCY_MID("#F5F6F7"),
+    CURRENCY_HIGH("#7aff7d"),
+
+    BUSY_BAR_EMPTY("#346a94"),
+    BUSY_BAR_FILL("#43c0fa"),
+
+    SKILL_BAR_EMPTY("#448555"),
+    SKILL_BAR_FILL("#55e67b"),
+
+    SPECIAL_BAR_EMPTY("#448555"),
+    SPECIAL_BAR_FILL("#55e67b"),
+
+    MANA_BAR_EMPTY("#2f3887"),
+    MANA_BAR_FILL("#6978ff");
 
     private final TextColor color;
     private final String hex;
 
-    Colors(String hex) {
+    Color(String hex) {
         this.color = TextColor.fromHexString(hex);
         this.hex = hex;
     }

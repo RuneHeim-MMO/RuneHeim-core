@@ -6,8 +6,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
+import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.ArrayList;
@@ -19,7 +20,8 @@ public class ActionBarManager {
     private final RunePlayer player;
     private final List<Component> elements = new ArrayList<>();
     private BukkitTask activeTask = null;
-    private boolean tick = false; // Tick tock counter
+    private boolean tick = false; // Ticktock counter
+    int coins = 0;
 
     public ActionBarManager(RunePlayer player) {
         this.player = player;
@@ -37,19 +39,50 @@ public class ActionBarManager {
 
     private Component getDefaultElement() {
 
+        coins += 5000;
 
-        return Component.text(tick ? Icon.HEART_BIG.get() : Icon.HEART.get(), NamedTextColor.WHITE).append(Component.text(" 10/99" + " ".repeat(80), Colors.ERROR.asColor()));
+        Component specialAttackBar = new LoadingBarBuilder()
+                .totalSteps(12)
+                .currentStep(6)
+                .barLength(12)
+                .segment(Icon.PROGRESS_TALL_SEGMENT.get())
+                .start(Icon.PROGRESS_GEM_TALL_START.get())
+                .stop(Icon.PROGRESS_TALL_END.get())
+                .emptyColor(Color.SPECIAL_BAR_EMPTY.asColor())
+                .fillColor(Color.SPECIAL_BAR_FILL.asColor())
+                .build();
+
+        Component manaBar = new LoadingBarBuilder()
+                .totalSteps(12)
+                .currentStep(3)
+                .barLength(12)
+                .segment(Icon.PROGRESS_TALL_SEGMENT.get())
+                .start(Icon.PROGRESS_TALL_START.get())
+                .stop(Icon.PROGRESS_SKULL_TALL_END.get())
+                .emptyColor(Color.MANA_BAR_EMPTY.asColor())
+                .fillColor(Color.MANA_BAR_FILL.asColor())
+                .inverted(true)
+                .build();
+
+        return Component.text(Icon.HEART_BIG.get(), NamedTextColor.WHITE)
+                .append(Component.text(" 10/99 HP" + " ".repeat(5), Color.ERROR.asColor()))
+                .append(specialAttackBar)
+                .append(manaBar)
+                .append(Component.text(" ".repeat(5)))
+                .append(CurrencyUtils.getCurrencyComponent(coins))
+                .append(Component.text(" GP", CurrencyUtils.getCurrencyColor(coins).asColor()));
+
     }
 
     public void showLevelUp() {
-        queueFrame(Component.text("Level ups!", Colors.SUCCESS.asColor()), 20);
-        queueTypewriter("Some new recipes are available!", 1, Colors.SUCCESS);
+        queueFrame(Component.text("Level ups!", Color.SUCCESS.asColor()), 20);
+        queueTypewriter("Some new recipes are available!", 1, Color.SUCCESS);
 
         startAnimationLoop();
 
     }
 
-    private void queueTypewriter(String text, int frameCountPerChar, Colors color) {
+    private void queueTypewriter(String text, int frameCountPerChar, Color color) {
         for (int i = 1; i <= text.length(); i++) {
             Component frame = Component.text(text.substring(0, i), color.asColor());
             queueFrame(frame, frameCountPerChar);

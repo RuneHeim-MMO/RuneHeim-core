@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
@@ -183,7 +183,7 @@ public class RunePlayer {
             );
 
             if (dropMessage != null && !dropMessage.isEmpty()) {
-                player.sendMessage(Component.text(dropMessage).color(Colors.ERROR.asColor()));
+                player.sendMessage(Component.text(dropMessage).color(Color.ERROR.asColor()));
                 SoundType.INVENTORY_FULL.play(player);
             }
 

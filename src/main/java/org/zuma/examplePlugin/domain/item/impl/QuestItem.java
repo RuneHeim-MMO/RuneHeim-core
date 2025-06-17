@@ -2,7 +2,7 @@ package org.zuma.examplePlugin.domain.item.impl;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
@@ -15,7 +15,7 @@ public class QuestItem extends AbstractItem {
     public QuestItem(AbstractItemMeta meta) {
         super(meta);
         super.appendToLore(Component.text(Icon.BOOK.get()));
-        this.appendToLore(Component.text("Quest Item").color(Colors.ITEM_TYPE.asColor()));
+        this.appendToLore(Component.text("Quest Item").color(Color.ITEM_TYPE.asColor()));
     }
 
     public void setQuestName(String name) {
@@ -25,7 +25,7 @@ public class QuestItem extends AbstractItem {
     @Override
     public void onPlayerItemDrop(PlayerDropItemEvent event, RunePlayer player, StateManager itemStateManager) {
         event.setCancelled(true);
-        player.getPlayer().sendMessage(Component.text("You cannot drop this item. It is associated with " + questName + " quest.").color(Colors.ERROR.asColor()));
+        player.getPlayer().sendMessage(Component.text("You cannot drop this item. It is associated with " + questName + " quest.").color(Color.ERROR.asColor()));
     }
 
 

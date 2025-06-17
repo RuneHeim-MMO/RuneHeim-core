@@ -5,7 +5,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
@@ -27,9 +27,9 @@ public class FoodItem extends AbstractItem {
         this.healAmount = amount;
 
         super.appendToLore(Component.text(""));
-        super.appendToLore(Component.text("Food", Colors.ITEM_TYPE.asColor()));
-        super.appendToLore(Component.text("Heals ", Colors.SUCCESS.asColor()).append(Component.text(SkillType.HITPOINTS.getSymbol(), NamedTextColor.WHITE))
-                .append(Component.text(" " + healAmount + " " + SkillType.HITPOINTS.getLabel(), Colors.SUCCESS.asColor())));
+        super.appendToLore(Component.text("Food", Color.ITEM_TYPE.asColor()));
+        super.appendToLore(Component.text("Heals ", Color.SUCCESS.asColor()).append(Component.text(SkillType.HITPOINTS.getSymbol(), NamedTextColor.WHITE))
+                .append(Component.text(" " + healAmount + " " + SkillType.HITPOINTS.getLabel(), Color.SUCCESS.asColor())));
 
     }
 

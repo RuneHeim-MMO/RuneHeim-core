@@ -6,7 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.hud.HudService;
@@ -30,11 +30,11 @@ public class InventoryOpenerBlock extends AbstractInteractableBlock implements S
 
     private void initializeHologram() {
         List<String> hologramContent = new ArrayList<>(List.of(
-                Colors.INTERACTABLE_ENTITY.asSpigotHex() + label
+                Color.INTERACTABLE_ENTITY.asSpigotHex() + label
         ));
 
         if (requirements != null) {
-            requirements.forEach(req -> hologramContent.add(Colors.ACCENT.asSpigotHex() +
+            requirements.forEach(req -> hologramContent.add(Color.ACCENT.asSpigotHex() +
                     "Req. " + req.type().getSymbol() + " " + req.minimumLevel() + " Level"));
         }
 

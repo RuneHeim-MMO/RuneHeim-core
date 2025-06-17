@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
@@ -87,7 +87,7 @@ public class NodeSelectorInventory extends IndividualGUI {
 
         ItemStack undo = new ItemStack(Material.BARRIER);
         ItemMeta meta = undo.getItemMeta();
-        meta.displayName(Component.text("Undo", Colors.ERROR.asColor()));
+        meta.displayName(Component.text("Undo", Color.ERROR.asColor()));
         undo.setItemMeta(meta);
         super.assignMenuValue(undo, -1);
         inventory.setItem(super.getSlots() - 1, undo);

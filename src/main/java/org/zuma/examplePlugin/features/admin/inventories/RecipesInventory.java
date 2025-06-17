@@ -3,7 +3,7 @@ package org.zuma.examplePlugin.features.admin.inventories;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipes.RecipeRegistry;
@@ -18,7 +18,7 @@ public class RecipesInventory {
         int ITEMS_IN_ROW = 9; // Always 9
 
         if (!player.getPlayer().hasPermission("rune.admin.item_recipes")) {
-            player.getPlayer().sendMessage(Component.text("Missing rune.admin.item_recipes permission.").color(Colors.ERROR.asColor()));
+            player.getPlayer().sendMessage(Component.text("Missing rune.admin.item_recipes permission.").color(Color.ERROR.asColor()));
             return;
         }
 
@@ -29,7 +29,7 @@ public class RecipesInventory {
         int maxPages = ((totalItems + slots - 1) / slots) - 1;
 
         if (indexStart >= totalItems) {
-            player.getPlayer().sendMessage(Component.text("No items to display on page " + page + ". Total pages: 0-" + maxPages).color(Colors.ERROR.asColor()));
+            player.getPlayer().sendMessage(Component.text("No items to display on page " + page + ". Total pages: 0-" + maxPages).color(Color.ERROR.asColor()));
             return;
         }
 

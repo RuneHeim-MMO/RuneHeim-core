@@ -4,7 +4,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
@@ -27,7 +27,7 @@ public class PotionItem extends AbstractItem implements Stateful {
         super(meta);
         this.setRarityPrefixSlot(Icon.POTION.get());
         super.appendToLore(Component.text(""));
-        super.appendToLore(Component.text("Potion", Colors.ITEM_TYPE.asColor()));
+        super.appendToLore(Component.text("Potion", Color.ITEM_TYPE.asColor()));
         this.setStateType(StateType.MULTI_CONSUMABLE);
     }
 
@@ -51,7 +51,7 @@ public class PotionItem extends AbstractItem implements Stateful {
         }
 
         if (state.isConsumed()) {
-            player.getPlayer().sendMessage(Component.text("It's consumed already!", Colors.ERROR.asColor()));
+            player.getPlayer().sendMessage(Component.text("It's consumed already!", Color.ERROR.asColor()));
             return;
         }
 
@@ -64,7 +64,7 @@ public class PotionItem extends AbstractItem implements Stateful {
         }
 
         if (state.consume()) {
-            this.setDisplayName(itemStack, null, Component.text(" (" + state.getUsageLeft() + "/" + state.getMaxUsages() + ")", Colors.ITEM_TYPE.asColor()));
+            this.setDisplayName(itemStack, null, Component.text(" (" + state.getUsageLeft() + "/" + state.getMaxUsages() + ")", Color.ITEM_TYPE.asColor()));
             itemStateManager.saveUpdatedState(state);
 
             if (state.isConsumed()) {

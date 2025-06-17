@@ -6,10 +6,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
+import org.zuma.examplePlugin.domain.hud.LoadingBarBuilder;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.time.Duration;
@@ -65,7 +67,7 @@ public class RunePlayerBusyStateHandler {
                     successSound.play(onlinePlayer);
                     onlinePlayer.showTitle(Title.title(
                             Component.text(""),
-                            Component.text(successAction).color(Colors.SUCCESS.asColor()),
+                            Component.text(successAction).color(Color.SUCCESS.asColor()),
                             TextUtils.getGenericDuration()
                     ));
 
@@ -76,12 +78,21 @@ public class RunePlayerBusyStateHandler {
 
                 // Progress bar
                 int secondsLeft = (int) Math.ceil(((durationMs / (double) steps) * (steps - currentSteps.get())) / 1000.0);
+                Component progressBar = new LoadingBarBuilder()
+                        .totalSteps(steps)
+                        .currentStep(currentSteps.get())
+                        .barLength(16)
+                        .segment(Icon.PROGRESS_SHORT_SEGMENT.get())
+                        .start(Icon.PROGRESS_SHORT_START.get())
+                        .stop(Icon.PROGRESS_SHORT_END.get())
+                        .emptyColor(Color.BUSY_BAR_EMPTY.asColor())
+                        .fillColor(Color.BUSY_BAR_FILL.asColor())
+                        .build();
 
                 stepSound.play(onlinePlayer);
-                onlinePlayer.showTitle(Title.title(
-                        TextUtils.buildLoadingBar(steps, currentSteps.get()),
-                        Component.text("[" + secondsLeft + "s] ").color(Colors.SUCCESS.asColor())
-                                .append(Component.text(action).color(Colors.SUBTITLE.asColor())),
+                onlinePlayer.showTitle(Title.title(progressBar,
+                        Component.text("[" + secondsLeft + "s] ").color(Color.SUCCESS.asColor())
+                                .append(Component.text(action).color(Color.SUBTITLE.asColor())),
                         Title.Times.times(
                                 Duration.ZERO,
                                 Duration.ofSeconds(stepDuration),

@@ -5,7 +5,8 @@ public enum Icon {
     ARMOR("⛨"),
     ARROW("⇶"),
     AXE("🪓"),
-    COIN_MANY("①"),
+    COIN_HANDFUL("①"),
+    COIN_PILE("◬"),
     COIN_ONE("②"),
     COIN_TWO("③"),
     CRAFTING("҂"),
@@ -27,7 +28,18 @@ public enum Icon {
     STRENGTH("⻖"),
     SWORD("†"),
     BOOK("ↁ"),
-    ROCK("⋍");
+    ROCK("⋍"),
+
+    PROGRESS_TALL_START("┉"),
+    PROGRESS_GEM_TALL_START("⢽"),
+    PROGRESS_SKULL_TALL_END("ⶡ"),
+    PROGRESS_TALL_END("▨"),
+    PROGRESS_TALL_SEGMENT("↕"),
+
+    PROGRESS_SHORT_START("⸉"),
+    PROGRESS_SHORT_END("≖"),
+    PROGRESS_SHORT_SEGMENT("⌨");
+
 
     private final String icon;
 

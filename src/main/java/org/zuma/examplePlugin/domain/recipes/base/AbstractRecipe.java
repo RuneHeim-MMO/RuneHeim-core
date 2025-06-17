@@ -8,7 +8,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.Colors;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
@@ -91,7 +91,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         }
 
         boolean playHasInInventory = PlayerUtils.hasItems(player, List.of(record));
-        Colors color = playHasInInventory ? Colors.SUCCESS : Colors.ERROR;
+        Color color = playHasInInventory ? Color.SUCCESS : Color.ERROR;
 
         return Component.text(record.getAmount() + "x " + ingredient.displayName).color(color.asColor());
     }
@@ -106,12 +106,12 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         int craftTimeSeconds = Math.toIntExact(craftTimeMs / 1000);
 
         if (!playerMeetsSkillRequirements) {
-            meta.displayName(Component.text(TextUtils.extractPlainText(displayItemstack.displayName()).replace("[", "").replace("]", ""), Colors.ERROR_LIGHT.asColor()).decoration(TextDecoration.ITALIC, false));
+            meta.displayName(Component.text(TextUtils.extractPlainText(displayItemstack.displayName()).replace("[", "").replace("]", ""), Color.ERROR_LIGHT.asColor()).decoration(TextDecoration.ITALIC, false));
 
         }
 
-        itemLore.add(Component.text("✔ " + craftTimeSeconds + " sec crafting time", Colors.coloredProgressValue(craftTimeSeconds, 0, 120, true)));
-        itemLore.add(Component.text("⏱ " + chanceOfSuccess + "% chance of success", Colors.coloredProgressValue(chanceOfSuccess, 0, 100, false)));
+        itemLore.add(Component.text("✔ " + craftTimeSeconds + " sec crafting time", Color.coloredProgressValue(craftTimeSeconds, 0, 120, true)));
+        itemLore.add(Component.text("⏱ " + chanceOfSuccess + "% chance of success", Color.coloredProgressValue(chanceOfSuccess, 0, 100, false)));
 
         List<ItemRecord> recipeIngredients = !ingredients.isEmpty() ? ingredients.stream()
                 .filter(IngredientRecord::isConsumedOnCraft)
@@ -124,7 +124,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
 
         if (!requiredTools.isEmpty()) {
             itemLore.add(Component.text(""));
-            itemLore.add(Component.text("Tools: ", Colors.ITEM_LABEL.asColor()));
+            itemLore.add(Component.text("Tools: ", Color.ITEM_LABEL.asColor()));
 
             requiredTools.forEach(record -> {
                 Component loreItem = getLoreForRequiredItem(registry, record, player);
@@ -136,7 +136,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
 
         if (!recipeIngredients.isEmpty()) {
             itemLore.add(Component.text(""));
-            itemLore.add(Component.text("Ingredients: ", Colors.ITEM_LABEL.asColor()));
+            itemLore.add(Component.text("Ingredients: ", Color.ITEM_LABEL.asColor()));
 
             recipeIngredients.forEach(record -> {
                 Component loreItem = getLoreForRequiredItem(registry, record, player);
@@ -149,11 +149,11 @@ public abstract class AbstractRecipe implements SkillRestrictable {
 
         if (!requirements.isEmpty()) {
             itemLore.add(Component.text(""));
-            itemLore.add(Component.text("Requirements: ", Colors.ITEM_LABEL.asColor()));
+            itemLore.add(Component.text("Requirements: ", Color.ITEM_LABEL.asColor()));
 
             requirements.forEach(requirement -> {
                 boolean playMeetsReq = requirement.playerMeetsRequirement(player);
-                Colors color = playMeetsReq ? Colors.SUCCESS : Colors.ERROR;
+                Color color = playMeetsReq ? Color.SUCCESS : Color.ERROR;
 
                 itemLore.add(Component.text(requirement.type().getSymbol() + " " + requirement.minimumLevel() + " " + requirement.type().getLabel()).color(color.asColor()));
             });
@@ -162,8 +162,8 @@ public abstract class AbstractRecipe implements SkillRestrictable {
 
 
         itemLore.add(Component.text(""));
-        itemLore.add(Component.text("Result: ", Colors.ITEM_LABEL.asColor()));
-        itemLore.add(Component.text(successResult.getAmount() + "x ", Colors.ITEM_LABEL.asColor()).append(displayItemstack.displayName()));
+        itemLore.add(Component.text("Result: ", Color.ITEM_LABEL.asColor()));
+        itemLore.add(Component.text(successResult.getAmount() + "x ", Color.ITEM_LABEL.asColor()).append(displayItemstack.displayName()));
         itemLore.add(Component.text(""));
 
         meta.lore(itemLore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());
