@@ -138,12 +138,12 @@ public class BlockInvCreatorInventory extends IndividualGUI {
             side = dy < 0.5 ? HologramSide.BOTTOM : HologramSide.TOP;
         }
 
-        Location hologramLocation = result.getHitBlock().getLocation().clone().add(0.5, 0.5, 0.5);
+        Location hologramLocation = result.getHitBlock().getLocation().clone().add(0.5, 1.5, 0.5);
         BlockFace oppositeFace = MathUtils.yawToFace(player.getPlayer().getYaw()).getOppositeFace();
 
         switch (side) {
-            case TOP -> hologramLocation.add(0, 0.5, 0);
-            case BOTTOM -> hologramLocation.add(0, -0, 0);
+            case TOP -> hologramLocation.add(0, 0, 0);
+            case BOTTOM -> hologramLocation.add(0, 0, 0);
             case FRONT -> hologramLocation.add(0, 0, -1);
             case BACK -> hologramLocation.add(0, 0, 1);
             case LEFT -> hologramLocation.add(-1, 0, 0);
