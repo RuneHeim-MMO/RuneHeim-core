@@ -84,7 +84,7 @@ public class RunePlayerLoadingStateHandler {
 
         player.showTitle(Title.title(
                 Component.text("Loading...").color(NamedTextColor.GOLD).decorate(TextDecoration.BOLD),
-                Component.text(funFact).color(Color.SUBTITLE.asColor()).decorate(TextDecoration.ITALIC).append(Component.text(" @ RuneQuest").color(Color.SERVER_BRAND.asColor())),
+                Component.text(funFact).color(Color.SUBTITLE.asColor()).decorate(TextDecoration.ITALIC).append(Component.text(" @ RuneHeim").color(Color.SERVER_BRAND.asColor())),
                 Title.Times.times(Duration.ofSeconds(EFFECT_DURATION_TICKS / 20 / 3), Duration.ofSeconds(EFFECT_DURATION_TICKS / 20 / 3), Duration.ofSeconds(EFFECT_DURATION_TICKS / 20 / 3))
         ));
     }

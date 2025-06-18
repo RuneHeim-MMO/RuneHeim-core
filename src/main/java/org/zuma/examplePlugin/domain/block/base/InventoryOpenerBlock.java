@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
+import org.zuma.examplePlugin.domain.map.MarkerType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 
@@ -21,7 +22,7 @@ import java.util.UUID;
 public class InventoryOpenerBlock extends AbstractInteractableBlock implements SkillRestrictable {
     private int inventoryId;
     private List<SkillRequirement> requirements;
-    private String label;
+    private String label, icon;
 
     public InventoryOpenerBlock(AbstractInteractableBlockMeta meta) {
         super(meta, null, null);
@@ -30,7 +31,7 @@ public class InventoryOpenerBlock extends AbstractInteractableBlock implements S
 
     private void initializeHologram() {
         List<String> hologramContent = new ArrayList<>(List.of(
-                Color.INTERACTABLE_ENTITY.asSpigotHex() + label
+                "§f" + this.icon + Color.INTERACTABLE_ENTITY.asSpigotHex() + label
         ));
 
         if (requirements != null) {
@@ -54,10 +55,14 @@ public class InventoryOpenerBlock extends AbstractInteractableBlock implements S
     }
 
 
-    public void initializeBlock(int inventoryId, List<SkillRequirement> requirements, String label, Material material) {
+    public void initializeBlock(int inventoryId, List<SkillRequirement> requirements, String label, String icon, Material material, MarkerType markerType, String markerLabel) {
         this.inventoryId = inventoryId;
         this.requirements = requirements;
         this.label = label;
+        this.icon = icon;
+        super.setMarkerType(markerType);
+        super.setMarkerLabel(markerLabel);
+
 
         initializeHologram();
         super.spawn(material);

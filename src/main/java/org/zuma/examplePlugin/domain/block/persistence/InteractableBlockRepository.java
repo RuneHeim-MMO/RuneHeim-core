@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.BlockFace;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.adapters.LocationAdapter;
 import org.zuma.examplePlugin.core.database.HikariPool;
@@ -32,19 +33,20 @@ public class InteractableBlockRepository {
     }
 
     public List<Long> insertBlocks(List<BlockEntity> entities) {
-        String sql = "INSERT INTO blocks (block_type, world_name, x, y, z, hologram_location, json) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO blocks (block_type, block_face, world_name, x, y, z, hologram_location, json) VALUES (?,?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = pool.getDataSource().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             for (BlockEntity entity : entities) {
                 stmt.setString(1, entity.getType().toString());
-                stmt.setString(2, entity.getLocation().getWorld().getName());
-                stmt.setDouble(3, entity.getLocation().x());
-                stmt.setDouble(4, entity.getLocation().y());
-                stmt.setDouble(5, entity.getLocation().z());
-                stmt.setString(6, entity.getHologramLocation() != null ? gson.toJson(entity.getHologramLocation()) : null);
-                stmt.setString(7, gson.toJson(entity.getJson()));
+                stmt.setString(2, entity.getFace().toString());
+                stmt.setString(3, entity.getLocation().getWorld().getName());
+                stmt.setDouble(4, entity.getLocation().x());
+                stmt.setDouble(5, entity.getLocation().y());
+                stmt.setDouble(6, entity.getLocation().z());
+                stmt.setString(7, entity.getHologramLocation() != null ? gson.toJson(entity.getHologramLocation()) : null);
+                stmt.setString(8, gson.toJson(entity.getJson()));
                 stmt.addBatch();
             }
 
@@ -66,7 +68,7 @@ public class InteractableBlockRepository {
 
 
     public List<BlockEntity> getAll() {
-        String sql = "SELECT id, block_type, world_name, x, y, z, hologram_location, json FROM blocks";
+        String sql = "SELECT id, block_type, block_face, world_name, x, y, z, hologram_location, json FROM blocks";
         List<BlockEntity> result = new ArrayList<>();
 
         try (Connection conn = pool.getDataSource().getConnection();
@@ -88,7 +90,7 @@ public class InteractableBlockRepository {
 
     @Nullable
     public BlockEntity getById(long id) {
-        String sql = "SELECT id, block_type, world_name, x, y, z, hologram_location, json FROM blocks WHERE id = ?";
+        String sql = "SELECT id, block_type, block_face, world_name, x, y, z, hologram_location, json FROM blocks WHERE id = ?";
 
         try (Connection conn = pool.getDataSource().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -133,6 +135,7 @@ public class InteractableBlockRepository {
         try {
             int id = rs.getInt("id");
             String blockTypeStr = rs.getString("block_type");
+            String blockFaceStr = rs.getString("block_face");
             String worldName = rs.getString("world_name");
             double x = rs.getDouble("x");
             double y = rs.getDouble("y");
@@ -141,6 +144,7 @@ public class InteractableBlockRepository {
             String json = rs.getString("json");
 
             BlockType blockType = BlockType.valueOf(blockTypeStr);
+            BlockFace blockFace = BlockFace.valueOf(blockFaceStr);
             World world = Bukkit.getWorld(worldName);
             Location location = new Location(world, x, y, z);
 
@@ -152,7 +156,7 @@ public class InteractableBlockRepository {
             VersionedJson versionedJson = gson.fromJson(json, VersionedJson.class);
 
             return new BlockEntity(
-                    new AbstractInteractableBlockMeta(id, blockType, location, hologramLocation),
+                    new AbstractInteractableBlockMeta(id, blockType, blockFace, location, hologramLocation),
                     versionedJson
             );
 

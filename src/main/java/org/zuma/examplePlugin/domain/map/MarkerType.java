@@ -29,7 +29,12 @@ public enum MarkerType {
     IRON("ore-iron-markers", "Iron ore veins", "https://i.imgur.com/THemPsw.png"),
     MITHRIL("ore-mithril-markers", "Mithril ore veins", "https://i.imgur.com/ctUyoqV.png"),
     ADAMANTITE("ore-adamantite-markers", "Adamantite ore veins", "https://i.imgur.com/XyrJr1T.png"),
-    RUNITE("ore-runite-markers", "Runite ore veins", "https://i.imgur.com/7hiGFYY.png");
+    RUNITE("ore-runite-markers", "Runite ore veins", "https://i.imgur.com/7hiGFYY.png"),
+
+    FIRE_SOURCE("fire-source-markers", "Fire sources", ""),
+    SMELTING_FURNACE("smelting-furnace-markers", "Smelting furnaces", ""),
+    ANVIL("anvil-markers", "Anvils", ""),
+    CRAFTING_TABLE("crafting-table-markers", "Crafting tables", "");
 
 
     private final String id, label, iconURL;

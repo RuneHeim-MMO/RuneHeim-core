@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.block.persistence;
 
 import org.bukkit.Location;
+import org.bukkit.block.BlockFace;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
@@ -24,6 +25,10 @@ public record BlockEntity(AbstractInteractableBlockMeta meta, VersionedJson json
     @Nullable
     public Location getHologramLocation() {
         return meta.hologramLocation();
+    }
+
+    public BlockFace getFace() {
+        return meta.face();
     }
 
     public VersionedJson getJson() {

@@ -76,6 +76,10 @@ public class AdminCommand implements BasicCommand {
             RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_NODE_CREATE.asInt(), runePlayer);
         }
 
+        if (Objects.equals(args[0], "opener")) {
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), runePlayer);
+        }
+
 
 
 

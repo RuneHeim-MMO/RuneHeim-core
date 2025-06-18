@@ -29,6 +29,7 @@ public enum Icon {
     SWORD("†"),
     BOOK("ↁ"),
     ROCK("⋍"),
+    ENVELOPE("✉"),
 
     PROGRESS_TALL_START("┉"),
     PROGRESS_GEM_TALL_START("⢽"),

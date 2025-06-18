@@ -5,6 +5,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -13,44 +14,46 @@ import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
+import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
-import org.zuma.examplePlugin.domain.block.constants.ResourceNodeTypeId;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.HologramSide;
-import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
-import org.zuma.examplePlugin.domain.block.meta.v1.ResourceNodeMeta;
+import org.zuma.examplePlugin.domain.block.meta.v1.InventoryOpenerMeta;
 import org.zuma.examplePlugin.domain.block.persistence.BlockEntity;
+import org.zuma.examplePlugin.domain.gui.GUIHandler;
+import org.zuma.examplePlugin.domain.gui.base.AbstractGUI;
 import org.zuma.examplePlugin.domain.gui.base.IndividualGUI;
-import org.zuma.examplePlugin.domain.item.base.AbstractItem;
+import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
+import org.zuma.examplePlugin.domain.map.MarkerType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.HashMap;
 import java.util.List;
 
 
-public class NodeSelectorInventory extends IndividualGUI {
+public class BlockInvCreatorInventory extends IndividualGUI {
     private final BlockLoader loader;
+    private final GUIHandler guiHandler;
 
-    private static final HashMap<Integer, SchematicsRecord> SCHEMATIC_MAP = new HashMap<>() {{
-        put(ResourceNodeTypeId.TREE.asInt(), new SchematicsRecord("tree", "tree_depleted"));
-        put(ResourceNodeTypeId.BIRCH_TREE.asInt(), new SchematicsRecord("birch_tree", "birch_tree_depleted"));
-        put(ResourceNodeTypeId.MAPLE_TREE.asInt(), new SchematicsRecord("maple_tree", "maple_tree_depleted"));
-        put(ResourceNodeTypeId.YEW_TREE.asInt(), new SchematicsRecord("yew_tree", "yew_tree_depleted"));
-        put(ResourceNodeTypeId.MAHOGANY_TREE.asInt(), new SchematicsRecord("mahogany_tree", "mahogany_tree_depleted"));
-        put(ResourceNodeTypeId.MAGIC_TREE.asInt(), new SchematicsRecord("magic_tree", "magic_tree_depleted"));
+    private static final HashMap<Integer, InventoryOpenerMeta> META_MAP = new HashMap<>() {{
+        put(InventoryId.STOVE.asInt(), new InventoryOpenerMeta(InventoryId.STOVE.asInt(), Material.FURNACE, null, MarkerType.FIRE_SOURCE, "Stove", "Stove", Icon.FIRE.get()));
+        put(InventoryId.FIRE.asInt(), new InventoryOpenerMeta(InventoryId.FIRE.asInt(), Material.CAMPFIRE, null, MarkerType.FIRE_SOURCE, "Campfire", "Campfire", Icon.FIRE.get()));
+        put(InventoryId.ANVIL.asInt(), new InventoryOpenerMeta(InventoryId.ANVIL.asInt(), Material.ANVIL, null, MarkerType.ANVIL, "Anvil", "Anvil", Icon.ANVIL.get()));
+        put(InventoryId.CRAFTING_TABLE.asInt(), new InventoryOpenerMeta(InventoryId.CRAFTING_TABLE.asInt(), Material.CRAFTING_TABLE, null, MarkerType.CRAFTING_TABLE, "Crafting Table", "Crafting Table", Icon.CRAFTING.get()));
+        put(InventoryId.BASIC_FURNACE.asInt(), new InventoryOpenerMeta(InventoryId.BASIC_FURNACE.asInt(), Material.BARRIER, null, MarkerType.SMELTING_FURNACE, "Smelting Furnace", "Smelting Furnace", Icon.FIRE.get()));
+        ;
+
     }};
 
 
-    public record SchematicsRecord(String intact, String depleted) {
-    }
-
-
-    public NodeSelectorInventory(String title, int id, BlockLoader loader) {
+    public BlockInvCreatorInventory(String title, int id, BlockLoader loader, GUIHandler guiHandler) {
         super(title, id, 6);
         this.loader = loader;
+        this.guiHandler = guiHandler;
     }
 
     @Override
@@ -60,25 +63,19 @@ public class NodeSelectorInventory extends IndividualGUI {
         }
 
         Inventory inventory = getBaseInventory();
-        List<ResourceNodeType> types = loader.getResourceNodeTypes().values().stream().toList();
+        List<AbstractGUI> inventories = guiHandler.getRegistry().getAllInventories().stream().filter(inv -> META_MAP.containsKey(inv.getId())).toList();
 
-        for (int i = 0; i < types.size(); i++) {
+        for (int i = 0; i < inventories.size(); i++) {
 
             if (i >= super.getSlots() - 1) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, title + " inventory is overflowing.");
                 continue;
             }
 
-            ResourceNodeType type = types.get(i);
-            AbstractItem dropItem = RuneQuestPlugin.getItemRegistry().getItem(type.getDrop().getItemId());
-
-            if (dropItem == null) {
-                return;
-            }
-
-            ItemStack item = new ItemStack(dropItem.asItemStack());
+            AbstractGUI gui = inventories.get(i);
+            ItemStack item = new ItemStack(Material.BARRIER);
             ItemMeta meta = item.getItemMeta();
-            meta.displayName(Component.text(type.getLabel()));
+            meta.displayName(gui.getTitle());
             item.setItemMeta(meta);
             super.assignMenuValue(item, i);
 
@@ -141,15 +138,24 @@ public class NodeSelectorInventory extends IndividualGUI {
             side = dy < 0.5 ? HologramSide.BOTTOM : HologramSide.TOP;
         }
 
+        Location hologramLocation = result.getHitBlock().getLocation().clone().add(0.5, 0.5, 0.5);
+        BlockFace oppositeFace = MathUtils.yawToFace(player.getPlayer().getYaw()).getOppositeFace();
 
-        List<ResourceNodeType> types = loader.getResourceNodeTypes().values().stream().toList();
-        ResourceNodeType type = types.get(menuValue);
-        SchematicsRecord schematics = SCHEMATIC_MAP.get(type.getId());
+        switch (side) {
+            case TOP -> hologramLocation.add(0, 0.5, 0);
+            case BOTTOM -> hologramLocation.add(0, -0, 0);
+            case FRONT -> hologramLocation.add(0, 0, -1);
+            case BACK -> hologramLocation.add(0, 0, 1);
+            case LEFT -> hologramLocation.add(-1, 0, 0);
+            case RIGHT -> hologramLocation.add(1, 0, 0);
+        }
 
 
         loader.insertNewNode(new BlockEntity(
-                new AbstractInteractableBlockMeta(0, BlockType.ResourceNode, result.getHitBlock().getLocation(), side),
-                new VersionedJson(new Gson().toJson(new ResourceNodeMeta(type.getId(), schematics != null ? schematics.intact() : null, schematics != null ? schematics.depleted() : null)), 1)));
+                new AbstractInteractableBlockMeta(0, BlockType.InventoryOpener, oppositeFace, result.getHitBlock().getLocation(), hologramLocation),
+                new VersionedJson(new Gson().toJson(META_MAP.get(menuValue)), 1)));
 
     }
+
+
 }

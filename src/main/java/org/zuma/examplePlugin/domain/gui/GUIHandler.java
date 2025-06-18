@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.gui.base.AbstractGUI;
@@ -13,7 +14,8 @@ import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.gui.impl.individual.AnvilInventory;
 import org.zuma.examplePlugin.domain.gui.impl.individual.CookingInventory;
 import org.zuma.examplePlugin.domain.gui.impl.individual.FurnaceInventory;
-import org.zuma.examplePlugin.domain.gui.impl.individual.admin.NodeSelectorInventory;
+import org.zuma.examplePlugin.domain.gui.impl.individual.admin.BlockInvCreatorInventory;
+import org.zuma.examplePlugin.domain.gui.impl.individual.admin.NodeCreatorInventory;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 
@@ -26,16 +28,22 @@ public class GUIHandler {
         this.playerManager = playerManager;
     }
 
+    public GUIRegistry getRegistry() {
+        return registry;
+    }
+
     public void closeAllInventories() {
         Bukkit.getOnlinePlayers().forEach(HumanEntity::closeInventory);
     }
 
     public void initializeInventories(BlockLoader blockLoader) {
-        this.registry.registerGUI(new FurnaceInventory("Furnace", InventoryId.BASIC_FURNACE.asInt()));
-        this.registry.registerGUI(new CookingInventory("Stove", InventoryId.STOVE.asInt()));
-        this.registry.registerGUI(new CookingInventory("Campfire", InventoryId.FIRE.asInt()));
-        this.registry.registerGUI(new AnvilInventory("Anvil", InventoryId.ANVIL.asInt()));
-        this.registry.registerGUI(new NodeSelectorInventory("[A] Create Resource Node", InventoryId.ADMIN_NODE_CREATE.asInt(), blockLoader));
+        this.registry.registerGUI(new FurnaceInventory("§f" + Icon.FIRE.get() + " Furnace", InventoryId.BASIC_FURNACE.asInt()));
+        this.registry.registerGUI(new CookingInventory("§f" + Icon.FIRE.get() + "§r Stove", InventoryId.STOVE.asInt()));
+        this.registry.registerGUI(new CookingInventory("§f" + Icon.FIRE.get() + " Campfire", InventoryId.FIRE.asInt()));
+        this.registry.registerGUI(new AnvilInventory("§f" + Icon.ANVIL.get() + " Anvil", InventoryId.ANVIL.asInt()));
+        this.registry.registerGUI(new AnvilInventory("§f" + Icon.CRAFTING.get() + " Crafting Table", InventoryId.CRAFTING_TABLE.asInt()));
+        this.registry.registerGUI(new NodeCreatorInventory("[A] Create Resource Node", InventoryId.ADMIN_NODE_CREATE.asInt(), blockLoader));
+        this.registry.registerGUI(new BlockInvCreatorInventory("[A] Create Inventory Opener", InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), blockLoader, this));
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventories().size() + " inventories.");
     }

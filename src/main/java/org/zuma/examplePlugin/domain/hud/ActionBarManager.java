@@ -22,6 +22,7 @@ public class ActionBarManager {
     private BukkitTask activeTask = null;
     private boolean tick = false; // Ticktock counter
     int coins = 0;
+    int bar = 0;
 
     public ActionBarManager(RunePlayer player) {
         this.player = player;
@@ -38,13 +39,20 @@ public class ActionBarManager {
     }
 
     private Component getDefaultElement() {
+        Component flashingEnvelope = Component.text(" " + Icon.ENVELOPE.get() + " ", tick ? NamedTextColor.WHITE : NamedTextColor.DARK_GRAY);
+        boolean hasNotifications = coins < 100000;
 
-        coins += 5000;
+        coins += 5050;
+        bar += 1;
+
+        if (bar >= 10) {
+            bar = 0;
+        }
 
         Component specialAttackBar = new LoadingBarBuilder()
-                .totalSteps(12)
-                .currentStep(6)
-                .barLength(12)
+                .totalSteps(10)
+                .currentStep(bar)
+                .barLength(10)
                 .segment(Icon.PROGRESS_TALL_SEGMENT.get())
                 .start(Icon.PROGRESS_GEM_TALL_START.get())
                 .stop(Icon.PROGRESS_TALL_END.get())
@@ -53,9 +61,9 @@ public class ActionBarManager {
                 .build();
 
         Component manaBar = new LoadingBarBuilder()
-                .totalSteps(12)
-                .currentStep(3)
-                .barLength(12)
+                .totalSteps(10)
+                .currentStep(bar)
+                .barLength(10)
                 .segment(Icon.PROGRESS_TALL_SEGMENT.get())
                 .start(Icon.PROGRESS_TALL_START.get())
                 .stop(Icon.PROGRESS_SKULL_TALL_END.get())
@@ -65,12 +73,13 @@ public class ActionBarManager {
                 .build();
 
         return Component.text(Icon.HEART_BIG.get(), NamedTextColor.WHITE)
-                .append(Component.text(" 10/99 HP" + " ".repeat(5), Color.ERROR.asColor()))
+                .append(Component.text(" 10/99" + " ".repeat(2), Color.ERROR.asColor()))
                 .append(specialAttackBar)
+                .append(hasNotifications ? flashingEnvelope : Component.empty())
                 .append(manaBar)
-                .append(Component.text(" ".repeat(5)))
+                .append(Component.text(" ".repeat(2)))
                 .append(CurrencyUtils.getCurrencyComponent(coins))
-                .append(Component.text(" GP", CurrencyUtils.getCurrencyColor(coins).asColor()));
+                .append(Component.text("", CurrencyUtils.getCurrencyColor(coins).asColor()));
 
     }
 

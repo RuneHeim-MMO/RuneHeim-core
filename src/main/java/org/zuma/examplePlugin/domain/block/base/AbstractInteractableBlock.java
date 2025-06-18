@@ -3,9 +3,13 @@ package org.zuma.examplePlugin.domain.block.base;
 import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
 import io.papermc.paper.event.block.BlockBreakProgressUpdateEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -25,6 +29,8 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
     private Hologram hologram;
 
     @Nullable
+    private BlockFace face;
+    @Nullable
     private MarkerType markerType;
     @Nullable
     private String markerLabel;
@@ -35,12 +41,18 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
         this.hologramLocation = meta.hologramLocation();
         this.markerType = markerType;
         this.markerLabel = markerLabel;
-
+        this.face = meta.face();
     }
 
     public void spawn(Material material) {
         Block block = location.getBlock();
         block.setType(material);
+
+        BlockData data = Bukkit.createBlockData(material);
+        if (data instanceof Directional directional && face != null) {
+            directional.setFacing(face);
+            block.setBlockData(directional);
+        }
     }
 
     public void setLocation(Location location) {
@@ -111,5 +123,14 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
 
     public void setMarkerLabel(@Nullable String markerLabel) {
         this.markerLabel = markerLabel;
+    }
+
+    public void setFace(@Nullable BlockFace face) {
+        this.face = face;
+    }
+
+    @Nullable
+    public BlockFace getFace() {
+        return this.face;
     }
 }

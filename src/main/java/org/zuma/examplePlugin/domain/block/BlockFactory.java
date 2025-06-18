@@ -48,7 +48,7 @@ public class BlockFactory {
             case 1 -> {
                 InventoryOpenerMeta deserialized = new Gson().fromJson(json.meta(), InventoryOpenerMeta.class);
                 InventoryOpenerBlock block = new InventoryOpenerBlock(meta);
-                block.initializeBlock(deserialized.inventoryId(), deserialized.requirements(), deserialized.label(), deserialized.blockType());
+                block.initializeBlock(deserialized.inventoryId(), deserialized.requirements(), deserialized.label(), deserialized.icon(), deserialized.blockType(), deserialized.marker(), deserialized.markerLabel());
                 return block;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
