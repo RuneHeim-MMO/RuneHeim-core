@@ -113,9 +113,7 @@ public class ResourceNode extends AbstractInteractableBlock {
     private void startGatheringAction(RunePlayer player, double modifier) {
         blockType.getStartSound().play(player);
         player.useBusyState((int) (blockType.getBaseGatheringDurationMillis() / modifier), blockType.getActionVerb() + " " + blockType.getLabel(),
-                "", blockType.getStepSound(), blockType.getGatherSuccessSound(), (a) -> {
-                    onGather(player);
-                });
+                "", blockType.getStepSound(), blockType.getGatherSuccessSound(), () -> onGather(player), null);
     }
 
     private void onGather(RunePlayer player) {

@@ -34,10 +34,12 @@ public abstract class AbstractRecipe implements SkillRestrictable {
     private final List<SkillRequirement> requirements;
     private final List<IngredientRecord> ingredients;
     private final int craftTimeMs;
-    private final ItemRecord successResult;
+
 
     @Nullable
     private final ItemRecord failResult;
+    @Nullable
+    private final ItemRecord successResult;
     private final List<SkillXpRecord> successXp;
 
 
@@ -69,6 +71,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         return craftTimeMs;
     }
 
+    @Nullable
     public ItemRecord getSuccessResult() {
         return successResult;
     }
@@ -95,6 +98,10 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         Color color = playHasInInventory ? Color.SUCCESS : Color.ERROR;
 
         return Component.text(record.getAmount() + "x " + ingredient.displayName).color(color.asColor());
+    }
+
+    public ItemStack getDisplayItemstack() {
+        return this.displayItemstack;
     }
 
     public ItemStack getDisplayItemstack(RunePlayer player, ItemRegistry registry) {
@@ -163,9 +170,12 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         }
 
 
+        // Success result can be null for recipes like campfire recipe.
+        int successCrafts = successResult != null ? successResult.getAmount() : 1;
+
         itemLore.add(Component.text(""));
         itemLore.add(Component.text("Result: ", Color.ITEM_LABEL.asColor()));
-        itemLore.add(Component.text(successResult.getAmount() + "x ", Color.ITEM_LABEL.asColor()).append(displayItemstack.displayName()));
+        itemLore.add(Component.text(successCrafts + "x ", Color.ITEM_LABEL.asColor()).append(displayItemstack.displayName()));
         itemLore.add(Component.text(""));
 
         meta.lore(itemLore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());
@@ -180,5 +190,17 @@ public abstract class AbstractRecipe implements SkillRestrictable {
 
     public @Nullable ItemRecord getFailResult() {
         return failResult;
+    }
+
+    public void onCraftingSuccess(RunePlayer player) {
+
+    }
+
+    public void onCraftingStart(RunePlayer player) {
+
+    }
+
+    public void onCraftingCancelled(RunePlayer player) {
+
     }
 }

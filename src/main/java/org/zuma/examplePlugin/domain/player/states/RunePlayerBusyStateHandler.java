@@ -14,10 +14,10 @@ import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.hud.LoadingBarBuilder;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
+import javax.annotation.Nullable;
 import java.time.Duration;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Consumer;
 
 public class RunePlayerBusyStateHandler {
     private final RunePlayer player;
@@ -27,7 +27,7 @@ public class RunePlayerBusyStateHandler {
         this.player = player;
     }
 
-    public void useBusyState(int durationMs, String action, String successAction, SoundType stepSound, SoundType successSound, Consumer<Void> consumer) {
+    public void useBusyState(int durationMs, String action, String successAction, SoundType stepSound, SoundType successSound, Runnable onSuccess, @Nullable Runnable onFailure) {
         UUID uuid = player.getUUID();
         int steps = 10;
         long stepDuration = Math.max(1L, (durationMs / 50L) / steps);
@@ -56,6 +56,11 @@ public class RunePlayerBusyStateHandler {
                     isBusy = false;
                     HudService.showFailTitle(player, "Task cancelled.");
                     this.cancel();
+
+                    if (onFailure != null) {
+                        onFailure.run();
+                    }
+
                     return;
                 }
 
@@ -71,7 +76,7 @@ public class RunePlayerBusyStateHandler {
                             TextUtils.getGenericDuration()
                     ));
 
-                    consumer.accept(null);
+                    onSuccess.run();
                     return;
 
                 }

@@ -29,7 +29,6 @@ import org.zuma.examplePlugin.events.player.RunePlayerGainedXPEvent;
 import org.zuma.examplePlugin.events.player.RunePlayerLevelUpEvent;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 public class RunePlayer {
     private final UUID uuid;
@@ -136,8 +135,8 @@ public class RunePlayer {
         }
     }
 
-    public void useBusyState(int durationMs, String action, String successAction, SoundType stepSound, SoundType successSound, Consumer<Void> consumer) {
-        this.busyStateHandler.useBusyState(durationMs, action, successAction, stepSound, successSound, consumer);
+    public void useBusyState(int durationMs, String action, String successAction, SoundType stepSound, SoundType successSound, Runnable onSuccess, @Nullable Runnable onFailure) {
+        this.busyStateHandler.useBusyState(durationMs, action, successAction, stepSound, successSound, onSuccess, onFailure);
     }
 
     public boolean isBusy() {

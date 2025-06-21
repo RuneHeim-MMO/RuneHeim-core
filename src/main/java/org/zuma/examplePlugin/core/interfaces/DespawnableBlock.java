@@ -7,6 +7,10 @@ import javax.annotation.Nullable;
 public interface DespawnableBlock {
     boolean shouldBeDespawned();
 
+    default int despawnSeconds() {
+        return 600;
+    }
+
     @Nullable
     default ItemRecord dropOnDespawn() {
         return null;

@@ -137,6 +137,12 @@ public class ItemRepository {
                                         ), null)
                         ), 1)),
 
+                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.FLINT_AND_STEEL.asInt(), Material.FLINT_AND_STEEL, ItemRarity.COMMON, "Flint and Steel", List.of("A nice tool to start a fire."), null, null),
+                        new VersionedJson(new Gson().toJson(
+                                new EquipableMeta(
+                                        null, null)
+                        ), 1)),
+
 
                 // Materials
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.COPPER_ORE.asInt(), Material.COAL, ItemRarity.COMMON, "Copper Ore", List.of("Raw copper ore, ready to be smelted into metal."), null, null), null),

@@ -15,7 +15,6 @@ import java.util.Collection;
 import java.util.HashMap;
 
 public class BlockManager {
-    private static final int BLOCK_DESPAWN_SECONDS = 10;
     private final HashMap<Location, AbstractInteractableBlock> blocks = new HashMap<>();
     private final HashMap<DespawnableBlock, Long> despawnableQueue = new HashMap<>();
 
@@ -42,7 +41,7 @@ public class BlockManager {
                         return;
                     }
 
-                    despawnableQueue.put(despawnable, System.currentTimeMillis() + BlockManager.BLOCK_DESPAWN_SECONDS * 1000L);
+                    despawnableQueue.put(despawnable, System.currentTimeMillis() + despawnable.despawnSeconds() * 1000L);
                 });
 
                 despawnableQueue.forEach((block, despawnMillis) -> {

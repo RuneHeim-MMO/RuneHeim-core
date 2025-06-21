@@ -81,7 +81,10 @@ public enum RecipeId {
     STEEL_PICKAXE(1002),
     MITHRIL_PICKAXE(1003),
     ADAMANTITE_PICKAXE(1004),
-    RUNITE_PICKAXE(1005);
+    RUNITE_PICKAXE(1005),
+
+    LOG_CAMPFIRE(1100),
+    MAGIC_LOG_CAMPFIRE(1101); // todo: CHANGE ID!
 
 
     private final int id;

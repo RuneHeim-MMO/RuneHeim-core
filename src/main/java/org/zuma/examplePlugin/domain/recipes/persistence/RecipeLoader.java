@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.domain.recipes.persistence;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.zuma.examplePlugin.RuneQuestPlugin;
@@ -32,14 +33,19 @@ public class RecipeLoader {
     }
 
     private void registerRecipe(AbstractRecipeMeta meta) {
-        AbstractItem item = this.itemRegistry.getItem(meta.successResult().getItemId());
+        ItemStack itemStack = new ItemStack(Material.BARRIER);
 
-        if (item == null) {
-            RuneQuestPlugin.getRuneLogger().logWithStack(LogLevel.WARN, "Cannot register " + meta.type().name() + " recipe. Recipe result ItemRecord id is invalid.");
-            return;
+        if (meta.successResult() != null) {
+            AbstractItem item = this.itemRegistry.getItem(meta.successResult().getItemId());
+
+            if (item == null) {
+                RuneQuestPlugin.getRuneLogger().logWithStack(LogLevel.WARN, "Cannot register " + meta.type().name() + " recipe. Recipe result ItemRecord id is invalid.");
+                return;
+            }
+
+            itemStack = item.asItemStack();
         }
 
-        ItemStack itemStack = item.asItemStack();
         ItemMeta displayItemMeta = itemStack.getItemMeta();
 
         displayItemMeta.lore(new ArrayList<>());

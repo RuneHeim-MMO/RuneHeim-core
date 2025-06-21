@@ -11,6 +11,6 @@ import java.util.List;
 public record ConcreteRecipeMeta(
         int id,
         int craftTimeMs, List<SkillRequirement> requirements,
-        List<IngredientRecord> ingredients, ItemRecord successResult,
+        List<IngredientRecord> ingredients, @Nullable ItemRecord successResult,
         @Nullable ItemRecord failResult, List<SkillXpRecord> successXp) {
 }

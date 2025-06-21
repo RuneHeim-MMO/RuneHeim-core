@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.block.impl;
 
 import eu.decentsoftware.holograms.api.DHAPI;
+import eu.decentsoftware.holograms.api.holograms.Hologram;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -27,37 +28,51 @@ import java.util.List;
 import java.util.UUID;
 
 public class CampfireBlock extends InventoryOpenerBlock implements DespawnableBlock {
+    private final String initialName;
     private final int burnSeconds;
     private int burnLeftSeconds;
+    private boolean burning;
 
-    public CampfireBlock(Location location, boolean soulSkin, int burnSeconds) {
+    public CampfireBlock(Location location, String initialName, boolean soulSkin, int burnSeconds) {
         super(new AbstractInteractableBlockMeta(-1, BlockType.InventoryOpener, BlockFace.NORTH, location, HologramSide.TOP));
+        this.initialName = initialName;
         this.burnSeconds = burnSeconds;
         this.burnLeftSeconds = burnSeconds;
-        super.initializeBlock(InventoryId.FIRE.asInt(), new ArrayList<>(), "Campfire", null, soulSkin ? Material.SOUL_CAMPFIRE : Material.CAMPFIRE, null, null);
-        updateHologram();
-        startLoop();
+        this.burning = false;
+        super.initializeBlock(InventoryId.FIRE.asInt(), new ArrayList<>(), "", null, soulSkin ? Material.SOUL_CAMPFIRE : Material.CAMPFIRE, null, null);
+        setIsLit(false);
     }
 
     private void updateHologram() {
-        getHologram().delete();
+        Hologram hologram = getHologram();
 
-        Component progressBar = new LoadingBarBuilder()
-                .barLength(14)
-                .totalSteps(burnSeconds)
-                .currentStep(burnLeftSeconds)
-                .segment(Icon.PROGRESS_SHORT_SEGMENT.get())
-                .start(Icon.PROGRESS_SHORT_START.get())
-                .stop(Icon.PROGRESS_SHORT_END.get())
-                .emptyColor(Color.CAMPFIRE_BAR_EMPTY.asColor())
-                .fillColor(Color.CAMPFIRE_BAR_FILL.asColor())
-                .build();
+        if (hologram != null) {
+            getHologram().delete();
+        }
 
-        List<String> hologramContent = new ArrayList<>(List.of(
-                "§f" + Icon.FIRE.get() + " " + Color.INTERACTABLE_ENTITY.asSpigotHex() + "Campfire",
-                TextUtils.componentToColoredString(progressBar),
-                burnLeftSeconds + " s"
-        ));
+        String title = burning ? "Campfire" : initialName;
+        List<String> hologramContent = List.of();
+
+        if (burning) {
+            Component progressBar = new LoadingBarBuilder()
+                    .barLength(14)
+                    .totalSteps(burnSeconds)
+                    .currentStep(burnLeftSeconds)
+                    .segment(Icon.PROGRESS_SHORT_SEGMENT.get())
+                    .start(Icon.PROGRESS_SHORT_START.get())
+                    .stop(Icon.PROGRESS_SHORT_END.get())
+                    .emptyColor(Color.CAMPFIRE_BAR_EMPTY.asColor())
+                    .fillColor(Color.CAMPFIRE_BAR_FILL.asColor())
+                    .build();
+
+            hologramContent = List.of(
+                    "§f" + Icon.FIRE.get() + " " + Color.INTERACTABLE_ENTITY.asSpigotHex() + title,
+                    TextUtils.componentToColoredString(progressBar),
+                    burnLeftSeconds + " s"
+            );
+        } else {
+            hologramContent = List.of("§8" + Icon.FIRE.get() + " " + Color.INTERACTABLE_ENTITY.asSpigotHex() + initialName);
+        }
 
         setHologram(DHAPI.createHologram(UUID.randomUUID().toString(), getHologramLocation(), hologramContent));
     }
@@ -69,7 +84,7 @@ public class CampfireBlock extends InventoryOpenerBlock implements DespawnableBl
                 burnLeftSeconds -= 1;
                 updateHologram();
 
-                if (burnLeftSeconds < 0) {
+                if (burnLeftSeconds <= 0) {
                     extinguish();
                     this.cancel();
                 }
@@ -78,28 +93,45 @@ public class CampfireBlock extends InventoryOpenerBlock implements DespawnableBl
 
     }
 
-    private void extinguish() {
-        getHologram().delete();
-        Block block = getLocation().getBlock();
+    public void startFire() {
+        this.burning = true;
+        setIsLit(true);
+        updateHologram();
+        startLoop();
+    }
 
+    private void extinguish() {
+        Hologram hologram = getHologram();
+
+        if (hologram != null) {
+            getHologram().delete();
+        }
+
+        setIsLit(true);
+    }
+
+    private void setIsLit(boolean isLit) {
+        Block block = getLocation().getBlock();
         if (block.getType() == Material.CAMPFIRE || block.getType() == Material.SOUL_CAMPFIRE) {
             BlockData data = block.getBlockData();
             if (data instanceof Campfire campfireData) {
-                campfireData.setLit(false);
+                campfireData.setLit(isLit);
                 block.setBlockData(campfireData);
             }
         }
-
-
     }
-
 
     @Override
     public boolean shouldBeDespawned() {
         return burnLeftSeconds <= 0;
     }
 
-    // TODO REDO!
+    @Override
+    public int despawnSeconds() {
+        return 0;
+    }
+
+
     @Override
     public ItemRecord dropOnDespawn() {
         return new ItemRecord(ItemId.BURNT_FOOD, 1);

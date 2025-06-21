@@ -31,7 +31,7 @@ public class HudService {
     private static final Random random = new Random();
 
     public static void showXpGainMessage(RunePlayer player, SkillType type, double xp, XpSource source) {
-        String xpStr = type.getSymbol() + " " + xp + " XP";
+        String xpStr = "§f" + type.getSymbol() + Color.SUCCESS.asSpigotHex() + " " + xp + " XP";
         boolean isPartySource = source == XpSource.PARTY;
 
         spawnVerticalHologramBubble(player, Color.SUCCESS.asSpigotHex() + "+ " + xpStr + " " + (isPartySource ? "[Party]" : ""));
@@ -65,8 +65,8 @@ public class HudService {
             player.getPlayer().showTitle(Title.title(
                     Component.text("Congratulations!", Color.SERVER_BRAND.asColor()),
                     Component.text("Your ", Color.SUCCESS.asColor())
-                        .append(Component.text(type.getSymbol(), NamedTextColor.WHITE))
-                        .append(Component.text(" " + type.getLabel() + " level is now " + skill.getLevel() + "!", Color.SUCCESS.asColor())),
+                            .append(Component.text(type.getSymbol(), NamedTextColor.WHITE))
+                            .append(Component.text(" " + type.getLabel() + " level is now " + skill.getLevel() + "!", Color.SUCCESS.asColor())),
                     Title.Times.times(
                             Duration.ofSeconds(1),
                             Duration.ofSeconds(8, 5),
@@ -100,8 +100,8 @@ public class HudService {
             player.getPlayer().showTitle(Title.title(
                     congrats,
                     Component.text("No way! You have MAXED your ", Color.SUCCESS.asColor())
-                        .append(Component.text(type.getSymbol(), NamedTextColor.WHITE))
-                        .append(Component.text(" " + type.getLabel() + " level!", Color.SUCCESS.asColor())),
+                            .append(Component.text(type.getSymbol(), NamedTextColor.WHITE))
+                            .append(Component.text(" " + type.getLabel() + " level!", Color.SUCCESS.asColor())),
                     Title.Times.times(
                             Duration.ofSeconds(1),
                             Duration.ofSeconds(10),

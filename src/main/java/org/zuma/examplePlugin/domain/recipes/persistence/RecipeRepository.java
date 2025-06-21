@@ -16,6 +16,30 @@ public class RecipeRepository {
 
     public List<AbstractRecipeMeta> getAll() {
         return List.of(
+
+                new AbstractRecipeMeta(RecipeId.LOG_CAMPFIRE.getId(), RecipeType.CAMPFIRE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FIREMAKING, 1)),
+                        List.of(
+                                new IngredientRecord(ItemId.LOG, 1, true),
+                                new IngredientRecord(ItemId.FLINT_AND_STEEL, 1, false)
+                        ),
+                        null,
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FIREMAKING, 6.2))
+                ),
+
+                new AbstractRecipeMeta(RecipeId.MAGIC_LOG_CAMPFIRE.getId(), RecipeType.CAMPFIRE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FIREMAKING, 1)),
+                        List.of(
+                                new IngredientRecord(ItemId.MAGIC_LOG, 1, true),
+                                new IngredientRecord(ItemId.FLINT_AND_STEEL, 1, false)
+                        ),
+                        null,
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FIREMAKING, 6.2))
+                ),
+
+
                 // Bars
                 new AbstractRecipeMeta(RecipeId.BRONZE_BAR.getId(), RecipeType.SMELTING_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 1)),

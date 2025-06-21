@@ -51,6 +51,10 @@ public enum SoundType {
     FISHING_STEP("BLOCK_BUBBLE_COLUMN_UPWARDS_AMBIENT", false, 0.2f, 1.0f),
     FISHING_SUCCESS("ENTITY_FISH_SWIM", false, 1.0f, 1.4f),
 
+    CAMPFIRE_RECIPE_START("BLOCK_LAVA_POP", false, 1.0f, 1.3f),
+    CAMPFIRE_RECIPE_STEP("BLOCK_BAMBOO_BREAK", false, 1.0f, 0.9f),
+    CAMPFIRE_RECIPE_SUCCESS("BLOCK_BLASTFURNACE_FIRE_CRACKLE", false, 1.0f, 0.5f),
+    
     // AMBIENT
     VILLAGER_MAN_AMBIENT_1("vocal_villagers:entity.villager.ambient", true, 1, 0.75f),
     VILLAGER_MAN_AMBIENT_2("vocal_villagers:entity.villager.ambient", true, 1, 0.80f),

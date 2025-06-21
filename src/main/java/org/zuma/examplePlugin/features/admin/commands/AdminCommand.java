@@ -85,13 +85,9 @@ public class AdminCommand implements BasicCommand {
 
         if (Objects.equals(args[0], "campfire")) {
             blockManager.registerBlock(
-                    new CampfireBlock(PlayerUtils.trunacePlayerFeetLocation(runePlayer), false, 300));
+                    new CampfireBlock(PlayerUtils.trunacePlayerFeetLocation(runePlayer), "Logs", false, 300));
         }
 
-        if (Objects.equals(args[0], "soulcampfire")) {
-            blockManager.registerBlock(
-                    new CampfireBlock(PlayerUtils.trunacePlayerFeetLocation(runePlayer), true, 600));
-        }
 
         // Items without page
         if (args.length == 1 && Objects.equals(args[0], "items")) {

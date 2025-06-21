@@ -13,6 +13,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.PersistanceDataKey;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +46,22 @@ public class PlayerUtils {
             itemCounts.put(id, itemCounts.getOrDefault(id, 0) + amount);
         }
 
+        // Also count the item on the player's cursor
+        ItemStack cursor = player.getPlayer().getItemOnCursor();
+        if (!cursor.getType().isAir()) {
+            ItemMeta meta = cursor.getItemMeta();
+            if (meta != null) {
+                PersistentDataContainer container = meta.getPersistentDataContainer();
+                if (container.has(itemIdKey, PersistentDataType.INTEGER)) {
+                    Integer id = container.get(itemIdKey, PersistentDataType.INTEGER);
+                    if (id != null) {
+                        int amount = cursor.getAmount();
+                        itemCounts.put(id, itemCounts.getOrDefault(id, 0) + amount);
+                    }
+                }
+            }
+        }
+
         // Check if all required items are available in sufficient quantity
         for (ItemRecord record : requiredItems) {
             int requiredId = record.getItemId();
@@ -58,6 +75,7 @@ public class PlayerUtils {
         return true;
     }
 
+
     public static boolean removeItems(RunePlayer player, List<ItemRecord> requiredItems) {
         if (!hasItems(player, requiredItems)) {
             return false;
@@ -66,13 +84,15 @@ public class PlayerUtils {
         NamespacedKey itemIdKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistanceDataKey.ITEM_ID.asString());
         PlayerInventory inventory = player.getPlayer().getInventory();
         ItemStack[] contents = inventory.getStorageContents();
+        ItemStack cursor = player.getPlayer().getItemOnCursor();
 
         for (ItemRecord req : requiredItems) {
             int remainingToRemove = req.getAmount();
             int requiredId = req.getItemId();
 
-            if (remainingToRemove <= 0) continue; // skip invalid records
+            if (remainingToRemove <= 0) continue;
 
+            // Step 1: Remove from main inventory
             for (int i = 0; i < contents.length; i++) {
                 ItemStack stack = contents[i];
                 if (stack == null || stack.getType().isAir()) continue;
@@ -99,11 +119,37 @@ public class PlayerUtils {
 
                 if (remainingToRemove <= 0) break;
             }
+
+            // Step 2: Remove from cursor if needed
+            if (remainingToRemove > 0 && !cursor.getType().isAir()) {
+                ItemMeta cursorMeta = cursor.getItemMeta();
+                if (cursorMeta != null) {
+                    PersistentDataContainer cursorContainer = cursorMeta.getPersistentDataContainer();
+                    if (cursorContainer.has(itemIdKey, PersistentDataType.INTEGER)) {
+                        Integer cursorId = cursorContainer.get(itemIdKey, PersistentDataType.INTEGER);
+                        if (cursorId != null && cursorId == requiredId) {
+                            int cursorAmount = cursor.getAmount();
+
+                            if (cursorAmount <= remainingToRemove) {
+                                remainingToRemove -= cursorAmount;
+                                player.getPlayer().setItemOnCursor(null);
+                            } else {
+                                cursor.setAmount(cursorAmount - remainingToRemove);
+                                remainingToRemove = 0;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (remainingToRemove > 0) {
+                // Not enough items found, abort
+                return false;
+            }
         }
 
         inventory.setStorageContents(contents);
         player.getPlayer().updateInventory();
-
         return true;
     }
 
@@ -137,5 +183,27 @@ public class PlayerUtils {
         int z = loc.getBlockZ();
 
         return new Location(world, x, y, z, loc.getYaw(), loc.getPitch());
+    }
+
+    public static int getCraftSuccessChance(RunePlayer player, SkillRequirement requirement, int minPercentage) {
+        int MAX_LEVEL = 99;
+        int SAFE_OFFSET = 10;
+
+        int requiredLevel = requirement.minimumLevel();
+        int playerLevel = player.getSkill(requirement.type()).getLevel();
+
+        if (playerLevel >= MAX_LEVEL || playerLevel >= requiredLevel + SAFE_OFFSET) {
+            return 100;
+        }
+
+        if (playerLevel < requiredLevel) {
+            // Below requirement: minimum success chance (e.g. 30%)
+            return minPercentage;
+        }
+
+        // Between [requiredLevel] and [requiredLevel + SAFE_OFFSET]
+        int offset = playerLevel - requiredLevel;
+        float progress = offset / (float) SAFE_OFFSET;
+        return Math.round(minPercentage + ((100 - minPercentage) * progress)); // from minPercentage to 100%
     }
 }

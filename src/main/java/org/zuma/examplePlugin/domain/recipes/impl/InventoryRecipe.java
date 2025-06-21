@@ -7,8 +7,8 @@ import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
 import org.zuma.examplePlugin.domain.recipes.meta.AbstractRecipeMeta;
 import org.zuma.examplePlugin.domain.recipes.meta.ConcreteRecipeMeta;
 
-public class CraftingRecipe extends AbstractRecipe {
-    public CraftingRecipe(ItemStack displayItemstack, ConcreteRecipeMeta meta) {
+public class InventoryRecipe extends AbstractRecipe {
+    public InventoryRecipe(ItemStack displayItemstack, ConcreteRecipeMeta meta) {
         super(displayItemstack, new AbstractRecipeMeta(meta.id(), RecipeType.INVENTORY_RECIPE, meta.craftTimeMs(), meta.requirements(), meta.ingredients(), meta.successResult(), meta.failResult(), meta.successXp()));
     }
 

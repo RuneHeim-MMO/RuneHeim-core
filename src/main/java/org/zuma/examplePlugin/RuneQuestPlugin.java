@@ -41,6 +41,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayerListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.recipes.RecipeFactory;
 import org.zuma.examplePlugin.domain.recipes.RecipeHandler;
+import org.zuma.examplePlugin.domain.recipes.RecipeListener;
 import org.zuma.examplePlugin.domain.recipes.RecipeRegistry;
 import org.zuma.examplePlugin.domain.recipes.persistence.RecipeLoader;
 import org.zuma.examplePlugin.domain.recipes.persistence.RecipeRepository;
@@ -116,6 +117,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         RecipeLoader recipeLoader = new RecipeLoader(itemRegistry, recipeRegistry, new RecipeRepository(), new RecipeFactory());
         recipeLoader.loadAllRecipes();
         recipeHandler = new RecipeHandler(recipeRegistry, itemRegistry);
+        RecipeListener recipeListener = new RecipeListener(recipeHandler);
+        getServer().getPluginManager().registerEvents(recipeListener, pluginInstance);
 
         guiHandler = new GUIHandler(new GUIRegistry(), runePlayerManager);
         GUIListener guiListener = new GUIListener(guiHandler);
@@ -209,5 +212,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     public static RecipeHandler getRecipeHandler() {
         return recipeHandler;
     }
+
+    public static BlockManager getBlockManager() {
+        return blockManager;
+    }
+
 
 }

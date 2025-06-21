@@ -86,7 +86,7 @@ public class ActionBarManager {
     public void showLevelUp() {
         queueFrame(Component.text("Level ups!", Color.SUCCESS.asColor()), 20);
         queueTypewriter("Some new recipes are available!", 1, Color.SUCCESS);
-
+        queueFrame(Component.text("Some new recipes are available!", Color.SUCCESS.asColor()), 60);
         startAnimationLoop();
 
     }
