@@ -15,7 +15,7 @@ import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
-import org.zuma.examplePlugin.domain.item.impl.EquipableItem;
+import org.zuma.examplePlugin.domain.item.base.EquipableItem;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;

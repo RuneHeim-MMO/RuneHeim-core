@@ -20,14 +20,11 @@ public class FoodItem extends AbstractItem {
 
     public FoodItem(AbstractItemMeta meta) {
         super(meta);
-        this.setRarityPrefixSlot(Icon.FRUIT.get());
+        super.appendItemType("Food", Icon.FRUIT.get());
     }
 
     public void setHealAmount(int amount) {
         this.healAmount = amount;
-
-        super.appendToLore(Component.text(""));
-        super.appendToLore(Component.text("Food", Color.ITEM_TYPE.asColor()));
         super.appendToLore(Component.text("Heals ", Color.SUCCESS.asColor()).append(Component.text(SkillType.HITPOINTS.getSymbol(), NamedTextColor.WHITE))
                 .append(Component.text(" " + healAmount + " " + SkillType.HITPOINTS.getLabel(), Color.SUCCESS.asColor())));
 

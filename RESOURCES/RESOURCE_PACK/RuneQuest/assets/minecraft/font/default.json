@@ -2,6 +2,76 @@
   "providers": [
     {
       "type": "bitmap",
+      "file": "minecraft:font/icons/common.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["▜"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/uncommon.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⏤"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/rare.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⩰"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/epic.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⏇"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/legendary.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⢕"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/mythic.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⛧"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/divine.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⟴"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/sword_2.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⯴"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/shield_3.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⤜"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/tool.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["≜"]
+    },
+    {
+      "type": "bitmap",
       "file": "minecraft:font/icons/anvil.png",
       "ascent": 9,
       "height": 12,
@@ -31,28 +101,28 @@
     {
       "type": "bitmap",
       "file": "minecraft:font/icons/coin_handful.png",
-      "ascent": 10,
+      "ascent": 9,
       "height": 12,
       "chars": ["①"]
     },
     {
       "type": "bitmap",
       "file": "minecraft:font/icons/coin_one.png",
-      "ascent": 10,
+      "ascent": 9,
       "height": 12,
       "chars": ["②"]
     },
     {
       "type": "bitmap",
       "file": "minecraft:font/icons/coin_two.png",
-      "ascent": 10,
+      "ascent": 9,
       "height": 12,
       "chars": ["③"]
     },
     {
       "type": "bitmap",
       "file": "minecraft:font/icons/coin_pile.png",
-      "ascent": 10,
+      "ascent": 9,
       "height": 12,
       "chars": ["◬"]
     },
@@ -95,7 +165,7 @@
       "type": "bitmap",
       "file": "minecraft:font/icons/fruit.png",
       "ascent": 9,
-      "height": 10,
+      "height": 12,
       "chars": ["✿"]
     },
     {
@@ -137,7 +207,7 @@
       "type": "bitmap",
       "file": "minecraft:font/icons/potion.png",
       "ascent": 9,
-      "height": 10,
+      "height": 12,
       "chars": ["☀"]
     },
     {
@@ -251,6 +321,27 @@
       "ascent": 6,
       "height": 7,
       "chars": ["⌨"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/rock.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⋍"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/envelope.png",
+      "ascent": 13,
+      "height": 20,
+      "chars": ["✉"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/logo.png",
+      "ascent": 94,
+      "height": 128,
+      "chars": ["◾"]
     }
   ]
 }

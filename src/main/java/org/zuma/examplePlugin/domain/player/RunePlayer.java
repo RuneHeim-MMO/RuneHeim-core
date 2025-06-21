@@ -16,6 +16,7 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.hud.ActionBarManager;
 import org.zuma.examplePlugin.domain.hud.HudService;
+import org.zuma.examplePlugin.domain.hud.ScoreboardManager;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
@@ -35,6 +36,7 @@ public class RunePlayer {
     private final List<Modifier> gearModifiers = new ArrayList<>();
     private final EnumMap<SkillType, Skill> skills = new EnumMap<>(SkillType.class);
     private final ActionBarManager actionBarManager;
+    private ScoreboardManager scoreboardManager;
     private final RunePlayerBusyStateHandler busyStateHandler;
     private @Nullable Party party;
 
@@ -42,6 +44,11 @@ public class RunePlayer {
         this.uuid = uuid;
         this.busyStateHandler = new RunePlayerBusyStateHandler(this);
         this.actionBarManager = new ActionBarManager(this);
+
+        // todo: fix
+        Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+            this.scoreboardManager = new ScoreboardManager(this);
+        });
 
         // Each player starts with default XP in all skill types.
         for (SkillType type : SkillType.values()) {
@@ -125,7 +132,7 @@ public class RunePlayer {
         if (party != null) {
             party.splitXPBetweenMembers(type, xp);
         } else {
-            addSkillXp(type, xp, XpSource.PERSONAL);
+            addSkillXp(type, xp, org.zuma.examplePlugin.core.constants.XpSource.PERSONAL);
         }
     }
 

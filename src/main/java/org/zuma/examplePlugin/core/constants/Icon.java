@@ -1,6 +1,16 @@
 package org.zuma.examplePlugin.core.constants;
 
 public enum Icon {
+    EMPTY(""),
+    
+    COMMON("▜"),
+    UNCOMMON("⏤"),
+    RARE("⩰"),
+    EPIC("⏇"),
+    LEGENDARY("⢕"),
+    MYTHIC("⛧"),
+    DIVINE("⟴"),
+
     ANVIL("⮯"),
     ARMOR("⛨"),
     ARROW("⇶"),
@@ -21,6 +31,9 @@ public enum Icon {
     MATERIAL("⑧"),
     PICKAXE("⛏"),
     POTION("☀"),
+    TOOL("≜"),
+    SWORD_2("⯴"),
+    SHIELD_3("⤜"),
     SHIELD_2("▒"),
     SHIELD("▓"),
     STAB_ATTACK("ᗧ"),

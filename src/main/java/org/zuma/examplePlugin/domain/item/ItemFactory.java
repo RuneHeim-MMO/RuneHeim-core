@@ -4,10 +4,7 @@ import com.google.gson.Gson;
 import org.zuma.examplePlugin.core.exception.UnsupportedJsonVersionException;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
-import org.zuma.examplePlugin.domain.item.impl.EquipableItem;
-import org.zuma.examplePlugin.domain.item.impl.MaterialItem;
-import org.zuma.examplePlugin.domain.item.impl.MiscItem;
-import org.zuma.examplePlugin.domain.item.impl.QuestItem;
+import org.zuma.examplePlugin.domain.item.impl.*;
 import org.zuma.examplePlugin.domain.item.impl.consumable.FoodItem;
 import org.zuma.examplePlugin.domain.item.impl.consumable.PotionItem;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
@@ -21,7 +18,9 @@ import javax.annotation.Nullable;
 public class ItemFactory {
     public AbstractItem createItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
         return switch (meta.type()) {
-            case GEAR -> createEquipableItem(meta, json);
+            case EQUIPMENT -> createGearItem(meta, json);
+            case TOOL -> createToolItem(meta, json);
+            case WEAPON -> createWeaponItem(meta, json);
             case QUEST -> createQuestItem(meta, json);
             case MATERIAL -> createMaterialItem(meta);
             case POTION -> createPotionItem(meta, json);
@@ -31,7 +30,7 @@ public class ItemFactory {
         };
     }
 
-    private EquipableItem createEquipableItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+    private GearItem createGearItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {
             throw new UnsupportedOperationException("Cannot create equipable item " + meta.displayName() + " required json is null!");
         }
@@ -39,7 +38,45 @@ public class ItemFactory {
         switch (json.version()) {
             case 1 -> {
                 EquipableMeta deserialized = new Gson().fromJson(json.meta(), EquipableMeta.class);
-                EquipableItem item = new EquipableItem(meta);
+                GearItem item = new GearItem(meta);
+
+                item.addModifiers(deserialized.modifiers());
+                item.addRequirements(deserialized.requirements());
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
+    }
+
+    private ToolItem createToolItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create tool item " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                EquipableMeta deserialized = new Gson().fromJson(json.meta(), EquipableMeta.class);
+                ToolItem item = new ToolItem(meta);
+
+                item.addModifiers(deserialized.modifiers());
+                item.addRequirements(deserialized.requirements());
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
+    }
+
+    private WeaponItem createWeaponItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create tool item " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                EquipableMeta deserialized = new Gson().fromJson(json.meta(), EquipableMeta.class);
+                WeaponItem item = new WeaponItem(meta);
 
                 item.addModifiers(deserialized.modifiers());
                 item.addRequirements(deserialized.requirements());

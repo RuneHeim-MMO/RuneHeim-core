@@ -2,11 +2,13 @@ package org.zuma.examplePlugin.domain.item.constants;
 
 public enum ItemType {
     MISC(0),
-    GEAR(1),
+    EQUIPMENT(1),
     MATERIAL(2),
     QUEST(3),
     POTION(4),
-    FOOD(5);
+    FOOD(5),
+    WEAPON(6),
+    TOOL(7);
 
     private final int key;
 

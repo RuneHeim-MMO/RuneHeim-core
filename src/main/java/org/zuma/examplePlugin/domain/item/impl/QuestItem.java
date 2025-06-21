@@ -14,8 +14,7 @@ public class QuestItem extends AbstractItem {
 
     public QuestItem(AbstractItemMeta meta) {
         super(meta);
-        super.appendToLore(Component.text(Icon.BOOK.get()));
-        this.appendToLore(Component.text("Quest Item").color(Color.ITEM_TYPE.asColor()));
+        super.appendItemType("Quest Item", Icon.BOOK.get());
     }
 
     public void setQuestName(String name) {

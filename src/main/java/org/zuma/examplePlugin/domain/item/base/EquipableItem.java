@@ -1,13 +1,11 @@
-package org.zuma.examplePlugin.domain.item.impl;
+package org.zuma.examplePlugin.domain.item.base;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
-import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
@@ -17,15 +15,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class EquipableItem extends AbstractItem implements SkillRestrictable {
+public abstract class EquipableItem extends AbstractItem implements SkillRestrictable {
     private final List<Modifier> modifiers = new ArrayList<>();
     private final List<SkillRequirement> requirements = new ArrayList<>();
+    private boolean applyModifiersWhenInHand = false;
 
     public EquipableItem(AbstractItemMeta meta) {
         super(meta);
-        this.setRarityPrefixSlot(Icon.SHIELD.get());
-        super.appendToLore(Component.text(""));
-        super.appendToLore(Component.text("Equipment", Color.ITEM_TYPE.asColor()));
+    }
+
+    public boolean getApplyModifiersWhenInHand() {
+        return this.applyModifiersWhenInHand;
+    }
+
+    public void applyModifiersWhenInHand(boolean apply) {
+        this.applyModifiersWhenInHand = apply;
     }
 
     public List<Modifier> getModifiers() {

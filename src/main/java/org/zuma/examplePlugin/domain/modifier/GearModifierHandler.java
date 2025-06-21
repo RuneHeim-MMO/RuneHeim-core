@@ -1,12 +1,13 @@
 package org.zuma.examplePlugin.domain.modifier;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.zuma.examplePlugin.core.utils.ItemUtils;
 import org.zuma.examplePlugin.core.utils.ModifierUtils;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
-import org.zuma.examplePlugin.domain.item.impl.EquipableItem;
+import org.zuma.examplePlugin.domain.item.base.AbstractItem;
+import org.zuma.examplePlugin.domain.item.base.EquipableItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.modifier.GearModifiersRecalculatedEvent;
 
@@ -32,11 +33,14 @@ public class GearModifierHandler {
     private List<Modifier> getGearModifiers(RunePlayer player, ItemStack itemInHand) {
         PlayerInventory inventory = player.getPlayer().getInventory();
         List<Modifier> modifiers = new ArrayList<>();
-
         List<ItemStack> items = new ArrayList<>(Arrays.asList(inventory.getArmorContents()));
 
-        if (!ItemUtils.isWearableGear(itemInHand)) {
-            items.add(itemInHand);
+        if (itemInHand.getType() != Material.AIR) {
+            AbstractItem item = itemRegistry.getItem(itemInHand);
+
+            if (item instanceof EquipableItem gearItem && gearItem.getApplyModifiersWhenInHand()) {
+                items.add(itemInHand);
+            }
         }
 
         items.stream()

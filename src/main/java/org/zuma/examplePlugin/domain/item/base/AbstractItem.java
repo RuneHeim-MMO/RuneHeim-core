@@ -39,7 +39,7 @@ public abstract class AbstractItem {
     public final List<Component> lore = new ArrayList<>();
     public final List<Component> requirementsLore = new ArrayList<>();
     public final List<Component> bonusesLore = new ArrayList<>();
-    public String rarityPrefixSlot;
+    public final List<Component> itemTypeLore = new ArrayList<>();
     public int customModelData;
 
     @Nullable
@@ -58,7 +58,6 @@ public abstract class AbstractItem {
         this.displayName = meta.displayName();
         this.customModelData = meta.id();
         this.rarity = meta.rarity();
-        this.rarityPrefixSlot = null;
         this.headTexture = meta.headTexture();
         this.leatherColor = meta.leatherColor();
 
@@ -66,10 +65,6 @@ public abstract class AbstractItem {
             this.lore.addAll(meta.lore().stream().map(lore -> Component.text(lore).color(Color.ITEM_DESCRIPTION.asColor())).toList());
         }
 
-    }
-
-    public void setRarityPrefixSlot(String string) {
-        this.rarityPrefixSlot = string;
     }
 
     public void appendToLore(Component component) {
@@ -82,6 +77,10 @@ public abstract class AbstractItem {
 
     public void appendToBonusesLore(Component component) {
         this.bonusesLore.add(component);
+    }
+
+    public void appendItemType(String type, @Nullable String icon) {
+        itemTypeLore.add(Component.text(icon != null ? icon + " " : "", NamedTextColor.WHITE).append(Component.text(type, Color.ITEM_TYPE.asColor())));
     }
 
     public ItemStack asItemStack() {
@@ -170,10 +169,19 @@ public abstract class AbstractItem {
             itemLore.addAll(bonusesLore);
         }
 
+
         itemLore.add(Component.text(""));
 
         List<Component> loreComponents = new ArrayList<>(itemLore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());
-        loreComponents.add(Component.text(rarityPrefixSlot == null ? "" : rarityPrefixSlot + " ", NamedTextColor.WHITE).append(rarity.getComponent()).decoration(TextDecoration.ITALIC, false));
+
+        // todo rarity icons
+        if (rarity != ItemRarity.NOT_APPLICABLE) {
+            loreComponents.add(rarity.getComponent().decoration(TextDecoration.ITALIC, false));
+        }
+
+        loreComponents.addAll(itemTypeLore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());
+
+
         meta.lore(loreComponents);
 
         if (customModelData != -1) {

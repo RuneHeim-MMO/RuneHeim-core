@@ -25,9 +25,7 @@ public class PotionItem extends AbstractItem implements Stateful {
 
     public PotionItem(AbstractItemMeta meta) {
         super(meta);
-        this.setRarityPrefixSlot(Icon.POTION.get());
-        super.appendToLore(Component.text(""));
-        super.appendToLore(Component.text("Potion", Color.ITEM_TYPE.asColor()));
+        super.appendItemType("Potion", Icon.POTION.get());
         this.setStateType(StateType.MULTI_CONSUMABLE);
     }
 
