@@ -35,7 +35,7 @@ public class GearModifierHandler {
         List<Modifier> modifiers = new ArrayList<>();
         List<ItemStack> items = new ArrayList<>(Arrays.asList(inventory.getArmorContents()));
 
-        if (itemInHand.getType() != Material.AIR) {
+        if (itemInHand != null && itemInHand.getType() != Material.AIR) {
             AbstractItem item = itemRegistry.getItem(itemInHand);
 
             if (item instanceof EquipableItem gearItem && gearItem.getApplyModifiersWhenInHand()) {

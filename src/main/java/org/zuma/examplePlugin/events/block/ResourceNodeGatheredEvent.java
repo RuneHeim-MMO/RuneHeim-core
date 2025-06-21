@@ -4,7 +4,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
-import org.zuma.examplePlugin.domain.block.base.ResourceNode;
+import org.zuma.examplePlugin.domain.block.impl.ResourceNode;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class ResourceNodeGatheredEvent extends Event implements Cancellable {

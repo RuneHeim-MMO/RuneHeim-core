@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.block.base;
+package org.zuma.examplePlugin.domain.block.impl;
 
 import eu.decentsoftware.holograms.api.DHAPI;
 import net.kyori.adventure.text.Component;
@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
+import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
@@ -15,6 +16,7 @@ import org.zuma.examplePlugin.domain.map.MarkerType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -55,7 +57,7 @@ public class InventoryOpenerBlock extends AbstractInteractableBlock implements S
     }
 
 
-    public void initializeBlock(int inventoryId, List<SkillRequirement> requirements, String label, String icon, Material material, MarkerType markerType, String markerLabel) {
+    public void initializeBlock(int inventoryId, List<SkillRequirement> requirements, String label, String icon, Material material, @Nullable MarkerType markerType, @Nullable String markerLabel) {
         this.inventoryId = inventoryId;
         this.requirements = requirements;
         this.label = label;

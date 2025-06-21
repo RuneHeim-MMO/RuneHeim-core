@@ -35,7 +35,11 @@ public enum Color {
     SPECIAL_BAR_FILL("#55e67b"),
 
     MANA_BAR_EMPTY("#2f3887"),
-    MANA_BAR_FILL("#6978ff");
+    MANA_BAR_FILL("#6978ff"),
+
+    CAMPFIRE_BAR_EMPTY("#4a3312"),
+    CAMPFIRE_BAR_FILL("#f7ab39");
+
 
     private final TextColor color;
     private final String hex;

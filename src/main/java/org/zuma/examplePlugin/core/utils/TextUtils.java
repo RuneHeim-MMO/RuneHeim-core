@@ -1,9 +1,11 @@
 package org.zuma.examplePlugin.core.utils;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.kyori.adventure.title.Title;
+import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.core.constants.Color;
 
 import java.time.Duration;
@@ -60,5 +62,102 @@ public class TextUtils {
 
     public static String extractPlainText(Component component) {
         return PlainTextComponentSerializer.plainText().serialize(component);
+    }
+
+    public static String componentToColoredString(Component component) {
+        StringBuilder sb = new StringBuilder();
+        appendComponent(sb, component);
+        return sb.toString();
+    }
+
+    private static void appendComponent(StringBuilder sb, Component component) {
+        // Get color code for this component
+        String colorCode = getColorCode(component.color());
+        if (colorCode != null) {
+            sb.append(colorCode);
+        }
+
+        // Append decoration codes if present
+        if (component.hasDecoration(TextDecoration.BOLD)) {
+            sb.append("§l");
+        }
+        if (component.hasDecoration(TextDecoration.ITALIC)) {
+            sb.append("§o");
+        }
+        if (component.hasDecoration(TextDecoration.UNDERLINED)) {
+            sb.append("§n");
+        }
+        if (component.hasDecoration(TextDecoration.STRIKETHROUGH)) {
+            sb.append("§m");
+        }
+        if (component.hasDecoration(TextDecoration.OBFUSCATED)) {
+            sb.append("§k");
+        }
+
+        // Append the actual text content of this component
+        String content = component instanceof net.kyori.adventure.text.TextComponent
+                ? ((net.kyori.adventure.text.TextComponent) component).content()
+                : "";
+        sb.append(content);
+
+        // Recursively process children
+        for (Component child : component.children()) {
+            appendComponent(sb, child);
+        }
+
+        // Reset format after this component to avoid bleed to following text
+        sb.append("§r");
+    }
+
+    private static String getColorCode(@Nullable TextColor color) {
+        if (color == null) return null;
+
+        // Example mapping of TextColor to Minecraft § codes (basic colors only)
+        int rgb = color.value();
+        switch (rgb) {
+            case 0x000000:
+                return "§0"; // black
+            case 0x0000AA:
+                return "§1"; // dark blue
+            case 0x00AA00:
+                return "§2"; // dark green
+            case 0x00AAAA:
+                return "§3"; // dark aqua
+            case 0xAA0000:
+                return "§4"; // dark red
+            case 0xAA00AA:
+                return "§5"; // dark purple
+            case 0xFFAA00:
+                return "§6"; // gold
+            case 0xAAAAAA:
+                return "§7"; // gray
+            case 0x555555:
+                return "§8"; // dark gray
+            case 0x5555FF:
+                return "§9"; // blue
+            case 0x55FF55:
+                return "§a"; // green
+            case 0x55FFFF:
+                return "§b"; // aqua
+            case 0xFF5555:
+                return "§c"; // red
+            case 0xFF55FF:
+                return "§d"; // light purple
+            case 0xFFFF55:
+                return "§e"; // yellow
+            case 0xFFFFFF:
+                return "§f"; // white
+            default:
+                // For custom colors, Adventure supports RGB with §x§R§R§G§G§B§B format
+                return toMinecraftHexColorCode(rgb);
+        }
+    }
+
+    // Convert int RGB (0xRRGGBB) to Minecraft hex color code §x§R§R§G§G§B§B
+    private static String toMinecraftHexColorCode(int rgb) {
+        char[] hexChars = String.format("%06X", rgb).toCharArray();
+        return "§x§" + hexChars[0] + "§" + hexChars[1] +
+                "§" + hexChars[2] + "§" + hexChars[3] +
+                "§" + hexChars[4] + "§" + hexChars[5];
     }
 }

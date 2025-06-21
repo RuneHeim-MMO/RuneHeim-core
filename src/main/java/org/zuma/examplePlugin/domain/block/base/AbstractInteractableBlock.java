@@ -93,20 +93,7 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
         location.getBlock().setType(Material.AIR);
 
     }
-
-    public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItem
-            itemInHand) {
-
-    }
-
-    public void onPlayerBlockBreakProgressUpdateEvent(RunePlayer player, BlockBreakProgressUpdateEvent event) {
-
-    }
-
-    public void onPlayerBlockBreakEvent(RunePlayer player, BlockBreakEvent event) {
-
-    }
-
+    
     @Nullable
     public MarkerType getMarkerType() {
         return markerType;
@@ -132,5 +119,17 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
     @Nullable
     public BlockFace getFace() {
         return this.face;
+    }
+
+    public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItem itemInHand) {
+
+    }
+
+    public void onPlayerBlockBreakProgressUpdateEvent(RunePlayer player, BlockBreakProgressUpdateEvent event) {
+
+    }
+
+    public void onPlayerBlockBreakEvent(RunePlayer player, BlockBreakEvent event) {
+
     }
 }

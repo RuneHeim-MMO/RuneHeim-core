@@ -29,6 +29,7 @@ public class BlockListener implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.useInteractedBlock() == Event.Result.DENY ||
                 event.useItemInHand() == Event.Result.DENY) {
+
             return;
         }
 
@@ -42,9 +43,11 @@ public class BlockListener implements Listener {
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
         AbstractInteractableBlock block = manager.getAbstractInteractableBlock(dumbBlock);
 
+
         if (runePlayer == null || block == null) {
             return;
         }
+
 
         AbstractItem itemInHand = itemRegistry.getItem(PlayerUtils.getItemStackInHand(player));
         block.onPlayerInteractEvent(runePlayer, event.getAction(), event, itemInHand);

@@ -1,6 +1,8 @@
 package org.zuma.examplePlugin.core.utils;
 
+import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -123,5 +125,17 @@ public class PlayerUtils {
         item.setAmount(amount - 1);
         player.getPlayer().getInventory().setItemInMainHand(item);
 
+    }
+
+    public static Location trunacePlayerFeetLocation(RunePlayer player) {
+        if (player == null) return null;
+        Location loc = player.getPlayer().getLocation();
+        World world = loc.getWorld();
+
+        int x = loc.getBlockX();
+        int y = loc.getBlockY();
+        int z = loc.getBlockZ();
+
+        return new Location(world, x, y, z, loc.getYaw(), loc.getPitch());
     }
 }

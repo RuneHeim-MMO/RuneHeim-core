@@ -6,7 +6,7 @@ import org.bukkit.block.BlockFace;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.domain.block.base.ResourceNode;
+import org.zuma.examplePlugin.domain.block.impl.ResourceNode;
 import org.zuma.examplePlugin.domain.schematic.InteractiveElType;
 import org.zuma.examplePlugin.domain.schematic.InteractiveElement;
 import org.zuma.examplePlugin.domain.schematic.SchematicSpawner;
@@ -43,7 +43,7 @@ public class ResourceNodeSchematicHandler {
 
         spawner.clearLastPaste();
         Clipboard spawnClipboard = spawner.pasteSchematic(location, schematicPath.toFile(), true);
-        
+
         if (spawnClipboard == null) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed spawning schematic for " + node.getNodeType().getLabel() + "! File: " + schematicPath);
             return;

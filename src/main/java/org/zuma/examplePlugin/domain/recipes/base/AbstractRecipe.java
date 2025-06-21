@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.recipes.base;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -155,7 +156,8 @@ public abstract class AbstractRecipe implements SkillRestrictable {
                 boolean playMeetsReq = requirement.playerMeetsRequirement(player);
                 Color color = playMeetsReq ? Color.SUCCESS : Color.ERROR;
 
-                itemLore.add(Component.text(requirement.type().getSymbol() + " " + requirement.minimumLevel() + " " + requirement.type().getLabel()).color(color.asColor()));
+                itemLore.add(Component.text(requirement.type().getSymbol(), NamedTextColor.WHITE).append(
+                        Component.text(" " + requirement.minimumLevel() + " " + requirement.type().getLabel()).color(color.asColor())));
             });
 
         }

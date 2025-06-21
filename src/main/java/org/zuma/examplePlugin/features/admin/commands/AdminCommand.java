@@ -9,9 +9,11 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.block.BlockManager;
+import org.zuma.examplePlugin.domain.block.impl.CampfireBlock;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
@@ -81,31 +83,15 @@ public class AdminCommand implements BasicCommand {
         }
 
 
+        if (Objects.equals(args[0], "campfire")) {
+            blockManager.registerBlock(
+                    new CampfireBlock(PlayerUtils.trunacePlayerFeetLocation(runePlayer), false, 300));
+        }
 
-
-
-
-
-
-       /* if (Objects.equals(args[0], "ore")) {
-            RayTraceResult result = player.rayTraceBlocks(20);
-
-            if (result == null) {
-                return;
-            }
-
-            Block hitBlock = result.getHitBlock();
-            BlockFace hitFace = result.getHitBlockFace();
-
-            if (hitFace == null || hitBlock == null) {
-                return;
-            }
-
-            ResourceNodeType type = oreTypeRepository.getAll().getFirst();
-            blockManager.spawnResourceNode(type,
-                    hitBlock.getLocation(), hitBlock.getLocation().add(hitFace.getDirection()).add(0.5, 1.25, 0.5));
-        }*/
-
+        if (Objects.equals(args[0], "soulcampfire")) {
+            blockManager.registerBlock(
+                    new CampfireBlock(PlayerUtils.trunacePlayerFeetLocation(runePlayer), true, 600));
+        }
 
         // Items without page
         if (args.length == 1 && Objects.equals(args[0], "items")) {

@@ -64,7 +64,9 @@ public class HudService {
         if (!isMaxedSkill) {
             player.getPlayer().showTitle(Title.title(
                     Component.text("Congratulations!", Color.SERVER_BRAND.asColor()),
-                    Component.text("Your " + type.getSymbol() + " " + type.getLabel() + " level is now " + skill.getLevel() + "!", Color.SUCCESS.asColor()),
+                    Component.text("Your ", Color.SUCCESS.asColor())
+                        .append(Component.text(type.getSymbol(), NamedTextColor.WHITE))
+                        .append(Component.text(" " + type.getLabel() + " level is now " + skill.getLevel() + "!", Color.SUCCESS.asColor())),
                     Title.Times.times(
                             Duration.ofSeconds(1),
                             Duration.ofSeconds(8, 5),
@@ -97,7 +99,9 @@ public class HudService {
 
             player.getPlayer().showTitle(Title.title(
                     congrats,
-                    Component.text("No way! You have MAXED your " + type.getSymbol() + " " + type.getLabel() + " level!", Color.SUCCESS.asColor()),
+                    Component.text("No way! You have MAXED your ", Color.SUCCESS.asColor())
+                        .append(Component.text(type.getSymbol(), NamedTextColor.WHITE))
+                        .append(Component.text(" " + type.getLabel() + " level!", Color.SUCCESS.asColor())),
                     Title.Times.times(
                             Duration.ofSeconds(1),
                             Duration.ofSeconds(10),

@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.block.base;
+package org.zuma.examplePlugin.domain.block.impl;
 
 import eu.decentsoftware.holograms.api.DHAPI;
 import net.kyori.adventure.text.Component;
@@ -17,6 +17,7 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.ResourceNodeSchematicHandler;
+import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
