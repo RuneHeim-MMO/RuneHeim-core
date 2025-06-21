@@ -15,11 +15,17 @@ import org.zuma.examplePlugin.domain.recipes.base.AbstractRecipe;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
 import org.zuma.examplePlugin.domain.recipes.meta.AbstractRecipeMeta;
 import org.zuma.examplePlugin.domain.recipes.meta.ConcreteRecipeMeta;
+import org.zuma.examplePlugin.domain.skill.SkillRequirement;
+import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class CampfireRecipe extends AbstractRecipe {
+    private final SkillRequirement mainRequirement;
+    private final int MINIMUM_SUCCESS_CHANCE = 50;
+
     private final HashMap<UUID, CampfireBlock> inProgressBlocks = new HashMap<>();
 
     public CampfireRecipe(ConcreteRecipeMeta meta) {
@@ -28,16 +34,32 @@ public class CampfireRecipe extends AbstractRecipe {
         ItemMeta stackMeta = super.getDisplayItemstack().getItemMeta();
         stackMeta.displayName(Component.text("Campfire").decoration(TextDecoration.ITALIC, false));
         super.getDisplayItemstack().setItemMeta(stackMeta);
+
+
+        mainRequirement = super.getRequirements().stream()
+                .filter(req -> req.type() == SkillType.FIREMAKING)
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
     public boolean isCraftSuccessful(RunePlayer player) {
-        return true;
+        if (mainRequirement == null) {
+            return true;
+        }
+
+        int successChance = PlayerUtils.getCraftSuccessChance(player, mainRequirement, MINIMUM_SUCCESS_CHANCE);
+        return ThreadLocalRandom.current().nextInt(0, 101) < successChance;
+
     }
 
     @Override
     public int getChanceOfSuccess(RunePlayer player) {
-        return 100;
+        if (mainRequirement == null) {
+            return 100;
+        }
+
+        return PlayerUtils.getCraftSuccessChance(player, mainRequirement, MINIMUM_SUCCESS_CHANCE);
     }
 
     @Override
