@@ -9,7 +9,7 @@ public class WeaponItem extends EquipableItem {
     public WeaponItem(AbstractItemMeta meta) {
         super(meta);
         this.applyModifiersWhenInHand(true);
-        super.appendItemType("Weapon", Icon.SWORD_2.get());
+        super.appendToItemTypeLore("Weapon", Icon.SWORD_2.get());
     }
 
 

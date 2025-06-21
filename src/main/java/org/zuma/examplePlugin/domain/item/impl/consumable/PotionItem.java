@@ -25,7 +25,7 @@ public class PotionItem extends AbstractItem implements Stateful {
 
     public PotionItem(AbstractItemMeta meta) {
         super(meta);
-        super.appendItemType("Potion", Icon.POTION.get());
+        super.appendToItemTypeLore("Potion", Icon.POTION.get());
         this.setStateType(StateType.MULTI_CONSUMABLE);
     }
 

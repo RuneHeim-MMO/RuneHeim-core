@@ -20,7 +20,7 @@ public class FoodItem extends AbstractItem {
 
     public FoodItem(AbstractItemMeta meta) {
         super(meta);
-        super.appendItemType("Food", Icon.FRUIT.get());
+        super.appendToItemTypeLore("Food", Icon.FRUIT.get());
     }
 
     public void setHealAmount(int amount) {

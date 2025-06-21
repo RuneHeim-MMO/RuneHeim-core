@@ -8,7 +8,7 @@ public class ToolItem extends EquipableItem {
 
     public ToolItem(AbstractItemMeta meta) {
         super(meta);
-        super.appendItemType("Tool", Icon.TOOL.get());
+        super.appendToItemTypeLore("Tool", Icon.TOOL.get());
     }
 
 

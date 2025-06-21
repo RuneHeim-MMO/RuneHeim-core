@@ -6,6 +6,6 @@ import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 public class MiscItem extends AbstractItem {
     public MiscItem(AbstractItemMeta meta) {
         super(meta);
-        super.appendItemType("Misc", null);
+        super.appendToItemTypeLore("Misc", null);
     }
 }
