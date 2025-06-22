@@ -179,6 +179,9 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAHOGANY_LOG.asInt(), Material.MANGROVE_LOG, ItemRarity.RARE, "Mahogany Log", List.of("A rich, dark wood valued for fine construction."), null, null), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_LOG.asInt(), Material.CHERRY_LOG, ItemRarity.LEGENDARY, "Magic Log", List.of("Glows faintly with arcane energy, rare and powerful."), null, null), null),
 
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ASHES.asInt(), Material.COAL, ItemRarity.COMMON, "Ashes", List.of("Fine powder left after fire consumes wood."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_ASHES.asInt(), Material.COAL, ItemRarity.RARE, "Magic Ashes", List.of("Glowing remnants infused with mysterious arcane power."), null, null), null),
+
                 // Misc
                 new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.BURNT_FOOD.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Charred Remains", List.of("All that's left after fire claims its meal."), null, null), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.EMPTY_POTION_BOTTLE.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Empty Potion Bottle",

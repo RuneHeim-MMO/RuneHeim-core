@@ -5,6 +5,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.recipes.RecipeFactory;
@@ -12,6 +13,7 @@ import org.zuma.examplePlugin.domain.recipes.RecipeRegistry;
 import org.zuma.examplePlugin.domain.recipes.base.AbstractRecipe;
 import org.zuma.examplePlugin.domain.recipes.meta.AbstractRecipeMeta;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 public class RecipeLoader {
@@ -28,11 +30,11 @@ public class RecipeLoader {
     }
 
     public void loadAllRecipes() {
-        this.repository.getAll().forEach(this::registerRecipe);
+        this.repository.getAll().forEach(entity -> registerRecipe(entity.meta(), entity.json()));
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.recipeRegistry.getAllRecipes().size() + " recipes.");
     }
 
-    private void registerRecipe(AbstractRecipeMeta meta) {
+    private void registerRecipe(AbstractRecipeMeta meta, @Nullable VersionedJson json) {
         ItemStack itemStack = new ItemStack(Material.BARRIER);
 
         if (meta.successResult() != null) {
@@ -51,7 +53,7 @@ public class RecipeLoader {
         displayItemMeta.lore(new ArrayList<>());
         itemStack.setItemMeta(displayItemMeta);
 
-        AbstractRecipe newRecipe = factory.createRecipe(itemStack, meta);
+        AbstractRecipe newRecipe = factory.createRecipe(itemStack, meta, json);
         recipeRegistry.registerRecipe(newRecipe.getId(), newRecipe);
     }
 }

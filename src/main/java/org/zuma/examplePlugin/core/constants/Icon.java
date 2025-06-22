@@ -2,7 +2,7 @@ package org.zuma.examplePlugin.core.constants;
 
 public enum Icon {
     EMPTY(""),
-    
+
     COMMON("▜"),
     UNCOMMON("⏤"),
     RARE("⩰"),
@@ -43,6 +43,7 @@ public enum Icon {
     BOOK("ↁ"),
     ROCK("⋍"),
     ENVELOPE("✉"),
+    LOG("Ⓘ"),
 
     PROGRESS_TALL_START("┉"),
     PROGRESS_GEM_TALL_START("⢽"),

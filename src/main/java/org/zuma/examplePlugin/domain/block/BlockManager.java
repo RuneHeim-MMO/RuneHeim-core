@@ -49,6 +49,7 @@ public class BlockManager {
 
                         Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                             despawnBlock(block);
+                            block.onDespawn();
                         });
                     }
                 });
@@ -67,7 +68,6 @@ public class BlockManager {
         if (despawnDrop != null) {
             AbstractInteractableBlock abstractInteractableBlock = (AbstractInteractableBlock) block;
             Location blockLocation = abstractInteractableBlock.getLocation();
-
 
             AbstractItem drop = RuneQuestPlugin.getItemRegistry().getItem(despawnDrop.getItemId());
 

@@ -192,15 +192,15 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         return failResult;
     }
 
-    public void onCraftingSuccess(RunePlayer player) {
+    public void handleRecipeCraftingSuccess(RunePlayer player) {
 
     }
 
-    public void onCraftingStart(RunePlayer player) {
+    public void handleRecipeCraftingStart(RunePlayer player) {
 
     }
 
-    public void onCraftingCancelled(RunePlayer player) {
+    public void handleRecipeCraftingAborted(RunePlayer player) {
 
     }
 }

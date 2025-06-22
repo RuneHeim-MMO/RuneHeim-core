@@ -9,11 +9,9 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.block.BlockManager;
-import org.zuma.examplePlugin.domain.block.impl.CampfireBlock;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
@@ -81,13 +79,6 @@ public class AdminCommand implements BasicCommand {
         if (Objects.equals(args[0], "opener")) {
             RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), runePlayer);
         }
-
-
-        if (Objects.equals(args[0], "campfire")) {
-            blockManager.registerBlock(
-                    new CampfireBlock(PlayerUtils.trunacePlayerFeetLocation(runePlayer), "Logs", false, 300));
-        }
-
 
         // Items without page
         if (args.length == 1 && Objects.equals(args[0], "items")) {

@@ -44,6 +44,10 @@ public class InventoryOpenerBlock extends AbstractInteractableBlock implements S
         setHologram(DHAPI.createHologram(UUID.randomUUID().toString(), getHologramLocation(), hologramContent));
     }
 
+    public void forceCloseOpenedInventories() {
+        RuneQuestPlugin.getGUIHandler().forceCloseOpenedInventories(inventoryId);
+    }
+
     @Override
     public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItem itemInHand) {
         event.setCancelled(true);

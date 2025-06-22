@@ -22,7 +22,7 @@ public class ActionBarManager {
     private BukkitTask activeTask = null;
     private boolean tick = false; // Ticktock counter
     int coins = 0;
-    int bar = 0;
+    int bar = 6;
 
     public ActionBarManager(RunePlayer player) {
         this.player = player;
@@ -43,7 +43,7 @@ public class ActionBarManager {
         boolean hasNotifications = coins < 100000;
 
         coins += 5050;
-        bar += 1;
+
 
         if (bar >= 10) {
             bar = 0;
@@ -52,7 +52,7 @@ public class ActionBarManager {
         Component specialAttackBar = new LoadingBarBuilder()
                 .totalSteps(10)
                 .currentStep(bar)
-                .barLength(10)
+                .barLength(8)
                 .segment(Icon.PROGRESS_TALL_SEGMENT.get())
                 .start(Icon.PROGRESS_GEM_TALL_START.get())
                 .stop(Icon.PROGRESS_TALL_END.get())
@@ -63,7 +63,7 @@ public class ActionBarManager {
         Component manaBar = new LoadingBarBuilder()
                 .totalSteps(10)
                 .currentStep(bar)
-                .barLength(10)
+                .barLength(8)
                 .segment(Icon.PROGRESS_TALL_SEGMENT.get())
                 .start(Icon.PROGRESS_TALL_START.get())
                 .stop(Icon.PROGRESS_SKULL_TALL_END.get())

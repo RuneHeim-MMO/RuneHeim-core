@@ -125,7 +125,10 @@ public enum ItemId {
     MAPLE_LOG(1602),
     YEW_LOG(1603),
     MAHOGANY_LOG(1604),
-    MAGIC_LOG(1605);
+    MAGIC_LOG(1605),
+
+    ASHES(1700),
+    MAGIC_ASHES(1701);
 
 
     private final int id;

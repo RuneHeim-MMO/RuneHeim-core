@@ -83,7 +83,7 @@ public class RecipeHandler {
         }
 
         type.getStartSound().play(player);
-        recipe.onCraftingStart(player);
+        recipe.handleRecipeCraftingStart(player);
 
         player.useBusyState(recipe.getCraftTimeMs() * times,
                 type.getContinuousVerb() + " " + recipeResultNameString, "", type.getStepSound(), type.getFinishSound(), () -> {
@@ -91,13 +91,13 @@ public class RecipeHandler {
                     // If players inventory gets modified during waiting for the craft (e.g. player drops item)
                     if (!PlayerUtils.hasItems(player, totalIngredients)) {
                         HudService.sendFailMessage(player, Component.text("You do not have required ingredients to " + type.getVerb().toLowerCase() + " " + times + "x ").append(resultComponent));
-                        recipe.onCraftingCancelled(player);
+                        recipe.handleRecipeCraftingAborted(player);
                         return;
                     }
 
                     if (!PlayerUtils.hasItems(player, requiredTools)) {
                         HudService.sendFailMessage(player, Component.text("You do not have required tools to " + type.getVerb().toLowerCase() + " " + times + "x ").append(resultComponent));
-                        recipe.onCraftingCancelled(player);
+                        recipe.handleRecipeCraftingAborted(player);
                         return;
                     }
 
@@ -105,7 +105,7 @@ public class RecipeHandler {
 
                     if (!itemsRemoveSuccess) {
                         HudService.sendFailMessage(player, Component.text("Failed removing items from player inventory."));
-                        recipe.onCraftingCancelled(player);
+                        recipe.handleRecipeCraftingAborted(player);
                         return;
                     }
 
@@ -117,7 +117,7 @@ public class RecipeHandler {
                     Bukkit.getServer().getPluginManager().callEvent(successEvent);
 
                     if (successEvent.isCancelled()) {
-                        recipe.onCraftingCancelled(player);
+                        recipe.handleRecipeCraftingAborted(player);
                         return;
                     }
 
@@ -128,13 +128,13 @@ public class RecipeHandler {
                         }
 
                         recipe.onCraftFinish(player, successCrafts);
-                        recipe.onCraftingSuccess(player);
+                        recipe.handleRecipeCraftingSuccess(player);
                         player.getPlayer().sendMessage(Component.text("Successfully " + type.getPastTenseVerb().toLowerCase() + " " + successCrafts + "x ").append(resultComponent).color(Color.SUCCESS.asColor()));
                         type.getFinishSound().play(player);
                     } else {
 
                         if (times == 1) {
-                            recipe.onCraftingCancelled(player);
+                            recipe.handleRecipeCraftingAborted(player);
                         }
                     }
 
@@ -148,7 +148,7 @@ public class RecipeHandler {
                     }
 
 
-                }, () -> recipe.onCraftingCancelled(player));
+                }, () -> recipe.handleRecipeCraftingAborted(player));
 
         return true;
     }

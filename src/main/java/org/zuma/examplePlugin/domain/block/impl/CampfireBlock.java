@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.block.impl;
 import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -13,6 +14,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.interfaces.DespawnableBlock;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
@@ -21,26 +23,36 @@ import org.zuma.examplePlugin.domain.block.meta.HologramSide;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.hud.LoadingBarBuilder;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
-import org.zuma.examplePlugin.domain.item.constants.ItemId;
+import org.zuma.examplePlugin.events.block.CampfireStateChanged;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class CampfireBlock extends InventoryOpenerBlock implements DespawnableBlock {
-    private final String initialName;
+    private final UUID owner;
+    private final String initialName, burningName;
     private final int burnSeconds;
     private int burnLeftSeconds;
     private boolean burning;
+    private final boolean soulSkin;
+    @Nullable
+    private final ItemRecord despawnDrop;
 
-    public CampfireBlock(Location location, String initialName, boolean soulSkin, int burnSeconds) {
+    public CampfireBlock(UUID owner, Location location, String initialName, String burningName, boolean soulSkin, int burnSeconds, @Nullable ItemRecord despawnDrop) {
         super(new AbstractInteractableBlockMeta(-1, BlockType.InventoryOpener, BlockFace.NORTH, location, HologramSide.TOP));
+        this.owner = owner;
         this.initialName = initialName;
+        this.burningName = burningName;
         this.burnSeconds = burnSeconds;
         this.burnLeftSeconds = burnSeconds;
         this.burning = false;
+        this.soulSkin = soulSkin;
+        this.despawnDrop = despawnDrop;
         super.initializeBlock(InventoryId.FIRE.asInt(), new ArrayList<>(), "", null, soulSkin ? Material.SOUL_CAMPFIRE : Material.CAMPFIRE, null, null);
-        setIsLit(false);
+        setLitBlockState(false);
+        updateHologram();
     }
 
     private void updateHologram() {
@@ -50,7 +62,7 @@ public class CampfireBlock extends InventoryOpenerBlock implements DespawnableBl
             getHologram().delete();
         }
 
-        String title = burning ? "Campfire" : initialName;
+        String title = burning ? burningName : initialName;
         List<String> hologramContent = List.of();
 
         if (burning) {
@@ -65,13 +77,15 @@ public class CampfireBlock extends InventoryOpenerBlock implements DespawnableBl
                     .fillColor(Color.CAMPFIRE_BAR_FILL.asColor())
                     .build();
 
+            String iconColor = soulSkin ? "§9" : "§f";
+
             hologramContent = List.of(
-                    "§f" + Icon.FIRE.get() + " " + Color.INTERACTABLE_ENTITY.asSpigotHex() + title,
+                    iconColor + Icon.FIRE.get() + " " + Color.INTERACTABLE_ENTITY.asSpigotHex() + title,
                     TextUtils.componentToColoredString(progressBar),
                     burnLeftSeconds + " s"
             );
         } else {
-            hologramContent = List.of("§8" + Icon.FIRE.get() + " " + Color.INTERACTABLE_ENTITY.asSpigotHex() + initialName);
+            hologramContent = List.of("§8" + Icon.LOG.get() + " " + Color.INTERACTABLE_ENTITY.asSpigotHex() + initialName);
         }
 
         setHologram(DHAPI.createHologram(UUID.randomUUID().toString(), getHologramLocation(), hologramContent));
@@ -84,6 +98,10 @@ public class CampfireBlock extends InventoryOpenerBlock implements DespawnableBl
                 burnLeftSeconds -= 1;
                 updateHologram();
 
+                if (burnLeftSeconds <= 3) {
+                    setLitBlockState(false);
+                }
+
                 if (burnLeftSeconds <= 0) {
                     extinguish();
                     this.cancel();
@@ -94,23 +112,38 @@ public class CampfireBlock extends InventoryOpenerBlock implements DespawnableBl
     }
 
     public void startFire() {
+        CampfireStateChanged event = new CampfireStateChanged(this, true);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
+        if (event.isCancelled()) {
+            return;
+        }
+
         this.burning = true;
-        setIsLit(true);
+        setLitBlockState(true);
         updateHologram();
         startLoop();
     }
 
-    private void extinguish() {
+    public void extinguish() {
+        CampfireStateChanged event = new CampfireStateChanged(this, false);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
+        if (event.isCancelled()) {
+            return;
+        }
+
         Hologram hologram = getHologram();
 
         if (hologram != null) {
             getHologram().delete();
         }
 
-        setIsLit(true);
+        forceCloseOpenedInventories();
+        setLitBlockState(false);
     }
 
-    private void setIsLit(boolean isLit) {
+    private void setLitBlockState(boolean isLit) {
         Block block = getLocation().getBlock();
         if (block.getType() == Material.CAMPFIRE || block.getType() == Material.SOUL_CAMPFIRE) {
             BlockData data = block.getBlockData();
@@ -121,19 +154,20 @@ public class CampfireBlock extends InventoryOpenerBlock implements DespawnableBl
         }
     }
 
-    @Override
+
+    public void onDespawn() {
+        SoundType.CAMPFIRE_DESPAWN.play(this.getLocation());
+    }
+
     public boolean shouldBeDespawned() {
         return burnLeftSeconds <= 0;
     }
 
-    @Override
     public int despawnSeconds() {
         return 0;
     }
 
-
-    @Override
     public ItemRecord dropOnDespawn() {
-        return new ItemRecord(ItemId.BURNT_FOOD, 1);
+        return despawnDrop;
     }
 }

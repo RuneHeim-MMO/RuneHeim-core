@@ -54,7 +54,8 @@ public enum SoundType {
     CAMPFIRE_RECIPE_START("BLOCK_LAVA_POP", false, 1.0f, 1.3f),
     CAMPFIRE_RECIPE_STEP("BLOCK_BAMBOO_BREAK", false, 1.0f, 0.9f),
     CAMPFIRE_RECIPE_SUCCESS("BLOCK_BLASTFURNACE_FIRE_CRACKLE", false, 1.0f, 0.5f),
-    
+    CAMPFIRE_DESPAWN("BLOCK_FIRE_EXTINGUISH", false, 0.8f, 0.6f),
+
     // AMBIENT
     VILLAGER_MAN_AMBIENT_1("vocal_villagers:entity.villager.ambient", true, 1, 0.75f),
     VILLAGER_MAN_AMBIENT_2("vocal_villagers:entity.villager.ambient", true, 1, 0.80f),

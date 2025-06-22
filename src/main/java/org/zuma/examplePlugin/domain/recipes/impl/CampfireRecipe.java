@@ -8,16 +8,17 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.block.impl.CampfireBlock;
-import org.zuma.examplePlugin.domain.item.constants.ItemId;
+import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.recipes.IngredientRecord;
 import org.zuma.examplePlugin.domain.recipes.base.AbstractRecipe;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
 import org.zuma.examplePlugin.domain.recipes.meta.AbstractRecipeMeta;
 import org.zuma.examplePlugin.domain.recipes.meta.ConcreteRecipeMeta;
+import org.zuma.examplePlugin.domain.recipes.meta.v1.CampfireRecipeMeta;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
@@ -25,14 +26,25 @@ import java.util.concurrent.ThreadLocalRandom;
 public class CampfireRecipe extends AbstractRecipe {
     private final SkillRequirement mainRequirement;
     private final int MINIMUM_SUCCESS_CHANCE = 50;
+    private final int burnTime;
+    private final boolean soulCampfireSkin;
+    private final String initialName, burningName;
+    @Nullable
+    private final ItemRecord despawnDrop;
 
     private final HashMap<UUID, CampfireBlock> inProgressBlocks = new HashMap<>();
 
-    public CampfireRecipe(ConcreteRecipeMeta meta) {
+    public CampfireRecipe(ConcreteRecipeMeta meta, CampfireRecipeMeta campfireRecipeMeta) {
         super(new ItemStack(Material.OAK_LOG), new AbstractRecipeMeta(meta.id(), RecipeType.CAMPFIRE_RECIPE, meta.craftTimeMs(), meta.requirements(), meta.ingredients(), null, null, meta.successXp()));
 
+        this.burnTime = campfireRecipeMeta.burnTime();
+        this.soulCampfireSkin = campfireRecipeMeta.isSoulCampfire();
+        this.despawnDrop = campfireRecipeMeta.despawnDrop();
+        this.initialName = campfireRecipeMeta.initialName();
+        this.burningName = campfireRecipeMeta.burningName();
+
         ItemMeta stackMeta = super.getDisplayItemstack().getItemMeta();
-        stackMeta.displayName(Component.text("Campfire").decoration(TextDecoration.ITALIC, false));
+        stackMeta.displayName(Component.text(this.burningName).decoration(TextDecoration.ITALIC, false));
         super.getDisplayItemstack().setItemMeta(stackMeta);
 
 
@@ -63,16 +75,14 @@ public class CampfireRecipe extends AbstractRecipe {
     }
 
     @Override
-    public void onCraftingStart(RunePlayer player) {
-        boolean isSoulSkin = this.getIngredients().stream().map(IngredientRecord::itemId).toList().contains(ItemId.MAGIC_LOG);
-
-        CampfireBlock campfire = new CampfireBlock(PlayerUtils.trunacePlayerFeetLocation(player), "Logs", isSoulSkin, 300);
+    public void handleRecipeCraftingStart(RunePlayer player) {
+        CampfireBlock campfire = new CampfireBlock(player.getUUID(), PlayerUtils.trunacePlayerFeetLocation(player), initialName, burningName, soulCampfireSkin, burnTime, despawnDrop);
         inProgressBlocks.put(player.getUUID(), campfire);
         RuneQuestPlugin.getBlockManager().registerBlock(campfire);
     }
 
     @Override
-    public void onCraftingSuccess(RunePlayer player) {
+    public void handleRecipeCraftingSuccess(RunePlayer player) {
         CampfireBlock progressBlock = inProgressBlocks.get(player.getUUID());
         inProgressBlocks.remove(player.getUUID());
 
@@ -82,7 +92,7 @@ public class CampfireRecipe extends AbstractRecipe {
     }
 
     @Override
-    public void onCraftingCancelled(RunePlayer player) {
+    public void handleRecipeCraftingAborted(RunePlayer player) {
         CampfireBlock progressBlock = inProgressBlocks.get(player.getUUID());
         inProgressBlocks.remove(player.getUUID());
 

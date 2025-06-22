@@ -84,7 +84,11 @@ public enum RecipeId {
     RUNITE_PICKAXE(1005),
 
     LOG_CAMPFIRE(1100),
-    MAGIC_LOG_CAMPFIRE(1101); // todo: CHANGE ID!
+    BIRCH_CAMPFIRE(1101),
+    MAPLE_CAMPFIRE(1102),
+    YEW_CAMPFIRE(1103),
+    MAHOGANY_CAMPFIRE(1104),
+    MAGIC_LOG_CAMPFIRE(1105);
 
 
     private final int id;

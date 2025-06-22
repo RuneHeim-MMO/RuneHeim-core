@@ -196,10 +196,21 @@
       },
       "model": "item/custom/tools/fishing_trap"
     },
-
     {
       "predicate": {
-        "custom_model_data": 1504
+        "custom_model_data": 1700
+      },
+      "model": "item/custom/materials/ashes"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1701
+      },
+      "model": "item/custom/materials/magic_ashes"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1702
       },
       "model": "item/coal"
     }
