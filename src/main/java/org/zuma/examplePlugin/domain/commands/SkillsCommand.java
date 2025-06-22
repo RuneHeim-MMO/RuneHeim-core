@@ -23,7 +23,7 @@ public class SkillsCommand implements BasicCommand {
     private Component getSkillStats(RunePlayer player) {
         Component result = Component.text("\n");
 
-        for (Skill skill : player.getSkills()) {
+        for (Skill skill : player.getSkills().values()) {
             int currentLevel = skill.getLevel();
             int totalXp = (int) Math.round(skill.getXp());
             boolean isMaxed = XpUtils.isMaxLevel(currentLevel);

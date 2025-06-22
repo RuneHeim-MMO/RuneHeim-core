@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
+import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.XpUtils;
@@ -20,6 +21,7 @@ import org.zuma.examplePlugin.domain.hud.ScoreboardManager;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
+import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.party.Party;
 import org.zuma.examplePlugin.domain.player.states.RunePlayerBusyStateHandler;
 import org.zuma.examplePlugin.domain.skill.Skill;
@@ -28,16 +30,23 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.events.player.RunePlayerGainedXPEvent;
 import org.zuma.examplePlugin.events.player.RunePlayerLevelUpEvent;
 
-import java.util.*;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-public class RunePlayer {
+public class RunePlayer implements CombatEntity {
     private final UUID uuid;
-    private final List<Modifier> gearModifiers = new ArrayList<>();
+    private final EnumMap<ModifierType, Modifier> modifiers = new EnumMap<>(ModifierType.class);
     private final EnumMap<SkillType, Skill> skills = new EnumMap<>(SkillType.class);
     private final ActionBarManager actionBarManager;
     private ScoreboardManager scoreboardManager;
     private final RunePlayerBusyStateHandler busyStateHandler;
     private @Nullable Party party;
+
+    private int health = 99;
 
     public RunePlayer(UUID uuid) {
         this.uuid = uuid;
@@ -63,76 +72,21 @@ public class RunePlayer {
         return Bukkit.getPlayer(uuid);
     }
 
-    public void setGearModifiers(List<Modifier> newModifiers) {
-        gearModifiers.clear();
-        gearModifiers.addAll(newModifiers);
+    public void setModifiers(List<Modifier> newModifiers) {
+        modifiers.clear();
+        modifiers.putAll(
+                newModifiers.stream().collect(Collectors.toMap(
+                        Modifier::type,
+                        Function.identity()
+                ))
+        );
 
         System.out.println("Recalculated modifiers " + newModifiers);
-    }
-
-    public List<Modifier> getActiveModifiers() {
-        return List.copyOf(gearModifiers);
-    }
-
-    protected void setSkill(SkillType type, Skill skill) {
-        skills.put(type, skill);
     }
 
     @NotNull
     public Skill getSkill(SkillType type) {
         return skills.get(type);
-    }
-
-    @NotNull
-    public Collection<Skill> getSkills() {
-        return skills.values();
-    }
-
-    public void addSkillXp(SkillType type, double xp, XpSource source) {
-        Skill skill = skills.get(type);
-
-        RunePlayerGainedXPEvent event = new RunePlayerGainedXPEvent(this, type, xp, source);
-        Bukkit.getServer().getPluginManager().callEvent(event);
-
-        if (event.isCancelled()) {
-            return;
-        }
-
-        if (skill == null) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Tried adding XP for skill " + type.getLabel() + " which does not exist in players instance.");
-            return;
-        }
-
-        double nextXp = skill.getXp() + xp;
-        boolean leveledUp = false;
-
-        if (nextXp >= XpUtils.getXpForLevel(skill.getLevel() + 1)) {
-            leveledUp = true;
-
-            RunePlayerLevelUpEvent levelUpEvent = new RunePlayerLevelUpEvent(this, type, XpUtils.getCappedLevel(skill.getLevel() + 1), source);
-            Bukkit.getServer().getPluginManager().callEvent(levelUpEvent);
-
-            if (levelUpEvent.isCancelled()) {
-                return;
-            }
-        }
-
-        HudService.showXpGainMessage(this, type, xp, source);
-        skill.addXp(xp);
-
-        if (leveledUp) {
-            HudService.showPlayerLevelUpTitle(this, skill);
-            actionBarManager.showLevelUp();
-        }
-
-    }
-
-    public void addShareableXp(SkillType type, double xp) {
-        if (party != null) {
-            party.splitXPBetweenMembers(type, xp);
-        } else {
-            addSkillXp(type, xp, org.zuma.examplePlugin.core.constants.XpSource.PERSONAL);
-        }
     }
 
     public void useBusyState(int durationMs, String action, String successAction, SoundType stepSound, SoundType successSound, Runnable onSuccess, @Nullable Runnable onFailure) {
@@ -205,5 +159,68 @@ public class RunePlayer {
 
     public void setParty(@Nullable Party party) {
         this.party = party;
+    }
+
+    @Override
+    public EnumMap<ModifierType, Modifier> getModifiers() {
+        return new EnumMap<>(modifiers);
+    }
+
+    @Override
+    public EnumMap<SkillType, Skill> getSkills() {
+        return new EnumMap<>(skills);
+    }
+
+    @Override
+    public int getHealth() {
+        return health;
+    }
+
+
+    public void addSkillXp(SkillType type, double xp, XpSource source) {
+        Skill skill = skills.get(type);
+
+        RunePlayerGainedXPEvent event = new RunePlayerGainedXPEvent(this, type, xp, source);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
+        if (event.isCancelled()) {
+            return;
+        }
+
+        if (skill == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Tried adding XP for skill " + type.getLabel() + " which does not exist in players instance.");
+            return;
+        }
+
+        double nextXp = skill.getXp() + xp;
+        boolean leveledUp = false;
+
+        if (nextXp >= XpUtils.getXpForLevel(skill.getLevel() + 1)) {
+            leveledUp = true;
+
+            RunePlayerLevelUpEvent levelUpEvent = new RunePlayerLevelUpEvent(this, type, XpUtils.getCappedLevel(skill.getLevel() + 1), source);
+            Bukkit.getServer().getPluginManager().callEvent(levelUpEvent);
+
+            if (levelUpEvent.isCancelled()) {
+                return;
+            }
+        }
+
+        HudService.showXpGainMessage(this, type, xp, source);
+        skill.addXp(xp);
+
+        if (leveledUp) {
+            HudService.showPlayerLevelUpTitle(this, skill);
+            actionBarManager.showLevelUp();
+        }
+
+    }
+
+    public void addShareableXp(SkillType type, double xp) {
+        if (party != null) {
+            party.splitXPBetweenMembers(type, xp);
+        } else {
+            addSkillXp(type, xp, org.zuma.examplePlugin.core.constants.XpSource.PERSONAL);
+        }
     }
 }

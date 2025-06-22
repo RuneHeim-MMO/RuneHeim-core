@@ -26,7 +26,7 @@ public class GearModifierHandler {
         List<Modifier> gearModifiers = getGearModifiers(player, itemInHand);
         List<Modifier> combined = ModifierUtils.combineModifiersByType(gearModifiers);
 
-        player.setGearModifiers(combined);
+        player.setModifiers(combined);
         Bukkit.getServer().getPluginManager().callEvent(new GearModifiersRecalculatedEvent(player));
     }
 
