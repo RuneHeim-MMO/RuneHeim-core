@@ -10,5 +10,5 @@ import java.util.List;
 
 public record CombatantMobMeta(String displayName, EquipmentSet equipmentSet, List<SkillLevelRecord> skills,
                                List<Modifier> modifiers, @Nullable String skin,
-                               EntityType baseEntity) {
+                               int maxHealth, EntityType baseEntity) {
 }

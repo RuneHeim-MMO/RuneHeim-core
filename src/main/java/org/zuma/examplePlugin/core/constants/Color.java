@@ -38,8 +38,11 @@ public enum Color {
     MANA_BAR_FILL("#6978ff"),
 
     CAMPFIRE_BAR_EMPTY("#4a3312"),
-    CAMPFIRE_BAR_FILL("#f7ab39");
+    CAMPFIRE_BAR_FILL("#f7ab39"),
 
+    ZERO_HIT("#5274ff"),
+    DAMAGE_HIT("#ff2427"),
+    CRITICAL_HIT("#870002");
 
     private final TextColor color;
     private final String hex;

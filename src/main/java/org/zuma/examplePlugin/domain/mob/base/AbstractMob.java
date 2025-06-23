@@ -19,7 +19,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.EulerAngle;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.interfaces.Cloneable;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
@@ -31,10 +30,10 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.UUID;
 
-public abstract class AbstractMob implements Cloneable<AbstractMob> {
+public abstract class AbstractMob {
     private UUID uuid;
     private final boolean ai;
-    private final Component displayName;
+    private Component displayName;
     private final EntityType baseMob;
     private final boolean silent;
 
@@ -86,6 +85,10 @@ public abstract class AbstractMob implements Cloneable<AbstractMob> {
         this.mobEquipment = equipment;
     }
 
+    public void setDisplayName(Component name) {
+        this.displayName = name;
+    }
+
     public void setBaby(boolean baby) {
         this.isBaby = baby;
     }
@@ -96,6 +99,10 @@ public abstract class AbstractMob implements Cloneable<AbstractMob> {
 
     public boolean canWalk() {
         return this.canWalk;
+    }
+
+    public String getDisplayName() {
+        return TextUtils.extractPlainText(displayName);
     }
 
     @Nullable

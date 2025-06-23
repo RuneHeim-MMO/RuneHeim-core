@@ -8,16 +8,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.entity.Firework;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
+import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.core.utils.FireworkUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
+import org.zuma.examplePlugin.domain.combat.AttackType;
+import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -36,6 +41,18 @@ public class HudService {
 
         spawnVerticalHologramBubble(player, Color.SUCCESS.asSpigotHex() + "+ " + xpStr + " " + (isPartySource ? "[Party]" : ""));
         player.getPlayer().sendMessage(type.getLabel() + " +" + xp + "xp! Type: " + source.name());
+    }
+
+    public static void showDamageBubble(CombatEntity entity, Hit hit, AttackType type, boolean isCriticalHit) {
+        boolean isZeroHit = hit.damage() == 0;
+        boolean isHitByPlayer = !(entity.getEntity() instanceof Player);
+
+        String color = hit.damage() == 0 ? Color.ZERO_HIT.asSpigotHex() : isCriticalHit ? Color.CRITICAL_HIT.asSpigotHex() : Color.DAMAGE_HIT.asSpigotHex();
+        String symbol = type == AttackType.MELEE ? Icon.SWORD.get() : type == AttackType.RANGED ? Icon.ARROW.get() : Icon.LEGENDARY.get(); // Todo: Replace magic icon!
+        String msg = "§f" + (isHitByPlayer ? "§l" : "") + symbol + " " + color + (isHitByPlayer ? "§l" : "") + (isCriticalHit ? "CRIT! " : "") + (isZeroHit ? "" : "-") + hit.damage();
+
+        spawnVerticalHologramBubble(entity.getEntity().getLocation(), msg);
+
     }
 
     public static void sendFailMessage(RunePlayer player, Component text) {
@@ -138,6 +155,35 @@ public class HudService {
 
     }
 
+    private static void updateVanillaHealth(RunePlayer player) {
+        int maxHpLevel = player.getSkills().get(SkillType.HITPOINTS).getLevel();
+        if (maxHpLevel <= 0) maxHpLevel = 1; // prevent division by zero
+
+        // Clamp current health between 0 and max HP level
+        double currentHp = Math.max(0, Math.min(player.getHealth(), maxHpLevel));
+
+        // Scale current HP proportionally to Minecraft's 20 HP scale
+        double scaledHealth = 20.0 * (currentHp / maxHpLevel);
+
+        // Clamp scaledHealth between 0.5 and 20
+        scaledHealth = Math.max(0.5, Math.min(20.0, scaledHealth));
+
+        player.getPlayer().setHealth(scaledHealth);
+    }
+
+    private static void updateXpBarLevel(RunePlayer player) {
+        player.getPlayer().setLevel(player.getCombatLvl());
+    }
+
+    public static void updateVanillaGUI(RunePlayer player) {
+        updateXpBarLevel(player);
+        updateVanillaHealth(player);
+    }
+
+    private static void spawnVerticalHologramBubble(Location location, String content) {
+        spawnVerticalHologramBubble(location.clone().add(0, 1, 0), location.getDirection().clone().normalize(), content);
+    }
+
     private static void spawnVerticalHologramBubble(RunePlayer player, String content) {
         spawnVerticalHologramBubble(player.getPlayer().getLocation().clone().add(0, 1, 0), player.getPlayer().getLocation().getDirection().clone().normalize(), content);
     }
@@ -184,4 +230,6 @@ public class HudService {
             }
         }.runTaskTimer(RuneQuestPlugin.getInstance(), 0L, 2L);
     }
+
+
 }

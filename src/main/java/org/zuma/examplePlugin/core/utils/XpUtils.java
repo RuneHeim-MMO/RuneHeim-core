@@ -1,5 +1,10 @@
 package org.zuma.examplePlugin.core.utils;
 
+import org.zuma.examplePlugin.domain.skill.Skill;
+import org.zuma.examplePlugin.domain.skill.constants.SkillType;
+
+import java.util.EnumMap;
+
 public class XpUtils {
     private static final int MAX_LEVEL = 99;
     private static final int[] XP_TABLE = new int[100]; // index 1-99 used
@@ -60,5 +65,29 @@ public class XpUtils {
         int xpIntoLevel = getXpIntoCurrentLevel(totalXp, currentLevel);
         int xpToNextLevel = getXpToNextLevel(currentLevel);
         return (int) Math.round((xpIntoLevel / (double) xpToNextLevel) * 100);
+    }
+
+    public static int calculateCombatLevel(int attack, int strength, int defence, int hitpoints) {
+        // Defensive stats combined with a smaller weight
+        double defenseScore = 0.7 * defence + 0.8 * hitpoints;
+        // Offensive stats combined equally
+        double offenseScore = attack + strength;
+
+        // Weighted sum (offense weighed more)
+        double weightedAverage = (offenseScore + defenseScore * 0.6) / (1.0 + 0.6);
+
+        // Clamp input range to 1-99
+        weightedAverage = Math.max(1, Math.min(99, weightedAverage));
+
+        // Scale linearly to 1-100 combat level
+        return (int) Math.round(1 + (weightedAverage - 1) * (99.0 / 98.0));
+    }
+
+    public static int getCombatLevelFromSkills(EnumMap<SkillType, Skill> skills) {
+        int attack = skills.get(SkillType.ATTACK) != null ? skills.get(SkillType.ATTACK).getLevel() : 1;
+        int strength = skills.get(SkillType.STRENGTH) != null ? skills.get(SkillType.STRENGTH).getLevel() : 1;
+        int defence = skills.get(SkillType.DEFENCE) != null ? skills.get(SkillType.DEFENCE).getLevel() : 1;
+        int hitpoints = skills.get(SkillType.HITPOINTS) != null ? skills.get(SkillType.HITPOINTS).getLevel() : 1;
+        return XpUtils.calculateCombatLevel(attack, strength, defence, hitpoints);
     }
 }

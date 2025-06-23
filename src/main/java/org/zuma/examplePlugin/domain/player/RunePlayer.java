@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.player;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.*;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -15,9 +16,10 @@ import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.XpUtils;
+import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.hud.ActionBarManager;
 import org.zuma.examplePlugin.domain.hud.HudService;
-import org.zuma.examplePlugin.domain.hud.ScoreboardManager;
+import org.zuma.examplePlugin.domain.hud.PlayerScoreboardManager;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
@@ -42,11 +44,10 @@ public class RunePlayer implements CombatEntity {
     private final EnumMap<ModifierType, Modifier> modifiers = new EnumMap<>(ModifierType.class);
     private final EnumMap<SkillType, Skill> skills = new EnumMap<>(SkillType.class);
     private final ActionBarManager actionBarManager;
-    private ScoreboardManager scoreboardManager;
+    private PlayerScoreboardManager scoreboardManager;
     private final RunePlayerBusyStateHandler busyStateHandler;
     private @Nullable Party party;
-
-    private int health = 99;
+    private int combatLvl, health;
 
     public RunePlayer(UUID uuid) {
         this.uuid = uuid;
@@ -55,13 +56,18 @@ public class RunePlayer implements CombatEntity {
 
         // todo: fix
         Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-            this.scoreboardManager = new ScoreboardManager(this);
+            this.scoreboardManager = new PlayerScoreboardManager(this);
         });
 
         // Each player starts with default XP in all skill types.
         for (SkillType type : SkillType.values()) {
-            skills.put(type, new Skill(type, 250));//type.getDefaultXp()));
+            skills.put(type, new Skill(type, XpUtils.getXpForLevel(99)));
         }
+
+        this.health = skills.get(SkillType.HITPOINTS).getLevel();
+
+        this.combatLvl = XpUtils.getCombatLevelFromSkills(skills);
+        HudService.updateVanillaGUI(this);
     }
 
     public UUID getUUID() {
@@ -161,22 +167,6 @@ public class RunePlayer implements CombatEntity {
         this.party = party;
     }
 
-    @Override
-    public EnumMap<ModifierType, Modifier> getModifiers() {
-        return new EnumMap<>(modifiers);
-    }
-
-    @Override
-    public EnumMap<SkillType, Skill> getSkills() {
-        return new EnumMap<>(skills);
-    }
-
-    @Override
-    public int getHealth() {
-        return health;
-    }
-
-
     public void addSkillXp(SkillType type, double xp, XpSource source) {
         Skill skill = skills.get(type);
 
@@ -211,6 +201,8 @@ public class RunePlayer implements CombatEntity {
 
         if (leveledUp) {
             HudService.showPlayerLevelUpTitle(this, skill);
+            this.combatLvl = XpUtils.getCombatLevelFromSkills(skills);
+            HudService.updateVanillaGUI(this);
             actionBarManager.showLevelUp();
         }
 
@@ -223,4 +215,40 @@ public class RunePlayer implements CombatEntity {
             addSkillXp(type, xp, org.zuma.examplePlugin.core.constants.XpSource.PERSONAL);
         }
     }
+
+
+    public EnumMap<ModifierType, Modifier> getModifiers() {
+        return new EnumMap<>(modifiers);
+    }
+
+    public EnumMap<SkillType, Skill> getSkills() {
+        return new EnumMap<>(skills);
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getMaxHealth() {
+        return skills.get(SkillType.HITPOINTS).getLevel();
+    }
+
+    public int getCombatLvl() {
+        return combatLvl;
+    }
+
+    public void takeHit(Hit hit) {
+        this.health -= Math.min(this.health, hit.damage());
+        HudService.updateVanillaGUI(this);
+
+        if (this.health <= 0) {
+            getPlayer().sendMessage("Welp, you died!");
+            this.health = this.skills.get(SkillType.HITPOINTS).getLevel();
+        }
+    }
+
+    public Entity getEntity() {
+        return this.getPlayer();
+    }
+
 }

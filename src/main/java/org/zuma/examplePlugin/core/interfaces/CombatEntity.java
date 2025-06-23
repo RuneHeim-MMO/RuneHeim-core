@@ -1,5 +1,7 @@
 package org.zuma.examplePlugin.core.interfaces;
 
+import org.bukkit.entity.Entity;
+import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.skill.Skill;
@@ -12,5 +14,11 @@ public interface CombatEntity {
 
     EnumMap<SkillType, Skill> getSkills();
 
+    void takeHit(Hit hit);
+
     int getHealth();
+
+    int getMaxHealth();
+
+    Entity getEntity();
 }

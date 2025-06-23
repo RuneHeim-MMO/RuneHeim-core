@@ -14,7 +14,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
 
-public class ScoreboardManager {
+public class PlayerScoreboardManager {
     private final RunePlayer player;
     private BukkitTask activeTask = null;
     private boolean tick = false; // Ticktock counter
@@ -23,7 +23,7 @@ public class ScoreboardManager {
     @Nullable
     Scoreboard scoreboard = null;
 
-    public ScoreboardManager(RunePlayer player) {
+    public PlayerScoreboardManager(RunePlayer player) {
         this.player = player;
 
         initializeScoreboard();

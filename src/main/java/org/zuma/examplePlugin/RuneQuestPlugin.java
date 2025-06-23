@@ -7,10 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.database.HikariPool;
-import org.zuma.examplePlugin.core.handlers.BlockProtector;
-import org.zuma.examplePlugin.core.handlers.DefaultMobDisabler;
-import org.zuma.examplePlugin.core.handlers.FireworkDamageDisabler;
-import org.zuma.examplePlugin.core.handlers.OffHandDisabler;
+import org.zuma.examplePlugin.core.handlers.*;
 import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
 import org.zuma.examplePlugin.core.logger.Logger;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
@@ -20,6 +17,8 @@ import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
+import org.zuma.examplePlugin.domain.combat.HitHandler;
+import org.zuma.examplePlugin.domain.combat.HitListener;
 import org.zuma.examplePlugin.domain.commands.SkillsCommand;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
 import org.zuma.examplePlugin.domain.gui.GUIListener;
@@ -76,6 +75,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new BlockProtector(), pluginInstance);
         getServer().getPluginManager().registerEvents(new DefaultMobDisabler(), pluginInstance);
         getServer().getPluginManager().registerEvents(new FireworkDamageDisabler(), pluginInstance);
+        getServer().getPluginManager().registerEvents(new DurabilityDisabler(), pluginInstance);
 
         ConfigManager configManager = new ConfigManager();
         configManager.initializeFolders();
@@ -129,6 +129,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(guiListener, pluginInstance);
         guiHandler.initializeInventories(blockLoader);
 
+        HitHandler hitHandler = new HitHandler();
+        HitListener hitListener = new HitListener(hitHandler, runePlayerManager, mobRegistry);
+        getServer().getPluginManager().registerEvents(hitListener, pluginInstance);
+        
         initializeMap();
 
 

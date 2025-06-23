@@ -7,6 +7,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
+import org.zuma.examplePlugin.core.utils.XpUtils;
+import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
 import org.zuma.examplePlugin.domain.mob.meta.CombatantMobMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
@@ -20,13 +22,18 @@ import java.util.EnumMap;
 public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     private final EnumMap<ModifierType, Modifier> modifiers = new EnumMap<>(ModifierType.class);
     private final EnumMap<SkillType, Skill> skills = new EnumMap<>(SkillType.class);
-    private int health = 10;
+    private final int maxHealth;
+    private int health;
 
     public CombatantMob(CombatantMobMeta meta) {
-        super(new AbstractMobMeta(true, true, Component.text(meta.displayName()), meta.baseEntity()));
+        super(new AbstractMobMeta(true, true, Component.empty(), meta.baseEntity()));
+        this.health = meta.maxHealth();
+        this.maxHealth = meta.maxHealth();
 
         meta.skills().forEach(record -> skills.put(record.type(), new Skill(record.type(), record.getXP())));
         meta.modifiers().forEach(modifier -> modifiers.put(modifier.type(), modifier));
+
+        this.setDisplayName(Component.text("§6[" + XpUtils.getCombatLevelFromSkills(skills) + " Lvl] §7" + meta.displayName()));
 
         if (meta.skin() != null) {
             setPlayerDisguise(meta.skin());
@@ -40,8 +47,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
 
     @Override
     public void onPlayerAttackEntity(EntityDamageByEntityEvent event, RunePlayer player) {
-        health -= 1;
-        player.getPlayer().sendMessage("You hit this entity! HP: " + health);
+        player.getPlayer().sendMessage(getDisplayName() + " HP: " + health);
 
         Entity entity = this.getEntity();
 
@@ -58,34 +64,32 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         }
     }
 
-    @Override
-    public void onEntityAttackPlayer(EntityDamageByEntityEvent event, RunePlayer player) {
-        player.getPlayer().sendMessage("Entity hit you!");
-    }
 
     @Override
     public void onEntityDamaged(EntityDamageEvent event) {
-        event.getEntity().setFireTicks(0);
-
         if (event.getCause() != EntityDamageEvent.DamageCause.CUSTOM) {
             event.setDamage(0);
         }
-
-
     }
 
-    @Override
     public EnumMap<ModifierType, Modifier> getModifiers() {
         return modifiers;
     }
 
-    @Override
     public EnumMap<SkillType, Skill> getSkills() {
         return skills;
     }
 
-    @Override
     public int getHealth() {
         return health;
     }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void takeHit(Hit hit) {
+        this.health -= Math.min(this.health, hit.damage());
+    }
+
 }

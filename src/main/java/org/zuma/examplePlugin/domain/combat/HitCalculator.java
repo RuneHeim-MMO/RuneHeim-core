@@ -32,17 +32,17 @@ public class HitCalculator {
         return matchingModifier.amount();
     }
 
-    public static int getHitDamage(CombatEntity attacker, CombatEntity defender, AttackType type) {
+    public static Hit getHitDamage(CombatEntity attacker, CombatEntity defender, AttackType type) {
         boolean hitSuccess = isHitSuccess(attacker, defender, type);
 
         if (hitSuccess) {
             int maxHit = getMaxHit(attacker, type);
             int baseDamage = (int) (Math.random() * (maxHit + 1));
 
-            return Math.min(defender.getHealth(), baseDamage);
+            return new Hit(attacker, defender, type, Math.min(defender.getHealth(), baseDamage));
         }
 
-        return 0;
+        return new Hit(attacker, defender, type, Math.min(defender.getHealth(), 0));
 
     }
 
