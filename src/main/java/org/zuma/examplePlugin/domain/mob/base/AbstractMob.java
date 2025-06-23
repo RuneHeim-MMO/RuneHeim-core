@@ -10,12 +10,14 @@ import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.EulerAngle;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.interfaces.Cloneable;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
@@ -24,9 +26,11 @@ import org.zuma.examplePlugin.domain.mob.meta.MobEquipmentMeta;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
+import java.util.UUID;
 
-public abstract class AbstractMob {
-    private final int id, typeId;
+public abstract class AbstractMob implements Cloneable<AbstractMob> {
+    private UUID uuid;
+    private final int typeId;
     private final boolean ai;
     private final Component displayName;
     private final EntityType baseMob;
@@ -43,8 +47,10 @@ public abstract class AbstractMob {
     private boolean isBaby = false;
     private boolean isWalking = true;
 
+    @Nullable
+    private Entity entity;
+
     public AbstractMob(AbstractMobMeta meta) {
-        this.id = meta.id();
         this.typeId = meta.typeId();
         this.ai = meta.ai();
         this.displayName = meta.displayName();
@@ -52,8 +58,10 @@ public abstract class AbstractMob {
         this.silent = meta.silent();
     }
 
-    public void spawn(Location location) {
+    public void spawn(UUID uuid, Location location) {
         Entity entity = location.getWorld().spawnEntity(location, baseMob);
+        this.entity = entity;
+        this.uuid = uuid;
 
         this.setEntityPersistenceKey(entity);
 
@@ -83,6 +91,11 @@ public abstract class AbstractMob {
         return this.isWalking;
     }
 
+    @Nullable
+    public Entity getEntity() {
+        return this.entity;
+    }
+
     public void setPlayerDisguise(String username) {
         PlayerDisguise disguise = new PlayerDisguise(username);
         disguise.setDisplayedInTab(false);
@@ -91,12 +104,18 @@ public abstract class AbstractMob {
         this.disguise = disguise;
     }
 
+    public void onDisable() {
+        if (this.entity != null) {
+            DisguiseAPI.undisguiseToAll(this.entity);
+        }
+    }
+
     public int getTypeId() {
         return this.typeId;
     }
 
-    public int getId() {
-        return this.id;
+    public UUID getUUID() {
+        return this.uuid;
     }
 
     @Nullable
@@ -114,7 +133,6 @@ public abstract class AbstractMob {
         entity.setCustomNameVisible(true);
         entity.setAI(ai);
         entity.setSilent(silent);
-
 
         if (entity instanceof Ageable ageable) {
             if (isBaby) {
@@ -169,8 +187,8 @@ public abstract class AbstractMob {
     }
 
     private void setEntityPersistenceKey(Entity entity) {
-        NamespacedKey key = new NamespacedKey(RuneQuestPlugin.getInstance(), MobDataKey.MOB_ID.asString());
-        entity.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, id);
+        NamespacedKey key = new NamespacedKey(RuneQuestPlugin.getInstance(), MobDataKey.MOB_UUID.asString());
+        entity.getPersistentDataContainer().set(key, PersistentDataType.STRING, this.uuid.toString());
     }
 
     public void handlePositiveInteraction(PlayerInteractAtEntityEvent event, RunePlayer player) {
@@ -181,7 +199,17 @@ public abstract class AbstractMob {
 
     public void handleNegativeInteraction(PlayerInteractAtEntityEvent event, RunePlayer player) {
         if (behavior != null) {
-            behavior.handleInteractionSuccess(event, player);
+            behavior.handleInteractionFail(event, player);
+        }
+    }
+
+    public void onChunkLoaded(ChunkLoadEvent event) {
+        if (entity instanceof LivingEntity livingEntity) {
+            this.setLivingEntityMeta(livingEntity);
+
+            if (this.disguise != null) {
+                DisguiseAPI.disguiseToAll(entity, disguise);
+            }
         }
     }
 

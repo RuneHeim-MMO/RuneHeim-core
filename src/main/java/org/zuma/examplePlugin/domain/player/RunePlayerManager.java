@@ -17,8 +17,10 @@ import java.util.Map;
 import java.util.UUID;
 
 public class RunePlayerManager {
+    private static final int AUTOSAVE_DELAY_SECONDS = 60;
     private final Map<UUID, RunePlayer> players = new HashMap<>();
     private final RunePlayerLoadingStateHandler loadingStateHandler;
+
 
     public RunePlayerManager() {
         loadingStateHandler = new RunePlayerLoadingStateHandler(RuneQuestPlugin.getInstance());
@@ -34,10 +36,16 @@ public class RunePlayerManager {
 
     public void handleOnEnable() {
         Bukkit.getOnlinePlayers().forEach(this::loadPlayerData);
+        startAsyncSavingLoop();
     }
 
-    public void handleOnDisable() {
-        Bukkit.getOnlinePlayers().forEach(player -> savePlayerData(player, true));
+    public void saveAllPlayers() {
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Auto-saving " + Bukkit.getOnlinePlayers().size() + " players data.");
+        Bukkit.getOnlinePlayers().forEach(player -> savePlayerData(player, false));
+    }
+
+    private void startAsyncSavingLoop() {
+        Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::saveAllPlayers, AUTOSAVE_DELAY_SECONDS * 20, AUTOSAVE_DELAY_SECONDS * 20);
     }
 
     public void loadPlayerData(Player player) {

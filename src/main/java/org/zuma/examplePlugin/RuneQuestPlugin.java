@@ -13,6 +13,7 @@ import org.zuma.examplePlugin.core.handlers.FireworkDamageDisabler;
 import org.zuma.examplePlugin.core.handlers.OffHandDisabler;
 import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
 import org.zuma.examplePlugin.core.logger.Logger;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.BlockFactory;
 import org.zuma.examplePlugin.domain.block.BlockListener;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
@@ -175,12 +176,13 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
+        getRuneLogger().log(LogLevel.INFO, "Disabling plugin...");
         guiHandler.closeAllInventories();
-        Bukkit.getScheduler().cancelTasks(this);
         blockManager.onDisable();
         pool.closeConnection();
-        runePlayerManager.handleOnDisable();
         mobHandler.cleanup();
+        Bukkit.getScheduler().cancelTasks(this);
+        getRuneLogger().log(LogLevel.INFO, "Plugin disabled.");
     }
 
     public static Logger getRuneLogger() {

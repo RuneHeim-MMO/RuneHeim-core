@@ -9,7 +9,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public abstract class FriendlyImmortalMob extends AbstractMob {
     public FriendlyImmortalMob(FriendlyImmortalMobMeta meta) {
-        super(new AbstractMobMeta(meta.id(), meta.typeId(), true, meta.silent(), meta.displayName(), meta.baseEntity()));
+        super(new AbstractMobMeta(meta.typeId(), true, meta.silent(), meta.displayName(), meta.baseEntity()));
     }
 
     @Override

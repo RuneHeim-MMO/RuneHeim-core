@@ -1,37 +1,26 @@
 package org.zuma.examplePlugin.domain.mob;
 
+import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
-import org.zuma.examplePlugin.domain.mob.behavior.MobBehaviors;
-import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
-import org.zuma.examplePlugin.domain.mob.constants.MobId;
-import org.zuma.examplePlugin.domain.mob.impl.GenericShopkeeper;
+import org.zuma.examplePlugin.domain.mob.constants.MobType;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class MobRegistry {
-    private final HashMap<Integer, AbstractMob> mobs = new HashMap<>();
-
-
-    public MobRegistry() {
-        this.registerMob(new GenericShopkeeper(1, "Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_MAN_1.getBehavior(), "shopkeeper", 0, false));
-    }
+    private final HashMap<UUID, AbstractMob> mobs = new HashMap<>();
 
     @Nullable
-    public AbstractMob getItem(MobId id) {
-        return getById(id.asInt());
-    }
-
-
-    @Nullable
-    public AbstractMob getById(int id) {
-        return mobs.get(id);
+    public AbstractMob getByUUID(UUID uuid) {
+        return mobs.get(uuid);
     }
 
     public Collection<AbstractMob> getAll() {
@@ -40,19 +29,26 @@ public class MobRegistry {
 
     @Nullable
     public AbstractMob getMob(Entity entity) {
-        NamespacedKey key = new NamespacedKey(RuneQuestPlugin.getInstance(), MobDataKey.MOB_ID.asString());
-        Integer value = entity.getPersistentDataContainer().get(key, PersistentDataType.INTEGER);
+        NamespacedKey key = new NamespacedKey(RuneQuestPlugin.getInstance(), MobDataKey.MOB_UUID.asString());
+        String uuid = entity.getPersistentDataContainer().get(key, PersistentDataType.STRING);
 
-        return value != null ? getById(value) : null;
+        return uuid != null ? getByUUID(UUID.fromString(uuid)) : null;
     }
 
-    public void registerMob(AbstractMob mob) {
-        AbstractMob existing = this.mobs.get(mob.getId());
+    public void spawnMob(UUID uuid, Location location, MobType type) {
+        AbstractMob existing = this.mobs.get(uuid);
 
         if (existing != null) {
-            throw new Error("[DUPLICATE] Mob with id " + mob.getId() + " already exists.");
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[DUPLICATE] Mob with id " + uuid + " already exists.");
+            return;
         }
 
-        this.mobs.put(mob.getId(), mob);
+        AbstractMob mob = type.getNewInstance();
+        mob.spawn(uuid, location);
+        this.mobs.put(uuid, mob);
+    }
+
+    public void removeMob(UUID uuid) {
+        mobs.remove(uuid);
     }
 }

@@ -16,7 +16,7 @@ import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockReposito
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
-import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
+import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipes.RecipeRegistry;
 import org.zuma.examplePlugin.features.admin.inventories.ItemRegistryInventory;
@@ -24,6 +24,7 @@ import org.zuma.examplePlugin.features.admin.inventories.RecipesInventory;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -60,16 +61,15 @@ public class AdminCommand implements BasicCommand {
 
         if (Objects.equals(args[0], "skills")) {
             runePlayer.getPlayer().sendMessage(
-                    runePlayer.getSkills().stream()
+                    runePlayer.getSkills().values().stream()
                             .map(skill -> skill.getType().getLabel() + ": " + XpUtils.getLevelFromXp(skill.getXp()))
                             .collect(Collectors.joining(", "))
             );
         }
 
         if (Objects.equals(args[0], "mob1")) {
-            AbstractMob mob = RuneQuestPlugin.getMobRegistry().getById(1);
+            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.CHESTPLATE_SHOP);
 
-            mob.spawn(player.getLocation());
         }
 
         if (Objects.equals(args[0], "node")) {

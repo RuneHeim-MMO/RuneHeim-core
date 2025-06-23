@@ -5,13 +5,17 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.behavior.MobIdleBehaviorHandler;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+
+import java.util.UUID;
 
 public class MobHandler {
     private final MobRegistry registry;
@@ -22,14 +26,22 @@ public class MobHandler {
         idleManager.start();
     }
 
-    // Clears all mobs with MOB_ID data keys.
+    // Clears all mobs with MOB_UUID data keys.
     public void cleanup() {
+
         for (World world : Bukkit.getWorlds()) {
             world.getEntities().forEach(entity -> {
-                NamespacedKey key = new NamespacedKey(RuneQuestPlugin.getInstance(), MobDataKey.MOB_ID.asString());
-                Integer value = entity.getPersistentDataContainer().get(key, PersistentDataType.INTEGER);
+                NamespacedKey key = new NamespacedKey(RuneQuestPlugin.getInstance(), MobDataKey.MOB_UUID.asString());
+                String value = entity.getPersistentDataContainer().get(key, PersistentDataType.STRING);
+
 
                 if (value != null) {
+                    AbstractMob mob = registry.getByUUID(UUID.fromString(value));
+
+                    if (mob != null) {
+                        mob.onDisable();
+                    }
+
                     entity.remove();
                 }
 
@@ -49,12 +61,26 @@ public class MobHandler {
         mob.onEntityAttackPlayer(event, player);
     }
 
+    public void onEntityDeath(EntityDeathEvent event, AbstractMob mob) {
+        if (mob.getEntity() != null) {
+            mob.getEntity().remove();
+        }
+
+        if (mob.getUUID() != null) {
+            registry.removeMob(mob.getUUID());
+        }
+    }
+
+
     public void onEntityDamaged(EntityDamageEvent event, AbstractMob mob) {
         mob.onEntityDamaged(event);
-
 
         if (mob.getBehavior() != null && !event.isCancelled()) {
             mob.getBehavior().handleDamage(event);
         }
+    }
+
+    public void onChunkLoad(ChunkLoadEvent event, AbstractMob mob) {
+        mob.onChunkLoaded(event);
     }
 }

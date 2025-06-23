@@ -6,11 +6,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.world.ChunkLoadEvent;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 
+import java.util.Arrays;
 import java.util.function.BiConsumer;
 
 public class MobListener implements Listener {
@@ -80,6 +83,29 @@ public class MobListener implements Listener {
         if (mob == null) return;
 
         mobHandler.onEntityDamaged(event, mob);
+
+    }
+
+
+    @EventHandler
+    public void onEntityRemove(EntityDeathEvent event) {
+        Entity entity = event.getEntity();
+
+        AbstractMob mob = mobRegistry.getMob(entity);
+        if (mob == null) return;
+
+        mobHandler.onEntityDeath(event, mob);
+    }
+
+    @EventHandler
+    public void onChunkLoad(ChunkLoadEvent event) {
+        Arrays.stream(event.getChunk().getEntities()).forEach(entity -> {
+            AbstractMob mob = mobRegistry.getMob(entity);
+            if (mob == null) return;
+
+            mobHandler.onChunkLoad(event, mob);
+        });
+
 
     }
 }

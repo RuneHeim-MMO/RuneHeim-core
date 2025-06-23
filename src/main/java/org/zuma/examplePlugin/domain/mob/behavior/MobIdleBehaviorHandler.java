@@ -15,7 +15,7 @@ import java.util.*;
 public class MobIdleBehaviorHandler {
     private final MobRegistry registry;
     private final Random random = new Random();
-    private final HashMap<Integer, Location> mobLocations = new HashMap<>();
+    private final HashMap<UUID, Location> mobLocations = new HashMap<>();
     private final List<World> worlds = Bukkit.getWorlds();
 
     // Stores next allowed idle sound play time per mob UUID
@@ -42,10 +42,12 @@ public class MobIdleBehaviorHandler {
                     AbstractMob mob = this.registry.getMob(entity);
                     if (mob == null) continue;
 
-                    if (!mob.canWalk() && !mobLocations.containsKey(mob.getId())) {
-                        mobLocations.put(mob.getId(), entity.getLocation());
-                    } else if (!mob.canWalk() && entity.getLocation().distanceSquared(mobLocations.get(mob.getId())) > 1) {
-                        entity.teleport(mobLocations.get(mob.getId()));
+                    UUID mobUUID = mob.getUUID();
+
+                    if (!mob.canWalk() && !mobLocations.containsKey(mobUUID)) {
+                        mobLocations.put(mobUUID, entity.getLocation());
+                    } else if (!mob.canWalk() && entity.getLocation().distanceSquared(mobLocations.get(mobUUID)) > 1) {
+                        entity.teleport(mobLocations.get(mobUUID));
                     }
 
                     var behavior = mob.getBehavior();
