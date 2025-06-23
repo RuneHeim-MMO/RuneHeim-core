@@ -34,9 +34,7 @@ import org.zuma.examplePlugin.domain.item.state.StateFactory;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.item.state.StateRepository;
 import org.zuma.examplePlugin.domain.map.MapMarkerHandler;
-import org.zuma.examplePlugin.domain.mob.MobHandler;
-import org.zuma.examplePlugin.domain.mob.MobListener;
-import org.zuma.examplePlugin.domain.mob.MobRegistry;
+import org.zuma.examplePlugin.domain.mob.*;
 import org.zuma.examplePlugin.domain.modifier.GearModifierHandler;
 import org.zuma.examplePlugin.domain.modifier.GearModifierListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerListener;
@@ -111,7 +109,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         blockLoader.fetchAllResourceNodeTypes();
         blockLoader.loadInteractableBlocks();
 
-        mobRegistry = new MobRegistry();
+        MobTypeRegistry mobTypeRegistry = new MobTypeRegistry();
+        MobTypesLoader.registerMobs(mobTypeRegistry);
+
+        mobRegistry = new MobRegistry(mobTypeRegistry);
         mobHandler = new MobHandler(mobRegistry);
         MobListener mobListener = new MobListener(runePlayerManager, mobHandler, mobRegistry);
         getServer().getPluginManager().registerEvents(mobListener, pluginInstance);

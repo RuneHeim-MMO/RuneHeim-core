@@ -6,7 +6,7 @@ public class XpUtils {
 
     static {
         int experience = 0;
-        for (int level = 1; level <= 99; level++) {
+        for (int level = 1; level <= MAX_LEVEL; level++) {
             if (level > 1) {
                 double value = (level - 1) + 300 * Math.pow(2, (level - 1) / 7.0);
                 experience += (int) Math.floor(value / 4.0);
@@ -16,17 +16,17 @@ public class XpUtils {
     }
 
     public static int getXpForLevel(int level) {
-        if (level < 1 || level > 99) throw new IllegalArgumentException();
+        if (level < 1 || level > MAX_LEVEL) throw new IllegalArgumentException("Max level is " + MAX_LEVEL);
         return XP_TABLE[level];
     }
 
     public static int getLevelFromXp(double xp) {
         if (xp < 0) throw new IllegalArgumentException();
 
-        for (int level = 2; level <= 99; level++) {
+        for (int level = 2; level <= MAX_LEVEL; level++) {
             if (XP_TABLE[level] > xp) return level - 1;
         }
-        return 99;
+        return MAX_LEVEL;
     }
 
     public static int getXpIntoCurrentLevel(int totalXp, int currentLevel) {

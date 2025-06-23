@@ -25,7 +25,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     public CombatantMob(CombatantMobMeta meta) {
         super(new AbstractMobMeta(true, true, Component.text(meta.displayName()), meta.baseEntity()));
 
-        meta.skills().forEach(skill -> skills.put(skill.getType(), skill));
+        meta.skills().forEach(record -> skills.put(record.type(), new Skill(record.type(), record.getXP())));
         meta.modifiers().forEach(modifier -> modifiers.put(modifier.type(), modifier));
 
         if (meta.skin() != null) {

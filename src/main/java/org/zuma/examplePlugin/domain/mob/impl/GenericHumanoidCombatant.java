@@ -8,7 +8,7 @@ import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
 import org.zuma.examplePlugin.domain.mob.meta.CombatantMobMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
-import org.zuma.examplePlugin.domain.skill.Skill;
+import org.zuma.examplePlugin.domain.skill.SkillLevelRecord;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -19,7 +19,7 @@ public class GenericHumanoidCombatant extends CombatantMob {
     EquipmentSet equipmentSet;
     MobBehavior behavior;
     String skin;
-    List<Skill> skills;
+    List<SkillLevelRecord> skills;
     List<Modifier> modifiers;
     double walkSpeed;
     boolean attacksOnSight, attacksWithFriends;
@@ -41,7 +41,7 @@ public class GenericHumanoidCombatant extends CombatantMob {
         return null;
     }
 
-    public GenericHumanoidCombatant(String displayName, @Nullable EquipmentSet equipmentSet, List<Skill> skills, List<Modifier> modifiers, @Nullable MobBehavior behavior, double walkSpeed,
+    public GenericHumanoidCombatant(String displayName, @Nullable EquipmentSet equipmentSet, List<SkillLevelRecord> skills, List<Modifier> modifiers, @Nullable MobBehavior behavior, double walkSpeed,
                                     boolean attacksOnSight, boolean attacksWithFriends,
                                     String skin) {
         super(new CombatantMobMeta(displayName, equipmentSet, skills, modifiers, skin, getMobWithCorrectBehavior(attacksOnSight, attacksWithFriends)));

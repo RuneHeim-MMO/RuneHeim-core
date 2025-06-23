@@ -69,7 +69,7 @@ public class AdminCommand implements BasicCommand {
 
         if (Objects.equals(args[0], "mob1")) {
             for (int i = 0; i < 1; i++) {
-                RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.AGGRESSIVE_BANDIT);
+                RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.AGGRESSIVE_BANDIT.getId());
             }
 
         }

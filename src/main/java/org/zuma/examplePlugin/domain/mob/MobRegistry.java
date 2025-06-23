@@ -8,7 +8,6 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
-import org.zuma.examplePlugin.domain.mob.constants.MobType;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -16,7 +15,12 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class MobRegistry {
+    private final MobTypeRegistry typeRegistry;
     private final HashMap<UUID, AbstractMob> mobs = new HashMap<>();
+
+    public MobRegistry(MobTypeRegistry typeRegistry) {
+        this.typeRegistry = typeRegistry;
+    }
 
     @Nullable
     public AbstractMob getByUUID(UUID uuid) {
@@ -35,7 +39,7 @@ public class MobRegistry {
         return uuid != null ? getByUUID(UUID.fromString(uuid)) : null;
     }
 
-    public void spawnMob(UUID uuid, Location location, MobType type) {
+    public void spawnMob(UUID uuid, Location location, String id) {
         AbstractMob existing = this.mobs.get(uuid);
 
         if (existing != null) {
@@ -43,7 +47,7 @@ public class MobRegistry {
             return;
         }
 
-        AbstractMob mob = type.getNewInstance();
+        AbstractMob mob = typeRegistry.create(id);
         mob.spawn(uuid, location);
         this.mobs.put(uuid, mob);
     }
