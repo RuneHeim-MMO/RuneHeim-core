@@ -19,7 +19,7 @@ public class RunePlayerLoadedEvent extends Event {
     }
 
     public Player getBukkitPlayer() {
-        return player.getPlayer();
+        return player.asBukkitPlayer();
     }
 
     @Override

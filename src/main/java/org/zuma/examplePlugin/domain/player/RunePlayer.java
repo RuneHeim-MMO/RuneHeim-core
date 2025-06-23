@@ -1,39 +1,30 @@
 package org.zuma.examplePlugin.domain.player;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
-import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
-import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.hud.ActionBarManager;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.hud.PlayerScoreboardManager;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
-import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.party.Party;
+import org.zuma.examplePlugin.domain.player.handlers.PlayerItemDistributor;
+import org.zuma.examplePlugin.domain.player.handlers.PlayerXpHandler;
 import org.zuma.examplePlugin.domain.player.states.RunePlayerBusyStateHandler;
 import org.zuma.examplePlugin.domain.skill.Skill;
-import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
-import org.zuma.examplePlugin.events.player.RunePlayerGainedXPEvent;
-import org.zuma.examplePlugin.events.player.RunePlayerLevelUpEvent;
 
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
@@ -41,32 +32,30 @@ import java.util.stream.Collectors;
 
 public class RunePlayer implements CombatEntity {
     private final UUID uuid;
-    private final EnumMap<ModifierType, Modifier> modifiers = new EnumMap<>(ModifierType.class);
-    private final EnumMap<SkillType, Skill> skills = new EnumMap<>(SkillType.class);
-    private final ActionBarManager actionBarManager;
-    private PlayerScoreboardManager scoreboardManager;
-    private final RunePlayerBusyStateHandler busyStateHandler;
+    private final PlayerCombatData combatData;
     private @Nullable Party party;
-    private int combatLvl, health;
 
-    public RunePlayer(UUID uuid) {
+    private final EnumMap<ModifierType, Modifier> modifiers;
+    private final EnumMap<SkillType, Skill> skills;
+    private final PlayerXpHandler xpHandler;
+    private final PlayerItemDistributor itemHandler;
+    private final RunePlayerBusyStateHandler busyStateHandler;
+    private final ActionBarManager actionBarManager;
+    private final PlayerScoreboardManager scoreboardManager;
+
+
+    public RunePlayer(UUID uuid, EnumMap<SkillType, Skill> skills) {
         this.uuid = uuid;
-        this.busyStateHandler = new RunePlayerBusyStateHandler(this);
-        this.actionBarManager = new ActionBarManager(this);
+        this.skills = skills;
+        this.combatData = new PlayerCombatData(this, skills.get(SkillType.HITPOINTS).getLevel(), XpUtils.getCombatLevelFromSkills(skills));
 
-        // todo: fix
-        Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-            this.scoreboardManager = new PlayerScoreboardManager(this);
-        });
+        modifiers = new EnumMap<>(ModifierType.class);
+        actionBarManager = new ActionBarManager(this);
+        scoreboardManager = new PlayerScoreboardManager(this);
+        busyStateHandler = new RunePlayerBusyStateHandler(this);
+        itemHandler = new PlayerItemDistributor(this);
+        xpHandler = new PlayerXpHandler(this);
 
-        // Each player starts with default XP in all skill types.
-        for (SkillType type : SkillType.values()) {
-            skills.put(type, new Skill(type, XpUtils.getXpForLevel(99)));
-        }
-
-        this.health = skills.get(SkillType.HITPOINTS).getLevel();
-
-        this.combatLvl = XpUtils.getCombatLevelFromSkills(skills);
         HudService.updateVanillaGUI(this);
     }
 
@@ -74,91 +63,37 @@ public class RunePlayer implements CombatEntity {
         return uuid;
     }
 
-    public Player getPlayer() {
+    public Player asBukkitPlayer() {
         return Bukkit.getPlayer(uuid);
     }
 
+    public Entity getEntity() {
+        return this.asBukkitPlayer();
+    }
+
+    // Modifiers
     public void setModifiers(List<Modifier> newModifiers) {
         modifiers.clear();
-        modifiers.putAll(
-                newModifiers.stream().collect(Collectors.toMap(
-                        Modifier::type,
-                        Function.identity()
-                ))
-        );
-
+        modifiers.putAll(newModifiers.stream()
+                .collect(Collectors.toMap(Modifier::type, Function.identity())));
         System.out.println("Recalculated modifiers " + newModifiers);
     }
 
+    public EnumMap<ModifierType, Modifier> getModifiers() {
+        return new EnumMap<>(modifiers);
+    }
+
+    // Skills
     @NotNull
     public Skill getSkill(SkillType type) {
         return skills.get(type);
     }
 
-    public void useBusyState(int durationMs, String action, String successAction, SoundType stepSound, SoundType successSound, Runnable onSuccess, @Nullable Runnable onFailure) {
-        this.busyStateHandler.useBusyState(durationMs, action, successAction, stepSound, successSound, onSuccess, onFailure);
+    public EnumMap<SkillType, Skill> getSkills() {
+        return new EnumMap<>(skills);
     }
 
-    public boolean isBusy() {
-        return busyStateHandler.isBusy();
-    }
-
-    public void cancelTask() {
-        busyStateHandler.cancelTask();
-    }
-
-    public boolean meetsRequirements(Object item) {
-
-        if (getPlayer().getGameMode() == GameMode.CREATIVE) {
-            return true;
-        }
-
-        if (item instanceof SkillRestrictable) {
-            List<SkillRequirement> requirements = ((SkillRestrictable) item).getRequirements();
-            return requirements.stream().allMatch(req -> req.playerMeetsRequirement(this));
-
-        }
-        return true;
-    }
-
-    public void addItemOrDrop(ItemRecord item) {
-        AbstractItem customItem = RuneQuestPlugin.getItemRegistry().getItem(item.getItemId());
-
-        if (customItem == null) {
-            RuneQuestPlugin.getRuneLogger().logWithStack(LogLevel.WARN, "Cannot add item with id " + item.getItemId() + " to players inventory. Item does not exist in registry.");
-            return;
-        }
-
-
-        ItemStack itemStack = customItem.asItemStack(item.getAmount());
-        Component name = itemStack.getItemMeta().displayName();
-        String plainName = name != null ? PlainTextComponentSerializer.plainText().serialize(name) : null;
-
-        addItemOrDrop(itemStack, "Your inventory is full! " + itemStack.getAmount() + "x " + plainName + " dropped on the ground.");
-    }
-
-    public void addItemOrDrop(ItemStack item, String dropMessage) {
-        Player player = this.getPlayer();
-        HashMap<Integer, ItemStack> leftovers = player.getInventory().addItem(item);
-
-
-        if (!leftovers.isEmpty()) {
-            Location dropLocation = player.getLocation();
-            leftovers.values().forEach(leftover ->
-                    player.getWorld().dropItemNaturally(dropLocation, leftover)
-            );
-
-            if (dropMessage != null && !dropMessage.isEmpty()) {
-                player.sendMessage(Component.text(dropMessage).color(Color.ERROR.asColor()));
-                SoundType.INVENTORY_FULL.play(player);
-            }
-
-            return;
-        }
-
-        player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 1f, 1f);
-    }
-
+    // Party
     public @Nullable Party getParty() {
         return party;
     }
@@ -167,66 +102,9 @@ public class RunePlayer implements CombatEntity {
         this.party = party;
     }
 
-    public void addSkillXp(SkillType type, double xp, XpSource source) {
-        Skill skill = skills.get(type);
-
-        RunePlayerGainedXPEvent event = new RunePlayerGainedXPEvent(this, type, xp, source);
-        Bukkit.getServer().getPluginManager().callEvent(event);
-
-        if (event.isCancelled()) {
-            return;
-        }
-
-        if (skill == null) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Tried adding XP for skill " + type.getLabel() + " which does not exist in players instance.");
-            return;
-        }
-
-        double nextXp = skill.getXp() + xp;
-        boolean leveledUp = false;
-
-        if (nextXp >= XpUtils.getXpForLevel(skill.getLevel() + 1)) {
-            leveledUp = true;
-
-            RunePlayerLevelUpEvent levelUpEvent = new RunePlayerLevelUpEvent(this, type, XpUtils.getCappedLevel(skill.getLevel() + 1), source);
-            Bukkit.getServer().getPluginManager().callEvent(levelUpEvent);
-
-            if (levelUpEvent.isCancelled()) {
-                return;
-            }
-        }
-
-        HudService.showXpGainMessage(this, type, xp, source);
-        skill.addXp(xp);
-
-        if (leveledUp) {
-            HudService.showPlayerLevelUpTitle(this, skill);
-            this.combatLvl = XpUtils.getCombatLevelFromSkills(skills);
-            HudService.updateVanillaGUI(this);
-            actionBarManager.showLevelUp();
-        }
-
-    }
-
-    public void addShareableXp(SkillType type, double xp) {
-        if (party != null) {
-            party.splitXPBetweenMembers(type, xp);
-        } else {
-            addSkillXp(type, xp, org.zuma.examplePlugin.core.constants.XpSource.PERSONAL);
-        }
-    }
-
-
-    public EnumMap<ModifierType, Modifier> getModifiers() {
-        return new EnumMap<>(modifiers);
-    }
-
-    public EnumMap<SkillType, Skill> getSkills() {
-        return new EnumMap<>(skills);
-    }
-
+    // Combat data (health, combat level)
     public int getHealth() {
-        return health;
+        return combatData.getHealth();
     }
 
     public int getMaxHealth() {
@@ -234,21 +112,52 @@ public class RunePlayer implements CombatEntity {
     }
 
     public int getCombatLvl() {
-        return combatLvl;
+        return combatData.getCombatLvl();
+    }
+
+    public void setCombatLvl(int combatLvl) {
+        combatData.setCombatLvl(combatLvl);
     }
 
     public void takeHit(Hit hit) {
-        this.health -= Math.min(this.health, hit.damage());
-        HudService.updateVanillaGUI(this);
-
-        if (this.health <= 0) {
-            getPlayer().sendMessage("Welp, you died!");
-            this.health = this.skills.get(SkillType.HITPOINTS).getLevel();
-        }
+        combatData.takeHit(hit);
     }
 
-    public Entity getEntity() {
-        return this.getPlayer();
+    // Busy state management
+    public void useBusyState(int durationMs, String action, String successAction, SoundType stepSound, SoundType successSound, Runnable onSuccess, @Nullable Runnable onFailure) {
+        this.busyStateHandler.useBusyState(durationMs, action, successAction, stepSound, successSound, onSuccess, onFailure);
     }
+
+    public boolean isBusy() {
+        return busyStateHandler.isBusy();
+    }
+
+    public void cancelBusyState() {
+        busyStateHandler.cancelTask();
+    }
+
+    // XP handling
+    public void distributeXp(SkillType type, double xp) {
+        xpHandler.distributeXp(type, xp);
+    }
+
+    public void addXp(SkillType type, double xp, XpSource source) {
+        xpHandler.addXp(type, xp, source);
+    }
+
+    // Item handling
+    public void giveItemOrDrop(ItemRecord item) {
+        itemHandler.addItemOrDrop(item);
+    }
+
+    // Utility
+    public boolean meetsRequirements(Object item) {
+        return PlayerUtils.playerMeetsItemRequirements(this, item);
+    }
+
+    public ActionBarManager getActionBar() {
+        return this.actionBarManager;
+    }
+
 
 }

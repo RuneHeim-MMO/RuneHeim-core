@@ -58,7 +58,7 @@ public class BlockInvCreatorInventory extends IndividualGUI {
 
     @Override
     public void openInventory(RunePlayer player) {
-        if (!player.getPlayer().isOp()) {
+        if (!player.asBukkitPlayer().isOp()) {
             return;
         }
 
@@ -89,7 +89,7 @@ public class BlockInvCreatorInventory extends IndividualGUI {
         super.assignMenuValue(undo, -1);
         inventory.setItem(super.getSlots() - 1, undo);
 
-        player.getPlayer().openInventory(inventory);
+        player.asBukkitPlayer().openInventory(inventory);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class BlockInvCreatorInventory extends IndividualGUI {
             return;
         }
 
-        RayTraceResult result = player.getPlayer().rayTraceBlocks(20);
+        RayTraceResult result = player.asBukkitPlayer().rayTraceBlocks(20);
 
         if (result == null || result.getHitBlock() == null || result.getHitPosition() == null) {
             return;
@@ -139,7 +139,7 @@ public class BlockInvCreatorInventory extends IndividualGUI {
         }
 
         Location hologramLocation = result.getHitBlock().getLocation().clone().add(0.5, 1.5, 0.5);
-        BlockFace oppositeFace = MathUtils.yawToFace(player.getPlayer().getYaw()).getOppositeFace();
+        BlockFace oppositeFace = MathUtils.yawToFace(player.asBukkitPlayer().getYaw()).getOppositeFace();
 
         switch (side) {
             case TOP -> hologramLocation.add(0, 0, 0);

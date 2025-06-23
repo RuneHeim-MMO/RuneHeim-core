@@ -60,7 +60,7 @@ public class AdminCommand implements BasicCommand {
         }
 
         if (Objects.equals(args[0], "skills")) {
-            runePlayer.getPlayer().sendMessage(
+            runePlayer.asBukkitPlayer().sendMessage(
                     runePlayer.getSkills().values().stream()
                             .map(skill -> skill.getType().getLabel() + ": " + XpUtils.getLevelFromXp(skill.getXp()))
                             .collect(Collectors.joining(", "))
@@ -68,10 +68,10 @@ public class AdminCommand implements BasicCommand {
         }
 
         if (Objects.equals(args[0], "mob1")) {
-            for (int i = 0; i < 1; i++) {
-                RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.AGGRESSIVE_BANDIT.getId());
-            }
-
+            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.AGGRESSIVE_BANDIT_1.getId());
+        }
+        if (Objects.equals(args[0], "mob2")) {
+            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.AGGRESSIVE_BANDIT_2.getId());
         }
 
         if (Objects.equals(args[0], "node")) {

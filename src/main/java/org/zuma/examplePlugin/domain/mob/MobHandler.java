@@ -34,7 +34,6 @@ public class MobHandler {
                 NamespacedKey key = new NamespacedKey(RuneQuestPlugin.getInstance(), MobDataKey.MOB_UUID.asString());
                 String value = entity.getPersistentDataContainer().get(key, PersistentDataType.STRING);
 
-
                 if (value != null) {
                     AbstractMob mob = registry.getByUUID(UUID.fromString(value));
 

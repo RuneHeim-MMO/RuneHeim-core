@@ -57,7 +57,7 @@ public class NodeCreatorInventory extends IndividualGUI {
 
     @Override
     public void openInventory(RunePlayer player) {
-        if (!player.getPlayer().isOp()) {
+        if (!player.asBukkitPlayer().isOp()) {
             return;
         }
 
@@ -94,7 +94,7 @@ public class NodeCreatorInventory extends IndividualGUI {
         super.assignMenuValue(undo, -1);
         inventory.setItem(super.getSlots() - 1, undo);
 
-        player.getPlayer().openInventory(inventory);
+        player.asBukkitPlayer().openInventory(inventory);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class NodeCreatorInventory extends IndividualGUI {
             return;
         }
 
-        RayTraceResult result = player.getPlayer().rayTraceBlocks(20);
+        RayTraceResult result = player.asBukkitPlayer().rayTraceBlocks(20);
 
         if (result == null || result.getHitBlock() == null || result.getHitPosition() == null) {
             return;
@@ -134,7 +134,7 @@ public class NodeCreatorInventory extends IndividualGUI {
         double dz = hitPos.getZ() - blockLoc.getZ();
 
         HologramSide side;
-        BlockFace oppositeFace = MathUtils.yawToFace(player.getPlayer().getYaw()).getOppositeFace();
+        BlockFace oppositeFace = MathUtils.yawToFace(player.asBukkitPlayer().getYaw()).getOppositeFace();
 
         if (Math.abs(dx - 0.5) > Math.abs(dy - 0.5) && Math.abs(dx - 0.5) > Math.abs(dz - 0.5)) {
             side = dx < 0.5 ? HologramSide.LEFT : HologramSide.RIGHT;

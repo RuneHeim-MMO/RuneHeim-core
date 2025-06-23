@@ -24,7 +24,7 @@ public class Party {
     public Party(UUID uuid, RunePlayer owner, int maxMembers) {
         this.uuid = uuid;
         this.ownerUuid = owner.getUUID();
-        this.ownerUsername = owner.getPlayer().getName();
+        this.ownerUsername = owner.asBukkitPlayer().getName();
         this.players = new ArrayList<>();
         this.invites = new ArrayList<>();
         this.players.add(owner);
@@ -53,7 +53,7 @@ public class Party {
         }
 
         ownerUuid = player.getUUID();
-        ownerUsername = player.getPlayer().getName();
+        ownerUsername = player.asBukkitPlayer().getName();
         Bukkit.getServer().getPluginManager().callEvent(new PartyOwnerUpdateEvent(this, player));
     }
 
@@ -91,7 +91,7 @@ public class Party {
 
     public void kickPlayer(RunePlayer whoKicked, RunePlayer player) {
         if (ownerUuid != whoKicked.getUUID()) {
-            throw new IllegalStateException(whoKicked.getPlayer().getName() + " is not party owner.");
+            throw new IllegalStateException(whoKicked.asBukkitPlayer().getName() + " is not party owner.");
         }
 
         if (!players.contains(player)) {
@@ -116,7 +116,7 @@ public class Party {
         double equalXp = xp / players.size();
 
         players.forEach(player -> {
-            player.addSkillXp(type, equalXp, XpSource.PARTY);
+            player.addXp(type, equalXp, XpSource.PARTY);
         });
     }
 }

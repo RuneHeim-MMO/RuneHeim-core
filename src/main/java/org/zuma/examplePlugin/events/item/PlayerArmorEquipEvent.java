@@ -24,7 +24,7 @@ public class PlayerArmorEquipEvent extends Event implements Cancellable {
     }
 
     public Player getBukkitPlayer() {
-        return player.getPlayer();
+        return player.asBukkitPlayer();
     }
 
     @Override

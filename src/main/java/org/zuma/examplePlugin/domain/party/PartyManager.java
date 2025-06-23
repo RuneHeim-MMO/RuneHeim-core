@@ -20,7 +20,7 @@ public class PartyManager {
         Party existingParty = getPlayersParty(creator);
 
         if (existingParty != null) {
-            throw new IllegalStateException(creator.getPlayer().getName() + " is already in " + existingParty.getOwnerUsername() + "'s party.");
+            throw new IllegalStateException(creator.asBukkitPlayer().getName() + " is already in " + existingParty.getOwnerUsername() + "'s party.");
         }
 
         UUID partyUuid = UUID.randomUUID();
@@ -35,11 +35,11 @@ public class PartyManager {
         Party existingParty = getPlayersParty(disbander);
 
         if (existingParty == null) {
-            throw new IllegalStateException(disbander.getPlayer().getName() + " does not belong to any party.");
+            throw new IllegalStateException(disbander.asBukkitPlayer().getName() + " does not belong to any party.");
         }
 
         if (!existingParty.getOwnerUuid().equals(disbander.getUUID())) {
-            throw new IllegalStateException(disbander.getPlayer().getName() + " is not party owner.");
+            throw new IllegalStateException(disbander.asBukkitPlayer().getName() + " is not party owner.");
         }
 
         existingParty.getMembers().forEach(member -> member.setParty(null));

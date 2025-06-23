@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.core.utils;
 
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
@@ -10,6 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.PersistanceDataKey;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -30,7 +32,7 @@ public class PlayerUtils {
         NamespacedKey itemIdKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistanceDataKey.ITEM_ID.asString());
 
         // Count all item IDs in the player's main inventory (excluding armor/offhand)
-        for (ItemStack stack : player.getPlayer().getInventory().getStorageContents()) {
+        for (ItemStack stack : player.asBukkitPlayer().getInventory().getStorageContents()) {
             if (stack == null || stack.getType().isAir()) continue;
 
             ItemMeta meta = stack.getItemMeta();
@@ -47,7 +49,7 @@ public class PlayerUtils {
         }
 
         // Also count the item on the player's cursor
-        ItemStack cursor = player.getPlayer().getItemOnCursor();
+        ItemStack cursor = player.asBukkitPlayer().getItemOnCursor();
         if (!cursor.getType().isAir()) {
             ItemMeta meta = cursor.getItemMeta();
             if (meta != null) {
@@ -82,9 +84,9 @@ public class PlayerUtils {
         }
 
         NamespacedKey itemIdKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistanceDataKey.ITEM_ID.asString());
-        PlayerInventory inventory = player.getPlayer().getInventory();
+        PlayerInventory inventory = player.asBukkitPlayer().getInventory();
         ItemStack[] contents = inventory.getStorageContents();
-        ItemStack cursor = player.getPlayer().getItemOnCursor();
+        ItemStack cursor = player.asBukkitPlayer().getItemOnCursor();
 
         for (ItemRecord req : requiredItems) {
             int remainingToRemove = req.getAmount();
@@ -132,7 +134,7 @@ public class PlayerUtils {
 
                             if (cursorAmount <= remainingToRemove) {
                                 remainingToRemove -= cursorAmount;
-                                player.getPlayer().setItemOnCursor(null);
+                                player.asBukkitPlayer().setItemOnCursor(null);
                             } else {
                                 cursor.setAmount(cursorAmount - remainingToRemove);
                                 remainingToRemove = 0;
@@ -149,13 +151,13 @@ public class PlayerUtils {
         }
 
         inventory.setStorageContents(contents);
-        player.getPlayer().updateInventory();
+        player.asBukkitPlayer().updateInventory();
         return true;
     }
 
 
     public static void subtractOneFromMainHand(RunePlayer player) {
-        ItemStack item = player.getPlayer().getInventory().getItemInMainHand();
+        ItemStack item = player.asBukkitPlayer().getInventory().getItemInMainHand();
 
         if (item.getType().isAir()) {
             return;
@@ -164,18 +166,18 @@ public class PlayerUtils {
         int amount = item.getAmount();
 
         if (amount <= 1) {
-            player.getPlayer().getInventory().setItemInMainHand(null);
+            player.asBukkitPlayer().getInventory().setItemInMainHand(null);
             return;
         }
 
         item.setAmount(amount - 1);
-        player.getPlayer().getInventory().setItemInMainHand(item);
+        player.asBukkitPlayer().getInventory().setItemInMainHand(item);
 
     }
 
     public static Location trunacePlayerFeetLocation(RunePlayer player) {
         if (player == null) return null;
-        Location loc = player.getPlayer().getLocation();
+        Location loc = player.asBukkitPlayer().getLocation();
         World world = loc.getWorld();
 
         int x = loc.getBlockX();
@@ -206,4 +208,18 @@ public class PlayerUtils {
         float progress = offset / (float) SAFE_OFFSET;
         return Math.round(minPercentage + ((100 - minPercentage) * progress)); // from minPercentage to 100%
     }
+
+    public static boolean playerMeetsItemRequirements(RunePlayer player, Object item) {
+        if (player.asBukkitPlayer().getGameMode() == GameMode.CREATIVE) {
+            return true;
+        }
+
+        if (item instanceof SkillRestrictable) {
+            List<SkillRequirement> requirements = ((SkillRestrictable) item).getRequirements();
+            return requirements.stream().allMatch(req -> req.playerMeetsRequirement(player));
+
+        }
+        return true;
+    }
+
 }

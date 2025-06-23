@@ -7,20 +7,30 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.TextUtils;
+import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.player.states.RunePlayerLoadingStateHandler;
+import org.zuma.examplePlugin.domain.skill.Skill;
+import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.events.player.RunePlayerLoadedEvent;
 import org.zuma.examplePlugin.events.player.RunePlayerSavedEvent;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class RunePlayerManager {
     private static final int AUTOSAVE_DELAY_SECONDS = 60;
     private final Map<UUID, RunePlayer> players = new HashMap<>();
     private final RunePlayerLoadingStateHandler loadingStateHandler;
 
+    EnumMap<SkillType, Skill> defaultSkills = Arrays.stream(SkillType.values())
+            .collect(Collectors.toMap(
+                    Function.identity(),
+                    type -> new Skill(type, XpUtils.getXpForLevel(99)),
+                    (a, b) -> b,
+                    () -> new EnumMap<>(SkillType.class)
+            ));
 
     public RunePlayerManager() {
         loadingStateHandler = new RunePlayerLoadingStateHandler(RuneQuestPlugin.getInstance());
@@ -53,7 +63,7 @@ public class RunePlayerManager {
 
         if (players.containsKey(uuid)) {
             Component kickScreen = TextUtils.getErrorKickScreen("Player " + uuid + " is already online.");
-            players.get(uuid).getPlayer().kick(kickScreen);
+            players.get(uuid).asBukkitPlayer().kick(kickScreen);
             player.kick(kickScreen);
             return;
         }
@@ -64,7 +74,7 @@ public class RunePlayerManager {
             try {
 
                 // TODO: Deserialize & initialize player
-                RunePlayer runePlayer = new RunePlayer(uuid);
+                RunePlayer runePlayer = new RunePlayer(uuid, defaultSkills);
 
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                     if (Bukkit.getPlayer(uuid) == null) {
@@ -129,6 +139,6 @@ public class RunePlayerManager {
             return;
         }
 
-        runePlayer.cancelTask();
+        runePlayer.cancelBusyState();
     }
 }

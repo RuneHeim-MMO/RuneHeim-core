@@ -16,7 +16,11 @@ public class MobTypesLoader {
 
     public static void registerMobs(MobTypeRegistry registry) {
         registry.register(MobType.GENERIC_SHOPKEEPER.getId(), () -> new GenericShopkeeper("Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_MAN_1.getBehavior(), "shopkeeper", 0, false));
-        registry.register(MobType.AGGRESSIVE_BANDIT.getId(), () -> new GenericHumanoidCombatant("Bandit", null,
+        registry.register(MobType.AGGRESSIVE_BANDIT_1.getId(), () -> new GenericHumanoidCombatant("Bandit", EquipmentSet.BANDIT_1,
+                List.of(new SkillLevelRecord(SkillType.ATTACK, 1), new SkillLevelRecord(SkillType.STRENGTH, 1), new SkillLevelRecord(SkillType.DEFENCE, 1)),
+                List.of(new Modifier(ModifierType.ATTACK_SLASH, 5)), MobBehaviors.VILLAGER_MAN_1.getBehavior(),
+                0.23, false, true, 50, "bandit"));
+        registry.register(MobType.AGGRESSIVE_BANDIT_2.getId(), () -> new GenericHumanoidCombatant("Bandit", EquipmentSet.BANDIT_2,
                 List.of(new SkillLevelRecord(SkillType.ATTACK, 1), new SkillLevelRecord(SkillType.STRENGTH, 1), new SkillLevelRecord(SkillType.DEFENCE, 1)),
                 List.of(new Modifier(ModifierType.ATTACK_SLASH, 5)), MobBehaviors.VILLAGER_MAN_1.getBehavior(),
                 0.23, false, true, 50, "bandit"));

@@ -40,7 +40,7 @@ public class HudService {
         boolean isPartySource = source == XpSource.PARTY;
 
         spawnVerticalHologramBubble(player, Color.SUCCESS.asSpigotHex() + "+ " + xpStr + " " + (isPartySource ? "[Party]" : ""));
-        player.getPlayer().sendMessage(type.getLabel() + " +" + xp + "xp! Type: " + source.name());
+        player.asBukkitPlayer().sendMessage(type.getLabel() + " +" + xp + "xp! Type: " + source.name());
     }
 
     public static void showDamageBubble(CombatEntity entity, Hit hit, AttackType type, boolean isCriticalHit) {
@@ -56,17 +56,17 @@ public class HudService {
     }
 
     public static void sendFailMessage(RunePlayer player, Component text) {
-        player.getPlayer().sendMessage(text.color(Color.ERROR.asColor()));
-        SoundType.FAIL_ACTION.play(player.getPlayer());
+        player.asBukkitPlayer().sendMessage(text.color(Color.ERROR.asColor()));
+        SoundType.FAIL_ACTION.play(player.asBukkitPlayer());
     }
 
     public static void showFailTitle(RunePlayer player, String text) {
-        player.getPlayer().showTitle(Title.title(
+        player.asBukkitPlayer().showTitle(Title.title(
                 Component.text(""),
                 Component.text(text).color(Color.ERROR.asColor()),
                 TextUtils.getGenericDuration()
         ));
-        SoundType.FAIL_ACTION.play(player.getPlayer());
+        SoundType.FAIL_ACTION.play(player.asBukkitPlayer());
     }
 
     public static void showPlayerLevelUpTitle(RunePlayer player, Skill skill) {
@@ -79,7 +79,7 @@ public class HudService {
 
 
         if (!isMaxedSkill) {
-            player.getPlayer().showTitle(Title.title(
+            player.asBukkitPlayer().showTitle(Title.title(
                     Component.text("Congratulations!", Color.SERVER_BRAND.asColor()),
                     Component.text("Your ", Color.SUCCESS.asColor())
                             .append(Component.text(type.getSymbol(), NamedTextColor.WHITE))
@@ -114,7 +114,7 @@ public class HudService {
                     .append(Component.text("S").color(NamedTextColor.GREEN))
                     .append(Component.text("!").color(NamedTextColor.GOLD));
 
-            player.getPlayer().showTitle(Title.title(
+            player.asBukkitPlayer().showTitle(Title.title(
                     congrats,
                     Component.text("No way! You have MAXED your ", Color.SUCCESS.asColor())
                             .append(Component.text(type.getSymbol(), NamedTextColor.WHITE))
@@ -130,7 +130,7 @@ public class HudService {
         for (int i = 0; i < count; i++) {
             int delay = i * delayBetween;
             Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-                Location loc = player.getPlayer().getLocation().add(0, 1, 0);
+                Location loc = player.asBukkitPlayer().getLocation().add(0, 1, 0);
                 Firework firework = loc.getWorld().spawn(loc, Firework.class);
 
                 FireworkMeta meta = firework.getFireworkMeta();
@@ -168,11 +168,11 @@ public class HudService {
         // Clamp scaledHealth between 0.5 and 20
         scaledHealth = Math.max(0.5, Math.min(20.0, scaledHealth));
 
-        player.getPlayer().setHealth(scaledHealth);
+        player.asBukkitPlayer().setHealth(scaledHealth);
     }
 
     private static void updateXpBarLevel(RunePlayer player) {
-        player.getPlayer().setLevel(player.getCombatLvl());
+        player.asBukkitPlayer().setLevel(player.getCombatLvl());
     }
 
     public static void updateVanillaGUI(RunePlayer player) {
@@ -185,7 +185,7 @@ public class HudService {
     }
 
     private static void spawnVerticalHologramBubble(RunePlayer player, String content) {
-        spawnVerticalHologramBubble(player.getPlayer().getLocation().clone().add(0, 1, 0), player.getPlayer().getLocation().getDirection().clone().normalize(), content);
+        spawnVerticalHologramBubble(player.asBukkitPlayer().getLocation().clone().add(0, 1, 0), player.asBukkitPlayer().getLocation().getDirection().clone().normalize(), content);
     }
 
     private static void spawnVerticalHologramBubble(Location start, Vector direction, String content) {

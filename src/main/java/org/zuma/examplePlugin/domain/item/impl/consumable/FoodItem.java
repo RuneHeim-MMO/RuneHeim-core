@@ -31,7 +31,7 @@ public class FoodItem extends AbstractItem {
     }
 
     public void onPlayerConsumeItem(PlayerItemConsumeEvent event, RunePlayer player, StateManager itemStateManager) {
-        ItemStack itemStack = PlayerUtils.getItemStackInHand(player.getPlayer());
+        ItemStack itemStack = PlayerUtils.getItemStackInHand(player.asBukkitPlayer());
 
         PlayerConsumableConsumeEvent newEvent = new PlayerConsumableConsumeEvent(player, this, itemStack, itemStateManager);
         Bukkit.getServer().getPluginManager().callEvent(newEvent);
@@ -42,7 +42,7 @@ public class FoodItem extends AbstractItem {
         }
 
 
-        player.getPlayer().sendMessage("You ate " + super.displayName + "! Health +" + healAmount);
+        player.asBukkitPlayer().sendMessage("You ate " + super.displayName + "! Health +" + healAmount);
         PlayerUtils.subtractOneFromMainHand(player);
     }
 

@@ -47,7 +47,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
 
     @Override
     public void onPlayerAttackEntity(EntityDamageByEntityEvent event, RunePlayer player) {
-        player.getPlayer().sendMessage(getDisplayName() + " HP: " + health);
+        player.asBukkitPlayer().sendMessage(getDisplayName() + " HP: " + health);
 
         Entity entity = this.getEntity();
 

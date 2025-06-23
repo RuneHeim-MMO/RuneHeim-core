@@ -74,7 +74,7 @@ public class SkillsCommand implements BasicCommand {
                 return;
             }
 
-            runePlayer.getPlayer().sendMessage(getSkillStats(runePlayer));
+            runePlayer.asBukkitPlayer().sendMessage(getSkillStats(runePlayer));
         }
 
         // With Player

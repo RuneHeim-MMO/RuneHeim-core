@@ -40,7 +40,7 @@ public class AnvilInventory extends IndividualGUI {
             inventory.setItem(i, item);
         }
 
-        player.getPlayer().openInventory(inventory);
+        player.asBukkitPlayer().openInventory(inventory);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class AnvilInventory extends IndividualGUI {
         boolean craftStarted = RuneQuestPlugin.getRecipeHandler().craftRecipe(player, RuneQuestPlugin.getRecipeRegistry().getRecipeById(menuValue), times);
 
         if (craftStarted) {
-            player.getPlayer().closeInventory();
+            player.asBukkitPlayer().closeInventory();
         }
 
     }

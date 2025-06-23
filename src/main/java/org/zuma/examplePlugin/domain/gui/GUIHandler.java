@@ -63,7 +63,7 @@ public class GUIHandler {
         AbstractGUI matchingGUI = this.registry.getInventoryByID(id);
 
         if (matchingGUI == null) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, player.getPlayer().getName() + " attempted to open a non existent inventory with id " + id + "!");
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, player.asBukkitPlayer().getName() + " attempted to open a non existent inventory with id " + id + "!");
             return;
         }
 

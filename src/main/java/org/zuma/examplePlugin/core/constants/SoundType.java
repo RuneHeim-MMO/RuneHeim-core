@@ -17,7 +17,7 @@ public enum SoundType {
     PLAYER_MAX_SKILL("ENTITY_ENDER_DRAGON_GROWL", false, 1.0f, 0.5f),
     UI_FAIL("ENTITY_VILLAGER_NO", false, 1.0f, 1.0f),
     UI_CONFIRM("ENTITY_EXPERIENCE_ORB_PICKUP", false, 1.0f, 1.5f),
-    
+
     HIT_MELEE_CRITICAL("ENTITY_PLAYER_ATTACK_CRIT", false, 1.0f, 1.3f),
     HIT_MAGIC_CRITICAL("ENTITY_WITCH_THROW", false, 1.0f, 1.0f),
     HIT_RANGED_CRITICAL("ENTITY_ARROW_HIT", false, 1.0f, 0.85f),
@@ -170,7 +170,7 @@ public enum SoundType {
     }
 
     public void play(RunePlayer player) {
-        play(player.getPlayer().getLocation(), player.getPlayer());
+        play(player.asBukkitPlayer().getLocation(), player.asBukkitPlayer());
     }
 
     public void play(Location location) {

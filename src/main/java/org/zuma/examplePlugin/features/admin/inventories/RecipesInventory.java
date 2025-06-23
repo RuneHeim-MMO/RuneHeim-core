@@ -17,8 +17,8 @@ public class RecipesInventory {
         int INVENTORY_ROWS = 6; // Max 6!
         int ITEMS_IN_ROW = 9; // Always 9
 
-        if (!player.getPlayer().hasPermission("rune.admin.item_recipes")) {
-            player.getPlayer().sendMessage(Component.text("Missing rune.admin.item_recipes permission.").color(Color.ERROR.asColor()));
+        if (!player.asBukkitPlayer().hasPermission("rune.admin.item_recipes")) {
+            player.asBukkitPlayer().sendMessage(Component.text("Missing rune.admin.item_recipes permission.").color(Color.ERROR.asColor()));
             return;
         }
 
@@ -29,7 +29,7 @@ public class RecipesInventory {
         int maxPages = ((totalItems + slots - 1) / slots) - 1;
 
         if (indexStart >= totalItems) {
-            player.getPlayer().sendMessage(Component.text("No items to display on page " + page + ". Total pages: 0-" + maxPages).color(Color.ERROR.asColor()));
+            player.asBukkitPlayer().sendMessage(Component.text("No items to display on page " + page + ". Total pages: 0-" + maxPages).color(Color.ERROR.asColor()));
             return;
         }
 
@@ -43,7 +43,7 @@ public class RecipesInventory {
             inventory.setItem(i, paginatedRegistryItems.get(i).getDisplayItemstack(player, itemRegistry));
         }
 
-        player.getPlayer().openInventory(inventory);
+        player.asBukkitPlayer().openInventory(inventory);
 
 
     }

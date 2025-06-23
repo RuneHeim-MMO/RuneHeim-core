@@ -26,8 +26,10 @@ public class PlayerScoreboardManager {
     public PlayerScoreboardManager(RunePlayer player) {
         this.player = player;
 
-        initializeScoreboard();
-        startDefaultLoop();
+        Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+            initializeScoreboard();
+            startDefaultLoop();
+        });
     }
 
 
@@ -71,7 +73,7 @@ public class PlayerScoreboardManager {
         Objective objective = board.registerNewObjective("stats", Criteria.DUMMY, Component.text("◾"));
 
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        this.player.getPlayer().setScoreboard(board);
+        this.player.asBukkitPlayer().setScoreboard(board);
         scoreboard = board;
     }
 
@@ -89,7 +91,7 @@ public class PlayerScoreboardManager {
 
             @Override
             public void run() {
-                Player p = player.getPlayer();
+                Player p = player.asBukkitPlayer();
 
                 if (p == null || !p.isOnline()) {
                     this.cancel();

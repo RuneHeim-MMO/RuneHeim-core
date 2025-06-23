@@ -24,7 +24,7 @@ public class FurnaceInventory extends IndividualGUI {
     public void openInventory(RunePlayer player) {
         Inventory inventory = getBaseInventory();
         List<AbstractRecipe> recipes = RuneQuestPlugin.getRecipeRegistry().getRecipesByType(RecipeType.SMELTING_RECIPE, true);
-        
+
         for (int i = 0; i < recipes.size(); i++) {
             if (i >= super.getSlots()) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, title + " inventory is overflowing.");
@@ -39,7 +39,7 @@ public class FurnaceInventory extends IndividualGUI {
             inventory.setItem(i, item);
         }
 
-        player.getPlayer().openInventory(inventory);
+        player.asBukkitPlayer().openInventory(inventory);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class FurnaceInventory extends IndividualGUI {
         boolean craftStarted = RuneQuestPlugin.getRecipeHandler().craftRecipe(player, RuneQuestPlugin.getRecipeRegistry().getRecipeById(menuValue), times);
 
         if (craftStarted) {
-            player.getPlayer().closeInventory();
+            player.asBukkitPlayer().closeInventory();
         }
 
     }

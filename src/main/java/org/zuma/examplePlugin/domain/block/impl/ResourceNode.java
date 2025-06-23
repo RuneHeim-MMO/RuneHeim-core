@@ -129,8 +129,8 @@ public class ResourceNode extends AbstractInteractableBlock {
         }
 
         depleteResource();
-        player.addItemOrDrop(blockType.getDrop());
-        blockType.getXpReward().forEach(reward -> player.addShareableXp(reward.type(), reward.xp()));
+        player.giveItemOrDrop(blockType.getDrop());
+        blockType.getXpReward().forEach(reward -> player.distributeXp(reward.type(), reward.xp()));
 
 
     }
@@ -209,10 +209,10 @@ public class ResourceNode extends AbstractInteractableBlock {
                 .toList();
 
         // If any requirements are missing, notify player and cancel interaction
-        if (!missingRequirements.isEmpty() && player.getPlayer().getGameMode() != GameMode.CREATIVE) {
-            SoundType.UI_FAIL.play(player.getPlayer());
+        if (!missingRequirements.isEmpty() && player.asBukkitPlayer().getGameMode() != GameMode.CREATIVE) {
+            SoundType.UI_FAIL.play(player.asBukkitPlayer());
             missingRequirements.forEach(req -> {
-                player.getPlayer().sendMessage(Component.text(
+                player.asBukkitPlayer().sendMessage(Component.text(
                         "You need " + req.minimumLevel() + " " + req.type().getLabel() + " in order to gather from " + blockType.getLabel() + "."
                 ).color(Color.ERROR.asColor()));
             });
@@ -222,8 +222,8 @@ public class ResourceNode extends AbstractInteractableBlock {
 
         // Ensure the item in hand is equipable and valid for gathering
         if (!(itemInHand instanceof EquipableItem gearItemInHand)) {
-            SoundType.UI_FAIL.play(player.getPlayer());
-            player.getPlayer().sendMessage(Component.text(blockType.getWrongToolMessage()).color(Color.ERROR.asColor()));
+            SoundType.UI_FAIL.play(player.asBukkitPlayer());
+            player.asBukkitPlayer().sendMessage(Component.text(blockType.getWrongToolMessage()).color(Color.ERROR.asColor()));
             return;
         }
 
@@ -233,8 +233,8 @@ public class ResourceNode extends AbstractInteractableBlock {
 
         // If a required modifier exists but the item lacks it, fail the interaction
         if (hasRequiredModifier && requiredToolModifier.isEmpty()) {
-            SoundType.UI_FAIL.play(player.getPlayer());
-            player.getPlayer().sendMessage(Component.text(blockType.getWrongToolMessage()).color(Color.ERROR.asColor()));
+            SoundType.UI_FAIL.play(player.asBukkitPlayer());
+            player.asBukkitPlayer().sendMessage(Component.text(blockType.getWrongToolMessage()).color(Color.ERROR.asColor()));
             return;
         }
 

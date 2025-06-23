@@ -107,7 +107,7 @@ public class ActionBarManager {
 
             @Override
             public void run() {
-                Player p = player.getPlayer();
+                Player p = player.asBukkitPlayer();
 
                 if (p == null || !p.isOnline()) {
                     this.cancel();
@@ -138,7 +138,7 @@ public class ActionBarManager {
 
             @Override
             public void run() {
-                Player p = player.getPlayer();
+                Player p = player.asBukkitPlayer();
 
                 if (p == null || !p.isOnline()) {
                     this.cancel();

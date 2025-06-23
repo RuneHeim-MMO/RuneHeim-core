@@ -19,10 +19,10 @@ public abstract class SharedGUI extends AbstractGUI {
     @Override
     public void openInventory(RunePlayer player) {
         if (inventory == null) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, player.getPlayer().getName() + " attempted to open shared inventory id " + super.id + ". Cannot open inventory because it want initialized.");
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, player.asBukkitPlayer().getName() + " attempted to open shared inventory id " + super.id + ". Cannot open inventory because it want initialized.");
         }
 
-        player.getPlayer().openInventory(inventory);
+        player.asBukkitPlayer().openInventory(inventory);
     }
 
 

@@ -124,12 +124,12 @@ public class RecipeHandler {
                     if (successCrafts > 0) {
                         // Can be null for recipes that dont produce items (e.g. campfires)
                         if (recipe.getSuccessResult() != null) {
-                            player.addItemOrDrop(new ItemRecord(recipe.getSuccessResult().getItemId(), recipe.getSuccessResult().getAmount() * successCrafts));
+                            player.giveItemOrDrop(new ItemRecord(recipe.getSuccessResult().getItemId(), recipe.getSuccessResult().getAmount() * successCrafts));
                         }
 
                         recipe.onCraftFinish(player, successCrafts);
                         recipe.handleRecipeCraftingSuccess(player);
-                        player.getPlayer().sendMessage(Component.text("Successfully " + type.getPastTenseVerb().toLowerCase() + " " + successCrafts + "x ").append(resultComponent).color(Color.SUCCESS.asColor()));
+                        player.asBukkitPlayer().sendMessage(Component.text("Successfully " + type.getPastTenseVerb().toLowerCase() + " " + successCrafts + "x ").append(resultComponent).color(Color.SUCCESS.asColor()));
                         type.getFinishSound().play(player);
                     } else {
 
@@ -140,11 +140,11 @@ public class RecipeHandler {
 
                     if (failedCrafts > 0 && recipe.getFailResult() != null) {
                         int itemsYieldAmntOnSuccess = recipe.getSuccessResult() != null ? recipe.getSuccessResult().getAmount() : 1;
-                        player.addItemOrDrop(new ItemRecord(recipe.getFailResult().getItemId(), itemsYieldAmntOnSuccess * failedCrafts));
+                        player.giveItemOrDrop(new ItemRecord(recipe.getFailResult().getItemId(), itemsYieldAmntOnSuccess * failedCrafts));
                     }
 
                     if (times == 1 && failedCrafts == 1) {
-                        player.getPlayer().sendMessage(Component.text("Failed to " + type.getVerb().toLowerCase() + " a ").append(resultComponent).color(Color.ERROR.asColor()));
+                        player.asBukkitPlayer().sendMessage(Component.text("Failed to " + type.getVerb().toLowerCase() + " a ").append(resultComponent).color(Color.ERROR.asColor()));
                     }
 
 

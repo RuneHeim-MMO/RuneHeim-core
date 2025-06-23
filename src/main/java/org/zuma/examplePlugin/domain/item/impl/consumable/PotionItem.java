@@ -41,7 +41,7 @@ public class PotionItem extends AbstractItem implements Stateful {
 
     @Override
     public void onPlayerConsumeItem(PlayerItemConsumeEvent event, RunePlayer player, StateManager itemStateManager) {
-        ItemStack itemStack = PlayerUtils.getItemStackInHand(player.getPlayer());
+        ItemStack itemStack = PlayerUtils.getItemStackInHand(player.asBukkitPlayer());
         MultiConsumableState state = (MultiConsumableState) itemStateManager.getItemState(itemStack);
 
         if (state == null) {
@@ -49,7 +49,7 @@ public class PotionItem extends AbstractItem implements Stateful {
         }
 
         if (state.isConsumed()) {
-            player.getPlayer().sendMessage(Component.text("It's consumed already!", Color.ERROR.asColor()));
+            player.asBukkitPlayer().sendMessage(Component.text("It's consumed already!", Color.ERROR.asColor()));
             return;
         }
 
@@ -67,7 +67,7 @@ public class PotionItem extends AbstractItem implements Stateful {
 
             if (state.isConsumed()) {
                 PlayerUtils.subtractOneFromMainHand(player);
-                player.addItemOrDrop(new ItemRecord(ItemId.EMPTY_POTION_BOTTLE, 1));
+                player.giveItemOrDrop(new ItemRecord(ItemId.EMPTY_POTION_BOTTLE, 1));
             }
         }
     }

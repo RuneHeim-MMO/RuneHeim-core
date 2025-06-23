@@ -24,7 +24,7 @@ public class QuestItem extends AbstractItem {
     @Override
     public void onPlayerItemDrop(PlayerDropItemEvent event, RunePlayer player, StateManager itemStateManager) {
         event.setCancelled(true);
-        player.getPlayer().sendMessage(Component.text("You cannot drop this item. It is associated with " + questName + " quest.").color(Color.ERROR.asColor()));
+        player.asBukkitPlayer().sendMessage(Component.text("You cannot drop this item. It is associated with " + questName + " quest.").color(Color.ERROR.asColor()));
     }
 
 

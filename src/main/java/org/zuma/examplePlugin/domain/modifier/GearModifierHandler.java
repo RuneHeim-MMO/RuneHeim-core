@@ -31,7 +31,7 @@ public class GearModifierHandler {
     }
 
     private List<Modifier> getGearModifiers(RunePlayer player, ItemStack itemInHand) {
-        PlayerInventory inventory = player.getPlayer().getInventory();
+        PlayerInventory inventory = player.asBukkitPlayer().getInventory();
         List<Modifier> modifiers = new ArrayList<>();
         List<ItemStack> items = new ArrayList<>(Arrays.asList(inventory.getArmorContents()));
 

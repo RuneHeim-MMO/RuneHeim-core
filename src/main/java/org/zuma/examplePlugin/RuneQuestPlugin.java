@@ -132,7 +132,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         HitHandler hitHandler = new HitHandler();
         HitListener hitListener = new HitListener(hitHandler, runePlayerManager, mobRegistry);
         getServer().getPluginManager().registerEvents(hitListener, pluginInstance);
-        
+
         initializeMap();
 
 
@@ -153,8 +153,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     }
 
     public static void reloadMarkers() {
-        Collection<POIMarkerable> poiMarkers = new ArrayList<>();
-        poiMarkers.addAll(blockManager.getAllBlocks());
+        Collection<POIMarkerable> poiMarkers = new ArrayList<>(blockManager.getAllBlocks());
 
         markerHandler.clearMarkers();
         markerHandler.renderMarkers(poiMarkers);

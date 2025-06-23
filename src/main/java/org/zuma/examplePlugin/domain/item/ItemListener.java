@@ -50,7 +50,7 @@ public class ItemListener implements Listener {
     }
 
     private void requirementsFailCancelEvent(Cancellable event, AbstractItem item, RunePlayer player) {
-        player.getPlayer().sendMessage(Component.text("You do not meet requirements to use " + item.displayName + ".").color(Color.ERROR.asColor()));
+        player.asBukkitPlayer().sendMessage(Component.text("You do not meet requirements to use " + item.displayName + ".").color(Color.ERROR.asColor()));
         event.setCancelled(true);
     }
 

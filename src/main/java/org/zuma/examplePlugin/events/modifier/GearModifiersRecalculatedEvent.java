@@ -19,7 +19,7 @@ public class GearModifiersRecalculatedEvent extends Event {
     }
 
     public Player getBukkitPlayer() {
-        return player.getPlayer();
+        return player.asBukkitPlayer();
     }
 
     @Override
