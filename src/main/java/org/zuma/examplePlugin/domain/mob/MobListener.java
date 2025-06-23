@@ -2,8 +2,10 @@ package org.zuma.examplePlugin.domain.mob;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -65,12 +67,11 @@ public class MobListener implements Listener {
             return;
         }
 
-        if (!(event.getEntity() instanceof Player bukkitPlayer)) {
+        if (!(event.getEntity() instanceof Player defender)) {
             return;
         }
 
-
-        withMobAndPlayer(bukkitPlayer, event.getEntity(), (mob, player) -> {
+        withMobAndPlayer(defender, event.getDamager(), (mob, player) -> {
             mobHandler.onEntityAttackPlayer(event, mob, player);
         });
     }
@@ -105,7 +106,12 @@ public class MobListener implements Listener {
 
             mobHandler.onChunkLoad(event, mob);
         });
+    }
 
-
+    @EventHandler
+    public void onEntityCombust(EntityCombustEvent event) {
+        if (event.getEntity() instanceof Zombie) {
+            event.setCancelled(true); // Prevent burning in sunlight
+        }
     }
 }

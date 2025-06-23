@@ -6,6 +6,8 @@ import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -26,11 +28,11 @@ import org.zuma.examplePlugin.domain.mob.meta.MobEquipmentMeta;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.UUID;
 
 public abstract class AbstractMob implements Cloneable<AbstractMob> {
     private UUID uuid;
-    private final int typeId;
     private final boolean ai;
     private final Component displayName;
     private final EntityType baseMob;
@@ -45,13 +47,14 @@ public abstract class AbstractMob implements Cloneable<AbstractMob> {
     @Nullable
     private MobEquipmentMeta mobEquipment = null;
     private boolean isBaby = false;
-    private boolean isWalking = true;
+    private boolean canWalk = true;
 
     @Nullable
     private Entity entity;
 
+    private HashMap<Attribute, Double> customAttributes = new HashMap<>();
+
     public AbstractMob(AbstractMobMeta meta) {
-        this.typeId = meta.typeId();
         this.ai = meta.ai();
         this.displayName = meta.displayName();
         this.baseMob = meta.baseEntity();
@@ -75,6 +78,10 @@ public abstract class AbstractMob implements Cloneable<AbstractMob> {
 
     }
 
+    public void setAttributes(HashMap<Attribute, Double> customAttributes) {
+        this.customAttributes = customAttributes;
+    }
+
     public void setMobEquipment(@Nullable MobEquipmentMeta equipment) {
         this.mobEquipment = equipment;
     }
@@ -84,11 +91,11 @@ public abstract class AbstractMob implements Cloneable<AbstractMob> {
     }
 
     public void setCanWalk(boolean canWalk) {
-        this.isWalking = canWalk;
+        this.canWalk = canWalk;
     }
 
     public boolean canWalk() {
-        return this.isWalking;
+        return this.canWalk;
     }
 
     @Nullable
@@ -110,10 +117,6 @@ public abstract class AbstractMob implements Cloneable<AbstractMob> {
         }
     }
 
-    public int getTypeId() {
-        return this.typeId;
-    }
-
     public UUID getUUID() {
         return this.uuid;
     }
@@ -127,12 +130,48 @@ public abstract class AbstractMob implements Cloneable<AbstractMob> {
         this.behavior = behavior;
     }
 
+    public void clearMobEquipment(LivingEntity entity) {
+        if (entity == null || entity.getEquipment() == null) return;
+
+        EntityEquipment equipment = entity.getEquipment();
+
+        // Clear all armor and items by setting to AIR
+        equipment.setHelmet(null);      // or new ItemStack(Material.AIR)
+        equipment.setChestplate(null);
+        equipment.setLeggings(null);
+        equipment.setBoots(null);
+        equipment.setItemInMainHand(null);
+        equipment.setItemInOffHand(null);
+
+        // Set all drop chances to zero
+        equipment.setHelmetDropChance(0f);
+        equipment.setChestplateDropChance(0f);
+        equipment.setLeggingsDropChance(0f);
+        equipment.setBootsDropChance(0f);
+        equipment.setItemInMainHandDropChance(0f);
+        equipment.setItemInOffHandDropChance(0f);
+
+        // Special case for ArmorStands
+        if (entity instanceof ArmorStand armorStand) {
+            armorStand.setArms(false);
+            armorStand.setRightArmPose(new EulerAngle(0, 0, 0));
+            armorStand.setLeftArmPose(new EulerAngle(0, 0, 0));
+        }
+    }
 
     private void setLivingEntityMeta(LivingEntity entity) {
         entity.customName(displayName);
         entity.setCustomNameVisible(true);
         entity.setAI(ai);
         entity.setSilent(silent);
+
+        customAttributes.forEach((attr, val) -> {
+            AttributeInstance entityAttr = entity.getAttribute(attr);
+
+            if (entityAttr != null) {
+                entityAttr.setBaseValue(val);
+            }
+        });
 
         if (entity instanceof Ageable ageable) {
             if (isBaby) {
@@ -143,10 +182,11 @@ public abstract class AbstractMob implements Cloneable<AbstractMob> {
         }
 
 
-        if (!this.isWalking) {
+        if (!this.canWalk) {
             entity.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, Integer.MAX_VALUE, 255, false, false, false));
         }
 
+        clearMobEquipment(entity);
         if (mobEquipment != null && entity.getEquipment() != null) {
             EntityEquipment equipment = entity.getEquipment();
 
