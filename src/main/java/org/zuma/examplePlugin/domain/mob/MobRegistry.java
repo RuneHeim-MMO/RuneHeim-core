@@ -50,6 +50,8 @@ public class MobRegistry {
         AbstractMob mob = typeRegistry.create(id);
         mob.spawn(uuid, location);
         this.mobs.put(uuid, mob);
+
+        if (mob.getEntity() != null) MobSessionManager.tagEntity(mob.getEntity());
     }
 
     public void removeMob(UUID uuid) {

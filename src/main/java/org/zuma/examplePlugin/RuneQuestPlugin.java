@@ -112,11 +112,13 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         MobTypeRegistry mobTypeRegistry = new MobTypeRegistry();
         MobTypesLoader.registerMobs(mobTypeRegistry);
 
+        MobSessionManager mobSessionManager = new MobSessionManager();
         mobRegistry = new MobRegistry(mobTypeRegistry);
         mobHandler = new MobHandler(mobRegistry);
         MobListener mobListener = new MobListener(runePlayerManager, mobHandler, mobRegistry);
         getServer().getPluginManager().registerEvents(mobListener, pluginInstance);
-
+        getServer().getPluginManager().registerEvents(mobSessionManager, pluginInstance);
+        
         recipeRegistry = new RecipeRegistry();
         RecipeLoader recipeLoader = new RecipeLoader(itemRegistry, recipeRegistry, new RecipeRepository(), new RecipeFactory());
         recipeLoader.loadAllRecipes();
