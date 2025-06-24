@@ -68,19 +68,18 @@ public class XpUtils {
     }
 
     public static int calculateCombatLevel(int attack, int strength, int defence, int hitpoints) {
-        // Defensive stats combined with a smaller weight
-        double defenseScore = 0.7 * defence + 0.8 * hitpoints;
-        // Offensive stats combined equally
-        double offenseScore = attack + strength;
+        // Defensive base including defence and hitpoints (no prayer)
+        double base = 0.25 * (defence + hitpoints);
 
-        // Weighted sum (offense weighed more)
-        double weightedAverage = (offenseScore + defenseScore * 0.6) / (1.0 + 0.6);
+        // Melee offense calculation
+        double melee = 0.325 * (attack + strength);
 
-        // Clamp input range to 1-99
-        weightedAverage = Math.max(1, Math.min(99, weightedAverage));
+        // Combat level is base plus melee offense
+        double combatLevel = base + melee;
 
-        // Scale linearly to 1-100 combat level
-        return (int) Math.round(1 + (weightedAverage - 1) * (99.0 / 98.0));
+        combatLevel = Math.max(3, Math.min(150, combatLevel));
+
+        return (int) Math.floor(combatLevel);
     }
 
     public static int getCombatLevelFromSkills(EnumMap<SkillType, Skill> skills) {

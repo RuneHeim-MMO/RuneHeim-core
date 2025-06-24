@@ -173,6 +173,7 @@ public class HudService {
 
     private static void updateXpBarLevel(RunePlayer player) {
         player.asBukkitPlayer().setLevel(player.getCombatLvl());
+        player.asBukkitPlayer().sendMessage("Set cmb to: " + player.getCombatLvl());
     }
 
     public static void updateVanillaGUI(RunePlayer player) {

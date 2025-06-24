@@ -29,7 +29,13 @@ public class SkillsCommand implements BasicCommand {
             boolean isMaxed = XpUtils.isMaxLevel(currentLevel);
             int percentToNextLevel = isMaxed ? 100 : XpUtils.getProgressPercent(totalXp, currentLevel);
             String formattedXp = NumberFormat.getNumberInstance().format(totalXp);
-            String formattedNextLevelXp = NumberFormat.getNumberInstance().format(isMaxed ? "MAX" : XpUtils.getXpForLevel(currentLevel + 1));
+            
+            String formattedNextLevelXp;
+            if (isMaxed) {
+                formattedNextLevelXp = "MAX";
+            } else {
+                formattedNextLevelXp = NumberFormat.getNumberInstance().format(XpUtils.getXpForLevel(currentLevel + 1));
+            }
 
             Component progressBar = new LoadingBarBuilder()
                     .totalSteps(100)

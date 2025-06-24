@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.combat;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.domain.hud.HudService;
@@ -48,13 +49,13 @@ public class HitHandler {
 
         defender.takeHit(hit);
 
-       /* if (attacker.getEntity() instanceof Player p) {
+        if (attacker.getEntity() instanceof Player p) {
             p.sendMessage("Your max hit: " + HitCalculator.getMaxHit(attacker, AttackType.MELEE));
         }
 
         if (defender.getEntity() instanceof Player p) {
             p.sendMessage("Attackers max hit: " + HitCalculator.getMaxHit(attacker, AttackType.MELEE));
-        } */
+        }
 
         handleCriticalSound(defender, type, isCriticalHit);
         HudService.showDamageBubble(defender, hit, type, isCriticalHit);

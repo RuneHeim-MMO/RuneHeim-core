@@ -39,6 +39,11 @@ public class HitListener implements Listener {
 
     @EventHandler
     public void onEntityAttackEntity(EntityDamageByEntityEvent event) {
+
+        if (event.isCancelled()) {
+            return;
+        }
+        
         CombatEntity attacker = getCombatEntity(event.getDamager());
         CombatEntity defender = getCombatEntity(event.getEntity());
 

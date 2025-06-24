@@ -150,7 +150,13 @@ public enum SoundType {
     VILLAGER_WOMAN_YES_2("vocal_villagers:entity.villager.yes", true, 1, 1.10f),
     VILLAGER_WOMAN_YES_3("vocal_villagers:entity.villager.yes", true, 1, 1.15f),
     VILLAGER_WOMAN_YES_4("vocal_villagers:entity.villager.yes", true, 1, 1.20f),
-    VILLAGER_WOMAN_YES_5("vocal_villagers:entity.villager.yes", true, 1, 1.25f);
+    VILLAGER_WOMAN_YES_5("vocal_villagers:entity.villager.yes", true, 1, 1.25f),
+
+    GOBLIN_AMBIENT("ENTITY_WITCH_AMBIENT", false, 0.8f, 1.2f),
+    GOBLIN_CELEBRATE("ENTITY_EVOKER_CAST_SPELL", false, 1.0f, 1.5f),
+    GOBLIN_NO("ENTITY_VILLAGER_NO", false, 1.0f, 0.9f),
+    GOBLIN_HURT("ENTITY_HUSK_HURT", false, 1.0f, 0.8f),
+    GOBLIN_DEATH("ENTITY_HUSK_DEATH", false, 1.0f, 0.7f);
 
 
     private final String soundKey;

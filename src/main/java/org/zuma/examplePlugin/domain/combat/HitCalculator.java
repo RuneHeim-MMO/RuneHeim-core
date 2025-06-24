@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.domain.combat;
 
+import org.bukkit.Bukkit;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
@@ -7,7 +8,7 @@ import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 public class HitCalculator {
-    private static final double BASE_BONUS = 64.0;
+    private static final double BASE_BONUS = 128.0;
     private static final double MAX_HIT_DIVISOR = 640.0;
     private static final double MAX_HIT_FLOOR_OFFSET = 0.5;
     private static final double HIT_CHANCE_OFFSET = 2.0;
@@ -56,7 +57,7 @@ public class HitCalculator {
             // Melee max hit = floor(0.5 + StrengthLevel * (StrengthBonus + 64) / 640)
             double maxHit = MAX_HIT_FLOOR_OFFSET + attackerStrength * (attackerStrBonus + BASE_BONUS) / MAX_HIT_DIVISOR;
 
-            return (int) Math.floor(maxHit);
+            return Math.max(2, (int) Math.ceil(maxHit));
         }
 
         if (type == AttackType.RANGED) {
@@ -65,7 +66,7 @@ public class HitCalculator {
             // Ranged max hit = floor(RangedLevel * (RangedStrength + 64) / 640)
             double maxHit = attackerRanged * (attackerRangeStr + BASE_BONUS) / MAX_HIT_DIVISOR;
 
-            return (int) Math.floor(maxHit);
+            return Math.max(2, (int) Math.ceil(maxHit));
         }
 
         if (type == AttackType.MAGIC) {
@@ -120,6 +121,7 @@ public class HitCalculator {
             chanceToHit = attackRoll / (2 * (defenceRoll + 1));
         }
 
+        Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage("Change to hit: " + chanceToHit + "%"));
         return Math.random() < chanceToHit;
     }
 

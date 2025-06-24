@@ -27,7 +27,7 @@ public class RunePlayerManager {
     EnumMap<SkillType, Skill> defaultSkills = Arrays.stream(SkillType.values())
             .collect(Collectors.toMap(
                     Function.identity(),
-                    type -> new Skill(type, XpUtils.getXpForLevel(99)),
+                    type -> type == SkillType.HITPOINTS ? new Skill(type, XpUtils.getXpForLevel(10)) : new Skill(type, XpUtils.getXpForLevel(1)),
                     (a, b) -> b,
                     () -> new EnumMap<>(SkillType.class)
             ));

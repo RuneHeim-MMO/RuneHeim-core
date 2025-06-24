@@ -1,11 +1,16 @@
 package org.zuma.examplePlugin.domain.mob.base;
 
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.util.Vector;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
@@ -31,12 +36,18 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         this.maxHealth = meta.maxHealth();
 
         meta.skills().forEach(record -> skills.put(record.type(), new Skill(record.type(), record.getXP())));
-        meta.modifiers().forEach(modifier -> modifiers.put(modifier.type(), modifier));
+
+        if (meta.modifiers() != null)
+            meta.modifiers().forEach(modifier -> modifiers.put(modifier.type(), modifier));
 
         this.setDisplayName(Component.text("§6[" + XpUtils.getCombatLevelFromSkills(skills) + " Lvl] §7" + meta.displayName()));
 
-        if (meta.skin() != null) {
+        if (meta.skin() != null && meta.disguiseType() == null) {
             setPlayerDisguise(meta.skin());
+        }
+
+        if (meta.disguiseType() != null) {
+            setDisguise(meta.disguiseType());
         }
     }
 
@@ -69,6 +80,25 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     public void onEntityDamaged(EntityDamageEvent event) {
         if (event.getCause() != EntityDamageEvent.DamageCause.CUSTOM) {
             event.setDamage(0);
+        }
+    }
+
+    @Override
+    public void onEntityAttackPlayer(EntityDamageByEntityEvent event, RunePlayer runePlayer) {
+
+        // Remove iron golem upwards vel on attack.
+        if (event.getDamager() instanceof IronGolem) {
+            Player player = runePlayer.asBukkitPlayer();
+
+            Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+                Vector vel = player.getVelocity();
+
+                if (vel.getY() > 0.3) {
+                    double newY = vel.getY() - 0.5;
+                    if (newY < 0) newY = 0;
+                    player.setVelocity(new Vector(vel.getX(), newY, vel.getZ()));
+                }
+            });
         }
     }
 

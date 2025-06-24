@@ -2,7 +2,10 @@ package org.zuma.examplePlugin.domain.mob.base;
 
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.Disguise;
+import me.libraryaddict.disguise.disguisetypes.DisguiseType;
+import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
+import me.libraryaddict.disguise.disguisetypes.watchers.LivingWatcher;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -71,6 +74,13 @@ public abstract class AbstractMob {
             this.setLivingEntityMeta(livingEntity);
 
             if (this.disguise != null) {
+                
+                if (disguise instanceof MobDisguise) {
+                    LivingWatcher watcher = (LivingWatcher) disguise.getWatcher();
+                    watcher.setCustomName(getDisplayName());
+                    watcher.setCustomNameVisible(true);
+                }
+
                 DisguiseAPI.disguiseToAll(entity, disguise);
             }
         }
@@ -110,11 +120,17 @@ public abstract class AbstractMob {
         return this.entity;
     }
 
+    public void setDisguise(DisguiseType type) {
+        MobDisguise disguise = new MobDisguise(type);
+        disguise.setReplaceSounds(true);
+        this.disguise = disguise;
+    }
+
     public void setPlayerDisguise(String username) {
         PlayerDisguise disguise = new PlayerDisguise(username);
         disguise.setDisplayedInTab(false);
         disguise.setReplaceSounds(true);
-        disguise.setName(TextUtils.extractPlainText(displayName));
+        disguise.setName(getDisplayName());
         this.disguise = disguise;
     }
 
