@@ -1,0 +1,9 @@
+{
+	"parent": "item/torch",
+	"textures": {
+		"1": "block/torch/soul_torch",
+		"3": "block/torch/lick",
+		"5": "block/torch/torch_soul_fire",
+		"particle": "block/torch/soul_torch"
+	}
+}

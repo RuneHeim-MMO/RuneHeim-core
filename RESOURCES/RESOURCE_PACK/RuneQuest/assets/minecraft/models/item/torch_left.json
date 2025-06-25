@@ -1,0 +1,113 @@
+{
+	"credit": "Made with Blockbench",
+	"ambientocclusion": false,
+	"textures": {
+		"1": "block/torch/torch",
+		"3": "block/torch/lick",
+		"5": "block/torch/torch_flame",
+		"particle": "block/torch"
+	},
+	"elements": [
+		{
+			"name": "flame1",
+			"from": [4.57868, 10, -6.52132],
+			"to": [4.57868, 28, 11.47868],
+			"shade": false,
+			"light_emission": 15,
+			"rotation": {"angle": -45, "axis": "y", "origin": [4.57868, 18, 7.47868]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 16], "texture": "#5"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#5"},
+				"south": {"uv": [0, 0, 0, 16], "texture": "#5"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#5"},
+				"up": {"uv": [0, 0, 16, 0], "rotation": 270, "texture": "#5"},
+				"down": {"uv": [0, 0, 16, 0], "rotation": 90, "texture": "#5"}
+			}
+		},
+		{
+			"name": "cloth",
+			"from": [7, 8.5, 3.55736],
+			"to": [9, 12.5, 5.55736],
+			"light_emission": 5,
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [8.025, 10.05, 4.53236]},
+			"faces": {
+				"north": {"uv": [14, 0, 16, 4], "texture": "#1"},
+				"east": {"uv": [12, 0, 14, 4], "texture": "#1"},
+				"south": {"uv": [10, 0, 12, 4], "texture": "#1"},
+				"west": {"uv": [8, 0, 10, 4], "texture": "#1"},
+				"up": {"uv": [0, 14, 2, 16], "rotation": 270, "texture": "#1"},
+				"down": {"uv": [14, 14, 16, 16], "rotation": 90, "texture": "#1"}
+			}
+		},
+		{
+			"name": "handle",
+			"from": [7.275, 2, 3.78236],
+			"to": [8.775, 12, 5.28236],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 10.05, 4.55736]},
+			"faces": {
+				"north": {"uv": [2, 1, 4, 11], "texture": "#1"},
+				"east": {"uv": [6, 1, 8, 11], "texture": "#1"},
+				"south": {"uv": [4, 1, 6, 11], "texture": "#1"},
+				"west": {"uv": [0, 1, 2, 11], "texture": "#1"},
+				"up": {"uv": [2, 14, 4, 16], "rotation": 270, "texture": "#1"},
+				"down": {"uv": [4, 14, 6, 16], "rotation": 90, "texture": "#1"}
+			}
+		},
+		{
+			"name": "lick",
+			"from": [6.97, 10.63, 2.93736],
+			"to": [9.03, 12.63, 5.00736],
+			"shade": false,
+			"light_emission": 12,
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 11.52, 4.55736]},
+			"faces": {
+				"north": {"uv": [6, 3, 8, 5], "rotation": 180, "texture": "#5"},
+				"east": {"uv": [5, 4, 7, 6], "rotation": 180, "texture": "#5"},
+				"south": {"uv": [6, 3, 8, 5], "rotation": 180, "texture": "#5"},
+				"west": {"uv": [5, 4, 7, 6], "rotation": 180, "texture": "#5"},
+				"up": {"uv": [6, 12, 8, 14], "rotation": 270, "texture": "#5"},
+				"down": {"uv": [0, 0, 0, 0], "rotation": 90, "texture": "#5"}
+			}
+		},
+		{
+			"name": "lick2",
+			"from": [6.95, 11.63, 2.94736],
+			"to": [9.01, 12.63, 4.99736],
+			"shade": false,
+			"light_emission": 12,
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 11.52, 4.55736]},
+			"faces": {
+				"north": {"uv": [7, 7, 9, 8], "rotation": 180, "texture": "#5"},
+				"east": {"uv": [6, 8, 8, 9], "rotation": 180, "texture": "#5"},
+				"south": {"uv": [7, 7, 9, 8], "rotation": 180, "texture": "#5"},
+				"west": {"uv": [6, 8, 8, 9], "rotation": 180, "texture": "#5"},
+				"up": {"uv": [1, 15, 3, 16], "rotation": 270, "texture": "#5"},
+				"down": {"uv": [1, 4, 1, 4], "rotation": 90, "texture": "#5"}
+			}
+		},
+		{
+			"name": "underlick",
+			"from": [6.98, 10.47, 2.95736],
+			"to": [9.02, 12.47, 4.99736],
+			"shade": false,
+			"light_emission": 10,
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [8.01, 11.52, 4.54736]},
+			"faces": {
+				"north": {"uv": [6, 3, 8, 5], "rotation": 180, "texture": "#3"},
+				"east": {"uv": [5, 4, 7, 6], "rotation": 180, "texture": "#3"},
+				"south": {"uv": [6, 3, 8, 5], "rotation": 180, "texture": "#3"},
+				"west": {"uv": [5, 4, 7, 6], "rotation": 180, "texture": "#3"},
+				"up": {"uv": [0, 14, 2, 16], "rotation": 270, "texture": "#3"},
+				"down": {"uv": [0, 0, 0, 0], "rotation": 90, "texture": "#3"}
+			}
+		}
+	],
+	"display": {
+		"firstperson_righthand": {
+			"translation": [9, 3, 0]
+		},
+		"firstperson_lefthand": {
+			"translation": [9, 3, 0]
+		}
+	}
+}

@@ -14,6 +14,7 @@ import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.handlers.IllegalItemWatchdog;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.core.utils.MathUtils;
@@ -82,15 +83,18 @@ public class NodeCreatorInventory extends IndividualGUI {
             ItemMeta meta = item.getItemMeta();
             meta.displayName(Component.text(type.getLabel()));
             item.setItemMeta(meta);
-            super.assignMenuValue(item, i);
+            IllegalItemWatchdog.tagIllegalItem(item);
 
+            super.assignMenuValue(item, i);
             inventory.setItem(i, item);
         }
 
         ItemStack undo = new ItemStack(Material.BARRIER);
         ItemMeta meta = undo.getItemMeta();
         meta.displayName(Component.text("Undo", Color.ERROR.asColor()));
+        IllegalItemWatchdog.tagIllegalItem(meta);
         undo.setItemMeta(meta);
+
         super.assignMenuValue(undo, -1);
         inventory.setItem(super.getSlots() - 1, undo);
 

@@ -17,6 +17,7 @@ import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
+import org.zuma.examplePlugin.core.handlers.IllegalItemWatchdog;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.core.utils.MathUtils;
@@ -74,9 +75,10 @@ public class BlockInvCreatorInventory extends IndividualGUI {
             ItemStack item = new ItemStack(Material.BARRIER);
             ItemMeta meta = item.getItemMeta();
             meta.displayName(Component.text(META_MAP.get(i).markerLabel(), NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
+            IllegalItemWatchdog.tagIllegalItem(meta);
             item.setItemMeta(meta);
-            super.assignMenuValue(item, i);
 
+            super.assignMenuValue(item, i);
             inventory.setItem(i, item);
         }
 
@@ -84,6 +86,8 @@ public class BlockInvCreatorInventory extends IndividualGUI {
         ItemMeta meta = undo.getItemMeta();
         meta.displayName(Component.text("Undo", Color.ERROR.asColor()));
         undo.setItemMeta(meta);
+        IllegalItemWatchdog.tagIllegalItem(undo);
+
         super.assignMenuValue(undo, -1);
         inventory.setItem(super.getSlots() - 1, undo);
 

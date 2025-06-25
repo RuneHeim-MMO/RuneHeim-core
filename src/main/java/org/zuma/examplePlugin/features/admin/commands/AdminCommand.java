@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.handlers.IllegalItemWatchdog;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.block.BlockManager;
@@ -114,6 +115,10 @@ public class AdminCommand implements BasicCommand {
             RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), runePlayer);
         }
 
+        if (args.length == 1 && Objects.equals(args[0], "illegal")) {
+            IllegalItemWatchdog.tagIllegalItem(player.getInventory().getItemInMainHand());
+        }
+
         // Items without page
         if (args.length == 1 && Objects.equals(args[0], "items")) {
             ItemRegistryInventory.open(itemRegistry, player, 0);
@@ -146,21 +151,6 @@ public class AdminCommand implements BasicCommand {
             RecipesInventory.open(recipeRegistry, itemRegistry, runePlayer, page);
         }
 
-        // without page
-        if (args.length == 1 && Objects.equals(args[0], "recipes")) {
-            RecipesInventory.open(recipeRegistry, itemRegistry, runePlayer, 0);
-        }
-
-        // without page
-        if (args.length == 2 && Objects.equals(args[0], "recipes")) {
-            int page = 0;
-
-            if (TypeUtils.isInteger(args[1])) {
-                page = Integer.parseInt(args[1]);
-            }
-
-            RecipesInventory.open(recipeRegistry, itemRegistry, runePlayer, page);
-        }
 
     }
 

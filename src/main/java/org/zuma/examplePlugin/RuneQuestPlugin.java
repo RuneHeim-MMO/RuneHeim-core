@@ -71,6 +71,9 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private void initializePlugin() {
         pluginInstance = this;
 
+        IllegalItemWatchdog illegalItemWatchdog = new IllegalItemWatchdog();
+
+        getServer().getPluginManager().registerEvents(illegalItemWatchdog, pluginInstance);
         getServer().getPluginManager().registerEvents(new OffHandDisabler(), pluginInstance);
         getServer().getPluginManager().registerEvents(new BlockProtector(), pluginInstance);
         getServer().getPluginManager().registerEvents(new DefaultMobDisabler(), pluginInstance);
@@ -118,7 +121,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         MobListener mobListener = new MobListener(runePlayerManager, mobHandler, mobRegistry);
         getServer().getPluginManager().registerEvents(mobListener, pluginInstance);
         getServer().getPluginManager().registerEvents(mobSessionManager, pluginInstance);
-        
+
         recipeRegistry = new RecipeRegistry();
         RecipeLoader recipeLoader = new RecipeLoader(itemRegistry, recipeRegistry, new RecipeRepository(), new RecipeFactory());
         recipeLoader.loadAllRecipes();

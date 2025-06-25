@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.handlers.IllegalItemWatchdog;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
@@ -109,13 +110,13 @@ public abstract class AbstractRecipe implements SkillRestrictable {
 
         ItemStack newItem = playerMeetsSkillRequirements ? new ItemStack(displayItemstack) : new ItemStack(Material.BARRIER);
         ItemMeta meta = newItem.getItemMeta();
+        IllegalItemWatchdog.tagIllegalItem(meta);
         List<Component> itemLore = new ArrayList<>();
         int chanceOfSuccess = Math.toIntExact(getChanceOfSuccess(player));
         int craftTimeSeconds = Math.toIntExact(craftTimeMs / 1000);
 
         if (!playerMeetsSkillRequirements) {
             meta.displayName(Component.text(TextUtils.extractPlainText(displayItemstack.displayName()).replace("[", "").replace("]", ""), Color.ERROR_LIGHT.asColor()).decoration(TextDecoration.ITALIC, false));
-
         }
 
         itemLore.add(Component.text("✔ " + craftTimeSeconds + " sec crafting time", Color.coloredProgressValue(craftTimeSeconds, 0, 120, true)));

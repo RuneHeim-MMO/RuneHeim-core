@@ -2,6 +2,41 @@
   "providers": [
     {
       "type": "bitmap",
+      "file": "minecraft:font/gui/crafting_table.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": ["⼟"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/gui/anvil.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": ["⽰"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/gui/furnace.png",
+      "ascent": 14,
+      "height": 150,
+      "chars": ["Ⰳ"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/gui/cooking.png",
+      "ascent": 14,
+      "height": 168,
+      "chars": ["⬛"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/gui/pixel.png",
+      "ascent": -2000,
+      "height": -3,
+      "chars": ["⛒"]
+    },
+    {
+      "type": "bitmap",
       "file": "minecraft:font/icons/log.png",
       "ascent": 9,
       "height": 12,

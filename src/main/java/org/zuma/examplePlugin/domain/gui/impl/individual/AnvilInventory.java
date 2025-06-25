@@ -7,18 +7,22 @@ import org.zuma.examplePlugin.domain.gui.base.PaginatedIndividualGUI;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 public class AnvilInventory extends PaginatedIndividualGUI {
     private static final int LEFT_CLICK_SMELT_AMOUNT = 1;
     private static final int SHIFT_CLICK_SMELT_AMOUNT = 5;
 
     public AnvilInventory(String title, int id) {
-        super(title, id, 6);
+        super(title, id, 6, new HashSet<>(Arrays.asList(0, 1, 9, 10)));
     }
 
 
     @Override
     public void handleInventoryClick(InventoryClickEvent event, int slot, RunePlayer player) {
         event.setCancelled(true);
+        player.asBukkitPlayer().sendMessage("Cancelled");
 
         ItemStack currentItem = event.getCurrentItem();
 

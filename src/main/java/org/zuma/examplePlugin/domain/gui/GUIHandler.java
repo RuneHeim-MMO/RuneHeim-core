@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.gui.base.AbstractGUI;
+import org.zuma.examplePlugin.domain.gui.constants.GUIOverlay;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.gui.impl.individual.AnvilInventory;
 import org.zuma.examplePlugin.domain.gui.impl.individual.CookingInventory;
@@ -46,11 +47,11 @@ public class GUIHandler {
     }
 
     public void initializeInventories(BlockLoader blockLoader) {
-        this.registry.register(InventoryId.BASIC_FURNACE.asInt(), () -> new FurnaceInventory("§f" + Icon.FIRE.get() + " Furnace", InventoryId.BASIC_FURNACE.asInt()));
-        this.registry.register(InventoryId.STOVE.asInt(), () -> new CookingInventory("§f" + Icon.FIRE.get() + "§r Stove", InventoryId.STOVE.asInt()));
-        this.registry.register(InventoryId.FIRE.asInt(), () -> new CookingInventory("§f" + Icon.FIRE.get() + " Campfire", InventoryId.FIRE.asInt()));
-        this.registry.register(InventoryId.ANVIL.asInt(), () -> new AnvilInventory("§f" + Icon.ANVIL.get() + " Anvil", InventoryId.ANVIL.asInt()));
-        this.registry.register(InventoryId.CRAFTING_TABLE.asInt(), () -> new AnvilInventory("§f" + Icon.CRAFTING.get() + " Crafting Table", InventoryId.CRAFTING_TABLE.asInt()));
+        this.registry.register(InventoryId.BASIC_FURNACE.asInt(), () -> new FurnaceInventory(GUIOverlay.FURNACE_OVERLAY.asGlyph() + "§f" + Icon.FIRE.get() + "§f Furnace", InventoryId.BASIC_FURNACE.asInt()));
+        this.registry.register(InventoryId.STOVE.asInt(), () -> new CookingInventory(GUIOverlay.COOKING_OVERLAY.asGlyph() + "§f" + Icon.FIRE.get() + "§f Stove", InventoryId.STOVE.asInt()));
+        this.registry.register(InventoryId.FIRE.asInt(), () -> new CookingInventory(GUIOverlay.COOKING_OVERLAY.asGlyph() + "§f" + Icon.FIRE.get() + "§f Campfire", InventoryId.FIRE.asInt()));
+        this.registry.register(InventoryId.ANVIL.asInt(), () -> new AnvilInventory(GUIOverlay.ANVIL_OVERLAY.asGlyph() + "§f" + Icon.ANVIL.get() + "§f Anvil", InventoryId.ANVIL.asInt()));
+        this.registry.register(InventoryId.CRAFTING_TABLE.asInt(), () -> new AnvilInventory(GUIOverlay.CRAFTING_TABLE.asGlyph() + "§f" + Icon.CRAFTING.get() + "§f Crafting Table", InventoryId.CRAFTING_TABLE.asInt()));
         this.registry.register(InventoryId.ADMIN_NODE_CREATE.asInt(), () -> new NodeCreatorInventory("[A] Create Resource Node", InventoryId.ADMIN_NODE_CREATE.asInt(), blockLoader));
         this.registry.register(InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), () -> new BlockInvCreatorInventory("[A] Create Inventory Opener", InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), blockLoader, this));
 

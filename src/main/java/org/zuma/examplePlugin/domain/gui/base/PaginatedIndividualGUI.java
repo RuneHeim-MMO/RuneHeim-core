@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.domain.gui.base;
 
+
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -8,10 +9,15 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.zuma.examplePlugin.core.handlers.IllegalItemWatchdog;
+import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
+import javax.annotation.Nullable;
 import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public abstract class PaginatedIndividualGUI extends IndividualGUI {
     private static final int ITEMS_IN_ROW = 9;   // Always 9
@@ -24,44 +30,59 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
     private int indexEnd = 0;
     private int maxPages = 1;
     private List<ItemStack> items;
+    @Nullable
+    private Set<Integer> ignoredSlots;
 
-
-    public PaginatedIndividualGUI(String title, int id, int rows) {
+    public PaginatedIndividualGUI(String title, int id, int rows, @Nullable Set<Integer> ignoredSlots) {
         super(title, id, rows);
 
         this.inventory = super.getBaseInventory();
+        this.items = new ArrayList<>();
+        this.ignoredSlots = ignoredSlots;
 
         if (rows < 2) {
-            throw new IllegalStateException("PaginatedIndividualGUI can have minimum of 2rows!");
+            throw new IllegalStateException("PaginatedIndividualGUI can have minimum of 2 rows!");
         }
     }
 
+    private int getUsableSlotsCount() {
+        int totalSlots = usableRows * ITEMS_IN_ROW;
+        if (ignoredSlots == null || ignoredSlots.isEmpty()) {
+            return totalSlots;
+        }
+        // Count how many ignored slots are in the usable area (exclude last row)
+        int ignoredCount = 0;
+        int maxSlotIndex = usableRows * ITEMS_IN_ROW - 1;
+        for (Integer slot : ignoredSlots) {
+            if (slot >= 0 && slot <= maxSlotIndex) {
+                ignoredCount++;
+            }
+        }
+        return totalSlots - ignoredCount;
+    }
+
     private void recalculateIndexes() {
-        int slots = usableRows * ITEMS_IN_ROW;
+        int usableSlots = getUsableSlotsCount();
 
         if (page > maxPages) page = maxPages;
         if (page < 1) page = 1;
 
-        indexStart = (page - 1) * slots;
+        indexStart = (page - 1) * usableSlots;
+        indexEnd = Math.min(indexStart + usableSlots, totalItems);
 
-        // inclusive end index, but must be at least indexStart if no items
-        indexEnd = Math.min(indexStart + slots, totalItems);
-
-        // If there are no items, adjust so indexEnd is not negative
         if (totalItems == 0) {
             indexStart = 0;
             indexEnd = 0;
         }
-
     }
 
     public void setContent(List<ItemStack> items) {
         this.totalItems = items.size();
-        this.items = List.copyOf(items);
+        this.items = List.copyOf(items).stream().peek(IllegalItemWatchdog::tagIllegalItem).toList();
 
-        int slotsPerPage = usableRows * ITEMS_IN_ROW;
+        int usableSlots = getUsableSlotsCount();
 
-        maxPages = (totalItems + slotsPerPage - 1) / slotsPerPage;
+        maxPages = (totalItems + usableSlots - 1) / usableSlots;
         if (maxPages == 0) maxPages = 1;
 
         recalculateIndexes();
@@ -76,7 +97,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
             return;
         }
 
-        page += 1;
+        page++;
         recalculateIndexes();
         getBaseInventory();
     }
@@ -86,7 +107,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
             return;
         }
 
-        page -= 1;
+        page--;
         recalculateIndexes();
         getBaseInventory();
     }
@@ -96,7 +117,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
             return new ItemStack(Material.AIR);
         }
 
-        ItemStack icon = new ItemStack(Material.GREEN_BANNER);
+        ItemStack icon = GUIControl.CHEVRON_RIGHT.asItemstack();
         ItemMeta meta = icon.getItemMeta();
         meta.displayName(Component.text("Next", NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
         icon.setItemMeta(meta);
@@ -110,7 +131,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
             return new ItemStack(Material.AIR);
         }
 
-        ItemStack icon = new ItemStack(Material.RED_BANNER);
+        ItemStack icon = GUIControl.CHEVRON_LEFT.asItemstack();
         ItemMeta meta = icon.getItemMeta();
         meta.displayName(Component.text("Previous", NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
         icon.setItemMeta(meta);
@@ -121,15 +142,30 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
 
     @Override
     public Inventory getBaseInventory() {
+        // Clear entire inventory first
         for (int i = 0; i < inventory.getSize(); i++) {
             inventory.clear(i);
         }
 
         List<ItemStack> pageItems = items.subList(indexStart, indexEnd);
-        for (int i = 0; i < pageItems.size(); i++) {
-            inventory.setItem(i, pageItems.get(i));
+        int itemIndex = 0;
+
+        // Fill non-ignored slots in usable rows
+        int maxSlotIndex = usableRows * ITEMS_IN_ROW - 1;
+
+        for (int i = 0; i <= maxSlotIndex; i++) {
+            if (ignoredSlots != null && ignoredSlots.contains(i)) {
+                continue;
+            }
+            if (itemIndex >= pageItems.size()) {
+                break;
+            }
+
+            inventory.setItem(i, pageItems.get(itemIndex));
+            itemIndex++;
         }
 
+        // Place pagination icons in the last row (full row assumed)
         int lastRowStart = (rows - 1) * ITEMS_IN_ROW;
 
         inventory.setItem(lastRowStart + ITEMS_IN_ROW - 2, previousPageIcon());
@@ -148,25 +184,17 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
 
         Integer menuValue = getMenuValue(currentItem);
 
-        if (menuValue == null) {
-            return;
-        }
 
-        if (menuValue == 10000) {
+        if (menuValue != null && menuValue == 10000) {
             nextPage();
             event.setCancelled(true);
-            return;
-        }
-
-        if (menuValue == -10000) {
+        } else if (menuValue != null && menuValue == -10000) {
             previousPage();
             event.setCancelled(true);
-            return;
+        } else {
+            handleInventoryClick(event, slot, player);
         }
-
-        handleInventoryClick(event, slot, player);
     }
-
 
     public abstract void handleInventoryClick(InventoryClickEvent event, int slot, RunePlayer player);
 }
