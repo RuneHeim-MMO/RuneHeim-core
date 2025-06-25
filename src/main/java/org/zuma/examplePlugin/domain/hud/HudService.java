@@ -75,7 +75,7 @@ public class HudService {
         int delayBetween = 5;
         SkillType type = skill.getType();
 
-        SoundType.PLAYER_LEVEL_UP.play(player);
+        SoundType.PLAYER_LEVEL_UP.play(player, true);
 
 
         if (!isMaxedSkill) {
@@ -94,7 +94,7 @@ public class HudService {
 
         if (isMaxedSkill) {
             Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-                SoundType.PLAYER_MAX_SKILL.play(player);
+                SoundType.PLAYER_MAX_SKILL.play(player, true);
             }, 40);
 
             Component congrats = Component.text("C").color(NamedTextColor.RED)

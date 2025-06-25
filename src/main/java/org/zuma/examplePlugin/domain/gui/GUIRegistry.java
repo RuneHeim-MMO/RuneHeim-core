@@ -40,9 +40,6 @@ public class GUIRegistry {
     public AbstractGUI getInstance(UUID playerUUID, int id) {
         Supplier<AbstractGUI> supplier = types.get(id);
 
-        Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage(individualInstances.keySet().toString()));
-
-
         if (supplier == null) {
             throw new IllegalArgumentException("Unknown inventory id: " + id);
         }

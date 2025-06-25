@@ -101,7 +101,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
     }
 
     public ItemStack getDisplayItemstack() {
-        return this.displayItemstack;
+        return this.displayItemstack.clone();
     }
 
     public ItemStack getDisplayItemstack(RunePlayer player, ItemRegistry registry) {

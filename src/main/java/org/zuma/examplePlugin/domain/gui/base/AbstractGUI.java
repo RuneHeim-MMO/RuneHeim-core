@@ -24,11 +24,15 @@ public abstract class AbstractGUI {
     private final static int ITEMS_IN_ROW = 9;
 
     private final UUID uuid;
-    protected final String title;
+    protected String title;
     protected final int id, rows;
-    private final boolean shared;
+    protected final boolean shared;
 
     public AbstractGUI(String title, int id, int rows, boolean shared) {
+        if (rows < 1 || rows > 6) {
+            throw new IllegalStateException("GUI can have minimum of 1 and maximum of 6 rows!");
+        }
+
         this.uuid = UUID.randomUUID();
         this.title = title;
         this.id = id;
@@ -38,6 +42,10 @@ public abstract class AbstractGUI {
 
     public Component getTitle() {
         return Component.text(this.title);
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getId() {
