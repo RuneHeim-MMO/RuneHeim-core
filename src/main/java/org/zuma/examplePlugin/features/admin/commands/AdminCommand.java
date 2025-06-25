@@ -19,12 +19,17 @@ import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipes.RecipeRegistry;
+import org.zuma.examplePlugin.domain.skill.Skill;
+import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.features.admin.inventories.ItemRegistryInventory;
 import org.zuma.examplePlugin.features.admin.inventories.RecipesInventory;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -52,6 +57,11 @@ public class AdminCommand implements BasicCommand {
             return;
         }
 
+        if (!player.isOp()) {
+            sender.sendMessage(Component.text("Invalid command.").color(Color.ERROR.asColor()));
+            return;
+        }
+
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
 
         if (runePlayer == null) {
@@ -65,6 +75,28 @@ public class AdminCommand implements BasicCommand {
                             .map(skill -> skill.getType().getLabel() + ": " + XpUtils.getLevelFromXp(skill.getXp()))
                             .collect(Collectors.joining(", "))
             );
+        }
+
+        if (args.length == 2 && Objects.equals(args[0], "base")) {
+            int baseLevel;
+
+            if (TypeUtils.isInteger(args[1])) {
+                baseLevel = Integer.parseInt(args[1]);
+            } else {
+                baseLevel = 1;
+            }
+
+            EnumMap<SkillType, Skill> skills = Arrays.stream(SkillType.values())
+                    .collect(Collectors.toMap(
+                            Function.identity(),
+                            type -> new Skill(type, XpUtils.getXpForLevel(baseLevel)),
+                            (a, b) -> b,
+                            () -> new EnumMap<>(SkillType.class)
+                    ));
+
+            runePlayer.setSkills(skills);
+            runePlayer.asBukkitPlayer().sendMessage("Set all skill levels to " + baseLevel);
+
         }
 
         if (Objects.equals(args[0], "mob1")) {
@@ -98,12 +130,28 @@ public class AdminCommand implements BasicCommand {
             ItemRegistryInventory.open(itemRegistry, player, page);
         }
 
-        // Items without page
+        // without page
         if (args.length == 1 && Objects.equals(args[0], "recipes")) {
             RecipesInventory.open(recipeRegistry, itemRegistry, runePlayer, 0);
         }
 
-        // Items with page
+        // without page
+        if (args.length == 2 && Objects.equals(args[0], "recipes")) {
+            int page = 0;
+
+            if (TypeUtils.isInteger(args[1])) {
+                page = Integer.parseInt(args[1]);
+            }
+
+            RecipesInventory.open(recipeRegistry, itemRegistry, runePlayer, page);
+        }
+
+        // without page
+        if (args.length == 1 && Objects.equals(args[0], "recipes")) {
+            RecipesInventory.open(recipeRegistry, itemRegistry, runePlayer, 0);
+        }
+
+        // without page
         if (args.length == 2 && Objects.equals(args[0], "recipes")) {
             int page = 0;
 

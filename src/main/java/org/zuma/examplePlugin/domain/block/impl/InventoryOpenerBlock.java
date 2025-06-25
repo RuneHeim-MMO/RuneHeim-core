@@ -23,11 +23,13 @@ import java.util.UUID;
 
 public class InventoryOpenerBlock extends AbstractInteractableBlock implements SkillRestrictable {
     private int inventoryId;
+    private final List<UUID> createdInventoryInstances;
     private List<SkillRequirement> requirements;
     private String label, icon;
 
     public InventoryOpenerBlock(AbstractInteractableBlockMeta meta) {
         super(meta, null, null);
+        createdInventoryInstances = new ArrayList<>();
     }
 
 
@@ -45,7 +47,12 @@ public class InventoryOpenerBlock extends AbstractInteractableBlock implements S
     }
 
     public void forceCloseOpenedInventories() {
-        RuneQuestPlugin.getGUIHandler().forceCloseOpenedInventories(inventoryId);
+        createdInventoryInstances.forEach(uuid -> RuneQuestPlugin.getGUIHandler().forceCloseOpenedInventories(uuid));
+        createdInventoryInstances.clear();
+    }
+
+    public void removeInventoryUUID(UUID instanceUUID) {
+        createdInventoryInstances.remove(instanceUUID);
     }
 
     @Override
@@ -57,7 +64,9 @@ public class InventoryOpenerBlock extends AbstractInteractableBlock implements S
             return;
         }
 
-        RuneQuestPlugin.getGUIHandler().openInventory(inventoryId, player);
+        UUID initializedInventoryUUID = RuneQuestPlugin.getGUIHandler().openInventory(inventoryId, player);
+        createdInventoryInstances.add(initializedInventoryUUID);
+
     }
 
 

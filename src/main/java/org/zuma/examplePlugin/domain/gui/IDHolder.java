@@ -3,7 +3,9 @@ package org.zuma.examplePlugin.domain.gui;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
-public record IDHolder(int id) implements InventoryHolder {
+import java.util.UUID;
+
+public record IDHolder(int id, UUID instanceUUID) implements InventoryHolder {
 
     @Override
     public Inventory getInventory() {

@@ -18,17 +18,22 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class AbstractGUI {
     private final static int ITEMS_IN_ROW = 9;
 
+    private final UUID uuid;
     protected final String title;
     protected final int id, rows;
+    private final boolean shared;
 
-    public AbstractGUI(String title, int id, int rows) {
+    public AbstractGUI(String title, int id, int rows, boolean shared) {
+        this.uuid = UUID.randomUUID();
         this.title = title;
         this.id = id;
         this.rows = rows;
+        this.shared = shared;
     }
 
     public Component getTitle() {
@@ -80,7 +85,7 @@ public abstract class AbstractGUI {
 
 
     public Inventory getBaseInventory() {
-        return Bukkit.createInventory(new IDHolder(id), getSlots(), getTitle());
+        return Bukkit.createInventory(new IDHolder(id, uuid), getSlots(), getTitle());
     }
 
     public abstract void openInventory(RunePlayer player);
@@ -89,4 +94,12 @@ public abstract class AbstractGUI {
 
     }
 
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public boolean isShared() {
+        return shared;
+    }
 }

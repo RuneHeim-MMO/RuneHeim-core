@@ -20,6 +20,7 @@ import org.zuma.examplePlugin.domain.gui.impl.individual.admin.NodeCreatorInvent
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +29,8 @@ import java.util.UUID;
 public class GUIHandler {
     private final GUIRegistry registry;
     private final RunePlayerManager playerManager;
-    private final HashMap<Integer, List<UUID>> inventoryViewers = new HashMap<Integer, List<UUID>>();
+    // Inventory UUID : List<PlayerUUID>
+    private final HashMap<UUID, List<UUID>> inventoryViewers = new HashMap<UUID, List<UUID>>();
 
     public GUIHandler(GUIRegistry registry, RunePlayerManager playerManager) {
         this.registry = registry;
@@ -44,38 +46,40 @@ public class GUIHandler {
     }
 
     public void initializeInventories(BlockLoader blockLoader) {
-        this.registry.registerGUI(new FurnaceInventory("§f" + Icon.FIRE.get() + " Furnace", InventoryId.BASIC_FURNACE.asInt()));
-        this.registry.registerGUI(new CookingInventory("§f" + Icon.FIRE.get() + "§r Stove", InventoryId.STOVE.asInt()));
-        this.registry.registerGUI(new CookingInventory("§f" + Icon.FIRE.get() + " Campfire", InventoryId.FIRE.asInt()));
-        this.registry.registerGUI(new AnvilInventory("§f" + Icon.ANVIL.get() + " Anvil", InventoryId.ANVIL.asInt()));
-        this.registry.registerGUI(new AnvilInventory("§f" + Icon.CRAFTING.get() + " Crafting Table", InventoryId.CRAFTING_TABLE.asInt()));
-        this.registry.registerGUI(new NodeCreatorInventory("[A] Create Resource Node", InventoryId.ADMIN_NODE_CREATE.asInt(), blockLoader));
-        this.registry.registerGUI(new BlockInvCreatorInventory("[A] Create Inventory Opener", InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), blockLoader, this));
+        this.registry.register(InventoryId.BASIC_FURNACE.asInt(), () -> new FurnaceInventory("§f" + Icon.FIRE.get() + " Furnace", InventoryId.BASIC_FURNACE.asInt()));
+        this.registry.register(InventoryId.STOVE.asInt(), () -> new CookingInventory("§f" + Icon.FIRE.get() + "§r Stove", InventoryId.STOVE.asInt()));
+        this.registry.register(InventoryId.FIRE.asInt(), () -> new CookingInventory("§f" + Icon.FIRE.get() + " Campfire", InventoryId.FIRE.asInt()));
+        this.registry.register(InventoryId.ANVIL.asInt(), () -> new AnvilInventory("§f" + Icon.ANVIL.get() + " Anvil", InventoryId.ANVIL.asInt()));
+        this.registry.register(InventoryId.CRAFTING_TABLE.asInt(), () -> new AnvilInventory("§f" + Icon.CRAFTING.get() + " Crafting Table", InventoryId.CRAFTING_TABLE.asInt()));
+        this.registry.register(InventoryId.ADMIN_NODE_CREATE.asInt(), () -> new NodeCreatorInventory("[A] Create Resource Node", InventoryId.ADMIN_NODE_CREATE.asInt(), blockLoader));
+        this.registry.register(InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), () -> new BlockInvCreatorInventory("[A] Create Inventory Opener", InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), blockLoader, this));
 
-        this.registry.getAllInventories().forEach(inventory -> {
-            inventoryViewers.put(inventory.getId(), new ArrayList<>());
-        });
-
-        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventories().size() + " inventories.");
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
     }
 
-    public void openInventory(int id, RunePlayer player) {
-        AbstractGUI matchingGUI = this.registry.getInventoryByID(id);
+    @Nullable
+    public UUID openInventory(int id, RunePlayer player) {
+        AbstractGUI matchingGUI = this.registry.getInstance(player.getUUID(), id);
 
         if (matchingGUI == null) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, player.asBukkitPlayer().getName() + " attempted to open a non existent inventory with id " + id + "!");
-            return;
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, player.asBukkitPlayer().getName() + " attempted to open a non existent inventory instance with id:uuid " + id + ":" + player.getUUID() + "!");
+            return null;
         }
 
+        if (!inventoryViewers.containsKey(player.getUUID())) {
+            inventoryViewers.put(matchingGUI.getUuid(), new ArrayList<>());
+        }
+
+        inventoryViewers.get(matchingGUI.getUuid()).add(player.getUUID());
         matchingGUI.openInventory(player);
-        inventoryViewers.get(id).add(player.getUUID());
+        return matchingGUI.getUuid();
     }
 
-    public void forceCloseOpenedInventories(int id) {
-        List<UUID> matchingList = inventoryViewers.get(id);
+    public void forceCloseOpenedInventories(UUID inventoryUUID) {
+        List<UUID> matchingList = inventoryViewers.get(inventoryUUID);
 
         if (matchingList == null) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot force close inventories with id " + id + "! This id does not exist in inventoryViewers hashmap.");
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot force close inventories with id " + inventoryUUID + "! This id does not exist in inventoryViewers hashmap.");
             return;
         }
 
@@ -88,15 +92,11 @@ public class GUIHandler {
 
         });
 
-        Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> inventoryViewers.put(id, new ArrayList<>()));
+        Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> inventoryViewers.put(inventoryUUID, new ArrayList<>()));
     }
 
     public void onInventoryClose(InventoryCloseEvent event) {
         InventoryHolder holder = event.getInventory().getHolder();
-
-        if (event.getReason() == InventoryCloseEvent.Reason.UNLOADED) {
-            return;
-        }
 
         if (!(event.getPlayer() instanceof Player bukkitPlayer)) {
             return;
@@ -106,21 +106,18 @@ public class GUIHandler {
             return;
         }
 
+        if (event.getReason() == InventoryCloseEvent.Reason.UNLOADED) {
+            return;
+        }
 
         RunePlayer player = playerManager.getRunePlayer(bukkitPlayer);
-        int inventoryId = idHolder.id();
 
         if (player == null) {
             return;
         }
 
-        AbstractGUI matchingGUI = this.registry.getInventoryByID(inventoryId);
-
-        if (matchingGUI == null) {
-            return;
-        }
-
-        inventoryViewers.get(matchingGUI.getId()).remove(player.getUUID());
+        inventoryViewers.get(idHolder.instanceUUID()).remove(player.getUUID());
+        registry.removePlayersActiveInstance(bukkitPlayer.getUniqueId());
 
     }
 
@@ -143,7 +140,7 @@ public class GUIHandler {
             return;
         }
 
-        AbstractGUI matchingGUI = this.registry.getInventoryByID(inventoryId);
+        AbstractGUI matchingGUI = this.registry.getInstance(bukkitPlayer.getUniqueId(), inventoryId);
 
         if (matchingGUI == null) {
             return;

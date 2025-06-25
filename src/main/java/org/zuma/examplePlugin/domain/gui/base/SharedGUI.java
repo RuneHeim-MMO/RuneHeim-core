@@ -9,7 +9,7 @@ public abstract class SharedGUI extends AbstractGUI {
     protected Inventory inventory = null;
 
     public SharedGUI(String title, int id, int rows) {
-        super(title, id, rows);
+        super(title, id, rows, true);
         inventory = getBaseInventory();
         this.initializeInventory(inventory);
     }

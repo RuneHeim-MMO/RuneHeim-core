@@ -29,7 +29,7 @@ public class SkillsCommand implements BasicCommand {
             boolean isMaxed = XpUtils.isMaxLevel(currentLevel);
             int percentToNextLevel = isMaxed ? 100 : XpUtils.getProgressPercent(totalXp, currentLevel);
             String formattedXp = NumberFormat.getNumberInstance().format(totalXp);
-            
+
             String formattedNextLevelXp;
             if (isMaxed) {
                 formattedNextLevelXp = "MAX";
@@ -80,7 +80,9 @@ public class SkillsCommand implements BasicCommand {
                 return;
             }
 
-            runePlayer.asBukkitPlayer().sendMessage(getSkillStats(runePlayer));
+            runePlayer.asBukkitPlayer().sendMessage(getSkillStats(runePlayer)
+                    .append(Component.text("\n" + runePlayer.asBukkitPlayer().getName() + " Combat level: ", NamedTextColor.GRAY))
+                    .append(Component.text(runePlayer.getCombatLvl(), Color.ACCENT.asColor())));
         }
 
         // With Player
@@ -99,7 +101,9 @@ public class SkillsCommand implements BasicCommand {
                 return;
             }
 
-            sender.sendMessage(Component.text(args[0] + " skills are: ", Color.ACCENT.asColor()).append(getSkillStats(runePlayer)));
+            sender.sendMessage(Component.text(args[0] + " skills are: ", Color.ACCENT.asColor()).append(getSkillStats(runePlayer))
+                    .append(Component.text("\n" + runePlayer.asBukkitPlayer().getName() + " Combat level: ", NamedTextColor.GRAY))
+                    .append(Component.text(runePlayer.getCombatLvl(), Color.ACCENT.asColor())));
 
 
         }

@@ -8,10 +8,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.InventoryHolder;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
+import org.zuma.examplePlugin.domain.gui.IDHolder;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -90,5 +93,21 @@ public class BlockListener implements Listener {
 
         block.onPlayerBlockBreakEvent(runePlayer, event);
 
+    }
+
+    // On inventory unmount, clear all references to inventory uuids in inv opener blocks
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent event) {
+        InventoryHolder holder = event.getInventory().getHolder();
+
+        if (!(event.getPlayer() instanceof Player)) {
+            return;
+        }
+
+        if (!(holder instanceof IDHolder idHolder)) {
+            return;
+        }
+
+        manager.removeStoredInventoryUUIDForBlock(idHolder);
     }
 }

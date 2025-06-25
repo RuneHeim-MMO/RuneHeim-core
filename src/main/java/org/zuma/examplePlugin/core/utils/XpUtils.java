@@ -6,6 +6,7 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import java.util.EnumMap;
 
 public class XpUtils {
+    private static final int MAX_COMBAT_LEVEL = 110; // Can be up to 113, capped by formula.
     private static final int MAX_LEVEL = 99;
     private static final int[] XP_TABLE = new int[100]; // index 1-99 used
 
@@ -21,7 +22,8 @@ public class XpUtils {
     }
 
     public static int getXpForLevel(int level) {
-        if (level < 1 || level > MAX_LEVEL) throw new IllegalArgumentException("Max level is " + MAX_LEVEL);
+        if (level < 1 || level > MAX_LEVEL)
+            throw new IllegalArgumentException("Level should be between 1- " + MAX_LEVEL);
         return XP_TABLE[level];
     }
 
@@ -77,7 +79,7 @@ public class XpUtils {
         // Combat level is base plus melee offense
         double combatLevel = base + melee;
 
-        combatLevel = Math.max(3, Math.min(150, combatLevel));
+        combatLevel = Math.max(3, Math.min(MAX_COMBAT_LEVEL, combatLevel));
 
         return (int) Math.floor(combatLevel);
     }

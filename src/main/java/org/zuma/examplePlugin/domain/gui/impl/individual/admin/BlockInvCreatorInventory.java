@@ -2,6 +2,8 @@ package org.zuma.examplePlugin.domain.gui.impl.individual.admin;
 
 import com.google.gson.Gson;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -25,7 +27,6 @@ import org.zuma.examplePlugin.domain.block.meta.HologramSide;
 import org.zuma.examplePlugin.domain.block.meta.v1.InventoryOpenerMeta;
 import org.zuma.examplePlugin.domain.block.persistence.BlockEntity;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
-import org.zuma.examplePlugin.domain.gui.base.AbstractGUI;
 import org.zuma.examplePlugin.domain.gui.base.IndividualGUI;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.map.MarkerType;
@@ -45,8 +46,6 @@ public class BlockInvCreatorInventory extends IndividualGUI {
         put(InventoryId.ANVIL.asInt(), new InventoryOpenerMeta(InventoryId.ANVIL.asInt(), Material.ANVIL, null, MarkerType.ANVIL, "Anvil", "Anvil", Icon.ANVIL.get()));
         put(InventoryId.CRAFTING_TABLE.asInt(), new InventoryOpenerMeta(InventoryId.CRAFTING_TABLE.asInt(), Material.CRAFTING_TABLE, null, MarkerType.CRAFTING_TABLE, "Crafting Table", "Crafting Table", Icon.CRAFTING.get()));
         put(InventoryId.BASIC_FURNACE.asInt(), new InventoryOpenerMeta(InventoryId.BASIC_FURNACE.asInt(), Material.BARRIER, null, MarkerType.SMELTING_FURNACE, "Smelting Furnace", "Smelting Furnace", Icon.FIRE.get()));
-        ;
-
     }};
 
 
@@ -63,7 +62,7 @@ public class BlockInvCreatorInventory extends IndividualGUI {
         }
 
         Inventory inventory = getBaseInventory();
-        List<AbstractGUI> inventories = guiHandler.getRegistry().getAllInventories().stream().filter(inv -> META_MAP.containsKey(inv.getId())).toList();
+        List<Integer> inventories = guiHandler.getRegistry().getAllInventoryIds().stream().filter(META_MAP::containsKey).toList();
 
         for (int i = 0; i < inventories.size(); i++) {
 
@@ -72,10 +71,9 @@ public class BlockInvCreatorInventory extends IndividualGUI {
                 continue;
             }
 
-            AbstractGUI gui = inventories.get(i);
             ItemStack item = new ItemStack(Material.BARRIER);
             ItemMeta meta = item.getItemMeta();
-            meta.displayName(gui.getTitle());
+            meta.displayName(Component.text(META_MAP.get(i).markerLabel(), NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
             item.setItemMeta(meta);
             super.assignMenuValue(item, i);
 

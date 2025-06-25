@@ -35,9 +35,9 @@ public class MobTypesLoader {
 
 
         registry.register(MobType.GOBLIN_LOW_LVL_2.getId(), () -> new GenericCombatant("Goblin", EquipmentSet.GOBLIN_2,
-                List.of(new SkillLevelRecord(SkillType.ATTACK, 5), new SkillLevelRecord(SkillType.STRENGTH, 5), new SkillLevelRecord(SkillType.DEFENCE, 5)),
+                List.of(new SkillLevelRecord(SkillType.ATTACK, 40), new SkillLevelRecord(SkillType.STRENGTH, 40), new SkillLevelRecord(SkillType.DEFENCE, 40)),
                 null, MobBehaviors.GOBLIN.getBehavior(),
-                0.23, false, false, 8, "goblin_1"));
+                0.33, false, false, 8, "goblin_1"));
 
 
     }

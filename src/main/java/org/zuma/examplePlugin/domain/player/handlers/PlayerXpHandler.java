@@ -37,6 +37,10 @@ public class PlayerXpHandler {
         double nextXp = skill.getXp() + xp;
         boolean leveledUp = false;
 
+        if (XpUtils.isMaxLevel(skill.getLevel())) {
+            return;
+        }
+
         if (nextXp >= XpUtils.getXpForLevel(skill.getLevel() + 1)) {
             leveledUp = true;
 

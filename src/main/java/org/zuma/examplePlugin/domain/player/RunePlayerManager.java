@@ -24,7 +24,7 @@ public class RunePlayerManager {
     private final Map<UUID, RunePlayer> players = new HashMap<>();
     private final RunePlayerLoadingStateHandler loadingStateHandler;
 
-    EnumMap<SkillType, Skill> defaultSkills = Arrays.stream(SkillType.values())
+    private static final EnumMap<SkillType, Skill> defaultSkills = Arrays.stream(SkillType.values())
             .collect(Collectors.toMap(
                     Function.identity(),
                     type -> type == SkillType.HITPOINTS ? new Skill(type, XpUtils.getXpForLevel(10)) : new Skill(type, XpUtils.getXpForLevel(1)),
@@ -74,7 +74,7 @@ public class RunePlayerManager {
             try {
 
                 // TODO: Deserialize & initialize player
-                RunePlayer runePlayer = new RunePlayer(uuid, defaultSkills);
+                RunePlayer runePlayer = new RunePlayer(uuid, new EnumMap<>(defaultSkills));
 
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                     if (Bukkit.getPlayer(uuid) == null) {

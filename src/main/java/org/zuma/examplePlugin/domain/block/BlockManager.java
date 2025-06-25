@@ -8,6 +8,8 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.interfaces.DespawnableBlock;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
+import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerBlock;
+import org.zuma.examplePlugin.domain.gui.IDHolder;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 
@@ -132,4 +134,14 @@ public class BlockManager {
         }
     }
 
+    public void removeStoredInventoryUUIDForBlock(IDHolder idHolder) {
+        blocks.values().forEach(block -> {
+            if (!(block instanceof InventoryOpenerBlock)) {
+                return;
+            }
+
+            ((InventoryOpenerBlock) block).removeInventoryUUID(idHolder.instanceUUID());
+        });
+
+    }
 }

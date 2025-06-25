@@ -10,7 +10,7 @@ public class PlayerCombatData {
     private final RunePlayer player;
     private int combatLvl, health;
 
-    public PlayerCombatData(RunePlayer player, int combatLvl, int health) {
+    public PlayerCombatData(RunePlayer player, int health, int combatLvl) {
         this.player = player;
         this.combatLvl = combatLvl;
         this.health = health;

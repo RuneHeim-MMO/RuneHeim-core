@@ -172,11 +172,11 @@ public enum SoundType {
     }
 
     public void play(Player player) {
-        play(player.getLocation(), player);
+        play(player.getLocation(), null);
     }
 
     public void play(RunePlayer player) {
-        play(player.asBukkitPlayer().getLocation(), player.asBukkitPlayer());
+        play(player.asBukkitPlayer().getLocation(), null);
     }
 
     public void play(Location location) {

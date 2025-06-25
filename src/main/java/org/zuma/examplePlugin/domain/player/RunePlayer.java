@@ -93,6 +93,12 @@ public class RunePlayer implements CombatEntity {
         return new EnumMap<>(skills);
     }
 
+    public void setSkills(EnumMap<SkillType, Skill> skills) {
+        this.skills.putAll(skills);
+        HudService.updateVanillaGUI(this);
+        combatData.setCombatLvl(XpUtils.getCombatLevelFromSkills(skills));
+    }
+
     // Party
     public @Nullable Party getParty() {
         return party;
