@@ -69,7 +69,7 @@ public class RunePlayerBusyStateHandler {
                     isBusy = false;
                     this.cancel();
 
-                    successSound.play(onlinePlayer);
+                    successSound.play(onlinePlayer, true);
                     onlinePlayer.showTitle(Title.title(
                             Component.text(""),
                             Component.text(successAction).color(Color.SUCCESS.asColor()),
@@ -94,7 +94,7 @@ public class RunePlayerBusyStateHandler {
                         .fillColor(Color.BUSY_BAR_FILL.asColor())
                         .build();
 
-                stepSound.play(onlinePlayer);
+                stepSound.play(onlinePlayer, true);
                 onlinePlayer.showTitle(Title.title(progressBar,
                         Component.text("[" + secondsLeft + "s] ").color(Color.SUCCESS.asColor())
                                 .append(Component.text(action).color(Color.SUBTITLE.asColor())),

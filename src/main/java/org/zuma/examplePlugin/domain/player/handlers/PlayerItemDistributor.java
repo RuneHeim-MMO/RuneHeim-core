@@ -53,7 +53,7 @@ public class PlayerItemDistributor {
 
             if (dropMessage != null && !dropMessage.isEmpty()) {
                 player.sendMessage(Component.text(dropMessage).color(Color.ERROR.asColor()));
-                SoundType.INVENTORY_FULL.play(player);
+                SoundType.INVENTORY_FULL.play(player, true);
             }
 
             return;

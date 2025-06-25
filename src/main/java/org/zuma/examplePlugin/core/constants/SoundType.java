@@ -171,12 +171,12 @@ public enum SoundType {
         this.pitch = pitch;
     }
 
-    public void play(Player player) {
-        play(player.getLocation(), null);
+    public void play(Player player, boolean global) {
+        play(player.getLocation(), global ? player : null);
     }
 
-    public void play(RunePlayer player) {
-        play(player.asBukkitPlayer().getLocation(), null);
+    public void play(RunePlayer player, boolean global) {
+        play(player.asBukkitPlayer().getLocation(), global ? player.asBukkitPlayer() : null);
     }
 
     public void play(Location location) {

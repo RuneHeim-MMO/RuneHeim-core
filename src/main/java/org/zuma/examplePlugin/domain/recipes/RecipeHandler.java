@@ -82,7 +82,7 @@ public class RecipeHandler {
             return false;
         }
 
-        type.getStartSound().play(player);
+        type.getStartSound().play(player, true);
         recipe.handleRecipeCraftingStart(player);
 
         player.useBusyState(recipe.getCraftTimeMs() * times,
@@ -130,7 +130,7 @@ public class RecipeHandler {
                         recipe.onCraftFinish(player, successCrafts);
                         recipe.handleRecipeCraftingSuccess(player);
                         player.asBukkitPlayer().sendMessage(Component.text("Successfully " + type.getPastTenseVerb().toLowerCase() + " " + successCrafts + "x ").append(resultComponent).color(Color.SUCCESS.asColor()));
-                        type.getFinishSound().play(player);
+                        type.getFinishSound().play(player, true);
                     } else {
 
                         if (times == 1) {

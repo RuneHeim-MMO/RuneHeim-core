@@ -111,7 +111,7 @@ public class ResourceNode extends AbstractInteractableBlock {
 
 
     private void startGatheringAction(RunePlayer player, double modifier) {
-        blockType.getStartSound().play(player);
+        blockType.getStartSound().play(player, true);
         player.useBusyState((int) (blockType.getBaseGatheringDurationMillis() / modifier), blockType.getActionVerb() + " " + blockType.getLabel(),
                 "", blockType.getStepSound(), blockType.getGatherSuccessSound(), () -> onGather(player), null);
     }
@@ -210,7 +210,7 @@ public class ResourceNode extends AbstractInteractableBlock {
 
         // If any requirements are missing, notify player and cancel interaction
         if (!missingRequirements.isEmpty() && player.asBukkitPlayer().getGameMode() != GameMode.CREATIVE) {
-            SoundType.UI_FAIL.play(player.asBukkitPlayer());
+            SoundType.UI_FAIL.play(player.asBukkitPlayer(), false);
             missingRequirements.forEach(req -> {
                 player.asBukkitPlayer().sendMessage(Component.text(
                         "You need " + req.minimumLevel() + " " + req.type().getLabel() + " in order to gather from " + blockType.getLabel() + "."
@@ -222,7 +222,7 @@ public class ResourceNode extends AbstractInteractableBlock {
 
         // Ensure the item in hand is equipable and valid for gathering
         if (!(itemInHand instanceof EquipableItem gearItemInHand)) {
-            SoundType.UI_FAIL.play(player.asBukkitPlayer());
+            SoundType.UI_FAIL.play(player.asBukkitPlayer(), false);
             player.asBukkitPlayer().sendMessage(Component.text(blockType.getWrongToolMessage()).color(Color.ERROR.asColor()));
             return;
         }
@@ -233,7 +233,7 @@ public class ResourceNode extends AbstractInteractableBlock {
 
         // If a required modifier exists but the item lacks it, fail the interaction
         if (hasRequiredModifier && requiredToolModifier.isEmpty()) {
-            SoundType.UI_FAIL.play(player.asBukkitPlayer());
+            SoundType.UI_FAIL.play(player.asBukkitPlayer(), false);
             player.asBukkitPlayer().sendMessage(Component.text(blockType.getWrongToolMessage()).color(Color.ERROR.asColor()));
             return;
         }

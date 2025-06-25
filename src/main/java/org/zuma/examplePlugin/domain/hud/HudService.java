@@ -57,7 +57,7 @@ public class HudService {
 
     public static void sendFailMessage(RunePlayer player, Component text) {
         player.asBukkitPlayer().sendMessage(text.color(Color.ERROR.asColor()));
-        SoundType.FAIL_ACTION.play(player.asBukkitPlayer());
+        SoundType.FAIL_ACTION.play(player.asBukkitPlayer(), false);
     }
 
     public static void showFailTitle(RunePlayer player, String text) {
@@ -66,7 +66,7 @@ public class HudService {
                 Component.text(text).color(Color.ERROR.asColor()),
                 TextUtils.getGenericDuration()
         ));
-        SoundType.FAIL_ACTION.play(player.asBukkitPlayer());
+        SoundType.FAIL_ACTION.play(player.asBukkitPlayer(), false);
     }
 
     public static void showPlayerLevelUpTitle(RunePlayer player, Skill skill) {
