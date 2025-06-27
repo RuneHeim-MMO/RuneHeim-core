@@ -8,7 +8,7 @@ import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.domain.combat.AttackType;
 import org.zuma.examplePlugin.domain.combat.Hit;
 
-public class CustomEntityDamageEntity extends Event implements Cancellable {
+public class RuneEntityDamageEntityEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
     private boolean cancelled;
     private final CombatEntity attacker;
@@ -16,7 +16,7 @@ public class CustomEntityDamageEntity extends Event implements Cancellable {
     private final Hit hit;
     private final AttackType type;
 
-    public CustomEntityDamageEntity(CombatEntity attacker, CombatEntity defender, Hit hit, AttackType type) {
+    public RuneEntityDamageEntityEvent(CombatEntity attacker, CombatEntity defender, Hit hit, AttackType type) {
         this.attacker = attacker;
         this.defender = defender;
         this.hit = hit;

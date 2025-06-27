@@ -30,7 +30,11 @@ public abstract class AbstractItem {
     public final ItemRarity rarity;
     public final Material material;
     public final String displayName;
-    public final List<Component> lore, requirementsLore, bonusesLore, itemTypeLore;
+    public final List<Component> lore;
+    public final List<Component> requirementsLore;
+    public final List<Component> bonusesLore;
+    public final List<Component> itemTypeLore;
+    public List<Component> gemsLore;
     public int customModelData;
     @Nullable
     public StateType stateType = null;
@@ -55,6 +59,7 @@ public abstract class AbstractItem {
         requirementsLore = new ArrayList<>();
         bonusesLore = new ArrayList<>();
         itemTypeLore = new ArrayList<>();
+        gemsLore = new ArrayList<>();
 
         if (meta.lore() != null) {
             this.lore.addAll(meta.lore().stream().map(lore -> Component.text(lore).color(Color.ITEM_DESCRIPTION.asColor())).toList());
@@ -76,6 +81,14 @@ public abstract class AbstractItem {
 
     public void appendToItemTypeLore(String type, @Nullable String icon) {
         itemTypeLore.add(Component.text(icon != null ? icon + " " : "", NamedTextColor.WHITE).append(Component.text(type, Color.ITEM_TYPE.asColor())));
+    }
+
+    public void setGemsLore(List<Component> gemsLore) {
+        this.gemsLore = gemsLore;
+    }
+
+    public void clearGemsLore() {
+        this.gemsLore.clear();
     }
 
     public ItemStack asItemStack() {
@@ -111,6 +124,9 @@ public abstract class AbstractItem {
         return metaGenerator.setDisplayName(itemStack, prefix, suffix);
     }
 
+    public void updateLore(ItemStack itemStack) {
+        itemStack.setItemMeta(metaGenerator.generateMeta(itemStack));
+    }
 
     @Nullable
     public StateType getStateType() {

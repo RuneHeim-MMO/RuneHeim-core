@@ -8,6 +8,7 @@ import org.zuma.examplePlugin.core.utils.ModifierUtils;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.base.EquipableItem;
+import org.zuma.examplePlugin.domain.item.base.EquipableWithSockets;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.modifier.GearModifiersRecalculatedEvent;
 
@@ -53,7 +54,14 @@ public class GearModifierHandler {
                     return player.meetsRequirements(gearItem);
                 })
                 .map(item -> (EquipableItem) item)
-                .forEach(gearItem -> modifiers.addAll(gearItem.getModifiers()));
+                .forEach(gearItem -> {
+                    modifiers.addAll(gearItem.getModifiers());
+
+                    if (gearItem instanceof EquipableWithSockets withSockets) {
+                        modifiers.addAll(withSockets.getGemModifiers());
+                    }
+
+                });
 
 
         return modifiers;

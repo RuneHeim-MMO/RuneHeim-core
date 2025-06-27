@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.domain.hud.HudService;
-import org.zuma.examplePlugin.events.combat.CustomEntityDamageEntity;
+import org.zuma.examplePlugin.events.combat.RuneEntityDamageEntityEvent;
 
 public class HitHandler {
 
@@ -39,7 +39,7 @@ public class HitHandler {
         Hit hit = HitCalculator.getHitDamage(attacker, defender, type);
         boolean isCriticalHit = getIsCriticalHit(defender, hit);
 
-        CustomEntityDamageEntity event = new CustomEntityDamageEntity(attacker, defender, hit, type);
+        RuneEntityDamageEntityEvent event = new RuneEntityDamageEntityEvent(attacker, defender, hit, type);
         Bukkit.getServer().getPluginManager().callEvent(event);
 
         if (event.isCancelled()) {

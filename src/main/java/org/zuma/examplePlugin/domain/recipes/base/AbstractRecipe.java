@@ -132,7 +132,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
 
 
         if (!requiredTools.isEmpty()) {
-            itemLore.add(Component.text(""));
+            itemLore.add(Component.empty());
             itemLore.add(Component.text("Tools: ", Color.ITEM_LABEL.asColor()));
 
             requiredTools.forEach(record -> {
@@ -144,7 +144,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         }
 
         if (!recipeIngredients.isEmpty()) {
-            itemLore.add(Component.text(""));
+            itemLore.add(Component.empty());
             itemLore.add(Component.text("Ingredients: ", Color.ITEM_LABEL.asColor()));
 
             recipeIngredients.forEach(record -> {
@@ -157,7 +157,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
 
 
         if (!requirements.isEmpty()) {
-            itemLore.add(Component.text(""));
+            itemLore.add(Component.empty());
             itemLore.add(Component.text("Requirements: ", Color.ITEM_LABEL.asColor()));
 
             requirements.forEach(requirement -> {
@@ -174,10 +174,10 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         // Success result can be null for recipes like campfire recipe.
         int successCrafts = successResult != null ? successResult.getAmount() : 1;
 
-        itemLore.add(Component.text(""));
+        itemLore.add(Component.empty());
         itemLore.add(Component.text("Result: ", Color.ITEM_LABEL.asColor()));
         itemLore.add(Component.text(successCrafts + "x ", Color.ITEM_LABEL.asColor()).append(displayItemstack.displayName()));
-        itemLore.add(Component.text(""));
+        itemLore.add(Component.empty());
 
         meta.lore(itemLore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());
         newItem.setItemMeta(meta);

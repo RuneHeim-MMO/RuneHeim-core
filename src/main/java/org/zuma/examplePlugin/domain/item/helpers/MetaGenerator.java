@@ -30,7 +30,7 @@ public class MetaGenerator {
         List<Component> itemLore = new ArrayList<>(customItem.lore);
 
         if (!customItem.requirementsLore.isEmpty()) {
-            itemLore.add(Component.text(""));
+            itemLore.add(Component.empty());
             itemLore.add(Component.text("Requirements: ", Color.ITEM_LABEL.asColor()));
             Component combined = customItem.requirementsLore.stream()
                     .reduce((comp1, comp2) -> comp1.append(Component.text(", ")).append(comp2))
@@ -40,13 +40,16 @@ public class MetaGenerator {
         }
 
         if (!customItem.bonusesLore.isEmpty()) {
-            itemLore.add(Component.text(""));
+            itemLore.add(Component.empty());
             itemLore.add(Component.text("Modifiers: ", Color.ITEM_LABEL.asColor()));
             itemLore.addAll(customItem.bonusesLore);
         }
 
+        if (!customItem.gemsLore.isEmpty()) {
+            itemLore.addAll(customItem.gemsLore);
+        }
 
-        itemLore.add(Component.text(""));
+        itemLore.add(Component.empty());
 
         List<Component> loreComponents = new ArrayList<>(itemLore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());
 

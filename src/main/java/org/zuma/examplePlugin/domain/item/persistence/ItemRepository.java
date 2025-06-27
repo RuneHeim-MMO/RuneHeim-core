@@ -12,6 +12,7 @@ import org.zuma.examplePlugin.domain.item.constants.ItemType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.v1.EquipableMeta;
 import org.zuma.examplePlugin.domain.item.meta.v1.FoodMeta;
+import org.zuma.examplePlugin.domain.item.meta.v1.GearWithSocketsMeta;
 import org.zuma.examplePlugin.domain.item.meta.v1.PotionMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
@@ -728,15 +729,15 @@ public class ItemRepository {
                                 )
                         ), 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.RUNITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Sword", List.of("Runite sword crackling with magical energy."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON_WITH_GEM_SOCKETS, ItemId.RUNITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Sword", List.of("Runite sword crackling with magical energy."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableMeta(
+                                new GearWithSocketsMeta(new EquipableMeta(
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 30),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 29)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 40))
-                                )
+                                ), null, 3)
                         ), 1)
                 ),
 

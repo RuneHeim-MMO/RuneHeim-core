@@ -62,7 +62,7 @@ public class HudService {
 
     public static void showFailTitle(RunePlayer player, String text) {
         player.asBukkitPlayer().showTitle(Title.title(
-                Component.text(""),
+                Component.empty(),
                 Component.text(text).color(Color.ERROR.asColor()),
                 TextUtils.getGenericDuration()
         ));

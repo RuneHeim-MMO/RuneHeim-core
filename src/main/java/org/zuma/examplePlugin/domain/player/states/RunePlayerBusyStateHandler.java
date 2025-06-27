@@ -71,7 +71,7 @@ public class RunePlayerBusyStateHandler {
 
                     successSound.play(onlinePlayer, true);
                     onlinePlayer.showTitle(Title.title(
-                            Component.text(""),
+                            Component.empty(),
                             Component.text(successAction).color(Color.SUCCESS.asColor()),
                             TextUtils.getGenericDuration()
                     ));

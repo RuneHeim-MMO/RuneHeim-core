@@ -1,5 +1,8 @@
 package org.zuma.examplePlugin.core.constants;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+
 public enum Icon {
     EMPTY(""),
 
@@ -45,6 +48,8 @@ public enum Icon {
     ENVELOPE("✉"),
     LOG("Ⓘ"),
 
+    GREEN_GEM("⮩"),
+
     PROGRESS_TALL_START("┉"),
     PROGRESS_GEM_TALL_START("⢽"),
     PROGRESS_SKULL_TALL_END("ⶡ"),
@@ -64,5 +69,9 @@ public enum Icon {
 
     public String get() {
         return icon;
+    }
+
+    public Component asComponent() {
+        return Component.text(get(), NamedTextColor.WHITE).append(Component.text(" "));
     }
 }

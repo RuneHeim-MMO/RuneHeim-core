@@ -20,6 +20,9 @@ import org.zuma.examplePlugin.domain.gui.impl.individual.admin.BlockInvCreatorIn
 import org.zuma.examplePlugin.domain.gui.impl.individual.admin.NodeCreatorInventory;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
+import org.zuma.examplePlugin.events.inventory.RuneInventoryClick;
+import org.zuma.examplePlugin.events.inventory.RuneInventoryCloseEvent;
+import org.zuma.examplePlugin.events.inventory.RuneInventoryOpenEvent;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -31,7 +34,7 @@ public class GUIHandler {
     private final GUIRegistry registry;
     private final RunePlayerManager playerManager;
     // Inventory UUID : List<PlayerUUID>
-    private final HashMap<UUID, List<UUID>> inventoryViewers = new HashMap<UUID, List<UUID>>();
+    private final HashMap<UUID, List<UUID>> inventoryViewers = new HashMap<>();
 
     public GUIHandler(GUIRegistry registry, RunePlayerManager playerManager) {
         this.registry = registry;
@@ -49,7 +52,7 @@ public class GUIHandler {
     public void initializeInventories(BlockLoader blockLoader) {
         this.registry.register(InventoryId.BASIC_FURNACE.asInt(), () -> new FurnaceInventory(GUIOverlay.FURNACE_OVERLAY.asGlyph() + "§f" + Icon.FIRE.get() + "§f Furnace", InventoryId.BASIC_FURNACE.asInt()));
         this.registry.register(InventoryId.STOVE.asInt(), () -> new CookingInventory(GUIOverlay.COOKING_OVERLAY.asGlyph() + "§f" + Icon.FIRE.get() + "§f Stove", InventoryId.STOVE.asInt()));
-        this.registry.register(InventoryId.FIRE.asInt(), () -> new CookingInventory(GUIOverlay.COOKING_OVERLAY.asGlyph() + "§f" + Icon.FIRE.get() + "§f Campfire", InventoryId.FIRE.asInt()));
+        this.registry.register(InventoryId.FIRE.asInt(), () -> new CookingInventory(GUIOverlay.CAMPFIRE_OVERLAY.asGlyph() + "§f" + Icon.FIRE.get() + "§f Campfire", InventoryId.FIRE.asInt()));
         this.registry.register(InventoryId.ANVIL.asInt(), () -> new AnvilInventory(GUIOverlay.ANVIL_OVERLAY.asGlyph() + "§f" + Icon.ANVIL.get() + "§f Anvil", InventoryId.ANVIL.asInt()));
         this.registry.register(InventoryId.CRAFTING_TABLE.asInt(), () -> new AnvilInventory(GUIOverlay.CRAFTING_TABLE.asGlyph() + "§f" + Icon.CRAFTING.get() + "§f Crafting Table", InventoryId.CRAFTING_TABLE.asInt()));
         this.registry.register(InventoryId.ADMIN_NODE_CREATE.asInt(), () -> new NodeCreatorInventory("[A] Create Resource Node", InventoryId.ADMIN_NODE_CREATE.asInt(), blockLoader));
@@ -72,6 +75,14 @@ public class GUIHandler {
         }
 
         inventoryViewers.get(matchingGUI.getUuid()).add(player.getUUID());
+
+        RuneInventoryOpenEvent event = new RuneInventoryOpenEvent(player, matchingGUI, inventoryViewers.get(matchingGUI.getUuid()));
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
+        if (event.isCancelled()) {
+            return null;
+        }
+
         matchingGUI.openInventory(player);
         return matchingGUI.getUuid();
     }
@@ -103,11 +114,7 @@ public class GUIHandler {
             return;
         }
 
-        if (!(holder instanceof IDHolder idHolder)) {
-            return;
-        }
-
-        if (event.getReason() == InventoryCloseEvent.Reason.UNLOADED) {
+        if (!(holder instanceof IDHolder(int id, UUID instanceUUID))) {
             return;
         }
 
@@ -117,9 +124,20 @@ public class GUIHandler {
             return;
         }
 
-        inventoryViewers.get(idHolder.instanceUUID()).remove(player.getUUID());
-        registry.removePlayersActiveInstance(bukkitPlayer.getUniqueId());
+        if (event.getReason() == InventoryCloseEvent.Reason.UNLOADED) {
+            Bukkit.getServer().getPluginManager().callEvent(
+                    new RuneInventoryCloseEvent(player, id, instanceUUID, inventoryViewers.get(instanceUUID), true));
+            return;
+        }
 
+        List<UUID> viewerUUIDs = inventoryViewers.get(instanceUUID);
+
+        Bukkit.getServer().getPluginManager().callEvent(
+                new RuneInventoryCloseEvent(player, id, instanceUUID, inventoryViewers.get(instanceUUID), false));
+
+
+        viewerUUIDs.remove(player.getUUID());
+        registry.removePlayersActiveInstance(bukkitPlayer.getUniqueId());
     }
 
     public void onInventoryClick(InventoryClickEvent event) {
@@ -133,7 +151,6 @@ public class GUIHandler {
             return;
         }
 
-
         RunePlayer player = playerManager.getRunePlayer(bukkitPlayer);
         int inventoryId = idHolder.id();
 
@@ -144,6 +161,14 @@ public class GUIHandler {
         AbstractGUI matchingGUI = this.registry.getInstance(bukkitPlayer.getUniqueId(), inventoryId);
 
         if (matchingGUI == null) {
+            return;
+        }
+
+        RuneInventoryClick runeEvent = new RuneInventoryClick(player, matchingGUI, event);
+        Bukkit.getServer().getPluginManager().callEvent(runeEvent);
+
+        if (runeEvent.isCancelled()) {
+            event.setCancelled(true);
             return;
         }
 

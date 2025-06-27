@@ -74,7 +74,7 @@ public abstract class AbstractGUI {
         List<Component> lore = meta.lore();
         List<Component> appendLore = new ArrayList<>();
 
-        appendLore.add(Component.text(""));
+        appendLore.add(Component.empty());
         appendLore.add(Component.text(leftClickAction + " - Left Click", Color.ACCENT.asColor()).decoration(TextDecoration.ITALIC, false));
 
         if (shiftClickAction != null) {

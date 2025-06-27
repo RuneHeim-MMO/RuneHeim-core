@@ -8,19 +8,21 @@ import org.zuma.examplePlugin.domain.item.impl.*;
 import org.zuma.examplePlugin.domain.item.impl.consumable.FoodItem;
 import org.zuma.examplePlugin.domain.item.impl.consumable.PotionItem;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
-import org.zuma.examplePlugin.domain.item.meta.v1.EquipableMeta;
-import org.zuma.examplePlugin.domain.item.meta.v1.FoodMeta;
-import org.zuma.examplePlugin.domain.item.meta.v1.PotionMeta;
-import org.zuma.examplePlugin.domain.item.meta.v1.QuestItemMeta;
+import org.zuma.examplePlugin.domain.item.meta.v1.*;
+import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemFactory {
     public AbstractItem createItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
         return switch (meta.type()) {
             case EQUIPMENT -> createGearItem(meta, json);
+            case EQUIPMENT_WITH_GEM_SOCKETS -> createGearWithSockets(meta, json);
             case TOOL -> createToolItem(meta, json);
             case WEAPON -> createWeaponItem(meta, json);
+            case WEAPON_WITH_GEM_SOCKETS -> createWeaponWithSockets(meta, json);
             case QUEST -> createQuestItem(meta, json);
             case MATERIAL -> createMaterialItem(meta);
             case POTION -> createPotionItem(meta, json);
@@ -143,6 +145,57 @@ public class ItemFactory {
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
         }
     }
+
+    private WeaponWithSocketsItem createWeaponWithSockets(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create gear with sockets " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                GearWithSocketsMeta deserialized = new Gson().fromJson(json.meta(), GearWithSocketsMeta.class);
+                WeaponWithSocketsItem item = new WeaponWithSocketsItem(meta);
+                List<Integer> gemIds = deserialized.defaultGemIds();
+
+                if (gemIds == null) {
+                    gemIds = new ArrayList<>();
+                }
+
+                item.addModifiers(deserialized.equipableMeta().modifiers());
+                item.addRequirements(deserialized.equipableMeta().requirements());
+                item.setGemState(new GearGemSocketsState(gemIds, deserialized.gemSlots()));
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
+    }
+
+    private WeaponWithSocketsItem createGearWithSockets(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create gear with sockets " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                GearWithSocketsMeta deserialized = new Gson().fromJson(json.meta(), GearWithSocketsMeta.class);
+                WeaponWithSocketsItem item = new WeaponWithSocketsItem(meta);
+                List<Integer> gemIds = deserialized.defaultGemIds();
+
+                if (gemIds == null) {
+                    gemIds = new ArrayList<>();
+                }
+
+                item.addModifiers(deserialized.equipableMeta().modifiers());
+                item.addRequirements(deserialized.equipableMeta().requirements());
+                item.setGemState(new GearGemSocketsState(gemIds, deserialized.gemSlots()));
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
+    }
+
 
     private MiscItem createMiscItem(AbstractItemMeta meta) {
         return new MiscItem(meta);
