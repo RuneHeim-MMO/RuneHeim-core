@@ -17,6 +17,7 @@ public abstract class SocketedEquipableItemType extends EquipableItemType implem
 
     public SocketedEquipableItemType(AbstractItemMeta meta) {
         super(meta);
+        this.setStateType(StateType.GEAR_GEM_SOCKETS);
     }
 
     public void setGemState(GearGemSocketsState state) {
@@ -33,7 +34,7 @@ public abstract class SocketedEquipableItemType extends EquipableItemType implem
 
     @Override
     public AbstractState getInitialState() {
-        return new GearGemSocketsState(new ArrayList<>(socketsState.getInsertedGemIds()), socketsState.getGemSlots());
+        return new GearGemSocketsState(new ArrayList<>(socketsState.getInsertedGemIds()), socketsState.getTotalGemSlots());
     }
 
     @Nullable

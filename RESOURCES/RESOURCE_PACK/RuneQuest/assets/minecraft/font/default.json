@@ -2,6 +2,13 @@
   "providers": [
     {
       "type": "bitmap",
+      "file": "minecraft:font/gui/fusion_master.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": ["⾭"]
+    },
+    {
+      "type": "bitmap",
       "file": "minecraft:font/gui/campfire.png",
       "ascent": 13,
       "height": 168,
@@ -41,6 +48,62 @@
       "ascent": -2000,
       "height": -3,
       "chars": ["⛒"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/scroll_01a.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["ⵣ"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/scroll_01b.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⁝"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/scroll_01c.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["Ⅸ"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/scroll_01d.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⼷"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/scroll_01e.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⾟"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/scroll_01f.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⊣"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/scroll_01g.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⠳"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/scroll_01h.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⑬"]
     },
     {
       "type": "bitmap",

@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -22,6 +23,13 @@ import java.util.List;
 import java.util.Map;
 
 public class PlayerUtils {
+
+    public static boolean hasCustomInventoryOpen(RunePlayer player) {
+        InventoryType openType = player.asBukkitPlayer().getOpenInventory().getType();
+
+        return openType != InventoryType.CRAFTING &&
+                openType != InventoryType.CREATIVE;
+    }
 
     public static ItemStack getItemStackInHand(Player player) {
         return player.getInventory().getItemInMainHand();

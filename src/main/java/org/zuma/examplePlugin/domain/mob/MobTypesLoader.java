@@ -1,8 +1,10 @@
 package org.zuma.examplePlugin.domain.mob;
 
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehaviors;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
+import org.zuma.examplePlugin.domain.mob.impl.FusionMaster;
 import org.zuma.examplePlugin.domain.mob.impl.GenericCombatant;
 import org.zuma.examplePlugin.domain.mob.impl.GenericShopkeeper;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
@@ -15,6 +17,8 @@ import java.util.List;
 public class MobTypesLoader {
 
     public static void registerMobs(MobTypeRegistry registry) {
+        registry.register(MobType.FUSION_MASTER.getId(), () -> new FusionMaster(Icon.SCROLL_RED.get() + " Fusion Master", MobBehaviors.FUSION_MASTER.getBehavior(), false));
+
         registry.register(MobType.GENERIC_SHOPKEEPER.getId(), () -> new GenericShopkeeper("Chestplate Shop 0", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_MAN_1.getBehavior(), "shopkeeper", 0, false));
 
         registry.register(MobType.AGGRESSIVE_BANDIT_1.getId(), () -> new GenericCombatant("Bandit", EquipmentSet.BANDIT_1,

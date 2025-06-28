@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -37,10 +38,14 @@ public class PlayerItemDistributor {
         Component name = itemStack.getItemMeta().displayName();
         String plainName = name != null ? PlainTextComponentSerializer.plainText().serialize(name) : null;
 
-        addItemOrDrop(itemStack, "Your inventory is full! " + itemStack.getAmount() + "x " + plainName + " dropped on the ground.");
+        addItemStackOrDrop(itemStack, "Your inventory is full! " + itemStack.getAmount() + "x " + plainName + " dropped on the ground.");
     }
 
-    public void addItemOrDrop(ItemStack item, String dropMessage) {
+    public void addItemOrDrop(ItemStack item) {
+        addItemStackOrDrop(item, "Your inventory is full! " + item.getAmount() + "x " + TextUtils.extractPlainText(item.displayName()) + " dropped on the ground.");
+    }
+
+    private void addItemStackOrDrop(ItemStack item, String dropMessage) {
         Player player = runePlayer.asBukkitPlayer();
         HashMap<Integer, ItemStack> leftovers = player.getInventory().addItem(item);
 

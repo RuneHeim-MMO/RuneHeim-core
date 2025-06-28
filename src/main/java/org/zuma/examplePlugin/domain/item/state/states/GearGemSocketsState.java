@@ -45,8 +45,12 @@ public class GearGemSocketsState extends AbstractState {
         return new ArrayList<>(gemIds);
     }
 
-    public int getGemSlots() {
+    public int getTotalGemSlots() {
         return this.slots;
+    }
+
+    public int getAvailableGemSlots() {
+        return this.slots - this.gemIds.size();
     }
 
     public List<Gem> getInsertedGems() {

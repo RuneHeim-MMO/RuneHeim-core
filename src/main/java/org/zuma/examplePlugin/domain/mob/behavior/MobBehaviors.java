@@ -86,6 +86,14 @@ public enum MobBehaviors {
             List.of(SoundType.VILLAGER_WOMAN_DEATH_5)
     )),
 
+    FUSION_MASTER(new MobBehavior(
+            List.of(SoundType.FUSION_MASTER_AMBIENT_1, SoundType.FUSION_MASTER_AMBIENT_2, SoundType.FUSION_MASTER_AMBIENT_3),
+            List.of(SoundType.FUSION_MASTER_SUCCESS),
+            List.of(SoundType.FUSION_MASTER_NO),
+            null,
+            null
+    )),
+
     GOBLIN(new MobBehavior(
             List.of(SoundType.GOBLIN_AMBIENT),
             List.of(SoundType.GOBLIN_CELEBRATE),
@@ -93,6 +101,7 @@ public enum MobBehaviors {
             List.of(SoundType.GOBLIN_HURT),
             List.of(SoundType.GOBLIN_DEATH)
     ));
+
 
     private final MobBehavior behavior;
 

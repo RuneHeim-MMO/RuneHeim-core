@@ -210,7 +210,37 @@
     },
     {
       "predicate": {
-        "custom_model_data": 1702
+        "custom_model_data": 1800
+      },
+      "model": "item/custom/scrolls/fusion_scroll"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1900
+      },
+      "model": "item/custom/gems/brutalite_core"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1901
+      },
+      "model": "item/custom/gems/obsidian_bulwark"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1902
+      },
+      "model": "item/custom/gems/bladestone"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1903
+      },
+      "model": "item/custom/gems/archers_ember"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1904
       },
       "model": "item/coal"
     }

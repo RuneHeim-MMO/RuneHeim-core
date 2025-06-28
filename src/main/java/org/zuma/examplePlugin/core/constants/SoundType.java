@@ -156,8 +156,13 @@ public enum SoundType {
     GOBLIN_CELEBRATE("ENTITY_EVOKER_CAST_SPELL", false, 1.0f, 1.5f),
     GOBLIN_NO("ENTITY_VILLAGER_NO", false, 1.0f, 0.9f),
     GOBLIN_HURT("ENTITY_HUSK_HURT", false, 1.0f, 0.8f),
-    GOBLIN_DEATH("ENTITY_HUSK_DEATH", false, 1.0f, 0.7f);
+    GOBLIN_DEATH("ENTITY_HUSK_DEATH", false, 1.0f, 0.7f),
 
+    FUSION_MASTER_AMBIENT_1("ENTITY_WARDEN_LISTENING", false, 0.6f, 1.0f),
+    FUSION_MASTER_AMBIENT_2("ENTITY_WARDEN_SNIFF", false, 0.7f, 1.1f),
+    FUSION_MASTER_AMBIENT_3("ENTITY_WARDEN_AMBIENT", false, 0.8f, 0.9f),
+    FUSION_MASTER_SUCCESS("ENTITY_WARDEN_ATTACK_IMPACT", false, 1.0f, 1.6f),
+    FUSION_MASTER_NO("ENTITY_ELDER_GUARDIAN_CURSE", false, 0.8f, 0.7f);
 
     private final String soundKey;
     private final boolean isCustom;

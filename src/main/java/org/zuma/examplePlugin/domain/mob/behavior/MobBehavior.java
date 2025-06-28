@@ -6,7 +6,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.zuma.examplePlugin.core.constants.SoundType;
-import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.List;
 import java.util.Random;
@@ -36,11 +35,11 @@ public class MobBehavior {
     }
 
 
-    public void handleInteractionSuccess(PlayerInteractAtEntityEvent event, RunePlayer player) {
+    public void handleInteractionSuccess(PlayerInteractAtEntityEvent event) {
         playRandomSound(event.getRightClicked(), interactionSuccessSounds);
     }
 
-    public void handleInteractionFail(PlayerInteractAtEntityEvent event, RunePlayer player) {
+    public void handleInteractionFail(PlayerInteractAtEntityEvent event) {
         playRandomSound(event.getRightClicked(), interactionFailSounds);
     }
 

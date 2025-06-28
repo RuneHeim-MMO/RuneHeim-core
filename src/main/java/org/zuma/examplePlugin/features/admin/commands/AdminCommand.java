@@ -107,12 +107,17 @@ public class AdminCommand implements BasicCommand {
             RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.GOBLIN_LOW_LVL_2.getId());
         }
 
+        if (Objects.equals(args[0], "fusion_master")) {
+            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.FUSION_MASTER.getId());
+        }
+
+
         if (Objects.equals(args[0], "node")) {
-            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_NODE_CREATE.asInt(), runePlayer);
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_NODE_CREATE.asInt(), runePlayer, null);
         }
 
         if (Objects.equals(args[0], "opener")) {
-            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), runePlayer);
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), runePlayer, null);
         }
 
         if (args.length == 1 && Objects.equals(args[0], "illegal")) {

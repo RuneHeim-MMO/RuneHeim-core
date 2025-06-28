@@ -74,7 +74,7 @@ public abstract class AbstractMob {
             this.setLivingEntityMeta(livingEntity);
 
             if (this.disguise != null) {
-                
+
                 if (disguise instanceof MobDisguise) {
                     LivingWatcher watcher = (LivingWatcher) disguise.getWatcher();
                     watcher.setCustomName(getDisplayName());
@@ -254,15 +254,15 @@ public abstract class AbstractMob {
         entity.getPersistentDataContainer().set(key, PersistentDataType.STRING, this.uuid.toString());
     }
 
-    public void handlePositiveInteraction(PlayerInteractAtEntityEvent event, RunePlayer player) {
+    public void handlePositiveInteraction(PlayerInteractAtEntityEvent event) {
         if (behavior != null) {
-            behavior.handleInteractionSuccess(event, player);
+            behavior.handleInteractionSuccess(event);
         }
     }
 
-    public void handleNegativeInteraction(PlayerInteractAtEntityEvent event, RunePlayer player) {
+    public void handleNegativeInteraction(PlayerInteractAtEntityEvent event) {
         if (behavior != null) {
-            behavior.handleInteractionFail(event, player);
+            behavior.handleInteractionFail(event);
         }
     }
 

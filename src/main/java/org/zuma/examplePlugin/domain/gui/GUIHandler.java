@@ -36,6 +36,7 @@ public class GUIHandler {
     private final RunePlayerManager playerManager;
     // Inventory UUID : List<PlayerUUID>
     private final HashMap<UUID, List<UUID>> inventoryViewers = new HashMap<>();
+    private final HashMap<UUID, Runnable> closeRunnables = new HashMap<>();
 
     public GUIHandler(GUIRegistry registry, RunePlayerManager playerManager) {
         this.registry = registry;
@@ -64,7 +65,7 @@ public class GUIHandler {
     }
 
     @Nullable
-    public UUID openInventory(int id, RunePlayer player) {
+    public UUID openInventory(int id, RunePlayer player, @Nullable Runnable onClose) {
         AbstractGUI matchingGUI = this.registry.getInstance(player.getUUID(), id);
 
         if (matchingGUI == null) {
@@ -72,7 +73,7 @@ public class GUIHandler {
             return null;
         }
 
-        if (!inventoryViewers.containsKey(player.getUUID())) {
+        if (!inventoryViewers.containsKey(matchingGUI.getUuid())) {
             inventoryViewers.put(matchingGUI.getUuid(), new ArrayList<>());
         }
 
@@ -86,6 +87,9 @@ public class GUIHandler {
         }
 
         matchingGUI.openInventory(player);
+        if (onClose != null) {
+            closeRunnables.put(matchingGUI.getUuid(), onClose);
+        }
         return matchingGUI.getUuid();
     }
 
@@ -126,10 +130,17 @@ public class GUIHandler {
             return;
         }
 
+
         if (event.getReason() == InventoryCloseEvent.Reason.UNLOADED) {
+            inventoryViewers.remove(instanceUUID);
             Bukkit.getServer().getPluginManager().callEvent(
                     new RuneInventoryCloseEvent(player, id, instanceUUID, inventoryViewers.get(instanceUUID), true));
             return;
+        }
+
+        if (closeRunnables.get(instanceUUID) != null) {
+            closeRunnables.get(instanceUUID).run();
+            closeRunnables.remove(instanceUUID);
         }
 
         List<UUID> viewerUUIDs = inventoryViewers.get(instanceUUID);

@@ -86,10 +86,11 @@ public class MetaGenerator {
 
         if (itemType instanceof SocketedEquipableItemType) {
             AbstractState state = RuneQuestPlugin.getItemStateManager().getItemState(item);
-
+            System.out.println("SOCKET EQUIPABLE TYPE " + state);
             if (state instanceof GearGemSocketsState socketsState) {
+                System.out.println("SOCKET EQUIPABLE TYPE@@@@@@@@@");
                 lore.add(Component.empty());
-                lore.add(Icon.GREEN_GEM.asComponent().append(Component.text("Gem slots (0/" + socketsState.getGemSlots() + ")", Color.SUCCESS.asColor())));
+                lore.add(Icon.GREEN_GEM.asComponent().append(Component.text("Gem slots (0/" + socketsState.getTotalGemSlots() + ")", Color.SUCCESS.asColor())));
                 lore.add(Component.text(TextUtils.repeatString("-", 16), Color.SUCCESS.asColor()).decorate(TextDecoration.STRIKETHROUGH));
 
                 socketsState.getInsertedGems().forEach(gemItem -> {
@@ -97,7 +98,7 @@ public class MetaGenerator {
                     lore.add(Component.text("* " + gemItem.displayName, Color.SUCCESS.asColor()));
                 });
 
-                for (int i = 0; i < socketsState.getGemSlots() - socketsState.getInsertedGemIds().size(); i++) {
+                for (int i = 0; i < socketsState.getTotalGemSlots() - socketsState.getInsertedGemIds().size(); i++) {
                     lore.add(Component.text(" * Empty gem slot *", Color.ITEM_TYPE.asColor()));
                 }
                 lore.add(Component.text(TextUtils.repeatString("-", 16), Color.SUCCESS.asColor()).decorate(TextDecoration.STRIKETHROUGH));
@@ -170,6 +171,9 @@ public class MetaGenerator {
             NamespacedKey stateUuid = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistanceDataKey.STATE_UUID.asString());
             meta.getPersistentDataContainer().set(stateUuid, PersistentDataType.STRING, UUID.randomUUID().toString());
         }
+
+        // To set it's state uuid so lore generation fn can access it's state.
+        item.setItemMeta(meta);
 
         if (itemType.customModelData != -1) {
             meta.setCustomModelData(itemType.customModelData);

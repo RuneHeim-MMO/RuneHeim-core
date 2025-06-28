@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
+import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.hud.HudService;
@@ -17,9 +18,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class InventoryOpenerBlock extends AbstractInteractableBlock implements SkillRestrictable {
     private int inventoryId;
@@ -49,7 +48,8 @@ public class InventoryOpenerBlock extends AbstractInteractableBlock implements S
     }
 
     public void forceCloseOpenedInventories() {
-        createdInventoryInstances.forEach(uuid -> RuneQuestPlugin.getGUIHandler().forceCloseOpenedInventories(uuid));
+        Set<UUID> copy = new HashSet<>(createdInventoryInstances);
+        copy.forEach(uuid -> RuneQuestPlugin.getGUIHandler().forceCloseOpenedInventories(uuid));
         createdInventoryInstances.clear();
     }
 
@@ -61,12 +61,16 @@ public class InventoryOpenerBlock extends AbstractInteractableBlock implements S
     public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItemType itemInHand) {
         event.setCancelled(true);
 
+        if (PlayerUtils.hasCustomInventoryOpen(player)) {
+            return;
+        }
+
         if (requirements != null && !player.meetsRequirements(this)) {
             HudService.sendFailMessage(player, Component.text("You do not meet requirements to use this!"));
             return;
         }
 
-        UUID initializedInventoryUUID = RuneQuestPlugin.getGUIHandler().openInventory(inventoryId, player);
+        UUID initializedInventoryUUID = RuneQuestPlugin.getGUIHandler().openInventory(inventoryId, player, null);
         createdInventoryInstances.add(initializedInventoryUUID);
 
     }

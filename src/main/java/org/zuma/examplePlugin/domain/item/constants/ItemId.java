@@ -132,8 +132,10 @@ public enum ItemId {
 
     FUSION_SCROLL(1800),
 
-    GEM_OF_STRENGTH(1900);
-
+    BRUTALITE_CORE(1900),
+    OBSIDIAN_BULWARK(1901),
+    BLADESTONE(1902),
+    ARCHERS_EMBER(1903);
 
     private final int id;
 

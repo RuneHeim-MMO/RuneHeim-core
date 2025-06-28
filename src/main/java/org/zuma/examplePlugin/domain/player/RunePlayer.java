@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.player;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.core.constants.SoundType;
@@ -153,6 +154,10 @@ public class RunePlayer implements CombatEntity {
 
     // Item handling
     public void giveItemOrDrop(ItemRecord item) {
+        itemHandler.addItemOrDrop(item);
+    }
+
+    public void giveItemOrDrop(ItemStack item) {
         itemHandler.addItemOrDrop(item);
     }
 
