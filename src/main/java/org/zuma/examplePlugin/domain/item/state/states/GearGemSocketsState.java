@@ -2,8 +2,8 @@ package org.zuma.examplePlugin.domain.item.state.states;
 
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.domain.item.base.AbstractType;
-import org.zuma.examplePlugin.domain.item.impl.GemType;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.impl.Gem;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 
@@ -21,7 +21,7 @@ public class GearGemSocketsState extends AbstractState {
     }
 
 
-    public void insertGem(AbstractType gem) throws IllegalStateException {
+    public void insertGem(AbstractItemType gem) throws IllegalStateException {
         if (gemIds.contains(gem.id)) {
             throw new IllegalStateException(gem.displayName + " is already in this gear.");
         }
@@ -33,7 +33,7 @@ public class GearGemSocketsState extends AbstractState {
         gemIds.add(gem.id);
     }
 
-    public void removeGem(AbstractType gem) throws IllegalStateException {
+    public void removeGem(AbstractItemType gem) throws IllegalStateException {
         if (!gemIds.contains(gem.id)) {
             throw new IllegalStateException(gem.displayName + " is not inserted into this gear.");
         }
@@ -49,18 +49,18 @@ public class GearGemSocketsState extends AbstractState {
         return this.slots;
     }
 
-    public List<GemType> getInsertedGems() {
-        List<GemType> list = new ArrayList<>();
+    public List<Gem> getInsertedGems() {
+        List<Gem> list = new ArrayList<>();
 
         getInsertedGemIds().forEach(id -> {
-            AbstractType item = RuneQuestPlugin.getItemRegistry().getItem(id);
+            AbstractItemType item = RuneQuestPlugin.getItemRegistry().getItem(id);
 
             if (item == null) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot retrieve gem item: Socket state contains invalid item id " + id + "!");
                 return;
             }
 
-            if (!(item instanceof GemType gemItem)) {
+            if (!(item instanceof Gem gemItem)) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot retrieve gem item: Socket state inserted gems ids contains id " + id + ", but " + item.displayName + " is not a gem!");
                 return;
             }

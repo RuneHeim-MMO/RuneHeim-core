@@ -9,7 +9,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.ItemHandler;
-import org.zuma.examplePlugin.domain.item.base.AbstractType;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.constants.PersistanceDataKey;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
@@ -52,13 +52,13 @@ public class StateManager {
     @Nullable
     public AbstractState getItemState(ItemStack item) {
         UUID uuid = getItemStackStateUuid(item);
-        AbstractType abstractType = itemHandler.getRegistry().getItem(item);
+        AbstractItemType abstractItemType = itemHandler.getRegistry().getItem(item);
 
         if (uuid == null) {
             return null;
         }
 
-        if (!(abstractType instanceof Stateful stateful)) {
+        if (!(abstractItemType instanceof Stateful stateful)) {
             return null;
         }
 

@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class EquipableType extends AbstractType implements SkillRestrictable {
+public abstract class EquipableItemType extends AbstractItemType implements SkillRestrictable {
     private final List<Modifier> modifiers = new ArrayList<>();
     private final List<SkillRequirement> requirements = new ArrayList<>();
     private boolean applyModifiersWhenInHand = false;
 
-    public EquipableType(AbstractItemMeta meta) {
+    public EquipableItemType(AbstractItemMeta meta) {
         super(meta);
     }
 

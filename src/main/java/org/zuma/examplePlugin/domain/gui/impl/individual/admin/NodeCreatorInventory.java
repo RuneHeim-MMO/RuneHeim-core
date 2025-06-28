@@ -27,7 +27,7 @@ import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
 import org.zuma.examplePlugin.domain.block.meta.v1.ResourceNodeMeta;
 import org.zuma.examplePlugin.domain.block.persistence.BlockEntity;
 import org.zuma.examplePlugin.domain.gui.base.IndividualGUI;
-import org.zuma.examplePlugin.domain.item.base.AbstractType;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.HashMap;
@@ -73,7 +73,7 @@ public class NodeCreatorInventory extends IndividualGUI {
             }
 
             ResourceNodeType type = types.get(i);
-            AbstractType dropItem = RuneQuestPlugin.getItemRegistry().getItem(type.getDrop().getItemId());
+            AbstractItemType dropItem = RuneQuestPlugin.getItemRegistry().getItem(type.getDrop().getItemId());
 
             if (dropItem == null) {
                 return;

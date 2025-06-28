@@ -20,8 +20,8 @@ import org.zuma.examplePlugin.domain.block.ResourceNodeSchematicHandler;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
-import org.zuma.examplePlugin.domain.item.base.AbstractType;
-import org.zuma.examplePlugin.domain.item.base.EquipableType;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
@@ -75,7 +75,7 @@ public class ResourceNode extends AbstractInteractableBlock {
             return;
         }
 
-        AbstractType drop = RuneQuestPlugin.getItemRegistry().getItem(type.getDrop().getItemId());
+        AbstractItemType drop = RuneQuestPlugin.getItemRegistry().getItem(type.getDrop().getItemId());
 
         if (drop == null) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Could not initialize resource node! ResourceNodeType with ID " + resourceTypeId + " has an invalid drop item id.");
@@ -196,7 +196,7 @@ public class ResourceNode extends AbstractInteractableBlock {
     }
 
     @Override
-    public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractType itemInHand) {
+    public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItemType itemInHand) {
         // Cancel interaction if player is busy or the resource is depleted
         if (player.isBusy() || isDepleted) {
             event.setCancelled(true);
@@ -221,7 +221,7 @@ public class ResourceNode extends AbstractInteractableBlock {
         }
 
         // Ensure the item in hand is equipable and valid for gathering
-        if (!(itemInHand instanceof EquipableType gearItemInHand && gearItemInHand.getApplyModifiersWhenInHand())) {
+        if (!(itemInHand instanceof EquipableItemType gearItemInHand && gearItemInHand.getApplyModifiersWhenInHand())) {
             SoundType.UI_FAIL.play(player.asBukkitPlayer(), false);
             player.asBukkitPlayer().sendMessage(Component.text(blockType.getWrongToolMessage()).color(Color.ERROR.asColor()));
             return;

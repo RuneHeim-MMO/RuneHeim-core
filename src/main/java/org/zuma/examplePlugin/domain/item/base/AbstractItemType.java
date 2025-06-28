@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractType {
+public abstract class AbstractItemType {
     private final MetaGenerator metaGenerator;
     private final ItemStackCreator creator;
 
@@ -42,7 +42,7 @@ public abstract class AbstractType {
     public final org.bukkit.Color leatherColor;
 
 
-    public AbstractType(AbstractItemMeta meta) {
+    public AbstractItemType(AbstractItemMeta meta) {
         this.type = meta.type();
         this.id = meta.id();
         this.material = meta.material();

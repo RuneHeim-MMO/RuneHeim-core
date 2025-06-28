@@ -3,10 +3,10 @@ package org.zuma.examplePlugin.domain.item;
 import com.google.gson.Gson;
 import org.zuma.examplePlugin.core.exception.UnsupportedJsonVersionException;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
-import org.zuma.examplePlugin.domain.item.base.AbstractType;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.impl.*;
-import org.zuma.examplePlugin.domain.item.impl.consumable.FoodType;
-import org.zuma.examplePlugin.domain.item.impl.consumable.PotionType;
+import org.zuma.examplePlugin.domain.item.impl.consumable.Food;
+import org.zuma.examplePlugin.domain.item.impl.consumable.Potion;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.v1.*;
 import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemFactory {
-    public AbstractType createItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+    public AbstractItemType createItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
         return switch (meta.type()) {
             case EQUIPMENT -> createGearItem(meta, json);
             case EQUIPMENT_WITH_GEM_SOCKETS -> createGearWithSockets(meta, json);
@@ -34,12 +34,12 @@ public class ItemFactory {
         };
     }
 
-    private MaterialScrollType createMaterialScroll(AbstractItemMeta meta) {
-        return new MaterialScrollType(meta);
+    private MaterialScroll createMaterialScroll(AbstractItemMeta meta) {
+        return new MaterialScroll(meta);
     }
 
 
-    private GemType createGemItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+    private Gem createGemItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {
             throw new UnsupportedOperationException("Cannot create gem item " + meta.displayName() + " required json is null!");
         }
@@ -47,7 +47,7 @@ public class ItemFactory {
         switch (json.version()) {
             case 1 -> {
                 GemMeta deserialized = new Gson().fromJson(json.meta(), GemMeta.class);
-                GemType item = new GemType(meta);
+                Gem item = new Gem(meta);
 
                 item.addModifiers(deserialized.modifiers());
                 return item;
@@ -57,7 +57,7 @@ public class ItemFactory {
 
     }
 
-    private GearType createGearItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+    private Gear createGearItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {
             throw new UnsupportedOperationException("Cannot create equipable item " + meta.displayName() + " required json is null!");
         }
@@ -65,7 +65,7 @@ public class ItemFactory {
         switch (json.version()) {
             case 1 -> {
                 EquipableTypeMeta deserialized = new Gson().fromJson(json.meta(), EquipableTypeMeta.class);
-                GearType item = new GearType(meta);
+                Gear item = new Gear(meta);
 
                 item.addModifiers(deserialized.modifiers());
                 item.addRequirements(deserialized.requirements());
@@ -76,7 +76,7 @@ public class ItemFactory {
 
     }
 
-    private ToolType createToolItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+    private Tool createToolItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {
             throw new UnsupportedOperationException("Cannot create tool item " + meta.displayName() + " required json is null!");
         }
@@ -84,7 +84,7 @@ public class ItemFactory {
         switch (json.version()) {
             case 1 -> {
                 EquipableTypeMeta deserialized = new Gson().fromJson(json.meta(), EquipableTypeMeta.class);
-                ToolType item = new ToolType(meta);
+                Tool item = new Tool(meta);
 
                 item.addModifiers(deserialized.modifiers());
                 item.addRequirements(deserialized.requirements());
@@ -95,7 +95,7 @@ public class ItemFactory {
 
     }
 
-    private WeaponType createWeaponItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+    private Weapon createWeaponItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {
             throw new UnsupportedOperationException("Cannot create tool item " + meta.displayName() + " required json is null!");
         }
@@ -103,7 +103,7 @@ public class ItemFactory {
         switch (json.version()) {
             case 1 -> {
                 EquipableTypeMeta deserialized = new Gson().fromJson(json.meta(), EquipableTypeMeta.class);
-                WeaponType item = new WeaponType(meta);
+                Weapon item = new Weapon(meta);
 
                 item.addModifiers(deserialized.modifiers());
                 item.addRequirements(deserialized.requirements());
@@ -114,7 +114,7 @@ public class ItemFactory {
 
     }
 
-    private QuestType createQuestItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+    private QuestItem createQuestItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {
             throw new UnsupportedOperationException("Cannot create quest item " + meta.displayName() + " required json is null!");
         }
@@ -122,7 +122,7 @@ public class ItemFactory {
         switch (json.version()) {
             case 1 -> {
                 QuestItemMeta deserialized = new Gson().fromJson(json.meta(), QuestItemMeta.class);
-                QuestType item = new QuestType(meta);
+                QuestItem item = new QuestItem(meta);
 
                 item.setQuestName(deserialized.questName());
                 return item;
@@ -131,11 +131,11 @@ public class ItemFactory {
         }
     }
 
-    private MaterialType createMaterialItem(AbstractItemMeta meta) {
-        return new MaterialType(meta);
+    private Material createMaterialItem(AbstractItemMeta meta) {
+        return new Material(meta);
     }
 
-    private PotionType createPotionItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+    private Potion createPotionItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {
             throw new UnsupportedOperationException("Cannot create potion item " + meta.displayName() + " required json is null!");
         }
@@ -143,7 +143,7 @@ public class ItemFactory {
         switch (json.version()) {
             case 1 -> {
                 PotionMeta deserialized = new Gson().fromJson(json.meta(), PotionMeta.class);
-                PotionType item = new PotionType(meta);
+                Potion item = new Potion(meta);
 
                 item.setUsages(deserialized.usages(), deserialized.maxUsages());
                 item.setCustomModelData(deserialized.potionModel());
@@ -154,7 +154,7 @@ public class ItemFactory {
 
     }
 
-    private FoodType createFoodItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+    private Food createFoodItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {
             throw new UnsupportedOperationException("Cannot create food item " + meta.displayName() + " required json is null!");
         }
@@ -162,7 +162,7 @@ public class ItemFactory {
         switch (json.version()) {
             case 1 -> {
                 FoodTypeMeta deserialized = new Gson().fromJson(json.meta(), FoodTypeMeta.class);
-                FoodType item = new FoodType(meta);
+                Food item = new Food(meta);
 
                 item.setHealAmount(deserialized.healAmount());
                 return item;
@@ -171,7 +171,7 @@ public class ItemFactory {
         }
     }
 
-    private SocketedWeaponType createWeaponWithSockets(AbstractItemMeta meta, @Nullable VersionedJson json) {
+    private SocketedWeapon createWeaponWithSockets(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {
             throw new UnsupportedOperationException("Cannot create gear with sockets " + meta.displayName() + " required json is null!");
         }
@@ -179,7 +179,7 @@ public class ItemFactory {
         switch (json.version()) {
             case 1 -> {
                 SocketedEquipableMeta deserialized = new Gson().fromJson(json.meta(), SocketedEquipableMeta.class);
-                SocketedWeaponType item = new SocketedWeaponType(meta);
+                SocketedWeapon item = new SocketedWeapon(meta);
                 List<Integer> gemIds = deserialized.defaultGemIds();
 
                 if (gemIds == null) {
@@ -196,7 +196,7 @@ public class ItemFactory {
 
     }
 
-    private SocketedWeaponType createGearWithSockets(AbstractItemMeta meta, @Nullable VersionedJson json) {
+    private SocketedWeapon createGearWithSockets(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {
             throw new UnsupportedOperationException("Cannot create gear with sockets " + meta.displayName() + " required json is null!");
         }
@@ -204,7 +204,7 @@ public class ItemFactory {
         switch (json.version()) {
             case 1 -> {
                 SocketedEquipableMeta deserialized = new Gson().fromJson(json.meta(), SocketedEquipableMeta.class);
-                SocketedWeaponType item = new SocketedWeaponType(meta);
+                SocketedWeapon item = new SocketedWeapon(meta);
                 List<Integer> gemIds = deserialized.defaultGemIds();
 
                 if (gemIds == null) {
@@ -222,7 +222,7 @@ public class ItemFactory {
     }
 
 
-    private MiscType createMiscItem(AbstractItemMeta meta) {
-        return new MiscType(meta);
+    private MiscItem createMiscItem(AbstractItemMeta meta) {
+        return new MiscItem(meta);
     }
 }

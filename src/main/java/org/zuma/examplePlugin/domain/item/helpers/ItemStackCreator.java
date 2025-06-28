@@ -4,12 +4,12 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.zuma.examplePlugin.domain.heads.HeadGenerator;
-import org.zuma.examplePlugin.domain.item.base.AbstractType;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 
 public class ItemStackCreator {
-    private final AbstractType itemType;
+    private final AbstractItemType itemType;
 
-    public ItemStackCreator(AbstractType itemType) {
+    public ItemStackCreator(AbstractItemType itemType) {
         this.itemType = itemType;
     }
 

@@ -13,12 +13,12 @@ import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
 import org.zuma.examplePlugin.core.utils.TextUtils;
-import org.zuma.examplePlugin.domain.item.base.AbstractType;
-import org.zuma.examplePlugin.domain.item.base.EquipableType;
-import org.zuma.examplePlugin.domain.item.base.SocketedEquipableType;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
+import org.zuma.examplePlugin.domain.item.base.SocketedEquipableItemType;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.PersistanceDataKey;
-import org.zuma.examplePlugin.domain.item.impl.consumable.FoodType;
+import org.zuma.examplePlugin.domain.item.impl.consumable.Food;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
@@ -29,9 +29,9 @@ import java.util.List;
 import java.util.UUID;
 
 public class MetaGenerator {
-    private final AbstractType itemType;
+    private final AbstractItemType itemType;
 
-    public MetaGenerator(AbstractType itemType) {
+    public MetaGenerator(AbstractItemType itemType) {
         this.itemType = itemType;
     }
 
@@ -51,13 +51,13 @@ public class MetaGenerator {
 
         lore.addAll(itemType.descriptionLore.stream().map(str -> Component.text(str).color(Color.ITEM_DESCRIPTION.asColor())).toList());
 
-        if (itemType instanceof FoodType food) {
+        if (itemType instanceof Food food) {
             lore.add(Component.text("Heals ", Color.SUCCESS.asColor())
                     .append(SkillType.HITPOINTS.getSymbolComponent())
                     .append(Component.text(" " + food.getHealAmount() + " " + SkillType.HITPOINTS.getLabel(), Color.SUCCESS.asColor())));
         }
 
-        if (itemType instanceof EquipableType equipable) {
+        if (itemType instanceof EquipableItemType equipable) {
             lore.add(Component.empty());
 
             if (!equipable.getRequirements().isEmpty()) {
@@ -84,7 +84,7 @@ public class MetaGenerator {
             }
         }
 
-        if (itemType instanceof SocketedEquipableType) {
+        if (itemType instanceof SocketedEquipableItemType) {
             AbstractState state = RuneQuestPlugin.getItemStateManager().getItemState(item);
 
             if (state instanceof GearGemSocketsState socketsState) {

@@ -9,7 +9,7 @@ import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
-import org.zuma.examplePlugin.domain.item.base.AbstractType;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
@@ -19,11 +19,11 @@ import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.item.PlayerConsumableConsumeEvent;
 
-public class PotionType extends AbstractType implements Stateful {
+public class Potion extends AbstractItemType implements Stateful {
     private int usages;
     private int maxUsages;
 
-    public PotionType(AbstractItemMeta meta) {
+    public Potion(AbstractItemMeta meta) {
         super(meta);
         super.setTypeLore("Potion", Icon.POTION.get());
         this.setStateType(StateType.MULTI_CONSUMABLE);

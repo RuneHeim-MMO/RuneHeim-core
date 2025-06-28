@@ -7,7 +7,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.domain.item.base.AbstractType;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class RecipeListener implements Listener {
@@ -45,8 +45,8 @@ public class RecipeListener implements Listener {
             return;
         }
 
-        AbstractType customClicked = RuneQuestPlugin.getItemRegistry().getItem(clicked);
-        AbstractType customCursor = RuneQuestPlugin.getItemRegistry().getItem(cursor);
+        AbstractItemType customClicked = RuneQuestPlugin.getItemRegistry().getItem(clicked);
+        AbstractItemType customCursor = RuneQuestPlugin.getItemRegistry().getItem(cursor);
 
         if (customClicked == null || customCursor == null) {
             return;

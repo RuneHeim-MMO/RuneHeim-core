@@ -14,8 +14,8 @@ import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
-import org.zuma.examplePlugin.domain.item.base.AbstractType;
-import org.zuma.examplePlugin.domain.item.base.EquipableType;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
@@ -37,10 +37,10 @@ public class ItemListener implements Listener {
         itemRegistry = handler.getRegistry();
     }
 
-    private void withItemAndPlayer(Player bukkitPlayer, ItemStack itemStack, BiConsumer<AbstractType, RunePlayer> consumer) {
+    private void withItemAndPlayer(Player bukkitPlayer, ItemStack itemStack, BiConsumer<AbstractItemType, RunePlayer> consumer) {
         if (itemStack == null || itemStack.getType().isAir()) return;
 
-        AbstractType item = itemRegistry.getItem(itemStack);
+        AbstractItemType item = itemRegistry.getItem(itemStack);
         if (item == null) return;
 
         RunePlayer player = playerHandler.getRunePlayer(bukkitPlayer);
@@ -49,7 +49,7 @@ public class ItemListener implements Listener {
         consumer.accept(item, player);
     }
 
-    private void requirementsFailCancelEvent(Cancellable event, AbstractType item, RunePlayer player) {
+    private void requirementsFailCancelEvent(Cancellable event, AbstractItemType item, RunePlayer player) {
         player.asBukkitPlayer().sendMessage(Component.text("You do not meet requirements to use " + item.displayName + ".").color(Color.ERROR.asColor()));
         event.setCancelled(true);
     }
@@ -62,7 +62,7 @@ public class ItemListener implements Listener {
                 return;
             }
 
-            if (item instanceof EquipableType gearItem && gearItem.getApplyModifiersWhenInHand()) {
+            if (item instanceof EquipableItemType gearItem && gearItem.getApplyModifiersWhenInHand()) {
                 if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_AIR) {
                     PlayerArmorEquipEvent newEvent = new PlayerArmorEquipEvent(player, item);
                     Bukkit.getServer().getPluginManager().callEvent(newEvent);

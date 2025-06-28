@@ -12,7 +12,7 @@ import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
-import org.zuma.examplePlugin.domain.item.base.AbstractType;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.HashMap;
@@ -25,7 +25,7 @@ public class PlayerItemDistributor {
     }
 
     public void addItemOrDrop(ItemRecord item) {
-        AbstractType customItem = RuneQuestPlugin.getItemRegistry().getItem(item.getItemId());
+        AbstractItemType customItem = RuneQuestPlugin.getItemRegistry().getItem(item.getItemId());
 
         if (customItem == null) {
             RuneQuestPlugin.getRuneLogger().logWithStack(LogLevel.WARN, "Cannot add item with id " + item.getItemId() + " to players inventory. Item does not exist in registry.");

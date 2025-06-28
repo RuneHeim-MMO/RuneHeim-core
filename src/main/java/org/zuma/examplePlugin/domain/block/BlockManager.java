@@ -11,7 +11,7 @@ import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerBlock;
 import org.zuma.examplePlugin.domain.gui.IDHolder;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
-import org.zuma.examplePlugin.domain.item.base.AbstractType;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -71,7 +71,7 @@ public class BlockManager {
             AbstractInteractableBlock abstractInteractableBlock = (AbstractInteractableBlock) block;
             Location blockLocation = abstractInteractableBlock.getLocation();
 
-            AbstractType drop = RuneQuestPlugin.getItemRegistry().getItem(despawnDrop.getItemId());
+            AbstractItemType drop = RuneQuestPlugin.getItemRegistry().getItem(despawnDrop.getItemId());
 
             if (drop == null) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Could not produce a drop on despawn for " + ((AbstractInteractableBlock) block).getType() + ". It has an invalid item id in item record..");

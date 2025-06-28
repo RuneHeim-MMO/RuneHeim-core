@@ -17,7 +17,7 @@ import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
-import org.zuma.examplePlugin.domain.item.base.AbstractType;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipes.IngredientRecord;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
@@ -88,7 +88,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
     }
 
     private Component getLoreForRequiredItem(ItemRegistry registry, ItemRecord record, RunePlayer player) {
-        AbstractType ingredient = registry.getItem(record.getItemId());
+        AbstractItemType ingredient = registry.getItem(record.getItemId());
 
         if (ingredient == null) {
             RuneQuestPlugin.getRuneLogger().logWithStack(LogLevel.WARN, "Unknown item id! ID: " + record.getItemId());
