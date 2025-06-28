@@ -1,21 +1,22 @@
 package org.zuma.examplePlugin.domain.skill.constants;
 
+import net.kyori.adventure.text.Component;
 import org.zuma.examplePlugin.core.constants.Icon;
 
 public enum SkillType {
-    ATTACK(0, "Attack", 0, Icon.SWORD.get()),
-    DEFENCE(1, "Defence", 0, Icon.SHIELD.get()),
-    STRENGTH(2, "Strength", 0, Icon.STRENGTH.get()),
-    HITPOINTS(3, "Hitpoints", 1154, Icon.HEART.get()),
-    RANGED(4, "Ranged", 0, Icon.ARROW.get()),
-    COOKING(7, "Cooking", 0, Icon.EGGS.get()),
-    WOODCUTTING(8, "Woodcutting", 0, Icon.AXE.get()),
-    FISHING(9, "Fishing", 0, Icon.FISH.get()),
-    FIREMAKING(10, "Firemaking", 0, Icon.FIRE.get()),
+    ATTACK(0, "Attack", 0, Icon.SWORD),
+    DEFENCE(1, "Defence", 0, Icon.SHIELD),
+    STRENGTH(2, "Strength", 0, Icon.STRENGTH),
+    HITPOINTS(3, "Hitpoints", 1154, Icon.HEART),
+    RANGED(4, "Ranged", 0, Icon.ARROW),
+    COOKING(7, "Cooking", 0, Icon.EGGS),
+    WOODCUTTING(8, "Woodcutting", 0, Icon.AXE),
+    FISHING(9, "Fishing", 0, Icon.FISH),
+    FIREMAKING(10, "Firemaking", 0, Icon.FIRE),
 
-    CRAFTING(11, "Crafting", 0, Icon.CRAFTING.get()),
-    SMITHING(12, "Smithing", 0, Icon.ANVIL.get()),
-    MINING(13, "Mining", 0, Icon.PICKAXE.get());
+    CRAFTING(11, "Crafting", 0, Icon.CRAFTING),
+    SMITHING(12, "Smithing", 0, Icon.ANVIL),
+    MINING(13, "Mining", 0, Icon.PICKAXE);
 
     /*
         HERBLORE(15, "Herblore", 0),
@@ -31,9 +32,9 @@ public enum SkillType {
     private final int key;
     private final String label;
     private final int defaultXp;
-    private final String symbol;
+    private final Icon symbol;
 
-    SkillType(int key, String label, int defaultXp, String symbol) {
+    SkillType(int key, String label, int defaultXp, Icon symbol) {
         this.key = key;
         this.label = label;
         this.defaultXp = defaultXp;
@@ -53,7 +54,11 @@ public enum SkillType {
     }
 
     public String getSymbol() {
-        return symbol;
+        return symbol.get();
+    }
+
+    public Component getSymbolComponent() {
+        return symbol.asComponent();
     }
 }
 

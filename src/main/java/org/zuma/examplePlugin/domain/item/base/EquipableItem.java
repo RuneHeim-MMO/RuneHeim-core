@@ -1,10 +1,6 @@
 package org.zuma.examplePlugin.domain.item.base;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.NotNull;
-import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
@@ -47,26 +43,19 @@ public abstract class EquipableItem extends AbstractItem implements SkillRestric
     }
 
     public void addRequirements(List<SkillRequirement> requirements) {
-        if (requirements != null) {
-            this.requirements.addAll(requirements);
-            requirements.forEach(requirement -> appendToRequirementsLore(Component.text(requirement.type().getSymbol(), NamedTextColor.WHITE)
-                    .append(Component.text(" " + requirement.minimumLevel() + " " + requirement.type().getLabel(), Color.ITEM_REQUIREMENT.asColor()))));
+        if (requirements == null) {
+            return;
         }
+
+        this.requirements.addAll(requirements);
     }
 
     public void addModifiers(List<Modifier> modifiers) {
-        if (modifiers != null) {
-            this.modifiers.addAll(modifiers);
-
-            modifiers.forEach(modifier -> {
-                int amount = Math.toIntExact(Math.round(modifier.amount()));
-                String sign = amount > 0 ? "+" : "";
-                TextColor color = amount > 0 ? Color.ITEM_BONUS_POSITIVE.asColor() : Color.ITEM_BONUS_NEGATIVE.asColor();
-
-                appendToBonusesLore(Component.text(modifier.type().getSymbol(), NamedTextColor.WHITE)
-                        .append(Component.text(" " + sign + amount + " " + modifier.type().getLabel()).color(color)));
-            });
+        if (modifiers == null) {
+            return;
         }
+
+        this.modifiers.addAll(modifiers);
     }
 
 }

@@ -8,9 +8,9 @@ import org.zuma.examplePlugin.domain.mob.meta.MobEquipmentMeta;
 
 public enum EquipmentSet {
     SHOPKEEPER_1(new MobEquipmentMeta(null, null, null, null, new ItemStack(Material.PAPER))),
-    BANDIT_1(new MobEquipmentMeta(null, new ItemStack(Material.DIAMOND_CHESTPLATE), null, null, RuneQuestPlugin.getItemRegistry().getItem(ItemId.ADAMANTITE_DAGGER).asItemStack())),
-    BANDIT_2(new MobEquipmentMeta(RuneQuestPlugin.getItemRegistry().getItem(ItemId.RUNITE_HELMET).asItemStack(), null, null, null, RuneQuestPlugin.getItemRegistry().getItem(ItemId.ADAMANTITE_SWORD).asItemStack())),
-    GOBLIN_1(new MobEquipmentMeta(RuneQuestPlugin.getItemRegistry().getItem(ItemId.BRONZE_HELMET).asItemStack(), null, null, null, new ItemStack(Material.STICK))),
+    BANDIT_1(new MobEquipmentMeta(null, new ItemStack(Material.DIAMOND_CHESTPLATE), null, null, RuneQuestPlugin.getItemRegistry().getItem(ItemId.ADAMANTITE_DAGGER).createItemStackOfType())),
+    BANDIT_2(new MobEquipmentMeta(RuneQuestPlugin.getItemRegistry().getItem(ItemId.RUNITE_HELMET).createItemStackOfType(), null, null, null, RuneQuestPlugin.getItemRegistry().getItem(ItemId.ADAMANTITE_SWORD).createItemStackOfType())),
+    GOBLIN_1(new MobEquipmentMeta(RuneQuestPlugin.getItemRegistry().getItem(ItemId.BRONZE_HELMET).createItemStackOfType(), null, null, null, new ItemStack(Material.STICK))),
     GOBLIN_2(new MobEquipmentMeta(null, null, null, null, new ItemStack(Material.STICK)));
 
 

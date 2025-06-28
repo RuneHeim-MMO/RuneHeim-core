@@ -8,7 +8,7 @@ public class GearWithSocketsItem extends EquipableWithSockets {
 
     public GearWithSocketsItem(AbstractItemMeta meta) {
         super(meta);
-        super.appendToItemTypeLore("Gear", Icon.SHIELD_3.get());
+        super.setTypeLore("Gear", Icon.SHIELD_3.get());
     }
 
 

@@ -7,6 +7,6 @@ import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 public class MaterialItem extends AbstractItem {
     public MaterialItem(AbstractItemMeta meta) {
         super(meta);
-        super.appendToItemTypeLore("Material", Icon.MATERIAL.get());
+        super.setTypeLore("Material", Icon.MATERIAL.get());
     }
 }

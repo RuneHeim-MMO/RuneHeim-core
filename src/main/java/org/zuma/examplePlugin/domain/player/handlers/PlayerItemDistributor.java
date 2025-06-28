@@ -33,7 +33,7 @@ public class PlayerItemDistributor {
         }
 
 
-        ItemStack itemStack = customItem.asItemStack(item.getAmount());
+        ItemStack itemStack = customItem.createItemStackOfType(item.getAmount());
         Component name = itemStack.getItemMeta().displayName();
         String plainName = name != null ? PlainTextComponentSerializer.plainText().serialize(name) : null;
 

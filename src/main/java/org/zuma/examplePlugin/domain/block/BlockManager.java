@@ -78,7 +78,7 @@ public class BlockManager {
                 return;
             }
 
-            blockLocation.getWorld().dropItem(blockLocation, drop.asItemStack(despawnDrop.getAmount()));
+            blockLocation.getWorld().dropItem(blockLocation, drop.createItemStackOfType(despawnDrop.getAmount()));
         }
 
     }

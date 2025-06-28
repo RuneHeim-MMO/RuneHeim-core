@@ -21,7 +21,6 @@ public class MultiConsumableState extends AbstractState {
         return maxUsages;
     }
 
-
     public boolean consume() {
         if (usageLeft <= 0) {
             return false;

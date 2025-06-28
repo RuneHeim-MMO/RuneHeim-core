@@ -88,7 +88,7 @@ public class ResourceNode extends AbstractInteractableBlock {
         }
 
         this.blockType = type;
-        this.dropItemStack = drop.asItemStack();
+        this.dropItemStack = drop.createItemStackOfType();
         super.setMarkerType(type.getMarkerType());
         super.setMarkerLabel(type.getLabel());
         this.spawn(type.getMaterial());

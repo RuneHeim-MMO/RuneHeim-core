@@ -7,6 +7,6 @@ import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 public class MaterialScrollItem extends AbstractItem {
     public MaterialScrollItem(AbstractItemMeta meta) {
         super(meta);
-        super.appendToItemTypeLore("Scroll", Icon.SCROLL_LIGHT_GRAY.get());
+        super.setTypeLore("Scroll", Icon.SCROLL_LIGHT_GRAY.get());
     }
 }

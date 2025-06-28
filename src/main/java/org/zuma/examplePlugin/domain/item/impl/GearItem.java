@@ -8,7 +8,7 @@ public class GearItem extends EquipableItem {
 
     public GearItem(AbstractItemMeta meta) {
         super(meta);
-        super.appendToItemTypeLore("Gear", Icon.SHIELD_3.get());
+        super.setTypeLore("Gear", Icon.SHIELD_3.get());
     }
 
 

@@ -12,4 +12,5 @@ public abstract class AbstractState {
     public StateType getStateType() {
         return type;
     }
+
 }

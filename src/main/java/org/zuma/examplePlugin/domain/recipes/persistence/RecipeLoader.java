@@ -45,7 +45,7 @@ public class RecipeLoader {
                 return;
             }
 
-            itemStack = item.asItemStack();
+            itemStack = item.createItemStackOfType();
         }
 
         ItemMeta displayItemMeta = itemStack.getItemMeta();

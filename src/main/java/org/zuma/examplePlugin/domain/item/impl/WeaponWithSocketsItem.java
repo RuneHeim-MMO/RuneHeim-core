@@ -9,7 +9,7 @@ public class WeaponWithSocketsItem extends EquipableWithSockets {
     public WeaponWithSocketsItem(AbstractItemMeta meta) {
         super(meta);
         this.applyModifiersWhenInHand(true);
-        super.appendToItemTypeLore("Weapon", Icon.SWORD_2.get());
+        super.setTypeLore("Weapon", Icon.SWORD_2.get());
     }
 
 

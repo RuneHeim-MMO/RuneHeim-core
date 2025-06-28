@@ -39,7 +39,7 @@ public class ItemRegistryInventory {
         Inventory inventory = Bukkit.createInventory(null, slots, Component.text("Item Registry | Page: " + page + "-" + maxPages));
 
         for (int i = 0; i < paginatedRegistryItems.size(); i++) {
-            inventory.setItem(i, paginatedRegistryItems.get(i).asItemStack());
+            inventory.setItem(i, paginatedRegistryItems.get(i).createItemStackOfType());
         }
 
         player.openInventory(inventory);

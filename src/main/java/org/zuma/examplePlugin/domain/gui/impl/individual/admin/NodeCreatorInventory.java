@@ -79,7 +79,7 @@ public class NodeCreatorInventory extends IndividualGUI {
                 return;
             }
 
-            ItemStack item = new ItemStack(dropItem.asItemStack());
+            ItemStack item = new ItemStack(dropItem.createItemStackOfType());
             ItemMeta meta = item.getItemMeta();
             meta.displayName(Component.text(type.getLabel()));
             item.setItemMeta(meta);

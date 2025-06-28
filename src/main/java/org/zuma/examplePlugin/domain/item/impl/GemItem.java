@@ -8,6 +8,6 @@ public class GemItem extends EquipableItem {
     public GemItem(AbstractItemMeta meta) {
         super(meta);
         super.applyModifiersWhenInHand(false);
-        super.appendToItemTypeLore("Gem", Icon.GREEN_GEM.get());
+        super.setTypeLore("Gem", Icon.GREEN_GEM.get());
     }
 }

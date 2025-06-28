@@ -25,7 +25,7 @@ public class PotionItem extends AbstractItem implements Stateful {
 
     public PotionItem(AbstractItemMeta meta) {
         super(meta);
-        super.appendToItemTypeLore("Potion", Icon.POTION.get());
+        super.setTypeLore("Potion", Icon.POTION.get());
         this.setStateType(StateType.MULTI_CONSUMABLE);
     }
 
@@ -62,8 +62,9 @@ public class PotionItem extends AbstractItem implements Stateful {
         }
 
         if (state.consume()) {
-            this.setDisplayName(itemStack, null, Component.text(" (" + state.getUsageLeft() + "/" + state.getMaxUsages() + ")", Color.ITEM_TYPE.asColor()));
+            // TODO: this.setDisplayName(itemStack, null, Component.text(" (" + state.getUsageLeft() + "/" + state.getMaxUsages() + ")", Color.ITEM_TYPE.asColor()));
             itemStateManager.saveUpdatedState(state);
+            this.getMetaGenerator().updatePresentationLayer(itemStack);
 
             if (state.isConsumed()) {
                 PlayerUtils.subtractOneFromMainHand(player);
