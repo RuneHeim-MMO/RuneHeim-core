@@ -8,7 +8,6 @@ import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.zuma.examplePlugin.core.handlers.IllegalItemWatchdog;
 import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -117,10 +116,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
             return new ItemStack(Material.AIR);
         }
 
-        ItemStack icon = GUIControl.CHEVRON_RIGHT.asItemstack();
-        ItemMeta meta = icon.getItemMeta();
-        meta.displayName(Component.text("Next", NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
-        icon.setItemMeta(meta);
+        ItemStack icon = GUIControl.CHEVRON_RIGHT.asItemstack(Component.text("Next", NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
 
         super.assignMenuValue(icon, 10000);
         return icon;
@@ -131,10 +127,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
             return new ItemStack(Material.AIR);
         }
 
-        ItemStack icon = GUIControl.CHEVRON_LEFT.asItemstack();
-        ItemMeta meta = icon.getItemMeta();
-        meta.displayName(Component.text("Previous", NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
-        icon.setItemMeta(meta);
+        ItemStack icon = GUIControl.CHEVRON_LEFT.asItemstack(Component.text("Previous", NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
 
         super.assignMenuValue(icon, -10000);
         return icon;

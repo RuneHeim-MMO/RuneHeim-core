@@ -221,7 +221,7 @@ public class ResourceNode extends AbstractInteractableBlock {
         }
 
         // Ensure the item in hand is equipable and valid for gathering
-        if (!(itemInHand instanceof EquipableItem gearItemInHand)) {
+        if (!(itemInHand instanceof EquipableItem gearItemInHand && gearItemInHand.getApplyModifiersWhenInHand())) {
             SoundType.UI_FAIL.play(player.asBukkitPlayer(), false);
             player.asBukkitPlayer().sendMessage(Component.text(blockType.getWrongToolMessage()).color(Color.ERROR.asColor()));
             return;

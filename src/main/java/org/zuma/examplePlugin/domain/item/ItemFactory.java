@@ -27,9 +27,34 @@ public class ItemFactory {
             case MATERIAL -> createMaterialItem(meta);
             case POTION -> createPotionItem(meta, json);
             case FOOD -> createFoodItem(meta, json);
+            case GEM -> createGemItem(meta, json);
+            case MATERIAL_SCROLL -> createMaterialScroll(meta);
             case MISC -> createMiscItem(meta);
             default -> throw new IllegalArgumentException("Unknown item type: " + meta.type());
         };
+    }
+
+    private MaterialScrollItem createMaterialScroll(AbstractItemMeta meta) {
+        return new MaterialScrollItem(meta);
+    }
+
+
+    private GemItem createGemItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create gem item " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                GemMeta deserialized = new Gson().fromJson(json.meta(), GemMeta.class);
+                GemItem item = new GemItem(meta);
+
+                item.addModifiers(deserialized.modifiers());
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
     }
 
     private GearItem createGearItem(AbstractItemMeta meta, @Nullable VersionedJson json) {

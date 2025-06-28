@@ -9,12 +9,11 @@ import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
 import org.zuma.examplePlugin.domain.item.base.EquipableItem;
 import org.zuma.examplePlugin.domain.item.base.EquipableWithSockets;
+import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.modifier.GearModifiersRecalculatedEvent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class GearModifierHandler {
     private final ItemRegistry itemRegistry;
@@ -45,24 +44,39 @@ public class GearModifierHandler {
         }
 
         items.stream()
-                .filter(item -> item != null)
-                .map(itemRegistry::getItem)
-                .filter(item -> {
-                    if (!(item instanceof EquipableItem gearItem)) {
+                .filter(Objects::nonNull)
+                // map each ItemStack to a pair (ItemStack, AbstractItem)
+                .map(itemStack -> Map.entry(itemStack, itemRegistry.getItem(itemStack)))
+                // filter out entries where AbstractItem is not EquipableItem or requirements not met
+                .filter(entry -> {
+                    AbstractItem abstractItem = entry.getValue();
+                    if (abstractItem == null) {
+                        return false;
+                    }
+
+                    if (!(abstractItem instanceof EquipableItem gearItem)) {
                         return false;
                     }
                     return player.meetsRequirements(gearItem);
                 })
-                .map(item -> (EquipableItem) item)
-                .forEach(gearItem -> {
+                .forEach(entry -> {
+                    ItemStack itemStack = entry.getKey();
+                    EquipableItem gearItem = (EquipableItem) entry.getValue();
+
                     modifiers.addAll(gearItem.getModifiers());
 
                     if (gearItem instanceof EquipableWithSockets withSockets) {
-                        modifiers.addAll(withSockets.getGemModifiers());
+                        GearGemSocketsState state = withSockets.getState(itemStack);
+
+                        if (state != null) {
+                            modifiers.addAll(
+                                    state.getInsertedGems()
+                                            .stream()
+                                            .flatMap(gem -> gem.getModifiers().stream())
+                                            .toList());
+                        }
                     }
-
                 });
-
 
         return modifiers;
     }

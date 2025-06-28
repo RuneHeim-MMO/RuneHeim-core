@@ -7,7 +7,8 @@ public enum InventoryId {
     STOVE(1),
     FIRE(2),
     ANVIL(3),
-    CRAFTING_TABLE(4);
+    CRAFTING_TABLE(4),
+    FUSION_MASTER(5);
 
     private final int id;
 

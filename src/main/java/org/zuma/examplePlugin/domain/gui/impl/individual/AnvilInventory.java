@@ -18,12 +18,24 @@ public class AnvilInventory extends PaginatedIndividualGUI {
         super(title, id, 6, new HashSet<>(Arrays.asList(0, 1, 9, 10)));
     }
 
+    @Override
+    public void openInventory(RunePlayer player) {
+        setContent(RuneQuestPlugin.getRecipeRegistry().getRecipesByType(RecipeType.SMITHING_RECIPE, true).stream().map(recipe -> {
+            ItemStack icon = recipe.getDisplayItemstack(player, RuneQuestPlugin.getItemRegistry());
+
+            super.assignMenuValue(icon, recipe.getId());
+            super.setActionsLore(icon, "Smith x" + LEFT_CLICK_SMELT_AMOUNT, "Smith x" + SHIFT_CLICK_SMELT_AMOUNT);
+
+            return icon;
+        }).toList());
+
+        player.asBukkitPlayer().openInventory(getBaseInventory());
+    }
 
     @Override
     public void handleInventoryClick(InventoryClickEvent event, int slot, RunePlayer player) {
         event.setCancelled(true);
-        player.asBukkitPlayer().sendMessage("Cancelled");
-
+  
         ItemStack currentItem = event.getCurrentItem();
 
         if (currentItem == null) {
@@ -45,17 +57,4 @@ public class AnvilInventory extends PaginatedIndividualGUI {
 
     }
 
-    @Override
-    public void openInventory(RunePlayer player) {
-        setContent(RuneQuestPlugin.getRecipeRegistry().getRecipesByType(RecipeType.SMITHING_RECIPE, true).stream().map(recipe -> {
-            ItemStack icon = recipe.getDisplayItemstack(player, RuneQuestPlugin.getItemRegistry());
-
-            super.assignMenuValue(icon, recipe.getId());
-            super.setActionsLore(icon, "Smith x" + LEFT_CLICK_SMELT_AMOUNT, "Smith x" + SHIFT_CLICK_SMELT_AMOUNT);
-
-            return icon;
-        }).toList());
-
-        player.asBukkitPlayer().openInventory(getBaseInventory());
-    }
 }

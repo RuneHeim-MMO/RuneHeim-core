@@ -48,6 +48,15 @@ public enum Icon {
     ENVELOPE("✉"),
     LOG("Ⓘ"),
 
+    SCROLL_RED("ⵣ"),
+    SCROLL_GRAY("⁝"),
+    SCROLL_GREEN("Ⅸ"),
+    SCROLL_BLUE("⼷"),
+    SCROLL_LIGHT_GRAY("⾟"),
+    SCROLL_YELLOW("⊣"),
+    SCROLL_PURPLE("⠳"),
+    SCROLL_BROWN("⑬"),
+
     GREEN_GEM("⮩"),
 
     PROGRESS_TALL_START("┉"),

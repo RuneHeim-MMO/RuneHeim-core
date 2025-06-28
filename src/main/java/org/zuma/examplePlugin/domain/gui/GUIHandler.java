@@ -16,6 +16,7 @@ import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.gui.impl.individual.AnvilInventory;
 import org.zuma.examplePlugin.domain.gui.impl.individual.CookingInventory;
 import org.zuma.examplePlugin.domain.gui.impl.individual.FurnaceInventory;
+import org.zuma.examplePlugin.domain.gui.impl.individual.FusionMasterInventory;
 import org.zuma.examplePlugin.domain.gui.impl.individual.admin.BlockInvCreatorInventory;
 import org.zuma.examplePlugin.domain.gui.impl.individual.admin.NodeCreatorInventory;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -54,7 +55,8 @@ public class GUIHandler {
         this.registry.register(InventoryId.STOVE.asInt(), () -> new CookingInventory(GUIOverlay.COOKING_OVERLAY.asGlyph() + "§f" + Icon.FIRE.get() + "§f Stove", InventoryId.STOVE.asInt()));
         this.registry.register(InventoryId.FIRE.asInt(), () -> new CookingInventory(GUIOverlay.CAMPFIRE_OVERLAY.asGlyph() + "§f" + Icon.FIRE.get() + "§f Campfire", InventoryId.FIRE.asInt()));
         this.registry.register(InventoryId.ANVIL.asInt(), () -> new AnvilInventory(GUIOverlay.ANVIL_OVERLAY.asGlyph() + "§f" + Icon.ANVIL.get() + "§f Anvil", InventoryId.ANVIL.asInt()));
-        this.registry.register(InventoryId.CRAFTING_TABLE.asInt(), () -> new AnvilInventory(GUIOverlay.CRAFTING_TABLE.asGlyph() + "§f" + Icon.CRAFTING.get() + "§f Crafting Table", InventoryId.CRAFTING_TABLE.asInt()));
+        this.registry.register(InventoryId.CRAFTING_TABLE.asInt(), () -> new AnvilInventory(GUIOverlay.CRAFTING_TABLE_OVERLAY.asGlyph() + "§f" + Icon.CRAFTING.get() + "§f Crafting Table", InventoryId.CRAFTING_TABLE.asInt()));
+        this.registry.register(InventoryId.FUSION_MASTER.asInt(), () -> new FusionMasterInventory(GUIOverlay.FUSION_MASTER_OVERLAY.asGlyph() + "§f" + Icon.SCROLL_RED.get() + "§f Fusion Master", InventoryId.FUSION_MASTER.asInt()));
         this.registry.register(InventoryId.ADMIN_NODE_CREATE.asInt(), () -> new NodeCreatorInventory("[A] Create Resource Node", InventoryId.ADMIN_NODE_CREATE.asInt(), blockLoader));
         this.registry.register(InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), () -> new BlockInvCreatorInventory("[A] Create Inventory Opener", InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), blockLoader, this));
 

@@ -10,10 +10,7 @@ import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
-import org.zuma.examplePlugin.domain.item.meta.v1.EquipableMeta;
-import org.zuma.examplePlugin.domain.item.meta.v1.FoodMeta;
-import org.zuma.examplePlugin.domain.item.meta.v1.GearWithSocketsMeta;
-import org.zuma.examplePlugin.domain.item.meta.v1.PotionMeta;
+import org.zuma.examplePlugin.domain.item.meta.v1.*;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
@@ -182,6 +179,14 @@ public class ItemRepository {
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ASHES.asInt(), Material.COAL, ItemRarity.COMMON, "Ashes", List.of("Fine powder left after fire consumes wood."), null, null), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_ASHES.asInt(), Material.COAL, ItemRarity.RARE, "Magic Ashes", List.of("Glowing remnants infused with mysterious arcane power."), null, null), null),
+
+                // Scrolls
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL_SCROLL, ItemId.FUSION_SCROLL.asInt(), Material.PAPER, ItemRarity.LEGENDARY, "Fusion Scroll", List.of("A mystical scroll used to embed gems into gear.", "Essential for upgrading equipment with gem-based attributes."), null, null), null),
+
+                // Gems
+                new ItemEntity(new AbstractItemMeta(ItemType.GEM, ItemId.GEM_OF_STRENGTH.asInt(), Material.COAL, ItemRarity.MYTHIC, "Gem of strength",
+                        List.of("A gem that increases the wearer’s physical power, boosting strength attributes when embedded into gear."), null, null), new VersionedJson(new Gson().toJson(
+                        new GemMeta(List.of(new Modifier(ModifierType.STRENGTH_BONUS, 888)))), 1)),
 
                 // Misc
                 new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.BURNT_FOOD.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Charred Remains", List.of("All that's left after fire claims its meal."), null, null), null),

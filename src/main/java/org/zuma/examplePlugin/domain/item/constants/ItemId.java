@@ -128,7 +128,11 @@ public enum ItemId {
     MAGIC_LOG(1605),
 
     ASHES(1700),
-    MAGIC_ASHES(1701);
+    MAGIC_ASHES(1701),
+
+    FUSION_SCROLL(1800),
+
+    GEM_OF_STRENGTH(1900);
 
 
     private final int id;

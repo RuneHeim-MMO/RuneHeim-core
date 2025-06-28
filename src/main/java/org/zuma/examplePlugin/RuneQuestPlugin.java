@@ -63,6 +63,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private static InteractableBlockRepository blockRepository;
     private static MapMarkerHandler markerHandler;
     private static BlockManager blockManager;
+    private static StateManager itemStateManager;
 
     private MobHandler mobHandler;
     private HikariPool pool;
@@ -95,7 +96,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
 
         ItemHandler itemHandler = new ItemHandler(itemRegistry);
-        StateManager itemStateManager = new StateManager(new StateFactory(), itemHandler, new StateRepository());
+        itemStateManager = new StateManager(new StateFactory(), itemHandler, new StateRepository());
         ItemListener itemListener = new ItemListener(itemHandler, runePlayerManager, itemStateManager);
         getServer().getPluginManager().registerEvents(itemListener, pluginInstance);
 
@@ -228,6 +229,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static BlockManager getBlockManager() {
         return blockManager;
+    }
+
+    public static StateManager getItemStateManager() {
+        return itemStateManager;
     }
 
 

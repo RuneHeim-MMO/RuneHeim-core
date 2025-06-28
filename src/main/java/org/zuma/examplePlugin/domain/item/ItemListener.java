@@ -62,7 +62,7 @@ public class ItemListener implements Listener {
                 return;
             }
 
-            if (item instanceof EquipableItem) {
+            if (item instanceof EquipableItem gearItem && gearItem.getApplyModifiersWhenInHand()) {
                 if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_AIR) {
                     PlayerArmorEquipEvent newEvent = new PlayerArmorEquipEvent(player, item);
                     Bukkit.getServer().getPluginManager().callEvent(newEvent);

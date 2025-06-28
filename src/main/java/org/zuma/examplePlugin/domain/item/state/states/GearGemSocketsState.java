@@ -1,6 +1,9 @@
 package org.zuma.examplePlugin.domain.item.state.states;
 
+import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.base.AbstractItem;
+import org.zuma.examplePlugin.domain.item.impl.GemItem;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 
@@ -44,5 +47,27 @@ public class GearGemSocketsState extends AbstractState {
 
     public int getGemSlots() {
         return this.slots;
+    }
+
+    public List<GemItem> getInsertedGems() {
+        List<GemItem> list = new ArrayList<>();
+
+        getInsertedGemIds().forEach(id -> {
+            AbstractItem item = RuneQuestPlugin.getItemRegistry().getItem(id);
+
+            if (item == null) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot retrieve gem item: Socket state contains invalid item id " + id + "!");
+                return;
+            }
+
+            if (!(item instanceof GemItem gemItem)) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot retrieve gem item: Socket state inserted gems ids contains id " + id + ", but " + item.displayName + " is not a gem!");
+                return;
+            }
+
+            list.add(gemItem);
+        });
+
+        return list;
     }
 }

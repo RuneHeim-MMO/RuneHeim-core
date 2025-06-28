@@ -34,8 +34,10 @@ public class InventoryOpenerBlock extends AbstractInteractableBlock implements S
 
 
     private void initializeHologram() {
+        String icon = this.icon == null ? "" : "§f" + this.icon + " ";
+
         List<String> hologramContent = new ArrayList<>(List.of(
-                "§f" + this.icon + Color.INTERACTABLE_ENTITY.asSpigotHex() + label
+                icon + Color.INTERACTABLE_ENTITY.asSpigotHex() + label
         ));
 
         if (requirements != null) {
