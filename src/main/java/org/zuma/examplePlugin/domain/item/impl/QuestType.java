@@ -4,15 +4,15 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
-import org.zuma.examplePlugin.domain.item.base.AbstractItem;
+import org.zuma.examplePlugin.domain.item.base.AbstractType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
-public class QuestItem extends AbstractItem {
+public class QuestType extends AbstractType {
     private String questName;
 
-    public QuestItem(AbstractItemMeta meta) {
+    public QuestType(AbstractItemMeta meta) {
         super(meta);
         super.setTypeLore("Quest Item", Icon.BOOK.get());
     }

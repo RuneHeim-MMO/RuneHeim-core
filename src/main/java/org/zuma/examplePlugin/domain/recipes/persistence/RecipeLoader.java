@@ -7,7 +7,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
-import org.zuma.examplePlugin.domain.item.base.AbstractItem;
+import org.zuma.examplePlugin.domain.item.base.AbstractType;
 import org.zuma.examplePlugin.domain.recipes.RecipeFactory;
 import org.zuma.examplePlugin.domain.recipes.RecipeRegistry;
 import org.zuma.examplePlugin.domain.recipes.base.AbstractRecipe;
@@ -38,7 +38,7 @@ public class RecipeLoader {
         ItemStack itemStack = new ItemStack(Material.BARRIER);
 
         if (meta.successResult() != null) {
-            AbstractItem item = this.itemRegistry.getItem(meta.successResult().getItemId());
+            AbstractType item = this.itemRegistry.getItem(meta.successResult().getItemId());
 
             if (item == null) {
                 RuneQuestPlugin.getRuneLogger().logWithStack(LogLevel.WARN, "Cannot register " + meta.type().name() + " recipe. Recipe result ItemRecord id is invalid.");

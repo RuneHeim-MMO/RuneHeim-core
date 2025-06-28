@@ -5,16 +5,16 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
-import org.zuma.examplePlugin.domain.item.base.AbstractItem;
+import org.zuma.examplePlugin.domain.item.base.AbstractType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.item.PlayerConsumableConsumeEvent;
 
-public class FoodItem extends AbstractItem {
+public class FoodType extends AbstractType {
     private int healAmount = 0;
 
-    public FoodItem(AbstractItemMeta meta) {
+    public FoodType(AbstractItemMeta meta) {
         super(meta);
         super.setTypeLore("Food", Icon.FRUIT.get());
     }

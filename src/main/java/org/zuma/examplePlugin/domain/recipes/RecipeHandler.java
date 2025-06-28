@@ -10,7 +10,7 @@ import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
-import org.zuma.examplePlugin.domain.item.base.AbstractItem;
+import org.zuma.examplePlugin.domain.item.base.AbstractType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipes.base.AbstractRecipe;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
@@ -153,7 +153,7 @@ public class RecipeHandler {
         return true;
     }
 
-    public boolean handleInventoryRecipeClick(RunePlayer player, Inventory inventory, AbstractItem firstItem, AbstractItem secondItem) {
+    public boolean handleInventoryRecipeClick(RunePlayer player, Inventory inventory, AbstractType firstItem, AbstractType secondItem) {
 
         List<AbstractRecipe> matchingRecipes = validInventoryRecipes.stream()
                 .filter(recipe -> {

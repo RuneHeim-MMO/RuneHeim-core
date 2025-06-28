@@ -1,4 +1,4 @@
 package org.zuma.examplePlugin.domain.item.meta.v1;
 
-public record FoodMeta(int healAmount) {
+public record FoodTypeMeta(int healAmount) {
 }

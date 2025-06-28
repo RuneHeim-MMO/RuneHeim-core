@@ -16,7 +16,7 @@ import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.gui.IDHolder;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
-import org.zuma.examplePlugin.domain.item.base.AbstractItem;
+import org.zuma.examplePlugin.domain.item.base.AbstractType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class BlockListener implements Listener {
@@ -52,7 +52,7 @@ public class BlockListener implements Listener {
         }
 
 
-        AbstractItem itemInHand = itemRegistry.getItem(PlayerUtils.getItemStackInHand(player));
+        AbstractType itemInHand = itemRegistry.getItem(PlayerUtils.getItemStackInHand(player));
         block.onPlayerInteractEvent(runePlayer, event.getAction(), event, itemInHand);
 
     }

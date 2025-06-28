@@ -12,10 +12,10 @@ import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 
-public abstract class EquipableWithSockets extends EquipableItem implements Stateful {
+public abstract class SocketedEquipableType extends EquipableType implements Stateful {
     private GearGemSocketsState socketsState;
 
-    public EquipableWithSockets(AbstractItemMeta meta) {
+    public SocketedEquipableType(AbstractItemMeta meta) {
         super(meta);
     }
 
@@ -23,7 +23,7 @@ public abstract class EquipableWithSockets extends EquipableItem implements Stat
         this.socketsState = state;
 
         state.getInsertedGemIds().forEach(id -> {
-            AbstractItem abstractGem = RuneQuestPlugin.getItemRegistry().getItem(id);
+            AbstractType abstractGem = RuneQuestPlugin.getItemRegistry().getItem(id);
 
             if (abstractGem == null) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Could find gem to apply modifiers to an item! Invalid ID: " + id);

@@ -1,12 +1,12 @@
 package org.zuma.examplePlugin.domain.item.impl;
 
 import org.zuma.examplePlugin.core.constants.Icon;
-import org.zuma.examplePlugin.domain.item.base.EquipableItem;
+import org.zuma.examplePlugin.domain.item.base.EquipableType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 
-public class ToolItem extends EquipableItem {
+public class ToolType extends EquipableType {
 
-    public ToolItem(AbstractItemMeta meta) {
+    public ToolType(AbstractItemMeta meta) {
         super(meta);
         this.applyModifiersWhenInHand(true);
         super.setTypeLore("Tool", Icon.TOOL.get());

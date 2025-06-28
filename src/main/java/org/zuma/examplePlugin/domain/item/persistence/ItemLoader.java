@@ -5,7 +5,7 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.item.ItemFactory;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
-import org.zuma.examplePlugin.domain.item.base.AbstractItem;
+import org.zuma.examplePlugin.domain.item.base.AbstractType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 
 import javax.annotation.Nullable;
@@ -27,7 +27,7 @@ public class ItemLoader {
     }
 
     private void registerItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
-        AbstractItem item = factory.createItem(meta, json);
+        AbstractType item = factory.createItem(meta, json);
         this.registry.registerItem(item);
     }
 

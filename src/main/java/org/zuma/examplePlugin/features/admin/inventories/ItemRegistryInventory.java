@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
-import org.zuma.examplePlugin.domain.item.base.AbstractItem;
+import org.zuma.examplePlugin.domain.item.base.AbstractType;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class ItemRegistryInventory {
             return;
         }
 
-        List<AbstractItem> paginatedRegistryItems = registry.getAllItems().stream().sorted((a, b) -> {
+        List<AbstractType> paginatedRegistryItems = registry.getAllItems().stream().sorted((a, b) -> {
             return a.id - b.id;
         }).toList().subList(indexStart, indexEnd);
 

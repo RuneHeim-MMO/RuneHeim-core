@@ -11,7 +11,7 @@ import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.hud.HudService;
-import org.zuma.examplePlugin.domain.item.base.AbstractItem;
+import org.zuma.examplePlugin.domain.item.base.AbstractType;
 import org.zuma.examplePlugin.domain.map.MarkerType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
@@ -58,7 +58,7 @@ public class InventoryOpenerBlock extends AbstractInteractableBlock implements S
     }
 
     @Override
-    public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItem itemInHand) {
+    public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractType itemInHand) {
         event.setCancelled(true);
 
         if (requirements != null && !player.meetsRequirements(this)) {

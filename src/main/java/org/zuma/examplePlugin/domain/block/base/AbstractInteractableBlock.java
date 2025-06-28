@@ -16,7 +16,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
-import org.zuma.examplePlugin.domain.item.base.AbstractItem;
+import org.zuma.examplePlugin.domain.item.base.AbstractType;
 import org.zuma.examplePlugin.domain.map.MarkerType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
@@ -93,7 +93,7 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
         location.getBlock().setType(Material.AIR);
 
     }
-    
+
     @Nullable
     public MarkerType getMarkerType() {
         return markerType;
@@ -121,7 +121,7 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
         return this.face;
     }
 
-    public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItem itemInHand) {
+    public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractType itemInHand) {
 
     }
 

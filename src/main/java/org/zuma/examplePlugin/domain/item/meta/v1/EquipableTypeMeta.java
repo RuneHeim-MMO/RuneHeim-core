@@ -6,5 +6,5 @@ import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public record EquipableMeta(List<Modifier> modifiers, @Nullable List<SkillRequirement> requirements) {
+public record EquipableTypeMeta(List<Modifier> modifiers, @Nullable List<SkillRequirement> requirements) {
 }

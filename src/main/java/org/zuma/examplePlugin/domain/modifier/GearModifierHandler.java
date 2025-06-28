@@ -6,9 +6,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.zuma.examplePlugin.core.utils.ModifierUtils;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
-import org.zuma.examplePlugin.domain.item.base.AbstractItem;
-import org.zuma.examplePlugin.domain.item.base.EquipableItem;
-import org.zuma.examplePlugin.domain.item.base.EquipableWithSockets;
+import org.zuma.examplePlugin.domain.item.base.AbstractType;
+import org.zuma.examplePlugin.domain.item.base.EquipableType;
+import org.zuma.examplePlugin.domain.item.base.SocketedEquipableType;
 import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.modifier.GearModifiersRecalculatedEvent;
@@ -36,36 +36,36 @@ public class GearModifierHandler {
         List<ItemStack> items = new ArrayList<>(Arrays.asList(inventory.getArmorContents()));
 
         if (itemInHand != null && itemInHand.getType() != Material.AIR) {
-            AbstractItem item = itemRegistry.getItem(itemInHand);
+            AbstractType item = itemRegistry.getItem(itemInHand);
 
-            if (item instanceof EquipableItem gearItem && gearItem.getApplyModifiersWhenInHand()) {
+            if (item instanceof EquipableType gearItem && gearItem.getApplyModifiersWhenInHand()) {
                 items.add(itemInHand);
             }
         }
 
         items.stream()
                 .filter(Objects::nonNull)
-                // map each ItemStack to a pair (ItemStack, AbstractItem)
+                // map each ItemStack to a pair (ItemStack, AbstractType)
                 .map(itemStack -> Map.entry(itemStack, itemRegistry.getItem(itemStack)))
-                // filter out entries where AbstractItem is not EquipableItem or requirements not met
+                // filter out entries where AbstractType is not EquipableType or requirements not met
                 .filter(entry -> {
-                    AbstractItem abstractItem = entry.getValue();
-                    if (abstractItem == null) {
+                    AbstractType abstractType = entry.getValue();
+                    if (abstractType == null) {
                         return false;
                     }
 
-                    if (!(abstractItem instanceof EquipableItem gearItem)) {
+                    if (!(abstractType instanceof EquipableType gearItem)) {
                         return false;
                     }
                     return player.meetsRequirements(gearItem);
                 })
                 .forEach(entry -> {
                     ItemStack itemStack = entry.getKey();
-                    EquipableItem gearItem = (EquipableItem) entry.getValue();
+                    EquipableType gearItem = (EquipableType) entry.getValue();
 
                     modifiers.addAll(gearItem.getModifiers());
 
-                    if (gearItem instanceof EquipableWithSockets withSockets) {
+                    if (gearItem instanceof SocketedEquipableType withSockets) {
                         GearGemSocketsState state = withSockets.getState(itemStack);
 
                         if (state != null) {

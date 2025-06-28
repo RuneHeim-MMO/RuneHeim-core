@@ -7,7 +7,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.domain.item.base.AbstractItem;
+import org.zuma.examplePlugin.domain.item.base.AbstractType;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.item.constants.PersistanceDataKey;
 
@@ -18,10 +18,10 @@ import java.util.List;
 import java.util.Map;
 
 public class ItemRegistry {
-    private final Map<Integer, AbstractItem> items = new HashMap<>(); // ID:RuneItem (ID stored in persistent item stack data)
+    private final Map<Integer, AbstractType> items = new HashMap<>(); // ID:RuneItem (ID stored in persistent item stack data)
 
-    public void registerItem(AbstractItem item) {
-        AbstractItem existingItem = items.get(item.id);
+    public void registerItem(AbstractType item) {
+        AbstractType existingItem = items.get(item.id);
 
         if (existingItem != null) {
             throw new Error("Cannot register " + item.displayName + ". Item with " + item.id + " (" + existingItem.displayName + ") already exists!");
@@ -31,7 +31,7 @@ public class ItemRegistry {
     }
 
     @Nullable
-    public AbstractItem getItem(ItemStack item) {
+    public AbstractType getItem(ItemStack item) {
         ItemMeta meta = item.getItemMeta();
 
         if (meta != null) {
@@ -46,13 +46,13 @@ public class ItemRegistry {
     }
 
     @Nullable
-    public AbstractItem getItem(ItemId id) {
+    public AbstractType getItem(ItemId id) {
         return getItem(id.asInt());
     }
 
     @Nullable
-    public AbstractItem getItem(int id) {
-        AbstractItem item = items.get(id);
+    public AbstractType getItem(int id) {
+        AbstractType item = items.get(id);
 
         if (item == null) {
             throw new Error("Cannot get rune item. Item with id " + id + " does not exist or is not registered in the registry.");
@@ -62,7 +62,7 @@ public class ItemRegistry {
     }
 
     @NotNull
-    public List<AbstractItem> getAllItems() {
+    public List<AbstractType> getAllItems() {
         return new ArrayList<>(items.values());
     }
 
