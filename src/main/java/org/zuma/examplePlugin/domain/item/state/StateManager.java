@@ -97,6 +97,7 @@ public class StateManager {
 
     @Nullable
     public AbstractState initializeState(UUID uuid) {
+
         AbstractStateMeta result = this.repository.getByUUID(uuid);
 
         if (result == null) {

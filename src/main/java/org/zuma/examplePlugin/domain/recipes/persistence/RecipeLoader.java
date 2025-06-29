@@ -35,25 +35,29 @@ public class RecipeLoader {
     }
 
     private void registerRecipe(AbstractRecipeMeta meta, @Nullable VersionedJson json) {
-        ItemStack itemStack = new ItemStack(Material.BARRIER);
+        try {
+            ItemStack itemStack = new ItemStack(Material.BARRIER);
 
-        if (meta.successResult() != null) {
-            AbstractItemType item = this.itemRegistry.getItem(meta.successResult().getItemId());
+            if (meta.successResult() != null) {
+                AbstractItemType item = this.itemRegistry.getItem(meta.successResult().getItemId());
 
-            if (item == null) {
-                RuneQuestPlugin.getRuneLogger().logWithStack(LogLevel.WARN, "Cannot register " + meta.type().name() + " recipe. Recipe result ItemRecord id is invalid.");
-                return;
+                if (item == null) {
+                    RuneQuestPlugin.getRuneLogger().logWithStack(LogLevel.WARN, "Cannot register " + meta.type().name() + " recipe. Recipe result ItemRecord id is invalid.");
+                    return;
+                }
+
+                itemStack = item.createItemStackOfType();
             }
 
-            itemStack = item.createItemStackOfType();
+            ItemMeta displayItemMeta = itemStack.getItemMeta();
+
+            displayItemMeta.lore(new ArrayList<>());
+            itemStack.setItemMeta(displayItemMeta);
+
+            AbstractRecipe newRecipe = factory.createRecipe(itemStack, meta, json);
+            recipeRegistry.registerRecipe(newRecipe.getId(), newRecipe);
+        } catch (Exception e) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to recipe " + meta.id() + "! Error: " + e.getMessage());
         }
-
-        ItemMeta displayItemMeta = itemStack.getItemMeta();
-
-        displayItemMeta.lore(new ArrayList<>());
-        itemStack.setItemMeta(displayItemMeta);
-
-        AbstractRecipe newRecipe = factory.createRecipe(itemStack, meta, json);
-        recipeRegistry.registerRecipe(newRecipe.getId(), newRecipe);
     }
 }

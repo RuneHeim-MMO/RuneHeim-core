@@ -27,8 +27,12 @@ public class ItemLoader {
     }
 
     private void registerItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
-        AbstractItemType item = factory.createItem(meta, json);
-        this.registry.registerItem(item);
+        try {
+            AbstractItemType item = factory.createItem(meta, json);
+            this.registry.registerItem(item);
+        } catch (Exception e) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to load item " + meta.displayName() + "! Error: " + e.getMessage());
+        }
     }
 
 

@@ -13,6 +13,7 @@ import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepositor
 import org.zuma.examplePlugin.events.block.InteractableBlockCreateStartEvent;
 import org.zuma.examplePlugin.events.block.InteractableBlockRepositoryUpdateEvent;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -88,11 +89,18 @@ public class BlockLoader {
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Spawned " + this.manager.getAllBlocks().size() + " interactable blocks.");
     }
 
+    @Nullable
     private AbstractInteractableBlock registerBlock(BlockManager manager, AbstractInteractableBlockMeta meta, VersionedJson json) {
-        AbstractInteractableBlock block = factory.createBlock(manager, meta, json, this);
-        this.manager.registerBlock(block);
+        try {
+            AbstractInteractableBlock block = factory.createBlock(manager, meta, json, this);
+            this.manager.registerBlock(block);
 
-        return block;
+            return block;
+        } catch (Exception e) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to load interactable block " + meta.type().name() + " : ID: " + meta.id() + "! Error: " + e.getMessage());
+        }
+
+        return null;
     }
 
 
