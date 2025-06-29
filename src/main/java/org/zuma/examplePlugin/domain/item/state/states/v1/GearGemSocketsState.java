@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.item.state.states;
+package org.zuma.examplePlugin.domain.item.state.states.v1;
 
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
@@ -15,7 +15,7 @@ public class GearGemSocketsState extends AbstractState {
     private final int slots;
 
     public GearGemSocketsState(List<Integer> gemIds, int maxSlots) {
-        super(StateType.GEAR_GEM_SOCKETS);
+        super(StateType.GEAR_GEM_SOCKETS, 1);
         this.gemIds = gemIds;
         this.slots = maxSlots;
     }

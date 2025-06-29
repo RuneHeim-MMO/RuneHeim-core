@@ -20,7 +20,7 @@ import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
-import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
+import org.zuma.examplePlugin.domain.item.state.states.v1.GearGemSocketsState;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;

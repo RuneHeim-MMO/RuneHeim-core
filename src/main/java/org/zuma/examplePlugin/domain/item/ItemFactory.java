@@ -9,7 +9,7 @@ import org.zuma.examplePlugin.domain.item.impl.consumable.Food;
 import org.zuma.examplePlugin.domain.item.impl.consumable.Potion;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.v1.*;
-import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
+import org.zuma.examplePlugin.domain.item.state.states.v1.GearGemSocketsState;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

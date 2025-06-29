@@ -7,7 +7,7 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
-import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
+import org.zuma.examplePlugin.domain.item.state.states.v1.GearGemSocketsState;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public abstract class SocketedEquipableItemType extends EquipableItemType implem
     @Nullable
     public GearGemSocketsState getState(ItemStack item) {
         AbstractState state = RuneQuestPlugin.getItemStateManager().getItemState(item);
-        
+
         if (state != null && state.getStateType() == StateType.GEAR_GEM_SOCKETS) {
             return (GearGemSocketsState) state;
         }

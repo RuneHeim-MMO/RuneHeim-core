@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.item.state.states;
+package org.zuma.examplePlugin.domain.item.state.states.v1;
 
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
@@ -8,7 +8,7 @@ public class MultiConsumableState extends AbstractState {
     private int usageLeft;
 
     public MultiConsumableState(int maxUsage, int usages) {
-        super(StateType.MULTI_CONSUMABLE);
+        super(StateType.MULTI_CONSUMABLE, 1);
         this.maxUsages = maxUsage;
         usageLeft = usages;
     }
