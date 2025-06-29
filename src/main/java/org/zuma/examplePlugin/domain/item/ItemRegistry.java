@@ -31,7 +31,12 @@ public class ItemRegistry {
     }
 
     @Nullable
-    public AbstractItemType getItem(ItemStack item) {
+    public AbstractItemType getItem(@Nullable ItemStack item) {
+
+        if (item == null) {
+            return null;
+        }
+
         ItemMeta meta = item.getItemMeta();
 
         if (meta != null) {

@@ -40,7 +40,7 @@ public abstract class SocketedEquipableItemType extends EquipableItemType implem
     @Nullable
     public GearGemSocketsState getState(ItemStack item) {
         AbstractState state = RuneQuestPlugin.getItemStateManager().getItemState(item);
-
+        
         if (state != null && state.getStateType() == StateType.GEAR_GEM_SOCKETS) {
             return (GearGemSocketsState) state;
         }

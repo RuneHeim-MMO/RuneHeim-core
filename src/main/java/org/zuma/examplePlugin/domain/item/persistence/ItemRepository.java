@@ -747,15 +747,15 @@ public class ItemRepository {
                                 )
                         ), 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.ADAMANTITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Sword", List.of("Adamantite sword, powerful and heavy."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON_WITH_GEM_SOCKETS, ItemId.ADAMANTITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Sword", List.of("Adamantite sword, powerful and heavy."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new SocketedEquipableMeta(new EquipableTypeMeta(
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 21),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 19)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 30))
-                                )
+                                ), null, 2)
                         ), 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON_WITH_GEM_SOCKETS, ItemId.RUNITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Sword", List.of("Runite sword crackling with magical energy."), null, null),

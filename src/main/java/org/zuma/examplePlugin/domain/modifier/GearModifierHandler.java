@@ -69,11 +69,15 @@ public class GearModifierHandler {
                         GearGemSocketsState state = withSockets.getState(itemStack);
 
                         if (state != null) {
+
                             modifiers.addAll(
                                     state.getInsertedGems()
                                             .stream()
                                             .flatMap(gem -> gem.getModifiers().stream())
                                             .toList());
+
+                            System.out.println("inserted gems");
+
                         }
                     }
                 });

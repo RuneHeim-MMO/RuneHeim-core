@@ -5,6 +5,8 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -39,7 +41,33 @@ public class MetaGenerator {
         ItemMeta meta = item.getItemMeta();
         meta.lore(generateLore(item));
         meta.displayName(getDisplayName(item));
+
+        if (itemType.customModelData != -1) {
+            meta.setCustomModelData(itemType.customModelData);
+        }
+
+        if (isItemGlowing(item)) {
+            meta.addEnchant(Enchantment.UNBREAKING, 1, true);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        }
+
         item.setItemMeta(meta);
+    }
+
+    public boolean isItemGlowing(ItemStack item) {
+        if (itemType == null) {
+            return false;
+        }
+
+        if (itemType instanceof SocketedEquipableItemType) {
+            AbstractState state = RuneQuestPlugin.getItemStateManager().getItemState(item);
+
+            if (state instanceof GearGemSocketsState socketsState) {
+                return !socketsState.getInsertedGemIds().isEmpty();
+            }
+        }
+
+        return false;
     }
 
     public List<Component> generateLore(ItemStack item) {
@@ -86,16 +114,15 @@ public class MetaGenerator {
 
         if (itemType instanceof SocketedEquipableItemType) {
             AbstractState state = RuneQuestPlugin.getItemStateManager().getItemState(item);
-            System.out.println("SOCKET EQUIPABLE TYPE " + state);
+
             if (state instanceof GearGemSocketsState socketsState) {
-                System.out.println("SOCKET EQUIPABLE TYPE@@@@@@@@@");
                 lore.add(Component.empty());
-                lore.add(Icon.GREEN_GEM.asComponent().append(Component.text("Gem slots (0/" + socketsState.getTotalGemSlots() + ")", Color.SUCCESS.asColor())));
+                lore.add(Icon.GREEN_GEM.asComponent().append(Component.text("Gem slots (" + socketsState.getInsertedGemIds().size() + "/" + socketsState.getTotalGemSlots() + ")", Color.SUCCESS.asColor())));
                 lore.add(Component.text(TextUtils.repeatString("-", 16), Color.SUCCESS.asColor()).decorate(TextDecoration.STRIKETHROUGH));
 
                 socketsState.getInsertedGems().forEach(gemItem -> {
-                    // Todo: gem based colors?
-                    lore.add(Component.text("* " + gemItem.displayName, Color.SUCCESS.asColor()));
+                    TextColor rarityColor = TextColor.fromHexString(gemItem.rarity.getHexColor());
+                    lore.add(Component.text(" ● " + gemItem.displayName, rarityColor));
                 });
 
                 for (int i = 0; i < socketsState.getTotalGemSlots() - socketsState.getInsertedGemIds().size(); i++) {
@@ -174,14 +201,6 @@ public class MetaGenerator {
 
         // To set it's state uuid so lore generation fn can access it's state.
         item.setItemMeta(meta);
-
-        if (itemType.customModelData != -1) {
-            meta.setCustomModelData(itemType.customModelData);
-        }
-
-        meta.displayName(getDisplayName(item));
-        meta.lore(generateLore(item));
-        item.setItemMeta(meta);
-
+        updatePresentationLayer(item);
     }
 }

@@ -115,6 +115,7 @@ public class GUIHandler {
 
     public void onInventoryClose(InventoryCloseEvent event) {
         InventoryHolder holder = event.getInventory().getHolder();
+        boolean isForced = event.getReason() == InventoryCloseEvent.Reason.UNLOADED;
 
         if (!(event.getPlayer() instanceof Player bukkitPlayer)) {
             return;
@@ -131,26 +132,27 @@ public class GUIHandler {
         }
 
 
-        if (event.getReason() == InventoryCloseEvent.Reason.UNLOADED) {
-            inventoryViewers.remove(instanceUUID);
-            Bukkit.getServer().getPluginManager().callEvent(
-                    new RuneInventoryCloseEvent(player, id, instanceUUID, inventoryViewers.get(instanceUUID), true));
-            return;
-        }
-
         if (closeRunnables.get(instanceUUID) != null) {
             closeRunnables.get(instanceUUID).run();
             closeRunnables.remove(instanceUUID);
         }
 
         List<UUID> viewerUUIDs = inventoryViewers.get(instanceUUID);
+        AbstractGUI matchingGUI = this.registry.getInstance(bukkitPlayer.getUniqueId(), id);
 
-        Bukkit.getServer().getPluginManager().callEvent(
-                new RuneInventoryCloseEvent(player, id, instanceUUID, inventoryViewers.get(instanceUUID), false));
+        if (matchingGUI != null) {
+            matchingGUI.onInventoryClose(event, player);
+        }
 
+        registry.removePlayersActiveInstance(bukkitPlayer.getUniqueId());
+        Bukkit.getServer().getPluginManager().callEvent(new RuneInventoryCloseEvent(player, id, instanceUUID, viewerUUIDs, isForced));
+
+        if (isForced) {
+            inventoryViewers.remove(instanceUUID); // If unloaded, remove instance:viewers k:v
+            return;
+        }
 
         viewerUUIDs.remove(player.getUUID());
-        registry.removePlayersActiveInstance(bukkitPlayer.getUniqueId());
     }
 
     public void onInventoryClick(InventoryClickEvent event) {

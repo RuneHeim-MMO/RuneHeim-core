@@ -44,5 +44,10 @@ public enum GUIControl {
         return icon;
     }
 
-
+    public static boolean isGuiItem(ItemStack item) {
+        if (item == null) {
+            return false;
+        }
+        return IllegalItemWatchdog.getItemStackStatus(item) != IllegalItemWatchdog.LegalityType.LEGAL;
+    }
 }

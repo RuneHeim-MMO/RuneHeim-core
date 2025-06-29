@@ -7,7 +7,10 @@ import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Firework;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -23,6 +26,9 @@ import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.combat.AttackType;
 import org.zuma.examplePlugin.domain.combat.Hit;
+import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
+import org.zuma.examplePlugin.domain.mob.base.AbstractInventoryOpener;
+import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -35,9 +41,102 @@ import java.util.UUID;
 public class HudService {
     private static final Random random = new Random();
 
+    public static void showFusionSuccessEffect(RunePlayer player, int gemsInserted) {
+        double radius = 5.0;
+
+        // Animate all inventory openers who open fusion master inventory.
+        for (Entity entity : player.asBukkitPlayer().getWorld().getNearbyEntities(player.asBukkitPlayer().getLocation(), radius, radius, radius)) {
+            if (!(entity instanceof LivingEntity)) continue;
+            AbstractMob mob = RuneQuestPlugin.getMobRegistry().getMob(entity);
+
+            if (!(mob instanceof AbstractInventoryOpener) || ((AbstractInventoryOpener) mob).getInventoryId() != InventoryId.FUSION_MASTER.asInt()) {
+                continue;
+            }
+
+            new BukkitRunnable() {
+                int thundersLeft = gemsInserted;
+
+                @Override
+                public void run() {
+                    try {
+
+                        if (entity.isDead() || thundersLeft == 0) {
+                            this.cancel();
+                            return;
+                        }
+
+                        entity.getWorld().strikeLightningEffect(entity.getLocation());
+                        SoundType.FUSION_SUCCESS_2.play(entity.getLocation());
+                        SoundType.FUSION_MASTER_ROAR.play(entity.getLocation());
+                        thundersLeft -= 1;
+
+
+                    } catch (Exception e) {
+                        // Do nothing
+                    }
+                }
+            }.runTaskTimer(RuneQuestPlugin.getInstance(), 20L, 10L);
+
+            new BukkitRunnable() {
+                int tick = 0;
+                final int holdTicks = 60;
+                final float startPitch = entity.getLocation().getPitch();
+                final float targetPitch = -80f;
+
+                @Override
+                public void run() {
+                    try {
+                        Player p = player.asBukkitPlayer();
+
+                        if (entity.isDead() || p == null || !p.isOnline()) {
+                            this.cancel();
+                            return;
+                        }
+
+                        // Spawn random Ender particles around the entity every tick
+                        Location particleLoc = entity.getLocation().add(
+                                (Math.random() - 0.5) * 3.5, // x offset [-0.75, 0.75]
+                                Math.random() * 3.5,         // y offset [0, 1.5]
+                                (Math.random() - 0.5) * 3.5  // z offset [-0.75, 0.75]
+                        );
+                        entity.getWorld().spawnParticle(Particle.CRIMSON_SPORE, particleLoc, 1, 0, 0, 0, 0);
+                        entity.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, particleLoc, 1, 0, 0, 0, 0);
+
+                        if (tick <= 20) { // about 1 second to look up smoothly
+                            float pitch = startPitch + ((targetPitch - startPitch) * tick / 20f);
+                            Location loc = entity.getLocation();
+                            loc.setPitch(pitch);
+                            entity.teleport(loc);
+                        } else if (tick <= 20 + holdTicks) {
+                            // hold pitch at -90 (look up)
+                            Location loc = entity.getLocation();
+                            loc.setPitch(targetPitch);
+                            entity.teleport(loc);
+                        } else if (tick <= 40 + holdTicks) {
+                            // smoothly go back down to startPitch
+                            float pitch = targetPitch + ((startPitch - targetPitch) * (tick - 20 - holdTicks) / 20f);
+                            Location loc = entity.getLocation();
+                            loc.setPitch(pitch);
+                            entity.teleport(loc);
+                        } else {
+                            cancel();
+                        }
+                        tick++;
+                    } catch (Exception e) {
+                        // Do nothing
+                    }
+                }
+            }.runTaskTimer(RuneQuestPlugin.getInstance(), 0L, 1L);
+
+
+        }
+
+
+    }
+
     public static void showXpGainMessage(RunePlayer player, SkillType type, double xp, XpSource source) {
         String xpStr = "§f" + type.getSymbol() + Color.SUCCESS.asSpigotHex() + " " + xp + " XP";
-        boolean isPartySource = source == XpSource.PARTY;
+        boolean isPartySource = source == org.zuma.examplePlugin.core.constants.XpSource.PARTY;
 
         spawnVerticalHologramBubble(player, Color.SUCCESS.asSpigotHex() + "+ " + xpStr + " " + (isPartySource ? "[Party]" : ""));
         player.asBukkitPlayer().sendMessage(type.getLabel() + " +" + xp + "xp! Type: " + source.name());

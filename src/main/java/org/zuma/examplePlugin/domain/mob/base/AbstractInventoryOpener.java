@@ -32,5 +32,9 @@ public abstract class AbstractInventoryOpener extends FriendlyImmortalMob {
         event.setCancelled(true);
     }
 
+    public int getInventoryId() {
+        return this.inventoryId;
+    }
+
     public abstract void onInventoryClose(PlayerInteractAtEntityEvent event, RunePlayer player);
 }

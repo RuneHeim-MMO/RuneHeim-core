@@ -5,6 +5,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -99,6 +100,10 @@ public abstract class AbstractGUI {
     public abstract void openInventory(RunePlayer player);
 
     public void onInventoryClick(InventoryClickEvent event, int slot, RunePlayer player) {
+
+    }
+
+    public void onInventoryClose(InventoryCloseEvent event, RunePlayer player) {
 
     }
 

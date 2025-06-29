@@ -10,6 +10,7 @@ import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,7 +74,7 @@ public class ActionBarManager {
                 .build();
 
         return Component.text(Icon.HEART_BIG.get(), NamedTextColor.WHITE)
-                .append(Component.text(" " + player.getHealth() + "/99" + " ".repeat(2), Color.ERROR.asColor()))
+                .append(Component.text(" " + player.getHealth() + "/" + player.getSkill(SkillType.HITPOINTS).getLevel() + " ".repeat(2), Color.ERROR.asColor()))
                 .append(specialAttackBar)
                 .append(hasNotifications ? flashingEnvelope : Component.empty())
                 .append(manaBar)

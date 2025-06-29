@@ -15,7 +15,7 @@ public class GearGemSocketsState extends AbstractState {
     private final int slots;
 
     public GearGemSocketsState(List<Integer> gemIds, int maxSlots) {
-        super(StateType.MULTI_CONSUMABLE);
+        super(StateType.GEAR_GEM_SOCKETS);
         this.gemIds = gemIds;
         this.slots = maxSlots;
     }
@@ -23,7 +23,7 @@ public class GearGemSocketsState extends AbstractState {
 
     public void insertGem(AbstractItemType gem) throws IllegalStateException {
         if (gemIds.contains(gem.id)) {
-            throw new IllegalStateException(gem.displayName + " is already in this gear.");
+            throw new IllegalStateException(gem.displayName + " is already in this item.");
         }
 
         if (gemIds.size() >= slots) {
@@ -35,7 +35,7 @@ public class GearGemSocketsState extends AbstractState {
 
     public void removeGem(AbstractItemType gem) throws IllegalStateException {
         if (!gemIds.contains(gem.id)) {
-            throw new IllegalStateException(gem.displayName + " is not inserted into this gear.");
+            throw new IllegalStateException(gem.displayName + " is not inserted into this item.");
         }
 
         gemIds.remove(gem.id);
