@@ -12,7 +12,9 @@ public enum ItemType {
     WEAPON_WITH_GEM_SOCKETS(8),
     EQUIPMENT_WITH_GEM_SOCKETS(9),
     GEM(10),
-    MATERIAL_SCROLL(11);
+    MATERIAL_SCROLL(11),
+    FAIRY_FOOD(12),
+    FAIRY_FRUIT(13);
 
     private final int key;
 

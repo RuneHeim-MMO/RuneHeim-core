@@ -30,9 +30,47 @@ public class ItemFactory {
             case FOOD -> createFoodItem(meta, json);
             case GEM -> createGemItem(meta, json);
             case MATERIAL_SCROLL -> createMaterialScroll(meta);
+            case FAIRY_FOOD -> createFairyFood(meta, json);
+            case FAIRY_FRUIT -> createFairyFruit(meta, json);
             case MISC -> createMiscItem(meta);
             default -> throw new IllegalArgumentException("Unknown item type: " + meta.type());
         };
+    }
+
+    private FairyFruit createFairyFruit(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create gem item " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                FairyFruitMeta deserialized = new Gson().fromJson(json.meta(), FairyFruitMeta.class);
+                FairyFruit item = new FairyFruit(meta);
+
+                item.addModifiers(deserialized.modifiers());
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
+    }
+
+    private FairyFood createFairyFood(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create gem item " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                FairyFoodMeta deserialized = new Gson().fromJson(json.meta(), FairyFoodMeta.class);
+                FairyFood item = new FairyFood(meta);
+
+                item.setEnergyRestoreAmount(deserialized.energyRestoreAmount());
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
     }
 
     private MaterialScroll createMaterialScroll(AbstractItemMeta meta) {
