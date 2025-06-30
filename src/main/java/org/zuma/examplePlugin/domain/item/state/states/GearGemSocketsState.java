@@ -19,7 +19,7 @@ public class GearGemSocketsState extends AbstractState {
     private final int slots;
 
     public GearGemSocketsState(GearGemSocketsStateMeta meta) {
-        super(StateType.GEAR_GEM_SOCKETS, 1);
+        super(StateType.GEAR_GEM_SOCKETS);
         this.gemIds = meta.gemIds();
         this.slots = meta.maxSlots();
     }
@@ -81,6 +81,6 @@ public class GearGemSocketsState extends AbstractState {
 
     @Override
     public AbstractStateMeta serialize(Gson gson) {
-        return new AbstractStateMeta(this.getStateType(), new VersionedJson(gson.toJson(new GearGemSocketsStateMeta(this.gemIds,this.slots)),1));
+        return new AbstractStateMeta(this.getStateType(), new VersionedJson(gson.toJson(new GearGemSocketsStateMeta(this.gemIds, this.slots)), 1));
     }
 }
