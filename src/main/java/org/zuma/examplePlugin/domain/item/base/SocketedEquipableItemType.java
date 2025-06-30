@@ -23,14 +23,6 @@ public abstract class SocketedEquipableItemType extends EquipableItemType implem
 
     public void setGemState(GearGemSocketsState state) {
         this.socketsState = state;
-
-        state.getInsertedGemIds().forEach(id -> {
-            AbstractItemType abstractGem = RuneQuestPlugin.getItemRegistry().getItem(id);
-
-            if (abstractGem == null) {
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Could find gem to apply modifiers to an item! Invalid ID: " + id);
-            }
-        });
     }
 
     @Override

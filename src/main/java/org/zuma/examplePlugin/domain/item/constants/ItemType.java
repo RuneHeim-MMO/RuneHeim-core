@@ -14,7 +14,8 @@ public enum ItemType {
     GEM(10),
     MATERIAL_SCROLL(11),
     FAIRY_FOOD(12),
-    FAIRY_FRUIT(13);
+    FAIRY_FRUIT(13),
+    FAIRY(14);
 
     private final int key;
 

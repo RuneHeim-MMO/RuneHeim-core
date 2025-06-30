@@ -9,7 +9,9 @@ import org.zuma.examplePlugin.domain.item.impl.consumable.Food;
 import org.zuma.examplePlugin.domain.item.impl.consumable.Potion;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.v1.*;
+import org.zuma.examplePlugin.domain.item.state.meta.v1.FairyStateMeta;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.GearGemSocketsStateMeta;
+import org.zuma.examplePlugin.domain.item.state.states.FairyState;
 import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 
 import javax.annotation.Nullable;
@@ -32,10 +34,30 @@ public class ItemFactory {
             case MATERIAL_SCROLL -> createMaterialScroll(meta);
             case FAIRY_FOOD -> createFairyFood(meta, json);
             case FAIRY_FRUIT -> createFairyFruit(meta, json);
+            case FAIRY -> createFairy(meta, json);
             case MISC -> createMiscItem(meta);
             default -> throw new IllegalArgumentException("Unknown item type: " + meta.type());
         };
     }
+
+    private Fairy createFairy(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create gem item " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                FairyMeta deserialized = new Gson().fromJson(json.meta(), FairyMeta.class);
+                Fairy item = new Fairy(meta);
+
+                item.setFairyState(new FairyState(new FairyStateMeta(new ArrayList<>(), 0, 0, false, deserialized.generation())));
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
+    }
+
 
     private FairyFruit createFairyFruit(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {

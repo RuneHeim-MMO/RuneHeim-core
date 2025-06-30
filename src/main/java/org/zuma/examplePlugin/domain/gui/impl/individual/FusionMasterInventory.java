@@ -150,7 +150,6 @@ public class FusionMasterInventory extends IndividualGUI {
     }
 
     private boolean isValidItemStack(ItemStackType type, @Nullable ItemStack itemStack) {
-
         if (itemStack == null) {
             return false;
         }
