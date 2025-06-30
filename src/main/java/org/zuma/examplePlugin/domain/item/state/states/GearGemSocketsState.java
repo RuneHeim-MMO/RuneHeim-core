@@ -1,11 +1,15 @@
-package org.zuma.examplePlugin.domain.item.state.states.v1;
+package org.zuma.examplePlugin.domain.item.state.states;
 
+import com.google.gson.Gson;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.impl.Gem;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
+import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
+import org.zuma.examplePlugin.domain.item.state.meta.v1.GearGemSocketsStateMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +18,10 @@ public class GearGemSocketsState extends AbstractState {
     private final List<Integer> gemIds;
     private final int slots;
 
-    public GearGemSocketsState(List<Integer> gemIds, int maxSlots) {
-        super(StateType.GEAR_GEM_SOCKETS, 1);
-        this.gemIds = gemIds;
-        this.slots = maxSlots;
+    public GearGemSocketsState(GearGemSocketsStateMeta meta) {
+        super(StateType.GEAR_GEM_SOCKETS);
+        this.gemIds = meta.gemIds();
+        this.slots = meta.maxSlots();
     }
 
 
@@ -73,5 +77,10 @@ public class GearGemSocketsState extends AbstractState {
         });
 
         return list;
+    }
+
+    @Override
+    public AbstractStateMeta serialize(Gson gson) {
+        return new AbstractStateMeta(this.getStateType(), new VersionedJson(gson.toJson(new GearGemSocketsStateMeta(this.gemIds, this.slots)), 1));
     }
 }

@@ -9,7 +9,8 @@ import org.zuma.examplePlugin.domain.item.impl.consumable.Food;
 import org.zuma.examplePlugin.domain.item.impl.consumable.Potion;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.v1.*;
-import org.zuma.examplePlugin.domain.item.state.states.v1.GearGemSocketsState;
+import org.zuma.examplePlugin.domain.item.state.meta.v1.GearGemSocketsStateMeta;
+import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -188,7 +189,7 @@ public class ItemFactory {
 
                 item.addModifiers(deserialized.equipableTypeMeta().modifiers());
                 item.addRequirements(deserialized.equipableTypeMeta().requirements());
-                item.setGemState(new GearGemSocketsState(gemIds, deserialized.gemSlots()));
+                item.setGemState(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
@@ -213,7 +214,7 @@ public class ItemFactory {
 
                 item.addModifiers(deserialized.equipableTypeMeta().modifiers());
                 item.addRequirements(deserialized.equipableTypeMeta().requirements());
-                item.setGemState(new GearGemSocketsState(gemIds, deserialized.gemSlots()));
+                item.setGemState(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());

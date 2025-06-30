@@ -24,6 +24,7 @@ public class StateManager {
     private final StateFactory factory;
     private final ItemHandler itemHandler;
     private final StateRepository repository;
+    private final Gson gson = new Gson();
 
     public StateManager(StateFactory factory, ItemHandler itemHandler, StateRepository repository) {
         this.factory = factory;
@@ -92,7 +93,7 @@ public class StateManager {
             return null;
         }
 
-        return new Gson().toJson(matchingState);
+        return gson.toJson(matchingState.serialize(gson));
     }
 
     @Nullable

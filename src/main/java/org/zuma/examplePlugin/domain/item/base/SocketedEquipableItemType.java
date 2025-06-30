@@ -7,7 +7,8 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
-import org.zuma.examplePlugin.domain.item.state.states.v1.GearGemSocketsState;
+import org.zuma.examplePlugin.domain.item.state.meta.v1.GearGemSocketsStateMeta;
+import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public abstract class SocketedEquipableItemType extends EquipableItemType implem
 
     @Override
     public AbstractState getInitialState() {
-        return new GearGemSocketsState(new ArrayList<>(socketsState.getInsertedGemIds()), socketsState.getTotalGemSlots());
+        return new GearGemSocketsState(new GearGemSocketsStateMeta(new ArrayList<>(socketsState.getInsertedGemIds()), socketsState.getTotalGemSlots()));
     }
 
     @Nullable

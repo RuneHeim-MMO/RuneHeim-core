@@ -5,8 +5,10 @@ import org.zuma.examplePlugin.core.exception.UnsupportedJsonVersionException;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
-import org.zuma.examplePlugin.domain.item.state.states.v1.GearGemSocketsState;
-import org.zuma.examplePlugin.domain.item.state.states.v1.MultiConsumableState;
+import org.zuma.examplePlugin.domain.item.state.meta.v1.GearGemSocketsStateMeta;
+import org.zuma.examplePlugin.domain.item.state.meta.v1.MultiConsumableStateMeta;
+import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
+import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
 
 import javax.annotation.Nullable;
 
@@ -30,7 +32,8 @@ public class StateFactory {
 
         switch (json.version()) {
             case 1 -> {
-                return gson.fromJson(json.meta(), MultiConsumableState.class);
+                MultiConsumableStateMeta deserialized = gson.fromJson(json.meta(), MultiConsumableStateMeta.class);
+                return new MultiConsumableState(deserialized);
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
         }
@@ -44,7 +47,8 @@ public class StateFactory {
 
         switch (json.version()) {
             case 1 -> {
-                return gson.fromJson(json.meta(), GearGemSocketsState.class);
+                GearGemSocketsStateMeta deserialized = gson.fromJson(json.meta(), GearGemSocketsStateMeta.class);
+                return new GearGemSocketsState(deserialized);
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
         }

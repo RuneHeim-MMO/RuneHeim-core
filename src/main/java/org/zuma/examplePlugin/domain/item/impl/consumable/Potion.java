@@ -15,7 +15,8 @@ import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
-import org.zuma.examplePlugin.domain.item.state.states.v1.MultiConsumableState;
+import org.zuma.examplePlugin.domain.item.state.meta.v1.MultiConsumableStateMeta;
+import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.item.PlayerConsumableConsumeEvent;
 
@@ -31,7 +32,7 @@ public class Potion extends AbstractItemType implements Stateful {
 
     @Override
     public AbstractState getInitialState() {
-        return new MultiConsumableState(maxUsages, usages);
+        return new MultiConsumableState(new MultiConsumableStateMeta(maxUsages, usages));
     }
 
     public void setUsages(int currentUsages, int maxUsages) {
