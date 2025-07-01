@@ -16,6 +16,7 @@ import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
+import org.zuma.examplePlugin.domain.item.constants.EquipableType;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
@@ -62,7 +63,7 @@ public class ItemListener implements Listener {
                 return;
             }
 
-            if (item instanceof EquipableItemType gearItem && gearItem.getApplyModifiersWhenInHand()) {
+            if (item instanceof EquipableItemType gearItem && gearItem.getEquipableType().equals(EquipableType.HANDHELD)) {
                 if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_AIR) {
                     PlayerArmorEquipEvent newEvent = new PlayerArmorEquipEvent(player, item);
                     Bukkit.getServer().getPluginManager().callEvent(newEvent);

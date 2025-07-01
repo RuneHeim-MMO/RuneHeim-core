@@ -52,6 +52,7 @@ public class RunePlayerBusyStateHandler {
                     return;
                 }
 
+
                 if (!isBusy) {
                     isBusy = false;
                     HudService.showFailTitle(player, "Task cancelled.");
@@ -95,6 +96,7 @@ public class RunePlayerBusyStateHandler {
                         .build();
 
                 stepSound.play(onlinePlayer, true);
+                onlinePlayer.swingMainHand();
                 onlinePlayer.showTitle(Title.title(progressBar,
                         Component.text("[" + secondsLeft + "s] ").color(Color.SUCCESS.asColor())
                                 .append(Component.text(action).color(Color.SUBTITLE.asColor())),

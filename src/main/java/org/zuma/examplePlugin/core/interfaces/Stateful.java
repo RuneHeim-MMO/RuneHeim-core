@@ -4,7 +4,10 @@ import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 
 public interface Stateful {
+
+    // Types initial state gets assigned in factories.
     public StateType getStateType();
 
-    public AbstractState getInitialState();
+    // Then, if state manager needs to initialize a new state instance, it uses this method and state received from above to clone it.
+    public AbstractState cloneDefaultStateTemplate();
 }

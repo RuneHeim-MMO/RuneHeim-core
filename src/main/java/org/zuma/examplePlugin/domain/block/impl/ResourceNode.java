@@ -22,6 +22,7 @@ import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
+import org.zuma.examplePlugin.domain.item.constants.EquipableType;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
@@ -221,7 +222,7 @@ public class ResourceNode extends AbstractInteractableBlock {
         }
 
         // Ensure the item in hand is equipable and valid for gathering
-        if (!(itemInHand instanceof EquipableItemType gearItemInHand && gearItemInHand.getApplyModifiersWhenInHand())) {
+        if (!(itemInHand instanceof EquipableItemType gearItemInHand && gearItemInHand.getEquipableType().equals(EquipableType.HANDHELD))) {
             SoundType.UI_FAIL.play(player.asBukkitPlayer(), false);
             player.asBukkitPlayer().sendMessage(Component.text(blockType.getWrongToolMessage()).color(Color.ERROR.asColor()));
             return;

@@ -9,6 +9,7 @@ import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.base.SocketedEquipableItemType;
+import org.zuma.examplePlugin.domain.item.constants.EquipableType;
 import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.modifier.GearModifiersRecalculatedEvent;
@@ -38,7 +39,7 @@ public class GearModifierHandler {
         if (itemInHand != null && itemInHand.getType() != Material.AIR) {
             AbstractItemType item = itemRegistry.getItem(itemInHand);
 
-            if (item instanceof EquipableItemType gearItem && gearItem.getApplyModifiersWhenInHand()) {
+            if (item instanceof EquipableItemType gearItem && gearItem.getEquipableType().equals(EquipableType.HANDHELD)) {
                 items.add(itemInHand);
             }
         }

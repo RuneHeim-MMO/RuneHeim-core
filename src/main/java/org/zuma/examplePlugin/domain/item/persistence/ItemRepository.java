@@ -180,8 +180,23 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ASHES.asInt(), Material.COAL, ItemRarity.COMMON, "Ashes", List.of("Fine powder left after fire consumes wood."), null, null), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_ASHES.asInt(), Material.COAL, ItemRarity.RARE, "Magic Ashes", List.of("Glowing remnants infused with mysterious arcane power."), null, null), null),
 
+
+                // Fairy food
+                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY_FOOD, ItemId.REGULAR_FAIRY_FOOD.asInt(), Material.COAL, ItemRarity.RARE, "Fairy Food", List.of("Regular food for fairies.", "Keeps them strong and energized."), null, null),
+                        new VersionedJson(new Gson().toJson(new FairyFoodMeta(15)), 1)),
+
+                // Fairy
+                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY, ItemId.FAIRY_OF_HOPE.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Fairy of Hope", List.of(""), null, null),
+                        new VersionedJson(new Gson().toJson(new FairyMeta(1)), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY, ItemId.FAIRY_MORDO.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Mordo", List.of(""), null, null),
+                        new VersionedJson(new Gson().toJson(new FairyMeta(2)), 1)),
+
+
+
                 // Scrolls
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL_SCROLL, ItemId.FUSION_SCROLL.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Fusion Scroll", List.of("A mystical scroll used to embed gems into gear.", "Essential for upgrading equipment with gem-based attributes."), null, null), null),
+
 
                 // Gems
                 new ItemEntity(new AbstractItemMeta(ItemType.GEM, ItemId.BRUTALITE_CORE.asInt(), Material.COAL, ItemRarity.MYTHIC, "Brutalite Core",

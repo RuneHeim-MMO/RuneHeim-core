@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
@@ -15,14 +16,15 @@ import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
-import org.zuma.examplePlugin.domain.item.state.meta.v1.MultiConsumableStateMeta;
+import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.item.PlayerConsumableConsumeEvent;
 
+import javax.annotation.Nullable;
+
 public class Potion extends AbstractItemType implements Stateful {
-    private int usages;
-    private int maxUsages;
+    private MultiConsumableState defaultStateTemplate;
 
     public Potion(AbstractItemMeta meta) {
         super(meta);
@@ -30,14 +32,23 @@ public class Potion extends AbstractItemType implements Stateful {
         this.setStateType(StateType.MULTI_CONSUMABLE);
     }
 
-    @Override
-    public AbstractState getInitialState() {
-        return new MultiConsumableState(new MultiConsumableStateMeta(maxUsages, usages));
+    public AbstractState cloneDefaultStateTemplate() {
+        return defaultStateTemplate.clone();
     }
 
-    public void setUsages(int currentUsages, int maxUsages) {
-        this.usages = currentUsages;
-        this.maxUsages = maxUsages;
+    public void setDefaultStateTemplate(MultiConsumableState state) {
+        this.defaultStateTemplate = state;
+    }
+
+    @Nullable
+    public MultiConsumableState getState(ItemStack item) {
+        AbstractState state = RuneQuestPlugin.getItemStateManager().getItemState(item);
+
+        if (state != null && state.getStateType() == StateType.MULTI_CONSUMABLE) {
+            return (MultiConsumableState) state;
+        }
+
+        return null;
     }
 
     @Override

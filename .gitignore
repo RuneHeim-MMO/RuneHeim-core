@@ -27,7 +27,7 @@ Desktop.ini
 # Java
 *.class
 *.log
-*.jar
+gradle-wrapper.jar
 *.war
 *.ear
 

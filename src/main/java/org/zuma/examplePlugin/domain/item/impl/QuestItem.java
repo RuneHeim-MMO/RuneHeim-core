@@ -10,7 +10,7 @@ import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class QuestItem extends AbstractItemType {
-    private String questName;
+    private String questName = "Not set";
 
     public QuestItem(AbstractItemMeta meta) {
         super(meta);

@@ -9,8 +9,12 @@ import org.zuma.examplePlugin.domain.item.impl.consumable.Food;
 import org.zuma.examplePlugin.domain.item.impl.consumable.Potion;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.v1.*;
+import org.zuma.examplePlugin.domain.item.state.meta.v1.FairyStateMeta;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.GearGemSocketsStateMeta;
+import org.zuma.examplePlugin.domain.item.state.meta.v1.MultiConsumableStateMeta;
+import org.zuma.examplePlugin.domain.item.state.states.FairyState;
 import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
+import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -30,9 +34,67 @@ public class ItemFactory {
             case FOOD -> createFoodItem(meta, json);
             case GEM -> createGemItem(meta, json);
             case MATERIAL_SCROLL -> createMaterialScroll(meta);
+            case FAIRY_FOOD -> createFairyFood(meta, json);
+            case FAIRY_FRUIT -> createFairyFruit(meta, json);
+            case FAIRY -> createFairy(meta, json);
             case MISC -> createMiscItem(meta);
             default -> throw new IllegalArgumentException("Unknown item type: " + meta.type());
         };
+    }
+
+    private Fairy createFairy(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create gem item " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                FairyMeta deserialized = new Gson().fromJson(json.meta(), FairyMeta.class);
+                Fairy item = new Fairy(meta);
+
+                item.setDefaultStateTemplate(new FairyState(new FairyStateMeta(new ArrayList<>(), 0, 0, false, deserialized.generation())));
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
+    }
+
+
+    private FairyFruit createFairyFruit(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create gem item " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                FairyFruitMeta deserialized = new Gson().fromJson(json.meta(), FairyFruitMeta.class);
+                FairyFruit item = new FairyFruit(meta);
+
+                item.addModifiers(deserialized.modifiers());
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
+    }
+
+    private FairyFood createFairyFood(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create gem item " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                FairyFoodMeta deserialized = new Gson().fromJson(json.meta(), FairyFoodMeta.class);
+                FairyFood item = new FairyFood(meta);
+
+                item.setEnergyRestoreAmount(deserialized.energyRestoreAmount());
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
     }
 
     private MaterialScroll createMaterialScroll(AbstractItemMeta meta) {
@@ -146,7 +208,7 @@ public class ItemFactory {
                 PotionMeta deserialized = new Gson().fromJson(json.meta(), PotionMeta.class);
                 Potion item = new Potion(meta);
 
-                item.setUsages(deserialized.usages(), deserialized.maxUsages());
+                item.setDefaultStateTemplate(new MultiConsumableState(new MultiConsumableStateMeta(deserialized.usages(), deserialized.maxUsages())));
                 item.setCustomModelData(deserialized.potionModel());
                 return item;
             }
@@ -189,7 +251,7 @@ public class ItemFactory {
 
                 item.addModifiers(deserialized.equipableTypeMeta().modifiers());
                 item.addRequirements(deserialized.equipableTypeMeta().requirements());
-                item.setGemState(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
+                item.setDefaultStateTemplate(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
@@ -214,7 +276,7 @@ public class ItemFactory {
 
                 item.addModifiers(deserialized.equipableTypeMeta().modifiers());
                 item.addRequirements(deserialized.equipableTypeMeta().requirements());
-                item.setGemState(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
+                item.setDefaultStateTemplate(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());

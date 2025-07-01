@@ -135,7 +135,12 @@ public enum ItemId {
     BRUTALITE_CORE(1900),
     OBSIDIAN_BULWARK(1901),
     BLADESTONE(1902),
-    ARCHERS_EMBER(1903);
+    ARCHERS_EMBER(1903),
+
+    REGULAR_FAIRY_FOOD(2000),
+
+    FAIRY_OF_HOPE(2100),
+    FAIRY_MORDO(2101);
 
     private final int id;
 
