@@ -93,12 +93,17 @@ public class FairyState extends AbstractState {
         return this.experience;
     }
 
+    public int getGeneration() {
+        return generation;
+    }
+
     @Override
     public AbstractStateMeta serialize(Gson gson) {
         return new AbstractStateMeta(this.getStateType(), new VersionedJson(gson.toJson(new FairyStateMeta(this.upgradeIds, this.stamina, this.experience, this.canConsumeFruit, this.getGeneration())), 1));
     }
 
-    public int getGeneration() {
-        return generation;
+    @Override
+    public AbstractState clone() {
+        return new FairyState(new FairyStateMeta(this.upgradeIds, this.stamina, this.experience, this.canConsumeFruit, this.generation));
     }
 }

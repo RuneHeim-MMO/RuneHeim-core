@@ -16,4 +16,6 @@ public abstract class AbstractState {
     }
 
     public abstract AbstractStateMeta serialize(Gson gson);
+
+    public abstract AbstractState clone();
 }

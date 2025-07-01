@@ -3,31 +3,27 @@ package org.zuma.examplePlugin.domain.item.base;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
-import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
-import org.zuma.examplePlugin.domain.item.state.meta.v1.GearGemSocketsStateMeta;
 import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 
 public abstract class SocketedEquipableItemType extends EquipableItemType implements Stateful {
-    private GearGemSocketsState socketsState;
+    private GearGemSocketsState defaultStateTemplate;
 
     public SocketedEquipableItemType(AbstractItemMeta meta) {
         super(meta);
         this.setStateType(StateType.GEAR_GEM_SOCKETS);
     }
 
-    public void setGemState(GearGemSocketsState state) {
-        this.socketsState = state;
+    public void setDefaultStateTemplate(GearGemSocketsState template) {
+        this.defaultStateTemplate = template;
     }
 
-    @Override
-    public AbstractState getInitialState() {
-        return new GearGemSocketsState(new GearGemSocketsStateMeta(new ArrayList<>(socketsState.getInsertedGemIds()), socketsState.getTotalGemSlots()));
+    public AbstractState cloneDefaultStateTemplate() {
+        return defaultStateTemplate.clone();
     }
 
     @Nullable

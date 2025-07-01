@@ -11,8 +11,10 @@ import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.v1.*;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.FairyStateMeta;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.GearGemSocketsStateMeta;
+import org.zuma.examplePlugin.domain.item.state.meta.v1.MultiConsumableStateMeta;
 import org.zuma.examplePlugin.domain.item.state.states.FairyState;
 import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
+import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -50,7 +52,7 @@ public class ItemFactory {
                 FairyMeta deserialized = new Gson().fromJson(json.meta(), FairyMeta.class);
                 Fairy item = new Fairy(meta);
 
-                item.setFairyState(new FairyState(new FairyStateMeta(new ArrayList<>(), 0, 0, false, deserialized.generation())));
+                item.setDefaultStateTemplate(new FairyState(new FairyStateMeta(new ArrayList<>(), 0, 0, false, deserialized.generation())));
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
@@ -206,7 +208,7 @@ public class ItemFactory {
                 PotionMeta deserialized = new Gson().fromJson(json.meta(), PotionMeta.class);
                 Potion item = new Potion(meta);
 
-                item.setUsages(deserialized.usages(), deserialized.maxUsages());
+                item.setDefaultStateTemplate(new MultiConsumableState(new MultiConsumableStateMeta(deserialized.usages(), deserialized.maxUsages())));
                 item.setCustomModelData(deserialized.potionModel());
                 return item;
             }
@@ -249,7 +251,7 @@ public class ItemFactory {
 
                 item.addModifiers(deserialized.equipableTypeMeta().modifiers());
                 item.addRequirements(deserialized.equipableTypeMeta().requirements());
-                item.setGemState(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
+                item.setDefaultStateTemplate(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
@@ -274,7 +276,7 @@ public class ItemFactory {
 
                 item.addModifiers(deserialized.equipableTypeMeta().modifiers());
                 item.addRequirements(deserialized.equipableTypeMeta().requirements());
-                item.setGemState(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
+                item.setDefaultStateTemplate(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());

@@ -51,7 +51,7 @@ public class StateManager {
     }
 
     @Nullable
-    public AbstractState getItemState(ItemStack item) {
+    public AbstractState getItemState(ItemStack item) throws IllegalStateException {
         UUID uuid = getItemStackStateUuid(item);
         AbstractItemType abstractItemType = itemHandler.getRegistry().getItem(item);
 
@@ -76,9 +76,14 @@ public class StateManager {
 
 
             // Create new if it doesn't exist.
-            AbstractState newState = stateful.getInitialState();
-            itemStates.put(uuid, newState);
-            repository.create(uuid, newState.getStateType(), serializeState(uuid));
+            AbstractState newState = stateful.cloneDefaultStateTemplate();
+
+            if (newState == null) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Tried to create new state for " + item.displayName() + ", but received null.");
+            } else {
+                itemStates.put(uuid, newState);
+                repository.create(uuid, newState.getStateType(), serializeState(uuid));
+            }
             return newState;
         }
 

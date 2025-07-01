@@ -9,6 +9,7 @@ import org.zuma.examplePlugin.domain.item.impl.Gem;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
+import org.zuma.examplePlugin.domain.item.state.meta.v1.FairyStateMeta;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.GearGemSocketsStateMeta;
 
 import java.util.ArrayList;
@@ -82,5 +83,10 @@ public class GearGemSocketsState extends AbstractState {
     @Override
     public AbstractStateMeta serialize(Gson gson) {
         return new AbstractStateMeta(this.getStateType(), new VersionedJson(gson.toJson(new GearGemSocketsStateMeta(this.gemIds, this.slots)), 1));
+    }
+
+    @Override
+    public AbstractState clone() {
+        return new GearGemSocketsState(new GearGemSocketsStateMeta(new ArrayList<>(this.gemIds), this.slots));
     }
 }

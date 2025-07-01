@@ -5,7 +5,10 @@ import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
+import org.zuma.examplePlugin.domain.item.state.meta.v1.GearGemSocketsStateMeta;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.MultiConsumableStateMeta;
+
+import java.util.ArrayList;
 
 public class MultiConsumableState extends AbstractState {
     private final int maxUsages;
@@ -40,5 +43,10 @@ public class MultiConsumableState extends AbstractState {
     @Override
     public AbstractStateMeta serialize(Gson gson) {
         return new AbstractStateMeta(this.getStateType(), new VersionedJson(gson.toJson(new MultiConsumableStateMeta(this.maxUsages, this.usageLeft)), 1));
+    }
+
+    @Override
+    public AbstractState clone() {
+        return new MultiConsumableState(new MultiConsumableStateMeta(this.maxUsages, this.usageLeft));
     }
 }
