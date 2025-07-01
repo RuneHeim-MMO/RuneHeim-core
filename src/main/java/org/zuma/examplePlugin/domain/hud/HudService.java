@@ -169,7 +169,7 @@ public class HudService {
     }
 
     public static void showPlayerLevelUpTitle(RunePlayer player, Skill skill) {
-        boolean isMaxedSkill = XpUtils.isMaxLevel(skill.getLevel());
+        boolean isMaxedSkill = XpUtils.isMaxLevel(skill.getBaseLevel());
         int count = isMaxedSkill ? 50 : 5;
         int delayBetween = 5;
         SkillType type = skill.getType();
@@ -182,7 +182,7 @@ public class HudService {
                     Component.text("Congratulations!", Color.SERVER_BRAND.asColor()),
                     Component.text("Your ", Color.SUCCESS.asColor())
                             .append(Component.text(type.getSymbol(), NamedTextColor.WHITE))
-                            .append(Component.text(" " + type.getLabel() + " level is now " + skill.getLevel() + "!", Color.SUCCESS.asColor())),
+                            .append(Component.text(" " + type.getLabel() + " level is now " + skill.getBaseLevel() + "!", Color.SUCCESS.asColor())),
                     Title.Times.times(
                             Duration.ofSeconds(1),
                             Duration.ofSeconds(8, 5),
@@ -255,7 +255,7 @@ public class HudService {
     }
 
     private static void updateVanillaHealth(RunePlayer player) {
-        int maxHpLevel = player.getSkills().get(SkillType.HITPOINTS).getLevel();
+        int maxHpLevel = player.getSkills().get(SkillType.HITPOINTS).getLevelWithBonuses();
         if (maxHpLevel <= 0) maxHpLevel = 1; // prevent division by zero
 
         // Clamp current health between 0 and max HP level

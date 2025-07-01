@@ -20,7 +20,7 @@ public class HitCalculator {
             return 0;
         }
 
-        return matchingSkill.getLevel();
+        return matchingSkill.getLevelWithBonuses();
     }
 
     private static double getEntityModifierLevel(CombatEntity entity, ModifierType type) {

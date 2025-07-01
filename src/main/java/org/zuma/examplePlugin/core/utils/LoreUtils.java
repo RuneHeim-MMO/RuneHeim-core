@@ -30,7 +30,7 @@ public class LoreUtils {
             int neededLevel = req.minimumLevel();
 
             // Check if player meets requirement (if player is null, just show in neutral color)
-            boolean meets = player != null && player.getSkill(skill).getLevel() >= neededLevel;
+            boolean meets = player != null && player.getSkill(skill).getBaseLevel() >= neededLevel;
 
             Component skillLine = Component.text("  ")
                     .append(Component.text("➤ ", NamedTextColor.GRAY))

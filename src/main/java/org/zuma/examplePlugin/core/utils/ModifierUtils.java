@@ -1,7 +1,9 @@
 package org.zuma.examplePlugin.core.utils;
 
 import org.zuma.examplePlugin.domain.modifier.Modifier;
+import org.zuma.examplePlugin.domain.modifier.SkillModifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
+import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +21,18 @@ public class ModifierUtils {
 
         return combined.entrySet().stream()
                 .map(entry -> new Modifier(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
+    }
+
+    public static List<SkillModifier> combineSkillModifiersByType(List<SkillModifier> modifiers) {
+        Map<SkillType, Integer> combined = new HashMap<>();
+
+        for (SkillModifier modifier : modifiers) {
+            combined.merge(modifier.type(), modifier.amount(), Integer::sum);
+        }
+
+        return combined.entrySet().stream()
+                .map(entry -> new SkillModifier(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
     }
 }

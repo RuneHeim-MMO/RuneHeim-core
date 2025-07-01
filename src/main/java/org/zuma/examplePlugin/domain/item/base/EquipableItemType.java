@@ -5,6 +5,7 @@ import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.domain.item.constants.EquipableType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
+import org.zuma.examplePlugin.domain.modifier.SkillModifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 public abstract class EquipableItemType extends AbstractItemType implements SkillRestrictable {
     private final List<Modifier> modifiers = new ArrayList<>();
+    private final List<SkillModifier> skillModifiers = new ArrayList<>();
     private final List<SkillRequirement> requirements = new ArrayList<>();
 
     public EquipableItemType(AbstractItemMeta meta) {
@@ -22,6 +24,10 @@ public abstract class EquipableItemType extends AbstractItemType implements Skil
 
     public List<Modifier> getModifiers() {
         return this.modifiers;
+    }
+
+    public List<SkillModifier> getSkillModifiers() {
+        return this.skillModifiers;
     }
 
     public Optional<Modifier> getModifierByType(ModifierType type) {
@@ -48,6 +54,14 @@ public abstract class EquipableItemType extends AbstractItemType implements Skil
         }
 
         this.modifiers.addAll(modifiers);
+    }
+
+    public void addSkillModifiers(List<SkillModifier> modifiers) {
+        if (modifiers == null) {
+            return;
+        }
+
+        this.skillModifiers.addAll(modifiers);
     }
 
     public abstract EquipableType getEquipableType();

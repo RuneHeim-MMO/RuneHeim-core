@@ -85,10 +85,10 @@ public class XpUtils {
     }
 
     public static int getCombatLevelFromSkills(EnumMap<SkillType, Skill> skills) {
-        int attack = skills.get(SkillType.ATTACK) != null ? skills.get(SkillType.ATTACK).getLevel() : 1;
-        int strength = skills.get(SkillType.STRENGTH) != null ? skills.get(SkillType.STRENGTH).getLevel() : 1;
-        int defence = skills.get(SkillType.DEFENCE) != null ? skills.get(SkillType.DEFENCE).getLevel() : 1;
-        int hitpoints = skills.get(SkillType.HITPOINTS) != null ? skills.get(SkillType.HITPOINTS).getLevel() : 1;
+        int attack = skills.get(SkillType.ATTACK) != null ? skills.get(SkillType.ATTACK).getBaseLevel() : 1;
+        int strength = skills.get(SkillType.STRENGTH) != null ? skills.get(SkillType.STRENGTH).getBaseLevel() : 1;
+        int defence = skills.get(SkillType.DEFENCE) != null ? skills.get(SkillType.DEFENCE).getBaseLevel() : 1;
+        int hitpoints = skills.get(SkillType.HITPOINTS) != null ? skills.get(SkillType.HITPOINTS).getBaseLevel() : 1;
         return XpUtils.calculateCombatLevel(attack, strength, defence, hitpoints);
     }
 }

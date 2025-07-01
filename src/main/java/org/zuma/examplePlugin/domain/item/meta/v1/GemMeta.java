@@ -1,8 +1,10 @@
 package org.zuma.examplePlugin.domain.item.meta.v1;
 
 import org.zuma.examplePlugin.domain.modifier.Modifier;
+import org.zuma.examplePlugin.domain.modifier.SkillModifier;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
-public record GemMeta(List<Modifier> modifiers) {
+public record GemMeta(@Nullable List<SkillModifier> skillModifiers, @Nullable List<Modifier> modifiers) {
 }

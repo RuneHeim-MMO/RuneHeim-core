@@ -38,7 +38,7 @@ import org.zuma.examplePlugin.domain.modifier.GearModifierHandler;
 import org.zuma.examplePlugin.domain.modifier.GearModifierListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
-import org.zuma.examplePlugin.domain.player.inventory.PlayerInvTopRowHandler;
+import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 import org.zuma.examplePlugin.domain.recipes.RecipeFactory;
 import org.zuma.examplePlugin.domain.recipes.RecipeHandler;
 import org.zuma.examplePlugin.domain.recipes.RecipeListener;
@@ -100,12 +100,12 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         ItemListener itemListener = new ItemListener(itemHandler, runePlayerManager, itemStateManager);
         getServer().getPluginManager().registerEvents(itemListener, pluginInstance);
 
-        GearModifierHandler gearModifierHandler = new GearModifierHandler(itemRegistry);
+        AdditionalGearSlotHandler additionalGearSlotHandler = new AdditionalGearSlotHandler();
+        getServer().getPluginManager().registerEvents(additionalGearSlotHandler, pluginInstance);
+
+        GearModifierHandler gearModifierHandler = new GearModifierHandler(itemRegistry, additionalGearSlotHandler);
         GearModifierListener gearModifierListener = new GearModifierListener(gearModifierHandler, runePlayerManager);
         getServer().getPluginManager().registerEvents(gearModifierListener, pluginInstance);
-
-        PlayerInvTopRowHandler playerInvTopRowHandler = new PlayerInvTopRowHandler();
-        getServer().getPluginManager().registerEvents(playerInvTopRowHandler, pluginInstance);
 
         blockManager = new BlockManager();
         BlockListener blockListener = new BlockListener(blockManager, itemRegistry);

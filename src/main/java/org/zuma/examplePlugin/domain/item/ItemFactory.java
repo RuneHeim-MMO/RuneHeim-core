@@ -72,6 +72,7 @@ public class ItemFactory {
                 FairyFruit item = new FairyFruit(meta);
 
                 item.addModifiers(deserialized.modifiers());
+                item.addSkillModifiers(deserialized.skillModifiers());
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
@@ -113,6 +114,7 @@ public class ItemFactory {
                 Gem item = new Gem(meta);
 
                 item.addModifiers(deserialized.modifiers());
+                item.addSkillModifiers(deserialized.skillModifiers());
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
@@ -132,6 +134,7 @@ public class ItemFactory {
 
                 item.addModifiers(deserialized.modifiers());
                 item.addRequirements(deserialized.requirements());
+                item.addSkillModifiers(deserialized.skillModifiers());
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
@@ -151,6 +154,7 @@ public class ItemFactory {
 
                 item.addModifiers(deserialized.modifiers());
                 item.addRequirements(deserialized.requirements());
+                item.addSkillModifiers(deserialized.skillModifiers());
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
@@ -170,6 +174,7 @@ public class ItemFactory {
 
                 item.addModifiers(deserialized.modifiers());
                 item.addRequirements(deserialized.requirements());
+                item.addSkillModifiers(deserialized.skillModifiers());
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
@@ -251,6 +256,7 @@ public class ItemFactory {
 
                 item.addModifiers(deserialized.equipableTypeMeta().modifiers());
                 item.addRequirements(deserialized.equipableTypeMeta().requirements());
+                item.addSkillModifiers(deserialized.equipableTypeMeta().skillModifiers());
                 item.setDefaultStateTemplate(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
                 return item;
             }

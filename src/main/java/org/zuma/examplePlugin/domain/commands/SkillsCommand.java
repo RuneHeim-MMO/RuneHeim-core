@@ -24,7 +24,7 @@ public class SkillsCommand implements BasicCommand {
         Component result = Component.text("\n");
 
         for (Skill skill : player.getSkills().values()) {
-            int currentLevel = skill.getLevel();
+            int currentLevel = skill.getBaseLevel();
             int totalXp = (int) Math.round(skill.getXp());
             boolean isMaxed = XpUtils.isMaxLevel(currentLevel);
             int percentToNextLevel = isMaxed ? 100 : XpUtils.getProgressPercent(totalXp, currentLevel);
@@ -51,7 +51,7 @@ public class SkillsCommand implements BasicCommand {
             result = result.append(progressBar)
                     .append(Component.text(" - ", NamedTextColor.GRAY))
                     .append(Component.text(skill.getType().getSymbol(), NamedTextColor.WHITE))
-                    .append(Component.text(" " + skill.getType().getLabel() + ": " + skill.getLevel() + " - ", NamedTextColor.GRAY))
+                    .append(Component.text(" " + skill.getType().getLabel() + ": " + skill.getBaseLevel() + " [+ " + skill.getBonus() + "]" + " - ", NamedTextColor.GRAY))
                     .append(Component.text(formattedXp + " XP" + "/" + formattedNextLevelXp + " XP", Color.ACCENT.asColor()))
                     .append(Component.text("\n"));
 

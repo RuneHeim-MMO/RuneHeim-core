@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.domain.item;
 
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -32,8 +33,7 @@ public class ItemRegistry {
 
     @Nullable
     public AbstractItemType getItem(@Nullable ItemStack item) {
-
-        if (item == null) {
+        if (item == null || item.getType() == Material.AIR) {
             return null;
         }
 

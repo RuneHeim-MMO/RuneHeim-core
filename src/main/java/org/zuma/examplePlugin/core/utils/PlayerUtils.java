@@ -200,7 +200,7 @@ public class PlayerUtils {
         int SAFE_OFFSET = 10;
 
         int requiredLevel = requirement.minimumLevel();
-        int playerLevel = player.getSkill(requirement.type()).getLevel();
+        int playerLevel = player.getSkill(requirement.type()).getBaseLevel();
 
         if (playerLevel >= MAX_LEVEL || playerLevel >= requiredLevel + SAFE_OFFSET) {
             return 100;

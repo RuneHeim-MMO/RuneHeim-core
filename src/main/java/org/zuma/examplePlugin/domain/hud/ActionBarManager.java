@@ -74,7 +74,7 @@ public class ActionBarManager {
                 .build();
 
         return Component.text(Icon.HEART_BIG.get(), NamedTextColor.WHITE)
-                .append(Component.text(" " + player.getHealth() + "/" + player.getSkill(SkillType.HITPOINTS).getLevel() + " ".repeat(2), Color.ERROR.asColor()))
+                .append(Component.text(" " + player.getHealth() + "/" + player.getSkill(SkillType.HITPOINTS).getLevelWithBonuses() + " ".repeat(2), Color.ERROR.asColor()))
                 .append(specialAttackBar)
                 .append(hasNotifications ? flashingEnvelope : Component.empty())
                 .append(manaBar)

@@ -12,6 +12,7 @@ import org.zuma.examplePlugin.domain.item.constants.ItemType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.v1.*;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
+import org.zuma.examplePlugin.domain.modifier.SkillModifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -128,7 +129,7 @@ public class ItemRepository {
         return List.of(
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.SMITHING_HAMMER.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Hammer", List.of("A sturdy hammer used for refining and forging equipment."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 4),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 2)
@@ -137,7 +138,7 @@ public class ItemRepository {
 
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.FLINT_AND_STEEL.asInt(), Material.FLINT_AND_STEEL, ItemRarity.COMMON, "Flint and Steel", List.of("A nice tool to start a fire."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         null, null)
                         ), 1)),
 
@@ -193,7 +194,6 @@ public class ItemRepository {
                         new VersionedJson(new Gson().toJson(new FairyMeta(2)), 1)),
 
 
-
                 // Scrolls
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL_SCROLL, ItemId.FUSION_SCROLL.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Fusion Scroll", List.of("A mystical scroll used to embed gems into gear.", "Essential for upgrading equipment with gem-based attributes."), null, null), null),
 
@@ -202,12 +202,12 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.GEM, ItemId.BRUTALITE_CORE.asInt(), Material.COAL, ItemRarity.MYTHIC, "Brutalite Core",
                         List.of("A gem that increases the wearer’s physical power, boosting strength attributes."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new GemMeta(List.of(new Modifier(ModifierType.STRENGTH_BONUS, 8)))), 1)),
+                                new GemMeta(null, List.of(new Modifier(ModifierType.STRENGTH_BONUS, 8)))), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.GEM, ItemId.OBSIDIAN_BULWARK.asInt(), Material.COAL, ItemRarity.MYTHIC, "Obsidian Bulwark",
                         List.of("A gem that bolsters resilience, reinforcing the wearer’s defenses."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new GemMeta(List.of(
+                                new GemMeta(null, List.of(
                                         new Modifier(ModifierType.DEFENCE_CRUSH, 6),
                                         new Modifier(ModifierType.DEFENCE_SLASH, 6),
                                         new Modifier(ModifierType.DEFENCE_STAB, 6)
@@ -216,7 +216,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.GEM, ItemId.BLADESTONE.asInt(), Material.COAL, ItemRarity.MYTHIC, "Bladestone",
                         List.of("A gem that enhances offensive prowess, increasing successful hit chance."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new GemMeta(List.of(
+                                new GemMeta(null, List.of(
                                         new Modifier(ModifierType.ATTACK_STAB, 6),
                                         new Modifier(ModifierType.ATTACK_SLASH, 6),
                                         new Modifier(ModifierType.ATTACK_CRUSH, 6)
@@ -225,7 +225,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.GEM, ItemId.ARCHERS_EMBER.asInt(), Material.COAL, ItemRarity.MYTHIC, "Archer’s Ember",
                         List.of("A gem that sharpens precision and power at range, boosting ranged strength."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new GemMeta(List.of(new Modifier(ModifierType.RANGED_STRENGTH, 8)))), 1)),
+                                new GemMeta(null, List.of(new Modifier(ModifierType.RANGED_STRENGTH, 8)))), 1)),
 
                 // Misc
                 new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.BURNT_FOOD.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Charred Remains", List.of("All that's left after fire claims its meal."), null, null), null),
@@ -302,7 +302,7 @@ public class ItemRepository {
                 // Tools
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.BRONZE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.COMMON, "Bronze Pickaxe", List.of("Bronze pickaxe, basic mining tool."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.MINING_BOOST, 1)),
                                         List.of(new SkillRequirement(SkillType.MINING, 1))
                                 )
@@ -310,7 +310,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.IRON_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.COMMON, "Iron Pickaxe", List.of("Iron pickaxe, mines ores with ease."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.MINING_BOOST, 1.1)),
                                         List.of(new SkillRequirement(SkillType.MINING, 1))
                                 )
@@ -318,7 +318,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.STEEL_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.COMMON, "Steel Pickaxe", List.of("Steel pickaxe, efficient and strong."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.MINING_BOOST, 1.2)),
                                         List.of(new SkillRequirement(SkillType.MINING, 6))
                                 )
@@ -326,7 +326,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.MITHRIL_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.UNCOMMON, "Mithril Pickaxe", List.of("Mithril pickaxe, fast and durable."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.MINING_BOOST, 1.3)),
                                         List.of(new SkillRequirement(SkillType.MINING, 21))
                                 )
@@ -334,7 +334,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.ADAMANTITE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.UNCOMMON, "Adamantite Pickaxe", List.of("Adamantite pickaxe, mines the hardest ores."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.MINING_BOOST, 1.5)),
                                         List.of(new SkillRequirement(SkillType.MINING, 31))
                                 )
@@ -342,7 +342,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.RUNITE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.RARE, "Runite Pickaxe", List.of("Runite pickaxe, enchanted for maximum yield."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.MINING_BOOST, 1.8)),
                                         List.of(new SkillRequirement(SkillType.MINING, 41))
                                 )
@@ -351,7 +351,7 @@ public class ItemRepository {
 
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.BRONZE_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Bronze axe", List.of("Bronze axe, useful for combat and chopping."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1)),
                                         List.of(new SkillRequirement(SkillType.WOODCUTTING, 1))
                                 )
@@ -359,7 +359,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.IRON_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Iron axe", List.of("Iron axe, sturdy and reliable."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.1)),
                                         List.of(new SkillRequirement(SkillType.WOODCUTTING, 1))
                                 )
@@ -367,7 +367,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.STEEL_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Steel axe", List.of("Steel axe, stronger and more durable."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.2)),
                                         List.of(new SkillRequirement(SkillType.WOODCUTTING, 6))
                                 )
@@ -375,7 +375,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.MITHRIL_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.UNCOMMON, "Mithril axe", List.of("Mithril axe, light and efficient."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.3)),
                                         List.of(new SkillRequirement(SkillType.WOODCUTTING, 21))
                                 )
@@ -383,7 +383,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.ADAMANTITE_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.UNCOMMON, "Adamantite axe", List.of("Adamantite axe, built to last."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.5)),
                                         List.of(new SkillRequirement(SkillType.WOODCUTTING, 31))
                                 )
@@ -391,7 +391,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.RUNITE_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.RARE, "Runite axe", List.of("Runite axe glowing with magical energy."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.8)),
                                         List.of(new SkillRequirement(SkillType.WOODCUTTING, 41))
                                 )
@@ -401,7 +401,7 @@ public class ItemRepository {
                 // Fishing
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.FISHING_NET.asInt(), Material.COAL, ItemRarity.COMMON, "Fishing Net",
                         List.of("A durable net for catching small fish like herring and minnows."), null, null), new VersionedJson(new Gson().toJson(
-                        new EquipableTypeMeta(
+                        new EquipableTypeMeta(null,
                                 List.of(
                                         new Modifier(ModifierType.BASIC_FISHING, 1)
                                 ),
@@ -412,7 +412,7 @@ public class ItemRepository {
 
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.FISHING_ROD.asInt(), Material.COAL, ItemRarity.COMMON, "Fishing Rod",
                         List.of("A reliable fishing rod suited for catching medium-sized fish such as trout and salmon."), null, null), new VersionedJson(new Gson().toJson(
-                        new EquipableTypeMeta(
+                        new EquipableTypeMeta(null,
                                 List.of(
                                         new Modifier(ModifierType.REGULAR_FISHING, 1)
                                 ),
@@ -423,7 +423,7 @@ public class ItemRepository {
 
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.REINFORCED_FISHING_ROD.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Reinforced Fishing Rod",
                         List.of("A sturdy rod designed for challenging catches like sharks and other deepwater fish."), null, null), new VersionedJson(new Gson().toJson(
-                        new EquipableTypeMeta(
+                        new EquipableTypeMeta(null,
                                 List.of(
                                         new Modifier(ModifierType.ADVANCED_FISHING, 1)
                                 ),
@@ -434,7 +434,7 @@ public class ItemRepository {
 
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.FISHING_TRAP.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Fishing Trap",
                         List.of("A baited trap used to catch slow-moving aquatic creatures like turtles and rays."), null, null), new VersionedJson(new Gson().toJson(
-                        new EquipableTypeMeta(
+                        new EquipableTypeMeta(null,
                                 List.of(
                                         new Modifier(ModifierType.TRAP_FISHING, 1)
                                 ),
@@ -447,7 +447,7 @@ public class ItemRepository {
                 // Armor - Helmets
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.BRONZE_HELMET.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Bronze Helmet", List.of("Simple bronze helmet offering minimal head protection."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(210, 170, 120)),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 1), new Modifier(ModifierType.DEFENCE_SLASH, 1), new Modifier(ModifierType.DEFENCE_CRUSH, 1)),
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 1))
                                 )
@@ -455,7 +455,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.IRON_HELMET.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Iron Helmet", List.of("Sturdy iron helmet to guard against blows."), HeadTexture.IRON_HELM.asBase64(), null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 3), new Modifier(ModifierType.DEFENCE_SLASH, 4), new Modifier(ModifierType.DEFENCE_CRUSH, 2)),
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 1))
                                 )
@@ -463,7 +463,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STEEL_HELMET.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Steel Helmet", List.of("Well-crafted steel helmet for enhanced defense."), HeadTexture.STEEL_HELM.asBase64(), null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 5), new Modifier(ModifierType.DEFENCE_SLASH, 6), new Modifier(ModifierType.DEFENCE_CRUSH, 5)),
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 5))
                                 )
@@ -471,7 +471,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MITHRIL_HELMET.asInt(), Material.PLAYER_HEAD, ItemRarity.UNCOMMON, "Mithril Helmet", List.of("Lightweight mithril helmet, combining agility and defense."), HeadTexture.MITHRIL_HELM.asBase64(), null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 8), new Modifier(ModifierType.DEFENCE_SLASH, 9), new Modifier(ModifierType.DEFENCE_CRUSH, 7)),
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 20))
                                 )
@@ -479,7 +479,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANTITE_HELMET.asInt(), Material.PLAYER_HEAD, ItemRarity.UNCOMMON, "Adamantite Helmet", List.of("Heavy adamantite helmet, favored by elite warriors."), HeadTexture.ADAMANT_HELM.asBase64(), null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 12), new Modifier(ModifierType.DEFENCE_SLASH, 13), new Modifier(ModifierType.DEFENCE_CRUSH, 11)),
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 30))
                                 )
@@ -487,7 +487,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.RUNITE_HELMET.asInt(), Material.PLAYER_HEAD, ItemRarity.RARE, "Runite Helmet", List.of("Runite helmet radiating magical protection."), HeadTexture.RUNE_HELM.asBase64(), null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 18), new Modifier(ModifierType.DEFENCE_SLASH, 19), new Modifier(ModifierType.DEFENCE_CRUSH, 17)),
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 40))
                                 )
@@ -497,7 +497,7 @@ public class ItemRepository {
                 // Armor - Chestplates
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.BRONZE_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Bronze Body", List.of("Basic bronze chestplate, shields vital organs."), null, Color.fromRGB(210, 170, 120)),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 6),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 8),
@@ -509,7 +509,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.IRON_BODY.asInt(), Material.CHAINMAIL_CHESTPLATE, ItemRarity.COMMON, "Iron Body", List.of("Iron chestplate providing solid body armor."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 10),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 13),
@@ -521,7 +521,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STEEL_BODY.asInt(), Material.IRON_CHESTPLATE, ItemRarity.COMMON, "Steel Body", List.of("Tough steel chestplate for frontline combat."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 18),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 19),
@@ -533,7 +533,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MITHRIL_BODY.asInt(), Material.GOLDEN_CHESTPLATE, ItemRarity.UNCOMMON, "Mithril Body", List.of("Mithril chestplate offering balance of speed and defense."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 24),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 25),
@@ -545,7 +545,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANTITE_BODY.asInt(), Material.DIAMOND_CHESTPLATE, ItemRarity.UNCOMMON, "Adamantite Body", List.of("Heavy adamantite chestplate for supreme protection."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 30),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 31),
@@ -557,7 +557,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.RUNITE_BODY.asInt(), Material.NETHERITE_CHESTPLATE, ItemRarity.RARE, "Runite Body", List.of("Runite chestplate enchanted for extra resilience."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 40),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 42),
@@ -571,7 +571,7 @@ public class ItemRepository {
                 // Armor - platelegs
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.BRONZE_PLATELEGS.asInt(), Material.LEATHER_LEGGINGS, ItemRarity.COMMON, "Bronze Platelegs", List.of("Bronze platelegs, basic leg armor."), null, Color.fromRGB(210, 170, 120)),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 4),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 5),
@@ -583,7 +583,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.IRON_PLATELEGS.asInt(), Material.CHAINMAIL_LEGGINGS, ItemRarity.COMMON, "Iron Platelegs", List.of("Iron platelegs for reliable leg protection."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 7),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 8),
@@ -595,7 +595,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STEEL_PLATELEGS.asInt(), Material.IRON_LEGGINGS, ItemRarity.COMMON, "Steel Platelegs", List.of("Steel platelegs favored by seasoned fighters."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 12),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 13),
@@ -607,7 +607,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MITHRIL_PLATELEGS.asInt(), Material.GOLDEN_LEGGINGS, ItemRarity.UNCOMMON, "Mithril Platelegs", List.of("Mithril platelegs combining speed and defense."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 16),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 17),
@@ -619,7 +619,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANTITE_PLATELEGS.asInt(), Material.DIAMOND_LEGGINGS, ItemRarity.UNCOMMON, "Adamantite Platelegs", List.of("Adamantite platelegs, thick and durable."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 21),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 22),
@@ -631,7 +631,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.RUNITE_PLATELEGS.asInt(), Material.NETHERITE_LEGGINGS, ItemRarity.RARE, "Runite Platelegs", List.of("Runite platelegs shimmering with magical energy."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 28),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 30),
@@ -645,7 +645,7 @@ public class ItemRepository {
                 // Armor - Boots
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.BRONZE_BOOTS.asInt(), Material.LEATHER_BOOTS, ItemRarity.COMMON, "Bronze Boots", List.of("Bronze boots, offering basic foot protection."), null, Color.fromRGB(210, 170, 120)),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 1),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 2),
@@ -657,7 +657,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.IRON_BOOTS.asInt(), Material.CHAINMAIL_BOOTS, ItemRarity.COMMON, "Iron Boots", List.of("Iron boots, sturdy and reliable."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 2),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 3),
@@ -669,7 +669,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STEEL_BOOTS.asInt(), Material.IRON_BOOTS, ItemRarity.COMMON, "Steel Boots", List.of("Steel boots, made for tough terrain."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 3),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 4),
@@ -681,7 +681,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MITHRIL_BOOTS.asInt(), Material.GOLDEN_BOOTS, ItemRarity.UNCOMMON, "Mithril Boots", List.of("Mithril boots, light and swift."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 5),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 6),
@@ -693,7 +693,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANTITE_BOOTS.asInt(), Material.DIAMOND_BOOTS, ItemRarity.UNCOMMON, "Adamantite Boots", List.of("Adamantite boots, heavy and protective."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 7),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 8),
@@ -705,7 +705,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.RUNITE_BOOTS.asInt(), Material.NETHERITE_BOOTS, ItemRarity.RARE, "Runite Boots", List.of("Runite boots imbued with arcane power."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 10),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 11),
@@ -720,7 +720,7 @@ public class ItemRepository {
                 // Weapons - Swords
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.BRONZE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Bronze Sword", List.of("Bronze sword, a beginner’s trusty blade."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 4),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 3)
@@ -731,7 +731,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.IRON_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Iron Sword", List.of("Iron sword, reliable for close combat."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 6),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 5)
@@ -742,7 +742,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.STEEL_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Steel Sword", List.of("Steel sword, sharp and durable."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 10),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 9)
@@ -753,7 +753,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.MITHRIL_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Mithril Sword", List.of("Mithril sword, light and deadly."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 16),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 14)
@@ -764,7 +764,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON_WITH_GEM_SOCKETS, ItemId.ADAMANTITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Sword", List.of("Adamantite sword, powerful and heavy."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new SocketedEquipableMeta(new EquipableTypeMeta(
+                                new SocketedEquipableMeta(new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 21),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 19)
@@ -776,6 +776,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON_WITH_GEM_SOCKETS, ItemId.RUNITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Sword", List.of("Runite sword crackling with magical energy."), null, null),
                         new VersionedJson(new Gson().toJson(
                                 new SocketedEquipableMeta(new EquipableTypeMeta(
+                                        List.of(new SkillModifier(SkillType.ATTACK, 10)),
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 30),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 29)
@@ -788,7 +789,7 @@ public class ItemRepository {
                 // Weapons - Daggers
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.BRONZE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Bronze Dagger", List.of("Bronze dagger, quick and light."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 3),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 2)
@@ -799,7 +800,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.IRON_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Iron Dagger", List.of("Iron dagger, sharp and practical."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 5),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 3)
@@ -810,7 +811,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.STEEL_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Steel Dagger", List.of("Steel dagger, deadly in skilled hands."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 8),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 6)
@@ -821,7 +822,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.MITHRIL_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Mithril Dagger", List.of("Mithril dagger, swift and precise."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 14),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 10)
@@ -832,7 +833,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.ADAMANTITE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Dagger", List.of("Adamantite dagger, strong and lethal."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 18),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 14)
@@ -843,7 +844,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.RUNITE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Dagger", List.of("Runite dagger glowing with mystical power."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 24),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 19)
@@ -856,7 +857,7 @@ public class ItemRepository {
                 // Weapons - Battleaxes
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.BRONZE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Bronze Battleaxe", List.of("Bronze battleaxe, heavy but slow."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 5),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 6),
@@ -868,7 +869,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.IRON_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Iron Battleaxe", List.of("Iron battleaxe, powerful cleaving weapon."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 8),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 9),
@@ -880,7 +881,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.STEEL_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Steel Battleaxe", List.of("Steel battleaxe, favored by warriors."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 12),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 13),
@@ -892,7 +893,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.MITHRIL_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Mithril Battleaxe", List.of("Mithril battleaxe, fast and deadly."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 18),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 19),
@@ -904,7 +905,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.ADAMANTITE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Battleaxe", List.of("Adamantite battleaxe, crushing blows guaranteed."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 23),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 24),
@@ -916,7 +917,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.RUNITE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Battleaxe", List.of("Runite battleaxe, imbued with arcane fury."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new EquipableTypeMeta(
+                                new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 32),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 33),
@@ -935,3 +936,4 @@ public class ItemRepository {
         this.cached = items;
     }
 }
+

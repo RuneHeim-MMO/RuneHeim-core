@@ -37,14 +37,14 @@ public class PlayerXpHandler {
         double nextXp = skill.getXp() + xp;
         boolean leveledUp = false;
 
-        if (XpUtils.isMaxLevel(skill.getLevel())) {
+        if (XpUtils.isMaxLevel(skill.getBaseLevel())) {
             return;
         }
 
-        if (nextXp >= XpUtils.getXpForLevel(skill.getLevel() + 1)) {
+        if (nextXp >= XpUtils.getXpForLevel(skill.getBaseLevel() + 1)) {
             leveledUp = true;
 
-            RunePlayerLevelUpEvent levelUpEvent = new RunePlayerLevelUpEvent(player, type, XpUtils.getCappedLevel(skill.getLevel() + 1), source);
+            RunePlayerLevelUpEvent levelUpEvent = new RunePlayerLevelUpEvent(player, type, XpUtils.getCappedLevel(skill.getBaseLevel() + 1), source);
             Bukkit.getServer().getPluginManager().callEvent(levelUpEvent);
 
             if (levelUpEvent.isCancelled()) {

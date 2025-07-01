@@ -17,6 +17,7 @@ import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.hud.PlayerScoreboardManager;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
+import org.zuma.examplePlugin.domain.modifier.SkillModifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.party.Party;
 import org.zuma.examplePlugin.domain.player.handlers.PlayerItemDistributor;
@@ -37,6 +38,7 @@ public class RunePlayer implements CombatEntity {
     private @Nullable Party party;
 
     private final EnumMap<ModifierType, Modifier> modifiers;
+    private final EnumMap<SkillType, SkillModifier> skillModifiers;
     private final EnumMap<SkillType, Skill> skills;
     private final PlayerXpHandler xpHandler;
     private final PlayerItemDistributor itemHandler;
@@ -48,9 +50,10 @@ public class RunePlayer implements CombatEntity {
     public RunePlayer(UUID uuid, EnumMap<SkillType, Skill> skills) {
         this.uuid = uuid;
         this.skills = skills;
-        this.combatData = new PlayerCombatData(this, skills.get(SkillType.HITPOINTS).getLevel(), XpUtils.getCombatLevelFromSkills(skills));
+        this.combatData = new PlayerCombatData(this, skills.get(SkillType.HITPOINTS).getBaseLevel(), XpUtils.getCombatLevelFromSkills(skills));
 
         modifiers = new EnumMap<>(ModifierType.class);
+        skillModifiers = new EnumMap<>(SkillType.class);
         actionBarManager = new ActionBarManager(this);
         scoreboardManager = new PlayerScoreboardManager(this);
         busyStateHandler = new RunePlayerBusyStateHandler(this);
@@ -78,6 +81,24 @@ public class RunePlayer implements CombatEntity {
         modifiers.putAll(newModifiers.stream()
                 .collect(Collectors.toMap(Modifier::type, Function.identity())));
         System.out.println("Recalculated modifiers " + newModifiers);
+    }
+
+    public void setSkillModifiers(List<SkillModifier> newModifiers) {
+        skillModifiers.clear();
+        skillModifiers.putAll(newModifiers.stream()
+                .collect(Collectors.toMap(SkillModifier::type, Function.identity())));
+
+        skillModifiers.values().forEach(skillModifier -> {
+            Skill matchingSkill = skills.get(skillModifier.type());
+
+            if (matchingSkill == null) {
+                return;
+            }
+
+            matchingSkill.setBonus(skillModifier.amount());
+        });
+
+        System.out.println("Recalculated skill modifiers " + newModifiers);
     }
 
     public EnumMap<ModifierType, Modifier> getModifiers() {
@@ -115,7 +136,7 @@ public class RunePlayer implements CombatEntity {
     }
 
     public int getMaxHealth() {
-        return skills.get(SkillType.HITPOINTS).getLevel();
+        return skills.get(SkillType.HITPOINTS).getBaseLevel();
     }
 
     public int getCombatLvl() {

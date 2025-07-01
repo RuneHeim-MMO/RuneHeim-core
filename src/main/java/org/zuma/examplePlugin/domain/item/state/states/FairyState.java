@@ -1,13 +1,19 @@
 package org.zuma.examplePlugin.domain.item.state.states;
 
 import com.google.gson.Gson;
+import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.impl.FairyFruit;
+import org.zuma.examplePlugin.domain.item.impl.Gem;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.FairyStateMeta;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.GearGemSocketsStateMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FairyState extends AbstractState {
@@ -95,6 +101,28 @@ public class FairyState extends AbstractState {
 
     public int getGeneration() {
         return generation;
+    }
+
+    public List<FairyFruit> getInsertedUpgrades() {
+        List<FairyFruit> list = new ArrayList<>();
+
+        upgradeIds.forEach(id -> {
+            AbstractItemType item = RuneQuestPlugin.getItemRegistry().getItem(id);
+
+            if (item == null) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot retrieve fairy upgrade item: State contains invalid item id " + id + "!");
+                return;
+            }
+
+            if (!(item instanceof FairyFruit fruit)) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot retrieve fairy upgrade item: State inserted upgrade ids contains id " + id + ", but " + item.displayName + " is not a fairy fruit!");
+                return;
+            }
+
+            list.add(fruit);
+        });
+
+        return list;
     }
 
     @Override

@@ -97,18 +97,35 @@ public class MetaGenerator {
 
             }
 
-            if (!equipable.getModifiers().isEmpty()) {
+            if (!equipable.getModifiers().isEmpty() || !equipable.getSkillModifiers().isEmpty()) {
                 lore.add(Component.empty());
                 lore.add(Component.text("Modifiers: ", Color.ITEM_LABEL.asColor()));
 
-                equipable.getModifiers().forEach(modifier -> {
-                    int amount = Math.toIntExact(Math.round(modifier.amount()));
-                    String sign = amount > 0 ? "+" : "";
-                    TextColor color = amount > 0 ? Color.ITEM_BONUS_POSITIVE.asColor() : Color.ITEM_BONUS_NEGATIVE.asColor();
+                if (!equipable.getSkillModifiers().isEmpty()) {
+                    equipable.getSkillModifiers().forEach(modifier -> {
+                        int amount = Math.toIntExact(modifier.amount());
+                        String sign = amount > 0 ? "+" : "";
+                        TextColor color = amount > 0 ? Color.ITEM_BONUS_POSITIVE.asColor() : Color.ITEM_BONUS_NEGATIVE.asColor();
 
-                    lore.add(Component.text(modifier.type().getSymbol(), NamedTextColor.WHITE)
-                            .append(Component.text(" " + sign + amount + " " + modifier.type().getLabel()).color(color)));
-                });
+                        lore.add(Component.text(modifier.type().getSymbol(), NamedTextColor.WHITE)
+                                .append(Component.text(" " + sign + amount + " " + modifier.type().getLabel() + " Level").color(color)));
+                    });
+
+                    if (!equipable.getModifiers().isEmpty()) {
+                        lore.add(Component.empty());
+                    }
+                }
+
+                if (!equipable.getModifiers().isEmpty()) {
+                    equipable.getModifiers().forEach(modifier -> {
+                        int amount = Math.toIntExact(Math.round(modifier.amount()));
+                        String sign = amount > 0 ? "+" : "";
+                        TextColor color = amount > 0 ? Color.ITEM_BONUS_POSITIVE.asColor() : Color.ITEM_BONUS_NEGATIVE.asColor();
+
+                        lore.add(Component.text(modifier.type().getSymbol(), NamedTextColor.WHITE)
+                                .append(Component.text(" " + sign + amount + " " + modifier.type().getLabel()).color(color)));
+                    });
+                }
             }
         }
 

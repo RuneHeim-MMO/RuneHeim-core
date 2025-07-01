@@ -45,7 +45,7 @@ public class PlayerCombatData {
 
         if (this.health <= 0) {
             player.asBukkitPlayer().sendMessage("Welp, you died!");
-            setHealth(player.getSkills().get(SkillType.HITPOINTS).getLevel(), RunePlayerHealthChangedEvent.Cause.COMBAT);
+            setHealth(player.getSkills().get(SkillType.HITPOINTS).getLevelWithBonuses(), RunePlayerHealthChangedEvent.Cause.COMBAT);
         }
 
         HudService.updateVanillaGUI(player);
