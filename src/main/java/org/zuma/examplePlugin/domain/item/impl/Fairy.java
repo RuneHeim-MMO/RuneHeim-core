@@ -9,7 +9,6 @@ import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.states.FairyState;
-import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 
 import javax.annotation.Nullable;
 

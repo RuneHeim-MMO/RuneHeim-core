@@ -12,6 +12,13 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class PlayerInvTopRowHandler implements Listener {
+    private final int PET_SLOT = 0;
+    private final int AMULET_SLOT = 1;
+    private final int RING_1_SLOT = 2;
+    private final int RING_2_SLOT = 3;
+    private final int FAIRY_SLOT = 4;
+    private final int FAIRY_FOOD_SLOT = 5;
+
     private enum ItemStackType {
         PET, AMULET, RING, FAIRY, FAIRY_FOOD
     }
