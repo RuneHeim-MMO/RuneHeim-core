@@ -1,10 +1,14 @@
 package org.zuma.examplePlugin.domain.item.helpers;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -51,6 +55,9 @@ public class MetaGenerator {
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
 
+        Multimap<Attribute, AttributeModifier> emptyModifiers = ArrayListMultimap.create();
+        meta.setAttributeModifiers(emptyModifiers);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         item.setItemMeta(meta);
     }
 

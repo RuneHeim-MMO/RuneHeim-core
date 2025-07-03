@@ -7,7 +7,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 
 public class DefaultMobDisabler implements Listener {
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onMobSpawn(CreatureSpawnEvent event) {
         CreatureSpawnEvent.SpawnReason reason = event.getSpawnReason();
 

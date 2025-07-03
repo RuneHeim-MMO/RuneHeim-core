@@ -208,12 +208,15 @@ public class FusionMasterInventory extends IndividualGUI {
     public void onInventoryClick(InventoryClickEvent event, int slot, RunePlayer player) {
         Inventory topInv = event.getView().getTopInventory();
         Inventory bottomInv = event.getView().getBottomInventory();
-        ItemStack currentItem = event.getCurrentItem();
+        ItemStack currentItemOrig = event.getCurrentItem();
+
         event.setCancelled(true);
 
-        if (currentItem == null) {
+        if (currentItemOrig == null) {
             return;
         }
+
+        ItemStack currentItem = currentItemOrig.clone();
 
         Integer menuValue = getMenuValue(currentItem);
 
@@ -272,8 +275,8 @@ public class FusionMasterInventory extends IndividualGUI {
 
         if (event.getClickedInventory() == topInv) {
             if (!GUIControl.isGuiItem(currentItem)) {
-                player.giveItemOrDrop(currentItem);
                 event.setCurrentItem(null);
+                player.giveItemOrDrop(currentItem);
                 Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> updateInventory(player), 2L);
             }
         }
@@ -288,8 +291,13 @@ public class FusionMasterInventory extends IndividualGUI {
 
             if (isValidItemStack(ItemStackType.SOCKETABLE, currentItem)) {
                 if (inventory.getItem(SOCKETABLE_SLOT) != null) {
-                    player.giveItemOrDrop(topInv.getItem(SOCKETABLE_SLOT));
-                    topInv.setItem(SOCKETABLE_SLOT, null);
+                    ItemStack itemStack = topInv.getItem(SOCKETABLE_SLOT);
+
+                    if (itemStack != null) {
+                        ItemStack cloned = itemStack.clone();
+                        topInv.setItem(SOCKETABLE_SLOT, null);
+                        player.giveItemOrDrop(cloned);
+                    }
                 }
 
                 ItemUtils.moveItemToSlot(bottomInv, topInv, event.getSlot(), SOCKETABLE_SLOT, 1);
@@ -346,8 +354,9 @@ public class FusionMasterInventory extends IndividualGUI {
             ItemStack item = inventory.getItem(slot);
 
             if (item != null && !GUIControl.isGuiItem(item)) {
-                player.giveItemOrDrop(item);
+                ItemStack cloned = item.clone();
                 inventory.setItem(slot, null);
+                player.giveItemOrDrop(cloned);
             }
         }
     }

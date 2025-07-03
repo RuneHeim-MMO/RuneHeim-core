@@ -1,56 +1,144 @@
 package org.zuma.examplePlugin.domain.player.inventory;
 
-import org.bukkit.event.Listener;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
+import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class AdditionalGearSlotHandler implements Listener {
-    private final int PET_SLOT = 0;
-    private final int AMULET_SLOT = 1;
-    private final int RING_1_SLOT = 2;
-    private final int RING_2_SLOT = 3;
-    private final int FAIRY_SLOT = 4;
-    private final int FAIRY_FOOD_SLOT = 5;
+public class AdditionalGearSlotHandler {
+    private static final int INFO_SLOT = 16;
+    private static final int SETTINGS_SLOT = 17;
 
-    private enum ItemStackType {
-        PET, AMULET, RING, FAIRY, FAIRY_FOOD
+    private final Map<Integer, ReservedSlot> slotsDef = ReservedSlot.getSlotMap();
+    private final List<Integer> slots = slotsDef.keySet().stream().toList();
+
+    private ItemStack getSlotPlaceholder(int slot) {
+        String slotLabel = slotsDef.get(slot).getPlaceHolderLabel();
+        if (slotLabel == null) slotLabel = "Accessory Slot";
+        return GUIControl.TRANSPARENT.asItemstack(Component.text(slotLabel, NamedTextColor.GRAY));
     }
 
-    private boolean isValidItemStack(ItemStackType type, @Nullable ItemStack itemStack) {
-        if (itemStack == null) {
-            return false;
+    public void fillReservedSlots(RunePlayer player) {
+        PlayerInventory inventory = player.asBukkitPlayer().getInventory();
+
+        inventory.setItem(INFO_SLOT, GUIControl.TRANSPARENT.asItemstack(Component.text("Info")));
+        inventory.setItem(SETTINGS_SLOT, GUIControl.TRANSPARENT.asItemstack(Component.text("Settings")));
+
+        for (int slot : slots) {
+            ItemStack inSlot = inventory.getItem(slot);
+
+            if (inSlot == null || inSlot.getType() == Material.AIR) {
+                inventory.setItem(slot, getSlotPlaceholder(slot));
+            }
         }
-
-        AbstractItemType itemType = RuneQuestPlugin.getItemRegistry().getItem(itemStack);
-
-        if (itemType == null) {
-            return false;
-        }
-
-        return switch (type) {
-            case PET -> false;
-            case AMULET -> false;
-            case RING -> false;
-            case FAIRY -> false;
-            case FAIRY_FOOD -> false;
-        };
 
     }
+
+    public void checkReservedSlotsValidity(RunePlayer player) {
+        PlayerInventory inventory = player.asBukkitPlayer().getInventory();
+
+        slotsDef.forEach((slot, def) -> {
+            ItemStack atSlot = inventory.getItem(slot);
+
+            if (GUIControl.isGuiItem(atSlot)) {
+                return;
+            }
+
+            if (atSlot == null) return;
+
+            AbstractItemType type = RuneQuestPlugin.getItemRegistry().getItem(atSlot);
+
+            if (type == null || !def.isValidItem(type)) {
+                ItemStack cloned = atSlot.clone();
+
+                inventory.setItem(slot, getSlotPlaceholder(slot));
+                player.giveItemOrDrop(cloned);
+            }
+        });
+
+        fillReservedSlots(player);
+
+    }
+
+    public void handleOwnInventoryClick(RunePlayer player, InventoryClickEvent event) {
+        PlayerInventory inventory = player.asBukkitPlayer().getInventory();
+        int slot = event.getSlot();
+
+        if (slot == INFO_SLOT || slot == SETTINGS_SLOT) {
+            if (slot == INFO_SLOT) {
+                player.asBukkitPlayer().sendMessage("Info");
+            }
+
+            if (slot == SETTINGS_SLOT) {
+                player.asBukkitPlayer().sendMessage("Settings");
+            }
+
+            event.setCancelled(true);
+            return;
+        }
+
+
+        ItemStack clickedItemStack = inventory.getItem(event.getSlot());
+        ItemStack cursor = event.getCursor();
+        boolean hasItemInCursor = event.getCursor().getType() != Material.AIR;
+
+        Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> fillReservedSlots(player), 2L);
+
+        if (!slots.contains(event.getSlot())) {
+            return;
+        }
+
+        if (GUIControl.isGuiItem(clickedItemStack) && !hasItemInCursor) {
+            event.setCancelled(true);
+            return;
+        }
+
+        if (!GUIControl.isGuiItem(clickedItemStack)) {
+            return;
+        }
+
+        AbstractItemType cursorItemType = RuneQuestPlugin.getItemRegistry().getItem(cursor);
+
+        if (cursorItemType instanceof SkillRestrictable restrictable && !player.meetsRequirements(restrictable)) {
+            HudService.sendFailMessage(player, Component.text("You do not meet requirements to use " + cursorItemType.displayName + "."));
+            event.setCancelled(true);
+            return;
+        }
+
+        if (!ReservedSlot.isItemInCorrectSlot(slot, cursorItemType)) {
+            event.setCancelled(true);
+            return;
+        }
+
+        if (GUIControl.isGuiItem(clickedItemStack)) {
+            ItemStack clonedCursor = cursor.clone();
+            event.getWhoClicked().setItemOnCursor(null);
+            inventory.setItem(slot, clonedCursor);
+            event.setCancelled(true);
+        }
+
+
+    }
+
 
     public List<ItemStack> getSlotItems(RunePlayer player) {
-        List<Integer> slots = List.of(PET_SLOT, AMULET_SLOT, RING_1_SLOT, RING_2_SLOT, FAIRY_SLOT, FAIRY_FOOD_SLOT);
         List<ItemStack> items = new ArrayList<>();
 
         for (int slot : slots) {
             items.add(player.asBukkitPlayer().getInventory().getItem(slot));
         }
 
-        return new ArrayList<>();
+        return items;
     }
 }

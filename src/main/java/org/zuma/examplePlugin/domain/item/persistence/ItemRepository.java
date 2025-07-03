@@ -187,10 +187,10 @@ public class ItemRepository {
                         new VersionedJson(new Gson().toJson(new FairyFoodMeta(15)), 1)),
 
                 // Fairy
-                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY, ItemId.FAIRY_OF_HOPE.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Fairy of Hope", List.of(""), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY, ItemId.FAIRY_OF_HOPE.asInt(), Material.KNOWLEDGE_BOOK, ItemRarity.LEGENDARY, "Fairy of Hope", List.of(""), null, null),
                         new VersionedJson(new Gson().toJson(new FairyMeta(1)), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY, ItemId.FAIRY_MORDO.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Mordo", List.of(""), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY, ItemId.FAIRY_MORDO.asInt(), Material.KNOWLEDGE_BOOK, ItemRarity.LEGENDARY, "Mordo", List.of(""), null, null),
                         new VersionedJson(new Gson().toJson(new FairyMeta(2)), 1)),
 
 

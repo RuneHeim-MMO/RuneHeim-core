@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -55,8 +56,9 @@ public class ItemListener implements Listener {
         event.setCancelled(true);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInteract(PlayerInteractEvent event) {
+
         withItemAndPlayer(event.getPlayer(), PlayerUtils.getItemStackInHand(event.getPlayer()), (item, player) -> {
             if (!player.meetsRequirements(item)) {
                 requirementsFailCancelEvent(event, item, player);
@@ -77,9 +79,10 @@ public class ItemListener implements Listener {
 
             itemHandler.onPlayerInteract(event, item, player, itemStateManager);
         });
+
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         withItemAndPlayer(event.getPlayer(), PlayerUtils.getItemStackInHand(event.getPlayer()), (item, player) -> {
             if (!player.meetsRequirements(item)) {
@@ -92,21 +95,21 @@ public class ItemListener implements Listener {
 
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerItemDrop(PlayerDropItemEvent event) {
         withItemAndPlayer(event.getPlayer(), event.getItemDrop().getItemStack(), (item, player) -> {
             itemHandler.onPlayerItemDrop(event, item, player, itemStateManager);
         });
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerTakeItemInHand(PlayerItemHeldEvent event) {
         withItemAndPlayer(event.getPlayer(), event.getPlayer().getInventory().getItem(event.getNewSlot()), (item, player) -> {
             itemHandler.onPlayerTakeItemInHand(event, item, player, itemStateManager);
         });
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerConsume(PlayerItemConsumeEvent event) {
         withItemAndPlayer(event.getPlayer(), event.getItem(), (item, player) -> {
             itemHandler.onPlayerConsumeItem(event, item, player, itemStateManager);
@@ -114,7 +117,7 @@ public class ItemListener implements Listener {
 
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerDamageEntity(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player damager)) {
             return;
@@ -130,13 +133,13 @@ public class ItemListener implements Listener {
         });
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerWearItem(PlayerArmorEquipEvent event) {
         itemHandler.onPlayerWearItem(event, event.getPlayer(), itemStateManager);
     }
 
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onBaseBukkitWearArmorClick(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player whoClicked)) {
             return;
@@ -173,7 +176,7 @@ public class ItemListener implements Listener {
         });
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onBaseBukkitWearShiftArmorClick(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player whoClicked)) {
             return;

@@ -5,6 +5,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -28,7 +29,7 @@ public class BlockListener implements Listener {
         this.itemRegistry = itemRegistry;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.useInteractedBlock() == Event.Result.DENY ||
                 event.useItemInHand() == Event.Result.DENY) {
@@ -57,7 +58,7 @@ public class BlockListener implements Listener {
 
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerBlockBreakProgressUpdateEvent(BlockBreakProgressUpdateEvent event) {
 
 
@@ -77,7 +78,7 @@ public class BlockListener implements Listener {
 
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerBlockBreakEvent(BlockBreakEvent event) {
         if (event.isCancelled()) {
             return;
@@ -96,7 +97,7 @@ public class BlockListener implements Listener {
     }
 
     // On inventory unmount, clear all references to inventory uuids in inv opener blocks
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryClose(InventoryCloseEvent event) {
         InventoryHolder holder = event.getInventory().getHolder();
 

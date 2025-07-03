@@ -1,34 +1,45 @@
 package org.zuma.examplePlugin.core.handlers;
 
 import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
+import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.constants.ItemType;
+
+import java.util.List;
 
 public class OffHandDisabler implements Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerInteractOffhand(PlayerInteractEvent event) {
         if (event.getHand() == EquipmentSlot.OFF_HAND) {
             event.setCancelled(true);
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onSwapHandItems(PlayerSwapHandItemsEvent event) {
         event.setCancelled(true);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent event) {
         event.getPlayer().getInventory().setItemInOffHand(null);
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getPlayer().isOp() && event.getPlayer().getGameMode() == GameMode.CREATIVE) {
             return;
@@ -37,5 +48,24 @@ public class OffHandDisabler implements Listener {
         event.setCancelled(true);
     }
 
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onPutIntoOffhandSlot(InventoryClickEvent event) {
+        if (event.getSlotType() == InventoryType.SlotType.QUICKBAR && event.getSlot() == 40) {
+            event.setCancelled(true);
+            return;
+        }
+    }
 
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onInventoryCloseWithOffhandItem(InventoryCloseEvent event) {
+        if (!(event.getPlayer() instanceof Player player)) return;
+
+        ItemStack offhand = player.getInventory().getItemInOffHand();
+
+        if (!offhand.getType().isAir()) {
+            ItemStack cloned = offhand.clone();
+            player.getInventory().setItemInOffHand(null);
+            player.getWorld().dropItem(player.getLocation(), cloned);
+        }
+    }
 }

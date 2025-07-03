@@ -20,6 +20,7 @@ import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 import org.zuma.examplePlugin.events.modifier.GearModifiersRecalculatedEvent;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class GearModifierHandler {
     private final ItemRegistry itemRegistry;
@@ -58,7 +59,12 @@ public class GearModifierHandler {
 
         items.stream()
                 .filter(Objects::nonNull)
-                .map(itemStack -> Map.entry(itemStack, itemRegistry.getItem(itemStack)))
+                .flatMap(itemStack -> {
+                    AbstractItemType item = itemRegistry.getItem(itemStack);
+                    return item != null
+                            ? Stream.of(Map.entry(itemStack, item))
+                            : Stream.empty();
+                })
                 .filter(entry -> {
                     AbstractItemType abstractItemType = entry.getValue();
 

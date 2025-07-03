@@ -281,6 +281,7 @@ public class ItemFactory {
                 }
 
                 item.addModifiers(deserialized.equipableTypeMeta().modifiers());
+                item.addSkillModifiers(deserialized.equipableTypeMeta().skillModifiers());
                 item.addRequirements(deserialized.equipableTypeMeta().requirements());
                 item.setDefaultStateTemplate(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
                 return item;

@@ -39,6 +39,7 @@ import org.zuma.examplePlugin.domain.modifier.GearModifierListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
+import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotListener;
 import org.zuma.examplePlugin.domain.recipes.RecipeFactory;
 import org.zuma.examplePlugin.domain.recipes.RecipeHandler;
 import org.zuma.examplePlugin.domain.recipes.RecipeListener;
@@ -101,7 +102,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(itemListener, pluginInstance);
 
         AdditionalGearSlotHandler additionalGearSlotHandler = new AdditionalGearSlotHandler();
-        getServer().getPluginManager().registerEvents(additionalGearSlotHandler, pluginInstance);
+        AdditionalGearSlotListener additionalGearSlotListener = new AdditionalGearSlotListener(additionalGearSlotHandler);
+        getServer().getPluginManager().registerEvents(additionalGearSlotListener, pluginInstance);
 
         GearModifierHandler gearModifierHandler = new GearModifierHandler(itemRegistry, additionalGearSlotHandler);
         GearModifierListener gearModifierListener = new GearModifierListener(gearModifierHandler, runePlayerManager);
