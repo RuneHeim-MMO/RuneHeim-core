@@ -94,8 +94,9 @@ public class AdditionalGearSlotHandler {
         boolean hasItemInCursor = event.getCursor().getType() != Material.AIR;
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> fillReservedSlots(player), 2L);
+        ReservedSlot slotDef = slotsDef.get(slot);
 
-        if (!slots.contains(event.getSlot())) {
+        if (!slots.contains(event.getSlot()) || slotDef == null) {
             return;
         }
 
@@ -105,6 +106,7 @@ public class AdditionalGearSlotHandler {
         }
 
         if (!GUIControl.isGuiItem(clickedItemStack)) {
+            slotDef.getUnequipSound().play(player, false);
             return;
         }
 
@@ -128,6 +130,8 @@ public class AdditionalGearSlotHandler {
             event.setCancelled(true);
         }
 
+
+        slotDef.getEquipSound().play(player, false);
 
     }
 

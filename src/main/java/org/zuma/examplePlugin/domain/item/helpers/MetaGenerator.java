@@ -19,17 +19,23 @@ import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
 import org.zuma.examplePlugin.core.utils.TextUtils;
+import org.zuma.examplePlugin.core.utils.XpUtils;
+import org.zuma.examplePlugin.domain.hud.LoadingBarBuilder;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.base.SocketedEquipableItemType;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.PersistanceDataKey;
 import org.zuma.examplePlugin.domain.item.impl.consumable.Food;
+import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
+import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFood;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
+import org.zuma.examplePlugin.domain.item.state.states.FairyState;
 import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -105,7 +111,10 @@ public class MetaGenerator {
             }
 
             if (!equipable.getModifiers().isEmpty() || !equipable.getSkillModifiers().isEmpty()) {
-                lore.add(Component.empty());
+                if (!equipable.getRequirements().isEmpty()) {
+                    lore.add(Component.empty());
+                }
+
                 lore.add(Component.text("Modifiers: ", Color.ITEM_LABEL.asColor()));
 
                 if (!equipable.getSkillModifiers().isEmpty()) {
@@ -156,6 +165,48 @@ public class MetaGenerator {
                 lore.add(Component.empty());
             }
 
+        }
+
+        if (itemType instanceof FairyFood fairyFood) {
+            lore.add(Component.empty());
+            lore.add(Component.text("Restores ", Color.SUCCESS.asColor())
+                    .append(Icon.STAMINA.asComponent())
+                    .append(Component.text(fairyFood.getEnergyRestoreAmount() + " Stamina", Color.SUCCESS.asColor())));
+        }
+
+        if (itemType instanceof Fairy) {
+            AbstractState state = RuneQuestPlugin.getItemStateManager().getItemState(item);
+
+            if (state instanceof FairyState fairyState) {
+
+                lore.add(Icon.LEVEL.asComponent().append(Component.text("Level: ", Color.ITEM_DESCRIPTION.asColor())
+                        .append(Component.text(fairyState.getLevel() + " ", Color.ACCENT.asColor()))));
+
+                String formattedXP = NumberFormat.getNumberInstance().format(fairyState.getXPForLevel(fairyState.getLevel() + 1));
+                lore.add(Icon.EXPERIENCE.asComponent()
+                        .append(Component.text(fairyState.getExperience() + " XP / " + formattedXP + " XP", Color.SUCCESS.asColor())));
+
+                lore.add(Icon.SPROUT.asComponent()
+                        .append(Component.text("I Generation", NamedTextColor.GREEN)));
+
+
+                lore.add(Component.empty());
+
+                lore.add(Icon.STAMINA.asComponent()
+                        .append(Component.text(fairyState.getStamina() + "% Stamina", Color.FAIRY_STAMINA.asColor())));
+
+                lore.add(Component.empty());
+
+                lore.add(Icon.FAIRY.asComponent().append(Component.text("Fairy Bonuses", Color.SUCCESS.asColor())));
+                lore.add(Component.text(TextUtils.repeatString("-", 16), Color.SUCCESS.asColor()).decorate(TextDecoration.STRIKETHROUGH));
+                lore.add(Component.text("  * No upgrades * ", Color.ITEM_TYPE.asColor()));
+                lore.add(Component.text(TextUtils.repeatString("-", 16), Color.SUCCESS.asColor()).decorate(TextDecoration.STRIKETHROUGH));
+
+                lore.add(Component.empty());
+                Color consumeFruitColor = fairyState.canConsumeFruit() ? Color.SUCCESS : Color.ERROR;
+                lore.add((Component.text(fairyState.canConsumeFruit() ? "✓ Ready for upgrade" : "❌ Not ready for upgrade", consumeFruitColor.asColor())));
+                lore.add(Component.empty());
+            }
         }
 
         lore.add(Component.empty());

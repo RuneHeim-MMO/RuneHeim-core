@@ -5,13 +5,11 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.item.impl.FairyFruit;
-import org.zuma.examplePlugin.domain.item.impl.Gem;
+import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFruit;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.FairyStateMeta;
-import org.zuma.examplePlugin.domain.item.state.meta.v1.GearGemSocketsStateMeta;
 
 import java.util.ArrayList;
 import java.util.List;

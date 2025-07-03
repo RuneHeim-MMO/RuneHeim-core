@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.item.impl;
+package org.zuma.examplePlugin.domain.item.impl.fairy;
 
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
@@ -8,7 +8,7 @@ import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 public class FairyFruit extends EquipableItemType {
     public FairyFruit(AbstractItemMeta meta) {
         super(meta);
-        super.setTypeLore("Fairy Fruit", Icon.GREEN_GEM.get());
+        super.setTypeLore("Fairy Fruit", Icon.FAIRY.get());
     }
 
     @Override

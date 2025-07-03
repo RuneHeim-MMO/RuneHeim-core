@@ -49,6 +49,41 @@
       "height": -3,
       "chars": ["⛒"]
     },
+   {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/stamina.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["ⶼ"]
+    },
+   {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/sprout.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["✦"]
+    },
+   {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/experience.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⭮"]
+    },
+   {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/level.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⛑"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/fairy.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["ⰱ"]
+    },
     {
       "type": "bitmap",
       "file": "minecraft:font/icons/scroll_01a.png",
@@ -458,8 +493,8 @@
     {
       "type": "bitmap",
       "file": "minecraft:font/icons/logo.png",
-      "ascent": 94,
-      "height": 128,
+      "ascent": 70,
+      "height": 90,
       "chars": ["◾"]
     }
   ]

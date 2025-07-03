@@ -60,6 +60,18 @@ public enum SoundType {
     CAMPFIRE_RECIPE_SUCCESS("BLOCK_BLASTFURNACE_FIRE_CRACKLE", false, 1.0f, 0.5f),
     CAMPFIRE_DESPAWN("BLOCK_FIRE_EXTINGUISH", false, 0.8f, 0.6f),
 
+    MOUNT_EQUIP("ENTITY_HORSE_SADDLE", false, 0.45f, 1.0f),
+    MOUNT_UNEQUIP("ENTITY_HORSE_SADDLE", false, 0.45f, 0.9f),
+
+    JEWELERY_EQUIP("ITEM_ARMOR_EQUIP_CHAIN", false, 0.45f, 1.1f),
+    JEWELERY_UNEQUIP("ITEM_ARMOR_EQUIP_CHAIN", false, 0.45f, 1.1f),
+
+    FAIRY_EQUIP("ENTITY_BAT_TAKEOFF", false, 0.45f, 1.2f),
+    FAIRY_UNEQUIP("ENTITY_BAT_DEATH", false, 0.45f, 0.8f),
+
+    FAIRY_FOOD_EQUIP("ENTITY_GENERIC_EAT", false, 0.45f, 1.0f),
+    FAIRY_FOOD_UNEQUIP("ENTITY_PLAYER_BURP", false, 0.45f, 0.9f),
+
     // AMBIENT
     VILLAGER_MAN_AMBIENT_1("vocal_villagers:entity.villager.ambient", true, 1, 0.75f),
     VILLAGER_MAN_AMBIENT_2("vocal_villagers:entity.villager.ambient", true, 1, 0.80f),

@@ -240,7 +240,25 @@
     },
     {
       "predicate": {
-        "custom_model_data": 1904
+        "custom_model_data": 2000
+      },
+      "model": "item/custom/fairy/rations/fairy_ration"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2001
+      },
+      "model": "item/custom/fairy/rations/fine_fairy_ration"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2002
+      },
+      "model": "item/custom/fairy/rations/superior_fairy_ration"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2003
       },
       "model": "item/coal"
     }

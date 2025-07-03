@@ -1,0 +1,44 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "item/knowledge_book"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 2100
+      },
+      "model": "item/custom/fairy/fairy_of_hope"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2101
+      },
+      "model": "item/custom/fairy/fairy_of_light"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2102
+      },
+      "model": "item/custom/fairy/fairy_of_silence"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2103
+      },
+      "model": "item/custom/fairy/fairy_of_darkness"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2104
+      },
+      "model": "item/custom/fairy/fairy_of_frost"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2105
+      },
+      "model": "item/knowledge_book"
+    }
+  ]
+}

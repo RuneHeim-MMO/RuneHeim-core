@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.item.impl;
+package org.zuma.examplePlugin.domain.item.impl.fairy;
 
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -9,7 +9,7 @@ public class FairyFood extends AbstractItemType {
 
     public FairyFood(AbstractItemMeta meta) {
         super(meta);
-        super.setTypeLore("Fairy Food", Icon.SCROLL_LIGHT_GRAY.get());
+        super.setTypeLore("Fairy Food", Icon.FAIRY.get());
     }
 
     public int getEnergyRestoreAmount() {

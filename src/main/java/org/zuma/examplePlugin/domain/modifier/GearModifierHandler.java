@@ -1,7 +1,6 @@
 package org.zuma.examplePlugin.domain.modifier;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.zuma.examplePlugin.core.utils.ModifierUtils;
@@ -10,8 +9,8 @@ import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.base.SocketedEquipableItemType;
 import org.zuma.examplePlugin.domain.item.constants.EquipableType;
-import org.zuma.examplePlugin.domain.item.impl.Fairy;
-import org.zuma.examplePlugin.domain.item.impl.FairyFruit;
+import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
+import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFruit;
 import org.zuma.examplePlugin.domain.item.impl.Gem;
 import org.zuma.examplePlugin.domain.item.state.states.FairyState;
 import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;

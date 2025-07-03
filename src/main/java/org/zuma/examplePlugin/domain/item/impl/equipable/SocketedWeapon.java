@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.item.impl;
+package org.zuma.examplePlugin.domain.item.impl.equipable;
 
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.domain.item.base.SocketedEquipableItemType;

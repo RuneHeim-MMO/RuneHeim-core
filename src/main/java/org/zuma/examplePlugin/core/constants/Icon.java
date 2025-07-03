@@ -57,6 +57,12 @@ public enum Icon {
     SCROLL_PURPLE("⠳"),
     SCROLL_BROWN("⑬"),
 
+    FAIRY("ⰱ"),
+    STAMINA("ⶼ"),
+    EXPERIENCE("⭮"),
+    LEVEL("⛑"),
+    SPROUT("✦"),
+
     GREEN_GEM("⮩"),
 
     PROGRESS_TALL_START("┉"),
