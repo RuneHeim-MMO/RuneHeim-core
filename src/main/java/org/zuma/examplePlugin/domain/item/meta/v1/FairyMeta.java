@@ -1,4 +1,6 @@
 package org.zuma.examplePlugin.domain.item.meta.v1;
 
-public record FairyMeta(int generation) {
+import org.bukkit.Particle;
+
+public record FairyMeta(Particle particle, int generation) {
 }

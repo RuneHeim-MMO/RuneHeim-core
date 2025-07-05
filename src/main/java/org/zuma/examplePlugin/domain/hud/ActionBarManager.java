@@ -9,9 +9,11 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.utils.CurrencyUtils;
+import org.zuma.examplePlugin.domain.fairy.FairyStatus;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,15 +21,30 @@ import java.util.List;
 public class ActionBarManager {
     private static final int FRAME_DURATION = 2;
     private final RunePlayer player;
-    private final List<Component> elements = new ArrayList<>();
-    private BukkitTask activeTask = null;
-    private boolean tick = false; // Ticktock counter
+    private final List<Component> elements;
+    private BukkitTask activeTask;
+    private boolean tick;
+    private FairyStatus fairyStatus;
+
     int coins = 0;
     int bar = 6;
 
     public ActionBarManager(RunePlayer player) {
         this.player = player;
+        this.elements = new ArrayList<>();
+        this.activeTask = null;
+        this.tick = false;
+        this.fairyStatus = FairyStatus.NONE;
         startDefaultLoop();
+    }
+
+
+    public void setFairyStatus(FairyStatus status) {
+        this.fairyStatus = status;
+    }
+
+    public FairyStatus getFairyStatus() {
+        return this.fairyStatus;
     }
 
     private void queueFrame(Component component, int frames) {
@@ -36,12 +53,19 @@ public class ActionBarManager {
         if (activeTask != null && activeTask.isCancelled()) {
             activeTask.cancel();
         }
-
     }
 
     private Component getDefaultElement() {
-        Component flashingEnvelope = Component.text(" " + Icon.ENVELOPE.get() + " ", tick ? NamedTextColor.WHITE : NamedTextColor.DARK_GRAY);
-        boolean hasNotifications = coins < 100000;
+        NamedTextColor fairyIconColor = NamedTextColor.WHITE;
+        boolean playerHasFairy = !fairyStatus.equals(FairyStatus.NONE);
+
+        switch (fairyStatus) {
+            case EXHAUSTED -> fairyIconColor = NamedTextColor.DARK_GRAY;
+            case READY_FOR_UPGRADE -> fairyIconColor = tick ? NamedTextColor.GREEN : NamedTextColor.WHITE;
+
+        }
+
+        Component fairyIcon = Component.text(" " + Icon.FAIRY.get() + " ", fairyIconColor);
 
         coins += 5050;
 
@@ -76,7 +100,7 @@ public class ActionBarManager {
         return Component.text(Icon.HEART_BIG.get(), NamedTextColor.WHITE)
                 .append(Component.text(" " + player.getHealth() + "/" + player.getSkill(SkillType.HITPOINTS).getLevelWithBonuses() + " ".repeat(2), Color.ERROR.asColor()))
                 .append(specialAttackBar)
-                .append(hasNotifications ? flashingEnvelope : Component.empty())
+                .append(playerHasFairy ? fairyIcon : Component.empty())
                 .append(manaBar)
                 .append(Component.text(" ".repeat(2)))
                 .append(CurrencyUtils.getCurrencyComponent(coins))
@@ -89,7 +113,6 @@ public class ActionBarManager {
         queueTypewriter("Some new recipes are available!", 1, Color.SUCCESS);
         queueFrame(Component.text("Some new recipes are available!", Color.SUCCESS.asColor()), 60);
         startAnimationLoop();
-
     }
 
     private void queueTypewriter(String text, int frameCountPerChar, Color color) {
@@ -112,11 +135,13 @@ public class ActionBarManager {
 
                 if (p == null || !p.isOnline()) {
                     this.cancel();
+                    activeTask = null;
                     return;
                 }
 
                 if (elements.isEmpty()) {
                     this.cancel();
+                    activeTask = null;
                     startDefaultLoop();
                 } else {
                     p.sendActionBar(elements.getFirst());
@@ -143,6 +168,7 @@ public class ActionBarManager {
 
                 if (p == null || !p.isOnline()) {
                     this.cancel();
+                    activeTask = null;
                     return;
                 }
 

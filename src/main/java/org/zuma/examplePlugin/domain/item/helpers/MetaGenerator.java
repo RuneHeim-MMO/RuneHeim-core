@@ -183,8 +183,14 @@ public class MetaGenerator {
                         .append(Component.text(fairyState.getLevel() + " ", Color.ACCENT.asColor()))));
 
                 String formattedXP = NumberFormat.getNumberInstance().format(fairyState.getXPForLevel(fairyState.getLevel() + 1));
-                lore.add(Icon.EXPERIENCE.asComponent()
-                        .append(Component.text(fairyState.getExperience() + " XP / " + formattedXP + " XP", Color.SUCCESS.asColor())));
+
+                if (fairyState.isMaxed()) {
+                    lore.add(Icon.EXPERIENCE.asComponent()
+                            .append(Component.text("Maximum level achieved", Color.SUCCESS.asColor())));
+                } else {
+                    lore.add(Icon.EXPERIENCE.asComponent()
+                            .append(Component.text(fairyState.getExperience() + " XP / " + formattedXP + " XP", Color.SUCCESS.asColor())));
+                }
 
                 lore.add(Icon.SPROUT.asComponent()
                         .append(Component.text("I Generation", NamedTextColor.GREEN)));

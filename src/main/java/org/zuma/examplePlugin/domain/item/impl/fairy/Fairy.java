@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.domain.item.impl.fairy;
 
+import org.bukkit.Particle;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Icon;
@@ -15,12 +16,14 @@ import javax.annotation.Nullable;
 
 
 public class Fairy extends EquipableItemType implements Stateful {
+    private final Particle particle;
     private FairyState defaultStateTemplate;
 
-    public Fairy(AbstractItemMeta meta) {
+    public Fairy(AbstractItemMeta meta, Particle particle) {
         super(meta);
         super.setTypeLore("Fairy", Icon.FAIRY.get());
         this.setStateType(StateType.FAIRY_STATE);
+        this.particle = particle;
     }
 
     @Override
@@ -47,4 +50,7 @@ public class Fairy extends EquipableItemType implements Stateful {
         return null;
     }
 
+    public Particle getParticle() {
+        return particle;
+    }
 }

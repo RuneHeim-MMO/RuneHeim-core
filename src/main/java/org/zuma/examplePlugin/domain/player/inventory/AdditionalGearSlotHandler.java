@@ -14,6 +14,7 @@ import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 public class AdditionalGearSlotHandler {
@@ -105,7 +106,7 @@ public class AdditionalGearSlotHandler {
             return;
         }
 
-        if (!GUIControl.isGuiItem(clickedItemStack)) {
+        if (!GUIControl.isGuiItem(clickedItemStack) && clickedItemStack != null) {
             slotDef.getUnequipSound().play(player, false);
             return;
         }
@@ -144,5 +145,10 @@ public class AdditionalGearSlotHandler {
         }
 
         return items;
+    }
+
+    @Nullable
+    public ItemStack getSlotItem(RunePlayer player, ReservedSlot slot) {
+        return player.asBukkitPlayer().getInventory().getItem(slot.getSlot());
     }
 }

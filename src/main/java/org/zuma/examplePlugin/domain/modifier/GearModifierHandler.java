@@ -102,7 +102,7 @@ public class GearModifierHandler {
                     if (gearItem instanceof Fairy fairy) {
                         FairyState state = fairy.getState(itemStack);
 
-                        if (state == null) {
+                        if (state == null || state.getStamina() <= 0) {
                             return;
                         }
 

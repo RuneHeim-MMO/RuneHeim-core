@@ -5,6 +5,8 @@ import net.kyori.adventure.text.format.TextColor;
 public enum Color {
     SERVER_BRAND("#50e6cf"),
     SUBTITLE("#d9d9d9"),
+    WARNING("#ffb326"),
+    INFO("#77e4f2"),
     ERROR("#d60b33"),
     ERROR_LIGHT("#fc5677"),
     SUCCESS("#0bd69d"),

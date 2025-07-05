@@ -44,6 +44,10 @@ public class RunePlayerManager {
         return players.get(uuid);
     }
 
+    public Collection<RunePlayer> getOnlinePlayers() {
+        return players.values();
+    }
+
     public void handleOnEnable() {
         Bukkit.getOnlinePlayers().forEach(this::loadPlayerData);
         startAsyncSavingLoop();

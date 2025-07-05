@@ -11,23 +11,74 @@ import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.FairyStateMeta;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+
+for(let lvl = 1; lvl <= 30; lvl++){
+  let totalxp = 0;
+
+for(let i = 1; i < lvl+1; i++){
+  totalxp = totalxp + (500 * Math.pow(1.15,i))
+}
+
+console.log(Math.round(totalxp) + " for lvl "+  lvl +" hrs: " + totalxp / 500)
+}
+
+575 for lvl 1 hrs: 1.15
+1236 for lvl 2 hrs: 2.4725
+1997 for lvl 3 hrs: 3.9933749999999995
+2871 for lvl 4 hrs: 5.742381249999998
+3877 for lvl 5 hrs: 7.753738437499998
+5033 for lvl 6 hrs: 10.066799203124997
+6363 for lvl 7 hrs: 12.726819083593746
+7893 for lvl 8 hrs: 15.785841946132807
+9652 for lvl 9 hrs: 19.303718238052728
+11675 for lvl 10 hrs: 23.349275973760633
+14001 for lvl 11 hrs: 28.001667369824727
+16676 for lvl 12 hrs: 33.351917475298436
+19752 for lvl 13 hrs: 39.50470509659319
+23290 for lvl 14 hrs: 46.58041086108217
+27359 for lvl 15 hrs: 54.717472490244496
+32038 for lvl 16 hrs: 64.07509336378116
+37418 for lvl 17 hrs: 74.83635736834833
+43606 for lvl 18 hrs: 87.21181097360058
+50722 for lvl 19 hrs: 101.44358261964065
+58905 for lvl 20 hrs: 117.81012001258675
+68316 for lvl 21 hrs: 136.63163801447473
+79138 for lvl 22 hrs: 158.27638371664594
+91584 for lvl 23 hrs: 183.16784127414283
+105897 for lvl 24 hrs: 211.79301746526423
+122356 for lvl 25 hrs: 244.71197008505382
+141284 for lvl 26 hrs: 282.5687655978119
+163052 for lvl 27 hrs: 326.1040804374837
+188085 for lvl 28 hrs: 376.1696925031062
+216873 for lvl 29 hrs: 433.7451463785721
+249978 for lvl 30 hrs: 499.95691833535784
+
+ */
+
 public class FairyState extends AbstractState {
     private static final int BASE_XP = 500;
-    private static final double XP_POWER_AMOUNT = 1.25; // 500\times (1.25)^(20)
-    private static final int LEVELS_PER_GENERATION = 20;
+    private static final double XP_POWER_AMOUNT = 1.15; // 500\times (1.25)^(20)
+    private static final int MAX_LVL_PER_GENERATION = 10;
+
+    // Every 10 sec
+    private static final double STAMINA_DECREASE_PER_TICK = 100.0 / 360.0; // -100 stamina per hour;
+    private static final double EXPERIENCE_GAIN_PER_TICK = 350; // 500.0 / 360.0; // +500 per hour
 
     private final int maxLevel, generation; // depends on generation
     private final List<Integer> upgradeIds;
-    private int stamina; // hunger 0-100
+    private double stamina; // hunger 0-100
     private double experience;
     private boolean canConsumeFruit;
 
     public FairyState(FairyStateMeta meta) {
         super(StateType.FAIRY_STATE);
-        this.maxLevel = meta.generation() * LEVELS_PER_GENERATION;
+        this.maxLevel = meta.generation() * MAX_LVL_PER_GENERATION;
         this.generation = meta.generation();
         this.upgradeIds = meta.upgradeIds();
 
@@ -36,12 +87,19 @@ public class FairyState extends AbstractState {
         this.canConsumeFruit = meta.canConsumeFruit();
     }
 
+
+    // Every 10 sec
     public void tick() {
-        if (stamina < 0) {
+        if (stamina < STAMINA_DECREASE_PER_TICK) {
+            stamina = 0;
             return;
         }
 
-        stamina -= 1;
+        stamina -= STAMINA_DECREASE_PER_TICK;
+
+        if (this.canConsumeFruit) {
+            return;
+        }
 
         // In lore should be smth if is max level, then should remove hte xp bar
         if (getLevel() >= maxLevel) {
@@ -53,15 +111,24 @@ public class FairyState extends AbstractState {
         int nextLevelXP = getXPForLevel(getLevel() + 1);
 
         if (!(experience >= nextLevelXP)) {
-            experience += 2.5;
+            experience += EXPERIENCE_GAIN_PER_TICK;
             canConsumeFruit = false;
+
+            if (experience >= nextLevelXP) {
+                // Set XP max xp for this level.
+                experience = nextLevelXP;
+                canConsumeFruit = true;
+            }
+        }
+    }
+
+    public void feedFairy(double amount) {
+        if (stamina + amount > 100) {
+            stamina = 100;
             return;
         }
 
-        // Set XP max xp for this level.
-        experience = nextLevelXP;
-        canConsumeFruit = true;
-
+        stamina += amount;
     }
 
     public int getXPForLevel(int level) {
@@ -89,12 +156,12 @@ public class FairyState extends AbstractState {
         return canConsumeFruit;
     }
 
-    public int getStamina() {
-        return this.stamina;
+    public double getStamina() {
+        return new BigDecimal(this.stamina).setScale(1, RoundingMode.HALF_UP).doubleValue();
     }
 
     public double getExperience() {
-        return this.experience;
+        return Math.toIntExact(Math.round(this.experience));
     }
 
     public int getGeneration() {

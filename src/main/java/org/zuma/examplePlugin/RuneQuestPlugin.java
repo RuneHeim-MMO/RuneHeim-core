@@ -20,6 +20,7 @@ import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepositor
 import org.zuma.examplePlugin.domain.combat.HitHandler;
 import org.zuma.examplePlugin.domain.combat.HitListener;
 import org.zuma.examplePlugin.domain.commands.SkillsCommand;
+import org.zuma.examplePlugin.domain.fairy.FairyHandler;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
 import org.zuma.examplePlugin.domain.gui.GUIListener;
 import org.zuma.examplePlugin.domain.gui.GUIRegistry;
@@ -66,6 +67,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private static MapMarkerHandler markerHandler;
     private static BlockManager blockManager;
     private static StateManager itemStateManager;
+    private static FairyHandler fairyHandler;
 
     private MobHandler mobHandler;
     private HikariPool pool;
@@ -144,6 +146,9 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         HitListener hitListener = new HitListener(hitHandler, runePlayerManager, mobRegistry);
         getServer().getPluginManager().registerEvents(hitListener, pluginInstance);
 
+        fairyHandler = new FairyHandler(additionalGearSlotHandler);
+        fairyHandler.startLoop();
+
         initializeMap();
 
 
@@ -196,6 +201,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         blockManager.onDisable();
         pool.closeConnection();
         mobHandler.cleanup();
+        fairyHandler.stopLoop();
         Bukkit.getScheduler().cancelTasks(this);
         getRuneLogger().log(LogLevel.INFO, "Plugin disabled.");
     }

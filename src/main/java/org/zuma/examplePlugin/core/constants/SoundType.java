@@ -66,11 +66,15 @@ public enum SoundType {
     JEWELERY_EQUIP("ITEM_ARMOR_EQUIP_CHAIN", false, 0.45f, 1.1f),
     JEWELERY_UNEQUIP("ITEM_ARMOR_EQUIP_CHAIN", false, 0.45f, 1.1f),
 
-    FAIRY_EQUIP("ENTITY_BAT_TAKEOFF", false, 0.45f, 1.2f),
-    FAIRY_UNEQUIP("ENTITY_BAT_DEATH", false, 0.45f, 0.8f),
+    FAIRY_EQUIP("ENTITY_ALLAY_AMBIENT_WITH_ITEM", false, 0.6f, 1.4f),
+    FAIRY_UNEQUIP("BLOCK_AMETHYST_BLOCK_BREAK", false, 0.5f, 1.0f),
 
-    FAIRY_FOOD_EQUIP("ENTITY_GENERIC_EAT", false, 0.45f, 1.0f),
-    FAIRY_FOOD_UNEQUIP("ENTITY_PLAYER_BURP", false, 0.45f, 0.9f),
+    FAIRY_FOOD_EQUIP("ENTITY_ALLAY_ITEM_GIVEN", false, 0.6f, 1.2f),
+    FAIRY_FOOD_UNEQUIP("ENTITY_ALLAY_ITEM_TAKEN", false, 0.6f, 0.9f),
+
+    FAIRY_FEED_SOUND("ENTITY_FOX_EAT", false, 0.7f, 1.2f),
+    FAIRY_OUT_OF_STAMINA("ENTITY_ALLAY_DEATH", false, 0.6f, 1.0f),
+
 
     // AMBIENT
     VILLAGER_MAN_AMBIENT_1("vocal_villagers:entity.villager.ambient", true, 1, 0.75f),
