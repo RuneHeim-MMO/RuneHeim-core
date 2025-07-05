@@ -68,7 +68,7 @@ public class FairyState extends AbstractState {
 
     // Every 10 sec
     private static final double STAMINA_DECREASE_PER_TICK = 100.0 / 360.0; // -100 stamina per hour;
-    private static final double EXPERIENCE_GAIN_PER_TICK = 350; // 500.0 / 360.0; // +500 per hour
+    private static final double EXPERIENCE_GAIN_PER_TICK = 500.0 / 360.0; // +500 per hour
 
     private final int maxLevel, generation; // depends on generation
     private final List<Integer> upgradeIds;
@@ -122,6 +122,16 @@ public class FairyState extends AbstractState {
         }
     }
 
+    public void consumeFruit(FairyFruit fruit) {
+        if (!canConsumeFruit) {
+            throw new IllegalStateException("Fairy is not ready to consume upgrades.");
+        }
+
+        this.experience = 0;
+        this.canConsumeFruit = false;
+        this.upgradeIds.add(fruit.id);
+    }
+
     public void feedFairy(double amount) {
         if (stamina + amount > 100) {
             stamina = 100;
@@ -132,7 +142,7 @@ public class FairyState extends AbstractState {
     }
 
     public int getXPForLevel(int level) {
-        if (level >= maxLevel) {
+        if (level > maxLevel) {
             return 0;
         }
 

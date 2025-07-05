@@ -75,7 +75,7 @@
       "file": "minecraft:font/icons/level.png",
       "ascent": 9,
       "height": 12,
-      "chars": ["⛑"]
+      "chars": ["┚"]
     },
     {
       "type": "bitmap",

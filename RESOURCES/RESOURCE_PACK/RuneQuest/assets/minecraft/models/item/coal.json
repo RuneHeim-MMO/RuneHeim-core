@@ -258,7 +258,38 @@
     },
     {
       "predicate": {
-        "custom_model_data": 2003
+        "custom_model_data": 2200
+      },
+      "model": "item/custom/fairy/upgrades/attack_upgrade"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2201
+      },
+      "model": "item/custom/fairy/upgrades/defence_upgrade"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2202
+      },
+      "model": "item/custom/fairy/upgrades/strength_upgrade"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2203
+      },
+      "model": "item/custom/fairy/upgrades/hitpoints_upgrade"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2204
+      },
+      "model": "item/custom/fairy/upgrades/range_upgrade"
+    },
+
+    {
+      "predicate": {
+        "custom_model_data": 2205
       },
       "model": "item/coal"
     }

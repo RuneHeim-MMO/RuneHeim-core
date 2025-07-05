@@ -210,6 +210,26 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.FAIRY, ItemId.FAIRY_OF_FROST.asInt(), Material.KNOWLEDGE_BOOK, ItemRarity.LEGENDARY, "Fairy of Frost", List.of("A chilly wisp that freezes the air and slows the fiercest foes."), null, null),
                         new VersionedJson(new Gson().toJson(new FairyMeta(Particle.ITEM_SNOWBALL, 1)), 1)),
 
+                // Fairy Upgrade
+                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY_FRUIT, ItemId.FAIRY_ATTACK_UPGRADE.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Blazing Apple",
+                        List.of("A crisp red apple with a fiery aura.", "Empowers your fairy to enhance your Attack."), null, null),
+                        new VersionedJson(new Gson().toJson(new FairyFruitMeta(null, List.of(new SkillModifier(SkillType.ATTACK, 1)))), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY_FRUIT, ItemId.FAIRY_DEFENCE_UPGRADE.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Stoneblue Berry",
+                        List.of("A cluster of enchanted blueberries, dense with magic.", "Strengthens your Defence through your fairy's help."), null, null),
+                        new VersionedJson(new Gson().toJson(new FairyFruitMeta(null, List.of(new SkillModifier(SkillType.DEFENCE, 1)))), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY_FRUIT, ItemId.FAIRY_STRENGTH_UPGRADE.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Inferno Dragonfruit",
+                        List.of("A rare dragonfruit pulsing with raw power.", "Bolsters your Strength using your bonded fairy."), null, null),
+                        new VersionedJson(new Gson().toJson(new FairyFruitMeta(null, List.of(new SkillModifier(SkillType.STRENGTH, 1)))), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY_FRUIT, ItemId.FAIRY_HITPOINTS_UPGRADE.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Golden Marmelade",
+                        List.of("A jar of radiant marmelade, sweet and soothing.", "Boosts your Hitpoints through your fairy’s magic."), null, null),
+                        new VersionedJson(new Gson().toJson(new FairyFruitMeta(null, List.of(new SkillModifier(SkillType.HITPOINTS, 1)))), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY_FRUIT, ItemId.FAIRY_RANGE_UPGRADE.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Whispering Grapes",
+                        List.of("A bunch of shimmering grapes that hum with energy.", "Improves your Ranged skill via fairy essence."), null, null),
+                        new VersionedJson(new Gson().toJson(new FairyFruitMeta(null, List.of(new SkillModifier(SkillType.RANGED, 1)))), 1)),
 
                 // Scrolls
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL_SCROLL, ItemId.FUSION_SCROLL.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Fusion Scroll", List.of("A mystical scroll used to embed gems into gear.", "Essential for upgrading equipment with gem-based attributes."), null, null), null),
@@ -792,8 +812,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON_WITH_GEM_SOCKETS, ItemId.RUNITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Sword", List.of("Runite sword crackling with magical energy."), null, null),
                         new VersionedJson(new Gson().toJson(
-                                new SocketedEquipableMeta(new EquipableTypeMeta(
-                                        List.of(new SkillModifier(SkillType.ATTACK, 10)),
+                                new SocketedEquipableMeta(new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 30),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 29)

@@ -74,6 +74,7 @@ public enum SoundType {
 
     FAIRY_FEED_SOUND("ENTITY_FOX_EAT", false, 0.7f, 1.2f),
     FAIRY_OUT_OF_STAMINA("ENTITY_ALLAY_DEATH", false, 0.6f, 1.0f),
+    FAIRY_UPGRADE("ENTITY_ILLUSIONER_PREPARE_MIRROR", false, 0.8f, 0.5f),
 
 
     // AMBIENT

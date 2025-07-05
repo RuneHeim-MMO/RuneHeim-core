@@ -60,7 +60,7 @@ public enum Icon {
     FAIRY("ⰱ"),
     STAMINA("ⶼ"),
     EXPERIENCE("⭮"),
-    LEVEL("⛑"),
+    LEVEL("┚"),
     SPROUT("✦"),
 
     GREEN_GEM("⮩"),

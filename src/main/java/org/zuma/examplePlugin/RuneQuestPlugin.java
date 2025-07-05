@@ -21,6 +21,7 @@ import org.zuma.examplePlugin.domain.combat.HitHandler;
 import org.zuma.examplePlugin.domain.combat.HitListener;
 import org.zuma.examplePlugin.domain.commands.SkillsCommand;
 import org.zuma.examplePlugin.domain.fairy.FairyHandler;
+import org.zuma.examplePlugin.domain.fairy.FairyListener;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
 import org.zuma.examplePlugin.domain.gui.GUIListener;
 import org.zuma.examplePlugin.domain.gui.GUIRegistry;
@@ -147,6 +148,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(hitListener, pluginInstance);
 
         fairyHandler = new FairyHandler(additionalGearSlotHandler);
+        FairyListener fairyListener = new FairyListener(fairyHandler);
+        getServer().getPluginManager().registerEvents(fairyListener, pluginInstance);
         fairyHandler.startLoop();
 
         initializeMap();

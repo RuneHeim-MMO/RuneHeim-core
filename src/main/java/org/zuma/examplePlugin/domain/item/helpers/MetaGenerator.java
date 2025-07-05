@@ -18,6 +18,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
+import org.zuma.examplePlugin.core.utils.ModifierUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.hud.LoadingBarBuilder;
@@ -26,6 +27,7 @@ import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.base.SocketedEquipableItemType;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.PersistanceDataKey;
+import org.zuma.examplePlugin.domain.item.helpers.lore.*;
 import org.zuma.examplePlugin.domain.item.impl.consumable.Food;
 import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
 import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFood;
@@ -33,6 +35,8 @@ import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.states.FairyState;
 import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
+import org.zuma.examplePlugin.domain.modifier.Modifier;
+import org.zuma.examplePlugin.domain.modifier.SkillModifier;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.text.NumberFormat;
@@ -64,6 +68,7 @@ public class MetaGenerator {
         Multimap<Attribute, AttributeModifier> emptyModifiers = ArrayListMultimap.create();
         meta.setAttributeModifiers(emptyModifiers);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(ItemFlag.HIDE_DYE);
         item.setItemMeta(meta);
     }
 
@@ -93,126 +98,24 @@ public class MetaGenerator {
         lore.addAll(itemType.descriptionLore.stream().map(str -> Component.text(str).color(Color.ITEM_DESCRIPTION.asColor())).toList());
 
         if (itemType instanceof Food food) {
-            lore.add(Component.text("Heals ", Color.SUCCESS.asColor())
-                    .append(SkillType.HITPOINTS.getSymbolComponent())
-                    .append(Component.text(" " + food.getHealAmount() + " " + SkillType.HITPOINTS.getLabel(), Color.SUCCESS.asColor())));
+            lore.addAll(new FoodLore(food).getLore());
         }
 
         if (itemType instanceof EquipableItemType equipable) {
-            lore.add(Component.empty());
+            lore.addAll(new EquipableLore(equipable).getLore());
 
-            if (!equipable.getRequirements().isEmpty()) {
-                lore.add(Component.text("Requirements: ", Color.ITEM_LABEL.asColor()));
-
-                equipable.getRequirements().forEach(requirement -> lore.add(
-                        Component.text(requirement.type().getSymbol(), NamedTextColor.WHITE)
-                                .append(Component.text(" " + requirement.minimumLevel() + " " + requirement.type().getLabel(), Color.ITEM_REQUIREMENT.asColor()))));
-
-            }
-
-            if (!equipable.getModifiers().isEmpty() || !equipable.getSkillModifiers().isEmpty()) {
-                if (!equipable.getRequirements().isEmpty()) {
-                    lore.add(Component.empty());
-                }
-
-                lore.add(Component.text("Modifiers: ", Color.ITEM_LABEL.asColor()));
-
-                if (!equipable.getSkillModifiers().isEmpty()) {
-                    equipable.getSkillModifiers().forEach(modifier -> {
-                        int amount = Math.toIntExact(modifier.amount());
-                        String sign = amount > 0 ? "+" : "";
-                        TextColor color = amount > 0 ? Color.ITEM_BONUS_POSITIVE.asColor() : Color.ITEM_BONUS_NEGATIVE.asColor();
-
-                        lore.add(Component.text(modifier.type().getSymbol(), NamedTextColor.WHITE)
-                                .append(Component.text(" " + sign + amount + " " + modifier.type().getLabel() + " Level").color(color)));
-                    });
-
-                    if (!equipable.getModifiers().isEmpty()) {
-                        lore.add(Component.empty());
-                    }
-                }
-
-                if (!equipable.getModifiers().isEmpty()) {
-                    equipable.getModifiers().forEach(modifier -> {
-                        int amount = Math.toIntExact(Math.round(modifier.amount()));
-                        String sign = amount > 0 ? "+" : "";
-                        TextColor color = amount > 0 ? Color.ITEM_BONUS_POSITIVE.asColor() : Color.ITEM_BONUS_NEGATIVE.asColor();
-
-                        lore.add(Component.text(modifier.type().getSymbol(), NamedTextColor.WHITE)
-                                .append(Component.text(" " + sign + amount + " " + modifier.type().getLabel()).color(color)));
-                    });
-                }
-            }
         }
 
         if (itemType instanceof SocketedEquipableItemType) {
-            AbstractState state = RuneQuestPlugin.getItemStateManager().getItemState(item);
-
-            if (state instanceof GearGemSocketsState socketsState) {
-                lore.add(Component.empty());
-                lore.add(Icon.GREEN_GEM.asComponent().append(Component.text("Gem slots (" + socketsState.getInsertedGemIds().size() + "/" + socketsState.getTotalGemSlots() + ")", Color.SUCCESS.asColor())));
-                lore.add(Component.text(TextUtils.repeatString("-", 16), Color.SUCCESS.asColor()).decorate(TextDecoration.STRIKETHROUGH));
-
-                socketsState.getInsertedGems().forEach(gemItem -> {
-                    TextColor rarityColor = TextColor.fromHexString(gemItem.rarity.getHexColor());
-                    lore.add(Component.text(" ● " + gemItem.displayName, rarityColor));
-                });
-
-                for (int i = 0; i < socketsState.getTotalGemSlots() - socketsState.getInsertedGemIds().size(); i++) {
-                    lore.add(Component.text(" * Empty gem slot *", Color.ITEM_TYPE.asColor()));
-                }
-                lore.add(Component.text(TextUtils.repeatString("-", 16), Color.SUCCESS.asColor()).decorate(TextDecoration.STRIKETHROUGH));
-                lore.add(Component.empty());
-            }
-
+            lore.addAll(new SocketedEquipableLore(item).getLore());
         }
 
         if (itemType instanceof FairyFood fairyFood) {
-            lore.add(Component.empty());
-            lore.add(Component.text("Restores ", Color.SUCCESS.asColor())
-                    .append(Icon.STAMINA.asComponent())
-                    .append(Component.text(fairyFood.getEnergyRestoreAmount() + " Stamina", Color.SUCCESS.asColor())));
+            lore.addAll(new FairyFoodLore(fairyFood).getLore());
         }
 
-        if (itemType instanceof Fairy) {
-            AbstractState state = RuneQuestPlugin.getItemStateManager().getItemState(item);
-
-            if (state instanceof FairyState fairyState) {
-
-                lore.add(Icon.LEVEL.asComponent().append(Component.text("Level: ", Color.ITEM_DESCRIPTION.asColor())
-                        .append(Component.text(fairyState.getLevel() + " ", Color.ACCENT.asColor()))));
-
-                String formattedXP = NumberFormat.getNumberInstance().format(fairyState.getXPForLevel(fairyState.getLevel() + 1));
-
-                if (fairyState.isMaxed()) {
-                    lore.add(Icon.EXPERIENCE.asComponent()
-                            .append(Component.text("Maximum level achieved", Color.SUCCESS.asColor())));
-                } else {
-                    lore.add(Icon.EXPERIENCE.asComponent()
-                            .append(Component.text(fairyState.getExperience() + " XP / " + formattedXP + " XP", Color.SUCCESS.asColor())));
-                }
-
-                lore.add(Icon.SPROUT.asComponent()
-                        .append(Component.text("I Generation", NamedTextColor.GREEN)));
-
-
-                lore.add(Component.empty());
-
-                lore.add(Icon.STAMINA.asComponent()
-                        .append(Component.text(fairyState.getStamina() + "% Stamina", Color.FAIRY_STAMINA.asColor())));
-
-                lore.add(Component.empty());
-
-                lore.add(Icon.FAIRY.asComponent().append(Component.text("Fairy Bonuses", Color.SUCCESS.asColor())));
-                lore.add(Component.text(TextUtils.repeatString("-", 16), Color.SUCCESS.asColor()).decorate(TextDecoration.STRIKETHROUGH));
-                lore.add(Component.text("  * No upgrades * ", Color.ITEM_TYPE.asColor()));
-                lore.add(Component.text(TextUtils.repeatString("-", 16), Color.SUCCESS.asColor()).decorate(TextDecoration.STRIKETHROUGH));
-
-                lore.add(Component.empty());
-                Color consumeFruitColor = fairyState.canConsumeFruit() ? Color.SUCCESS : Color.ERROR;
-                lore.add((Component.text(fairyState.canConsumeFruit() ? "✓ Ready for upgrade" : "❌ Not ready for upgrade", consumeFruitColor.asColor())));
-                lore.add(Component.empty());
-            }
+        if (itemType instanceof Fairy fairy) {
+            lore.addAll(new FairyLore(fairy, item).getLore());
         }
 
         lore.add(Component.empty());
@@ -224,6 +127,7 @@ public class MetaGenerator {
 
         return lore.stream().map(component -> component.decoration(TextDecoration.ITALIC, false)).toList();
     }
+
 
     public Component getDisplayNameSuffix(ItemStack item) {
         if (!(itemType instanceof Stateful)) {

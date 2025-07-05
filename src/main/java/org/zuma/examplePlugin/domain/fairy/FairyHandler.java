@@ -6,14 +6,17 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
 import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFood;
+import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFruit;
 import org.zuma.examplePlugin.domain.item.state.states.FairyState;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
@@ -46,6 +49,70 @@ public class FairyHandler {
         this.fedFairies = new HashMap<>();
     }
 
+    public void handleFruitClickOnFairy(InventoryClickEvent event, RunePlayer player, Fairy fairy, FairyFruit fruit, ItemStack clickedOnFairyItemStack, ItemStack cursorFruitItemStack) {
+        FairyState state = fairy.getState(clickedOnFairyItemStack);
+
+        if (state == null) {
+            return;
+        }
+
+        if (!state.canConsumeFruit()) {
+            HudService.sendFailMessage(player, Component.text("This fairy is not ready to consume upgrades."));
+            return;
+        }
+
+        try {
+            state.consumeFruit(fruit);
+            fairy.getMetaGenerator().updatePresentationLayer(clickedOnFairyItemStack);
+
+
+            if (cursorFruitItemStack.getAmount() > 1) {
+                cursorFruitItemStack.setAmount(cursorFruitItemStack.getAmount() - 1);
+                event.getView().setCursor(cursorFruitItemStack);
+            } else {
+                event.getView().setCursor(null);
+            }
+
+            SoundType.FAIRY_UPGRADE.play(player, true);
+            player.asBukkitPlayer().sendMessage(
+                    Component.text("Your fairy devoured ", Color.SUCCESS.asColor())
+                            .append(cursorFruitItemStack.displayName())
+                            .append(Component.text(" and gained new powers!", Color.SUCCESS.asColor()))
+            );
+
+        } catch (Exception e) {
+            HudService.sendFailMessage(player, Component.text(e.getMessage()));
+            return;
+        }
+
+    }
+
+    public void startLoop() {
+        if (spriteDrawingTask != null && !spriteDrawingTask.isCancelled()) return;
+        if (playerSlotTracker != null && !playerSlotTracker.isCancelled()) return;
+
+        spriteDrawingTask = Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::spriteDrawingTaskTick, SPRITE_DRAW_INTERVAL, SPRITE_DRAW_INTERVAL);
+        playerSlotTracker = Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::playerSlotTrackerTick, SLOT_CHECKER_INTERVAL, SLOT_CHECKER_INTERVAL);
+        fairyTickTask = Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::fairyTaskTick, FAIRY_TICK_INTERVAL, FAIRY_TICK_INTERVAL);
+    }
+
+    public void stopLoop() {
+        if (spriteDrawingTask != null && !spriteDrawingTask.isCancelled()) {
+            spriteDrawingTask.cancel();
+            spriteDrawingTask = null;
+        }
+
+        if (playerSlotTracker != null && !playerSlotTracker.isCancelled()) {
+            playerSlotTracker.cancel();
+            playerSlotTracker = null;
+        }
+
+
+        if (fairyTickTask != null && !fairyTickTask.isCancelled()) {
+            fairyTickTask.cancel();
+            fairyTickTask = null;
+        }
+    }
 
     private void spriteDrawingTaskTick() {
         updateT();
@@ -168,33 +235,6 @@ public class FairyHandler {
             }
 
         });
-    }
-
-    public void startLoop() {
-        if (spriteDrawingTask != null && !spriteDrawingTask.isCancelled()) return;
-        if (playerSlotTracker != null && !playerSlotTracker.isCancelled()) return;
-
-        spriteDrawingTask = Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::spriteDrawingTaskTick, SPRITE_DRAW_INTERVAL, SPRITE_DRAW_INTERVAL);
-        playerSlotTracker = Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::playerSlotTrackerTick, SLOT_CHECKER_INTERVAL, SLOT_CHECKER_INTERVAL);
-        fairyTickTask = Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::fairyTaskTick, FAIRY_TICK_INTERVAL, FAIRY_TICK_INTERVAL);
-    }
-
-    public void stopLoop() {
-        if (spriteDrawingTask != null && !spriteDrawingTask.isCancelled()) {
-            spriteDrawingTask.cancel();
-            spriteDrawingTask = null;
-        }
-
-        if (playerSlotTracker != null && !playerSlotTracker.isCancelled()) {
-            playerSlotTracker.cancel();
-            playerSlotTracker = null;
-        }
-
-
-        if (fairyTickTask != null && !fairyTickTask.isCancelled()) {
-            fairyTickTask.cancel();
-            fairyTickTask = null;
-        }
     }
 
     private void updateT() {
