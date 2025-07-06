@@ -6,7 +6,8 @@ public enum GUIOverlay {
     FURNACE_OVERLAY("Ⰳ"),
     ANVIL_OVERLAY("⽰"),
     CRAFTING_TABLE_OVERLAY("⼟"),
-    FUSION_MASTER_OVERLAY("⾭");
+    FUSION_MASTER_OVERLAY("⾭"),
+    SHOP("ⱅⷯ");
 
     private final String glyph;
 

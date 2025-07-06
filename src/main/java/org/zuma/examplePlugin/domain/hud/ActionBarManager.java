@@ -26,7 +26,6 @@ public class ActionBarManager {
     private boolean tick;
     private FairyStatus fairyStatus;
 
-    int coins = 0;
     int bar = 6;
 
     public ActionBarManager(RunePlayer player) {
@@ -58,6 +57,7 @@ public class ActionBarManager {
     private Component getDefaultElement() {
         NamedTextColor fairyIconColor = NamedTextColor.WHITE;
         boolean playerHasFairy = !fairyStatus.equals(FairyStatus.NONE);
+        long coins = player.getPouchCoins();
 
         switch (fairyStatus) {
             case EXHAUSTED -> fairyIconColor = NamedTextColor.DARK_GRAY;
@@ -66,8 +66,6 @@ public class ActionBarManager {
         }
 
         Component fairyIcon = Component.text(" " + Icon.FAIRY.get() + " ", fairyIconColor);
-
-        coins += 5050;
 
 
         if (bar >= 10) {

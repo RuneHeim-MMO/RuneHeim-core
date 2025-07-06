@@ -46,6 +46,8 @@ public class RunePlayer implements CombatEntity {
     private final ActionBarManager actionBarManager;
     private final PlayerScoreboardManager scoreboardManager;
 
+    private long pouchCoins;
+
 
     public RunePlayer(UUID uuid, EnumMap<SkillType, Skill> skills) {
         this.uuid = uuid;
@@ -59,6 +61,8 @@ public class RunePlayer implements CombatEntity {
         busyStateHandler = new RunePlayerBusyStateHandler(this);
         itemHandler = new PlayerItemDistributor(this);
         xpHandler = new PlayerXpHandler(this);
+
+        pouchCoins = 0;
 
         HudService.updateVanillaGUI(this);
     }
@@ -189,6 +193,16 @@ public class RunePlayer implements CombatEntity {
 
     public ActionBarManager getActionBar() {
         return this.actionBarManager;
+    }
+
+
+    public long getPouchCoins() {
+        return pouchCoins;
+    }
+
+    public void setPouchCoins(long coins) {
+        SoundType.COINS_DROP.play(this.asBukkitPlayer(), false);
+        this.pouchCoins = coins;
     }
 
 

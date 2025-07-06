@@ -22,6 +22,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 import org.zuma.examplePlugin.domain.player.inventory.ReservedSlot;
 import org.zuma.examplePlugin.events.fairy.FairyAutoFedEvent;
+import org.zuma.examplePlugin.events.fairy.FairyUpgradeEvent;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -61,10 +62,16 @@ public class FairyHandler {
             return;
         }
 
+        FairyUpgradeEvent newEvent = new FairyUpgradeEvent(player, fruit, fairy, state);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
+        if (newEvent.isCancelled()) {
+            return;
+        }
+
         try {
             state.consumeFruit(fruit);
             fairy.getMetaGenerator().updatePresentationLayer(clickedOnFairyItemStack);
-
 
             if (cursorFruitItemStack.getAmount() > 1) {
                 cursorFruitItemStack.setAmount(cursorFruitItemStack.getAmount() - 1);
@@ -74,6 +81,7 @@ public class FairyHandler {
             }
 
             SoundType.FAIRY_UPGRADE.play(player, true);
+            RuneQuestPlugin.getItemStateManager().saveUpdatedState(state);
             player.asBukkitPlayer().sendMessage(
                     Component.text("Your fairy devoured ", Color.SUCCESS.asColor())
                             .append(cursorFruitItemStack.displayName())

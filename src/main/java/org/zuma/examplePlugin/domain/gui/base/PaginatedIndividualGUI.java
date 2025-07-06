@@ -30,7 +30,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
     private int maxPages = 1;
     private List<ItemStack> items;
     @Nullable
-    private Set<Integer> ignoredSlots;
+    private final Set<Integer> ignoredSlots;
 
     public PaginatedIndividualGUI(String title, int id, int rows, @Nullable Set<Integer> ignoredSlots) {
         super(title, id, rows);

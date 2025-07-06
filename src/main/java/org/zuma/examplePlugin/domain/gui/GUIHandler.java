@@ -13,14 +13,12 @@ import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.gui.base.AbstractGUI;
 import org.zuma.examplePlugin.domain.gui.constants.GUIOverlay;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
-import org.zuma.examplePlugin.domain.gui.impl.individual.AnvilInventory;
-import org.zuma.examplePlugin.domain.gui.impl.individual.CookingInventory;
-import org.zuma.examplePlugin.domain.gui.impl.individual.FurnaceInventory;
-import org.zuma.examplePlugin.domain.gui.impl.individual.FusionMasterInventory;
+import org.zuma.examplePlugin.domain.gui.impl.individual.*;
 import org.zuma.examplePlugin.domain.gui.impl.individual.admin.BlockInvCreatorInventory;
 import org.zuma.examplePlugin.domain.gui.impl.individual.admin.NodeCreatorInventory;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
+import org.zuma.examplePlugin.domain.shop.constants.ShopId;
 import org.zuma.examplePlugin.events.inventory.RuneInventoryClick;
 import org.zuma.examplePlugin.events.inventory.RuneInventoryCloseEvent;
 import org.zuma.examplePlugin.events.inventory.RuneInventoryOpenEvent;
@@ -60,6 +58,7 @@ public class GUIHandler {
         this.registry.register(InventoryId.FUSION_MASTER.asInt(), () -> new FusionMasterInventory(GUIOverlay.FUSION_MASTER_OVERLAY.asGlyph() + "§f" + Icon.SCROLL_RED.get() + "§f Fusion Master", InventoryId.FUSION_MASTER.asInt()));
         this.registry.register(InventoryId.ADMIN_NODE_CREATE.asInt(), () -> new NodeCreatorInventory("[A] Create Resource Node", InventoryId.ADMIN_NODE_CREATE.asInt(), blockLoader));
         this.registry.register(InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), () -> new BlockInvCreatorInventory("[A] Create Inventory Opener", InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), blockLoader, this));
+        this.registry.register(InventoryId.GENERAL_STORE.asInt(), () -> new ShopInventory(GUIOverlay.SHOP.asGlyph() + "§f" + Icon.SCROLL_RED.get() + "§f General Store", InventoryId.GENERAL_STORE.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.GENERAL_STORE.asInt())));
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
     }

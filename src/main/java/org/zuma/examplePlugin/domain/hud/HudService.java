@@ -134,6 +134,13 @@ public class HudService {
 
     }
 
+    public static void showCoinsChangeBubble(RunePlayer player, long change) {
+        String icon = "§f" + Icon.COIN_HANDFUL.get() + Color.SUCCESS.asSpigotHex();
+        String prefix = change > 0 ? Color.SUCCESS.asSpigotHex() + "+" : Color.ERROR.asSpigotHex();
+
+        spawnVerticalHologramBubble(player, prefix + change + " " + icon);
+    }
+
     public static void showXpGainMessage(RunePlayer player, SkillType type, double xp, XpSource source) {
         String xpStr = "§f" + type.getSymbol() + Color.SUCCESS.asSpigotHex() + " " + xp + " XP";
         boolean isPartySource = source == org.zuma.examplePlugin.core.constants.XpSource.PARTY;

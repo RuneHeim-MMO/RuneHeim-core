@@ -39,14 +39,15 @@ public class FairyLore implements LoreCreator {
             lore.add(Icon.LEVEL.asComponent().append(Component.text("Level: ", Color.ITEM_DESCRIPTION.asColor())
                     .append(Component.text(fairyState.getLevel() + " ", Color.ACCENT.asColor()))));
 
-            String formattedXP = NumberFormat.getNumberInstance().format(fairyState.getXPForLevel(fairyState.getLevel() + 1));
+            String formattedCurrentXP = NumberFormat.getNumberInstance().format(fairyState.getExperience());
+            String formattedNextLevelXP = NumberFormat.getNumberInstance().format(fairyState.getXPForLevel(fairyState.getLevel() + 1));
 
             if (fairyState.isMaxed()) {
                 lore.add(Icon.EXPERIENCE.asComponent()
                         .append(Component.text("Maximum level achieved", Color.SUCCESS.asColor())));
             } else {
                 lore.add(Icon.EXPERIENCE.asComponent()
-                        .append(Component.text(fairyState.getExperience() + " XP / " + formattedXP + " XP", Color.SUCCESS.asColor())));
+                        .append(Component.text(formattedCurrentXP + " XP / " + formattedNextLevelXP + " XP", Color.SUCCESS.asColor())));
             }
 
             lore.add(Icon.SPROUT.asComponent()

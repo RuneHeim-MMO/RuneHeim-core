@@ -48,6 +48,9 @@ import org.zuma.examplePlugin.domain.recipes.RecipeListener;
 import org.zuma.examplePlugin.domain.recipes.RecipeRegistry;
 import org.zuma.examplePlugin.domain.recipes.persistence.RecipeLoader;
 import org.zuma.examplePlugin.domain.recipes.persistence.RecipeRepository;
+import org.zuma.examplePlugin.domain.shop.ShopHandler;
+import org.zuma.examplePlugin.domain.shop.ShopRegistry;
+import org.zuma.examplePlugin.domain.shop.persistence.ShopRepository;
 import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
 
 import java.util.ArrayList;
@@ -69,6 +72,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private static BlockManager blockManager;
     private static StateManager itemStateManager;
     private static FairyHandler fairyHandler;
+    private static ShopRegistry shopRegistry;
 
     private MobHandler mobHandler;
     private HikariPool pool;
@@ -138,6 +142,11 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         RecipeListener recipeListener = new RecipeListener(recipeHandler);
         getServer().getPluginManager().registerEvents(recipeListener, pluginInstance);
 
+        ShopRepository shopRepository = new ShopRepository();
+        shopRegistry = new ShopRegistry();
+        ShopHandler shopHandler = new ShopHandler(shopRegistry, shopRepository);
+        shopHandler.initializeShops();
+
         guiHandler = new GUIHandler(new GUIRegistry(), runePlayerManager);
         GUIListener guiListener = new GUIListener(guiHandler);
         getServer().getPluginManager().registerEvents(guiListener, pluginInstance);
@@ -151,6 +160,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         FairyListener fairyListener = new FairyListener(fairyHandler);
         getServer().getPluginManager().registerEvents(fairyListener, pluginInstance);
         fairyHandler.startLoop();
+
 
         initializeMap();
 
@@ -249,5 +259,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         return itemStateManager;
     }
 
+    public static ShopRegistry getShopRegistry() {
+        return shopRegistry;
+    }
 
 }

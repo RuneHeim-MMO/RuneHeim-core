@@ -12,6 +12,8 @@ public enum Color {
     SUCCESS("#0bd69d"),
     HEALTH("#c20037"),
 
+    SHOP_DESCRIPTION("#42cfa9"),
+
     ITEM_TYPE("#4f4f4f"),
     ITEM_DESCRIPTION("#c9c9c9"),
     ITEM_LABEL("#FFD700"),

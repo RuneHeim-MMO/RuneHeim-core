@@ -12,6 +12,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.InventoryUtils;
 import org.zuma.examplePlugin.core.utils.ItemUtils;
 import org.zuma.examplePlugin.domain.gui.base.IndividualGUI;
 import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
@@ -350,15 +351,7 @@ public class FusionMasterInventory extends IndividualGUI {
 
     @Override
     public void onInventoryClose(InventoryCloseEvent event, RunePlayer player) {
-        for (int slot = 0; slot < inventory.getSize(); slot++) {
-            ItemStack item = inventory.getItem(slot);
-
-            if (item != null && !GUIControl.isGuiItem(item)) {
-                ItemStack cloned = item.clone();
-                inventory.setItem(slot, null);
-                player.giveItemOrDrop(cloned);
-            }
-        }
+        InventoryUtils.returnPlayerItemFromInventory(inventory, player);
     }
 
 

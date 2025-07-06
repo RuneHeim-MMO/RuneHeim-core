@@ -28,6 +28,8 @@ public enum SoundType {
     SMITHING_STEP("BLOCK_ANVIL_HIT", false, 1.0f, 1.0f),
     SMITHING_SUCCESS("BLOCK_ANVIL_USE", false, 0.25f, 0.75f),
 
+    COINS_DROP("runequest.coins.drop", true, 1f, 1f),
+
     CRAFT_START("BLOCK_WOOD_PLACE", false, 0.8f, 1.0f),
     CRAFT_STEP("ITEM_ARMOR_EQUIP_GENERIC", false, 0.8f, 0.8f),
     CRAFT_SUCCESS("ITEM_ARMOR_EQUIP_GENERIC", false, 0.8f, 0.8f),
@@ -76,6 +78,7 @@ public enum SoundType {
     FAIRY_OUT_OF_STAMINA("ENTITY_ALLAY_DEATH", false, 0.6f, 1.0f),
     FAIRY_UPGRADE("ENTITY_ILLUSIONER_PREPARE_MIRROR", false, 0.8f, 0.5f),
 
+    SHOP_MOVE_ITEM("ITEM_ARMOR_EQUIP_GENERIC", false, 0.6f, 1.2f),
 
     // AMBIENT
     VILLAGER_MAN_AMBIENT_1("vocal_villagers:entity.villager.ambient", true, 1, 0.75f),

@@ -120,6 +120,10 @@ public class AdminCommand implements BasicCommand {
             RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), runePlayer, null);
         }
 
+        if (Objects.equals(args[0], "shop")) {
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.GENERAL_STORE.asInt(), runePlayer, null);
+        }
+
         if (args.length == 1 && Objects.equals(args[0], "illegal")) {
             IllegalItemWatchdog.tagIllegalItem(player.getInventory().getItemInMainHand());
         }
