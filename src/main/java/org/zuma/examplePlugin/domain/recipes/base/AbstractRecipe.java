@@ -102,13 +102,13 @@ public abstract class AbstractRecipe implements SkillRestrictable {
     }
 
     public ItemStack getDisplayItemstack() {
-        return this.displayItemstack.clone();
+        return this.displayItemstack;
     }
 
     public ItemStack getDisplayItemstack(RunePlayer player, ItemRegistry registry) {
         boolean playerMeetsSkillRequirements = player.meetsRequirements(this);
 
-        ItemStack newItem = playerMeetsSkillRequirements ? new ItemStack(displayItemstack) : new ItemStack(Material.BARRIER);
+        ItemStack newItem = playerMeetsSkillRequirements ? displayItemstack.clone() : new ItemStack(Material.BARRIER);
         ItemMeta meta = newItem.getItemMeta();
         IllegalItemWatchdog.tagIllegalItem(meta);
         List<Component> itemLore = new ArrayList<>();

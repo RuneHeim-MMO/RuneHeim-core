@@ -41,6 +41,10 @@ public class RecipeListener implements Listener {
             return;
         }
 
+        if (clicked.isSimilar(cursor)) {
+            return;
+        }
+
         if (cursor.getType().isAir()) {
             return;
         }
