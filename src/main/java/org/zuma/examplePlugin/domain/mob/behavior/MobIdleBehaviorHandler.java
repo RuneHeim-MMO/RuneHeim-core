@@ -43,10 +43,11 @@ public class MobIdleBehaviorHandler {
                     if (mob == null) continue;
 
                     UUID mobUUID = mob.getUUID();
+                    boolean hasWalkingLimit = mob.getMaxWalkDistance() >= -1; // -1 = infinite distance, 0 - no walking, x - amnt of blocks
 
-                    if (!mob.canWalk() && !mobLocations.containsKey(mobUUID)) {
+                    if (hasWalkingLimit && !mobLocations.containsKey(mobUUID)) {
                         mobLocations.put(mobUUID, entity.getLocation());
-                    } else if (!mob.canWalk() && entity.getLocation().distanceSquared(mobLocations.get(mobUUID)) > 1) {
+                    } else if (hasWalkingLimit && entity.getLocation().distanceSquared(mobLocations.get(mobUUID)) > mob.getMaxWalkDistance()) {
                         entity.teleport(mobLocations.get(mobUUID));
                     }
 

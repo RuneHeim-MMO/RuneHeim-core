@@ -275,7 +275,11 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
     public void onInventoryClose(InventoryCloseEvent event, RunePlayer player) {
         shop.unsubscribe(this);
         InventoryUtils.returnPlayerItemFromInventory(shopInventory, player);
-        HudService.showCoinsChangeBubble(player, player.getPouchCoins() - initialPlayerCoins);
+
+        long change = player.getPouchCoins() - initialPlayerCoins;
+
+        if (change != 0)
+            HudService.showCoinsChangeBubble(player, change);
     }
 
     @Override

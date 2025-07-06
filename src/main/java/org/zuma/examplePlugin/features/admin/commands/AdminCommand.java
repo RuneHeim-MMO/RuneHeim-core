@@ -121,7 +121,7 @@ public class AdminCommand implements BasicCommand {
         }
 
         if (Objects.equals(args[0], "shop")) {
-            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.GENERAL_STORE.asInt(), runePlayer, null);
+            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.GENERIC_SHOPKEEPER.getId());
         }
 
         if (args.length == 1 && Objects.equals(args[0], "illegal")) {

@@ -11,14 +11,16 @@ import java.util.List;
 public class ShopRepository {
     private final Gson gson = new Gson();
 
+    private static final List<ShopItemConfig> GENERAL_STORE_ITEMS = List.of(
+            new ShopItemConfig(ItemId.SMITHING_HAMMER.asInt(), 8, 30, 80L, 10L),
+            new ShopItemConfig(ItemId.FLINT_AND_STEEL.asInt(), 8, 30, 20L, 5L)
+    );
+
+
     public List<ShopConfig> getAll() {
         return List.of(
 
-                new ShopConfig(ShopId.GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
-                        new ShopItemConfig(ItemId.YEW_LOG.asInt(), 64, null, 80L, 20L)
-
-
-                ))), 1)));
+                new ShopConfig(ShopId.GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)));
 
 
     }

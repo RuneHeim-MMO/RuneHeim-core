@@ -11,12 +11,12 @@ import javax.annotation.Nullable;
 public abstract class AbstractInventoryOpener extends FriendlyImmortalMob {
     private final int inventoryId;
 
-    public AbstractInventoryOpener(FriendlyImmortalMobMeta meta, int inventoryId, @Nullable String skin, boolean canWalk) {
+    public AbstractInventoryOpener(FriendlyImmortalMobMeta meta, int inventoryId, @Nullable String skin, int maxWalkDistance) {
         super(meta);
         this.inventoryId = inventoryId;
 
         if (skin != null) setPlayerDisguise(skin);
-        setCanWalk(canWalk);
+        setMaxWalkDistance(maxWalkDistance);
     }
 
     @Override

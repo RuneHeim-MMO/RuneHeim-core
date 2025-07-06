@@ -49,7 +49,7 @@ public abstract class AbstractMob {
     @Nullable
     private MobEquipmentMeta mobEquipment = null;
     private boolean isBaby = false;
-    private boolean canWalk = true;
+    private int maxWalkDistance = -1; // -1 means no limits, can walk anywhere.
 
     @Nullable
     private Entity entity;
@@ -103,12 +103,16 @@ public abstract class AbstractMob {
         this.isBaby = baby;
     }
 
-    public void setCanWalk(boolean canWalk) {
-        this.canWalk = canWalk;
+    public void setMaxWalkDistance(int distance) {
+        this.maxWalkDistance = distance;
+    }
+
+    public int getMaxWalkDistance() {
+        return this.maxWalkDistance;
     }
 
     public boolean canWalk() {
-        return this.canWalk;
+        return maxWalkDistance != 0;
     }
 
     public String getDisplayName() {
@@ -205,7 +209,7 @@ public abstract class AbstractMob {
         }
 
 
-        if (!this.canWalk) {
+        if (!canWalk()) {
             entity.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, Integer.MAX_VALUE, 255, false, false, false));
         }
 
