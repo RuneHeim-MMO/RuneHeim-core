@@ -1,21 +1,30 @@
 package org.zuma.examplePlugin.domain.mob;
 
+import me.libraryaddict.disguise.DisguiseAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
+import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 import java.util.function.BiConsumer;
 
 public class MobListener implements Listener {
@@ -49,12 +58,11 @@ public class MobListener implements Listener {
 
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH) // To handle damage sounds
     public void onPlayerAttackEntity(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player bukkitPlayer)) {
             return;
         }
-
 
         withMobAndPlayer(bukkitPlayer, event.getEntity(), (mob, player) -> {
             mobHandler.onPlayerAttackEntity(event, mob, player);
@@ -100,13 +108,29 @@ public class MobListener implements Listener {
 
     @EventHandler
     public void onChunkLoad(ChunkLoadEvent event) {
+        Set<UUID> seen = new HashSet<>();
+
         Arrays.stream(event.getChunk().getEntities()).forEach(entity -> {
+            if (seen.contains(entity.getUniqueId())) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Duplicate entity uuid on chunk load! " + entity.getUniqueId());
+                return;
+            }
+
+            seen.add(entity.getUniqueId());
+
             AbstractMob mob = mobRegistry.getMob(entity);
             if (mob == null) return;
+
 
             mobHandler.onChunkLoad(event, mob);
         });
     }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        mobHandler.handleRedisguisingOnPlayerJoin(event);
+    }
+
 
     @EventHandler
     public void onEntityCombust(EntityCombustEvent event) {

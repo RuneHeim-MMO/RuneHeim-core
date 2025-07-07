@@ -7,6 +7,7 @@ import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import me.libraryaddict.disguise.disguisetypes.watchers.LivingWatcher;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
@@ -74,14 +75,15 @@ public abstract class AbstractMob {
             this.setLivingEntityMeta(livingEntity);
 
             if (this.disguise != null) {
+                Disguise cloned = disguise.clone();
 
                 if (disguise instanceof MobDisguise) {
-                    LivingWatcher watcher = (LivingWatcher) disguise.getWatcher();
+                    LivingWatcher watcher = (LivingWatcher) cloned.getWatcher();
                     watcher.setCustomName(getDisplayName());
                     watcher.setCustomNameVisible(true);
                 }
 
-                DisguiseAPI.disguiseToAll(entity, disguise);
+                DisguiseAPI.disguiseToAll(entity, cloned);
             }
         }
 
@@ -258,26 +260,23 @@ public abstract class AbstractMob {
         entity.getPersistentDataContainer().set(key, PersistentDataType.STRING, this.uuid.toString());
     }
 
-    public void handlePositiveInteraction(PlayerInteractAtEntityEvent event) {
-        if (behavior != null) {
-            behavior.handleInteractionSuccess(event);
-        }
-    }
-
-    public void handleNegativeInteraction(PlayerInteractAtEntityEvent event) {
-        if (behavior != null) {
-            behavior.handleInteractionFail(event);
-        }
-    }
 
     public void onChunkLoaded(ChunkLoadEvent event) {
         if (entity instanceof LivingEntity livingEntity) {
             this.setLivingEntityMeta(livingEntity);
 
             if (this.disguise != null) {
-                DisguiseAPI.disguiseToAll(entity, disguise);
+                DisguiseAPI.disguiseToAll(entity, disguise.clone());
             }
         }
+    }
+
+    public void playSound(MobBehavior.MobSoundType type) {
+        if (behavior == null || entity == null || entity.isDead()) {
+            return;
+        }
+
+        behavior.playSound(entity, type);
     }
 
     public void onPlayerInteractWithEntity(PlayerInteractAtEntityEvent event, RunePlayer player) {
@@ -297,4 +296,9 @@ public abstract class AbstractMob {
     }
 
 
+    @Nullable
+    public Disguise getDisguise() {
+        if (disguise == null) return null;
+        return disguise.clone();
+    }
 }

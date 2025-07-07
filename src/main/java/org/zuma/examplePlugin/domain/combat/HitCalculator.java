@@ -33,17 +33,39 @@ public class HitCalculator {
         return matchingModifier.amount();
     }
 
-    public static Hit getHitDamage(CombatEntity attacker, CombatEntity defender, AttackType type) {
+    public static boolean getIsCriticalHit(CombatEntity entity, int damage) {
+        int percentMaxHpHitCritical = 10;
+        return damage > (entity.getHealth() * percentMaxHpHitCritical / 100.0);
+    }
+
+    public static HitType getHitType(CombatEntity entity, int damage) {
+        HitType hitType = HitType.REGULAR;
+
+        if (damage == 0) {
+            hitType = HitType.MISS;
+        }
+
+        if (getIsCriticalHit(entity, damage)) {
+            hitType = HitType.CRIT;
+        }
+
+        return hitType;
+    }
+
+    public static Hit getNewHit(CombatEntity attacker, CombatEntity defender, AttackType type) {
         boolean hitSuccess = isHitSuccess(attacker, defender, type);
 
         if (hitSuccess) {
             int maxHit = getMaxHit(attacker, type);
             int baseDamage = (int) (Math.random() * (maxHit + 1));
 
-            return new Hit(attacker, defender, type, Math.min(defender.getHealth(), baseDamage));
+            int damage = Math.min(defender.getHealth(), baseDamage);
+            return new Hit(attacker, defender, type, damage, getHitType(defender, damage));
         }
 
-        return new Hit(attacker, defender, type, Math.min(defender.getHealth(), 0));
+
+        int damage = Math.min(defender.getHealth(), 0);
+        return new Hit(attacker, defender, type, damage, getHitType(defender, damage));
 
     }
 

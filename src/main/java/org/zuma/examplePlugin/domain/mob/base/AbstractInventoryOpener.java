@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.mob.base;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
+import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.meta.FriendlyImmortalMobMeta;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
@@ -27,8 +28,8 @@ public abstract class AbstractInventoryOpener extends FriendlyImmortalMob {
 
         RuneQuestPlugin.getGUIHandler().openInventory(inventoryId, player, () -> {
             onInventoryClose(event, player);
-        });
-        super.handlePositiveInteraction(event);
+        }, this, null);
+        super.playSound(MobBehavior.MobSoundType.IDLE);
         event.setCancelled(true);
     }
 

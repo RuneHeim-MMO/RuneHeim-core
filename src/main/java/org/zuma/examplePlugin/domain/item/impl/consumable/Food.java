@@ -5,11 +5,13 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.item.PlayerConsumableConsumeEvent;
+import org.zuma.examplePlugin.events.player.RunePlayerHealthChangedEvent;
 
 public class Food extends AbstractItemType {
     private int healAmount = 0;
@@ -39,7 +41,11 @@ public class Food extends AbstractItemType {
         }
 
 
-        player.asBukkitPlayer().sendMessage("You ate " + super.displayName + "! Health +" + healAmount);
+        int healthAfterEating = Math.min(player.getMaxHealth(), player.getHealth() + healAmount);
+        int healedAmount = healthAfterEating - player.getHealth();
+
+        player.setHealth(healthAfterEating, RunePlayerHealthChangedEvent.Cause.HEALING);
+        HudService.showHealBubble(player, healedAmount);
         PlayerUtils.subtractOneFromMainHand(player);
     }
 

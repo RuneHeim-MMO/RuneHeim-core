@@ -26,6 +26,7 @@ import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.combat.AttackType;
 import org.zuma.examplePlugin.domain.combat.Hit;
+import org.zuma.examplePlugin.domain.combat.HitType;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.mob.base.AbstractInventoryOpener;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
@@ -134,6 +135,13 @@ public class HudService {
 
     }
 
+    public static void showHealBubble(RunePlayer player, int healedHp) {
+        if (healedHp == 0) return;
+
+        String icon = "§f" + Icon.HEART_BIG.get() + Color.SUCCESS.asSpigotHex();
+        spawnVerticalHologramBubble(player, Color.SUCCESS.asSpigotHex() + "+ " + healedHp + " " + icon + " HP");
+    }
+
     public static void showCoinsChangeBubble(RunePlayer player, long change) {
         String icon = "§f" + Icon.COIN_HANDFUL.get() + Color.SUCCESS.asSpigotHex();
         String prefix = change > 0 ? Color.SUCCESS.asSpigotHex() + "+" : Color.ERROR.asSpigotHex();
@@ -149,9 +157,10 @@ public class HudService {
         player.asBukkitPlayer().sendMessage(type.getLabel() + " +" + xp + "xp! Type: " + source.name());
     }
 
-    public static void showDamageBubble(CombatEntity entity, Hit hit, AttackType type, boolean isCriticalHit) {
-        boolean isZeroHit = hit.damage() == 0;
+    public static void showDamageBubble(CombatEntity entity, Hit hit, AttackType type) {
+        boolean isZeroHit = hit.hitType() == HitType.MISS;
         boolean isHitByPlayer = !(entity.getEntity() instanceof Player);
+        boolean isCriticalHit = hit.hitType() == HitType.CRIT;
 
         String color = hit.damage() == 0 ? Color.ZERO_HIT.asSpigotHex() : isCriticalHit ? Color.CRITICAL_HIT.asSpigotHex() : Color.DAMAGE_HIT.asSpigotHex();
         String symbol = type == AttackType.MELEE ? Icon.SWORD.get() : type == AttackType.RANGED ? Icon.ARROW.get() : Icon.LEGENDARY.get(); // Todo: Replace magic icon!

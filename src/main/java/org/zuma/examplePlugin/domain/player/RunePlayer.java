@@ -25,6 +25,7 @@ import org.zuma.examplePlugin.domain.player.handlers.PlayerXpHandler;
 import org.zuma.examplePlugin.domain.player.states.RunePlayerBusyStateHandler;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
+import org.zuma.examplePlugin.events.player.RunePlayerHealthChangedEvent;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -137,6 +138,10 @@ public class RunePlayer implements CombatEntity {
     // Combat data (health, combat level)
     public int getHealth() {
         return combatData.getHealth();
+    }
+
+    public void setHealth(int hp, RunePlayerHealthChangedEvent.Cause cause) {
+        combatData.setHealth(hp, cause);
     }
 
     public int getMaxHealth() {

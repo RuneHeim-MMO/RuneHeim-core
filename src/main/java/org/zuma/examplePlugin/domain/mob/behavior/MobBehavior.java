@@ -6,6 +6,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 
 import java.util.List;
 import java.util.Random;
@@ -17,6 +18,10 @@ public class MobBehavior {
     private final List<SoundType> damageSounds;
     private final List<SoundType> deathSounds;
     private final Random random = new Random();
+
+    public enum MobSoundType {
+        POSITIVE, NEGATIVE, IDLE, HURT, DEATH
+    }
 
     public MobBehavior(List<SoundType> idleSounds,
                        List<SoundType> interactionSuccessSounds,
@@ -30,25 +35,14 @@ public class MobBehavior {
         this.deathSounds = deathSounds;
     }
 
-    public void handleIdleBehavior(LivingEntity entity) {
-        playRandomSound(entity, idleSounds);
-    }
-
-
-    public void handleInteractionSuccess(PlayerInteractAtEntityEvent event) {
-        playRandomSound(event.getRightClicked(), interactionSuccessSounds);
-    }
-
-    public void handleInteractionFail(PlayerInteractAtEntityEvent event) {
-        playRandomSound(event.getRightClicked(), interactionFailSounds);
-    }
-
-    public void handleDeath(EntityDeathEvent event) { //TODO: Add this guy!
-        playRandomSound(event.getEntity(), deathSounds);
-    }
-
-    public void handleDamage(EntityDamageEvent event) {
-        playRandomSound(event.getEntity(), damageSounds);
+    public void playSound(Entity entity, MobSoundType type) {
+        switch (type) {
+            case POSITIVE -> playRandomSound(entity, interactionSuccessSounds);
+            case NEGATIVE -> playRandomSound(entity, interactionFailSounds);
+            case IDLE -> playRandomSound(entity, idleSounds);
+            case HURT -> playRandomSound(entity, damageSounds);
+            case DEATH -> playRandomSound(entity, deathSounds);
+        }
     }
 
     private void playRandomSound(Entity entity, List<SoundType> sounds) {

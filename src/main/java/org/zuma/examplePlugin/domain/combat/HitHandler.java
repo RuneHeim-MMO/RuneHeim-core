@@ -9,34 +9,47 @@ import org.zuma.examplePlugin.events.combat.RuneEntityDamageEntityEvent;
 
 public class HitHandler {
 
+
     private boolean getIsCriticalHit(CombatEntity entity, Hit hit) {
         int percentMaxHpHitCritical = 10;
         return hit.damage() > (entity.getHealth() * percentMaxHpHitCritical / 100.0);
     }
 
-    private void handleCriticalSound(CombatEntity entity, AttackType type, boolean isCriticalHit) {
-        if (!isCriticalHit) {
-            return;
+    private void handleHitSound(CombatEntity entity, AttackType type, Hit hit) {
+        SoundType sound = null;
+
+        switch (hit.hitType()) {
+            case CRIT -> {
+                switch (type) {
+                    case MELEE -> sound = SoundType.HIT_MELEE_CRITICAL;
+                    case MAGIC -> sound = SoundType.HIT_MAGIC_CRITICAL;
+                    case RANGED -> sound = SoundType.HIT_RANGED_CRITICAL;
+                }
+            }
+            case REGULAR -> {
+                switch (type) {
+                    case MELEE -> sound = SoundType.HIT_MELEE_REGULAR;
+                    case MAGIC -> sound = SoundType.HIT_MAGIC_REGULAR;
+                    case RANGED -> sound = SoundType.HIT_RANGED_REGULAR;
+                }
+            }
+            case MISS -> {
+                switch (type) {
+                    case MELEE -> sound = SoundType.HIT_MELEE_MISS;
+                    case MAGIC -> sound = SoundType.HIT_MAGIC_MISS;
+                    case RANGED -> sound = SoundType.HIT_RANGED_MISS;
+                }
+            }
         }
 
-        switch (type) {
-            case MELEE:
-                SoundType.HIT_MELEE_CRITICAL.play(entity.getEntity().getLocation());
-                break;
-            case MAGIC:
-                SoundType.HIT_MAGIC_CRITICAL.play(entity.getEntity().getLocation());
-                break;
-            case RANGED:
-                SoundType.HIT_RANGED_CRITICAL.play(entity.getEntity().getLocation());
-                break;
-            default:
-                break;
+        if (sound != null) {
+            sound.play(entity.getEntity().getLocation());
         }
     }
 
     public void handleMeleeHit(CombatEntity attacker, CombatEntity defender) {
         AttackType type = AttackType.MELEE;
-        Hit hit = HitCalculator.getHitDamage(attacker, defender, type);
+        Hit hit = HitCalculator.getNewHit(attacker, defender, type);
         boolean isCriticalHit = getIsCriticalHit(defender, hit);
 
         RuneEntityDamageEntityEvent event = new RuneEntityDamageEntityEvent(attacker, defender, hit, type);
@@ -57,7 +70,8 @@ public class HitHandler {
             p.sendMessage("Attackers max hit: " + HitCalculator.getMaxHit(attacker, AttackType.MELEE));
         }
 
-        handleCriticalSound(defender, type, isCriticalHit);
-        HudService.showDamageBubble(defender, hit, type, isCriticalHit);
+
+        handleHitSound(defender, type, hit);
+        HudService.showDamageBubble(defender, hit, type);
     }
 }

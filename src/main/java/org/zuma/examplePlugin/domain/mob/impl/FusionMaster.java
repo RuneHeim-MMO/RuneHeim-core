@@ -19,8 +19,6 @@ public class FusionMaster extends AbstractInventoryOpener {
 
     @Override
     public void onInventoryClose(PlayerInteractAtEntityEvent event, RunePlayer player) {
-        if (getBehavior() != null) {
-            getBehavior().handleInteractionFail(event);
-        }
+        super.playSound(MobBehavior.MobSoundType.NEGATIVE);
     }
 }

@@ -89,6 +89,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new DefaultMobDisabler(), pluginInstance);
         getServer().getPluginManager().registerEvents(new FireworkDamageDisabler(), pluginInstance);
         getServer().getPluginManager().registerEvents(new DurabilityDisabler(), pluginInstance);
+        getServer().getPluginManager().registerEvents(new HungerLocker(), pluginInstance);
 
         ConfigManager configManager = new ConfigManager();
         configManager.initializeFolders();

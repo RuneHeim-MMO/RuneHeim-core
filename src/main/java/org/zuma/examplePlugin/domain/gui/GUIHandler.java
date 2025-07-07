@@ -10,12 +10,15 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
+import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerBlock;
 import org.zuma.examplePlugin.domain.gui.base.AbstractGUI;
 import org.zuma.examplePlugin.domain.gui.constants.GUIOverlay;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.gui.impl.individual.*;
 import org.zuma.examplePlugin.domain.gui.impl.individual.admin.BlockInvCreatorInventory;
 import org.zuma.examplePlugin.domain.gui.impl.individual.admin.NodeCreatorInventory;
+import org.zuma.examplePlugin.domain.mob.base.AbstractInventoryOpener;
+import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.shop.constants.ShopId;
@@ -65,6 +68,11 @@ public class GUIHandler {
 
     @Nullable
     public UUID openInventory(int id, RunePlayer player, @Nullable Runnable onClose) {
+        return openInventory(id, player, onClose, null, null);
+    }
+
+    @Nullable
+    public UUID openInventory(int id, RunePlayer player, @Nullable Runnable onClose, @Nullable AbstractInventoryOpener mobHolder, @Nullable InventoryOpenerBlock blockHolder) {
         AbstractGUI matchingGUI = this.registry.getInstance(player.getUUID(), id);
 
         if (matchingGUI == null) {
@@ -84,6 +92,9 @@ public class GUIHandler {
         if (event.isCancelled()) {
             return null;
         }
+
+        matchingGUI.setMobHolder(mobHolder);
+        matchingGUI.setBlockHolder(blockHolder);
 
         matchingGUI.openInventory(player);
         if (onClose != null) {

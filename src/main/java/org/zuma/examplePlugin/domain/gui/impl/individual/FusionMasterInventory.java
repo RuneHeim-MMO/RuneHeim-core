@@ -56,17 +56,6 @@ public class FusionMasterInventory extends IndividualGUI {
         inventory = getBaseInventory();
     }
 
-    private void fillWithPlaceholders() {
-        for (int i = 0; i < inventory.getSize(); i++) {
-
-            if (i == SOCKETABLE_SLOT || i == SCROLL_SLOT || GEM_SLOTS.contains(i)) {
-                continue;
-            }
-
-            inventory.setItem(i, transparentItem);
-        }
-    }
-
     private void updateAvailableGemSlots(int availableGemSlots, RunePlayer player) {
         ACTIVE_GEM_SLOTS.clear();
         for (int i = 0; i < availableGemSlots; i++) {
@@ -173,7 +162,6 @@ public class FusionMasterInventory extends IndividualGUI {
 
     @Override
     public void openInventory(RunePlayer player) {
-        fillWithPlaceholders();
         updateInventory(player);
 
         super.assignMenuValue(confirmItem, 1);

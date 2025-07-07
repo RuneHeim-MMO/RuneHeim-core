@@ -21,6 +21,8 @@ import org.zuma.examplePlugin.domain.gui.base.IndividualGUI;
 import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
+import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.shop.Shop;
 import org.zuma.examplePlugin.domain.shop.ShopItem;
@@ -242,6 +244,14 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
         Integer menuValue = getMenuValue(currentItem);
 
         if (menuValue == null) {
+
+            if (!GUIControl.isGuiItem(currentItem) && slot >= SELLING_SLOTS_START && slot <= SELLING_SLOT_END) {
+                ItemStack cloned = currentItem.clone();
+                shopInventory.setItem(slot, null);
+                player.giveItemOrDrop(cloned);
+                updateConfirmButton();
+            }
+
             return;
         }
 
@@ -280,6 +290,18 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
 
         if (change != 0)
             HudService.showCoinsChangeBubble(player, change);
+
+
+        AbstractMob mobHolder = getMobHolder();
+        if (mobHolder != null && mobHolder.getEntity() != null) {
+
+            if (change != 0) {
+                mobHolder.playSound(MobBehavior.MobSoundType.POSITIVE);
+            } else {
+                mobHolder.playSound(MobBehavior.MobSoundType.NEGATIVE);
+            }
+
+        }
     }
 
     @Override

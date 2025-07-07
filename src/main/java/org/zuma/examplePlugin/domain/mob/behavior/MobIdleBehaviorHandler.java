@@ -43,7 +43,7 @@ public class MobIdleBehaviorHandler {
                     if (mob == null) continue;
 
                     UUID mobUUID = mob.getUUID();
-                    boolean hasWalkingLimit = mob.getMaxWalkDistance() >= -1; // -1 = infinite distance, 0 - no walking, x - amnt of blocks
+                    boolean hasWalkingLimit = mob.getMaxWalkDistance() != -1; // -1 = infinite distance, 0 - no walking, x - amnt of blocks
 
                     if (hasWalkingLimit && !mobLocations.containsKey(mobUUID)) {
                         mobLocations.put(mobUUID, entity.getLocation());
@@ -62,7 +62,7 @@ public class MobIdleBehaviorHandler {
                     }
 
                     if (random.nextDouble() < 0.15) {
-                        behavior.handleIdleBehavior(living);
+                        behavior.playSound(living, MobBehavior.MobSoundType.IDLE);
 
                         // Schedule next allowed sound time with base cooldown + random jitter
                         long jitter = (long) (random.nextDouble() * jitterMillisMax);

@@ -13,7 +13,11 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
+import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerBlock;
 import org.zuma.examplePlugin.domain.gui.IDHolder;
+import org.zuma.examplePlugin.domain.mob.base.AbstractInventoryOpener;
+import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
@@ -29,6 +33,11 @@ public abstract class AbstractGUI {
     protected final int id, rows;
     protected final boolean shared;
 
+    @Nullable
+    protected AbstractInventoryOpener holder;
+    @Nullable
+    protected InventoryOpenerBlock blockHolder;
+
     public AbstractGUI(String title, int id, int rows, boolean shared) {
         if (rows < 1 || rows > 6) {
             throw new IllegalStateException("GUI can have minimum of 1 and maximum of 6 rows!");
@@ -39,6 +48,24 @@ public abstract class AbstractGUI {
         this.id = id;
         this.rows = rows;
         this.shared = shared;
+    }
+
+    public void setBlockHolder(@Nullable InventoryOpenerBlock holder) {
+        this.blockHolder = holder;
+    }
+
+    @Nullable
+    public InventoryOpenerBlock getBlockHolder() {
+        return this.blockHolder;
+    }
+
+    public void setMobHolder(@Nullable AbstractInventoryOpener holder) {
+        this.holder = holder;
+    }
+
+    @Nullable
+    public AbstractInventoryOpener getMobHolder() {
+        return this.holder;
     }
 
     public Component getTitle() {
