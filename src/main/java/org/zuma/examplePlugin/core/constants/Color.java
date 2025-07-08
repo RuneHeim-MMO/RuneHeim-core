@@ -14,9 +14,9 @@ public enum Color {
 
     SHOP_DESCRIPTION("#42cfa9"),
 
-    ITEM_TYPE("#4f4f4f"),
-    ITEM_DESCRIPTION("#c9c9c9"),
-    ITEM_LABEL("#FFD700"),
+    ITEM_TYPE_LABEL("#4f4f4f"),
+    ITEM_LORE_DESCRIPTION("#c9c9c9"),
+    ITEM_CATEGORY_LABEL("#FFD700"),
     ITEM_REQUIREMENT("#a8a8a8"),
     ITEM_BONUS_POSITIVE("#88fc65"),
     ITEM_BONUS_NEGATIVE("#fc656d"),

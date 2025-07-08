@@ -6,13 +6,13 @@
   "overrides": [
     {
       "predicate": {
-        "custom_model_data": 0
+        "custom_model_data": 1
       },
       "model": "item/custom/tools/hammer"
     },
     {
       "predicate": {
-        "custom_model_data": 1
+        "custom_model_data": 4
       },
       "model": "item/custom/tools/chisel"
     },

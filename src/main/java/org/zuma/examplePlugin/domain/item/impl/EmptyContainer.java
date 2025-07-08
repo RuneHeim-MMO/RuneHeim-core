@@ -19,6 +19,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class EmptyContainer extends AbstractItemType {
 
@@ -26,16 +27,31 @@ public class EmptyContainer extends AbstractItemType {
     }
 
     public enum InputType {
-        WATER, LAVA, FLOUR
+        WATER("Water"), LAVA("Lava"), FLOUR("Flour");
+
+        private final String label;
+
+        InputType(String label) {
+            this.label = label;
+        }
+
+        public String getLabel() {
+            return this.label;
+        }
+
     }
 
     private final Map<InputType, Integer> resultMap = new HashMap<>();
 
     public EmptyContainer(AbstractItemMeta meta, List<EmptyContainerConfig> config) {
         super(meta);
-        super.setTypeLore("Container", Icon.SCROLL_LIGHT_GRAY.get());
+        super.setTypeLore("Container", Icon.BUCKET.get());
 
         config.forEach(entry -> resultMap.put(entry.type, entry.resultItemId));
+    }
+
+    public Set<InputType> getSupportedStoredItems() {
+        return resultMap.keySet();
     }
 
     private void replaceItemInHandWithFilledVariant(RunePlayer player, InputType type) {

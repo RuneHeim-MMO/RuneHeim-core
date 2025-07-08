@@ -14,6 +14,7 @@ public enum Icon {
     MYTHIC("⛧"),
     DIVINE("⟴"),
 
+    BUCKET("⽻"),
     ANVIL("⮯"),
     ARMOR("⛨"),
     ARROW("⇶"),
@@ -56,6 +57,8 @@ public enum Icon {
     SCROLL_YELLOW("⊣"),
     SCROLL_PURPLE("⠳"),
     SCROLL_BROWN("⑬"),
+
+    CHEST("Ⳃ"),
 
     FAIRY("ⰱ"),
     STAMINA("ⶼ"),

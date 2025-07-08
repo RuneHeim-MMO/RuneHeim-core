@@ -20,7 +20,7 @@ public class MobTypesLoader {
     public static void registerMobs(MobTypeRegistry registry) {
         registry.register(MobType.FUSION_MASTER.getId(), () -> new FusionMaster(Icon.SCROLL_RED.get() + " Fusion Master", MobBehaviors.FUSION_MASTER.getBehavior(), 0));
 
-        registry.register(MobType.GENERIC_SHOPKEEPER.getId(), () -> new GenericShopkeeper("General Store", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_MAN_1.getBehavior(), "shopkeeper", InventoryId.GENERAL_STORE.asInt(), 20));
+        registry.register(MobType.GENERIC_SHOPKEEPER.getId(), () -> new GenericShopkeeper(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1, MobBehaviors.VILLAGER_MAN_1.getBehavior(), "shopkeeper", InventoryId.GENERAL_STORE.asInt(), 20));
 
         registry.register(MobType.AGGRESSIVE_BANDIT_1.getId(), () -> new GenericCombatant("Bandit", EquipmentSet.BANDIT_1,
                 List.of(new SkillLevelRecord(SkillType.ATTACK, 1), new SkillLevelRecord(SkillType.STRENGTH, 1), new SkillLevelRecord(SkillType.DEFENCE, 1)),

@@ -3,7 +3,6 @@ package org.zuma.examplePlugin.domain.item.helpers;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.NamespacedKey;
@@ -16,30 +15,21 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
-import org.zuma.examplePlugin.core.utils.ModifierUtils;
-import org.zuma.examplePlugin.core.utils.TextUtils;
-import org.zuma.examplePlugin.core.utils.XpUtils;
-import org.zuma.examplePlugin.domain.hud.LoadingBarBuilder;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.base.SocketedEquipableItemType;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.PersistanceDataKey;
 import org.zuma.examplePlugin.domain.item.helpers.lore.*;
+import org.zuma.examplePlugin.domain.item.impl.EmptyContainer;
 import org.zuma.examplePlugin.domain.item.impl.consumable.Food;
 import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
 import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFood;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
-import org.zuma.examplePlugin.domain.item.state.states.FairyState;
 import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
-import org.zuma.examplePlugin.domain.modifier.Modifier;
-import org.zuma.examplePlugin.domain.modifier.SkillModifier;
-import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -95,7 +85,7 @@ public class MetaGenerator {
             return lore;
         }
 
-        lore.addAll(itemType.descriptionLore.stream().map(str -> Component.text(str).color(Color.ITEM_DESCRIPTION.asColor())).toList());
+        lore.addAll(itemType.descriptionLore.stream().map(str -> Component.text(str).color(Color.ITEM_LORE_DESCRIPTION.asColor())).toList());
 
         if (itemType instanceof Food food) {
             lore.addAll(new FoodLore(food).getLore());
@@ -108,6 +98,10 @@ public class MetaGenerator {
 
         if (itemType instanceof SocketedEquipableItemType) {
             lore.addAll(new SocketedEquipableLore(item).getLore());
+        }
+
+        if (itemType instanceof EmptyContainer emptyContainer) {
+            lore.addAll(new EmptyContainerLore(emptyContainer).getLore());
         }
 
         if (itemType instanceof FairyFood fairyFood) {
@@ -136,7 +130,7 @@ public class MetaGenerator {
         AbstractState state = RuneQuestPlugin.getItemStateManager().getItemState(item);
 
         if (state instanceof MultiConsumableState consumableState) {
-            return Component.text(" (" + consumableState.getUsageLeft() + "/" + consumableState.getMaxUsages() + ")", Color.ITEM_TYPE.asColor());
+            return Component.text(" (" + consumableState.getUsageLeft() + "/" + consumableState.getMaxUsages() + ")", Color.ITEM_TYPE_LABEL.asColor());
         }
 
         return Component.empty();

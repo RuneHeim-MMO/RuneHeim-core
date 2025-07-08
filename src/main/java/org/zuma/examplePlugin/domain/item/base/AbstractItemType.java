@@ -66,7 +66,7 @@ public abstract class AbstractItemType {
 
     public void setTypeLore(String type, @Nullable String icon) {
         typeLore.clear();
-        typeLore.add(Component.text(icon != null ? icon + " " : "", NamedTextColor.WHITE).append(Component.text(type, Color.ITEM_TYPE.asColor())));
+        typeLore.add(Component.text(icon != null ? icon + " " : "", NamedTextColor.WHITE).append(Component.text(type, Color.ITEM_TYPE_LABEL.asColor())));
     }
 
     public ItemStack createItemStackOfType() {

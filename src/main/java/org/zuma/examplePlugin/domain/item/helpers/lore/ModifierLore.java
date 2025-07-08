@@ -3,20 +3,10 @@ package org.zuma.examplePlugin.domain.item.helpers.lore;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
-import net.kyori.adventure.text.format.TextDecoration;
-import org.bukkit.inventory.ItemStack;
-import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.core.constants.Icon;
-import org.zuma.examplePlugin.core.utils.ModifierUtils;
-import org.zuma.examplePlugin.core.utils.TextUtils;
-import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
-import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
-import org.zuma.examplePlugin.domain.item.state.states.FairyState;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.SkillModifier;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +15,7 @@ public class ModifierLore implements LoreCreator {
 
     public ModifierLore(List<Modifier> modifiers, List<SkillModifier> skillModifiers, boolean hideLabel) {
         if (!hideLabel && (!skillModifiers.isEmpty() || !modifiers.isEmpty())) {
-            lore.add(Component.text("Modifiers: ", Color.ITEM_LABEL.asColor()));
+            lore.add(Component.text("Modifiers: ", Color.ITEM_CATEGORY_LABEL.asColor()));
         }
 
         if (!skillModifiers.isEmpty()) {

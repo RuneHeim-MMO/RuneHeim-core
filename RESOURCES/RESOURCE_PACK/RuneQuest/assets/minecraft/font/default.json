@@ -149,6 +149,20 @@
     },
     {
       "type": "bitmap",
+      "file": "minecraft:font/icons/bucket.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⽻"]
+    },
+   {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/chest.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["Ⳃ"]
+    },
+    {
+      "type": "bitmap",
       "file": "minecraft:font/icons/green_gem.png",
       "ascent": 9,
       "height": 12,

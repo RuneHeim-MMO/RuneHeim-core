@@ -36,7 +36,7 @@ public class FairyLore implements LoreCreator {
 
 
             lore.add(Component.empty());
-            lore.add(Icon.LEVEL.asComponent().append(Component.text("Level: ", Color.ITEM_DESCRIPTION.asColor())
+            lore.add(Icon.LEVEL.asComponent().append(Component.text("Level: ", Color.ITEM_LORE_DESCRIPTION.asColor())
                     .append(Component.text(fairyState.getLevel() + " ", Color.ACCENT.asColor()))));
 
             String formattedCurrentXP = NumberFormat.getNumberInstance().format(fairyState.getExperience());
@@ -66,7 +66,7 @@ public class FairyLore implements LoreCreator {
 
 
             if (combinedSkillModifiers.isEmpty() && combinedModifiers.isEmpty()) {
-                lore.add(Component.text("  * No upgrades * ", Color.ITEM_TYPE.asColor()));
+                lore.add(Component.text("  * No upgrades * ", Color.ITEM_TYPE_LABEL.asColor()));
             } else {
                 lore.addAll(new ModifierLore(combinedModifiers, combinedSkillModifiers, true).getLore());
             }
