@@ -84,7 +84,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         IllegalItemWatchdog illegalItemWatchdog = new IllegalItemWatchdog();
 
         getServer().getPluginManager().registerEvents(illegalItemWatchdog, pluginInstance);
-        getServer().getPluginManager().registerEvents(new OffHandDisabler(), pluginInstance);
+        getServer().getPluginManager().registerEvents(new InteractionDisabler(), pluginInstance);
         getServer().getPluginManager().registerEvents(new BlockProtector(), pluginInstance);
         getServer().getPluginManager().registerEvents(new DefaultMobDisabler(), pluginInstance);
         getServer().getPluginManager().registerEvents(new FireworkDamageDisabler(), pluginInstance);

@@ -20,16 +20,21 @@ public class ShopItemLore implements LoreCreator {
 
         lore.add(Component.empty());
 
-        if (!isInStock) {
+        if (!isInStock && item.isBuyable()) {
             lore.add(Component.text("Out of stock", Color.ERROR.asColor()));
         }
 
         if (item.isBuyable() && isInStock) {
-            lore.add(Component.text("Buy 1x for ", Color.SHOP_DESCRIPTION.asColor()).append(CurrencyUtils.getCurrencyComponent(item.getBuyPrice())).append(Component.text(" coins.", Color.SHOP_DESCRIPTION.asColor())));
+            lore.add(Component.text("Buy 1x for ", Color.SHOP_DESCRIPTION.asColor()).append(CurrencyUtils.getCurrencyComponent(item.getBuyPrice())).append(Component.text(" coins. (Click)", Color.SHOP_DESCRIPTION.asColor())));
+            lore.add(Component.text("Buy 5x for ", Color.SHOP_DESCRIPTION.asColor()).append(CurrencyUtils.getCurrencyComponent(item.getBuyPrice() * 5)).append(Component.text(" coins. (Shift + Click)", Color.SHOP_DESCRIPTION.asColor())));
+
+            if (item.isSellable()) {
+                lore.add(Component.empty());
+            }
         }
 
         if (item.isSellable()) {
-            lore.add(Component.text("Sell 1x for ", Color.SHOP_DESCRIPTION.asColor()).append(CurrencyUtils.getCurrencyComponent(item.getSellPrice())).append(Component.text(" coins.", Color.SHOP_DESCRIPTION.asColor())));
+            lore.add(Component.text("Sell 1x for ", Color.SHOP_DESCRIPTION.asColor()).append(CurrencyUtils.getCurrencyComponent(item.getSellPrice())).append(Component.text(" coins. (Click in own inventory)", Color.SHOP_DESCRIPTION.asColor())));
         }
 
 

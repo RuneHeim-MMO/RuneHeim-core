@@ -12,8 +12,13 @@ public class ShopRepository {
     private final Gson gson = new Gson();
 
     private static final List<ShopItemConfig> GENERAL_STORE_ITEMS = List.of(
-            new ShopItemConfig(ItemId.SMITHING_HAMMER.asInt(), 8, 30, 80L, 10L),
-            new ShopItemConfig(ItemId.FLINT_AND_STEEL.asInt(), 8, 30, 20L, 5L)
+            new ShopItemConfig(ItemId.SMITHING_HAMMER.asInt(), 8, 30, 100L, 20L),
+            new ShopItemConfig(ItemId.SHEARS.asInt(), 8, 30, 35L, 10L),
+            new ShopItemConfig(ItemId.CHISEL.asInt(), 8, 30, 35L, 10L),
+            new ShopItemConfig(ItemId.FLINT_AND_STEEL.asInt(), 8, 30, 40L, 12L),
+            new ShopItemConfig(ItemId.EMPTY_POT.asInt(), 8, 30, 10L, 3L),
+            new ShopItemConfig(ItemId.EMPTY_BUCKET.asInt(), 8, 30, 10L, 3L),
+            new ShopItemConfig(ItemId.POT_OF_FLOUR.asInt(), 0, 10, 25L, 8L)
     );
 
 

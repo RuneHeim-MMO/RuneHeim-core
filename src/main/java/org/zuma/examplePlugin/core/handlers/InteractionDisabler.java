@@ -1,8 +1,8 @@
 package org.zuma.examplePlugin.core.handlers;
 
 import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Sheep;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -11,16 +11,12 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerShearEntityEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.item.constants.ItemType;
 
-import java.util.List;
-
-public class OffHandDisabler implements Listener {
+public class InteractionDisabler implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerInteractOffhand(PlayerInteractEvent event) {
@@ -66,6 +62,13 @@ public class OffHandDisabler implements Listener {
             ItemStack cloned = offhand.clone();
             player.getInventory().setItemInOffHand(null);
             player.getWorld().dropItem(player.getLocation(), cloned);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onSheepShear(PlayerShearEntityEvent event) {
+        if (event.getEntity() instanceof Sheep) {
+            event.setCancelled(true);
         }
     }
 }

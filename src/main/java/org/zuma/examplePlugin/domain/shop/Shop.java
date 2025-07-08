@@ -11,12 +11,13 @@ import org.zuma.examplePlugin.domain.shop.persistence.ShopItemConfig;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Shop {
     private final int id;
-    private final HashMap<Integer, ShopItem> stock = new HashMap<>();
+    private final LinkedHashMap<Integer, ShopItem> stock = new LinkedHashMap<>(); // Preserves order
     private final List<ShopSubscriber> updateSubscribers = new ArrayList<>();
     private final Throttler updateThrottler = new Throttler(500);
 

@@ -3,6 +3,8 @@ package org.zuma.examplePlugin.domain.item.constants;
 public enum ItemId {
     SMITHING_HAMMER(1),
     FLINT_AND_STEEL(2),
+    SHEARS(3),
+    CHISEL(4),
 
     COPPER_ORE(100),
     IRON_ORE(101),
@@ -107,7 +109,17 @@ public enum ItemId {
     RAW_RAY(1310),
 
     BURNT_FOOD(1311),
-    EMPTY_POTION_BOTTLE(1400),
+
+    EMPTY_VIAL(1312),
+    VIAL_OF_WATER(1313),
+    VIAL_OF_LAVA(1314),
+
+    EMPTY_POT(1315),
+    POT_OF_FLOUR(1316),
+
+    EMPTY_BUCKET(1317),
+    BUCKET_OF_WATER(1318),
+
 
     ATTACK_POTION_I(1401),
     STRENGTH_POTION_I(1402),
@@ -152,7 +164,6 @@ public enum ItemId {
     FAIRY_STRENGTH_UPGRADE(2202),
     FAIRY_HITPOINTS_UPGRADE(2203),
     FAIRY_RANGE_UPGRADE(2204);
-
 
     private final int id;
 

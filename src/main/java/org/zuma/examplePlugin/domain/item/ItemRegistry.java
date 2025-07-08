@@ -57,13 +57,7 @@ public class ItemRegistry {
 
     @Nullable
     public AbstractItemType getItem(int id) {
-        AbstractItemType item = items.get(id);
-
-        if (item == null) {
-            throw new Error("Cannot get rune item. Item with id " + id + " does not exist or is not registered in the registry.");
-        }
-
-        return item;
+        return items.get(id);
     }
 
     @NotNull

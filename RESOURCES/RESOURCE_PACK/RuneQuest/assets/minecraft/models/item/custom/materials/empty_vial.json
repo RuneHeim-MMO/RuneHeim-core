@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "item/potions/empty_potion_bottle"
+    "layer0": "item/materials/empty_vial"
   }
 }

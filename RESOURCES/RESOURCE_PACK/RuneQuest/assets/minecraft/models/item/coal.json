@@ -168,9 +168,45 @@
     },
     {
       "predicate": {
-        "custom_model_data": 1400
+        "custom_model_data": 1312
       },
-      "model": "item/custom/potions/empty_potion_bottle"
+      "model": "item/custom/materials/empty_vial"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1313
+      },
+      "model": "item/custom/materials/vial_of_water"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1314
+      },
+      "model": "item/custom/materials/vial_of_lava"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1315
+      },
+      "model": "item/custom/materials/empty_pot"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1316
+      },
+      "model": "item/custom/materials/pot_of_flour"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1317
+      },
+      "model": "item/custom/materials/empty_bucket"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1318
+      },
+      "model": "item/custom/materials/bucket_of_water"
     },
     {
       "predicate": {

@@ -35,8 +35,10 @@ public class EquipableLore implements LoreCreator {
 
         }
 
-        lore.add(Component.empty());
-        lore.addAll(new ModifierLore(equipable.getModifiers(), equipable.getSkillModifiers(), false).getLore());
+        if (!equipable.getModifiers().isEmpty() || !equipable.getSkillModifiers().isEmpty()) {
+            lore.add(Component.empty());
+            lore.addAll(new ModifierLore(equipable.getModifiers(), equipable.getSkillModifiers(), false).getLore());
+        }
     }
 
     @Override

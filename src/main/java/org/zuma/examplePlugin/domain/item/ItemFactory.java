@@ -45,9 +45,28 @@ public class ItemFactory {
             case FAIRY_FRUIT -> createFairyFruit(meta, json);
             case FAIRY -> createFairy(meta, json);
             case MISC -> createMiscItem(meta);
+            case EMPTY_CONTAINER -> createEmptyContainer(meta, json);
             default -> throw new IllegalArgumentException("Unknown item type: " + meta.type());
         };
     }
+
+    private EmptyContainer createEmptyContainer(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create empty container " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                EmptyContainerMeta deserialized = new Gson().fromJson(json.meta(), EmptyContainerMeta.class);
+                EmptyContainer item = new EmptyContainer(meta, deserialized.config());
+
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
+    }
+
 
     private Fairy createFairy(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {

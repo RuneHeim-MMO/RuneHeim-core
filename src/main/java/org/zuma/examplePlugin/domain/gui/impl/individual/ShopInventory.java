@@ -245,7 +245,7 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
 
         if (menuValue == null) {
 
-            if (!GUIControl.isGuiItem(currentItem) && slot >= SELLING_SLOTS_START && slot <= SELLING_SLOT_END) {
+            if (!GUIControl.isGuiItem(currentItem) && slot >= SELLING_SLOTS_START && slot <= SELLING_SLOT_END + 1) {
                 ItemStack cloned = currentItem.clone();
                 shopInventory.setItem(slot, null);
                 player.giveItemOrDrop(cloned);
@@ -256,7 +256,7 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
         }
 
         if (menuValue == CONFIRM_MENU_VALUE) {
-            for (int s = SELLING_SLOTS_START; s < SELLING_SLOT_END; s++) {
+            for (int s = SELLING_SLOTS_START; s <= SELLING_SLOT_END; s++) {
                 try {
                     if (shopInventory.getItem(s) == null) {
                         continue;
@@ -273,7 +273,13 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
         }
 
         try {
-            shop.buyItem(shop.getStock().get(menuValue), 1, player);
+            int amount = 1;
+
+            if (event.isShiftClick()) {
+                amount = 5;
+            }
+
+            shop.buyItem(shop.getStock().get(menuValue), amount, player);
         } catch (Exception e) {
             HudService.sendFailMessage(player, Component.text(e.getMessage()));
         }

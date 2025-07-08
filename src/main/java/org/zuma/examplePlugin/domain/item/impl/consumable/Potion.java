@@ -16,7 +16,6 @@ import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
-import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.item.PlayerConsumableConsumeEvent;
@@ -80,7 +79,7 @@ public class Potion extends AbstractItemType implements Stateful {
 
             if (state.isConsumed()) {
                 PlayerUtils.subtractOneFromMainHand(player);
-                player.giveItemOrDrop(new ItemRecord(ItemId.EMPTY_POTION_BOTTLE, 1));
+                player.giveItemOrDrop(new ItemRecord(ItemId.EMPTY_VIAL, 1));
             }
         }
     }

@@ -12,6 +12,12 @@
     },
     {
       "predicate": {
+        "custom_model_data": 1
+      },
+      "model": "item/custom/tools/chisel"
+    },
+    {
+      "predicate": {
         "custom_model_data": 1000
       },
       "model": "item/custom/tools/bronze_axe"
