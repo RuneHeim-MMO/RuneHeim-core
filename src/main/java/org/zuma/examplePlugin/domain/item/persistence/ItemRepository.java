@@ -198,6 +198,9 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ASHES.asInt(), Material.COAL, ItemRarity.COMMON, "Ashes", List.of("Fine powder left after fire consumes wood."), null, null), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_ASHES.asInt(), Material.COAL, ItemRarity.RARE, "Magic Ashes", List.of("Glowing remnants infused with mysterious arcane power."), null, null), null),
 
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.WOOL.asInt(), Material.WHITE_WOOL, ItemRarity.COMMON, "Wool", List.of("Soft tufts of freshly shorn wool", "Requires spinning before use."), null, null), null),
+
+
                 new ItemEntity(new AbstractItemMeta(ItemType.EMPTY_CONTAINER, ItemId.EMPTY_POT.asInt(), Material.COAL, ItemRarity.COMMON, "Empty Pot", List.of("A regular pot, made of clay."), null, null),
                         toVersionedJson(new EmptyContainerMeta(List.of(
                                 new EmptyContainer.EmptyContainerConfig(EmptyContainer.InputType.FLOUR, ItemId.POT_OF_FLOUR.asInt())

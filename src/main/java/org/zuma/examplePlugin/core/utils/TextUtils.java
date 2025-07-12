@@ -160,4 +160,12 @@ public class TextUtils {
                 "§" + hexChars[2] + "§" + hexChars[3] +
                 "§" + hexChars[4] + "§" + hexChars[5];
     }
+
+    public static String getLegacyColorCodeForLevel(int level) {
+        if (level < 10) return "§a"; // green
+        if (level < 25) return "§2"; // dark green
+        if (level < 50) return "§e"; // yellow
+        if (level < 75) return "§6"; // gold
+        return "§c";                 // red
+    }
 }

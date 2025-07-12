@@ -1,18 +1,22 @@
 package org.zuma.examplePlugin.domain.mob;
 
+import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
+import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehaviors;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.mob.impl.FusionMaster;
 import org.zuma.examplePlugin.domain.mob.impl.GenericCombatant;
 import org.zuma.examplePlugin.domain.mob.impl.GenericShopkeeper;
+import org.zuma.examplePlugin.domain.mob.impl.ShearableSheep;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.skill.SkillLevelRecord;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class MobTypesLoader {
@@ -45,6 +49,13 @@ public class MobTypesLoader {
                 0.33, false, false, 8, "goblin_1"));
 
 
+        registry.register(MobType.SHEEP.getId(), () -> new ShearableSheep("Sheep",
+                List.of(new SkillLevelRecord(SkillType.ATTACK, 1), new SkillLevelRecord(SkillType.STRENGTH, 1), new SkillLevelRecord(SkillType.DEFENCE, 1)),
+                null, MobBehaviors.SHEEP.getBehavior(),
+                0.2, false, false, 3));
+
+
     }
 
 }
+

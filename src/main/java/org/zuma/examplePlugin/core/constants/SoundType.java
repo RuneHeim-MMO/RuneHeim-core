@@ -88,6 +88,7 @@ public enum SoundType {
 
     SHOP_MOVE_ITEM("ITEM_ARMOR_EQUIP_GENERIC", false, 0.6f, 1.2f),
 
+
     // AMBIENT
     VILLAGER_MAN_AMBIENT_1("vocal_villagers:entity.villager.ambient", true, 1, 0.75f),
     VILLAGER_MAN_AMBIENT_2("vocal_villagers:entity.villager.ambient", true, 1, 0.80f),
@@ -185,6 +186,12 @@ public enum SoundType {
     GOBLIN_NO("ENTITY_VILLAGER_NO", false, 1.0f, 0.9f),
     GOBLIN_HURT("ENTITY_HUSK_HURT", false, 1.0f, 0.8f),
     GOBLIN_DEATH("ENTITY_HUSK_DEATH", false, 1.0f, 0.7f),
+
+    SHEEP_AMBIENT("ENTITY_SHEEP_AMBIENT", false, 1.0f, 1.0f),
+    SHEEP_SUCCESS("ENTITY_SHEEP_SHEAR", false, 1.0f, 1.2f),
+    SHEEP_NO("ENTITY_SHEEP_AMBIENT", false, 1.0f, 0.6f),
+    SHEEP_HURT("ENTITY_SHEEP_HURT", false, 1.0f, 1.0f),
+    SHEEP_DEATH("ENTITY_SHEEP_DEATH", false, 1.0f, 1.0f),
 
     FUSION_MASTER_AMBIENT_1("ENTITY_WARDEN_LISTENING", false, 0.6f, 1.0f),
     FUSION_MASTER_AMBIENT_2("ENTITY_WARDEN_SNIFF", false, 0.7f, 1.1f),

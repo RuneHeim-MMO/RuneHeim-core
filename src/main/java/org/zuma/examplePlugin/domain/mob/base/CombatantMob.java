@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
+import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
@@ -40,7 +41,12 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         if (meta.modifiers() != null)
             meta.modifiers().forEach(modifier -> modifiers.put(modifier.type(), modifier));
 
-        this.setDisplayName(Component.text("§6[" + XpUtils.getCombatLevelFromSkills(skills) + " Lvl] §7" + meta.displayName()));
+        int level = XpUtils.getCombatLevelFromSkills(skills);
+        String levelColorCode = TextUtils.getLegacyColorCodeForLevel(level);
+
+        String displayName = levelColorCode + "[" + level + " Lvl] §7" + meta.displayName();
+        this.setDisplayName(Component.text(displayName));
+
 
         if (meta.skin() != null && meta.disguiseType() == null) {
             setPlayerDisguise(meta.skin());
