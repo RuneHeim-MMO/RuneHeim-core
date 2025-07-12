@@ -20,6 +20,8 @@ import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepositor
 import org.zuma.examplePlugin.domain.combat.HitHandler;
 import org.zuma.examplePlugin.domain.combat.HitListener;
 import org.zuma.examplePlugin.domain.commands.SkillsCommand;
+import org.zuma.examplePlugin.domain.droptable.DropTableHandler;
+import org.zuma.examplePlugin.domain.droptable.persistence.DropTableRepository;
 import org.zuma.examplePlugin.domain.fairy.FairyHandler;
 import org.zuma.examplePlugin.domain.fairy.FairyListener;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
@@ -73,6 +75,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private static StateManager itemStateManager;
     private static FairyHandler fairyHandler;
     private static ShopRegistry shopRegistry;
+    private static DropTableHandler dropTableHandler;
 
     private MobHandler mobHandler;
     private HikariPool pool;
@@ -130,6 +133,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         MobTypesLoader.registerMobs(mobTypeRegistry);
 
         MobSessionManager mobSessionManager = new MobSessionManager();
+        dropTableHandler = new DropTableHandler(new DropTableRepository());
+        dropTableHandler.initialize();
         mobRegistry = new MobRegistry(mobTypeRegistry);
         mobHandler = new MobHandler(mobRegistry);
         MobListener mobListener = new MobListener(runePlayerManager, mobHandler, mobRegistry);
@@ -263,5 +268,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     public static ShopRegistry getShopRegistry() {
         return shopRegistry;
     }
+
+    public static DropTableHandler getDropTableHandler() {
+        return dropTableHandler;
+    }
+
 
 }

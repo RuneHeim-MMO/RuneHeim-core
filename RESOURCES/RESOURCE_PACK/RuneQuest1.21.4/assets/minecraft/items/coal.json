@@ -379,6 +379,13 @@
                 }
             },
             {
+                "threshold": 2301,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/misc/bones"
+                }
+            },
+            {
                 "threshold": 2205,
                 "model": {
                     "type": "model",

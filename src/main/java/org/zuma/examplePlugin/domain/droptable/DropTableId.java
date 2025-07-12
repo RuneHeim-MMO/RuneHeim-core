@@ -1,0 +1,15 @@
+package org.zuma.examplePlugin.domain.droptable;
+
+public enum DropTableId {
+    BONES(0);
+
+    private final int id;
+
+    DropTableId(int id) {
+        this.id = id;
+    }
+
+    public int asInt() {
+        return this.id;
+    }
+}

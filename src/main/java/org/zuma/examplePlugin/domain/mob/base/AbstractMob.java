@@ -27,7 +27,11 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.EulerAngle;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.TextUtils;
+import org.zuma.examplePlugin.domain.droptable.DropTable;
+import org.zuma.examplePlugin.domain.item.ItemRecord;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
@@ -35,9 +39,7 @@ import org.zuma.examplePlugin.domain.mob.meta.MobEquipmentMeta;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public abstract class AbstractMob {
     private UUID uuid;
@@ -47,29 +49,40 @@ public abstract class AbstractMob {
     private final boolean silent;
 
     @Nullable
-    private Disguise disguise = null;
+    private Disguise disguise;
 
     @Nullable
-    private String model = null;
+    private String model;
 
     @Nullable
-    private MobBehavior behavior = null;
+    private MobBehavior behavior;
 
     @Nullable
-    private MobEquipmentMeta mobEquipment = null;
-    private boolean isBaby = false;
-    private int maxWalkDistance = -1; // -1 means no limits, can walk anywhere.
+    private MobEquipmentMeta mobEquipment;
+    private boolean isBaby;
+    private int maxWalkDistance;
 
     @Nullable
     private Entity entity;
 
-    private HashMap<Attribute, Double> customAttributes = new HashMap<>();
+    private HashMap<Attribute, Double> customAttributes;
+    private List<Integer> dropTableIds;
 
     public AbstractMob(AbstractMobMeta meta) {
         this.ai = meta.ai();
         this.displayName = meta.displayName();
         this.baseMob = meta.baseEntity();
         this.silent = meta.silent();
+
+
+        disguise = null;
+        model = null;
+        behavior = null;
+        mobEquipment = null;
+        isBaby = false;
+        maxWalkDistance = -1; // -1 means no limits, can walk anywhere.
+        customAttributes = new HashMap<>();
+        dropTableIds = new ArrayList<>();
     }
 
     public void spawn(UUID uuid, Location location) {
@@ -83,8 +96,9 @@ public abstract class AbstractMob {
             ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(entity);
             ActiveModel activeModel = ModelEngineAPI.createActiveModel(model);
 
+            // TODO: display name
             modeledEntity.addModel(activeModel, true);
-   
+
             entity.setInvisible(true);
 
         }
@@ -105,6 +119,10 @@ public abstract class AbstractMob {
             }
         }
 
+    }
+
+    public void setDropTableIds(List<Integer> dropTableIds) {
+        this.dropTableIds = dropTableIds;
     }
 
     public void setAttributes(HashMap<Attribute, Double> customAttributes) {
@@ -295,6 +313,32 @@ public abstract class AbstractMob {
         }
 
         behavior.playSound(entity, type);
+    }
+
+    public void rollDrops(Location dropLocation) {
+        this.dropTableIds.forEach(id -> {
+            DropTable table = RuneQuestPlugin.getDropTableHandler().getByID(id);
+
+            if (table == null) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot roll drops for " + this.displayName + "! The table ID (" + id + ") is invalid!");
+                return;
+            }
+
+            @Nullable
+            ItemRecord drop = table.roll();
+
+            if (drop == null) {
+                return;
+            }
+            AbstractItemType type = RuneQuestPlugin.getItemRegistry().getItem(drop.getItemId());
+
+            if (type == null) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot spawn drop for " + this.displayName + "! The item id (" + drop.getItemId() + ") in table (" + id + ") is invalid!");
+                return;
+            }
+
+            dropLocation.getWorld().dropItem(dropLocation, type.createItemStackOfType(drop.getAmount()));
+        });
     }
 
     public void onPlayerInteractWithEntity(PlayerInteractAtEntityEvent event, RunePlayer player) {

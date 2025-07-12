@@ -16,6 +16,7 @@ import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.domain.droptable.DropTableId;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
@@ -38,7 +39,8 @@ public class ShearableSheep extends GenericCombatant {
 
     public ShearableSheep(String displayName, List<SkillLevelRecord> skills, List<Modifier> modifiers,
                           @Nullable MobBehavior behavior, double walkSpeed, boolean attacksOnSight, boolean attackWithGroup, int health) {
-        super(displayName, null, skills, modifiers, null, walkSpeed, false, false, health, null, null, DisguiseType.SHEEP);
+        super(displayName, null, skills, modifiers, null, walkSpeed, false, false, health, null, null,
+                DisguiseType.SHEEP, List.of(DropTableId.BONES.asInt()));
 
         HashMap<Attribute, Double> attributes = new HashMap<>();
         attributes.put(Attribute.GENERIC_MOVEMENT_SPEED, walkSpeed);

@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.mob;
 
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import org.zuma.examplePlugin.core.constants.Icon;
+import org.zuma.examplePlugin.domain.droptable.DropTableId;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehaviors;
@@ -29,30 +30,29 @@ public class MobTypesLoader {
         registry.register(MobType.AGGRESSIVE_BANDIT_1.getId(), () -> new GenericCombatant("Bandit", EquipmentSet.BANDIT_1,
                 List.of(new SkillLevelRecord(SkillType.ATTACK, 1), new SkillLevelRecord(SkillType.STRENGTH, 1), new SkillLevelRecord(SkillType.DEFENCE, 1)),
                 List.of(new Modifier(ModifierType.ATTACK_SLASH, 5)), MobBehaviors.VILLAGER_MAN_1.getBehavior(),
-                0.23, false, true, 50, "bandit"));
+                0.23, false, true, 50, "bandit", List.of(DropTableId.BONES.asInt())));
 
         registry.register(MobType.AGGRESSIVE_BANDIT_2.getId(), () -> new GenericCombatant("Bandit", EquipmentSet.BANDIT_2,
                 List.of(new SkillLevelRecord(SkillType.ATTACK, 1), new SkillLevelRecord(SkillType.STRENGTH, 1), new SkillLevelRecord(SkillType.DEFENCE, 1)),
                 List.of(new Modifier(ModifierType.ATTACK_SLASH, 5)), MobBehaviors.VILLAGER_MAN_1.getBehavior(),
-                0.23, false, true, 50, "bandit"));
+                0.23, false, true, 50, "bandit", List.of(DropTableId.BONES.asInt())));
 
 
         registry.register(MobType.GOBLIN_LOW_LVL_1.getId(), () -> new GenericCombatant("Goblin", EquipmentSet.GOBLIN_1,
                 List.of(new SkillLevelRecord(SkillType.ATTACK, 5), new SkillLevelRecord(SkillType.STRENGTH, 5), new SkillLevelRecord(SkillType.DEFENCE, 5)),
                 null, MobBehaviors.GOBLIN.getBehavior(),
-                0.23, false, false, 20, "goblin_1"));
+                0.23, false, false, 20, "goblin_1", List.of(DropTableId.BONES.asInt())));
 
 
         registry.register(MobType.GOBLIN_LOW_LVL_2.getId(), () -> new GenericCombatant("Goblin", EquipmentSet.GOBLIN_2,
                 List.of(new SkillLevelRecord(SkillType.ATTACK, 40), new SkillLevelRecord(SkillType.STRENGTH, 40), new SkillLevelRecord(SkillType.DEFENCE, 40)),
                 null, MobBehaviors.GOBLIN.getBehavior(),
-                0.33, false, false, 8, "goblin_1"));
+                0.33, false, false, 8, "goblin_1", List.of(DropTableId.BONES.asInt())));
 
         registry.register(MobType.BROWN_BOAR.getId(), () -> new GenericCombatant("Brown Boar", EquipmentSet.GOBLIN_2,
                 List.of(new SkillLevelRecord(SkillType.ATTACK, 40), new SkillLevelRecord(SkillType.STRENGTH, 40), new SkillLevelRecord(SkillType.DEFENCE, 40)),
                 null, MobBehaviors.GOBLIN.getBehavior(), "yungwilder_isles_boar_brown",
-                0.33, false, false, 8));
-
+                0.33, false, false, 8, List.of(DropTableId.BONES.asInt())));
 
 
         registry.register(MobType.SHEEP.getId(), () -> new ShearableSheep("Sheep",

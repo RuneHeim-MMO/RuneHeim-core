@@ -165,7 +165,8 @@ public enum ItemId {
     FAIRY_HITPOINTS_UPGRADE(2203),
     FAIRY_RANGE_UPGRADE(2204),
 
-    WOOL(2300);
+    WOOL(2300),
+    BONES(2301);
 
     private final int id;
 

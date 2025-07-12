@@ -43,8 +43,9 @@ public class GenericCombatant extends CombatantMob {
                             double walkSpeed,
                             boolean attacksOnSight,
                             boolean attackWithGroup,
-                            int health) {
-        this(displayName, equipmentSet, skills, modifiers, behavior, walkSpeed, attacksOnSight, attackWithGroup, health, null, model, null);
+                            int health,
+                            List<Integer> dropTableIds) {
+        this(displayName, equipmentSet, skills, modifiers, behavior, walkSpeed, attacksOnSight, attackWithGroup, health, null, model, null, dropTableIds);
     }
 
     public GenericCombatant(String displayName,
@@ -56,8 +57,9 @@ public class GenericCombatant extends CombatantMob {
                             boolean attacksOnSight,
                             boolean attackWithGroup,
                             int health,
-                            @Nullable String skin) {
-        this(displayName, equipmentSet, skills, modifiers, behavior, walkSpeed, attacksOnSight, attackWithGroup, health, skin, null, null);
+                            @Nullable String skin,
+                            List<Integer> dropTableIds) {
+        this(displayName, equipmentSet, skills, modifiers, behavior, walkSpeed, attacksOnSight, attackWithGroup, health, skin, null, null, dropTableIds);
     }
 
     public GenericCombatant(String displayName,
@@ -69,8 +71,9 @@ public class GenericCombatant extends CombatantMob {
                             boolean attacksOnSight, boolean attackWithGroup, int health,
                             @Nullable String skin,
                             @Nullable String model,
-                            @Nullable DisguiseType disguiseType) {
-        super(new CombatantMobMeta(displayName, equipmentSet, skills, modifiers, skin, model, disguiseType, health, getMobWithCorrectBehavior(attacksOnSight, attackWithGroup)));
+                            @Nullable DisguiseType disguiseType,
+                            List<Integer> dropTableIds) {
+        super(new CombatantMobMeta(displayName, equipmentSet, skills, modifiers, skin, model, disguiseType, dropTableIds, health, getMobWithCorrectBehavior(attacksOnSight, attackWithGroup)));
 
         HashMap<Attribute, Double> attributes = new HashMap<>();
         attributes.put(Attribute.GENERIC_MOVEMENT_SPEED, walkSpeed);

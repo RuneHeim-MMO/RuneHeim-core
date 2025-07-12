@@ -120,7 +120,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         }
 
         itemLore.add(Component.text("✔ " + craftTimeSeconds + " sec crafting time", Color.coloredProgressValue(craftTimeSeconds, 0, 120, true)));
-        itemLore.add(Component.text("⏱ " + chanceOfSuccess + "% chance of success", Color.coloredProgressValue(chanceOfSuccess, 0, 100, false)));
+        itemLore.add(Component.text("⏱ " + chanceOfSuccess + "% oneInNChance of success", Color.coloredProgressValue(chanceOfSuccess, 0, 100, false)));
 
         List<ItemRecord> recipeIngredients = !ingredients.isEmpty() ? ingredients.stream()
                 .filter(IngredientRecord::isConsumedOnCraft)

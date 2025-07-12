@@ -39,6 +39,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         this.maxHealth = meta.maxHealth();
 
         setModel(meta.model());
+        setDropTableIds(meta.dropTableIds());
         meta.skills().forEach(record -> skills.put(record.type(), new Skill(record.type(), record.getXP())));
 
         if (meta.modifiers() != null)

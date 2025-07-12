@@ -199,6 +199,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_ASHES.asInt(), Material.COAL, ItemRarity.RARE, "Magic Ashes", List.of("Glowing remnants infused with mysterious arcane power."), null, null), null),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.WOOL.asInt(), Material.WHITE_WOOL, ItemRarity.COMMON, "Wool", List.of("Soft tufts of freshly shorn wool", "Requires spinning before use."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.BONES.asInt(), Material.COAL, ItemRarity.COMMON, "Bones", List.of("Remains of a fallen creature."), null, null), null),
 
 
                 new ItemEntity(new AbstractItemMeta(ItemType.EMPTY_CONTAINER, ItemId.EMPTY_POT.asInt(), Material.COAL, ItemRarity.COMMON, "Empty Pot", List.of("A regular pot, made of clay."), null, null),
@@ -293,7 +294,7 @@ public class ItemRepository {
                                 )), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.GEM, ItemId.BLADESTONE.asInt(), Material.COAL, ItemRarity.MYTHIC, "Bladestone",
-                        List.of("A gem that enhances offensive prowess, increasing successful hit chance."), null, null),
+                        List.of("A gem that enhances offensive prowess, increasing successful hit oneInNChance."), null, null),
                         toVersionedJson(
                                 new GemMeta(null, List.of(
                                         new Modifier(ModifierType.ATTACK_STAB, 6),

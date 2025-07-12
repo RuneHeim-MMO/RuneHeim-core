@@ -73,6 +73,8 @@ public class MobHandler {
     }
 
     public void onEntityDeath(EntityDeathEvent event, AbstractMob mob) {
+        mob.rollDrops(event.getEntity().getLocation());
+
         if (mob.getBehavior() != null && !event.isCancelled()) {
             mob.getBehavior().playSound(event.getEntity(), MobBehavior.MobSoundType.DEATH);
         }
