@@ -1,0 +1,54 @@
+{
+    "model": {
+        "type": "range_dispatch",
+        "property": "custom_model_data",
+        "fallback": {
+            "type": "model",
+            "model": "item/wooden_pickaxe"
+        },
+        "entries": [
+            {
+                "threshold": 1100,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/tools/bronze_pickaxe"
+                }
+            },
+            {
+                "threshold": 1101,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/tools/iron_pickaxe"
+                }
+            },
+            {
+                "threshold": 1102,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/tools/steel_pickaxe"
+                }
+            },
+            {
+                "threshold": 1103,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/tools/mithril_pickaxe"
+                }
+            },
+            {
+                "threshold": 1104,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/tools/adamantite_pickaxe"
+                }
+            },
+            {
+                "threshold": 1105,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/tools/runite_pickaxe"
+                }
+            }
+        ]
+    }
+}

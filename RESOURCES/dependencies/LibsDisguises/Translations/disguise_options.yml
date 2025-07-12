@@ -326,9 +326,6 @@
 # Found in the disguise options for Boat and uses a int
 "setBoatShake": "setBoatShake"
 
-# Found in the disguise options for Boat and uses a Type
-"setBoatType": "setBoatType"
-
 # Found in the disguise options for Boat and uses a float
 "setDamage": "setDamage"
 
@@ -694,3 +691,12 @@
 
 # Used as a shortcut for setBaby(false) when disguising an entity
 "adult": "adult"
+
+# Found in the disguise options for Creaking and uses a boolean
+"setBrightEyes": "setBrightEyes"
+
+# Found in the disguise options for Creaking and uses a boolean
+"setMovementAnimations": "setMovementAnimations"
+
+# Found in the disguise options for Creaking and uses a boolean
+"setTearingDown": "setTearingDown"

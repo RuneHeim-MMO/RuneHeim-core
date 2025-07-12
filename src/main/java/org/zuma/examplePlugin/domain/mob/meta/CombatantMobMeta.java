@@ -10,7 +10,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public record CombatantMobMeta(String displayName, EquipmentSet equipmentSet, List<SkillLevelRecord> skills,
-                               @Nullable List<Modifier> modifiers, @Nullable String skin,
+                               @Nullable List<Modifier> modifiers, @Nullable String skin, @Nullable String model,
                                @Nullable DisguiseType disguiseType,
                                int maxHealth, EntityType baseEntity) {
 }

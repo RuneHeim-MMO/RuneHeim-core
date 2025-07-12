@@ -1,0 +1,390 @@
+{
+    "model": {
+        "type": "range_dispatch",
+        "property": "custom_model_data",
+        "fallback": {
+            "type": "model",
+            "model": "item/coal"
+        },
+        "entries": [
+            {
+                "threshold": 100,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/copper_ore"
+                }
+            },
+            {
+                "threshold": 101,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/iron_ore"
+                }
+            },
+            {
+                "threshold": 102,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/steel_ore"
+                }
+            },
+            {
+                "threshold": 103,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/mithril_ore"
+                }
+            },
+            {
+                "threshold": 104,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/adamantite_ore"
+                }
+            },
+            {
+                "threshold": 105,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/runite_ore"
+                }
+            },
+            {
+                "threshold": 106,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/tin_ore"
+                }
+            },
+            {
+                "threshold": 107,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/coal_ore"
+                }
+            },
+            {
+                "threshold": 200,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/bronze_bar"
+                }
+            },
+            {
+                "threshold": 201,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/iron_bar"
+                }
+            },
+            {
+                "threshold": 202,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/steel_bar"
+                }
+            },
+            {
+                "threshold": 203,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/mithril_bar"
+                }
+            },
+            {
+                "threshold": 204,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/adamantite_bar"
+                }
+            },
+            {
+                "threshold": 205,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/runite_bar"
+                }
+            },
+            {
+                "threshold": 206,
+                "model": {
+                    "type": "model",
+                    "model": "item/coal"
+                }
+            },
+            {
+                "threshold": 1300,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/food/raw_herring"
+                }
+            },
+            {
+                "threshold": 1301,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/food/raw_minnow"
+                }
+            },
+            {
+                "threshold": 1302,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/food/raw_trout"
+                }
+            },
+            {
+                "threshold": 1303,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/food/raw_salmon"
+                }
+            },
+            {
+                "threshold": 1304,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/food/raw_tuna"
+                }
+            },
+            {
+                "threshold": 1305,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/food/raw_crawler"
+                }
+            },
+            {
+                "threshold": 1306,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/food/raw_pike"
+                }
+            },
+            {
+                "threshold": 1307,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/food/raw_eel"
+                }
+            },
+            {
+                "threshold": 1308,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/food/raw_shark"
+                }
+            },
+            {
+                "threshold": 1309,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/food/raw_turtle"
+                }
+            },
+            {
+                "threshold": 1310,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/food/raw_ray"
+                }
+            },
+            {
+                "threshold": 1311,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/food/burnt_food"
+                }
+            },
+            {
+                "threshold": 1312,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/empty_vial"
+                }
+            },
+            {
+                "threshold": 1313,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/vial_of_water"
+                }
+            },
+            {
+                "threshold": 1314,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/vial_of_lava"
+                }
+            },
+            {
+                "threshold": 1315,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/empty_pot"
+                }
+            },
+            {
+                "threshold": 1316,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/pot_of_flour"
+                }
+            },
+            {
+                "threshold": 1317,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/empty_bucket"
+                }
+            },
+            {
+                "threshold": 1318,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/bucket_of_water"
+                }
+            },
+            {
+                "threshold": 1500,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/tools/fishing_net"
+                }
+            },
+            {
+                "threshold": 1501,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/tools/fishing_rod"
+                }
+            },
+            {
+                "threshold": 1502,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/tools/reinforced_fishing_rod"
+                }
+            },
+            {
+                "threshold": 1503,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/tools/fishing_trap"
+                }
+            },
+            {
+                "threshold": 1700,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/ashes"
+                }
+            },
+            {
+                "threshold": 1701,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/magic_ashes"
+                }
+            },
+            {
+                "threshold": 1800,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/scrolls/fusion_scroll"
+                }
+            },
+            {
+                "threshold": 1900,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/gems/brutalite_core"
+                }
+            },
+            {
+                "threshold": 1901,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/gems/obsidian_bulwark"
+                }
+            },
+            {
+                "threshold": 1902,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/gems/bladestone"
+                }
+            },
+            {
+                "threshold": 1903,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/gems/archers_ember"
+                }
+            },
+            {
+                "threshold": 2000,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/fairy/rations/fairy_ration"
+                }
+            },
+            {
+                "threshold": 2001,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/fairy/rations/fine_fairy_ration"
+                }
+            },
+            {
+                "threshold": 2002,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/fairy/rations/superior_fairy_ration"
+                }
+            },
+            {
+                "threshold": 2200,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/fairy/upgrades/attack_upgrade"
+                }
+            },
+            {
+                "threshold": 2201,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/fairy/upgrades/defence_upgrade"
+                }
+            },
+            {
+                "threshold": 2202,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/fairy/upgrades/strength_upgrade"
+                }
+            },
+            {
+                "threshold": 2203,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/fairy/upgrades/hitpoints_upgrade"
+                }
+            },
+            {
+                "threshold": 2204,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/fairy/upgrades/range_upgrade"
+                }
+            },
+            {
+                "threshold": 2205,
+                "model": {
+                    "type": "model",
+                    "model": "item/coal"
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,26 @@
+{
+   "sources":[
+      {
+         "type":"directory",
+         "source":"entity",
+         "prefix":"entity/"
+      },
+      {
+         "type":"directory",
+         "source":"particle",
+         "prefix":"particle/"
+      },
+      {
+         "source":"entity",
+         "prefix":"entity/",
+         "type":"directory"
+      },
+      {
+         "pattern":{
+            "namespace":"minecraft",
+            "path":"entity/fishing_hook"
+         },
+         "type":"filter"
+      }
+   ]
+}

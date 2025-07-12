@@ -9,88 +9,10 @@
 "View all the paintings you can use for a painting disguise": "View all the paintings you can use for a painting disguise"
 
 # Used for the disguise option Art
-"KEBAB": "KEBAB"
-
-# Used for the disguise option Art
-"AZTEC": "AZTEC"
-
-# Used for the disguise option Art
-"ALBAN": "ALBAN"
-
-# Used for the disguise option Art
-"AZTEC2": "AZTEC2"
-
-# Used for the disguise option Art
-"BOMB": "BOMB"
-
-# Used for the disguise option Art
-"PLANT": "PLANT"
-
-# Used for the disguise option Art
-"WASTELAND": "WASTELAND"
-
-# Used for the disguise option Art
-"POOL": "POOL"
-
-# Used for the disguise option Art
-"COURBET": "COURBET"
-
-# Used for the disguise option Art
-"SEA": "SEA"
-
-# Used for the disguise option Art
-"SUNSET": "SUNSET"
-
-# Used for the disguise option Art
-"CREEBET": "CREEBET"
-
-# Used for the disguise option Art
-"WANDERER": "WANDERER"
-
-# Used for the disguise option Art
-"GRAHAM": "GRAHAM"
-
-# Used for the disguise option Art
-"MATCH": "MATCH"
-
-# Used for the disguise option Art
-"BUST": "BUST"
-
-# Used for the disguise option Art
-"STAGE": "STAGE"
-
-# Used for the disguise option Art
-"VOID": "VOID"
-
-# Used for the disguise option Art
-"SKULL_AND_ROSES": "SKULL_AND_ROSES"
-
-# Used for the disguise option Art
 "WITHER": "WITHER"
 
 # Used for the disguise option Art
-"FIGHTERS": "FIGHTERS"
-
-# Used for the disguise option Art
-"POINTER": "POINTER"
-
-# Used for the disguise option Art
-"PIGSCENE": "PIGSCENE"
-
-# Used for the disguise option Art
-"BURNING_SKULL": "BURNING_SKULL"
-
-# Used for the disguise option Art
 "SKELETON": "SKELETON"
-
-# Used for the disguise option Art
-"DONKEY_KONG": "DONKEY_KONG"
-
-# Used for the disguise option Art
-"EARTH": "EARTH"
-
-# Used for the disguise option Art
-"WIND": "WIND"
 
 # Used for the disguise option Art
 "WATER": "WATER"
@@ -99,64 +21,7 @@
 "FIRE": "FIRE"
 
 # Used for the disguise option Art
-"BAROQUE": "BAROQUE"
-
-# Used for the disguise option Art
-"HUMBLE": "HUMBLE"
-
-# Used for the disguise option Art
-"MEDITATIVE": "MEDITATIVE"
-
-# Used for the disguise option Art
-"PRAIRIE_RIDE": "PRAIRIE_RIDE"
-
-# Used for the disguise option Art
-"UNPACKED": "UNPACKED"
-
-# Used for the disguise option Art
-"BACKYARD": "BACKYARD"
-
-# Used for the disguise option Art
-"BOUQUET": "BOUQUET"
-
-# Used for the disguise option Art
-"CAVEBIRD": "CAVEBIRD"
-
-# Used for the disguise option Art
-"CHANGING": "CHANGING"
-
-# Used for the disguise option Art
-"COTAN": "COTAN"
-
-# Used for the disguise option Art
-"ENDBOSS": "ENDBOSS"
-
-# Used for the disguise option Art
 "FERN": "FERN"
-
-# Used for the disguise option Art
-"FINDING": "FINDING"
-
-# Used for the disguise option Art
-"LOWMIST": "LOWMIST"
-
-# Used for the disguise option Art
-"ORB": "ORB"
-
-# Used for the disguise option Art
-"OWLEMONS": "OWLEMONS"
-
-# Used for the disguise option Art
-"PASSAGE": "PASSAGE"
-
-# Used for the disguise option Art
-"POND": "POND"
-
-# Used for the disguise option Art
-"SUNFLOWERS": "SUNFLOWERS"
-
-# Used for the disguise option Art
-"TIDES": "TIDES"
 
 # A disguise option name, has description 'View all the colors you can use for a horses color'
 "Horse Color": "Horse Color"
@@ -6535,3 +6400,345 @@
 
 # Used for the disguise option SoundGroup
 "ZOMBIFIED_PIGLIN": "ZOMBIFIED_PIGLIN"
+
+# Used for the disguise option Art
+"humble": "humble"
+
+# Used for the disguise option Art
+"sunflowers": "sunflowers"
+
+# Used for the disguise option Art
+"wasteland": "wasteland"
+
+# Used for the disguise option Art
+"pool": "pool"
+
+# Used for the disguise option Art
+"aztec": "aztec"
+
+# Used for the disguise option Art
+"void": "void"
+
+# Used for the disguise option Art
+"skeleton": "skeleton"
+
+# Used for the disguise option Art
+"creebet": "creebet"
+
+# Used for the disguise option Art
+"bust": "bust"
+
+# Used for the disguise option Art
+"sunset": "sunset"
+
+# Used for the disguise option Art
+"changing": "changing"
+
+# Used for the disguise option Art
+"water": "water"
+
+# Used for the disguise option Art
+"baroque": "baroque"
+
+# Used for the disguise option Art
+"backyard": "backyard"
+
+# Used for the disguise option Art
+"meditative": "meditative"
+
+# Used for the disguise option Art
+"wanderer": "wanderer"
+
+# Used for the disguise option Art
+"courbet": "courbet"
+
+# Used for the disguise option Art
+"wither": "wither"
+
+# Used for the disguise option Art
+"bomb": "bomb"
+
+# Used for the disguise option Art
+"donkey_kong": "donkey_kong"
+
+# Used for the disguise option Art
+"prairie_ride": "prairie_ride"
+
+# Used for the disguise option Art
+"fighters": "fighters"
+
+# Used for the disguise option Art
+"skull_and_roses": "skull_and_roses"
+
+# Used for the disguise option Art
+"tides": "tides"
+
+# Used for the disguise option Art
+"owlemons": "owlemons"
+
+# Used for the disguise option Art
+"lowmist": "lowmist"
+
+# Used for the disguise option Art
+"burning_skull": "burning_skull"
+
+# Used for the disguise option Art
+"sea": "sea"
+
+# Used for the disguise option Art
+"stage": "stage"
+
+# Used for the disguise option Art
+"pigscene": "pigscene"
+
+# Used for the disguise option Art
+"plant": "plant"
+
+# Used for the disguise option Art
+"unpacked": "unpacked"
+
+# Used for the disguise option Art
+"finding": "finding"
+
+# Used for the disguise option Art
+"alban": "alban"
+
+# Used for the disguise option Art
+"endboss": "endboss"
+
+# Used for the disguise option Art
+"earth": "earth"
+
+# Used for the disguise option Art
+"kebab": "kebab"
+
+# Used for the disguise option Art
+"pointer": "pointer"
+
+# Used for the disguise option Art
+"cotan": "cotan"
+
+# Used for the disguise option Art
+"passage": "passage"
+
+# Used for the disguise option Art
+"orb": "orb"
+
+# Used for the disguise option Art
+"fire": "fire"
+
+# Used for the disguise option Art
+"aztec2": "aztec2"
+
+# Used for the disguise option Art
+"cavebird": "cavebird"
+
+# Used for the disguise option Art
+"bouquet": "bouquet"
+
+# Used for the disguise option Art
+"pond": "pond"
+
+# Used for the disguise option Art
+"wind": "wind"
+
+# Used for the disguise option Art
+"graham": "graham"
+
+# Used for the disguise option Art
+"fern": "fern"
+
+# Used for the disguise option Art
+"match": "match"
+
+# Used for the disguise option ParticleType
+"PALE_OAK_LEAVES": "PALE_OAK_LEAVES"
+
+# Used for the disguise option ParticleType
+"BLOCK_CRUMBLE": "BLOCK_CRUMBLE"
+
+# Used for the disguise option ParticleType
+"TRAIL": "TRAIL"
+
+# A disguise option name, has description 'The size of a salmon'
+"Salmon Variant": "Salmon Variant"
+
+# Description for the disguise option Salmon Variant
+"The size of a salmon": "The size of a salmon"
+
+# Used for the disguise option Salmon Variant
+"SMALL": "SMALL"
+
+# Used for the disguise option Salmon Variant
+"MEDIUM": "MEDIUM"
+
+# Used for the disguise option Salmon Variant
+"LARGE": "LARGE"
+
+# Used for the disguise option Material
+"PALE_OAK_PLANKS": "PALE_OAK_PLANKS"
+
+# Used for the disguise option Material
+"PALE_OAK_SAPLING": "PALE_OAK_SAPLING"
+
+# Used for the disguise option Material
+"PALE_OAK_LOG": "PALE_OAK_LOG"
+
+# Used for the disguise option Material
+"STRIPPED_PALE_OAK_LOG": "STRIPPED_PALE_OAK_LOG"
+
+# Used for the disguise option Material
+"STRIPPED_PALE_OAK_WOOD": "STRIPPED_PALE_OAK_WOOD"
+
+# Used for the disguise option Material
+"PALE_OAK_WOOD": "PALE_OAK_WOOD"
+
+# Used for the disguise option Material
+"OPEN_EYEBLOSSOM": "OPEN_EYEBLOSSOM"
+
+# Used for the disguise option Material
+"CLOSED_EYEBLOSSOM": "CLOSED_EYEBLOSSOM"
+
+# Used for the disguise option Material
+"PALE_MOSS_CARPET": "PALE_MOSS_CARPET"
+
+# Used for the disguise option Material
+"PALE_HANGING_MOSS": "PALE_HANGING_MOSS"
+
+# Used for the disguise option Material
+"PALE_MOSS_BLOCK": "PALE_MOSS_BLOCK"
+
+# Used for the disguise option Material
+"PALE_OAK_SLAB": "PALE_OAK_SLAB"
+
+# Used for the disguise option Material
+"CREAKING_HEART": "CREAKING_HEART"
+
+# Used for the disguise option Material
+"PALE_OAK_FENCE": "PALE_OAK_FENCE"
+
+# Used for the disguise option Material
+"RESIN_CLUMP": "RESIN_CLUMP"
+
+# Used for the disguise option Material
+"RESIN_BLOCK": "RESIN_BLOCK"
+
+# Used for the disguise option Material
+"RESIN_BRICKS": "RESIN_BRICKS"
+
+# Used for the disguise option Material
+"RESIN_BRICK_STAIRS": "RESIN_BRICK_STAIRS"
+
+# Used for the disguise option Material
+"RESIN_BRICK_SLAB": "RESIN_BRICK_SLAB"
+
+# Used for the disguise option Material
+"RESIN_BRICK_WALL": "RESIN_BRICK_WALL"
+
+# Used for the disguise option Material
+"CHISELED_RESIN_BRICKS": "CHISELED_RESIN_BRICKS"
+
+# Used for the disguise option Material
+"PALE_OAK_STAIRS": "PALE_OAK_STAIRS"
+
+# Used for the disguise option Material
+"PALE_OAK_BUTTON": "PALE_OAK_BUTTON"
+
+# Used for the disguise option Material
+"PALE_OAK_PRESSURE_PLATE": "PALE_OAK_PRESSURE_PLATE"
+
+# Used for the disguise option Material
+"PALE_OAK_DOOR": "PALE_OAK_DOOR"
+
+# Used for the disguise option Material
+"PALE_OAK_TRAPDOOR": "PALE_OAK_TRAPDOOR"
+
+# Used for the disguise option Material
+"PALE_OAK_FENCE_GATE": "PALE_OAK_FENCE_GATE"
+
+# Used for the disguise option Material
+"PALE_OAK_BOAT": "PALE_OAK_BOAT"
+
+# Used for the disguise option Material
+"PALE_OAK_CHEST_BOAT": "PALE_OAK_CHEST_BOAT"
+
+# Used for the disguise option Material
+"PALE_OAK_SIGN": "PALE_OAK_SIGN"
+
+# Used for the disguise option Material
+"PALE_OAK_HANGING_SIGN": "PALE_OAK_HANGING_SIGN"
+
+# Used for the disguise option Material
+"WHITE_BUNDLE": "WHITE_BUNDLE"
+
+# Used for the disguise option Material
+"ORANGE_BUNDLE": "ORANGE_BUNDLE"
+
+# Used for the disguise option Material
+"MAGENTA_BUNDLE": "MAGENTA_BUNDLE"
+
+# Used for the disguise option Material
+"LIGHT_BLUE_BUNDLE": "LIGHT_BLUE_BUNDLE"
+
+# Used for the disguise option Material
+"YELLOW_BUNDLE": "YELLOW_BUNDLE"
+
+# Used for the disguise option Material
+"LIME_BUNDLE": "LIME_BUNDLE"
+
+# Used for the disguise option Material
+"PINK_BUNDLE": "PINK_BUNDLE"
+
+# Used for the disguise option Material
+"GRAY_BUNDLE": "GRAY_BUNDLE"
+
+# Used for the disguise option Material
+"LIGHT_GRAY_BUNDLE": "LIGHT_GRAY_BUNDLE"
+
+# Used for the disguise option Material
+"CYAN_BUNDLE": "CYAN_BUNDLE"
+
+# Used for the disguise option Material
+"PURPLE_BUNDLE": "PURPLE_BUNDLE"
+
+# Used for the disguise option Material
+"BLUE_BUNDLE": "BLUE_BUNDLE"
+
+# Used for the disguise option Material
+"BROWN_BUNDLE": "BROWN_BUNDLE"
+
+# Used for the disguise option Material
+"GREEN_BUNDLE": "GREEN_BUNDLE"
+
+# Used for the disguise option Material
+"RED_BUNDLE": "RED_BUNDLE"
+
+# Used for the disguise option Material
+"BLACK_BUNDLE": "BLACK_BUNDLE"
+
+# Used for the disguise option Material
+"CREAKING_SPAWN_EGG": "CREAKING_SPAWN_EGG"
+
+# Used for the disguise option Material
+"RESIN_BRICK": "RESIN_BRICK"
+
+# Used for the disguise option Material
+"FIELD_MASONED_BANNER_PATTERN": "FIELD_MASONED_BANNER_PATTERN"
+
+# Used for the disguise option Material
+"BORDURE_INDENTED_BANNER_PATTERN": "BORDURE_INDENTED_BANNER_PATTERN"
+
+# Used for the disguise option Material
+"PALE_OAK_WALL_SIGN": "PALE_OAK_WALL_SIGN"
+
+# Used for the disguise option Material
+"PALE_OAK_WALL_HANGING_SIGN": "PALE_OAK_WALL_HANGING_SIGN"
+
+# Used for the disguise option Material
+"POTTED_PALE_OAK_SAPLING": "POTTED_PALE_OAK_SAPLING"
+
+# Used for the disguise option Material
+"POTTED_OPEN_EYEBLOSSOM": "POTTED_OPEN_EYEBLOSSOM"
+
+# Used for the disguise option Material
+"POTTED_CLOSED_EYEBLOSSOM": "POTTED_CLOSED_EYEBLOSSOM"

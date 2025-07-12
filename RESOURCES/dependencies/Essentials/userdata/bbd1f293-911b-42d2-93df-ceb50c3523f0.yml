@@ -1,0 +1,30 @@
+teleportenabled: true
+teleportauto: false
+godmode: false
+muted: false
+jailed: false
+ip-address: 127.0.0.1
+afk: false
+socialspy: false
+npc: false
+powertoolsenabled: true
+accepting-pay: true
+baltop-exempt: false
+timestamps:
+  lastteleport: 0
+  lastheal: 0
+  mute: 0
+  jail: 0
+  onlinejail: 0
+  logout: 1751999637400
+  login: 1751999629999
+money: '0'
+logoutlocation:
+  world: 5e643a47-2716-4d1c-b5de-08c03a71f977
+  world-name: world
+  x: 5055.213462000172
+  y: 102.0
+  z: 4944.956823663279
+  yaw: -15.64886474609375
+  pitch: 6.600322723388672
+last-account-name: ObscureCode

@@ -1,0 +1,148 @@
+{
+    "model": {
+        "type": "range_dispatch",
+        "property": "custom_model_data",
+        "fallback": {
+            "type": "model",
+            "model": "minecraft:item/leather_horse_armor",
+            "tints": [
+                {
+                    "type": "minecraft:dye",
+                    "default": -6265536
+                }
+            ]
+        },
+        "entries": [
+            {
+                "threshold": 1,
+                "model": {
+                    "type": "model",
+                    "model": "modelengine:skr_snowbone/head",
+                    "tints": [
+                        {
+                            "type": "minecraft:dye",
+                            "default": -6265536
+                        }
+                    ]
+                }
+            },
+            {
+                "threshold": 4,
+                "model": {
+                    "type": "model",
+                    "model": "modelengine:skr_snowbone/right_leg",
+                    "tints": [
+                        {
+                            "type": "minecraft:dye",
+                            "default": -6265536
+                        }
+                    ]
+                }
+            },
+            {
+                "threshold": 7,
+                "model": {
+                    "type": "model",
+                    "model": "modelengine:skr_snowbone/snowball",
+                    "tints": [
+                        {
+                            "type": "minecraft:dye",
+                            "default": -6265536
+                        }
+                    ]
+                }
+            },
+            {
+                "threshold": 9,
+                "model": {
+                    "type": "model",
+                    "model": "modelengine:skr_snowbone/upper_skull",
+                    "tints": [
+                        {
+                            "type": "minecraft:dye",
+                            "default": -6265536
+                        }
+                    ]
+                }
+            },
+            {
+                "threshold": 10,
+                "model": {
+                    "type": "model",
+                    "model": "modelengine:skr_snowbone/hat",
+                    "tints": [
+                        {
+                            "type": "minecraft:dye",
+                            "default": -6265536
+                        }
+                    ]
+                }
+            },
+            {
+                "threshold": 13,
+                "model": {
+                    "type": "model",
+                    "model": "modelengine:skr_snowbone/body",
+                    "tints": [
+                        {
+                            "type": "minecraft:dye",
+                            "default": -6265536
+                        }
+                    ]
+                }
+            },
+            {
+                "threshold": 14,
+                "model": {
+                    "type": "model",
+                    "model": "modelengine:skr_snowbone/right_arm",
+                    "tints": [
+                        {
+                            "type": "minecraft:dye",
+                            "default": -6265536
+                        }
+                    ]
+                }
+            },
+            {
+                "threshold": 15,
+                "model": {
+                    "type": "model",
+                    "model": "modelengine:skr_snowbone/left_arm",
+                    "tints": [
+                        {
+                            "type": "minecraft:dye",
+                            "default": -6265536
+                        }
+                    ]
+                }
+            },
+            {
+                "threshold": 17,
+                "model": {
+                    "type": "model",
+                    "model": "modelengine:skr_snowbone/left_leg",
+                    "tints": [
+                        {
+                            "type": "minecraft:dye",
+                            "default": -6265536
+                        }
+                    ]
+                }
+            },
+            {
+                "threshold": 18,
+                "model": {
+                    "type": "model",
+                    "model": "modelengine:skr_snowbone/hat2",
+                    "tints": [
+                        {
+                            "type": "minecraft:dye",
+                            "default": -6265536
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

@@ -48,6 +48,12 @@ public class MobTypesLoader {
                 null, MobBehaviors.GOBLIN.getBehavior(),
                 0.33, false, false, 8, "goblin_1"));
 
+        registry.register(MobType.BROWN_BOAR.getId(), () -> new GenericCombatant("Brown Boar", EquipmentSet.GOBLIN_2,
+                List.of(new SkillLevelRecord(SkillType.ATTACK, 40), new SkillLevelRecord(SkillType.STRENGTH, 40), new SkillLevelRecord(SkillType.DEFENCE, 40)),
+                null, MobBehaviors.GOBLIN.getBehavior(), "yungwilder_isles_boar_brown",
+                0.33, false, false, 8));
+
+
 
         registry.register(MobType.SHEEP.getId(), () -> new ShearableSheep("Sheep",
                 List.of(new SkillLevelRecord(SkillType.ATTACK, 1), new SkillLevelRecord(SkillType.STRENGTH, 1), new SkillLevelRecord(SkillType.DEFENCE, 1)),

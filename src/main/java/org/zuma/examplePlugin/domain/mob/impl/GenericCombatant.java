@@ -33,22 +33,44 @@ public class GenericCombatant extends CombatantMob {
         return EntityType.IRON_GOLEM;
     }
 
-    public GenericCombatant(String displayName, @Nullable EquipmentSet equipmentSet, List<SkillLevelRecord> skills, List<Modifier> modifiers,
-                            @Nullable MobBehavior behavior, double walkSpeed, boolean attacksOnSight, boolean attackWithGroup, int health,
+
+    public GenericCombatant(String displayName,
+                            @Nullable EquipmentSet equipmentSet,
+                            List<SkillLevelRecord> skills,
+                            List<Modifier> modifiers,
+                            @Nullable MobBehavior behavior,
+                            @Nullable String model,
+                            double walkSpeed,
+                            boolean attacksOnSight,
+                            boolean attackWithGroup,
+                            int health) {
+        this(displayName, equipmentSet, skills, modifiers, behavior, walkSpeed, attacksOnSight, attackWithGroup, health, null, model, null);
+    }
+
+    public GenericCombatant(String displayName,
+                            @Nullable EquipmentSet equipmentSet,
+                            List<SkillLevelRecord> skills,
+                            List<Modifier> modifiers,
+                            @Nullable MobBehavior behavior,
+                            double walkSpeed,
+                            boolean attacksOnSight,
+                            boolean attackWithGroup,
+                            int health,
                             @Nullable String skin) {
-        this(displayName, equipmentSet, skills, modifiers, behavior, walkSpeed, attacksOnSight, attackWithGroup, health, skin, null);
+        this(displayName, equipmentSet, skills, modifiers, behavior, walkSpeed, attacksOnSight, attackWithGroup, health, skin, null, null);
     }
 
-    public GenericCombatant(String displayName, @Nullable EquipmentSet equipmentSet, List<SkillLevelRecord> skills, List<Modifier> modifiers,
-                            @Nullable MobBehavior behavior, double walkSpeed, boolean attacksOnSight, boolean attackWithGroup, int health,
-                            DisguiseType disguiseType) {
-        this(displayName, equipmentSet, skills, modifiers, behavior, walkSpeed, attacksOnSight, attackWithGroup, health, null, disguiseType);
-    }
-
-    public GenericCombatant(String displayName, @Nullable EquipmentSet equipmentSet, List<SkillLevelRecord> skills, List<Modifier> modifiers,
-                            @Nullable MobBehavior behavior, double walkSpeed, boolean attacksOnSight, boolean attackWithGroup, int health,
-                            @Nullable String skin, @Nullable DisguiseType disguiseType) {
-        super(new CombatantMobMeta(displayName, equipmentSet, skills, modifiers, skin, disguiseType, health, getMobWithCorrectBehavior(attacksOnSight, attackWithGroup)));
+    public GenericCombatant(String displayName,
+                            @Nullable EquipmentSet equipmentSet,
+                            List<SkillLevelRecord> skills,
+                            List<Modifier> modifiers,
+                            @Nullable MobBehavior behavior,
+                            double walkSpeed,
+                            boolean attacksOnSight, boolean attackWithGroup, int health,
+                            @Nullable String skin,
+                            @Nullable String model,
+                            @Nullable DisguiseType disguiseType) {
+        super(new CombatantMobMeta(displayName, equipmentSet, skills, modifiers, skin, model, disguiseType, health, getMobWithCorrectBehavior(attacksOnSight, attackWithGroup)));
 
         HashMap<Attribute, Double> attributes = new HashMap<>();
         attributes.put(Attribute.GENERIC_MOVEMENT_SPEED, walkSpeed);

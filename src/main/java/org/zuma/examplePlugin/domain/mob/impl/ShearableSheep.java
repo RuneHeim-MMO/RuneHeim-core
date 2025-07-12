@@ -10,7 +10,9 @@ import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
@@ -36,7 +38,7 @@ public class ShearableSheep extends GenericCombatant {
 
     public ShearableSheep(String displayName, List<SkillLevelRecord> skills, List<Modifier> modifiers,
                           @Nullable MobBehavior behavior, double walkSpeed, boolean attacksOnSight, boolean attackWithGroup, int health) {
-        super(displayName, null, skills, modifiers, null, walkSpeed, false, false, health, DisguiseType.SHEEP);
+        super(displayName, null, skills, modifiers, null, walkSpeed, false, false, health, null, null, DisguiseType.SHEEP);
 
         HashMap<Attribute, Double> attributes = new HashMap<>();
         attributes.put(Attribute.GENERIC_MOVEMENT_SPEED, walkSpeed);
@@ -81,6 +83,18 @@ public class ShearableSheep extends GenericCombatant {
             setWoolState(entity, true);
             hasWool = true;
         }, WOOL_RESPAWN_DELAY_SECONDS * 20);
+    }
+
+    @Override
+    public void onChunkLoaded(@Nullable ChunkLoadEvent event) {
+        if (this.getEntity() instanceof LivingEntity livingEntity) {
+            this.setLivingEntityMeta(livingEntity);
+
+            if (this.getDisguise() != null) {
+                DisguiseAPI.disguiseToAll(this.getEntity(), this.getDisguise().clone());
+                setWoolState(this.getEntity(), hasWool);
+            }
+        }
     }
 
     @Override

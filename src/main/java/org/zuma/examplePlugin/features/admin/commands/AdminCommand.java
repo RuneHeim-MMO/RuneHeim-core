@@ -4,8 +4,10 @@ package org.zuma.examplePlugin.features.admin.commands;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
@@ -24,6 +26,12 @@ import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.features.admin.inventories.ItemRegistryInventory;
 import org.zuma.examplePlugin.features.admin.inventories.RecipesInventory;
+import com.ticxo.modelengine.api.ModelEngineAPI;
+import com.ticxo.modelengine.api.entity.BukkitEntity;
+import com.ticxo.modelengine.api.ModelEngineAPI;
+import com.ticxo.modelengine.api.model.ActiveModel;
+import com.ticxo.modelengine.api.model.ModeledEntity;
+import org.bukkit.entity.ArmorStand;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -100,11 +108,26 @@ public class AdminCommand implements BasicCommand {
 
         }
 
+        if (args[0].equalsIgnoreCase("model")) {
+            Location location = player.getLocation();
+            // Spawn a new entity
+            Pig pig = location.getWorld().spawn(location, Pig.class);
+// Create a new ModeledEntity from the spawned entity
+            ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(pig);
+// Create a new ActiveModel using the ID of a model
+// Will throw an error if the model does not exist
+            ActiveModel activeModel = ModelEngineAPI.createActiveModel("yungwilder_isles_wolf_gray_dark");
+// Add the model to the entity
+            modeledEntity.addModel(activeModel, true);
+
+
+        }
+
         if (Objects.equals(args[0], "mob1")) {
             RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.GOBLIN_LOW_LVL_1.getId());
         }
         if (Objects.equals(args[0], "mob2")) {
-            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.GOBLIN_LOW_LVL_2.getId());
+            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.BROWN_BOAR.getId());
         }
 
         if (Objects.equals(args[0], "sheep")) {

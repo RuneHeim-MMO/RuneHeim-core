@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "item/materials/bucket_of_water"
+  }
+}

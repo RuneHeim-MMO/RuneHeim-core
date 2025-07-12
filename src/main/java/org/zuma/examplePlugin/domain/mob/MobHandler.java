@@ -1,5 +1,8 @@
 package org.zuma.examplePlugin.domain.mob;
 
+import com.ticxo.modelengine.api.ModelEngineAPI;
+import com.ticxo.modelengine.api.animation.handler.AnimationHandler;
+import com.ticxo.modelengine.api.model.ModeledEntity;
 import me.libraryaddict.disguise.DisguiseAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -100,6 +103,7 @@ public class MobHandler {
                 AbstractMob mob = registry.getMob(entity);
                 if (mob != null && mob.getDisguise() != null) {
                     DisguiseAPI.disguiseToAll(entity, mob.getDisguise().clone());
+                    mob.onChunkLoaded(null);
                 }
             }
         }, 20L);

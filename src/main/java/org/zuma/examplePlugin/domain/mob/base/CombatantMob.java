@@ -1,5 +1,7 @@
 package org.zuma.examplePlugin.domain.mob.base;
 
+import com.ticxo.modelengine.api.ModelEngineAPI;
+import com.ticxo.modelengine.api.model.ModeledEntity;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -36,6 +38,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         this.health = meta.maxHealth();
         this.maxHealth = meta.maxHealth();
 
+        setModel(meta.model());
         meta.skills().forEach(record -> skills.put(record.type(), new Skill(record.type(), record.getXP())));
 
         if (meta.modifiers() != null)
@@ -92,6 +95,17 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     @Override
     public void onEntityAttackPlayer(EntityDamageByEntityEvent event, RunePlayer runePlayer) {
 
+        Entity hit = getEntity();
+        if (hit != null) {
+            ModeledEntity me = ModelEngineAPI.getModeledEntity(hit);
+
+            if (me == null) return;
+
+            me.getModels().values().forEach(am -> {
+                am.getAnimationHandler().playAnimation("attack", 0f, 0.3f, 1, true);
+            });
+
+        }
         // Remove iron golem upwards vel on attack.
         if (event.getDamager() instanceof IronGolem) {
             Player player = runePlayer.asBukkitPlayer();

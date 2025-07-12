@@ -1,0 +1,38 @@
+{
+	"credit": "Made with Blockbench",
+	"ambientocclusion": false,
+	"textures": {
+		"1": "block/torch/redstone_torch_off",
+		"particle": "block/redstone_torch_off"
+	},
+	"elements": [
+		{
+			"name": "cloth",
+			"from": [7, 6.5, 7],
+			"to": [9, 10.5, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8.025, 8.05, 8.025]},
+			"faces": {
+				"north": {"uv": [8, 0, 10, 4], "texture": "#1"},
+				"east": {"uv": [14, 0, 16, 4], "texture": "#1"},
+				"south": {"uv": [12, 0, 14, 4], "texture": "#1"},
+				"west": {"uv": [10, 0, 12, 4], "texture": "#1"},
+				"up": {"uv": [0, 14, 2, 16], "texture": "#1"},
+				"down": {"uv": [14, 14, 16, 16], "texture": "#1"}
+			}
+		},
+		{
+			"name": "handle",
+			"from": [7.275, 0, 7.275],
+			"to": [8.775, 10, 8.775],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8.05, 8]},
+			"faces": {
+				"north": {"uv": [0, 1, 2, 11], "texture": "#1"},
+				"east": {"uv": [2, 1, 4, 11], "texture": "#1"},
+				"south": {"uv": [6, 1, 8, 11], "texture": "#1"},
+				"west": {"uv": [4, 1, 6, 11], "texture": "#1"},
+				"up": {"uv": [2, 14, 4, 16], "texture": "#1"},
+				"down": {"uv": [4, 14, 6, 16], "texture": "#1"}
+			}
+		}
+	]
+}

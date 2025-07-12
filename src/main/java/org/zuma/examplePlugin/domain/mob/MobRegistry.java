@@ -48,10 +48,15 @@ public class MobRegistry {
         }
 
         AbstractMob mob = typeRegistry.create(id);
-        mob.spawn(uuid, location);
-        this.mobs.put(uuid, mob);
 
-        if (mob.getEntity() != null) MobSessionManager.tagEntity(mob.getEntity());
+        try {
+            mob.spawn(uuid, location);
+            this.mobs.put(uuid, mob);
+
+            if (mob.getEntity() != null) MobSessionManager.tagEntity(mob.getEntity());
+        } catch (Exception e) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to spawn a " + mob.getDisplayName() + " mob! " + e.getMessage());
+        }
     }
 
     public void removeMob(UUID uuid) {

@@ -1,5 +1,8 @@
 package org.zuma.examplePlugin.domain.mob.base;
 
+import com.ticxo.modelengine.api.ModelEngineAPI;
+import com.ticxo.modelengine.api.model.ActiveModel;
+import com.ticxo.modelengine.api.model.ModeledEntity;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
@@ -9,6 +12,7 @@ import me.libraryaddict.disguise.disguisetypes.watchers.LivingWatcher;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Nameable;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -32,6 +36,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public abstract class AbstractMob {
@@ -43,6 +48,9 @@ public abstract class AbstractMob {
 
     @Nullable
     private Disguise disguise = null;
+
+    @Nullable
+    private String model = null;
 
     @Nullable
     private MobBehavior behavior = null;
@@ -70,6 +78,16 @@ public abstract class AbstractMob {
         this.uuid = uuid;
 
         this.setEntityPersistenceKey(entity);
+
+        if (this.model != null) {
+            ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(entity);
+            ActiveModel activeModel = ModelEngineAPI.createActiveModel(model);
+
+            modeledEntity.addModel(activeModel, true);
+   
+            entity.setInvisible(true);
+
+        }
 
         if (entity instanceof LivingEntity livingEntity) {
             this.setLivingEntityMeta(livingEntity);
@@ -188,7 +206,7 @@ public abstract class AbstractMob {
         }
     }
 
-    private void setLivingEntityMeta(LivingEntity entity) {
+    protected void setLivingEntityMeta(LivingEntity entity) {
         entity.customName(displayName);
         entity.setCustomNameVisible(true);
         entity.setAI(ai);
@@ -300,5 +318,9 @@ public abstract class AbstractMob {
     public Disguise getDisguise() {
         if (disguise == null) return null;
         return disguise.clone();
+    }
+
+    public void setModel(@Nullable String model) {
+        this.model = model;
     }
 }
