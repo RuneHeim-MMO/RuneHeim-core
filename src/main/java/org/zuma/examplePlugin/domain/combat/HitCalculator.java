@@ -143,7 +143,7 @@ public class HitCalculator {
             chanceToHit = attackRoll / (2 * (defenceRoll + 1));
         }
 
-        Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage("Change to hit: " + chanceToHit + "%"));
+        Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage("Chance to hit: " + chanceToHit + "%"));
         return Math.random() < chanceToHit;
     }
 

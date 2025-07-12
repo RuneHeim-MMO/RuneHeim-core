@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.TextUtils;
@@ -57,7 +58,7 @@ public class PlayerItemDistributor {
             );
 
             if (dropMessage != null && !dropMessage.isEmpty()) {
-                player.sendMessage(Component.text(dropMessage).color(Color.ERROR.asColor()));
+                player.sendMessage(Icon.INFO.asComponent().append(Component.text(dropMessage).color(Color.INFO.asColor())));
                 SoundType.INVENTORY_FULL.play(player, true);
             }
 

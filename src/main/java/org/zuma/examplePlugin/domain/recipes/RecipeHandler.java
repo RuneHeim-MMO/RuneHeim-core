@@ -5,6 +5,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
@@ -144,7 +145,7 @@ public class RecipeHandler {
                     }
 
                     if (times == 1 && failedCrafts == 1) {
-                        player.asBukkitPlayer().sendMessage(Component.text("Failed to " + type.getVerb().toLowerCase() + " a ").append(resultComponent).color(Color.ERROR.asColor()));
+                        player.asBukkitPlayer().sendMessage(Icon.ERROR.asComponent().append(Component.text("Failed to " + type.getVerb().toLowerCase() + " a ").append(resultComponent).color(Color.ERROR.asColor())));
                     }
 
 

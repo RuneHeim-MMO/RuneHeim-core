@@ -5,6 +5,8 @@ import net.kyori.adventure.text.format.NamedTextColor;
 
 public enum Icon {
     EMPTY(""),
+    INFO("§bⓤ"),
+    ERROR("§cⵅ"),
 
     COMMON("▜"),
     UNCOMMON("⏤"),

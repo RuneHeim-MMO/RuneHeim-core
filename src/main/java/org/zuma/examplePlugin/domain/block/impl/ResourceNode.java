@@ -20,6 +20,7 @@ import org.zuma.examplePlugin.domain.block.ResourceNodeSchematicHandler;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.constants.EquipableType;
@@ -211,11 +212,11 @@ public class ResourceNode extends AbstractInteractableBlock {
 
         // If any requirements are missing, notify player and cancel interaction
         if (!missingRequirements.isEmpty() && player.asBukkitPlayer().getGameMode() != GameMode.CREATIVE) {
-            SoundType.UI_FAIL.play(player.asBukkitPlayer(), false);
             missingRequirements.forEach(req -> {
-                player.asBukkitPlayer().sendMessage(Component.text(
+                HudService.sendFailMessage(player, Component.text(
                         "You need " + req.minimumLevel() + " " + req.type().getLabel() + " in order to gather from " + blockType.getLabel() + "."
-                ).color(Color.ERROR.asColor()));
+                ));
+
             });
 
             return;
@@ -223,8 +224,7 @@ public class ResourceNode extends AbstractInteractableBlock {
 
         // Ensure the item in hand is equipable and valid for gathering
         if (!(itemInHand instanceof EquipableItemType gearItemInHand && gearItemInHand.getEquipableType().equals(EquipableType.HANDHELD))) {
-            SoundType.UI_FAIL.play(player.asBukkitPlayer(), false);
-            player.asBukkitPlayer().sendMessage(Component.text(blockType.getWrongToolMessage()).color(Color.ERROR.asColor()));
+            HudService.sendFailMessage(player, Component.text(blockType.getWrongToolMessage()));
             return;
         }
 
@@ -234,8 +234,7 @@ public class ResourceNode extends AbstractInteractableBlock {
 
         // If a required modifier exists but the item lacks it, fail the interaction
         if (hasRequiredModifier && requiredToolModifier.isEmpty()) {
-            SoundType.UI_FAIL.play(player.asBukkitPlayer(), false);
-            player.asBukkitPlayer().sendMessage(Component.text(blockType.getWrongToolMessage()).color(Color.ERROR.asColor()));
+            HudService.sendFailMessage(player, Component.text(blockType.getWrongToolMessage()));
             return;
         }
 

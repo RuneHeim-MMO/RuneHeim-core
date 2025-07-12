@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
@@ -24,7 +25,7 @@ public class QuestItem extends AbstractItemType {
     @Override
     public void onPlayerItemDrop(PlayerDropItemEvent event, RunePlayer player, StateManager itemStateManager) {
         event.setCancelled(true);
-        player.asBukkitPlayer().sendMessage(Component.text("You cannot drop this item. It is associated with " + questName + " quest.").color(Color.ERROR.asColor()));
+        HudService.sendFailMessage(player, Component.text("You cannot drop this item. It is associated with " + questName + " quest."));
     }
 
 

@@ -171,7 +171,7 @@ public class HudService {
     }
 
     public static void sendFailMessage(RunePlayer player, Component text) {
-        player.asBukkitPlayer().sendMessage(text.color(Color.ERROR.asColor()));
+        player.asBukkitPlayer().sendMessage(Icon.ERROR.asComponent().append(text.color(Color.ERROR.asColor())));
         SoundType.FAIL_ACTION.play(player.asBukkitPlayer(), false);
     }
 
