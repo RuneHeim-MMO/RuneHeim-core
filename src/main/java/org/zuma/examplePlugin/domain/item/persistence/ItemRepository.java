@@ -139,7 +139,7 @@ public class ItemRepository {
                 // ADMIN STICK! REMOVE BEFORE ALPHA!
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.ADMIN_OP_STICK.asInt(), Material.STICK, ItemRarity.COMMON, "Admin Stick", List.of("Bronze dagger, quick and light."), null, null),
                         toVersionedJson(
-                                new EquipableTypeMeta(null,
+                                new EquipableTypeMeta(List.of(new SkillModifier(SkillType.HITPOINTS,50)),
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 999999),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 999999),

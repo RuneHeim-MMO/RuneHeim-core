@@ -89,6 +89,7 @@ public class RunePlayer implements CombatEntity {
     }
 
     public void setSkillModifiers(List<SkillModifier> newModifiers) {
+        skills.values().forEach(skill -> skill.setBonus(0));
         skillModifiers.clear();
         skillModifiers.putAll(newModifiers.stream()
                 .collect(Collectors.toMap(SkillModifier::type, Function.identity())));

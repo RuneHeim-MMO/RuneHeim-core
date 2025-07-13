@@ -48,10 +48,12 @@ public class SkillsCommand implements BasicCommand {
                     .fillColor(Color.SKILL_BAR_FILL.asColor())
                     .build();
 
-            result = result.append(progressBar)
-                    .append(Component.text(" - ", NamedTextColor.GRAY))
+            result = result
+                    .append(progressBar)
                     .append(Component.text(skill.getType().getSymbol(), NamedTextColor.WHITE))
-                    .append(Component.text(" " + skill.getType().getLabel() + ": " + skill.getBaseLevel() + " [+ " + skill.getBonus() + "]" + " - ", NamedTextColor.GRAY))
+                    .append(Component.text("  " + skill.getType().getLabel() + ": " + skill.getBaseLevel(), NamedTextColor.GRAY))
+                    .append(skill.getBonus() > 0 ? Component.text("+" + skill.getBonus(), NamedTextColor.GREEN) : Component.text(""))
+                    .append(Component.text(" - ", NamedTextColor.GRAY))
                     .append(Component.text(formattedXp + " XP" + "/" + formattedNextLevelXp + " XP", Color.ACCENT.asColor()))
                     .append(Component.text("\n"));
 
