@@ -19,6 +19,7 @@ import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockReposito
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
 import org.zuma.examplePlugin.domain.combat.HitHandler;
 import org.zuma.examplePlugin.domain.combat.HitListener;
+import org.zuma.examplePlugin.domain.commands.PouchCommand;
 import org.zuma.examplePlugin.domain.commands.SkillsCommand;
 import org.zuma.examplePlugin.domain.droptable.DropTableHandler;
 import org.zuma.examplePlugin.domain.droptable.persistence.DropTableRepository;
@@ -200,6 +201,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         );
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("skills", new SkillsCommand()));
+        this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("pouch", new PouchCommand()));
 
     }
 

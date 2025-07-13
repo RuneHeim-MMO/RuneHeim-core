@@ -206,7 +206,7 @@ public class RunePlayer implements CombatEntity {
     }
 
     public void setPouchCoins(long coins) {
-        SoundType.COINS_DROP.play(this.asBukkitPlayer(), false);
+        SoundType.COINS_DROP.play(this.asBukkitPlayer(), true);
         this.pouchCoins = coins;
     }
 

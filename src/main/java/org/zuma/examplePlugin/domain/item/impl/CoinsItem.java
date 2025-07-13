@@ -69,7 +69,6 @@ public class CoinsItem extends MiscItem {
 
         HudService.showCoinsChangeBubble(player, amount);
         player.setPouchCoins(player.getPouchCoins() + amount);
-        SoundType.COINS_DROP.play(player, true);
     }
 
 }

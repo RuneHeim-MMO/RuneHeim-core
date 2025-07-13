@@ -21,6 +21,7 @@ import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
+import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.core.utils.FireworkUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
@@ -143,10 +144,11 @@ public class HudService {
     }
 
     public static void showCoinsChangeBubble(RunePlayer player, long change) {
-        String icon = "§f" + Icon.COIN_HANDFUL.get() + Color.SUCCESS.asSpigotHex();
-        String prefix = change > 0 ? Color.SUCCESS.asSpigotHex() + "+" : Color.ERROR.asSpigotHex();
+        long absChange = Math.abs(change);
+        String icon = "§f" + CurrencyUtils.getCurrencyIcon(absChange).get() + Color.SUCCESS.asSpigotHex();
+        String prefix = change > 0 ? Color.SUCCESS.asSpigotHex() + "+" : Color.ERROR.asSpigotHex() + "-";
 
-        spawnVerticalHologramBubble(player, prefix + change + " " + icon);
+        spawnVerticalHologramBubble(player, prefix + CurrencyUtils.formatCurrencyString(absChange) + " " + icon);
     }
 
     public static void showXpGainMessage(RunePlayer player, SkillType type, double xp, XpSource source) {
