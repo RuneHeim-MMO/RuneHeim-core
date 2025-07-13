@@ -59,7 +59,7 @@ public abstract class AbstractMob {
 
     @Nullable
     private MobEquipmentMeta mobEquipment;
-    private boolean isBaby;
+    private boolean isBaby, isInvulnerable;
     private int maxWalkDistance;
 
     @Nullable
@@ -80,6 +80,7 @@ public abstract class AbstractMob {
         behavior = null;
         mobEquipment = null;
         isBaby = false;
+        isInvulnerable = false;
         maxWalkDistance = -1; // -1 means no limits, can walk anywhere.
         customAttributes = new HashMap<>();
         dropTableIds = new ArrayList<>();
@@ -92,33 +93,9 @@ public abstract class AbstractMob {
 
         this.setEntityPersistenceKey(entity);
 
-        if (this.model != null) {
-            ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(entity);
-            ActiveModel activeModel = ModelEngineAPI.createActiveModel(model);
-
-            // TODO: display name
-            modeledEntity.addModel(activeModel, true);
-
-            entity.setInvisible(true);
-
-        }
-
         if (entity instanceof LivingEntity livingEntity) {
             this.setLivingEntityMeta(livingEntity);
-
-            if (this.disguise != null) {
-                Disguise cloned = disguise.clone();
-
-                if (disguise instanceof MobDisguise) {
-                    LivingWatcher watcher = (LivingWatcher) cloned.getWatcher();
-                    watcher.setCustomName(getDisplayName());
-                    watcher.setCustomNameVisible(true);
-                }
-
-                DisguiseAPI.disguiseToAll(entity, cloned);
-            }
         }
-
     }
 
     public void setDropTableIds(List<Integer> dropTableIds) {
@@ -229,6 +206,29 @@ public abstract class AbstractMob {
         entity.setCustomNameVisible(true);
         entity.setAI(ai);
         entity.setSilent(silent);
+        entity.setInvulnerable(isInvulnerable);
+
+        if (this.model != null) {
+            ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(entity);
+            ActiveModel activeModel = ModelEngineAPI.createActiveModel(model);
+
+            modeledEntity.addModel(activeModel, true);
+            entity.setInvisible(true);
+
+        }
+
+        if (this.disguise != null) {
+            Disguise cloned = disguise.clone();
+
+            if (disguise instanceof MobDisguise) {
+                LivingWatcher watcher = (LivingWatcher) cloned.getWatcher();
+                watcher.setCustomName(getDisplayName());
+                watcher.setCustomNameVisible(true);
+            }
+
+            DisguiseAPI.disguiseToAll(entity, cloned);
+        }
+
 
         customAttributes.forEach((attr, val) -> {
             AttributeInstance entityAttr = entity.getAttribute(attr);
@@ -366,5 +366,13 @@ public abstract class AbstractMob {
 
     public void setModel(@Nullable String model) {
         this.model = model;
+    }
+
+    public boolean isInvulnerable() {
+        return isInvulnerable;
+    }
+
+    public void setInvulnerable(boolean invulnerable) {
+        isInvulnerable = invulnerable;
     }
 }

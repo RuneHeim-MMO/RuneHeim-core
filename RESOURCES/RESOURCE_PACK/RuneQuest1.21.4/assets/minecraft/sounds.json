@@ -5,6 +5,15 @@
       "custom/coins/coins_drop_2",
       "custom/coins/coins_drop_3"
     ]
+  },
+  "runequest.skills.mine_step": {
+    "sounds": [
+      "custom/skills/mine_1",
+      "custom/skills/mine_2",
+      "custom/skills/mine_3",
+      "custom/skills/mine_4",
+      "custom/skills/mine_5"
+    ]
   }
 }
 

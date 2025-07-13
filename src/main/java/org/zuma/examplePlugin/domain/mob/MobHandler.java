@@ -80,7 +80,8 @@ public class MobHandler {
         }
 
         if (mob.getEntity() != null) {
-            mob.getEntity().remove();
+            event.getDrops().clear();
+            event.setDroppedExp(0);
         }
 
         if (mob.getUUID() != null) {

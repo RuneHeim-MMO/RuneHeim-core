@@ -2,12 +2,14 @@ package org.zuma.examplePlugin.core.handlers;
 
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Sheep;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -77,6 +79,16 @@ public class InteractionDisabler implements Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onFarmlandTrample(EntityChangeBlockEvent event) {
         if (event.getBlock().getType() == Material.FARMLAND && event.getTo() == Material.DIRT) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onEntityRegainHealth(EntityRegainHealthEvent event) {
+        if (!(event.getEntity() instanceof LivingEntity)) return;
+
+        // Cancel health regen for non-player entities
+        if (!(event.getEntity() instanceof Player)) {
             event.setCancelled(true);
         }
     }

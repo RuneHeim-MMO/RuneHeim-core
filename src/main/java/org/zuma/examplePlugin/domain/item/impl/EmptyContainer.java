@@ -54,7 +54,7 @@ public class EmptyContainer extends AbstractItemType {
         return resultMap.keySet();
     }
 
-    private void replaceItemInHandWithFilledVariant(RunePlayer player, InputType type) {
+    public void replaceItemInHandWithFilledVariant(RunePlayer player, InputType type) {
         Integer matchingFilledItem = resultMap.get(type);
 
         if (matchingFilledItem == null) {

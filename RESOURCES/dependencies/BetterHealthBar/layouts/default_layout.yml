@@ -1,0 +1,47 @@
+default_layout:
+  images:
+    1:
+      image: empty
+    2:
+      image: first
+      listener:
+        class: health_before
+    3:
+      image: red
+      listener:
+        class: health
+      conditions:
+        1:
+          first: health_percentage
+          second: 0.33
+          operation: "<"
+    4:
+      image: yellow
+      listener:
+        class: health
+      conditions:
+        1:
+          first: health_percentage
+          second: 0.33
+          operation: ">="
+        2:
+          first: health_percentage
+          second: 0.66
+          operation: "<"
+    5:
+      image: green
+      listener:
+        class: health
+      conditions:
+        1:
+          first: health_percentage
+          second: 0.66
+          operation: ">="
+  texts:
+    1:
+      text: default_text
+      pattern: "[entity_name]"
+      align: center
+      x: 60
+      y: 20
+      scale: 0.5

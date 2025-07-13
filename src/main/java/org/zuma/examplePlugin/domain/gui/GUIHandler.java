@@ -86,7 +86,7 @@ public class GUIHandler {
         RuneInventoryOpenEvent event = new RuneInventoryOpenEvent(player, matchingGUI, inventoryViewers.get(instanceUUID));
         Bukkit.getServer().getPluginManager().callEvent(event);
 
-        // Revert instance if inventory failed to open
+        // Revert new instance if inventory failed to open
         if (event.isCancelled() || !matchingGUI.attemptOpenInventory(player)) {
             registry.removePlayersActiveInstance(player.getUUID());
             return null;

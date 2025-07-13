@@ -4,6 +4,8 @@ import com.ticxo.modelengine.api.ModelEngineAPI;
 import com.ticxo.modelengine.api.model.ModeledEntity;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.LivingEntity;
@@ -78,7 +80,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
 
         if (health == 0) {
             if (entity instanceof LivingEntity livingEntity) {
-                livingEntity.damage(1000.0);
+                livingEntity.setHealth(0.0);
             } else {
                 entity.remove();
             }
@@ -95,7 +97,6 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
 
     @Override
     public void onEntityAttackPlayer(EntityDamageByEntityEvent event, RunePlayer runePlayer) {
-
         Entity hit = getEntity();
         if (hit != null) {
             ModeledEntity me = ModelEngineAPI.getModeledEntity(hit);
@@ -140,7 +141,27 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     }
 
     public void takeHit(Hit hit) {
-        this.health -= Math.min(this.health, hit.damage());
+        if (!(getEntity() instanceof LivingEntity living)) {
+            return;
+        }
+
+        // Get max Minecraft health for this entity
+        AttributeInstance attr = living.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        double maxHealth = attr != null ? attr.getValue() : 20.0; // fallback
+
+        if (maxHealth <= 0) maxHealth = 1.0;
+
+        // Apply the hit to the custom health system
+        this.health = Math.max(0, this.health - hit.damage());
+
+        // Scale custom health to the entity's real health bar
+        double scaledHealth = maxHealth * ((double) this.health / this.maxHealth);
+
+        // Clamp between 0.5 and maxHealth to avoid instant death or invisibility
+        scaledHealth = Math.max(0.5, Math.min(maxHealth, scaledHealth));
+
+        // Apply the scaled health to the entity
+        living.setHealth(scaledHealth);
     }
 
 }
