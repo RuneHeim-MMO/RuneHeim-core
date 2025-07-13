@@ -59,9 +59,9 @@ public class BlockInvCreatorInventory extends IndividualGUI {
     }
 
     @Override
-    public void openInventory(RunePlayer player) {
+    public boolean attemptOpenInventory(RunePlayer player) {
         if (!player.asBukkitPlayer().isOp()) {
-            return;
+            return false;
         }
 
         Inventory inventory = getBaseInventory();
@@ -94,6 +94,7 @@ public class BlockInvCreatorInventory extends IndividualGUI {
         inventory.setItem(super.getSlots() - 1, undo);
 
         player.asBukkitPlayer().openInventory(inventory);
+        return true;
     }
 
     @Override

@@ -57,9 +57,9 @@ public class NodeCreatorInventory extends IndividualGUI {
     }
 
     @Override
-    public void openInventory(RunePlayer player) {
+    public boolean attemptOpenInventory(RunePlayer player) {
         if (!player.asBukkitPlayer().isOp()) {
-            return;
+            return false;
         }
 
         Inventory inventory = getBaseInventory();
@@ -76,7 +76,7 @@ public class NodeCreatorInventory extends IndividualGUI {
             AbstractItemType dropItem = RuneQuestPlugin.getItemRegistry().getItem(type.getDrop().getItemId());
 
             if (dropItem == null) {
-                return;
+                return false;
             }
 
             ItemStack item = new ItemStack(dropItem.createItemStackOfType());
@@ -99,6 +99,7 @@ public class NodeCreatorInventory extends IndividualGUI {
         inventory.setItem(super.getSlots() - 1, undo);
 
         player.asBukkitPlayer().openInventory(inventory);
+        return true;
     }
 
     @Override

@@ -117,11 +117,12 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
     }
 
     @Override
-    public void openInventory(RunePlayer player) {
+    public boolean attemptOpenInventory(RunePlayer player) {
         shop.subscribe(this);
         initialPlayerCoins = player.getPouchCoins();
         updateShopItems();
         player.asBukkitPlayer().openInventory(shopInventory);
+        return true;
     }
 
     private boolean tryAddOrStackToShopSlots(ItemStack itemToAdd) {

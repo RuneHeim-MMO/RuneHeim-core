@@ -24,7 +24,7 @@ public class CookingInventory extends IndividualGUI {
     }
 
     @Override
-    public void openInventory(RunePlayer player) {
+    public boolean attemptOpenInventory(RunePlayer player) {
         Inventory inventory = getBaseInventory();
         List<AbstractRecipe> recipes = RuneQuestPlugin.getRecipeRegistry().getRecipesByType(RecipeType.COOKING_RECIPE, true);
 
@@ -54,6 +54,7 @@ public class CookingInventory extends IndividualGUI {
         }
 
         player.asBukkitPlayer().openInventory(inventory);
+        return true;
     }
 
     @Override

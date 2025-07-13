@@ -1,9 +1,15 @@
 package org.zuma.examplePlugin.domain.gui.impl.individual;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.utils.ItemUtils;
+import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.gui.base.PaginatedIndividualGUI;
+import org.zuma.examplePlugin.domain.hud.HudService;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
 
@@ -19,7 +25,15 @@ public class AnvilInventory extends PaginatedIndividualGUI {
     }
 
     @Override
-    public void openInventory(RunePlayer player) {
+    public boolean attemptOpenInventory(RunePlayer player) {
+        ItemStack inHand = PlayerUtils.getItemStackInHand(player.asBukkitPlayer());
+        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getItem(inHand);
+
+        if (type == null || type.id != ItemId.SMITHING_HAMMER.asInt()) {
+            HudService.showFailTitle(player, "You need a hammer to operate this!");
+            return false;
+        }
+
         setContent(RuneQuestPlugin.getRecipeRegistry().getRecipesByType(RecipeType.SMITHING_RECIPE, true).stream().map(recipe -> {
             ItemStack icon = recipe.getDisplayItemstack(player, RuneQuestPlugin.getItemRegistry());
 
@@ -30,12 +44,13 @@ public class AnvilInventory extends PaginatedIndividualGUI {
         }).toList());
 
         player.asBukkitPlayer().openInventory(getBaseInventory());
+        return true;
     }
 
     @Override
     public void handleInventoryClick(InventoryClickEvent event, int slot, RunePlayer player) {
         event.setCancelled(true);
-  
+
         ItemStack currentItem = event.getCurrentItem();
 
         if (currentItem == null) {

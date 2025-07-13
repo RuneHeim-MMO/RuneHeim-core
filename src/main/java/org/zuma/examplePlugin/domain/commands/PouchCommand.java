@@ -55,7 +55,7 @@ public class PouchCommand implements BasicCommand {
         if (args.length == 2 && args[0].equalsIgnoreCase("drop") && TypeUtils.isInteger(args[1])) {
 
             Long dropTime = dropTimes.get(runePlayer.getUUID());
-            if (dropTime != null && System.currentTimeMillis() - dropTime <= DROP_COOLDOWN_SECONDS * 1000L) {
+            if (dropTime != null && System.currentTimeMillis() - dropTime <= DROP_COOLDOWN_SECONDS * 1000L && !bukkitPlayer.isOp()) {
                 HudService.showFailTitle(runePlayer, "Whoa there, slow down, cowboy. Try that again in a second.");
                 return;
             }

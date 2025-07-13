@@ -79,26 +79,29 @@ public class GUIHandler {
             return null;
         }
 
-        if (!inventoryViewers.containsKey(matchingGUI.getUuid())) {
-            inventoryViewers.put(matchingGUI.getUuid(), new ArrayList<>());
-        }
-
-        inventoryViewers.get(matchingGUI.getUuid()).add(player.getUUID());
-
-        RuneInventoryOpenEvent event = new RuneInventoryOpenEvent(player, matchingGUI, inventoryViewers.get(matchingGUI.getUuid()));
-        Bukkit.getServer().getPluginManager().callEvent(event);
-
-        if (event.isCancelled()) {
-            return null;
-        }
-
+        UUID instanceUUID = matchingGUI.getUuid();
         matchingGUI.setMobHolder(mobHolder);
         matchingGUI.setBlockHolder(blockHolder);
 
-        matchingGUI.openInventory(player);
-        if (onClose != null) {
-            closeRunnables.put(matchingGUI.getUuid(), onClose);
+        RuneInventoryOpenEvent event = new RuneInventoryOpenEvent(player, matchingGUI, inventoryViewers.get(instanceUUID));
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
+        // Revert instance if inventory failed to open
+        if (event.isCancelled() || !matchingGUI.attemptOpenInventory(player)) {
+            registry.removePlayersActiveInstance(player.getUUID());
+            return null;
         }
+
+        if (!inventoryViewers.containsKey(instanceUUID)) {
+            inventoryViewers.put(instanceUUID, new ArrayList<>());
+        }
+
+        inventoryViewers.get(instanceUUID).add(player.getUUID());
+
+        if (onClose != null) {
+            closeRunnables.put(instanceUUID, onClose);
+        }
+
         return matchingGUI.getUuid();
     }
 
@@ -140,7 +143,6 @@ public class GUIHandler {
             return;
         }
 
-
         if (closeRunnables.get(instanceUUID) != null) {
             closeRunnables.get(instanceUUID).run();
             closeRunnables.remove(instanceUUID);
@@ -162,6 +164,12 @@ public class GUIHandler {
         }
 
         viewerUUIDs.remove(player.getUUID());
+
+        if (viewerUUIDs.isEmpty()) {
+            inventoryViewers.remove(instanceUUID);
+        }
+
+
     }
 
     public void onInventoryClick(InventoryClickEvent event) {

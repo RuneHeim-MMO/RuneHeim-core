@@ -43,7 +43,7 @@ public enum SoundType {
     CRAFT_SUCCESS("ITEM_ARMOR_EQUIP_GENERIC", false, 0.8f, 0.8f),
 
     MINING_START("ENTITY_PLAYER_ATTACK_STRONG", false, 1.0f, 1.0f),
-    MINING_STEP("BLOCK_STONE_STEP", false, 1.0f, 1.0f),
+    MINING_STEP("runequest.skills.mine_step", true, 1.0f, 1.0f),
     MINING_SUCCESS("BLOCK_STONE_BREAK", false, 1.0f, 1.5f),
 
     WOODCUTTING_START("ITEM_AXE_STRIP", false, 1.0f, 1.0f),

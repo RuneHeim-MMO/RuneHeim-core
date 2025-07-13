@@ -161,7 +161,7 @@ public class FusionMasterInventory extends IndividualGUI {
     }
 
     @Override
-    public void openInventory(RunePlayer player) {
+    public boolean attemptOpenInventory(RunePlayer player) {
         updateInventory(player);
 
         super.assignMenuValue(confirmItem, 1);
@@ -191,6 +191,7 @@ public class FusionMasterInventory extends IndividualGUI {
 
 
         player.asBukkitPlayer().openInventory(inventory);
+        return true;
     }
 
     @Override

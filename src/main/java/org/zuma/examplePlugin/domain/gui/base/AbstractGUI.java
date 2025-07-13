@@ -13,11 +13,9 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerBlock;
 import org.zuma.examplePlugin.domain.gui.IDHolder;
 import org.zuma.examplePlugin.domain.mob.base.AbstractInventoryOpener;
-import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
@@ -124,7 +122,8 @@ public abstract class AbstractGUI {
         return Bukkit.createInventory(new IDHolder(id, uuid), getSlots(), getTitle());
     }
 
-    public abstract void openInventory(RunePlayer player);
+    // Returns true if inventory opening succeeded. (It might fail if trying to open anvil without hammer in hands for example)
+    public abstract boolean attemptOpenInventory(RunePlayer player);
 
     public void onInventoryClick(InventoryClickEvent event, int slot, RunePlayer player) {
 
