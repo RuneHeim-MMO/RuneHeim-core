@@ -41,18 +41,18 @@ public class MobTypesLoader {
         registry.register(MobType.GOBLIN_LOW_LVL_1.getId(), () -> new GenericCombatant("Goblin", EquipmentSet.GOBLIN_1,
                 List.of(new SkillLevelRecord(SkillType.ATTACK, 5), new SkillLevelRecord(SkillType.STRENGTH, 5), new SkillLevelRecord(SkillType.DEFENCE, 5)),
                 null, MobBehaviors.GOBLIN.getBehavior(),
-                0.23, false, false, 20, "goblin_1", List.of(DropTableId.BONES.asInt())));
+                0.23, false, false, 20, "goblin_1", List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())));
 
 
         registry.register(MobType.GOBLIN_LOW_LVL_2.getId(), () -> new GenericCombatant("Goblin", EquipmentSet.GOBLIN_2,
                 List.of(new SkillLevelRecord(SkillType.ATTACK, 40), new SkillLevelRecord(SkillType.STRENGTH, 40), new SkillLevelRecord(SkillType.DEFENCE, 40)),
                 null, MobBehaviors.GOBLIN.getBehavior(),
-                0.33, false, false, 8, "goblin_1", List.of(DropTableId.BONES.asInt())));
+                0.33, false, false, 8, "goblin_1", List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())));
 
         registry.register(MobType.BROWN_BOAR.getId(), () -> new GenericCombatant("Brown Boar", EquipmentSet.GOBLIN_2,
                 List.of(new SkillLevelRecord(SkillType.ATTACK, 40), new SkillLevelRecord(SkillType.STRENGTH, 40), new SkillLevelRecord(SkillType.DEFENCE, 40)),
                 null, MobBehaviors.GOBLIN.getBehavior(), "yungwilder_isles_boar_brown",
-                0.33, false, false, 8, List.of(DropTableId.BONES.asInt())));
+                0.33, false, false, 8, List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())));
 
 
         registry.register(MobType.SHEEP.getId(), () -> new ShearableSheep("Sheep",

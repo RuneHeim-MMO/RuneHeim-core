@@ -135,6 +135,24 @@ public class ItemRepository {
         VersionedJson empty = new VersionedJson("", 1);
 
         return List.of(
+
+                // ADMIN STICK! REMOVE BEFORE ALPHA!
+                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.ADMIN_OP_STICK.asInt(), Material.STICK, ItemRarity.COMMON, "Admin Stick", List.of("Bronze dagger, quick and light."), null, null),
+                        toVersionedJson(
+                                new EquipableTypeMeta(null,
+                                        List.of(
+                                                new Modifier(ModifierType.ATTACK_STAB, 999999),
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 999999),
+                                                new Modifier(ModifierType.ATTACK_CRUSH, 999999),
+                                                new Modifier(ModifierType.ATTACK_SLASH, 999999)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 1))
+                                )
+                                , 1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.COINS, ItemId.COINS.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Coins", List.of("If you have this item in your inventory, please submit a bug report."), null, null), null),
+
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.SMITHING_HAMMER.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Hammer", List.of("A sturdy hammer used for refining and forging equipment."), null, null),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,

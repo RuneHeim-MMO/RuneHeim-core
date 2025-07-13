@@ -42,6 +42,11 @@ public class ItemHandler {
         event.getItem().onPlayerWearItem(event, player, itemStateManager);
     }
 
+    public void onPlayerPickupItem(PlayerAttemptPickupItemEvent event, AbstractItemType item, RunePlayer player, StateManager itemStateManager) {
+        item.onPlayerPickupItem(event, player, itemStateManager);
+    }
+
+
     public void onPlayerConsumeItem(PlayerItemConsumeEvent event, AbstractItemType consumedItem, RunePlayer player, StateManager itemStateManager) {
         consumedItem.onPlayerConsumeItem(event, player, itemStateManager);
         event.setCancelled(true); // Prevent vanilla items consumption.

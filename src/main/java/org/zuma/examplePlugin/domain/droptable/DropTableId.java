@@ -1,7 +1,8 @@
 package org.zuma.examplePlugin.domain.droptable;
 
 public enum DropTableId {
-    BONES(0);
+    BONES(0),
+    COINS_SMALL(1);
 
     private final int id;
 

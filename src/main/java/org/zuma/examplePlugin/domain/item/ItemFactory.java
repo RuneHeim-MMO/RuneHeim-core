@@ -46,9 +46,11 @@ public class ItemFactory {
             case FAIRY -> createFairy(meta, json);
             case MISC -> createMiscItem(meta);
             case EMPTY_CONTAINER -> createEmptyContainer(meta, json);
+            case COINS -> new CoinsItem(meta);
             default -> throw new IllegalArgumentException("Unknown item type: " + meta.type());
         };
     }
+
 
     private EmptyContainer createEmptyContainer(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {

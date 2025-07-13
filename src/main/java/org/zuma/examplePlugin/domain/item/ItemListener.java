@@ -139,6 +139,14 @@ public class ItemListener implements Listener {
         itemHandler.onPlayerWearItem(event, event.getPlayer(), itemStateManager);
     }
 
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onPlayerPickupItem(PlayerAttemptPickupItemEvent event) {
+        withItemAndPlayer(event.getPlayer(), event.getItem().getItemStack(), (item, player) -> {
+            if (event.isCancelled()) return;
+            itemHandler.onPlayerPickupItem(event, item, player, itemStateManager);
+        });
+    }
+
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBaseBukkitWearArmorClick(InventoryClickEvent event) {

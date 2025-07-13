@@ -117,6 +117,10 @@ public abstract class AbstractItemType {
 
     }
 
+    public void onPlayerPickupItem(PlayerAttemptPickupItemEvent event, RunePlayer player, StateManager itemStateManager) {
+
+    }
+
     public MetaGenerator getMetaGenerator() {
         return metaGenerator;
     }

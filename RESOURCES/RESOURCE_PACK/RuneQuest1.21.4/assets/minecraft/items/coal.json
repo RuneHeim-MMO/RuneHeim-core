@@ -8,6 +8,41 @@
         },
         "entries": [
             {
+                "threshold": -4,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/currency/coin_pile"
+                }
+            },
+            {
+                "threshold": -3,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/currency/coin_handful"
+                }
+            },
+            {
+                "threshold": -2,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/currency/coin_two"
+                }
+            },
+            {
+                "threshold": -1,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/currency/coin_one"
+                }
+            },
+            {
+                "threshold": 0,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/currency/coin_one"
+                }
+            },
+            {
                 "threshold": 100,
                 "model": {
                     "type": "model",

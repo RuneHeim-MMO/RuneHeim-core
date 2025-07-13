@@ -16,7 +16,8 @@ public enum ItemType {
     FAIRY_FOOD(12),
     FAIRY_FRUIT(13),
     FAIRY(14),
-    EMPTY_CONTAINER(15);
+    EMPTY_CONTAINER(15),
+    COINS(16);
 
     private final int key;
 

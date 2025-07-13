@@ -100,11 +100,11 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         if (hit != null) {
             ModeledEntity me = ModelEngineAPI.getModeledEntity(hit);
 
-            if (me == null) return;
-
-            me.getModels().values().forEach(am -> {
-                am.getAnimationHandler().playAnimation("attack", 0f, 0.3f, 1, true);
-            });
+            if (me != null) {
+                me.getModels().values().forEach(am -> {
+                    am.getAnimationHandler().playAnimation("attack", 0f, 0.3f, 1, true);
+                });
+            }
 
         }
         // Remove iron golem upwards vel on attack.
