@@ -14,6 +14,25 @@
       "custom/skills/mine_4",
       "custom/skills/mine_5"
     ]
-  }
+    },
+    "runequest.attack.sweep": {
+      "sounds": [
+        "custom/player/attack/sweep1",
+        "custom/player/attack/sweep2",
+        "custom/player/attack/sweep3",
+        "custom/player/attack/sweep4",
+        "custom/player/attack/sweep5",
+        "custom/player/attack/sweep6",
+        "custom/player/attack/sweep7"
+      ]
+    },
+    "runequest.attack.weak": {
+      "sounds": [
+        "custom/player/attack/weak1",
+        "custom/player/attack/weak2",
+        "custom/player/attack/weak3",
+        "custom/player/attack/weak4"
+      ]
+    }
 }
 

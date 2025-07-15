@@ -15,18 +15,24 @@ import org.bukkit.inventory.InventoryHolder;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
+import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
 import org.zuma.examplePlugin.domain.gui.IDHolder;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class BlockListener implements Listener {
+    private static final long INTERACTION_THROTTLE_INTERVAL = 150L;
+    private final CooldownHandler interactionSpeedHandler;
+
     private final BlockManager manager;
     private final ItemRegistry itemRegistry;
 
     public BlockListener(BlockManager manager, ItemRegistry itemRegistry) {
+        this.interactionSpeedHandler = new CooldownHandler();
         this.manager = manager;
         this.itemRegistry = itemRegistry;
+
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -36,6 +42,13 @@ public class BlockListener implements Listener {
 
             return;
         }
+
+        if (interactionSpeedHandler.isCooledDown(event.getPlayer())) {
+            event.setCancelled(true);
+            return;
+        }
+
+        interactionSpeedHandler.startCooldown(event.getPlayer(), INTERACTION_THROTTLE_INTERVAL);
 
 
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_AIR) {
@@ -60,8 +73,6 @@ public class BlockListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerBlockBreakProgressUpdateEvent(BlockBreakProgressUpdateEvent event) {
-
-
         if (!(event.getEntity() instanceof Player player)) {
             return;
         }

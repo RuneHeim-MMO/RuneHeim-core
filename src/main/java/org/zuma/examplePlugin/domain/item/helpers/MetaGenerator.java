@@ -9,6 +9,8 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -16,11 +18,13 @@ import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
+import org.zuma.examplePlugin.domain.item.WeaponType;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.base.SocketedEquipableItemType;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.PersistanceDataKey;
+import org.zuma.examplePlugin.domain.item.constants.WeaponSpeed;
 import org.zuma.examplePlugin.domain.item.helpers.lore.*;
 import org.zuma.examplePlugin.domain.item.impl.EmptyContainer;
 import org.zuma.examplePlugin.domain.item.impl.consumable.Food;
@@ -33,6 +37,10 @@ import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import org.bukkit.attribute.AttributeModifier;
+
+import javax.annotation.Nullable;
 
 public class MetaGenerator {
     private final AbstractItemType itemType;
@@ -54,6 +62,7 @@ public class MetaGenerator {
             meta.addEnchant(Enchantment.UNBREAKING, 1, true);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
+
 
         Multimap<Attribute, AttributeModifier> emptyModifiers = ArrayListMultimap.create();
         meta.setAttributeModifiers(emptyModifiers);
@@ -87,14 +96,18 @@ public class MetaGenerator {
 
         lore.addAll(itemType.descriptionLore.stream().map(str -> Component.text(str).color(Color.ITEM_LORE_DESCRIPTION.asColor())).toList());
 
+        if (itemType instanceof WeaponType weapon) {
+            lore.addAll(new WeaponLore(weapon).getLore());
+        }
+
         if (itemType instanceof Food food) {
             lore.addAll(new FoodLore(food).getLore());
         }
 
         if (itemType instanceof EquipableItemType equipable) {
             lore.addAll(new EquipableLore(equipable).getLore());
-
         }
+
 
         if (itemType instanceof SocketedEquipableItemType) {
             lore.addAll(new SocketedEquipableLore(item).getLore());

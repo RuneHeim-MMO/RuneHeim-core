@@ -55,28 +55,35 @@
       "ascent": -2000,
       "height": -3,
       "chars": ["⛒"]
-    },
+   },
    {
       "type": "bitmap",
       "file": "minecraft:font/icons/stamina.png",
       "ascent": 9,
       "height": 12,
       "chars": ["ⶼ"]
-    },
+   },
    {
       "type": "bitmap",
       "file": "minecraft:font/icons/sprout.png",
       "ascent": 9,
       "height": 12,
       "chars": ["✦"]
-    },
+   },
    {
       "type": "bitmap",
       "file": "minecraft:font/icons/experience.png",
       "ascent": 9,
       "height": 12,
       "chars": ["⭮"]
-    },
+   },
+   {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/swing_speed.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⾏"]
+   },
    {
       "type": "bitmap",
       "file": "minecraft:font/icons/level.png",

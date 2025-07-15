@@ -19,6 +19,7 @@ import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockReposito
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
 import org.zuma.examplePlugin.domain.combat.HitHandler;
 import org.zuma.examplePlugin.domain.combat.HitListener;
+import org.zuma.examplePlugin.domain.combat.VisualWeaponSpeedHandler;
 import org.zuma.examplePlugin.domain.commands.PouchCommand;
 import org.zuma.examplePlugin.domain.commands.SkillsCommand;
 import org.zuma.examplePlugin.domain.droptable.DropTableHandler;
@@ -28,10 +29,7 @@ import org.zuma.examplePlugin.domain.fairy.FairyListener;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
 import org.zuma.examplePlugin.domain.gui.GUIListener;
 import org.zuma.examplePlugin.domain.gui.GUIRegistry;
-import org.zuma.examplePlugin.domain.item.ItemFactory;
-import org.zuma.examplePlugin.domain.item.ItemHandler;
-import org.zuma.examplePlugin.domain.item.ItemListener;
-import org.zuma.examplePlugin.domain.item.ItemRegistry;
+import org.zuma.examplePlugin.domain.item.*;
 import org.zuma.examplePlugin.domain.item.persistence.ItemLoader;
 import org.zuma.examplePlugin.domain.item.persistence.ItemRepository;
 import org.zuma.examplePlugin.domain.item.state.StateFactory;
@@ -77,6 +75,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private static FairyHandler fairyHandler;
     private static ShopRegistry shopRegistry;
     private static DropTableHandler dropTableHandler;
+    private static VisualWeaponSpeedHandler visualWeaponSpeedHandler;
 
     private MobHandler mobHandler;
     private HikariPool pool;
@@ -168,6 +167,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(fairyListener, pluginInstance);
         fairyHandler.startLoop();
 
+        visualWeaponSpeedHandler = new VisualWeaponSpeedHandler();
+        visualWeaponSpeedHandler.startEffectsLoop();
 
         initializeMap();
 
@@ -224,6 +225,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         pool.closeConnection();
         mobHandler.cleanup();
         fairyHandler.stopLoop();
+        visualWeaponSpeedHandler.onDisable();
         Bukkit.getScheduler().cancelTasks(this);
         getRuneLogger().log(LogLevel.INFO, "Plugin disabled.");
     }

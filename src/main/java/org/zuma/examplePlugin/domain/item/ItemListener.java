@@ -16,27 +16,34 @@ import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
+import org.zuma.examplePlugin.core.utils.ItemUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
+import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.constants.EquipableType;
+import org.zuma.examplePlugin.domain.item.constants.WeaponSpeed;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.events.item.PlayerArmorEquipEvent;
 
+import javax.annotation.Nullable;
 import java.util.function.BiConsumer;
 
 public class ItemListener implements Listener {
+    private final CooldownHandler weaponSpeedHandler;
     private final RunePlayerManager playerHandler;
     private final ItemHandler itemHandler;
     private final ItemRegistry itemRegistry;
     private final StateManager itemStateManager;
 
+
     public ItemListener(ItemHandler handler, RunePlayerManager playerHandler, StateManager itemStateManager) {
         this.itemHandler = handler;
         this.playerHandler = playerHandler;
         this.itemStateManager = itemStateManager;
+        this.weaponSpeedHandler = new CooldownHandler();
 
         itemRegistry = handler.getRegistry();
     }
@@ -128,11 +135,20 @@ public class ItemListener implements Listener {
             return;
         }
 
+        if (weaponSpeedHandler.isCooledDown(damager)) {
+            event.setCancelled(true);
+            return;
+        }
+
+        @Nullable WeaponSpeed speed = ItemUtils.getWeaponSpeed(PlayerUtils.getItemStackInHand(damager));
+        weaponSpeedHandler.startCooldown(damager, speed == null ? WeaponSpeed.NORMAL.getDelayMillis() : speed.getDelayMillis());
+
         withItemAndPlayer(damager, PlayerUtils.getItemStackInHand(damager), (item, player) -> {
             if (!player.meetsRequirements(item)) {
                 requirementsFailCancelEvent(event, item, player);
                 return;
             }
+
 
             itemHandler.onPlayerDamageEntity(event, player, item, itemStateManager);
         });
@@ -226,4 +242,5 @@ public class ItemListener implements Listener {
             }
         });
     }
+
 }

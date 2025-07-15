@@ -5,8 +5,13 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
+import org.zuma.examplePlugin.domain.item.WeaponType;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.constants.WeaponSpeed;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -90,5 +95,21 @@ public class ItemUtils {
         } else {
             fromInv.setItem(fromSlot, null);
         }
+    }
+
+    @Nullable
+    public static WeaponSpeed getWeaponSpeed(ItemStack item) {
+        if (item.getType() == Material.AIR) {
+            return null;
+        }
+
+        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getItem(item);
+
+        if (!(type instanceof WeaponType weapon)) {
+            return null;
+        }
+
+        return weapon.getSpeed();
+
     }
 }

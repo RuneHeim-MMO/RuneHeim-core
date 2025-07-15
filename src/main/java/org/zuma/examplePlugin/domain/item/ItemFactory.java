@@ -197,8 +197,8 @@ public class ItemFactory {
 
         switch (json.version()) {
             case 1 -> {
-                EquipableTypeMeta deserialized = new Gson().fromJson(json.meta(), EquipableTypeMeta.class);
-                Weapon item = new Weapon(meta);
+                EquipableWeaponTypeMeta deserialized = new Gson().fromJson(json.meta(), EquipableWeaponTypeMeta.class);
+                Weapon item = new Weapon(meta, deserialized.speed());
 
                 item.addModifiers(deserialized.modifiers());
                 item.addRequirements(deserialized.requirements());
@@ -274,8 +274,8 @@ public class ItemFactory {
 
         switch (json.version()) {
             case 1 -> {
-                SocketedEquipableMeta deserialized = new Gson().fromJson(json.meta(), SocketedEquipableMeta.class);
-                SocketedWeapon item = new SocketedWeapon(meta);
+                SocketedWeaponEquipableMeta deserialized = new Gson().fromJson(json.meta(), SocketedWeaponEquipableMeta.class);
+                SocketedWeapon item = new SocketedWeapon(meta, deserialized.equipableTypeMeta().speed());
                 List<Integer> gemIds = deserialized.defaultGemIds();
 
                 if (gemIds == null) {
@@ -300,8 +300,8 @@ public class ItemFactory {
 
         switch (json.version()) {
             case 1 -> {
-                SocketedEquipableMeta deserialized = new Gson().fromJson(json.meta(), SocketedEquipableMeta.class);
-                SocketedWeapon item = new SocketedWeapon(meta);
+                SocketedWeaponEquipableMeta deserialized = new Gson().fromJson(json.meta(), SocketedWeaponEquipableMeta.class);
+                SocketedWeapon item = new SocketedWeapon(meta, deserialized.equipableTypeMeta().speed());
                 List<Integer> gemIds = deserialized.defaultGemIds();
 
                 if (gemIds == null) {

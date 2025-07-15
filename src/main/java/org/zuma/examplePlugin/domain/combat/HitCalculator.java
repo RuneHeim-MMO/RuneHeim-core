@@ -2,6 +2,8 @@ package org.zuma.examplePlugin.domain.combat;
 
 import org.bukkit.Bukkit;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
+import org.zuma.examplePlugin.domain.combat.constants.AttackType;
+import org.zuma.examplePlugin.domain.combat.constants.HitType;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.skill.Skill;

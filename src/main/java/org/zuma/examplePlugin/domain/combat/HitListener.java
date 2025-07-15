@@ -39,27 +39,17 @@ public class HitListener implements Listener {
         return null;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = false)
     public void onEntityAttackEntity(EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
 
         if (!(event.getEntity() instanceof LivingEntity defenderEntity)) return;
-
-        // Respect vanilla hurt cooldown (red tint period)
-        if (defenderEntity.getNoDamageTicks() > 0) {
-            event.setCancelled(true);
-            return;
-        }
-
 
         CombatEntity attacker = getCombatEntity(event.getDamager());
         CombatEntity defender = getCombatEntity(defenderEntity);
 
         if (attacker != null && defender != null) {
             hitHandler.handleMeleeHit(attacker, defender);
-
-            // Optionally reset no damage ticks to mimic vanilla hit cooldown
-            defenderEntity.setNoDamageTicks(defenderEntity.getMaximumNoDamageTicks());
         }
 
         event.setDamage(0); // Cancel real damage

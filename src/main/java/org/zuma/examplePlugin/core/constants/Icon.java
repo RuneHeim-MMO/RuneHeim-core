@@ -50,6 +50,7 @@ public enum Icon {
     ROCK("⋍"),
     ENVELOPE("✉"),
     LOG("Ⓘ"),
+    SWING_SPEED("⾏"),
 
     SCROLL_RED("ⵣ"),
     SCROLL_GRAY("⁝"),

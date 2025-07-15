@@ -17,6 +17,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
@@ -28,11 +29,16 @@ import java.util.UUID;
 import java.util.function.BiConsumer;
 
 public class MobListener implements Listener {
+    private static final long INTERACTION_THROTTLE_INTERVAL = 1000L;
+    private final CooldownHandler interactionSpeedHandler;
+
     private final RunePlayerManager playerHandler;
     private final MobHandler mobHandler;
     private final MobRegistry mobRegistry;
 
     public MobListener(RunePlayerManager playerManager, MobHandler mobHandler, MobRegistry mobRegistry) {
+        this.interactionSpeedHandler = new CooldownHandler();
+
         this.playerHandler = playerManager;
         this.mobHandler = mobHandler;
         this.mobRegistry = mobRegistry;
@@ -50,8 +56,15 @@ public class MobListener implements Listener {
         consumer.accept(mob, player);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = false)
     public void onPlayerInteractWithEntity(PlayerInteractAtEntityEvent event) {
+        if (interactionSpeedHandler.isCooledDown(event.getPlayer())) {
+            event.setCancelled(true);
+            return;
+        }
+
+        interactionSpeedHandler.startCooldown(event.getPlayer(), INTERACTION_THROTTLE_INTERVAL);
+
         withMobAndPlayer(event.getPlayer(), event.getRightClicked(), (mob, player) -> {
             mobHandler.onPlayerInteractWithEntity(event, mob, player);
         });
