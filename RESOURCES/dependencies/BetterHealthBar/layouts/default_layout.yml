@@ -39,9 +39,16 @@ default_layout:
           operation: ">="
   texts:
     1:
-      text: default_text
-      pattern: "[entity_name]"
+      text: mob_name
+      pattern: "[runeheim_entity_name]"
       align: center
-      x: 60
+      x: 75
       y: 20
+      scale: 0.5
+    2:
+      text: level
+      pattern: "[runeheim_entity_lvl]"
+      align: center
+      x: 18
+      y: -2
       scale: 0.5

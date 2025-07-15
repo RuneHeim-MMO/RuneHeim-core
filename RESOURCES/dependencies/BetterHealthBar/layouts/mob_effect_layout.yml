@@ -5,7 +5,7 @@ mob_effect_absorption:
       image: mob_effect_absorption
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -20,7 +20,7 @@ mob_effect_bad_omen:
       image: mob_effect_bad_omen
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -35,7 +35,7 @@ mob_effect_blindness:
       image: mob_effect_blindness
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -50,7 +50,7 @@ mob_effect_conduit_power:
       image: mob_effect_conduit_power
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -65,7 +65,7 @@ mob_effect_darkness:
       image: mob_effect_darkness
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -80,7 +80,7 @@ mob_effect_dolphins_grace:
       image: mob_effect_dolphins_grace
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -95,7 +95,7 @@ mob_effect_fire_resistance:
       image: mob_effect_fire_resistance
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -110,7 +110,7 @@ mob_effect_glowing:
       image: mob_effect_glowing
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -125,7 +125,7 @@ mob_effect_haste:
       image: mob_effect_haste
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -140,7 +140,7 @@ mob_effect_health_boost:
       image: mob_effect_health_boost
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -155,7 +155,7 @@ mob_effect_hero_of_the_village:
       image: mob_effect_hero_of_the_village
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -170,7 +170,7 @@ mob_effect_hunger:
       image: mob_effect_hunger
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -185,7 +185,7 @@ mob_effect_infested:
       image: mob_effect_infested
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -200,7 +200,7 @@ mob_effect_instant_damage:
       image: mob_effect_instant_damage
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -215,7 +215,7 @@ mob_effect_instant_health:
       image: mob_effect_instant_health
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -230,7 +230,7 @@ mob_effect_invisibility:
       image: mob_effect_invisibility
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -245,7 +245,7 @@ mob_effect_jump_boost:
       image: mob_effect_jump_boost
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -260,7 +260,7 @@ mob_effect_levitation:
       image: mob_effect_levitation
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -275,7 +275,7 @@ mob_effect_luck:
       image: mob_effect_luck
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -290,7 +290,7 @@ mob_effect_mining_fatigue:
       image: mob_effect_mining_fatigue
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -305,7 +305,7 @@ mob_effect_nausea:
       image: mob_effect_nausea
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -320,7 +320,7 @@ mob_effect_night_vision:
       image: mob_effect_night_vision
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -335,7 +335,7 @@ mob_effect_oozing:
       image: mob_effect_oozing
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -350,7 +350,7 @@ mob_effect_poison:
       image: mob_effect_poison
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -365,7 +365,7 @@ mob_effect_raid_omen:
       image: mob_effect_raid_omen
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -380,7 +380,7 @@ mob_effect_regeneration:
       image: mob_effect_regeneration
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -395,7 +395,7 @@ mob_effect_resistance:
       image: mob_effect_resistance
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -410,7 +410,7 @@ mob_effect_saturation:
       image: mob_effect_saturation
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -425,7 +425,7 @@ mob_effect_slowness:
       image: mob_effect_slowness
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -440,7 +440,7 @@ mob_effect_slow_falling:
       image: mob_effect_slow_falling
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -455,7 +455,7 @@ mob_effect_speed:
       image: mob_effect_speed
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -470,7 +470,7 @@ mob_effect_strength:
       image: mob_effect_strength
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -485,7 +485,7 @@ mob_effect_trial_omen:
       image: mob_effect_trial_omen
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -500,7 +500,7 @@ mob_effect_unluck:
       image: mob_effect_unluck
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -515,7 +515,7 @@ mob_effect_water_breathing:
       image: mob_effect_water_breathing
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -530,7 +530,7 @@ mob_effect_weakness:
       image: mob_effect_weakness
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -545,7 +545,7 @@ mob_effect_weaving:
       image: mob_effect_weaving
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -560,7 +560,7 @@ mob_effect_wind_charged:
       image: mob_effect_wind_charged
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:
@@ -575,7 +575,7 @@ mob_effect_wither:
       image: mob_effect_wither
       group-x: 10
       y: 10
-      scale: 0.5
+      scale: 0.01
       layer: 254
       background: false
       conditions:

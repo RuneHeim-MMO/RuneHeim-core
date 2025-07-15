@@ -808,7 +808,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.IRON_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Iron Sword", List.of("Iron sword, reliable for close combat."), null, null),
                         toVersionedJson(
-                                new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
+                                new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 6),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 5)
@@ -819,7 +819,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.STEEL_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Steel Sword", List.of("Steel sword, sharp and durable."), null, null),
                         toVersionedJson(
-                                new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
+                                new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 10),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 9)
@@ -841,7 +841,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON_WITH_GEM_SOCKETS, ItemId.ADAMANTITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Sword", List.of("Adamantite sword, powerful and heavy."), null, null),
                         toVersionedJson(
-                                new SocketedWeaponEquipableMeta(new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
+                                new SocketedWeaponEquipableMeta(new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 21),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 19)
@@ -852,7 +852,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON_WITH_GEM_SOCKETS, ItemId.RUNITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Sword", List.of("Runite sword crackling with magical energy."), null, null),
                         toVersionedJson(
-                                new SocketedWeaponEquipableMeta(new EquipableWeaponTypeMeta(WeaponSpeed.VERY_FAST, null,
+                                new SocketedWeaponEquipableMeta(new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 30),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 29)
@@ -865,7 +865,7 @@ public class ItemRepository {
                 // Weapons - Daggers
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.BRONZE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Bronze Dagger", List.of("Bronze dagger, quick and light."), null, null),
                         toVersionedJson(
-                                new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
+                                new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 3),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 2)
@@ -876,7 +876,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.IRON_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Iron Dagger", List.of("Iron dagger, sharp and practical."), null, null),
                         toVersionedJson(
-                                new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
+                                new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 5),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 3)
@@ -887,7 +887,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.STEEL_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Steel Dagger", List.of("Steel dagger, deadly in skilled hands."), null, null),
                         toVersionedJson(
-                                new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
+                                new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 8),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 6)
@@ -898,7 +898,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.MITHRIL_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Mithril Dagger", List.of("Mithril dagger, swift and precise."), null, null),
                         toVersionedJson(
-                                new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
+                                new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 14),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 10)
@@ -909,7 +909,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.ADAMANTITE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Dagger", List.of("Adamantite dagger, strong and lethal."), null, null),
                         toVersionedJson(
-                                new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
+                                new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 18),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 14)
@@ -920,7 +920,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.RUNITE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Dagger", List.of("Runite dagger glowing with mystical power."), null, null),
                         toVersionedJson(
-                                new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
+                                new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 24),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 19)
@@ -933,7 +933,7 @@ public class ItemRepository {
                 // Weapons - Battleaxes
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.BRONZE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Bronze Battleaxe", List.of("Bronze battleaxe, heavy but slow."), null, null),
                         toVersionedJson(
-                                new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
+                                new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 5),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 6),
@@ -945,7 +945,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.IRON_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Iron Battleaxe", List.of("Iron battleaxe, powerful cleaving weapon."), null, null),
                         toVersionedJson(
-                                new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
+                                new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 8),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 9),
@@ -957,7 +957,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.STEEL_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Steel Battleaxe", List.of("Steel battleaxe, favored by warriors."), null, null),
                         toVersionedJson(
-                                new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
+                                new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 12),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 13),
@@ -969,7 +969,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.MITHRIL_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Mithril Battleaxe", List.of("Mithril battleaxe, fast and deadly."), null, null),
                         toVersionedJson(
-                                new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
+                                new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 18),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 19),
@@ -981,7 +981,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.ADAMANTITE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Battleaxe", List.of("Adamantite battleaxe, crushing blows guaranteed."), null, null),
                         toVersionedJson(
-                                new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
+                                new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 23),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 24),
@@ -993,7 +993,7 @@ public class ItemRepository {
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.RUNITE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Battleaxe", List.of("Runite battleaxe, imbued with arcane fury."), null, null),
                         toVersionedJson(
-                                new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
+                                new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 32),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 33),

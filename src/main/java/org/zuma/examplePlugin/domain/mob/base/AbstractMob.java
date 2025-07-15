@@ -68,6 +68,8 @@ public abstract class AbstractMob {
     private HashMap<Attribute, Double> customAttributes;
     private List<Integer> dropTableIds;
 
+    private String healthBarSafeName = "";
+
     public AbstractMob(AbstractMobMeta meta) {
         this.ai = meta.ai();
         this.displayName = meta.displayName();
@@ -84,6 +86,8 @@ public abstract class AbstractMob {
         maxWalkDistance = -1; // -1 means no limits, can walk anywhere.
         customAttributes = new HashMap<>();
         dropTableIds = new ArrayList<>();
+
+        healthBarSafeName = this instanceof CombatantMob ? "" : getDisplayName();
     }
 
     public void spawn(UUID uuid, Location location) {
@@ -149,7 +153,7 @@ public abstract class AbstractMob {
         PlayerDisguise disguise = new PlayerDisguise(username);
         disguise.setDisplayedInTab(false);
         disguise.setReplaceSounds(true);
-        disguise.setName(getDisplayName());
+        disguise.setName(healthBarSafeName);
         this.disguise = disguise;
     }
 
@@ -202,7 +206,7 @@ public abstract class AbstractMob {
     }
 
     protected void setLivingEntityMeta(LivingEntity entity) {
-        entity.customName(displayName);
+        entity.customName(Component.text(healthBarSafeName));
         entity.setCustomNameVisible(true);
         entity.setAI(ai);
         entity.setSilent(silent);
@@ -222,7 +226,7 @@ public abstract class AbstractMob {
 
             if (disguise instanceof MobDisguise) {
                 LivingWatcher watcher = (LivingWatcher) cloned.getWatcher();
-                watcher.setCustomName(getDisplayName());
+                watcher.setCustomName(healthBarSafeName);
                 watcher.setCustomNameVisible(true);
             }
 

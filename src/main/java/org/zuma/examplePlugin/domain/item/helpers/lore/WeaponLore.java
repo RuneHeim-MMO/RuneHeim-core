@@ -22,7 +22,7 @@ public class WeaponLore implements LoreCreator {
         lore.add(Component.empty());
         lore.add(Icon.SWING_SPEED.asComponent()
                 .append(Component.text("Speed: ", Color.ITEM_LORE_DESCRIPTION.asColor()))
-                .append(Component.text(item.getSpeed().getLabel())));
+                .append(Component.text(item.getSpeed().getLabel() + " (" + String.format("%.1f", item.getSpeed().getHitsPerSec()) + " HPS)")));
     }
 
     @Override

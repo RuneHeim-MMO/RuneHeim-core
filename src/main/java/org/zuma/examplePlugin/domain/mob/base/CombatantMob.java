@@ -32,7 +32,7 @@ import java.util.EnumMap;
 public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     private final EnumMap<ModifierType, Modifier> modifiers = new EnumMap<>(ModifierType.class);
     private final EnumMap<SkillType, Skill> skills = new EnumMap<>(SkillType.class);
-    private final int maxHealth;
+    private final int maxHealth, combatLvl;
     private int health;
 
     public CombatantMob(CombatantMobMeta meta) {
@@ -47,10 +47,10 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         if (meta.modifiers() != null)
             meta.modifiers().forEach(modifier -> modifiers.put(modifier.type(), modifier));
 
-        int level = XpUtils.getCombatLevelFromSkills(skills);
-        String levelColorCode = TextUtils.getLegacyColorCodeForLevel(level);
+        combatLvl = XpUtils.getCombatLevelFromSkills(skills);
+        String levelColorCode = TextUtils.getLegacyColorCodeForLevel(combatLvl);
 
-        String displayName = levelColorCode + "[" + level + " Lvl] §7" + meta.displayName();
+        String displayName = levelColorCode + "[" + combatLvl + " Lvl] §7" + meta.displayName();
         this.setDisplayName(Component.text(displayName));
 
 
@@ -61,6 +61,10 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         if (meta.disguiseType() != null) {
             setDisguise(meta.disguiseType());
         }
+    }
+
+    public int getCombatLvl() {
+        return this.combatLvl;
     }
 
     @Override
