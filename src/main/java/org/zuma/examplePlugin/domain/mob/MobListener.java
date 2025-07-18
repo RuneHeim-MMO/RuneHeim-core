@@ -15,6 +15,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
+import org.bukkit.event.world.ChunkUnloadEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
@@ -135,9 +136,23 @@ public class MobListener implements Listener {
             if (mob == null) return;
 
 
-            mobHandler.onChunkLoad(event, mob);
+            mobRegistry.removeMob(entity.getUniqueId());
+            entity.remove();
+            // mobHandler.onChunkLoad(event, mob);
         });
     }
+
+  /*  @EventHandler
+    public void onChunkUnload(ChunkUnloadEvent event) {
+        Arrays.stream(event.getChunk().getEntities()).forEach(entity -> {
+
+            AbstractMob mob = mobRegistry.getMob(entity);
+            if (mob == null) return;
+
+            mobRegistry.removeMob(mob.getUUID());
+            entity.remove();
+        });
+    }*/
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {

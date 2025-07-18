@@ -1,0 +1,166 @@
+package org.zuma.examplePlugin.domain.spawnzone;
+
+import com.destroystokyo.paper.event.entity.EntityRemoveFromWorldEvent;
+import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
+import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.world.ChunkUnloadEvent;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.scheduler.BukkitTask;
+import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.MathUtils;
+import org.zuma.examplePlugin.domain.mob.MobSessionManager;
+import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
+import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
+import org.zuma.examplePlugin.domain.spawnzone.persistence.SpawnZoneRepository;
+
+import javax.annotation.Nullable;
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class SpawnZoneHandler {
+    public static final NamespacedKey ZONE_KEY =
+            new NamespacedKey(RuneQuestPlugin.getInstance(), MobDataKey.SPAWN_ZONE_ID.toString());
+
+    private final static long TICK_RATE = 3 * 20L; //  Every 3 sec
+    private final Map<Integer, AbstractSpawnZone> spawnZones;
+    private final SpawnZoneRepository repository;
+    private final SpawnZoneFactory factory;
+    private BukkitTask loop;
+
+    public SpawnZoneHandler(SpawnZoneRepository repository) {
+        this.spawnZones = new HashMap<>();
+        this.repository = repository;
+        this.factory = new SpawnZoneFactory();
+    }
+
+    @Nullable
+    public AbstractSpawnZone getClosest(Location loc) {
+        if (spawnZones.isEmpty() || loc == null) {
+            return null;
+        }
+
+        AbstractSpawnZone closest = null;
+        double closestDistance = Double.MAX_VALUE;
+
+        for (AbstractSpawnZone zone : spawnZones.values()) {
+            Location zoneLoc = zone.getLocation();
+            if (zoneLoc == null) continue;
+
+            double distance = MathUtils.getLocationsDistanceXZ(loc, zoneLoc);
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closest = zone;
+            }
+        }
+
+        return closest;
+    }
+
+
+    public void onChunkUnload(ChunkUnloadEvent event) {
+        Chunk chunk = event.getChunk();
+
+        for (Entity entity : chunk.getEntities()) {
+            Integer zoneId = entity.getPersistentDataContainer().get(ZONE_KEY, PersistentDataType.INTEGER);
+
+            if (RuneQuestPlugin.getMobRegistry().getMob(entity) == null) {
+                // Not our mob, maybe item frame or smth
+                continue;
+            }
+
+            if (zoneId == null) {
+                // Unknown mob, remove - all mobs are controlled by spawn zones.
+                entity.remove();
+                continue;
+            }
+
+            AbstractSpawnZone matchingZone = spawnZones.get(zoneId);
+
+            if (matchingZone == null) {
+                // Unknown spawn zone, remove mob.
+                entity.remove();
+                continue;
+            }
+
+            matchingZone.getSpawnedAndLoadedEntities().remove(entity.getUniqueId());
+
+
+        }
+    }
+
+    public void onEntityDeath(EntityDeathEvent event) {
+        LivingEntity entity = event.getEntity();
+        UUID uuid = entity.getUniqueId();
+
+        Integer zoneId = entity.getPersistentDataContainer().get(ZONE_KEY, PersistentDataType.INTEGER);
+        if (zoneId == null) {
+            return;
+        }
+        AbstractSpawnZone zone = spawnZones.get(zoneId);
+
+        if (zone == null) {
+            return;
+        }
+
+        zone.getSpawnedAndLoadedEntities().remove(uuid);
+
+    }
+
+    public void onEntityRemove(EntityRemoveFromWorldEvent event) {
+        Entity entity = event.getEntity();
+
+        UUID uuid = entity.getUniqueId();
+        Integer zoneId = entity.getPersistentDataContainer().get(ZONE_KEY, PersistentDataType.INTEGER);
+        if (zoneId == null) {
+            return;
+        }
+
+        AbstractSpawnZone zone = spawnZones.get(zoneId);
+        if (zone == null) {
+            return;
+        }
+
+        zone.getSpawnedAndLoadedEntities().remove(uuid);
+    }
+
+    public void initializeFromDb() {
+        this.repository.getAll().forEach(record -> {
+            AbstractSpawnZone zone = factory.createZone(record.meta(), record.json());
+            spawnZones.put(zone.getId(), zone);
+        });
+
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Loaded " + spawnZones.size() + " spawn zones.");
+    }
+
+    public void startLoop() {
+        if (loop != null) {
+            loop.cancel();
+        }
+
+        loop = Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::tick, TICK_RATE, TICK_RATE);
+
+    }
+
+    public void onDisable() {
+        if (loop != null) {
+            loop.cancel();
+        }
+    }
+
+    private void tick() {
+        if (loop.isCancelled()) {
+            return;
+        }
+
+        spawnZones.values().forEach(AbstractSpawnZone::runTickIfDue);
+    }
+
+}

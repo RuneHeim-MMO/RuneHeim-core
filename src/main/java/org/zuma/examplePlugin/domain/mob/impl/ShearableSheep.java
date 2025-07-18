@@ -88,7 +88,7 @@ public class ShearableSheep extends GenericCombatant {
     }
 
     @Override
-    public void onChunkLoaded(@Nullable ChunkLoadEvent event) {
+    public void reapplyMetaToEntity(@Nullable ChunkLoadEvent event) {
         if (this.getEntity() instanceof LivingEntity livingEntity) {
             this.setLivingEntityMeta(livingEntity);
 

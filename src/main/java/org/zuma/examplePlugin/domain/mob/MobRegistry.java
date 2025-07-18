@@ -39,24 +39,29 @@ public class MobRegistry {
         return uuid != null ? getByUUID(UUID.fromString(uuid)) : null;
     }
 
-    public void spawnMob(UUID uuid, Location location, String id) {
+    @Nullable
+    public Entity spawnMob(UUID uuid, Location location, String id) {
         AbstractMob existing = this.mobs.get(uuid);
 
         if (existing != null) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[DUPLICATE] Mob with id " + uuid + " already exists.");
-            return;
+            return null;
         }
 
         AbstractMob mob = typeRegistry.create(id);
 
         try {
-            mob.spawn(uuid, location);
+            Entity spawnedEntity = mob.spawn(uuid, location);
             this.mobs.put(uuid, mob);
 
             if (mob.getEntity() != null) MobSessionManager.tagEntity(mob.getEntity());
+
+            return spawnedEntity;
         } catch (Exception e) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to spawn a " + mob.getDisplayName() + " mob! " + e.getMessage());
         }
+
+        return null;
     }
 
     public void removeMob(UUID uuid) {

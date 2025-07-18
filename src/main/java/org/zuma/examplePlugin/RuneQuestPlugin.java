@@ -52,6 +52,9 @@ import org.zuma.examplePlugin.domain.recipes.persistence.RecipeRepository;
 import org.zuma.examplePlugin.domain.shop.ShopHandler;
 import org.zuma.examplePlugin.domain.shop.ShopRegistry;
 import org.zuma.examplePlugin.domain.shop.persistence.ShopRepository;
+import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneHandler;
+import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneListener;
+import org.zuma.examplePlugin.domain.spawnzone.persistence.SpawnZoneRepository;
 import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
 
 import java.util.ArrayList;
@@ -76,6 +79,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private static ShopRegistry shopRegistry;
     private static DropTableHandler dropTableHandler;
     private static VisualWeaponSpeedHandler visualWeaponSpeedHandler;
+    private static SpawnZoneHandler spawnZoneHandler;
 
     private MobHandler mobHandler;
     private HikariPool pool;
@@ -170,6 +174,12 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         visualWeaponSpeedHandler = new VisualWeaponSpeedHandler();
         visualWeaponSpeedHandler.startEffectsLoop();
 
+        spawnZoneHandler = new SpawnZoneHandler(new SpawnZoneRepository());
+        SpawnZoneListener spawnZoneListener = new SpawnZoneListener(spawnZoneHandler);
+        getServer().getPluginManager().registerEvents(spawnZoneListener, pluginInstance);
+        spawnZoneHandler.initializeFromDb();
+        spawnZoneHandler.startLoop();
+
         initializeMap();
 
 
@@ -213,20 +223,51 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         initializeMySQL();
         initializePlugin();
         registerCommands();
-        mobHandler.cleanup();
-        runePlayerManager.handleOnEnable();
+
+        if (mobHandler != null) {
+            mobHandler.cleanup();
+        }
+
+        if (runePlayerManager != null) {
+            runePlayerManager.handleOnEnable();
+        }
+
     }
 
     @Override
     public void onDisable() {
         getRuneLogger().log(LogLevel.INFO, "Disabling plugin...");
-        guiHandler.closeAllInventories();
-        blockManager.onDisable();
-        pool.closeConnection();
-        mobHandler.cleanup();
-        fairyHandler.stopLoop();
-        visualWeaponSpeedHandler.onDisable();
+
+        if (guiHandler != null) {
+            guiHandler.closeAllInventories();
+        }
+
+        if (blockManager != null) {
+            blockManager.onDisable();
+        }
+
+        if (pool != null) {
+            pool.closeConnection();
+        }
+
+        if (mobHandler != null) {
+            mobHandler.cleanup();
+        }
+
+        if (fairyHandler != null) {
+            fairyHandler.stopLoop();
+        }
+
+        if (visualWeaponSpeedHandler != null) {
+            visualWeaponSpeedHandler.onDisable();
+        }
+
+        if (spawnZoneHandler != null) {
+            spawnZoneHandler.onDisable();
+        }
+
         Bukkit.getScheduler().cancelTasks(this);
+
         getRuneLogger().log(LogLevel.INFO, "Plugin disabled.");
     }
 
@@ -276,6 +317,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static DropTableHandler getDropTableHandler() {
         return dropTableHandler;
+    }
+
+    public static SpawnZoneHandler getSpawnZoneHandler() {
+        return spawnZoneHandler;
     }
 
 

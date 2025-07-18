@@ -10,9 +10,7 @@ import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import me.libraryaddict.disguise.disguisetypes.watchers.LivingWatcher;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Nameable;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -59,7 +57,7 @@ public abstract class AbstractMob {
 
     @Nullable
     private MobEquipmentMeta mobEquipment;
-    private boolean isBaby, isInvulnerable;
+    private boolean isBaby;
     private int maxWalkDistance;
 
     @Nullable
@@ -76,13 +74,11 @@ public abstract class AbstractMob {
         this.baseMob = meta.baseEntity();
         this.silent = meta.silent();
 
-
         disguise = null;
         model = null;
         behavior = null;
         mobEquipment = null;
         isBaby = false;
-        isInvulnerable = false;
         maxWalkDistance = -1; // -1 means no limits, can walk anywhere.
         customAttributes = new HashMap<>();
         dropTableIds = new ArrayList<>();
@@ -90,7 +86,7 @@ public abstract class AbstractMob {
         healthBarSafeName = this instanceof CombatantMob ? "" : getDisplayName();
     }
 
-    public void spawn(UUID uuid, Location location) {
+    public Entity spawn(UUID uuid, Location location) {
         Entity entity = location.getWorld().spawnEntity(location, baseMob);
         this.entity = entity;
         this.uuid = uuid;
@@ -100,6 +96,8 @@ public abstract class AbstractMob {
         if (entity instanceof LivingEntity livingEntity) {
             this.setLivingEntityMeta(livingEntity);
         }
+
+        return entity;
     }
 
     public void setDropTableIds(List<Integer> dropTableIds) {
@@ -210,7 +208,7 @@ public abstract class AbstractMob {
         entity.setCustomNameVisible(true);
         entity.setAI(ai);
         entity.setSilent(silent);
-        entity.setInvulnerable(isInvulnerable);
+        entity.setInvulnerable(true);
 
         if (this.model != null) {
             ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(entity);
@@ -301,7 +299,7 @@ public abstract class AbstractMob {
     }
 
 
-    public void onChunkLoaded(ChunkLoadEvent event) {
+    public void reapplyMetaToEntity(ChunkLoadEvent event) {
         if (entity instanceof LivingEntity livingEntity) {
             this.setLivingEntityMeta(livingEntity);
 
@@ -372,11 +370,4 @@ public abstract class AbstractMob {
         this.model = model;
     }
 
-    public boolean isInvulnerable() {
-        return isInvulnerable;
-    }
-
-    public void setInvulnerable(boolean invulnerable) {
-        isInvulnerable = invulnerable;
-    }
 }

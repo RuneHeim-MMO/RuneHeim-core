@@ -10,7 +10,6 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 public abstract class FriendlyImmortalMob extends AbstractMob {
     public FriendlyImmortalMob(FriendlyImmortalMobMeta meta) {
         super(new AbstractMobMeta(true, meta.silent(), meta.displayName(), meta.baseEntity()));
-        setInvulnerable(true);
     }
 
     @Override

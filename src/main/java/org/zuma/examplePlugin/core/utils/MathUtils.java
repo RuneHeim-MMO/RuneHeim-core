@@ -29,4 +29,10 @@ public class MathUtils {
 
         return new Location(world, x, y, z, yaw, pitch);
     }
+
+    public static double getLocationsDistanceXZ(Location loc1, Location loc2) {
+        double dx = loc1.getX() - loc2.getX();
+        double dz = loc1.getZ() - loc2.getZ();
+        return Math.sqrt(dx * dx + dz * dz);
+    }
 }

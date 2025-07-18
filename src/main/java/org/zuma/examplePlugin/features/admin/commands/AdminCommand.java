@@ -24,6 +24,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipes.RecipeRegistry;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
+import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
 import org.zuma.examplePlugin.features.admin.inventories.ItemRegistryInventory;
 import org.zuma.examplePlugin.features.admin.inventories.RecipesInventory;
 import com.ticxo.modelengine.api.ModelEngineAPI;
@@ -125,6 +126,40 @@ public class AdminCommand implements BasicCommand {
 
         if (args.length == 2 && Objects.equals(args[0], "pouch") & TypeUtils.isInteger(args[1])) {
             runePlayer.setPouchCoins(Long.parseLong(args[1]));
+        }
+
+        if (Objects.equals(args[0], "zone")) {
+            AbstractSpawnZone zone = RuneQuestPlugin.getSpawnZoneHandler().getClosest(player.getLocation());
+            if (zone == null) {
+                player.sendMessage("Closest zone not found.");
+                return;
+            }
+
+            StringBuilder message = new StringBuilder();
+
+
+            message.append("§6---- Spawn Zone Info ----\n");
+            message.append("§eZone ID: §f").append(zone.getId()).append("\n");
+            message.append("§eType: §f").append(zone.getType().name()).append("\n");
+
+            if (zone.getLocation() != null) {
+                message.append("§eLocation: §fWorld: ").append(zone.getLocation().getWorld().getName())
+                        .append(", X: ").append(zone.getLocation().getBlockX())
+                        .append(", Y: ").append(zone.getLocation().getBlockY())
+                        .append(", Z: ").append(zone.getLocation().getBlockZ()).append("\n");
+            } else {
+                message.append("§eLocation: §fN/A\n");
+            }
+
+            message.append("§eWave Rate: §f").append(zone.getWaveRateSeconds()).append(" seconds\n");
+            message.append("§eDead Threshold for Wave: §f").append(zone.getDeadThresholdForWave()).append("%\n");
+            message.append("§eMax Mobs: §f").append(zone.getMaxMobs()).append("\n");
+            message.append("§eCurrently Alive: §f").append(zone.getAliveMobCount()).append("\n");
+            message.append("§eLast Spawned Wave: §f").append(zone.getLastWaveSpawnedAmount()).append(" mobs\n");
+            message.append("§eDead % of Last Wave: §f").append(String.format("%.2f", zone.getDeadEntitiesPercentage())).append("%\n");
+
+            player.sendMessage(message.toString());
+
         }
 
         if (Objects.equals(args[0], "mob1")) {
