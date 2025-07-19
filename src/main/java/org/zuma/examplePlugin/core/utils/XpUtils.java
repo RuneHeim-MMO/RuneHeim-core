@@ -79,7 +79,7 @@ public class XpUtils {
         // Combat level is base plus melee offense
         double combatLevel = base + melee;
 
-        combatLevel = Math.max(3, Math.min(MAX_COMBAT_LEVEL, combatLevel));
+        combatLevel = Math.max(1, Math.min(MAX_COMBAT_LEVEL, combatLevel));
 
         return (int) Math.floor(combatLevel);
     }

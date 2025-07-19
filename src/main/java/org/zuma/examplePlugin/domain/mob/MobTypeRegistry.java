@@ -6,6 +6,7 @@ import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Supplier;
 
 public class MobTypeRegistry {
@@ -24,5 +25,9 @@ public class MobTypeRegistry {
         Supplier<AbstractMob> supplier = registry.get(id);
         if (supplier == null) throw new IllegalArgumentException("Unknown mob type: " + id);
         return supplier.get();
+    }
+
+    public Set<String> getAvailable() {
+        return registry.keySet();
     }
 }

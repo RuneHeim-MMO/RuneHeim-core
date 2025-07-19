@@ -60,14 +60,14 @@ public class MobHandler {
 
     public void onPlayerAttackEntity(EntityDamageByEntityEvent event, AbstractMob mob, RunePlayer player) {
         mob.onPlayerAttackEntity(event, player);
-
-        if (mob.getBehavior() != null && !event.isCancelled()) {
-            mob.getBehavior().playSound(event.getEntity(), MobBehavior.MobSoundType.HURT);
-        }
     }
 
     public void onEntityAttackPlayer(EntityDamageByEntityEvent event, AbstractMob mob, RunePlayer player) {
         mob.onEntityAttackPlayer(event, player);
+
+        if (mob.getBehavior() != null && !event.isCancelled()) {
+            mob.getBehavior().playSound(event.getEntity(), MobBehavior.MobSoundType.NEGATIVE);
+        }
     }
 
     public void onEntityDeath(EntityDeathEvent event, AbstractMob mob) {
@@ -85,10 +85,15 @@ public class MobHandler {
         if (mob.getUUID() != null) {
             registry.removeMob(mob.getUUID());
         }
+
     }
 
 
     public void onEntityDamaged(EntityDamageEvent event, AbstractMob mob) {
+        if (mob.getBehavior() != null && !event.isCancelled()) {
+            mob.getBehavior().playSound(event.getEntity(), MobBehavior.MobSoundType.HURT);
+        }
+
         mob.onEntityDamaged(event);
     }
 

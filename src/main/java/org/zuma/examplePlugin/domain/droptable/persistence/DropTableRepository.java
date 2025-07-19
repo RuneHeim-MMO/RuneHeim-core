@@ -21,6 +21,10 @@ public class DropTableRepository {
 
                 new DropTableDBEntry(DropTableId.COINS_SMALL.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropItemEntry(ItemId.COINS.asInt(), 1, 8, 3)
+                ))), 1)),
+
+                new DropTableDBEntry(DropTableId.WOOL.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropItemEntry(ItemId.WOOL.asInt(), 1, 1, 4)
                 ))), 1))
 
         );

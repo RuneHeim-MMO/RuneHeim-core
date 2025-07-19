@@ -30,7 +30,7 @@ public class GenericCombatant extends CombatantMob {
             return EntityType.ZOMBIFIED_PIGLIN;
         }
         // No matching mob
-        return EntityType.IRON_GOLEM;
+        return EntityType.POLAR_BEAR;
     }
 
 

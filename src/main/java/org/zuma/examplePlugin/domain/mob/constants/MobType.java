@@ -8,10 +8,17 @@ public enum MobType {
     GOBLIN_LOW_LVL_1("goblin_low_lvl_1"),
     GOBLIN_LOW_LVL_2("goblin_low_lvl_2"),
     GOBLIN_LOW_LVL_3("goblin_low_lvl_3"),
+    GOBLIN_LOW_LVL_4("goblin_low_lvl_4"),
+    GOBLIN_LOW_LVL_5("goblin_low_lvl_5"),
 
     FUSION_MASTER("fusion_master"),
     SHEEP("sheep"),
 
+
+    // City guards
+    CITY_GUARD_CLOSE_DISTANCE("city_guard_close_distance"),
+    CITY_GUARD_MEDIUM_DISTANCE("city_guard_medium_distance"),
+    CITY_GUARD_LONG_DISTANCE("city_guard_long_distance"),
 
     // Boars
     BOAR_BROWN_ALPHA("yungwilder_isles_boar_brown_alpha"),
@@ -29,7 +36,32 @@ public enum MobType {
     WOLF_GRAY_DARK_ALPHA("yungwilder_isles_wolf_gray_dark_alpha"),
     WOLF_GRAY_DARK("yungwilder_isles_wolf_gray_dark"),
     WOLF_GRAY_LIGHT_ALPHA("yungwilder_isles_wolf_gray_light_alpha"),
-    WOLF_GRAY_LIGHT("yungwilder_isles_wolf_gray_light");
+    WOLF_GRAY_LIGHT("yungwilder_isles_wolf_gray_light"),
+
+    CHICKEN("chicken"),
+    RAT("rat"),
+    AXOLOTL("axolotl"),
+    ARMADILLO("armadillo"),
+    BEE("bee"),
+    CAT("cat"),
+    DONKEY("donkey"),
+    FOX("fox"),
+    FROG("frog"),
+    GOAT("goat"),
+    HOGLIN("hoglin"),
+    HUSK("husk"),
+    LLAMA("llama"),
+    PANDA("panda"),
+    PIG("pig"),
+    POLAR_BEAR("polar_bear"),
+    RABBIT("rabbit"),
+    RAVAGER("ravager"),
+    SNIFFER("sniffer"),
+    SPIDER("spider"),
+    STRIDER("strider"),
+    TURTLE("turtle"),
+    WITCH("witch");
+
 
     private final String id;
 

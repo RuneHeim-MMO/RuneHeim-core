@@ -38,9 +38,9 @@ public class ShearableSheep extends GenericCombatant {
     private boolean hasWool = true;
 
     public ShearableSheep(String displayName, List<SkillLevelRecord> skills, List<Modifier> modifiers,
-                          @Nullable MobBehavior behavior, double walkSpeed, boolean attacksOnSight, boolean attackWithGroup, int health) {
+                          @Nullable MobBehavior behavior, double walkSpeed,  int health) {
         super(displayName, null, skills, modifiers, null, walkSpeed, false, false, health, null, null,
-                DisguiseType.SHEEP, List.of(DropTableId.BONES.asInt()));
+                DisguiseType.SHEEP, List.of(DropTableId.BONES.asInt(),DropTableId.WOOL.asInt()));
 
         HashMap<Attribute, Double> attributes = new HashMap<>();
         attributes.put(Attribute.GENERIC_MOVEMENT_SPEED, walkSpeed);

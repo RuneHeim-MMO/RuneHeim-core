@@ -72,7 +72,7 @@ public class MobListener implements Listener {
 
     }
 
-    @EventHandler(priority = EventPriority.HIGH) // To handle damage sounds
+    @EventHandler(priority = EventPriority.LOW) // To handle damage sounds
     public void onPlayerAttackEntity(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player bukkitPlayer)) {
             return;

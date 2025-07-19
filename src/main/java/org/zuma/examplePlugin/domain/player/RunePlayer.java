@@ -53,7 +53,7 @@ public class RunePlayer implements CombatEntity {
     public RunePlayer(UUID uuid, EnumMap<SkillType, Skill> skills) {
         this.uuid = uuid;
         this.skills = skills;
-        this.combatData = new PlayerCombatData(this, skills.get(SkillType.HITPOINTS).getBaseLevel(), XpUtils.getCombatLevelFromSkills(skills));
+        this.combatData = new PlayerCombatData(this, skills.get(SkillType.HITPOINTS).getBaseLevel(), Math.min(3, XpUtils.getCombatLevelFromSkills(skills)));
 
         modifiers = new EnumMap<>(ModifierType.class);
         skillModifiers = new EnumMap<>(SkillType.class);
@@ -123,7 +123,7 @@ public class RunePlayer implements CombatEntity {
 
     public void setSkills(EnumMap<SkillType, Skill> skills) {
         this.skills.putAll(skills);
-        combatData.setCombatLvl(XpUtils.getCombatLevelFromSkills(skills));
+        combatData.setCombatLvl(Math.min(3, XpUtils.getCombatLevelFromSkills(skills)));
         HudService.updateVanillaGUI(this);
     }
 

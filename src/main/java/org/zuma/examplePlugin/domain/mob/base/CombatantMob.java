@@ -6,10 +6,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.IronGolem;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
@@ -63,6 +60,10 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         }
     }
 
+    public void setBaseEntity(EntityType type) {
+        super.setBaseEntity(type);
+    }
+
     public int getCombatLvl() {
         return this.combatLvl;
     }
@@ -76,6 +77,15 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     public void onPlayerAttackEntity(EntityDamageByEntityEvent event, RunePlayer player) {
         player.asBukkitPlayer().sendMessage(getDisplayName() + " HP: " + health);
 
+    }
+
+
+    @Override
+    public void onEntityDamaged(EntityDamageEvent event) {
+        if (event.getCause() != EntityDamageEvent.DamageCause.CUSTOM) {
+            event.setDamage(0);
+        }
+
         Entity entity = this.getEntity();
 
         if (entity == null) {
@@ -88,14 +98,6 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
             } else {
                 entity.remove();
             }
-        }
-    }
-
-
-    @Override
-    public void onEntityDamaged(EntityDamageEvent event) {
-        if (event.getCause() != EntityDamageEvent.DamageCause.CUSTOM) {
-            event.setDamage(0);
         }
     }
 
@@ -161,8 +163,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         // Scale custom health to the entity's real health bar
         double scaledHealth = maxHealth * ((double) this.health / this.maxHealth);
 
-        // Clamp between 0.5 and maxHealth to avoid instant death or invisibility
-        scaledHealth = Math.max(0.5, Math.min(maxHealth, scaledHealth));
+        scaledHealth = Math.max(0, Math.min(maxHealth, scaledHealth));
 
         // Apply the scaled health to the entity
         living.setHealth(scaledHealth);

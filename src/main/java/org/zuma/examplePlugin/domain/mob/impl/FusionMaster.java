@@ -12,7 +12,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class FusionMaster extends AbstractInventoryOpener {
     public FusionMaster(String displayName, MobBehavior behavior, int maxWalkDistance) {
-        super(new FriendlyImmortalMobMeta(Component.text(displayName), EntityType.VILLAGER, true), InventoryId.FUSION_MASTER.asInt(), null, maxWalkDistance);
+        super(new FriendlyImmortalMobMeta(Component.text(displayName), EntityType.VILLAGER, true), InventoryId.FUSION_MASTER.asInt(), null, null, maxWalkDistance);
         super.setDisguise(DisguiseType.WARDEN);
         super.setBehavior(behavior);
     }

@@ -155,18 +155,6 @@ public enum SoundType {
     VILLAGER_WOMAN_DEATH_4("ENTITY_VILLAGER_DEATH", true, 1, 1.20f),
     VILLAGER_WOMAN_DEATH_5("ENTITY_VILLAGER_DEATH", true, 1, 1.25f),
 
-    // TRADE
-    VILLAGER_MAN_TRADE_1("vocal_villagers:entity.villager.trade", true, 1, 0.75f),
-    VILLAGER_MAN_TRADE_2("vocal_villagers:entity.villager.trade", true, 1, 0.80f),
-    VILLAGER_MAN_TRADE_3("vocal_villagers:entity.villager.trade", true, 1, 0.90f),
-    VILLAGER_MAN_TRADE_4("vocal_villagers:entity.villager.trade", true, 1, 0.95f),
-    VILLAGER_MAN_TRADE_5("vocal_villagers:entity.villager.trade", true, 1, 1.00f),
-
-    VILLAGER_WOMAN_TRADE_1("vocal_villagers:entity.villager.trade", true, 1, 1.05f),
-    VILLAGER_WOMAN_TRADE_2("vocal_villagers:entity.villager.trade", true, 1, 1.10f),
-    VILLAGER_WOMAN_TRADE_3("vocal_villagers:entity.villager.trade", true, 1, 1.15f),
-    VILLAGER_WOMAN_TRADE_4("vocal_villagers:entity.villager.trade", true, 1, 1.20f),
-    VILLAGER_WOMAN_TRADE_5("vocal_villagers:entity.villager.trade", true, 1, 1.25f),
 
     // YES
     VILLAGER_MAN_YES_1("vocal_villagers:entity.villager.yes", true, 1, 0.75f),
@@ -183,7 +171,7 @@ public enum SoundType {
 
     GOBLIN_AMBIENT("ENTITY_WITCH_AMBIENT", false, 0.8f, 1.2f),
     GOBLIN_CELEBRATE("ENTITY_EVOKER_CAST_SPELL", false, 1.0f, 1.5f),
-    GOBLIN_NO("ENTITY_VILLAGER_NO", false, 1.0f, 0.9f),
+    GOBLIN_ATTACK("ENTITY_VINDICATOR_AMBIENT", false, 1.0f, 1.0f),
     GOBLIN_HURT("ENTITY_HUSK_HURT", false, 1.0f, 0.8f),
     GOBLIN_DEATH("ENTITY_HUSK_DEATH", false, 1.0f, 0.7f),
 
@@ -199,12 +187,146 @@ public enum SoundType {
     FUSION_MASTER_SUCCESS("ENTITY_WARDEN_ATTACK_IMPACT", false, 1.0f, 1.6f),
     FUSION_MASTER_NO("ENTITY_ELDER_GUARDIAN_CURSE", false, 0.8f, 0.7f),
     FUSION_MASTER_ROAR("ENTITY_WARDEN_ROAR", false, 0.8f, 0.7f),
-
     FUSION_GEM_INSERT("BLOCK_AMETHYST_BLOCK_PLACE", false, 1.0f, 1.2f),
     FUSION_SUCCESS_1("ENTITY_WITHER_SPAWN", false, 0.5f, 0.25f),
     FUSION_SUCCESS_2("ENTITY_LIGHTNING_BOLT_THUNDER", false, 1f, 1f),
     PAPER_INSERT("ITEM_BOOK_PAGE_TURN", false, 1.0f, 1.1f),
-    EQUIPMENT_INSERT("ITEM_ARMOR_EQUIP_GENERIC", false, 1.0f, 0.9f);
+    EQUIPMENT_INSERT("ITEM_ARMOR_EQUIP_GENERIC", false, 1.0f, 0.9f),
+
+    BOAR_AMBIENT_1("ENTITY_HOGLIN_AMBIENT", false, 0.9f, 0.8f),
+    BOAR_HURT_1("ENTITY_HOGLIN_HURT", false, 0.9f, 0.8f),
+    BOAR_DEATH_1("ENTITY_HOGLIN_DEATH", false, 0.9f, 0.8f),
+    BOAR_ATTACK_1("ENTITY_HOGLIN_ATTACK", false, 0.9f, 0.8f),
+
+    BOAR_AMBIENT_2("ENTITY_HOGLIN_AMBIENT", false, 0.9f, 0.65f),
+    BOAR_HURT_2("ENTITY_HOGLIN_HURT", false, 0.9f, 0.65f),
+    BOAR_DEATH_2("ENTITY_HOGLIN_DEATH", false, 0.9f, 0.65f),
+    BOAR_ATTACK_2("ENTITY_HOGLIN_ATTACK", false, 0.9f, 0.65f),
+
+    WOLF_AMBIENT_1("ENTITY_WOLF_AMBIENT", false, 0.95f, 0.95f),
+    WOLF_HURT_1("ENTITY_WOLF_HURT", false, 0.95f, 0.95f),
+    WOLF_DEATH_1("ENTITY_WOLF_DEATH", false, 0.95f, 0.95f),
+    WOLF_ATTACK_1("ENTITY_WOLF_GROWL", false, 0.95f, 0.95f),
+
+    WOLF_AMBIENT_2("ENTITY_WOLF_AMBIENT", false, 0.95f, 0.85f),
+    WOLF_HURT_2("ENTITY_WOLF_HURT", false, 0.95f, 0.85f),
+    WOLF_DEATH_2("ENTITY_WOLF_DEATH", false, 0.95f, 0.85f),
+    WOLF_ATTACK_2("ENTITY_WOLF_GROWL", false, 0.95f, 0.85f),
+
+    CHICKEN_AMBIENT("ENTITY_CHICKEN_AMBIENT", false, 1.0f, 1.2f),
+    CHICKEN_ATTACK("ENTITY_CHICKEN_HURT", false, 1.0f, 1.4f),
+    CHICKEN_HURT("ENTITY_CHICKEN_HURT", false, 1.0f, 1.0f),
+    CHICKEN_DEATH("ENTITY_CHICKEN_DEATH", false, 1.0f, 0.9f),
+
+    RAT_AMBIENT("ENTITY_BAT_AMBIENT", false, 1.0f, 2.0f),
+    RAT_ATTACK("ENTITY_SILVERFISH_STEP", false, 1.0f, 1.4f),
+    RAT_HURT("ENTITY_RABBIT_HURT", false, 1.0f, 1.3f),
+    RAT_DEATH("ENTITY_RABBIT_DEATH", false, 1.0f, 0.9f),
+
+    AXOLOTL_AMBIENT("ENTITY_AXOLOTL_IDLE_WATER", false, 0.8f, 1.6f),
+    AXOLOTL_ATTACK("ENTITY_AXOLOTL_ATTACK", false, 1.0f, 1.4f),
+    AXOLOTL_HURT("ENTITY_AXOLOTL_HURT", false, 1.0f, 1.2f),
+    AXOLOTL_DEATH("ENTITY_AXOLOTL_DEATH", false, 1.0f, 1.0f),
+
+    ARMADILLO_AMBIENT("ENTITY_TURTLE_AMBIENT_LAND", false, 0.9f, 1.1f),
+    ARMADILLO_ATTACK("BLOCK_CHAIN_PLACE", false, 1.0f, 0.8f),
+    ARMADILLO_HURT("ENTITY_TURTLE_HURT", false, 1.0f, 1.0f),
+    ARMADILLO_DEATH("ENTITY_TURTLE_DEATH", false, 1.0f, 0.9f),
+
+    BEE_AMBIENT("ENTITY_BEE_LOOP", false, 0.7f, 2.0f),
+    BEE_ATTACK("ENTITY_BEE_STING", false, 1.0f, 1.6f),
+    BEE_HURT("ENTITY_BEE_HURT", false, 1.0f, 1.3f),
+    BEE_DEATH("ENTITY_BEE_DEATH", false, 1.0f, 1.1f),
+
+    CAT_AMBIENT("ENTITY_CAT_AMBIENT", false, 0.8f, 1.2f),
+    CAT_ATTACK("ENTITY_CAT_HISS", false, 1.0f, 1.1f),
+    CAT_HURT("ENTITY_CAT_HURT", false, 1.0f, 1.0f),
+    CAT_DEATH("ENTITY_CAT_DEATH", false, 1.0f, 0.9f),
+
+    DONKEY_AMBIENT("ENTITY_DONKEY_AMBIENT", false, 1.0f, 1.0f),
+    DONKEY_ATTACK("ENTITY_DONKEY_ANGRY", false, 1.0f, 0.9f),
+    DONKEY_HURT("ENTITY_DONKEY_HURT", false, 1.0f, 0.95f),
+    DONKEY_DEATH("ENTITY_DONKEY_DEATH", false, 1.0f, 0.9f),
+
+    FOX_AMBIENT("ENTITY_FOX_AMBIENT", false, 0.8f, 1.6f),
+    FOX_ATTACK("ENTITY_FOX_BITE", false, 1.0f, 1.4f),
+    FOX_HURT("ENTITY_FOX_HURT", false, 1.0f, 1.1f),
+    FOX_DEATH("ENTITY_FOX_DEATH", false, 1.0f, 1.0f),
+
+    FROG_AMBIENT("ENTITY_FROG_AMBIENT", false, 0.9f, 0.9f),
+    FROG_ATTACK("ENTITY_FROG_STEP", false, 1.0f, 1.1f),
+    FROG_HURT("ENTITY_FROG_HURT", false, 1.0f, 1.0f),
+    FROG_DEATH("ENTITY_FROG_DEATH", false, 1.0f, 0.95f),
+
+    GOAT_AMBIENT("ENTITY_GOAT_AMBIENT", false, 1.0f, 1.0f),
+    GOAT_ATTACK("ENTITY_GOAT_LONG_JUMP", false, 1.0f, 1.2f),
+    GOAT_HURT("ENTITY_GOAT_HURT", false, 1.0f, 1.0f),
+    GOAT_DEATH("ENTITY_GOAT_DEATH", false, 1.0f, 0.95f),
+
+    HOGLIN_AMBIENT("ENTITY_HOGLIN_AMBIENT", false, 1.0f, 0.8f),
+    HOGLIN_ATTACK("ENTITY_HOGLIN_ATTACK", false, 1.0f, 0.9f),
+    HOGLIN_HURT("ENTITY_HOGLIN_HURT", false, 1.0f, 0.8f),
+    HOGLIN_DEATH("ENTITY_HOGLIN_DEATH", false, 1.0f, 0.75f),
+
+    HUSK_AMBIENT("ENTITY_HUSK_AMBIENT", false, 1.0f, 0.7f),
+    HUSK_ATTACK("ENTITY_HUSK_STEP", false, 1.0f, 0.8f),
+    HUSK_HURT("ENTITY_HUSK_HURT", false, 1.0f, 0.75f),
+    HUSK_DEATH("ENTITY_HUSK_DEATH", false, 1.0f, 0.7f),
+
+    LLAMA_AMBIENT("ENTITY_LLAMA_AMBIENT", false, 1.0f, 1.0f),
+    LLAMA_ATTACK("ENTITY_LLAMA_SPIT", false, 1.0f, 1.2f),
+    LLAMA_HURT("ENTITY_LLAMA_HURT", false, 1.0f, 1.0f),
+    LLAMA_DEATH("ENTITY_LLAMA_DEATH", false, 1.0f, 0.95f),
+
+    PANDA_AMBIENT("ENTITY_PANDA_AMBIENT", false, 1.0f, 0.9f),
+    PANDA_ATTACK("ENTITY_PANDA_BITE", false, 1.0f, 1.0f),
+    PANDA_HURT("ENTITY_PANDA_HURT", false, 1.0f, 0.9f),
+    PANDA_DEATH("ENTITY_PANDA_DEATH", false, 1.0f, 0.85f),
+
+    PIG_AMBIENT("ENTITY_PIG_AMBIENT", false, 1.0f, 1.2f),
+    PIG_ATTACK("ENTITY_PIG_STEP", false, 1.0f, 1.1f),
+    PIG_HURT("ENTITY_PIG_HURT", false, 1.0f, 1.0f),
+    PIG_DEATH("ENTITY_PIG_DEATH", false, 1.0f, 0.95f),
+
+    POLAR_BEAR_AMBIENT("ENTITY_POLAR_BEAR_AMBIENT", false, 1.0f, 0.8f),
+    POLAR_BEAR_ATTACK("ENTITY_POLAR_BEAR_WARNING", false, 1.0f, 0.9f),
+    POLAR_BEAR_HURT("ENTITY_POLAR_BEAR_HURT", false, 1.0f, 0.8f),
+    POLAR_BEAR_DEATH("ENTITY_POLAR_BEAR_DEATH", false, 1.0f, 0.75f),
+
+    RABBIT_AMBIENT("ENTITY_RABBIT_AMBIENT", false, 0.8f, 1.4f),
+    RABBIT_ATTACK("ENTITY_RABBIT_JUMP", false, 1.0f, 1.6f),
+    RABBIT_HURT("ENTITY_RABBIT_HURT", false, 1.0f, 1.2f),
+    RABBIT_DEATH("ENTITY_RABBIT_DEATH", false, 1.0f, 1.0f),
+
+    RAVAGER_AMBIENT("ENTITY_RAVAGER_AMBIENT", false, 1.0f, 0.7f),
+    RAVAGER_ATTACK("ENTITY_RAVAGER_ATTACK", false, 1.0f, 0.8f),
+    RAVAGER_HURT("ENTITY_RAVAGER_HURT", false, 1.0f, 0.75f),
+    RAVAGER_DEATH("ENTITY_RAVAGER_DEATH", false, 1.0f, 0.7f),
+
+    SNIFFER_AMBIENT("ENTITY_SNIFFER_IDLE", false, 1.0f, 1.0f),
+    SNIFFER_ATTACK("BLOCK_ROOTED_DIRT_BREAK", false, 1.0f, 0.9f),
+    SNIFFER_HURT("ENTITY_SNIFFER_HURT", false, 1.0f, 1.0f),
+    SNIFFER_DEATH("ENTITY_SNIFFER_DEATH", false, 1.0f, 0.95f),
+
+    SPIDER_AMBIENT("ENTITY_SPIDER_AMBIENT", false, 1.0f, 0.8f),
+    SPIDER_ATTACK("ENTITY_SPIDER_STEP", false, 1.0f, 1.0f),
+    SPIDER_HURT("ENTITY_SPIDER_HURT", false, 1.0f, 0.9f),
+    SPIDER_DEATH("ENTITY_SPIDER_DEATH", false, 1.0f, 0.8f),
+
+    STRIDER_AMBIENT("ENTITY_STRIDER_AMBIENT", false, 1.0f, 1.3f),
+    STRIDER_ATTACK("ENTITY_STRIDER_HAPPY", false, 1.0f, 1.5f),
+    STRIDER_HURT("ENTITY_STRIDER_HURT", false, 1.0f, 1.2f),
+    STRIDER_DEATH("ENTITY_STRIDER_DEATH", false, 1.0f, 1.0f),
+
+    TURTLE_AMBIENT("ENTITY_TURTLE_AMBIENT_LAND", false, 1.0f, 0.9f),
+    TURTLE_ATTACK("BLOCK_SLIME_BLOCK_STEP", false, 1.0f, 0.8f),
+    TURTLE_HURT("ENTITY_TURTLE_HURT", false, 1.0f, 0.95f),
+    TURTLE_DEATH("ENTITY_TURTLE_DEATH", false, 1.0f, 0.9f),
+
+    WITCH_AMBIENT("ENTITY_WITCH_AMBIENT", false, 1.0f, 1.0f),
+    WITCH_ATTACK("ENTITY_WITCH_THROW", false, 1.0f, 1.1f),
+    WITCH_HURT("ENTITY_WITCH_HURT", false, 1.0f, 0.95f),
+    WITCH_DEATH("ENTITY_WITCH_DEATH", false, 1.0f, 0.9f);
 
 
     private final String soundKey;

@@ -35,10 +35,7 @@ import com.ticxo.modelengine.api.model.ModeledEntity;
 import org.bukkit.entity.ArmorStand;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -162,9 +159,86 @@ public class AdminCommand implements BasicCommand {
 
         }
 
+        if (Objects.equals(args[0], "guard")) {
+            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.CITY_GUARD_LONG_DISTANCE.getId());
+        }
+
         if (Objects.equals(args[0], "mob1")) {
             RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.GOBLIN_LOW_LVL_1.getId());
+            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.GOBLIN_LOW_LVL_2.getId());
+            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.GOBLIN_LOW_LVL_3.getId());
+            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.GOBLIN_LOW_LVL_4.getId());
+            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.GOBLIN_LOW_LVL_5.getId());
+
         }
+
+        if (Objects.equals(args[0], "mob") && args.length == 2) {
+            String input = args[1].toLowerCase();
+            Location baseLocation = player.getLocation();
+
+            if (Objects.equals(input, "all")) {
+                UUID uuid;
+                int offset = 0;
+
+                for (MobType mobType : List.of(
+                        MobType.RAT,
+                        MobType.AXOLOTL,
+                        MobType.ARMADILLO,
+                        MobType.BEE,
+                        MobType.CAT,
+                        MobType.DONKEY,
+                        MobType.FOX,
+                        MobType.FROG,
+                        MobType.GOAT,
+                        MobType.HOGLIN,
+                        MobType.HUSK,
+                        MobType.LLAMA,
+                        MobType.PANDA,
+                        MobType.PIG,
+                        MobType.POLAR_BEAR,
+                        MobType.RABBIT,
+                        MobType.RAVAGER,
+                        MobType.SNIFFER,
+                        MobType.SPIDER,
+                        MobType.STRIDER,
+                        MobType.TURTLE,
+                        MobType.WITCH
+                )) {
+                    uuid = UUID.randomUUID();
+                    Location spawnLocation = baseLocation.clone().add(offset % 5, 0, offset / 5);
+                    RuneQuestPlugin.getMobRegistry().spawnMob(uuid, spawnLocation, mobType.getId());
+                    offset++;
+                }
+
+                player.sendMessage("Spawned all custom mobs.");
+            } else {
+                boolean found = false;
+
+                for (MobType mobType : MobType.values()) {
+                    if (mobType.getId().equalsIgnoreCase(input)) {
+                        UUID uuid = UUID.randomUUID();
+                        RuneQuestPlugin.getMobRegistry().spawnMob(uuid, baseLocation, mobType.getId());
+                        player.sendMessage("Spawned mob: " + mobType.getId());
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    player.sendMessage("Unknown mob name: " + input);
+                }
+            }
+        }
+
+
+        if (Objects.equals(args[0], "chicken")) {
+            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.CHICKEN.getId());
+        }
+
+        if (Objects.equals(args[0], "rat")) {
+            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.RAT.getId());
+        }
+
 
         if (Objects.equals(args[0], "sheep")) {
             RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.SHEEP.getId());

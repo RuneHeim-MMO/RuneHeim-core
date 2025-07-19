@@ -31,6 +31,7 @@ import org.zuma.examplePlugin.domain.droptable.DropTable;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
+import org.zuma.examplePlugin.domain.mob.constants.EquipmentSlot;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
 import org.zuma.examplePlugin.domain.mob.meta.MobEquipmentMeta;
@@ -43,8 +44,8 @@ public abstract class AbstractMob {
     private UUID uuid;
     private final boolean ai;
     private Component displayName;
-    private final EntityType baseMob;
-    private final boolean silent;
+    private EntityType baseMob;
+    private boolean silent;
 
     @Nullable
     private Disguise disguise;
@@ -102,6 +103,10 @@ public abstract class AbstractMob {
         return entity;
     }
 
+    public void setBaseEntity(EntityType type) {
+        this.baseMob = type;
+    }
+
     public void setDropTableIds(List<Integer> dropTableIds) {
         this.dropTableIds = dropTableIds;
     }
@@ -136,6 +141,10 @@ public abstract class AbstractMob {
 
     public String getDisplayName() {
         return TextUtils.extractPlainText(displayName);
+    }
+
+    public void setSilent(boolean silent) {
+        this.silent = silent;
     }
 
     @Nullable
@@ -218,7 +227,6 @@ public abstract class AbstractMob {
 
             modeledEntity.addModel(activeModel, true);
             entity.setInvisible(true);
-
         }
 
         if (this.disguise != null) {
@@ -256,43 +264,40 @@ public abstract class AbstractMob {
         }
 
         clearMobEquipment(entity);
+
         if (mobEquipment != null && entity.getEquipment() != null) {
             EntityEquipment equipment = entity.getEquipment();
 
-            if (mobEquipment.helmet() != null) {
-                equipment.setHelmet(mobEquipment.helmet());
-            }
-
-            if (mobEquipment.chestplate() != null) {
-                equipment.setChestplate(mobEquipment.chestplate());
-            }
-
-            if (mobEquipment.leggings() != null) {
-                equipment.setLeggings(mobEquipment.leggings());
-            }
-
-            if (mobEquipment.chestplate() != null) {
-                equipment.setChestplate(mobEquipment.chestplate());
-            }
-
-            if (mobEquipment.hand() != null) {
-                equipment.setItemInMainHand(mobEquipment.hand());
-            }
-
-            if (!(entity instanceof ArmorStand armorStand)) {
-                equipment.setHelmetDropChance(0f);
-                equipment.setChestplateDropChance(0f);
-                equipment.setLeggingsDropChance(0f);
-                equipment.setChestplateDropChance(0f);
-                equipment.setItemInMainHandDropChance(0f);
-            } else {
-                armorStand.setArms(true);
-                armorStand.setRightArmPose(new EulerAngle(Math.toRadians(250), 0, 0));
-                armorStand.setLeftArmPose(new EulerAngle(Math.toRadians(250), 0, 0));
-            }
-
+            equipment.setHelmet(mobEquipment.rollSlot(EquipmentSlot.HEAD));
+            equipment.setChestplate(mobEquipment.rollSlot(EquipmentSlot.CHEST));
+            equipment.setLeggings(mobEquipment.rollSlot(EquipmentSlot.LEGS));
+            equipment.setBoots(mobEquipment.rollSlot(EquipmentSlot.FEET));
+            equipment.setItemInMainHand(mobEquipment.rollSlot(EquipmentSlot.HAND));
+            equipment.setItemInOffHand(mobEquipment.rollSlot(EquipmentSlot.OFFHAND));
 
         }
+
+
+        if (!(entity instanceof ArmorStand armorStand)) {
+            EntityEquipment equipment = entity.getEquipment();
+
+            if (equipment == null) {
+                return;
+            }
+
+            equipment.setHelmetDropChance(0f);
+            equipment.setChestplateDropChance(0f);
+            equipment.setLeggingsDropChance(0f);
+            equipment.setChestplateDropChance(0f);
+            equipment.setItemInMainHandDropChance(0f);
+            equipment.setItemInOffHandDropChance(0f);
+        } else {
+            armorStand.setArms(true);
+            armorStand.setRightArmPose(new EulerAngle(Math.toRadians(250), 0, 0));
+            armorStand.setLeftArmPose(new EulerAngle(Math.toRadians(250), 0, 0));
+        }
+
+
     }
 
     private void setEntityPersistenceKey(Entity entity) {

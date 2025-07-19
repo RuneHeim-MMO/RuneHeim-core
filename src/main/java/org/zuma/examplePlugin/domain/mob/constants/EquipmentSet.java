@@ -3,18 +3,43 @@ package org.zuma.examplePlugin.domain.mob.constants;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
+import org.zuma.examplePlugin.domain.mob.EquipmentSetRecord;
 import org.zuma.examplePlugin.domain.mob.meta.MobEquipmentMeta;
 
+import java.util.List;
+
 public enum EquipmentSet {
-    FUSION_MASTER(new MobEquipmentMeta(null, null, null, null, RuneQuestPlugin.getItemRegistry().getItem(ItemId.OBSIDIAN_BULWARK).createItemStackOfType())),
+    FUSION_MASTER(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.OBSIDIAN_BULWARK), 100)
+    ))),
 
-    SHOPKEEPER_1(new MobEquipmentMeta(null, null, null, null, new ItemStack(Material.PAPER))),
-    BANDIT_1(new MobEquipmentMeta(null, new ItemStack(Material.DIAMOND_CHESTPLATE), null, null, RuneQuestPlugin.getItemRegistry().getItem(ItemId.ADAMANTITE_DAGGER).createItemStackOfType())),
-    BANDIT_2(new MobEquipmentMeta(RuneQuestPlugin.getItemRegistry().getItem(ItemId.RUNITE_HELMET).createItemStackOfType(), null, null, null, RuneQuestPlugin.getItemRegistry().getItem(ItemId.ADAMANTITE_SWORD).createItemStackOfType())),
-    GOBLIN_1(new MobEquipmentMeta(RuneQuestPlugin.getItemRegistry().getItem(ItemId.BRONZE_HELMET).createItemStackOfType(), null, null, null, new ItemStack(Material.STICK))),
-    GOBLIN_2(new MobEquipmentMeta(null, null, null, null, new ItemStack(Material.STICK)));
+    RUNE_SET_BATTLEAXE(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.RUNITE_HELMET), 100),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNITE_BODY), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNITE_PLATELEGS), 100),
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.RUNITE_BOOTS), 100),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNITE_BATTLEAXE), 100)
+    ))),
 
+    SHOPKEEPER_1(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.PAPER), 100)
+    ))),
+
+    GOBLIN(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.IRON_BODY), 5),
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.BRONZE_BOOTS), 30),
+            new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.STICK), 20)
+    )));
+
+
+    private static ItemStack getRuneItem(ItemId id) {
+        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getItem(id);
+
+        if (type == null) return new ItemStack(Material.AIR);
+        return type.createItemStackOfType();
+    }
 
     private final MobEquipmentMeta meta;
 

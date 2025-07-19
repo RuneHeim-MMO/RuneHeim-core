@@ -39,7 +39,7 @@ public class HitListener implements Listener {
         return null;
     }
 
-    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = false)
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onEntityAttackEntity(EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
 
