@@ -57,7 +57,7 @@ public abstract class AbstractMob {
 
     @Nullable
     private MobEquipmentMeta mobEquipment;
-    private boolean isBaby;
+    private boolean isBaby, isInvulnerable;
     private int maxWalkDistance;
 
     @Nullable
@@ -74,11 +74,13 @@ public abstract class AbstractMob {
         this.baseMob = meta.baseEntity();
         this.silent = meta.silent();
 
+
         disguise = null;
         model = null;
         behavior = null;
         mobEquipment = null;
         isBaby = false;
+        isInvulnerable = false;
         maxWalkDistance = -1; // -1 means no limits, can walk anywhere.
         customAttributes = new HashMap<>();
         dropTableIds = new ArrayList<>();
@@ -208,7 +210,7 @@ public abstract class AbstractMob {
         entity.setCustomNameVisible(true);
         entity.setAI(ai);
         entity.setSilent(silent);
-        entity.setInvulnerable(true);
+        entity.setInvulnerable(isInvulnerable);
 
         if (this.model != null) {
             ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(entity);
@@ -370,4 +372,11 @@ public abstract class AbstractMob {
         this.model = model;
     }
 
+    public boolean isInvulnerable() {
+        return isInvulnerable;
+    }
+
+    public void setInvulnerable(boolean invulnerable) {
+        isInvulnerable = invulnerable;
+    }
 }

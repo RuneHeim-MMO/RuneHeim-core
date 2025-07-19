@@ -78,7 +78,7 @@ public class ItemFactory {
         switch (json.version()) {
             case 1 -> {
                 FairyMeta deserialized = new Gson().fromJson(json.meta(), FairyMeta.class);
-                Fairy item = new Fairy(meta, deserialized.particle());
+                Fairy item = new Fairy(meta, deserialized.model());
 
                 item.setDefaultStateTemplate(new FairyState(new FairyStateMeta(new ArrayList<>(), 100, 0, false, deserialized.generation())));
                 return item;

@@ -108,6 +108,22 @@ public enum MobBehaviors {
             List.of(SoundType.SHEEP_NO),
             List.of(SoundType.SHEEP_HURT),
             List.of(SoundType.SHEEP_DEATH)
+    )),
+
+    BOAR(new MobBehavior(
+            List.of(SoundType.GOBLIN_AMBIENT),
+            List.of(SoundType.GOBLIN_CELEBRATE),
+            List.of(SoundType.GOBLIN_NO),
+            List.of(SoundType.GOBLIN_HURT),
+            List.of(SoundType.GOBLIN_DEATH)
+    )),
+
+    WOLF(new MobBehavior(
+            List.of(SoundType.GOBLIN_AMBIENT),
+            List.of(SoundType.GOBLIN_CELEBRATE),
+            List.of(SoundType.GOBLIN_NO),
+            List.of(SoundType.GOBLIN_HURT),
+            List.of(SoundType.GOBLIN_DEATH)
     ));
 
 

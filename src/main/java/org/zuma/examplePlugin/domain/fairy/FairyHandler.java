@@ -1,17 +1,20 @@
 package org.zuma.examplePlugin.domain.fairy;
 
+import com.ticxo.modelengine.api.ModelEngineAPI;
+import com.ticxo.modelengine.api.model.ActiveModel;
+import com.ticxo.modelengine.api.model.ModeledEntity;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Particle;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
@@ -24,17 +27,21 @@ import org.zuma.examplePlugin.domain.player.inventory.ReservedSlot;
 import org.zuma.examplePlugin.events.fairy.FairyAutoFedEvent;
 import org.zuma.examplePlugin.events.fairy.FairyUpgradeEvent;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.UUID;
 
 public class FairyHandler {
-    private static final int SPRITE_DRAW_INTERVAL = 2;
+    private static final int SPRITE_DRAW_INTERVAL = 4;
     private static final int SLOT_CHECKER_INTERVAL = 20;
     private static final int FAIRY_TICK_INTERVAL = 20 * 10; //20 * 10;
+    private static final Random RANDOM = new Random();
 
     private final AdditionalGearSlotHandler slotHandler;
     private final HashMap<UUID, Fairy> wornFairies;
     private final HashMap<UUID, Fairy> fedFairies;
+    private final HashMap<UUID, Entity> fairyModels;
     private BukkitTask spriteDrawingTask;
     private BukkitTask playerSlotTracker;
     private BukkitTask fairyTickTask;
@@ -48,6 +55,7 @@ public class FairyHandler {
         this.slotHandler = slotHandler;
         this.wornFairies = new HashMap<>();
         this.fedFairies = new HashMap<>();
+        this.fairyModels = new HashMap<>();
     }
 
     public void handleFruitClickOnFairy(InventoryClickEvent event, RunePlayer player, Fairy fairy, FairyFruit fruit, ItemStack clickedOnFairyItemStack, ItemStack cursorFruitItemStack) {
@@ -122,19 +130,68 @@ public class FairyHandler {
         }
     }
 
+    public void clearPlayerFairyInstances(UUID uuid) {
+        wornFairies.remove(uuid);
+        fedFairies.remove(uuid);
+
+        removeFairyModel(uuid);
+    }
+
+    private void removeFairyModel(UUID uuid) {
+        Entity fairyModel = fairyModels.get(uuid);
+
+        if (fairyModel == null) {
+            return;
+        }
+
+        fairyModel.remove();
+        fairyModels.remove(uuid);
+    }
+
     private void spriteDrawingTaskTick() {
         updateT();
 
+
         fedFairies.forEach((uuid, fairy) -> {
+
             Player player = Bukkit.getPlayer(uuid);
-            Particle particle = fairy.getParticle();
+            Entity matchingEntity = fairyModels.get(uuid);
 
             if (player == null || !player.isOnline()) {
+                if (matchingEntity != null) matchingEntity.remove();
+                fairyModels.remove(uuid);
                 return;
             }
 
-            drawParticleInHelix(player, particle);
+            if (matchingEntity == null) {
+                return;
+            }
+
+            moveEntityInHelix(player, matchingEntity);
+
         });
+    }
+
+    @Nullable
+    private Entity spawnFairyModel(Player owner, Fairy fairy) {
+        ArmorStand entity = (ArmorStand) owner.getWorld().spawnEntity(owner.getLocation(), EntityType.ARMOR_STAND);
+        entity.setSilent(true);
+        entity.setInvulnerable(true);
+        entity.setMarker(true);
+        entity.setInvisible(true);
+
+        try {
+            ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(entity);
+            ActiveModel activeModel = ModelEngineAPI.createActiveModel(fairy.getModel());
+            modeledEntity.addModel(activeModel, true);
+        } catch (Exception e) {
+            entity.remove();
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to spawn fairy model for " + owner.getName() + " " + e.getMessage());
+            return null;
+        }
+
+        return entity;
+
     }
 
     private void playerSlotTrackerTick() {
@@ -144,8 +201,7 @@ public class FairyHandler {
 
             if (itemStack == null) {
                 player.getActionBar().setFairyStatus(FairyStatus.NONE);
-                wornFairies.remove(playerUUID);
-                fedFairies.remove(playerUUID);
+                clearPlayerFairyInstances(playerUUID);
                 return;
             }
 
@@ -153,8 +209,7 @@ public class FairyHandler {
 
             if (!(itemType instanceof Fairy fairy)) {
                 player.getActionBar().setFairyStatus(FairyStatus.NONE);
-                wornFairies.remove(playerUUID);
-                fedFairies.remove(playerUUID);
+                clearPlayerFairyInstances(playerUUID);
                 return;
             }
 
@@ -162,8 +217,7 @@ public class FairyHandler {
 
             if (state == null) {
                 player.getActionBar().setFairyStatus(FairyStatus.NONE);
-                fedFairies.remove(playerUUID);
-                wornFairies.remove(playerUUID);
+                clearPlayerFairyInstances(playerUUID);
                 return;
             }
 
@@ -174,9 +228,18 @@ public class FairyHandler {
                     player.asBukkitPlayer().sendMessage(Component.text("Your fairy's stamina has run out. Feed it to keep its bonuses active.", Color.WARNING.asColor()));
                     SoundType.FAIRY_OUT_OF_STAMINA.play(player, true);
                     fedFairies.remove(playerUUID);
+                    removeFairyModel(playerUUID);
                 }
             } else {
                 fedFairies.put(playerUUID, fairy);
+
+                if (!fairyModels.containsKey(playerUUID)) {
+                    Entity newFairyEntity = spawnFairyModel(player.asBukkitPlayer(), fairy);
+
+                    if (newFairyEntity != null) {
+                        fairyModels.put(playerUUID, newFairyEntity);
+                    }
+                }
 
                 if (!player.getActionBar().getFairyStatus().equals(FairyStatus.READY_FOR_UPGRADE)) {
                     player.getActionBar().setFairyStatus(FairyStatus.ACTIVE);
@@ -256,13 +319,13 @@ public class FairyHandler {
         }
     }
 
-    private void drawParticleInHelix(Player player, Particle particle) {
-        World world = player.getWorld();
-        Location base = player.getLocation().add(0, 1.5, 0);
+    private void moveEntityInHelix(Player player, Entity entity) {
+        World world = entity.getWorld();
+        Location base = player.getLocation().add(0, 1, 0);
         Location offset = getHelixPoint(world, t, radius, height);
         Location particleLoc = base.clone().add(offset);
 
-        world.spawnParticle(particle, particleLoc, 3);
+        entity.teleport(particleLoc);
     }
 
     // Helix point calculation

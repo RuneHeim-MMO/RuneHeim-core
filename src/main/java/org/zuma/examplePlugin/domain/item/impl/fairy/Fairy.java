@@ -16,14 +16,14 @@ import javax.annotation.Nullable;
 
 
 public class Fairy extends EquipableItemType implements Stateful {
-    private final Particle particle;
+    private final String model;
     private FairyState defaultStateTemplate;
 
-    public Fairy(AbstractItemMeta meta, Particle particle) {
+    public Fairy(AbstractItemMeta meta, String model) {
         super(meta);
         super.setTypeLore("Fairy", Icon.FAIRY.get());
         this.setStateType(StateType.FAIRY_STATE);
-        this.particle = particle;
+        this.model = model;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class Fairy extends EquipableItemType implements Stateful {
         return null;
     }
 
-    public Particle getParticle() {
-        return particle;
+    public String getModel() {
+        return model;
     }
 }

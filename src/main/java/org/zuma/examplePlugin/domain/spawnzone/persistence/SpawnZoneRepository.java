@@ -27,8 +27,12 @@ public class SpawnZoneRepository {
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(0, SpawnZoneType.AREA, 3, 50,
                         new Location(Bukkit.getWorld("world"), 5055, 102, 4946)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.AGGRESSIVE_BANDIT_1, 10, 50),
-                        new SpawnZoneMobRecord(MobType.BROWN_BOAR, 10, 50)
+                        new SpawnZoneMobRecord(MobType.BOAR_BROWN, 10, 50),
+                        new SpawnZoneMobRecord(MobType.BOAR_BROWN_ALPHA, 5, 30),
+                        new SpawnZoneMobRecord(MobType.BOAR_GRAY, 10, 50),
+                        new SpawnZoneMobRecord(MobType.BOAR_GRAY_ALPHA, 5, 30),
+                        new SpawnZoneMobRecord(MobType.BOAR_LIGHT_BROWN, 10, 50),
+                        new SpawnZoneMobRecord(MobType.BOAR_LIGHT_BROWN_ALPHA, 5, 30)
                 ), 30, false), 1))
 
         );
