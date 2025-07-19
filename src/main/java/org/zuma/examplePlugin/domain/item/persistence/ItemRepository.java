@@ -309,7 +309,7 @@ public class ItemRepository {
                                 )), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.GEM, ItemId.BLADESTONE.asInt(), Material.COAL, ItemRarity.MYTHIC, "Bladestone",
-                        List.of("A gem that enhances offensive prowess, increasing successful hit oneInNChance."), null, null),
+                        List.of("A gem that enhances offensive prowess, increasing successful hit chance."), null, null),
                         toVersionedJson(
                                 new GemMeta(null, List.of(
                                         new Modifier(ModifierType.ATTACK_STAB, 6),

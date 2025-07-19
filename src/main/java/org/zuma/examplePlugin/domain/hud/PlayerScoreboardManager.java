@@ -10,6 +10,7 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
@@ -35,14 +36,18 @@ public class PlayerScoreboardManager {
 
     private void setDefaultScoreboardContent(Scoreboard scoreboard) {
         Objective o = scoreboard.getObjective("stats");
+        String partyString = player.getParty() == null ? "§fNone" : "§6" + player.getParty().getOwnerUsername() + "'s party";
 
         if (o == null) {
             return;
         }
 
         o.getScore("").setScore(15);
-        o.getScore("§6Deaths: §f" + ticks + " ".repeat(14)).setScore(14);
-        o.getScore("§6Coins: §f" + ticks + " ".repeat(13)).setScore(13);
+
+        o.getScore("§7Party: " + partyString).setScore(14);
+        o.getScore("§7Combat Level: §3" + player.getCombatLvl()).setScore(13);
+
+        /*o.getScore("§6Coins: §f" + ticks + " ".repeat(13)).setScore(13);
         o.getScore("§6Kills: §f" + ticks + " ".repeat(12)).setScore(12);
         o.getScore("§6Deaths: §f" + ticks + " ".repeat(11)).setScore(11);
         o.getScore("§6Coins: §f" + ticks + " ".repeat(10)).setScore(10);
@@ -54,7 +59,7 @@ public class PlayerScoreboardManager {
         o.getScore("§6Coins: §f" + ticks + " ".repeat(4)).setScore(4);
         o.getScore("§6Kills: §f" + ticks + " ".repeat(3)).setScore(3);
         o.getScore("§6Deaths: §f" + ticks + " ".repeat(2)).setScore(2);
-        o.getScore("§6Coins: §f" + ticks + " ".repeat(1)).setScore(1);
+        o.getScore("§6Coins: §f" + ticks + " ".repeat(1)).setScore(1);*/
 
         ticks += 1;
     }

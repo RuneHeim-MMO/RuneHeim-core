@@ -17,7 +17,7 @@ public class FoodLore implements LoreCreator {
         lore.add(Component.empty());
         lore.add(Component.text("Heals ", Color.SUCCESS.asColor())
                 .append(SkillType.HITPOINTS.getSymbolComponent())
-                .append(Component.text(" " + food.getHealAmount() + " " + SkillType.HITPOINTS.getLabel(), Color.SUCCESS.asColor())));
+                .append(Component.text(food.getHealAmount() + " " + SkillType.HITPOINTS.getLabel(), Color.SUCCESS.asColor())));
     }
 
     @Override

@@ -19,6 +19,7 @@ import org.zuma.examplePlugin.events.recipe.PlayerCraftingFinishEvent;
 import org.zuma.examplePlugin.events.recipe.PlayerCraftingStartEvent;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static org.zuma.examplePlugin.core.utils.ItemUtils.multiplyItemRecords;
@@ -195,5 +196,19 @@ public class RecipeHandler {
 
     public RecipeRegistry getRegistry() {
         return registry;
+    }
+
+    public int getAvailableRecipesNumber(RunePlayer player) {
+        Collection<AbstractRecipe> recipes = registry.getAllRecipes();
+        int availableRecipes = 0;
+
+        for (AbstractRecipe recipe : recipes) {
+            if (player.meetsRequirements(recipe)) {
+                availableRecipes++;
+            }
+        }
+
+        return availableRecipes;
+
     }
 }

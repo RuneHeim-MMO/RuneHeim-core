@@ -18,8 +18,8 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class AdditionalGearSlotHandler {
-    private static final int INFO_SLOT = 16;
-    private static final int SETTINGS_SLOT = 17;
+    public static final int INFO_SLOT = 16;
+    public static final int SETTINGS_SLOT = 17;
 
     private final Map<Integer, ReservedSlot> slotsDef = ReservedSlot.getSlotMap();
     private final List<Integer> slots = slotsDef.keySet().stream().toList();
@@ -27,14 +27,14 @@ public class AdditionalGearSlotHandler {
     private ItemStack getSlotPlaceholder(int slot) {
         String slotLabel = slotsDef.get(slot).getPlaceHolderLabel();
         if (slotLabel == null) slotLabel = "Accessory Slot";
-        return GUIControl.TRANSPARENT.asItemstack(Component.text(slotLabel, NamedTextColor.GRAY));
+        return GUIControl.TRANSPARENT.asItemstack(Component.text(slotLabel, NamedTextColor.GRAY), true);
     }
 
     public void fillReservedSlots(RunePlayer player) {
         PlayerInventory inventory = player.asBukkitPlayer().getInventory();
 
-        inventory.setItem(INFO_SLOT, GUIControl.TRANSPARENT.asItemstack(Component.text("Info")));
-        inventory.setItem(SETTINGS_SLOT, GUIControl.TRANSPARENT.asItemstack(Component.text("Settings")));
+        inventory.setItem(INFO_SLOT, GUIControl.TRANSPARENT.asItemstack(Component.text("Info"), true));
+        inventory.setItem(SETTINGS_SLOT, GUIControl.TRANSPARENT.asItemstack(Component.text("Settings"), true));
 
         for (int slot : slots) {
             ItemStack inSlot = inventory.getItem(slot);

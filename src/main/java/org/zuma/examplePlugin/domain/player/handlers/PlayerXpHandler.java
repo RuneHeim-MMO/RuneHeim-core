@@ -12,11 +12,17 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.events.player.RunePlayerGainedXPEvent;
 import org.zuma.examplePlugin.events.player.RunePlayerLevelUpEvent;
 
+import javax.annotation.Nullable;
+
 public class PlayerXpHandler {
     private final RunePlayer player;
 
+    @Nullable
+    private SkillType lastXPGainedSkillType;
+
     public PlayerXpHandler(RunePlayer player) {
         this.player = player;
+        this.lastXPGainedSkillType = null;
     }
 
     public void addXp(SkillType type, double xp, XpSource source) {
@@ -34,14 +40,20 @@ public class PlayerXpHandler {
             return;
         }
 
+        if (source == XpSource.PERSONAL) {
+            lastXPGainedSkillType = type;
+        }
+
         double nextXp = skill.getXp() + xp;
         boolean leveledUp = false;
+        int availableRecipesBeforeLevelUp = 0;
 
         if (XpUtils.isMaxLevel(skill.getBaseLevel())) {
             return;
         }
 
         if (nextXp >= XpUtils.getXpForLevel(skill.getBaseLevel() + 1)) {
+            availableRecipesBeforeLevelUp = RuneQuestPlugin.getRecipeHandler().getAvailableRecipesNumber(player);
             leveledUp = true;
 
             RunePlayerLevelUpEvent levelUpEvent = new RunePlayerLevelUpEvent(player, type, XpUtils.getCappedLevel(skill.getBaseLevel() + 1), source);
@@ -56,11 +68,14 @@ public class PlayerXpHandler {
         skill.addXp(xp);
 
         if (leveledUp) {
+            int availableRecipesAfterLevelUp = RuneQuestPlugin.getRecipeHandler().getAvailableRecipesNumber(player);
+
             HudService.showPlayerLevelUpTitle(player, skill);
             player.setCombatLvl(XpUtils.getCombatLevelFromSkills(player.getSkills()));
-            HudService.updateVanillaGUI(player);
-            player.getActionBar().showLevelUp();
+            player.getActionBar().showLevelUp(skill, availableRecipesAfterLevelUp - availableRecipesBeforeLevelUp);
         }
+
+        HudService.updateVanillaGUI(player);
 
     }
 
@@ -70,6 +85,11 @@ public class PlayerXpHandler {
         } else {
             addXp(type, xp, XpSource.PERSONAL);
         }
+    }
+
+    @Nullable
+    public SkillType getLastXPGainedSkillType() {
+        return this.lastXPGainedSkillType;
     }
 
 

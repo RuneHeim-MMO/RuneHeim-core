@@ -12,6 +12,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.core.utils.InventoryUtils;
 import org.zuma.examplePlugin.core.utils.ItemUtils;
 import org.zuma.examplePlugin.domain.gui.base.IndividualGUI;
@@ -31,9 +32,8 @@ import java.util.List;
 import java.util.Set;
 
 public class FusionMasterInventory extends IndividualGUI {
-    private final ItemStack transparentItem = GUIControl.TRANSPARENT.asItemstack();
+    private final int COST_PER_GEM = 2500;
     private final ItemStack blankItem = GUIControl.BLANK.asItemstack();
-    private final ItemStack confirmItem = GUIControl.YES.asItemstack(Component.text("Confirm fusion", Color.SUCCESS.asColor()));
     private final ItemStack cancelItem = GUIControl.NO.asItemstack(Component.text("Cancel", Color.ERROR.asColor()));
 
     private final static int SOCKETABLE_SLOT = 4;
@@ -76,6 +76,18 @@ public class FusionMasterInventory extends IndividualGUI {
         }
     }
 
+    private int getValidGemsCount() {
+        int validGemsCount = 0;
+
+        for (int slot : ACTIVE_GEM_SLOTS) {
+            if (inventory.getItem(slot) != null && isValidItemStack(ItemStackType.GEM, inventory.getItem(slot))) {
+                validGemsCount++;
+            }
+        }
+
+        return validGemsCount;
+    }
+
     @Nullable
     private GearGemSocketsState getSocketableSlotState() {
         ItemStack gearSlotItem = inventory.getItem(SOCKETABLE_SLOT);
@@ -101,6 +113,12 @@ public class FusionMasterInventory extends IndividualGUI {
         updateAvailableGemSlots(socketState.getAvailableGemSlots(), player);
 
         if (isReadyToFuse(socketState)) {
+            int validGemsCount = getValidGemsCount();
+
+            ItemStack confirmItem = GUIControl.YES.asItemstack(Component.text("Confirm fusion", Color.SUCCESS.asColor()),
+                    List.of(Component.text("Fusion cost: ", NamedTextColor.WHITE).append(CurrencyUtils.getCurrencyComponent((long) validGemsCount * COST_PER_GEM))));
+            super.assignMenuValue(confirmItem, 1);
+
             inventory.setItem(CONFIRM_SLOT, confirmItem);
         } else {
             inventory.setItem(CONFIRM_SLOT, blankItem);
@@ -164,7 +182,6 @@ public class FusionMasterInventory extends IndividualGUI {
     public boolean attemptOpenInventory(RunePlayer player) {
         updateInventory(player);
 
-        super.assignMenuValue(confirmItem, 1);
         super.assignMenuValue(cancelItem, 0);
 
         inventory.setItem(CANCEL_SLOT, cancelItem);
@@ -202,141 +219,173 @@ public class FusionMasterInventory extends IndividualGUI {
 
         event.setCancelled(true);
 
-        if (currentItemOrig == null) {
-            return;
-        }
+        if (currentItemOrig == null) return;
 
         ItemStack currentItem = currentItemOrig.clone();
-
         Integer menuValue = getMenuValue(currentItem);
 
-        if (menuValue != null && menuValue == 0) {
-            player.asBukkitPlayer().closeInventory();
-            return;
-        }
-
-        if (menuValue != null && menuValue == 1) {
-            GearGemSocketsState state = getSocketableSlotState();
-            int insertedGems = 0;
-
-            if (state == null) {
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Socket state is null during fusion! Something went wrong...");
-                return;
-            }
-
-            for (int gemSlot : ACTIVE_GEM_SLOTS) {
-                AbstractItemType gem = RuneQuestPlugin.getItemRegistry().getItem(inventory.getItem(gemSlot));
-
-                if (gem == null) {
-                    continue;
-                }
-
-                if (gem.type == ItemType.GEM) {
-                    try {
-                        state.insertGem(gem);
-                        inventory.setItem(gemSlot, null);
-                        insertedGems += 1;
-                    } catch (IllegalStateException e) {
-                        HudService.sendFailMessage(player, Component.text(e.getMessage()));
-                    }
-                }
-
-            }
-
-            ItemStack socketableSlotItem = inventory.getItem(SOCKETABLE_SLOT);
-            AbstractItemType equipment = RuneQuestPlugin.getItemRegistry().getItem(socketableSlotItem);
-
-            if (equipment == null || socketableSlotItem == null) {
-                return;
-            }
-
-            if (insertedGems >= 1) {
-                inventory.setItem(SCROLL_SLOT, null);
-
-                RuneQuestPlugin.getItemStateManager().saveUpdatedState(state);
-                equipment.getMetaGenerator().updatePresentationLayer(socketableSlotItem);
-                Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> updateInventory(player), 2L);
-                SoundType.FUSION_SUCCESS_1.play(player, true);
-                HudService.showFusionSuccessEffect(player, insertedGems);
-                player.asBukkitPlayer().closeInventory();
-            }
-            return;
-        }
+        if (handleMenuClick(menuValue, player)) return;
 
         if (event.getClickedInventory() == topInv) {
-            if (!GUIControl.isGuiItem(currentItem)) {
-                event.setCurrentItem(null);
-                player.giveItemOrDrop(currentItem);
-                Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> updateInventory(player), 2L);
-            }
-        }
-
-
-        if (event.getClickedInventory() == bottomInv) {
-
-            if (!(isValidItemStack(ItemStackType.SCROLL, currentItem) || isValidItemStack(ItemStackType.GEM, currentItem) || isValidItemStack(ItemStackType.SOCKETABLE, currentItem))) {
-                HudService.sendFailMessage(player, Component.text("Fusion master accepts only items with sockets, gems or fusion scrolls."));
-                return;
-            }
-
-            if (isValidItemStack(ItemStackType.SOCKETABLE, currentItem)) {
-                if (inventory.getItem(SOCKETABLE_SLOT) != null) {
-                    ItemStack itemStack = topInv.getItem(SOCKETABLE_SLOT);
-
-                    if (itemStack != null) {
-                        ItemStack cloned = itemStack.clone();
-                        topInv.setItem(SOCKETABLE_SLOT, null);
-                        player.giveItemOrDrop(cloned);
-                    }
-                }
-
-                ItemUtils.moveItemToSlot(bottomInv, topInv, event.getSlot(), SOCKETABLE_SLOT, 1);
-                Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> updateInventory(player), 2L);
-                SoundType.EQUIPMENT_INSERT.play(player, false);
-            }
-
-            if (isValidItemStack(ItemStackType.SCROLL, currentItem)) {
-                if (inventory.getItem(SCROLL_SLOT) != null) {
-                    return;
-                }
-
-                ItemUtils.moveItemToSlot(bottomInv, topInv, event.getSlot(), SCROLL_SLOT, 1);
-                Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> updateInventory(player), 2L);
-                SoundType.PAPER_INSERT.play(player, false);
-            }
-
-            if (isValidItemStack(ItemStackType.GEM, currentItem)) {
-
-                if (ACTIVE_GEM_SLOTS.isEmpty()) {
-                    HudService.sendFailMessage(player, Component.text("Put in the equipment first!"));
-                    return;
-                }
-
-                int availableSlot = -1;
-
-                for (int gemSlot : ACTIVE_GEM_SLOTS) {
-                    if (inventory.getItem(gemSlot) == null) {
-                        availableSlot = gemSlot;
-                        break;
-
-                    }
-                }
-
-                if (availableSlot == -1) {
-                    HudService.sendFailMessage(player, Component.text("You cannot add more gems!"));
-                    return;
-                }
-
-                ItemUtils.moveItemToSlot(bottomInv, topInv, event.getSlot(), availableSlot, 1);
-                Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> updateInventory(player), 2L);
-                SoundType.FUSION_GEM_INSERT.play(player, false);
-                return;
-            }
-
-
-            return;
+            handleTopInventoryClick(event, player, currentItem);
+        } else if (event.getClickedInventory() == bottomInv) {
+            handleBottomInventoryClick(event, player, currentItem, topInv, bottomInv);
         }
     }
+
+    private boolean handleMenuClick(Integer menuValue, RunePlayer player) {
+        if (menuValue == null) return false;
+
+        if (menuValue == 0) {
+            player.asBukkitPlayer().closeInventory();
+            return true;
+        }
+
+        if (menuValue == 1) {
+            processFusion(player);
+            return true;
+        }
+
+        return false;
+    }
+
+    private void handleTopInventoryClick(InventoryClickEvent event, RunePlayer player, ItemStack currentItem) {
+        if (!GUIControl.isGuiItem(currentItem)) {
+            event.setCurrentItem(null);
+            player.giveItemOrDrop(currentItem);
+            scheduleInventoryUpdate(player);
+        }
+    }
+
+    private void handleBottomInventoryClick(InventoryClickEvent event, RunePlayer player, ItemStack currentItem,
+                                            Inventory topInv, Inventory bottomInv) {
+        if (!isAcceptedItem(currentItem)) {
+            HudService.sendFailMessage(player, Component.text("Fusion master accepts only items with sockets, gems or fusion scrolls."));
+            return;
+        }
+
+        if (isValidItemStack(ItemStackType.SOCKETABLE, currentItem)) {
+            handleSocketableItem(event, player, currentItem, topInv, bottomInv);
+        }
+
+        if (isValidItemStack(ItemStackType.SCROLL, currentItem)) {
+            handleScrollItem(event, player, topInv, bottomInv);
+        }
+
+        if (isValidItemStack(ItemStackType.GEM, currentItem)) {
+            handleGemItem(event, player, topInv, bottomInv);
+        }
+    }
+
+    private boolean isAcceptedItem(ItemStack item) {
+        return isValidItemStack(ItemStackType.SCROLL, item)
+                || isValidItemStack(ItemStackType.GEM, item)
+                || isValidItemStack(ItemStackType.SOCKETABLE, item);
+    }
+
+    private void handleSocketableItem(InventoryClickEvent event, RunePlayer player, ItemStack currentItem,
+                                      Inventory topInv, Inventory bottomInv) {
+        AbstractState state = RuneQuestPlugin.getItemStateManager().getItemState(currentItem);
+        if (!(state instanceof GearGemSocketsState socketsState)) return;
+
+        if (socketsState.getAvailableGemSlots() == 0) {
+            HudService.sendFailMessage(player, Component.text("This item's gem slots are full!"));
+            return;
+        }
+
+        ItemStack existing = topInv.getItem(SOCKETABLE_SLOT);
+        if (existing != null) {
+            topInv.setItem(SOCKETABLE_SLOT, null);
+            player.giveItemOrDrop(existing.clone());
+        }
+
+        ItemUtils.moveItemToSlot(bottomInv, topInv, event.getSlot(), SOCKETABLE_SLOT, 1);
+        scheduleInventoryUpdate(player);
+        SoundType.EQUIPMENT_INSERT.play(player, false);
+    }
+
+    private void handleScrollItem(InventoryClickEvent event, RunePlayer player, Inventory topInv, Inventory bottomInv) {
+        if (topInv.getItem(SCROLL_SLOT) != null) return;
+
+        ItemUtils.moveItemToSlot(bottomInv, topInv, event.getSlot(), SCROLL_SLOT, 1);
+        scheduleInventoryUpdate(player);
+        SoundType.PAPER_INSERT.play(player, false);
+    }
+
+    private void handleGemItem(InventoryClickEvent event, RunePlayer player, Inventory topInv, Inventory bottomInv) {
+        if (ACTIVE_GEM_SLOTS.isEmpty()) {
+            HudService.sendFailMessage(player, Component.text("Put in the equipment first!"));
+            return;
+        }
+
+        int availableSlot = ACTIVE_GEM_SLOTS.stream()
+                .filter(slot -> inventory.getItem(slot) == null)
+                .findFirst()
+                .orElse(-1);
+
+        if (availableSlot == -1) {
+            HudService.sendFailMessage(player, Component.text("You cannot add more gems!"));
+            return;
+        }
+
+        ItemUtils.moveItemToSlot(bottomInv, topInv, event.getSlot(), availableSlot, 1);
+        scheduleInventoryUpdate(player);
+        SoundType.FUSION_GEM_INSERT.play(player, false);
+    }
+
+    private void processFusion(RunePlayer player) {
+        GearGemSocketsState state = getSocketableSlotState();
+        if (state == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Socket state is null during fusion! Something went wrong...");
+            return;
+        }
+
+        int validGemsCount = getValidGemsCount();
+        long totalCost = (long) COST_PER_GEM * validGemsCount;
+
+        if (player.getPouchCoins() < totalCost) {
+            HudService.sendFailMessage(player, Component.text("You need at least ")
+                    .append(CurrencyUtils.getCurrencyComponent(totalCost))
+                    .append(Component.text(" in order to fuse the gems!")));
+            return;
+        }
+
+        int insertedGems = 0;
+
+        for (int gemSlot : ACTIVE_GEM_SLOTS) {
+            AbstractItemType gem = RuneQuestPlugin.getItemRegistry().getItem(inventory.getItem(gemSlot));
+            if (gem == null || gem.type != ItemType.GEM) continue;
+
+            try {
+                state.insertGem(gem);
+                inventory.setItem(gemSlot, null);
+                player.setPouchCoins(player.getPouchCoins() - COST_PER_GEM);
+                insertedGems++;
+            } catch (IllegalStateException e) {
+                HudService.sendFailMessage(player, Component.text(e.getMessage()));
+            }
+        }
+
+        ItemStack socketableSlotItem = inventory.getItem(SOCKETABLE_SLOT);
+        AbstractItemType equipment = RuneQuestPlugin.getItemRegistry().getItem(socketableSlotItem);
+        if (equipment == null || socketableSlotItem == null) return;
+
+        if (insertedGems > 0) {
+            inventory.setItem(SCROLL_SLOT, null);
+            RuneQuestPlugin.getItemStateManager().saveUpdatedState(state);
+            equipment.getMetaGenerator().updatePresentationLayer(socketableSlotItem);
+            scheduleInventoryUpdate(player);
+            SoundType.FUSION_SUCCESS_1.play(player, true);
+            HudService.showCoinsChangeBubble(player, -((long) insertedGems * COST_PER_GEM));
+            HudService.showFusionSuccessEffect(player, insertedGems);
+            player.asBukkitPlayer().closeInventory();
+        }
+    }
+
+    private void scheduleInventoryUpdate(RunePlayer player) {
+        Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> updateInventory(player), 2L);
+    }
+
 
     @Override
     public void onInventoryClose(InventoryCloseEvent event, RunePlayer player) {

@@ -3,7 +3,9 @@ package org.zuma.examplePlugin.features.admin.inventories;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.handlers.IllegalItemWatchdog;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipes.RecipeRegistry;
@@ -40,7 +42,8 @@ public class RecipesInventory {
         Inventory inventory = Bukkit.createInventory(null, slots, Component.text("Recipe Registry | Page: " + page + "-" + maxPages));
 
         for (int i = 0; i < paginatedRegistryItems.size(); i++) {
-            inventory.setItem(i, paginatedRegistryItems.get(i).getDisplayItemstack(player, itemRegistry));
+            ItemStack icon = paginatedRegistryItems.get(i).getDisplayItemstack(player, itemRegistry);
+            inventory.setItem(i, icon);
         }
 
         player.asBukkitPlayer().openInventory(inventory);

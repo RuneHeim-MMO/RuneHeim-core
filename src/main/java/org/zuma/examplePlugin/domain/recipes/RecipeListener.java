@@ -21,7 +21,6 @@ public class RecipeListener implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player player)) return;
 
-
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
 
         if (runePlayer == null) {

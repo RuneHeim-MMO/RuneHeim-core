@@ -290,7 +290,21 @@ public class HudService {
 
     private static void updateXpBarLevel(RunePlayer player) {
         player.asBukkitPlayer().setLevel(player.getCombatLvl());
-        player.asBukkitPlayer().setExp(0);
+
+        SkillType lastXPGainedSkillType = player.getLastXPGainedSkillType();
+
+        if (lastXPGainedSkillType == null) {
+            return;
+        }
+
+        Skill skill = player.getSkill(lastXPGainedSkillType);
+
+        if (skill == null) {
+            return;
+        }
+
+        int progressPercent = XpUtils.getProgressPercent((int) skill.getXp(), skill.getBaseLevel());
+        player.asBukkitPlayer().setExp((float) progressPercent / 100);
     }
 
     public static void updateVanillaGUI(RunePlayer player) {

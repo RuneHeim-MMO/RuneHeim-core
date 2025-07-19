@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.domain.fairy.FairyStatus;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import javax.annotation.Nullable;
@@ -106,10 +107,19 @@ public class ActionBarManager {
 
     }
 
-    public void showLevelUp() {
-        queueFrame(Component.text("Level ups!", Color.SUCCESS.asColor()), 20);
-        queueTypewriter("Some new recipes are available!", 1, Color.SUCCESS);
-        queueFrame(Component.text("Some new recipes are available!", Color.SUCCESS.asColor()), 60);
+    public void showLevelUp(Skill skill, int newRecipesAmount) {
+        queueFrame(Component.text(skill.getType().getSymbol() + " ", NamedTextColor.WHITE)
+                .append(Component.text(skill.getType().getLabel() + " level up!", Color.SUCCESS.asColor())), 40);
+
+        player.asBukkitPlayer().sendMessage("Level up, new recipes amount: " + newRecipesAmount);
+
+        if (newRecipesAmount > 0) {
+            String text = "Unlocked " + newRecipesAmount + " new crafting recipes!";
+
+            queueTypewriter(text, 1, Color.SUCCESS);
+            queueFrame(Component.text(text, Color.SUCCESS.asColor()), 60);
+        }
+
         startAnimationLoop();
     }
 

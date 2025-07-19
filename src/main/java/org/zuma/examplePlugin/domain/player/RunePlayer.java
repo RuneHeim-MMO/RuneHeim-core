@@ -183,6 +183,11 @@ public class RunePlayer implements CombatEntity {
         xpHandler.addXp(type, xp, source);
     }
 
+    @Nullable
+    public SkillType getLastXPGainedSkillType() {
+        return xpHandler.getLastXPGainedSkillType();
+    }
+
     // Item handling
     public void giveItemOrDrop(ItemRecord item) {
         itemHandler.addItemOrDrop(item);

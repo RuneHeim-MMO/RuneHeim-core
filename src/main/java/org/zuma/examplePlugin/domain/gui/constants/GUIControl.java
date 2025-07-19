@@ -29,17 +29,30 @@ public enum GUIControl {
         return asItemstack(Component.empty());
     }
 
-    public ItemStack asItemstack(Component displayName) {
-        return asItemstack(displayName, new ArrayList<>());
+    public ItemStack asItemstack(Component displayName, boolean bypassItemWatchdog) {
+        return asItemstack(displayName, new ArrayList<>(), !bypassItemWatchdog);
     }
 
+    public ItemStack asItemstack(Component displayName) {
+        return asItemstack(displayName, new ArrayList<>(), true);
+    }
+
+
     public ItemStack asItemstack(Component displayName, List<Component> lore) {
+        return this.asItemstack(displayName, lore, true);
+    }
+
+    public ItemStack asItemstack(Component displayName, List<Component> lore, boolean tagIllegal) {
         ItemStack icon = new ItemStack(Material.POTATO);
         ItemMeta meta = icon.getItemMeta();
         meta.displayName(displayName.decoration(TextDecoration.ITALIC, false));
         meta.lore(lore.stream().map(comp -> comp.decoration(TextDecoration.ITALIC, false)).toList());
         meta.setCustomModelData(modelId);
-        IllegalItemWatchdog.tagIllegalItem(meta);
+
+        if (tagIllegal) {
+            IllegalItemWatchdog.tagIllegalItem(meta);
+        }
+
         icon.setItemMeta(meta);
         return icon;
     }

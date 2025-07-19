@@ -18,7 +18,12 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.TextUtils;
+import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
 import org.zuma.examplePlugin.domain.item.constants.PersistanceDataKey;
+import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
+import org.zuma.examplePlugin.domain.player.inventory.ReservedSlot;
+
+import java.util.Set;
 
 public class IllegalItemWatchdog implements Listener {
     public enum LegalityType {
@@ -27,7 +32,7 @@ public class IllegalItemWatchdog implements Listener {
 
     public static ItemMeta tagIllegalItem(ItemMeta meta) {
         PersistentDataContainer container = meta.getPersistentDataContainer();
-        NamespacedKey key = new NamespacedKey(RuneQuestPlugin.getInstance(), "illegal_item");
+        NamespacedKey key = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistanceDataKey.ILLEGAL_ITEM.asString());
         container.set(key, PersistentDataType.INTEGER, 1);
         return meta;
     }
@@ -40,7 +45,7 @@ public class IllegalItemWatchdog implements Listener {
     public static LegalityType getItemStackStatus(ItemStack item) {
         ItemMeta meta = item.getItemMeta();
         PersistentDataContainer container = meta.getPersistentDataContainer();
-        NamespacedKey illegalKey = new NamespacedKey(RuneQuestPlugin.getInstance(), "illegal_item");
+        NamespacedKey illegalKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistanceDataKey.ILLEGAL_ITEM.asString());
         NamespacedKey itemIdKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistanceDataKey.ITEM_ID.asString());
 
         boolean isIllegalItem = container.get(illegalKey, PersistentDataType.INTEGER) != null;
@@ -86,8 +91,14 @@ public class IllegalItemWatchdog implements Listener {
         }
 
         PlayerInventory inventory = player.getInventory();
+        Set<Integer> reservedSlots = ReservedSlot.getSlotMap().keySet();
 
         for (int slot = 0; slot < inventory.getSize(); slot++) {
+
+            if (reservedSlots.contains(slot) || slot == AdditionalGearSlotHandler.INFO_SLOT || slot == AdditionalGearSlotHandler.SETTINGS_SLOT) {
+                continue; // ignore reserved slots
+            }
+
             ItemStack item = inventory.getItem(slot);
             if (item != null) {
                 LegalityType status = getItemStackStatus(item);

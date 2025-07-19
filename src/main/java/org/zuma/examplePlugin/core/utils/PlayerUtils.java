@@ -207,7 +207,7 @@ public class PlayerUtils {
         }
 
         if (playerLevel < requiredLevel) {
-            // Below requirement: minimum success oneInNChance (e.g. 30%)
+            // Below requirement: minimum success chance (e.g. 30%)
             return minPercentage;
         }
 
