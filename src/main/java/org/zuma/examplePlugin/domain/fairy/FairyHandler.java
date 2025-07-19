@@ -29,6 +29,7 @@ import org.zuma.examplePlugin.events.fairy.FairyUpgradeEvent;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 
@@ -230,22 +231,38 @@ public class FairyHandler {
                     fedFairies.remove(playerUUID);
                     removeFairyModel(playerUUID);
                 }
-            } else {
-                fedFairies.put(playerUUID, fairy);
 
-                if (!fairyModels.containsKey(playerUUID)) {
-                    Entity newFairyEntity = spawnFairyModel(player.asBukkitPlayer(), fairy);
-
-                    if (newFairyEntity != null) {
-                        fairyModels.put(playerUUID, newFairyEntity);
-                    }
-                }
-
-                if (!player.getActionBar().getFairyStatus().equals(FairyStatus.READY_FOR_UPGRADE)) {
-                    player.getActionBar().setFairyStatus(FairyStatus.ACTIVE);
-                }
+                return;
             }
 
+
+            if (!fairyModels.containsKey(playerUUID)) {
+                Entity newFairyEntity = spawnFairyModel(player.asBukkitPlayer(), fairy);
+
+                if (newFairyEntity != null) {
+                    fairyModels.put(playerUUID, newFairyEntity);
+                }
+            } else {
+
+
+                // Check if active entities model matches player worn fairy model
+                if (!ModelEngineAPI.getModeledEntity(fairyModels.get(playerUUID)).getModels().containsKey(fairy.getModel())) {
+                    clearPlayerFairyInstances(playerUUID);
+
+                    Entity newFairyEntity = spawnFairyModel(player.asBukkitPlayer(), fairy);
+                    fairyModels.put(playerUUID, newFairyEntity);
+                    return;
+                }
+
+
+            }
+
+
+            if (!player.getActionBar().getFairyStatus().equals(FairyStatus.READY_FOR_UPGRADE)) {
+                player.getActionBar().setFairyStatus(FairyStatus.ACTIVE);
+            }
+
+            fedFairies.put(playerUUID, fairy);
             wornFairies.put(playerUUID, fairy);
 
         });
