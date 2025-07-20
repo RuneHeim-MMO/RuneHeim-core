@@ -1126,10 +1126,72 @@ public class ItemRepository {
                                         List.of(new SkillRequirement(SkillType.RANGED, 50))
                                 ),
                                 1)
+                ),
+
+                // Crossbows
+
+                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON, ItemId.IRON_CROSSBOW.asInt(), Material.CROSSBOW, ItemRarity.UNCOMMON, "Iron Crossbow", List.of("A sturdy iron crossbow."), null, null),
+                        toVersionedJson(
+                                new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
+                                        List.of(
+                                                new Modifier(ModifierType.RANGED_STRENGTH, 15),
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 18)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 20))
+                                ),
+                                1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON, ItemId.STEEL_CROSSBOW.asInt(), Material.CROSSBOW, ItemRarity.UNCOMMON, "Steel Crossbow", List.of("A reliable steel crossbow."), null, null),
+                        toVersionedJson(
+                                new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
+                                        List.of(
+                                                new Modifier(ModifierType.RANGED_STRENGTH, 20),
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 22)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 30))
+                                ),
+                                1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON, ItemId.MITHRIL_CROSSBOW.asInt(), Material.CROSSBOW, ItemRarity.RARE, "Mithril Crossbow", List.of("A lightweight mithril crossbow with enhanced power."), null, null),
+                        toVersionedJson(
+                                new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
+                                        List.of(
+                                                new Modifier(ModifierType.RANGED_STRENGTH, 28),
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 30)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 40))
+                                ),
+                                1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON, ItemId.ADAMANT_CROSSBOW.asInt(), Material.CROSSBOW, ItemRarity.RARE, "Adamant Crossbow", List.of("A powerful adamant crossbow with great accuracy."), null, null),
+                        toVersionedJson(
+                                new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
+                                        List.of(
+                                                new Modifier(ModifierType.RANGED_STRENGTH, 35),
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 38)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 50))
+                                ),
+                                1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON, ItemId.RUNITE_CROSSBOW.asInt(), Material.CROSSBOW, ItemRarity.LEGENDARY, "Runite Crossbow", List.of("The ultimate runite crossbow with unmatched precision."), null, null),
+                        toVersionedJson(
+                                new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
+                                        List.of(
+                                                new Modifier(ModifierType.RANGED_STRENGTH, 42),
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 45)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 60))
+                                ),
+                                1)
                 )
 
 
-        );
+                );
     }
 
     public void setCache(List<AbstractItemMeta> items) {
