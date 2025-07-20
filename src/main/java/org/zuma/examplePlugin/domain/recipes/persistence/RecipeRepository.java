@@ -161,6 +161,21 @@ public class RecipeRepository {
                 ), null),
 
                 // Food
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.COOKED_CHICKEN.getId(), RecipeType.COOKING_RECIPE, 2200,
+                        List.of(new SkillRequirement(SkillType.COOKING, 1)),
+                        List.of(new IngredientRecord(ItemId.RAW_CHICKEN, 1, true, true)),
+                        new ItemRecord(ItemId.COOKED_CHICKEN, 1),
+                        new ItemRecord(ItemId.BURNT_FOOD, 1),
+                        List.of(new SkillXpRecord(SkillType.COOKING, 50)), null
+                ), null),
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.COOKED_MEAT.getId(), RecipeType.COOKING_RECIPE, 2200,
+                        List.of(new SkillRequirement(SkillType.COOKING, 1)),
+                        List.of(new IngredientRecord(ItemId.RAW_MEAT, 1, true, true)),
+                        new ItemRecord(ItemId.COOKED_MEAT, 1),
+                        new ItemRecord(ItemId.BURNT_FOOD, 1),
+                        List.of(new SkillXpRecord(SkillType.COOKING, 50)), null
+                ), null),
+
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.COOKED_HERRING.getId(), RecipeType.COOKING_RECIPE, 2200,
                         List.of(new SkillRequirement(SkillType.COOKING, 1)),
                         List.of(new IngredientRecord(ItemId.RAW_HERRING, 1, true, true)),

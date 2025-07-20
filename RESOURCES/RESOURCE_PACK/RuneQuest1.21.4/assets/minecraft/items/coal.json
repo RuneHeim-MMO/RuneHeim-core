@@ -281,6 +281,20 @@
                 }
             },
             {
+                "threshold": 1319,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/food/raw_chicken"
+                }
+            },
+            {
+                "threshold": 1320,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/food/raw_meat"
+                }
+            },
+            {
                 "threshold": 1500,
                 "model": {
                     "type": "model",

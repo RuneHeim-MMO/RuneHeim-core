@@ -88,6 +88,20 @@
                 "threshold": 1211,
                 "model": {
                     "type": "model",
+                    "model": "item/custom/food/cooked_chicken"
+                }
+            },
+            {
+                "threshold": 1212,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/food/cooked_meat"
+                }
+            },
+            {
+                "threshold": 1213,
+                "model": {
+                    "type": "model",
                     "model": "item/cooked_salmon"
                 }
             }

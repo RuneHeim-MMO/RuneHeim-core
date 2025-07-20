@@ -5,10 +5,9 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipes.base.AbstractRecipe;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
 import org.zuma.examplePlugin.domain.recipes.meta.AbstractRecipeMeta;
-import org.zuma.examplePlugin.domain.recipes.meta.ConcreteRecipeMeta;
 
 public class InventoryRecipe extends AbstractRecipe {
-    public InventoryRecipe(ItemStack displayItemstack, ConcreteRecipeMeta meta) {
+    public InventoryRecipe(ItemStack displayItemstack, AbstractRecipeMeta meta) {
         super(displayItemstack, new AbstractRecipeMeta(meta.id(), RecipeType.INVENTORY_RECIPE, meta.craftTimeMs(), meta.requirements(), meta.ingredients(), meta.successResult(), meta.failResult(), meta.successXp(), meta.cost()));
     }
 

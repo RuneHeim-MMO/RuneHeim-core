@@ -190,6 +190,8 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ADAMANTITE_BAR.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Adamantite Bar", List.of("Durable adamantite bar, for crafting superior items."), null, null), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RUNITE_BAR.asInt(), Material.COAL, ItemRarity.RARE, "Runite Bar", List.of("Runite bar pulsing with arcane energy, highly prized."), null, null), null),
 
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_CHICKEN.asInt(), Material.COAL, ItemRarity.COMMON, "Raw Chicken", List.of("A slab of uncooked poultry, still fresh."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_MEAT.asInt(), Material.COAL, ItemRarity.COMMON, "Raw Meat", List.of("Uncooked cut of meat, ideal for hearty meals."), null, null), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_HERRING.asInt(), Material.COAL, ItemRarity.COMMON, "Raw Herring", List.of("A slim, slippery river fish."), null, null), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_MINNOW.asInt(), Material.COAL, ItemRarity.COMMON, "Raw Minnow", List.of("A tiny fish, barely worth a bite."), null, null), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_TROUT.asInt(), Material.COAL, ItemRarity.COMMON, "Raw Trout", List.of("Caught fresh from the stream."), null, null), null),
@@ -325,6 +327,12 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.BURNT_FOOD.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Charred Remains", List.of("All that's left after fire claims its meal."), null, null), null),
 
                 // Food
+                new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_CHICKEN.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Cooked Chicken",
+                        List.of("Tender meat roasted to perfection."), null, null), toVersionedJson(new FoodTypeMeta(3), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_MEAT.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Cooked Meat",
+                        List.of("Cooked to a golden brown, still juicy inside."), null, null), toVersionedJson(new FoodTypeMeta(3), 1)),
+
                 new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_HERRING.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Cooked Herring",
                         List.of("Lightly roasted river fish, a quick meal."), null, null), toVersionedJson(new FoodTypeMeta(3), 1)),
 

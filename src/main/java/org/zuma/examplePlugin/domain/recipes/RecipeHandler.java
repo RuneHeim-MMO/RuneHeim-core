@@ -149,9 +149,11 @@ public class RecipeHandler {
                         return;
                     }
 
-                    player.setPouchCoins(player.getPouchCoins() - totalCost);
-                    HudService.showCoinsChangeBubble(player, -totalCost);
-
+                    if (totalCost > 0) {
+                        player.setPouchCoins(player.getPouchCoins() - totalCost);
+                        HudService.showCoinsChangeBubble(player, -totalCost);
+                    }
+                    
                     if (successCrafts > 0) {
                         // Can be null for recipes that dont produce items (e.g. campfires)
                         if (recipe.getSuccessResult() != null) {

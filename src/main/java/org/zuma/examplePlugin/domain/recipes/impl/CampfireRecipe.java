@@ -13,7 +13,6 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipes.base.AbstractRecipe;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
 import org.zuma.examplePlugin.domain.recipes.meta.AbstractRecipeMeta;
-import org.zuma.examplePlugin.domain.recipes.meta.ConcreteRecipeMeta;
 import org.zuma.examplePlugin.domain.recipes.meta.v1.CampfireRecipeMeta;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -34,7 +33,7 @@ public class CampfireRecipe extends AbstractRecipe {
 
     private final HashMap<UUID, CampfireBlock> inProgressBlocks = new HashMap<>();
 
-    public CampfireRecipe(ConcreteRecipeMeta meta, CampfireRecipeMeta campfireRecipeMeta) {
+    public CampfireRecipe(AbstractRecipeMeta meta, CampfireRecipeMeta campfireRecipeMeta) {
         super(new ItemStack(Material.OAK_LOG), new AbstractRecipeMeta(meta.id(), RecipeType.CAMPFIRE_RECIPE, meta.craftTimeMs(), meta.requirements(), meta.ingredients(), null, null, meta.successXp(), meta.cost()));
 
         this.burnTime = campfireRecipeMeta.burnTime();
@@ -60,8 +59,7 @@ public class CampfireRecipe extends AbstractRecipe {
             return true;
         }
 
-        int successChance = PlayerUtils.getCraftSuccessChance(player, mainRequirement, MINIMUM_SUCCESS_CHANCE);
-        return ThreadLocalRandom.current().nextInt(0, 101) < successChance;
+        return ThreadLocalRandom.current().nextInt(0, 101) < getChanceOfSuccess(player);
 
     }
 

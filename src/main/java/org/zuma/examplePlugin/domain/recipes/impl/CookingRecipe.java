@@ -6,17 +6,16 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipes.base.AbstractRecipe;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
 import org.zuma.examplePlugin.domain.recipes.meta.AbstractRecipeMeta;
-import org.zuma.examplePlugin.domain.recipes.meta.ConcreteRecipeMeta;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 public class CookingRecipe extends AbstractRecipe {
+    private final static int MINIMUM_SUCCESS_CHANCE = 50;
     private final SkillRequirement mainRequirement;
-    private final int MINIMUM_SUCCESS_CHANCE = 30;
 
-    public CookingRecipe(ItemStack displayItemstack, ConcreteRecipeMeta meta) {
+    public CookingRecipe(ItemStack displayItemstack, AbstractRecipeMeta meta) {
         super(displayItemstack, new AbstractRecipeMeta(meta.id(), RecipeType.COOKING_RECIPE, meta.craftTimeMs(), meta.requirements(), meta.ingredients(), meta.successResult(), meta.failResult(), meta.successXp(), meta.cost()));
 
         mainRequirement = super.getRequirements().stream()
@@ -27,12 +26,7 @@ public class CookingRecipe extends AbstractRecipe {
 
     @Override
     public boolean isCraftSuccessful(RunePlayer player) {
-        if (mainRequirement == null) {
-            return true;
-        }
-
-        int successChance = PlayerUtils.getCraftSuccessChance(player, mainRequirement, MINIMUM_SUCCESS_CHANCE);
-        return ThreadLocalRandom.current().nextInt(0, 101) < successChance;
+        return ThreadLocalRandom.current().nextInt(0, 101) < getChanceOfSuccess(player);
 
     }
 
