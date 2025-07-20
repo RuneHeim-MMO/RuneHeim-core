@@ -9,6 +9,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
@@ -32,7 +33,6 @@ import javax.annotation.Nullable;
 import java.util.function.BiConsumer;
 
 public class ItemListener implements Listener {
-    private final CooldownHandler weaponSpeedHandler;
     private final RunePlayerManager playerHandler;
     private final ItemHandler itemHandler;
     private final ItemRegistry itemRegistry;
@@ -43,8 +43,6 @@ public class ItemListener implements Listener {
         this.itemHandler = handler;
         this.playerHandler = playerHandler;
         this.itemStateManager = itemStateManager;
-        this.weaponSpeedHandler = new CooldownHandler();
-
         itemRegistry = handler.getRegistry();
     }
 
@@ -65,7 +63,7 @@ public class ItemListener implements Listener {
         event.setCancelled(true);
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = false) // Some fucking shithead is cancelling this SOMEWHERE for no reason...
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getHand() != EquipmentSlot.HAND) {
             return;
@@ -94,7 +92,7 @@ public class ItemListener implements Listener {
 
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         withItemAndPlayer(event.getPlayer(), PlayerUtils.getItemStackInHand(event.getPlayer()), (item, player) -> {
             if (!player.meetsRequirements(item)) {
@@ -107,21 +105,21 @@ public class ItemListener implements Listener {
 
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerItemDrop(PlayerDropItemEvent event) {
         withItemAndPlayer(event.getPlayer(), event.getItemDrop().getItemStack(), (item, player) -> {
             itemHandler.onPlayerItemDrop(event, item, player, itemStateManager);
         });
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerTakeItemInHand(PlayerItemHeldEvent event) {
         withItemAndPlayer(event.getPlayer(), event.getPlayer().getInventory().getItem(event.getNewSlot()), (item, player) -> {
             itemHandler.onPlayerTakeItemInHand(event, item, player, itemStateManager);
         });
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerConsume(PlayerItemConsumeEvent event) {
         withItemAndPlayer(event.getPlayer(), event.getItem(), (item, player) -> {
             itemHandler.onPlayerConsumeItem(event, item, player, itemStateManager);
@@ -129,19 +127,11 @@ public class ItemListener implements Listener {
 
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerDamageEntity(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player damager)) {
             return;
         }
-
-        if (weaponSpeedHandler.isCooledDown(damager)) {
-            event.setCancelled(true);
-            return;
-        }
-
-        @Nullable WeaponSpeed speed = ItemUtils.getWeaponSpeed(PlayerUtils.getItemStackInHand(damager));
-        weaponSpeedHandler.startCooldown(damager, speed == null ? WeaponSpeed.NORMAL.getDelayMillis() : speed.getDelayMillis());
 
         withItemAndPlayer(damager, PlayerUtils.getItemStackInHand(damager), (item, player) -> {
             if (!player.meetsRequirements(item)) {
@@ -154,12 +144,12 @@ public class ItemListener implements Listener {
         });
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerWearItem(PlayerArmorEquipEvent event) {
         itemHandler.onPlayerWearItem(event, event.getPlayer(), itemStateManager);
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerPickupItem(PlayerAttemptPickupItemEvent event) {
         withItemAndPlayer(event.getPlayer(), event.getItem().getItemStack(), (item, player) -> {
             if (event.isCancelled()) return;
@@ -168,7 +158,7 @@ public class ItemListener implements Listener {
     }
 
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onBaseBukkitWearArmorClick(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player whoClicked)) {
             return;
@@ -205,7 +195,7 @@ public class ItemListener implements Listener {
         });
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onBaseBukkitWearShiftArmorClick(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player whoClicked)) {
             return;

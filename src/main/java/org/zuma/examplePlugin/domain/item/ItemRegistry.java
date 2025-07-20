@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
-import org.zuma.examplePlugin.domain.item.constants.PersistanceDataKey;
+import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class ItemRegistry {
 
         if (meta != null) {
             PersistentDataContainer container = meta.getPersistentDataContainer();
-            NamespacedKey key = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistanceDataKey.ITEM_ID.asString());
+            NamespacedKey key = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.ITEM_ID.asString());
             Integer value = container.get(key, PersistentDataType.INTEGER);
 
             return value != null ? getItem(value) : null;

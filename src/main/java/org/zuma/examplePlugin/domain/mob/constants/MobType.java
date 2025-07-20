@@ -1,7 +1,6 @@
 package org.zuma.examplePlugin.domain.mob.constants;
 
 public enum MobType {
-    GENERIC_SHOPKEEPER("generic_shopkeeper"),
     AGGRESSIVE_BANDIT_1("aggressive_bandit_1"),
     AGGRESSIVE_BANDIT_2("aggressive_bandit_2"),
 
@@ -11,11 +10,14 @@ public enum MobType {
     GOBLIN_LOW_LVL_4("goblin_low_lvl_4"),
     GOBLIN_LOW_LVL_5("goblin_low_lvl_5"),
 
+
+
+
+    GENERIC_SHOPKEEPER("generic_shopkeeper"),
     FUSION_MASTER("fusion_master"),
-    SHEEP("sheep"),
+    SHEEP("sheep"), // Can shear wool off these
 
-
-    // City guards
+    // City guards (disguised iron golems to kill aggressive mobs near and inside of the cities)
     CITY_GUARD_CLOSE_DISTANCE("city_guard_close_distance"),
     CITY_GUARD_MEDIUM_DISTANCE("city_guard_medium_distance"),
     CITY_GUARD_LONG_DISTANCE("city_guard_long_distance"),

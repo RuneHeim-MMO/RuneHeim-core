@@ -8,18 +8,15 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
-import org.zuma.examplePlugin.domain.item.constants.PersistanceDataKey;
+import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
-import java.util.UUID;
-
 public class CoinsItem extends MiscItem {
-    private static final NamespacedKey COINS_AMOUNT_KEY = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistanceDataKey.COINS_AMOUNT.asString());
+    private static final NamespacedKey COINS_AMOUNT_KEY = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.COINS_AMOUNT.asString());
 
     public CoinsItem(AbstractItemMeta meta) {
         super(meta);

@@ -7,9 +7,9 @@ public enum ItemType {
     QUEST(3),
     POTION(4),
     FOOD(5),
-    WEAPON(6),
+    MELEE_WEAPON(6),
     TOOL(7),
-    WEAPON_WITH_GEM_SOCKETS(8),
+    MELEE_WEAPON_WITH_GEM_SOCKETS(8),
     EQUIPMENT_WITH_GEM_SOCKETS(9),
     GEM(10),
     MATERIAL_SCROLL(11),
@@ -17,7 +17,8 @@ public enum ItemType {
     FAIRY_FRUIT(13),
     FAIRY(14),
     EMPTY_CONTAINER(15),
-    COINS(16);
+    COINS(16),
+    RANGED_WEAPON(17);
 
     private final int key;
 

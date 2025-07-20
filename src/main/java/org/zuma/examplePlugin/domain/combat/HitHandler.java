@@ -51,7 +51,6 @@ public class HitHandler {
     public void handleMeleeHit(CombatEntity attacker, CombatEntity defender) {
         AttackType type = AttackType.MELEE;
         Hit hit = HitCalculator.getNewHit(attacker, defender, type);
-        boolean isCriticalHit = getIsCriticalHit(defender, hit);
 
         RuneEntityDamageEntityEvent event = new RuneEntityDamageEntityEvent(attacker, defender, hit, type);
         Bukkit.getServer().getPluginManager().callEvent(event);
@@ -69,6 +68,59 @@ public class HitHandler {
 
         if (defender.getEntity() instanceof Player p) {
             p.sendMessage("Attackers max hit: " + HitCalculator.getMaxHit(attacker, AttackType.MELEE));
+        }
+
+
+        handleHitSound(defender, type, hit);
+        HudService.showDamageBubble(defender, hit, type);
+    }
+
+    public void handleRangedHit(CombatEntity attacker, CombatEntity defender) {
+        AttackType type = AttackType.RANGED;
+        Hit hit = HitCalculator.getNewHit(attacker, defender, type);
+
+        RuneEntityDamageEntityEvent event = new RuneEntityDamageEntityEvent(attacker, defender, hit, type);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
+        if (event.isCancelled()) {
+            return;
+        }
+
+
+        defender.takeHit(hit);
+
+        if (attacker.getEntity() instanceof Player p) {
+            p.sendMessage("Your max hit: " + HitCalculator.getMaxHit(attacker, type));
+        }
+
+        if (defender.getEntity() instanceof Player p) {
+            p.sendMessage("Attackers max hit: " + HitCalculator.getMaxHit(attacker, type));
+        }
+
+
+        handleHitSound(defender, type, hit);
+        HudService.showDamageBubble(defender, hit, type);
+    }
+
+    public void handleMagicHit(CombatEntity attacker, CombatEntity defender) {
+        AttackType type = AttackType.MAGIC;
+        Hit hit = HitCalculator.getNewHit(attacker, defender, type);
+
+        RuneEntityDamageEntityEvent event = new RuneEntityDamageEntityEvent(attacker, defender, hit, type);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
+        if (event.isCancelled()) {
+            return;
+        }
+
+        defender.takeHit(hit);
+
+        if (attacker.getEntity() instanceof Player p) {
+            p.sendMessage("Your max hit: " + HitCalculator.getMaxHit(attacker, type));
+        }
+
+        if (defender.getEntity() instanceof Player p) {
+            p.sendMessage("Attackers max hit: " + HitCalculator.getMaxHit(attacker, type));
         }
 
 

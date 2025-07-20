@@ -21,4 +21,5 @@ public interface CombatEntity {
     int getMaxHealth();
 
     Entity getEntity();
+
 }

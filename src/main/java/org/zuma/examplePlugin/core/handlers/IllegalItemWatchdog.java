@@ -18,8 +18,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.TextUtils;
-import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
-import org.zuma.examplePlugin.domain.item.constants.PersistanceDataKey;
+import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 import org.zuma.examplePlugin.domain.player.inventory.ReservedSlot;
 
@@ -32,7 +31,7 @@ public class IllegalItemWatchdog implements Listener {
 
     public static ItemMeta tagIllegalItem(ItemMeta meta) {
         PersistentDataContainer container = meta.getPersistentDataContainer();
-        NamespacedKey key = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistanceDataKey.ILLEGAL_ITEM.asString());
+        NamespacedKey key = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.ILLEGAL_ITEM.asString());
         container.set(key, PersistentDataType.INTEGER, 1);
         return meta;
     }
@@ -45,8 +44,8 @@ public class IllegalItemWatchdog implements Listener {
     public static LegalityType getItemStackStatus(ItemStack item) {
         ItemMeta meta = item.getItemMeta();
         PersistentDataContainer container = meta.getPersistentDataContainer();
-        NamespacedKey illegalKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistanceDataKey.ILLEGAL_ITEM.asString());
-        NamespacedKey itemIdKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistanceDataKey.ITEM_ID.asString());
+        NamespacedKey illegalKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.ILLEGAL_ITEM.asString());
+        NamespacedKey itemIdKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.ITEM_ID.asString());
 
         boolean isIllegalItem = container.get(illegalKey, PersistentDataType.INTEGER) != null;
         if (isIllegalItem) return LegalityType.ILLEGAL;

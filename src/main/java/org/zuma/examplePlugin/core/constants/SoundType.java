@@ -30,6 +30,8 @@ public enum SoundType {
     HIT_MAGIC_MISS("ENTITY_BLAZE_SHOOT", false, 0.5f, 0.8f),
     HIT_RANGED_MISS("ENTITY_SNOWBALL_THROW", false, 0.5f, 1.1f),
 
+    BOW_SHOT_TOO_EARLY("BLOCK_CHEST_LOCKED", false, 0.6f, 2.5f),
+
     INVENTORY_FULL("ENTITY_ITEM_PICKUP", false, 1.0f, 0.8f),
 
     SMITHING_START("BLOCK_ANVIL_PLACE", false, 0.1f, 0.5f),
@@ -373,8 +375,11 @@ public enum SoundType {
         if (player != null) {
             if (sound instanceof String customKey) {
                 player.playSound(location, customKey, category, volume, pitch);
+
+
             } else if (sound instanceof Sound builtIn) {
                 player.playSound(location, builtIn, volume, pitch);
+
             }
         } else {
             if (sound instanceof String customKey) {

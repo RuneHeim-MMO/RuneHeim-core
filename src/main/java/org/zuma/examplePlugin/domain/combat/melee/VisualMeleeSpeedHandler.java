@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.combat;
+package org.zuma.examplePlugin.domain.combat.melee;
 
 import org.bukkit.Bukkit;
 import org.bukkit.potion.PotionEffect;
@@ -9,7 +9,7 @@ import org.zuma.examplePlugin.core.utils.ItemUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.constants.WeaponSpeed;
 
-public class VisualWeaponSpeedHandler {
+public class VisualMeleeSpeedHandler {
     private final static int TICK_DURATION = 40; // Every 2 seconds
     private BukkitTask loop;
 

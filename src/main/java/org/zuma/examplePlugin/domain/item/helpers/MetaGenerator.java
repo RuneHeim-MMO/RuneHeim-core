@@ -9,8 +9,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -18,13 +16,12 @@ import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
-import org.zuma.examplePlugin.domain.item.WeaponType;
+import org.zuma.examplePlugin.domain.item.Weapon;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.base.SocketedEquipableItemType;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
-import org.zuma.examplePlugin.domain.item.constants.PersistanceDataKey;
-import org.zuma.examplePlugin.domain.item.constants.WeaponSpeed;
+import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.item.helpers.lore.*;
 import org.zuma.examplePlugin.domain.item.impl.EmptyContainer;
 import org.zuma.examplePlugin.domain.item.impl.consumable.Food;
@@ -37,10 +34,6 @@ import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import org.bukkit.attribute.AttributeModifier;
-
-import javax.annotation.Nullable;
 
 public class MetaGenerator {
     private final AbstractItemType itemType;
@@ -96,7 +89,7 @@ public class MetaGenerator {
 
         lore.addAll(itemType.descriptionLore.stream().map(str -> Component.text(str).color(Color.ITEM_LORE_DESCRIPTION.asColor())).toList());
 
-        if (itemType instanceof WeaponType weapon) {
+        if (itemType instanceof Weapon weapon) {
             lore.addAll(new WeaponLore(weapon).getLore());
         }
 
@@ -183,11 +176,11 @@ public class MetaGenerator {
     public void setItemStackProps(ItemStack item) {
         ItemMeta meta = item.getItemMeta();
 
-        NamespacedKey IdKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistanceDataKey.ITEM_ID.asString());
+        NamespacedKey IdKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.ITEM_ID.asString());
         meta.getPersistentDataContainer().set(IdKey, PersistentDataType.INTEGER, itemType.id);
 
         if (itemType.stateType != null) {
-            NamespacedKey stateUuid = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistanceDataKey.STATE_UUID.asString());
+            NamespacedKey stateUuid = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.STATE_UUID.asString());
             meta.getPersistentDataContainer().set(stateUuid, PersistentDataType.STRING, UUID.randomUUID().toString());
         }
 

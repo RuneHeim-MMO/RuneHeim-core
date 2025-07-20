@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
-import org.zuma.examplePlugin.domain.item.WeaponType;
+import org.zuma.examplePlugin.domain.item.Weapon;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.constants.WeaponSpeed;
 
@@ -105,7 +105,7 @@ public class ItemUtils {
 
         AbstractItemType type = RuneQuestPlugin.getItemRegistry().getItem(item);
 
-        if (!(type instanceof WeaponType weapon)) {
+        if (!(type instanceof Weapon weapon)) {
             return null;
         }
 

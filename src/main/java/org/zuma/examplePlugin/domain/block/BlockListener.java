@@ -22,33 +22,22 @@ import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class BlockListener implements Listener {
-    private static final long INTERACTION_THROTTLE_INTERVAL = 150L;
-    private final CooldownHandler interactionSpeedHandler;
-
     private final BlockManager manager;
     private final ItemRegistry itemRegistry;
 
     public BlockListener(BlockManager manager, ItemRegistry itemRegistry) {
-        this.interactionSpeedHandler = new CooldownHandler();
         this.manager = manager;
         this.itemRegistry = itemRegistry;
 
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.useInteractedBlock() == Event.Result.DENY ||
                 event.useItemInHand() == Event.Result.DENY) {
 
             return;
         }
-
-        if (interactionSpeedHandler.isCooledDown(event.getPlayer())) {
-            event.setCancelled(true);
-            return;
-        }
-
-        interactionSpeedHandler.startCooldown(event.getPlayer(), INTERACTION_THROTTLE_INTERVAL);
 
 
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_AIR) {
@@ -71,7 +60,7 @@ public class BlockListener implements Listener {
 
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerBlockBreakProgressUpdateEvent(BlockBreakProgressUpdateEvent event) {
         if (!(event.getEntity() instanceof Player player)) {
             return;
@@ -89,7 +78,7 @@ public class BlockListener implements Listener {
 
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerBlockBreakEvent(BlockBreakEvent event) {
         if (event.isCancelled()) {
             return;
@@ -108,7 +97,7 @@ public class BlockListener implements Listener {
     }
 
     // On inventory unmount, clear all references to inventory uuids in inv opener blocks
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onInventoryClose(InventoryCloseEvent event) {
         InventoryHolder holder = event.getInventory().getHolder();
 

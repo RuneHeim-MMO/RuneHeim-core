@@ -14,7 +14,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
-import org.zuma.examplePlugin.domain.item.constants.PersistanceDataKey;
+import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 
@@ -37,7 +37,7 @@ public class PlayerUtils {
 
     public static boolean hasItems(RunePlayer player, List<ItemRecord> requiredItems) {
         Map<Integer, Integer> itemCounts = new HashMap<>();
-        NamespacedKey itemIdKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistanceDataKey.ITEM_ID.asString());
+        NamespacedKey itemIdKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.ITEM_ID.asString());
 
         // Count all item IDs in the player's main inventory (excluding armor/offhand)
         for (ItemStack stack : player.asBukkitPlayer().getInventory().getStorageContents()) {
@@ -91,7 +91,7 @@ public class PlayerUtils {
             return false;
         }
 
-        NamespacedKey itemIdKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistanceDataKey.ITEM_ID.asString());
+        NamespacedKey itemIdKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.ITEM_ID.asString());
         PlayerInventory inventory = player.asBukkitPlayer().getInventory();
         ItemStack[] contents = inventory.getStorageContents();
         ItemStack cursor = player.asBukkitPlayer().getItemOnCursor();

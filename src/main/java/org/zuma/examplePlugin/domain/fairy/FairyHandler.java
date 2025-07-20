@@ -29,7 +29,6 @@ import org.zuma.examplePlugin.events.fairy.FairyUpgradeEvent;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 

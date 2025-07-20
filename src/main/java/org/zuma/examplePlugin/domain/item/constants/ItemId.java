@@ -173,7 +173,20 @@ public enum ItemId {
     FAIRY_RANGE_UPGRADE(2204),
 
     WOOL(2300),
-    BONES(2301);
+    BONES(2301),
+
+    SHORT_BOW(2400),
+    BIRCH_SHORT_BOW(2401),
+    MAPLE_SHORT_BOW(2402),
+    YEW_SHORT_BOW(2403),
+    MAGIC_SHORT_BOW(2404),
+
+    LONG_BOW(2405),
+    BIRCH_LONG_BOW(2406),
+    MAPLE_LONG_BOW(2407),
+    YEW_LONG_BOW(2408),
+    MAGIC_LONG_BOW(2409);
+
 
     private final int id;
 

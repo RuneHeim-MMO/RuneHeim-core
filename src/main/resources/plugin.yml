@@ -10,3 +10,5 @@ depend:
   - DecentHolograms
   - LibsDisguises
   - BlueMap
+  - ModelEngine
+  - WorldEdit

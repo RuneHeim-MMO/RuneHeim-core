@@ -17,15 +17,20 @@ import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
+import org.zuma.examplePlugin.domain.combat.ranged.BowVelocityHandler;
 import org.zuma.examplePlugin.domain.combat.HitHandler;
 import org.zuma.examplePlugin.domain.combat.HitListener;
-import org.zuma.examplePlugin.domain.combat.VisualWeaponSpeedHandler;
+import org.zuma.examplePlugin.domain.combat.melee.VisualMeleeSpeedHandler;
 import org.zuma.examplePlugin.domain.commands.PouchCommand;
 import org.zuma.examplePlugin.domain.commands.SkillsCommand;
+import org.zuma.examplePlugin.domain.combat.ranged.BowSpeedHandler;
+import org.zuma.examplePlugin.domain.cooldown.InteractionSpeedHandler;
+import org.zuma.examplePlugin.domain.combat.melee.WeaponSpeedHandler;
 import org.zuma.examplePlugin.domain.droptable.DropTableHandler;
 import org.zuma.examplePlugin.domain.droptable.persistence.DropTableRepository;
 import org.zuma.examplePlugin.domain.fairy.FairyHandler;
 import org.zuma.examplePlugin.domain.fairy.FairyListener;
+import org.zuma.examplePlugin.domain.combat.ranged.BowDrawHelper;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
 import org.zuma.examplePlugin.domain.gui.GUIListener;
 import org.zuma.examplePlugin.domain.gui.GUIRegistry;
@@ -78,7 +83,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private static FairyHandler fairyHandler;
     private static ShopRegistry shopRegistry;
     private static DropTableHandler dropTableHandler;
-    private static VisualWeaponSpeedHandler visualWeaponSpeedHandler;
+    private static VisualMeleeSpeedHandler visualMeleeSpeedHandler;
     private static SpawnZoneHandler spawnZoneHandler;
 
     private MobHandler mobHandler;
@@ -98,12 +103,29 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new DurabilityDisabler(), pluginInstance);
         getServer().getPluginManager().registerEvents(new HungerLocker(), pluginInstance);
 
+        InteractionSpeedHandler interactionSpeedHandler = new InteractionSpeedHandler();
+        WeaponSpeedHandler weaponSpeedHandler = new WeaponSpeedHandler();
+        BowSpeedHandler bowSpeedHandler = new BowSpeedHandler();
+        BowVelocityHandler bowVelocityHandler = new BowVelocityHandler();
+        BowDrawHelper bowDrawHelper = new BowDrawHelper();
+
+        visualMeleeSpeedHandler = new VisualMeleeSpeedHandler();
+        visualMeleeSpeedHandler.startEffectsLoop();
+
+        getServer().getPluginManager().registerEvents(interactionSpeedHandler, pluginInstance);
+        getServer().getPluginManager().registerEvents(weaponSpeedHandler, pluginInstance);
+        getServer().getPluginManager().registerEvents(bowSpeedHandler, pluginInstance);
+        getServer().getPluginManager().registerEvents(bowVelocityHandler, pluginInstance);
+        getServer().getPluginManager().registerEvents(bowDrawHelper, pluginInstance);
+
+
         ConfigManager configManager = new ConfigManager();
         configManager.initializeFolders();
 
         runePlayerManager = new RunePlayerManager();
         RunePlayerListener runePlayerListener = new RunePlayerListener(runePlayerManager);
         getServer().getPluginManager().registerEvents(runePlayerListener, pluginInstance);
+
 
         itemRegistry = new ItemRegistry();
         ItemRepository itemRepository = new ItemRepository();
@@ -171,8 +193,6 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(fairyListener, pluginInstance);
         fairyHandler.startLoop();
 
-        visualWeaponSpeedHandler = new VisualWeaponSpeedHandler();
-        visualWeaponSpeedHandler.startEffectsLoop();
 
         spawnZoneHandler = new SpawnZoneHandler(new SpawnZoneRepository());
         SpawnZoneListener spawnZoneListener = new SpawnZoneListener(spawnZoneHandler);
@@ -258,8 +278,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
             fairyHandler.stopLoop();
         }
 
-        if (visualWeaponSpeedHandler != null) {
-            visualWeaponSpeedHandler.onDisable();
+        if (visualMeleeSpeedHandler != null) {
+            visualMeleeSpeedHandler.onDisable();
         }
 
         if (spawnZoneHandler != null) {

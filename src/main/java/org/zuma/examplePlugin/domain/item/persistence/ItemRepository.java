@@ -3,7 +3,6 @@ package org.zuma.examplePlugin.domain.item.persistence;
 import com.google.gson.Gson;
 import org.bukkit.Color;
 import org.bukkit.Material;
-import org.bukkit.Particle;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.heads.HeadTexture;
 import org.zuma.examplePlugin.domain.item.constants.*;
@@ -134,7 +133,7 @@ public class ItemRepository {
         return List.of(
 
                 // ADMIN STICK! REMOVE BEFORE ALPHA!
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.ADMIN_OP_STICK.asInt(), Material.STICK, ItemRarity.COMMON, "Admin Stick", List.of("Bronze dagger, quick and light."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.ADMIN_OP_STICK.asInt(), Material.STICK, ItemRarity.COMMON, "Admin Stick", List.of("Bronze dagger, quick and light."), null, null),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.VERY_FAST, List.of(new SkillModifier(SkillType.HITPOINTS, 50)),
                                         List.of(
@@ -795,7 +794,7 @@ public class ItemRepository {
 
 
                 // Weapons - Swords
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.BRONZE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Bronze Sword", List.of("Bronze sword, a beginner’s trusty blade."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.BRONZE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Bronze Sword", List.of("Bronze sword, a beginner’s trusty blade."), null, null),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
@@ -806,7 +805,7 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.IRON_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Iron Sword", List.of("Iron sword, reliable for close combat."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.IRON_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Iron Sword", List.of("Iron sword, reliable for close combat."), null, null),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
@@ -817,7 +816,7 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.STEEL_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Steel Sword", List.of("Steel sword, sharp and durable."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.STEEL_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Steel Sword", List.of("Steel sword, sharp and durable."), null, null),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
@@ -828,7 +827,7 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.MITHRIL_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Mithril Sword", List.of("Mithril sword, light and deadly."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.MITHRIL_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Mithril Sword", List.of("Mithril sword, light and deadly."), null, null),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
@@ -839,7 +838,7 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON_WITH_GEM_SOCKETS, ItemId.ADAMANTITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Sword", List.of("Adamantite sword, powerful and heavy."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON_WITH_GEM_SOCKETS, ItemId.ADAMANTITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Sword", List.of("Adamantite sword, powerful and heavy."), null, null),
                         toVersionedJson(
                                 new SocketedWeaponEquipableMeta(new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
@@ -850,7 +849,7 @@ public class ItemRepository {
                                 ), null, 2)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON_WITH_GEM_SOCKETS, ItemId.RUNITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Sword", List.of("Runite sword crackling with magical energy."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON_WITH_GEM_SOCKETS, ItemId.RUNITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Sword", List.of("Runite sword crackling with magical energy."), null, null),
                         toVersionedJson(
                                 new SocketedWeaponEquipableMeta(new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
@@ -863,7 +862,7 @@ public class ItemRepository {
                 ),
 
                 // Weapons - Daggers
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.BRONZE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Bronze Dagger", List.of("Bronze dagger, quick and light."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.BRONZE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Bronze Dagger", List.of("Bronze dagger, quick and light."), null, null),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
@@ -874,7 +873,7 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.IRON_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Iron Dagger", List.of("Iron dagger, sharp and practical."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.IRON_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Iron Dagger", List.of("Iron dagger, sharp and practical."), null, null),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
@@ -885,7 +884,7 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.STEEL_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Steel Dagger", List.of("Steel dagger, deadly in skilled hands."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.STEEL_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Steel Dagger", List.of("Steel dagger, deadly in skilled hands."), null, null),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
@@ -896,7 +895,7 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.MITHRIL_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Mithril Dagger", List.of("Mithril dagger, swift and precise."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.MITHRIL_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Mithril Dagger", List.of("Mithril dagger, swift and precise."), null, null),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
@@ -907,7 +906,7 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.ADAMANTITE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Dagger", List.of("Adamantite dagger, strong and lethal."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.ADAMANTITE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Dagger", List.of("Adamantite dagger, strong and lethal."), null, null),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
@@ -918,7 +917,7 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.RUNITE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Dagger", List.of("Runite dagger glowing with mystical power."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.RUNITE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Dagger", List.of("Runite dagger glowing with mystical power."), null, null),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
@@ -931,7 +930,7 @@ public class ItemRepository {
                 ),
 
                 // Weapons - Battleaxes
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.BRONZE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Bronze Battleaxe", List.of("Bronze battleaxe, heavy but slow."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.BRONZE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Bronze Battleaxe", List.of("Bronze battleaxe, heavy but slow."), null, null),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
@@ -943,7 +942,7 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.IRON_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Iron Battleaxe", List.of("Iron battleaxe, powerful cleaving weapon."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.IRON_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Iron Battleaxe", List.of("Iron battleaxe, powerful cleaving weapon."), null, null),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
@@ -955,7 +954,7 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.STEEL_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Steel Battleaxe", List.of("Steel battleaxe, favored by warriors."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.STEEL_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Steel Battleaxe", List.of("Steel battleaxe, favored by warriors."), null, null),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
@@ -967,7 +966,7 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.MITHRIL_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Mithril Battleaxe", List.of("Mithril battleaxe, fast and deadly."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.MITHRIL_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Mithril Battleaxe", List.of("Mithril battleaxe, fast and deadly."), null, null),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
@@ -979,7 +978,7 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.ADAMANTITE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Battleaxe", List.of("Adamantite battleaxe, crushing blows guaranteed."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.ADAMANTITE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Battleaxe", List.of("Adamantite battleaxe, crushing blows guaranteed."), null, null),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
@@ -991,7 +990,7 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.WEAPON, ItemId.RUNITE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Battleaxe", List.of("Runite battleaxe, imbued with arcane fury."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.RUNITE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Battleaxe", List.of("Runite battleaxe, imbued with arcane fury."), null, null),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
@@ -1000,6 +999,131 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 34)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 40))
+                                ),
+                                1)
+                ),
+
+
+                // SHORTBOWS
+
+                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON, ItemId.SHORT_BOW.asInt(), Material.BOW, ItemRarity.COMMON, "Oak Shortbow", List.of("A basic shortbow made from oak."), null, null),
+                        toVersionedJson(
+                                new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
+                                        List.of(
+                                                new Modifier(ModifierType.RANGED_STRENGTH, 5),
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 6)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 1))
+                                ),
+                                1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON, ItemId.BIRCH_SHORT_BOW.asInt(), Material.BOW, ItemRarity.COMMON, "Birch Shortbow", List.of("Light and flexible, but not very strong."), null, null),
+                        toVersionedJson(
+                                new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
+                                        List.of(
+                                                new Modifier(ModifierType.RANGED_STRENGTH, 7),
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 9)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 5))
+                                ),
+                                1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON, ItemId.MAPLE_SHORT_BOW.asInt(), Material.BOW, ItemRarity.UNCOMMON, "Maple Shortbow", List.of("A well-balanced shortbow made from maple."), null, null),
+                        toVersionedJson(
+                                new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
+                                        List.of(
+                                                new Modifier(ModifierType.RANGED_STRENGTH, 12),
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 15)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 20))
+                                ),
+                                1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON, ItemId.YEW_SHORT_BOW.asInt(), Material.BOW, ItemRarity.RARE, "Yew Shortbow", List.of("A shortbow made of yew, powerful and efficient."), null, null),
+                        toVersionedJson(
+                                new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
+                                        List.of(
+                                                new Modifier(ModifierType.RANGED_STRENGTH, 17),
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 20)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 30))
+                                ),
+                                1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON, ItemId.MAGIC_SHORT_BOW.asInt(), Material.BOW, ItemRarity.RARE, "Magic Shortbow", List.of("A magically enhanced shortbow with high accuracy."), null, null),
+                        toVersionedJson(
+                                new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
+                                        List.of(
+                                                new Modifier(ModifierType.RANGED_STRENGTH, 22),
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 28)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 50))
+                                ),
+                                1)
+                ),
+
+                // LONGBOWS
+
+                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON, ItemId.LONG_BOW.asInt(), Material.BOW, ItemRarity.COMMON, "Oak Longbow", List.of("A standard longbow with increased range."), null, null),
+                        toVersionedJson(
+                                new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
+                                        List.of(
+                                                new Modifier(ModifierType.RANGED_STRENGTH, 6),
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 8)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 1))
+                                ),
+                                1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON, ItemId.BIRCH_LONG_BOW.asInt(), Material.BOW, ItemRarity.COMMON, "Birch Longbow", List.of("A birch longbow, decent for beginners."), null, null),
+                        toVersionedJson(
+                                new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
+                                        List.of(
+                                                new Modifier(ModifierType.RANGED_STRENGTH, 9),
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 12)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 5))
+                                ),
+                                1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON, ItemId.MAPLE_LONG_BOW.asInt(), Material.BOW, ItemRarity.UNCOMMON, "Maple Longbow", List.of("A longbow crafted from sturdy maple."), null, null),
+                        toVersionedJson(
+                                new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
+                                        List.of(
+                                                new Modifier(ModifierType.RANGED_STRENGTH, 14),
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 18)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 20))
+                                ),
+                                1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON, ItemId.YEW_LONG_BOW.asInt(), Material.BOW, ItemRarity.RARE, "Yew Longbow", List.of("A longbow made of yew, strong and accurate."), null, null),
+                        toVersionedJson(
+                                new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
+                                        List.of(
+                                                new Modifier(ModifierType.RANGED_STRENGTH, 19),
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 24)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 30))
+                                ),
+                                1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON, ItemId.MAGIC_LONG_BOW.asInt(), Material.BOW, ItemRarity.EPIC, "Magic Longbow", List.of("An enchanted longbow with great range and power."), null, null),
+                        toVersionedJson(
+                                new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
+                                        List.of(
+                                                new Modifier(ModifierType.RANGED_STRENGTH, 24),
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 32)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 50))
                                 ),
                                 1)
                 )

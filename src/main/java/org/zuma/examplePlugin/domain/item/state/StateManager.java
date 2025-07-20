@@ -10,7 +10,7 @@ import org.zuma.examplePlugin.core.interfaces.Stateful;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.ItemHandler;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.item.constants.PersistanceDataKey;
+import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
 
@@ -40,7 +40,7 @@ public class StateManager {
             return null;
         }
 
-        NamespacedKey stateType = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistanceDataKey.STATE_UUID.asString());
+        NamespacedKey stateType = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.STATE_UUID.asString());
         String uuidStr = meta.getPersistentDataContainer().get(stateType, PersistentDataType.STRING);
 
         if (uuidStr == null) {

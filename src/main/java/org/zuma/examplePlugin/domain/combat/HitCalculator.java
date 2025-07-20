@@ -88,7 +88,7 @@ public class HitCalculator {
             int attackerRanged = getEntitySkillLevel(attacker, SkillType.RANGED);
 
             // Ranged max hit = floor(RangedLevel * (RangedStrength + 64) / 640)
-            double maxHit = attackerRanged * (attackerRangeStr + BASE_BONUS) / MAX_HIT_DIVISOR;
+            double maxHit = MAX_HIT_FLOOR_OFFSET + attackerRanged * (attackerRangeStr + BASE_BONUS) / MAX_HIT_DIVISOR;
 
             return Math.max(2, (int) Math.ceil(maxHit));
         }
@@ -108,7 +108,7 @@ public class HitCalculator {
             int defenderDefence = getEntitySkillLevel(defender, SkillType.DEFENCE);
 
             double atkBonus = getCombinedMeleeAttackBonus(attacker);
-            double defBonus = getCombinedMeleeDefenceBonus(defender);
+            double defBonus = getCombinedDefenceBonus(defender);
 
             double attackRoll = attackerAttack * (atkBonus + BASE_BONUS);
             double defenceRoll = defenderDefence * (defBonus + BASE_BONUS);
@@ -120,10 +120,12 @@ public class HitCalculator {
             int attackerRanged = getEntitySkillLevel(attacker, SkillType.RANGED);
             int defenderDefence = getEntitySkillLevel(defender, SkillType.DEFENCE);
 
-            double attackerRangeStr = getEntityModifierLevel(attacker, ModifierType.RANGED_STRENGTH);
+            double defBonus = getCombinedDefenceBonus(defender);
 
-            double attackRoll = attackerRanged * (attackerRangeStr + BASE_BONUS);
-            double defenceRoll = defenderDefence * BASE_BONUS;
+            double attackerRangeAcc = getEntityModifierLevel(attacker, ModifierType.RANGED_ACCURACY);
+
+            double attackRoll = attackerRanged * (attackerRangeAcc + BASE_BONUS);
+            double defenceRoll = defenderDefence * (defBonus + BASE_BONUS);
 
             return rollHitChance(attackRoll, defenceRoll);
         }
@@ -158,7 +160,7 @@ public class HitCalculator {
         return (stab + slash + crush) / 3.0;
     }
 
-    private static double getCombinedMeleeDefenceBonus(CombatEntity entity) {
+    private static double getCombinedDefenceBonus(CombatEntity entity) {
         double stab = getEntityModifierLevel(entity, ModifierType.DEFENCE_STAB);
         double slash = getEntityModifierLevel(entity, ModifierType.DEFENCE_SLASH);
         double crush = getEntityModifierLevel(entity, ModifierType.DEFENCE_CRUSH);

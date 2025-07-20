@@ -30,16 +30,11 @@ import java.util.UUID;
 import java.util.function.BiConsumer;
 
 public class MobListener implements Listener {
-    private static final long INTERACTION_THROTTLE_INTERVAL = 1000L;
-    private final CooldownHandler interactionSpeedHandler;
-
     private final RunePlayerManager playerHandler;
     private final MobHandler mobHandler;
     private final MobRegistry mobRegistry;
 
     public MobListener(RunePlayerManager playerManager, MobHandler mobHandler, MobRegistry mobRegistry) {
-        this.interactionSpeedHandler = new CooldownHandler();
-
         this.playerHandler = playerManager;
         this.mobHandler = mobHandler;
         this.mobRegistry = mobRegistry;
@@ -57,22 +52,15 @@ public class MobListener implements Listener {
         consumer.accept(mob, player);
     }
 
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = false)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerInteractWithEntity(PlayerInteractAtEntityEvent event) {
-        if (interactionSpeedHandler.isCooledDown(event.getPlayer())) {
-            event.setCancelled(true);
-            return;
-        }
-
-        interactionSpeedHandler.startCooldown(event.getPlayer(), INTERACTION_THROTTLE_INTERVAL);
-
         withMobAndPlayer(event.getPlayer(), event.getRightClicked(), (mob, player) -> {
             mobHandler.onPlayerInteractWithEntity(event, mob, player);
         });
 
     }
 
-    @EventHandler(priority = EventPriority.LOW) // To handle damage sounds
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerAttackEntity(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player bukkitPlayer)) {
             return;
@@ -83,7 +71,7 @@ public class MobListener implements Listener {
         });
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityAttackPlayer(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
             return;
@@ -98,7 +86,7 @@ public class MobListener implements Listener {
         });
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityDamaged(EntityDamageEvent event) {
         Entity entity = event.getEntity();
 
@@ -110,7 +98,7 @@ public class MobListener implements Listener {
     }
 
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityRemove(EntityDeathEvent event) {
         Entity entity = event.getEntity();
 
@@ -120,7 +108,7 @@ public class MobListener implements Listener {
         mobHandler.onEntityDeath(event, mob);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onChunkLoad(ChunkLoadEvent event) {
         Set<UUID> seen = new HashSet<>();
 
@@ -154,13 +142,12 @@ public class MobListener implements Listener {
         });
     }*/
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent event) {
         mobHandler.handleRedisguisingOnPlayerJoin(event);
     }
 
-
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityCombust(EntityCombustEvent event) {
         if (event.getEntity() instanceof Zombie) {
             event.setCancelled(true); // Prevent burning in sunlight
