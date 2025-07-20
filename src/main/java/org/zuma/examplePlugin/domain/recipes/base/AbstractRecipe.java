@@ -13,11 +13,13 @@ import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.handlers.IllegalItemWatchdog;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.impl.equipable.Tool;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipes.IngredientRecord;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
@@ -36,6 +38,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
     private final List<IngredientRecord> ingredients;
     private final int craftTimeMs;
 
+    private final Long cost;
 
     @Nullable
     private final ItemRecord failResult;
@@ -54,6 +57,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         this.successResult = meta.successResult();
         this.failResult = meta.failResult();
         this.successXp = meta.successXp();
+        this.cost = meta.cost();
     }
 
     public @NotNull List<SkillRequirement> getRequirements() {
@@ -123,11 +127,11 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         itemLore.add(Component.text("⏱ " + chanceOfSuccess + "% chance of success", Color.coloredProgressValue(chanceOfSuccess, 0, 100, false)));
 
         List<ItemRecord> recipeIngredients = !ingredients.isEmpty() ? ingredients.stream()
-                .filter(IngredientRecord::isConsumedOnCraft)
+                .filter(record -> registry.getItem(record.itemId()) instanceof org.zuma.examplePlugin.domain.item.impl.Material)
                 .map(record -> new ItemRecord(record.itemId(), record.amount())).toList() : new ArrayList<>();
 
         List<ItemRecord> requiredTools = !ingredients.isEmpty() ? ingredients.stream()
-                .filter(record -> !record.isConsumedOnCraft())
+                .filter(record -> registry.getItem(record.itemId()) instanceof Tool)
                 .map(record -> new ItemRecord(record.itemId(), record.amount())).toList() : new ArrayList<>();
 
 
@@ -177,7 +181,12 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         itemLore.add(Component.empty());
         itemLore.add(Component.text("Result: ", Color.ITEM_CATEGORY_LABEL.asColor()));
         itemLore.add(Component.text(successCrafts + "x ", Color.ITEM_CATEGORY_LABEL.asColor()).append(displayItemstack.displayName()));
-        itemLore.add(Component.empty());
+
+        if (cost != null && cost > 0) {
+            itemLore.add(Component.empty());
+            itemLore.add(Component.text("Cost: ", Color.ITEM_CATEGORY_LABEL.asColor()));
+            itemLore.add(CurrencyUtils.getCurrencyComponent(cost));
+        }
 
         meta.lore(itemLore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());
         newItem.setItemMeta(meta);
@@ -191,6 +200,12 @@ public abstract class AbstractRecipe implements SkillRestrictable {
 
     public @Nullable ItemRecord getFailResult() {
         return failResult;
+    }
+
+    public Long getRecipeCost() {
+        if (this.cost == null) return 0L;
+
+        return this.cost;
     }
 
     public void handleRecipeCraftingSuccess(RunePlayer player) {

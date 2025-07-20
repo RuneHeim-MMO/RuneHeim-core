@@ -20,8 +20,8 @@ public enum ModifierType {
     DEFENCE_CRUSH("Crush Defence", Icon.HELMET.get()),
 
     STRENGTH_BONUS("Strength Bonus", Icon.STRENGTH.get()),
-    RANGED_STRENGTH("Ranged Strength", Icon.ARROW.get()),
-    RANGED_ACCURACY("Ranged Accuracy", Icon.ARROW.get());
+    RANGED_STRENGTH("Ranged Strength", Icon.RANGED_STR.get()),
+    RANGED_ACCURACY("Ranged Accuracy", Icon.RANGED_ACCURACY.get());
 
     private final String label, symbol;
 

@@ -13,7 +13,7 @@ public class RangedWeapon extends EquipableItemType implements Weapon {
 
     public RangedWeapon(AbstractItemMeta meta, WeaponSpeed speed) {
         super(meta);
-        super.setTypeLore("Weapon (Ranged)", Icon.ARROW.get());
+        super.setTypeLore("Ranged Weapon", Icon.BOW.get());
         this.speed = speed;
     }
 

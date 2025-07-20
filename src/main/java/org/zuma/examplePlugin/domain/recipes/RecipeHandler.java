@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
+import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
@@ -44,17 +45,21 @@ public class RecipeHandler {
         }
 
         RecipeType type = recipe.getType();
+        long totalCost = times * recipe.getRecipeCost();
+
         Component resultComponent = recipe.getDisplayItemstack(player, itemRegistry).displayName().color(NamedTextColor.WHITE);
         String recipeResultNameString = times + "x " + TextUtils.extractPlainText(resultComponent);
-
-        List<ItemRecord> requiredTools = recipe.getIngredients().stream()
-                .filter(record -> !record.isConsumedOnCraft())
-                .map(record -> new ItemRecord(record.itemId(), record.amount())).toList();
-
         List<ItemRecord> totalIngredients = multiplyItemRecords(recipe.getIngredients().stream()
-                .filter(IngredientRecord::isConsumedOnCraft)
                 .map(record -> new ItemRecord(record.itemId(), record.amount())).toList(), times);
 
+
+        if (player.getPouchCoins() < totalCost) {
+            HudService.sendFailMessage(player, Component.text("You do not have enough money to " + type.getVerb().toLowerCase() + " ")
+                    .append(resultComponent)
+                    .append(Component.text("! You need at least "))
+                    .append(CurrencyUtils.getCurrencyComponent(totalCost)).append(Component.text(" coins.")));
+            return false;
+        }
 
         if (player.isBusy()) {
             HudService.sendFailMessage(player, Component.text("You are already busy with something else!"));
@@ -70,12 +75,6 @@ public class RecipeHandler {
             HudService.sendFailMessage(player, Component.text("You do not have required ingredients to " + type.getVerb().toLowerCase() + " " + times + "x ").append(resultComponent));
             return false;
         }
-
-        if (!PlayerUtils.hasItems(player, requiredTools)) {
-            HudService.sendFailMessage(player, Component.text("You do not have required tools to " + type.getVerb().toLowerCase() + " " + times + "x ").append(resultComponent));
-            return false;
-        }
-
 
         PlayerCraftingStartEvent event = new PlayerCraftingStartEvent(player, recipe, times);
         Bukkit.getServer().getPluginManager().callEvent(event);
@@ -97,23 +96,50 @@ public class RecipeHandler {
                         return;
                     }
 
-                    if (!PlayerUtils.hasItems(player, requiredTools)) {
-                        HudService.sendFailMessage(player, Component.text("You do not have required tools to " + type.getVerb().toLowerCase() + " " + times + "x ").append(resultComponent));
-                        recipe.handleRecipeCraftingAborted(player);
-                        return;
-                    }
-
-                    boolean itemsRemoveSuccess = PlayerUtils.removeItems(player, totalIngredients);
-
-                    if (!itemsRemoveSuccess) {
-                        HudService.sendFailMessage(player, Component.text("Failed removing items from player inventory."));
-                        recipe.handleRecipeCraftingAborted(player);
-                        return;
-                    }
-
 
                     int successCrafts = getSuccessCraftsAmount(player, recipe, times);
                     int failedCrafts = times - successCrafts;
+
+
+                    if (failedCrafts > 0) {
+                        List<ItemRecord> consumedOnFailIngredients = multiplyItemRecords(recipe.getIngredients().stream()
+                                .filter(IngredientRecord::isConsumedOnFail)
+                                .map(record -> new ItemRecord(record.itemId(), record.amount())).toList(), failedCrafts);
+
+                        boolean itemsRemoveSuccess = PlayerUtils.removeItems(player, consumedOnFailIngredients);
+
+                        if (!itemsRemoveSuccess) {
+                            HudService.sendFailMessage(player, Component.text("Failed removing items from player inventory."));
+                            recipe.handleRecipeCraftingAborted(player);
+                            return;
+                        }
+
+                    }
+
+                    if (successCrafts > 0) {
+                        List<ItemRecord> consumedOnSuccessIngredients = multiplyItemRecords(recipe.getIngredients().stream()
+                                .filter(IngredientRecord::isConsumedOnSuccess)
+                                .map(record -> new ItemRecord(record.itemId(), record.amount())).toList(), successCrafts);
+
+                        boolean itemsRemoveSuccess = PlayerUtils.removeItems(player, consumedOnSuccessIngredients);
+
+                        if (!itemsRemoveSuccess) {
+                            HudService.sendFailMessage(player, Component.text("Failed removing items from player inventory."));
+                            recipe.handleRecipeCraftingAborted(player);
+                            return;
+                        }
+
+                    }
+
+                    if (player.getPouchCoins() < totalCost) {
+                        HudService.sendFailMessage(player, Component.text("You do not have enough money to " + type.getVerb().toLowerCase() + " ")
+                                .append(resultComponent)
+                                .append(Component.text("! You need at least "))
+                                .append(CurrencyUtils.getCurrencyComponent(totalCost)).append(Component.text(" coins.")));
+                        recipe.handleRecipeCraftingAborted(player);
+                        return;
+                    }
+
 
                     PlayerCraftingFinishEvent successEvent = new PlayerCraftingFinishEvent(player, recipe, successCrafts, failedCrafts);
                     Bukkit.getServer().getPluginManager().callEvent(successEvent);
@@ -122,6 +148,9 @@ public class RecipeHandler {
                         recipe.handleRecipeCraftingAborted(player);
                         return;
                     }
+
+                    player.setPouchCoins(player.getPouchCoins() - totalCost);
+                    HudService.showCoinsChangeBubble(player, -totalCost);
 
                     if (successCrafts > 0) {
                         // Can be null for recipes that dont produce items (e.g. campfires)

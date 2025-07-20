@@ -124,4 +124,8 @@ public abstract class AbstractItemType {
     public MetaGenerator getMetaGenerator() {
         return metaGenerator;
     }
+
+    public Material getMaterial() {
+        return material;
+    }
 }

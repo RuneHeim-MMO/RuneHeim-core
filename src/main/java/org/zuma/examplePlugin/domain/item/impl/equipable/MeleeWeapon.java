@@ -13,7 +13,7 @@ public class MeleeWeapon extends EquipableItemType implements Weapon {
 
     public MeleeWeapon(AbstractItemMeta meta, WeaponSpeed speed) {
         super(meta);
-        super.setTypeLore("Weapon (Melee)", Icon.SWORD_2.get());
+        super.setTypeLore("Melee Weapon", Icon.SWORD_2.get());
         this.speed = speed;
     }
 

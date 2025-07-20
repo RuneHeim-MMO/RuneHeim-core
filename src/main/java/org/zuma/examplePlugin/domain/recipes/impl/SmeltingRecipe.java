@@ -9,7 +9,7 @@ import org.zuma.examplePlugin.domain.recipes.meta.ConcreteRecipeMeta;
 
 public class SmeltingRecipe extends AbstractRecipe {
     public SmeltingRecipe(ItemStack displayItemstack, ConcreteRecipeMeta meta) {
-        super(displayItemstack, new AbstractRecipeMeta(meta.id(), RecipeType.SMELTING_RECIPE, meta.craftTimeMs(), meta.requirements(), meta.ingredients(), meta.successResult(), meta.failResult(), meta.successXp()));
+        super(displayItemstack, new AbstractRecipeMeta(meta.id(), RecipeType.SMELTING_RECIPE, meta.craftTimeMs(), meta.requirements(), meta.ingredients(), meta.successResult(), meta.failResult(), meta.successXp(), meta.cost()));
     }
 
     @Override

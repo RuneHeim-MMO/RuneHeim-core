@@ -9,7 +9,6 @@ public class SocketedGear extends SocketedEquipableItemType {
 
     public SocketedGear(AbstractItemMeta meta) {
         super(meta);
-        super.setTypeLore("Gear", Icon.SHIELD_3.get());
     }
 
     @Override

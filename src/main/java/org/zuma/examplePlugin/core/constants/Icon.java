@@ -51,6 +51,10 @@ public enum Icon {
     ENVELOPE("✉"),
     LOG("Ⓘ"),
     SWING_SPEED("⾏"),
+    BOW("⾸"),
+    RANGED_STR("⫨"),
+    RANGED_ACCURACY("⥹"),
+    WIND("ⶉ"),
 
     SCROLL_RED("ⵣ"),
     SCROLL_GRAY("⁝"),

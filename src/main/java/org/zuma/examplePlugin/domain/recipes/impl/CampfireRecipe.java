@@ -35,7 +35,7 @@ public class CampfireRecipe extends AbstractRecipe {
     private final HashMap<UUID, CampfireBlock> inProgressBlocks = new HashMap<>();
 
     public CampfireRecipe(ConcreteRecipeMeta meta, CampfireRecipeMeta campfireRecipeMeta) {
-        super(new ItemStack(Material.OAK_LOG), new AbstractRecipeMeta(meta.id(), RecipeType.CAMPFIRE_RECIPE, meta.craftTimeMs(), meta.requirements(), meta.ingredients(), null, null, meta.successXp()));
+        super(new ItemStack(Material.OAK_LOG), new AbstractRecipeMeta(meta.id(), RecipeType.CAMPFIRE_RECIPE, meta.craftTimeMs(), meta.requirements(), meta.ingredients(), null, null, meta.successXp(), meta.cost()));
 
         this.burnTime = campfireRecipeMeta.burnTime();
         this.soulCampfireSkin = campfireRecipeMeta.isSoulCampfire();

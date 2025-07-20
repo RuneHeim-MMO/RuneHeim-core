@@ -12,5 +12,5 @@ public record ConcreteRecipeMeta(
         int id,
         int craftTimeMs, List<SkillRequirement> requirements,
         List<IngredientRecord> ingredients, @Nullable ItemRecord successResult,
-        @Nullable ItemRecord failResult, List<SkillXpRecord> successXp) {
+        @Nullable ItemRecord failResult, List<SkillXpRecord> successXp, @Nullable Long cost) {
 }

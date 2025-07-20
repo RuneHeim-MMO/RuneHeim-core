@@ -58,6 +58,34 @@
    },
    {
       "type": "bitmap",
+      "file": "minecraft:font/icons/bow.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⾸"]
+   },
+   {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/ranged_strength.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⫨"]
+   },
+   {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/ranged_accuracy.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⥹"]
+   },
+   {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/wind.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["ⶉ"]
+   },
+   {
+      "type": "bitmap",
       "file": "minecraft:font/icons/stamina.png",
       "ascent": 9,
       "height": 12,

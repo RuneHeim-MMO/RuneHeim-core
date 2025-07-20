@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 public class RecipeFactory {
 
     public AbstractRecipe createRecipe(ItemStack displayItem, AbstractRecipeMeta meta, @Nullable VersionedJson json) {
-        final ConcreteRecipeMeta recipeMeta = new ConcreteRecipeMeta(meta.id(), meta.craftTimeMs(), meta.requirements(), meta.ingredients(), meta.successResult(), meta.failResult(), meta.successXp());
+        final ConcreteRecipeMeta recipeMeta = new ConcreteRecipeMeta(meta.id(), meta.craftTimeMs(), meta.requirements(), meta.ingredients(), meta.successResult(), meta.failResult(), meta.successXp(), meta.cost());
 
         return switch (meta.type()) {
             case SMELTING_RECIPE -> new SmeltingRecipe(displayItem, recipeMeta);

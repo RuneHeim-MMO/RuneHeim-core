@@ -17,7 +17,7 @@ public class CookingRecipe extends AbstractRecipe {
     private final int MINIMUM_SUCCESS_CHANCE = 30;
 
     public CookingRecipe(ItemStack displayItemstack, ConcreteRecipeMeta meta) {
-        super(displayItemstack, new AbstractRecipeMeta(meta.id(), RecipeType.COOKING_RECIPE, meta.craftTimeMs(), meta.requirements(), meta.ingredients(), meta.successResult(), meta.failResult(), meta.successXp()));
+        super(displayItemstack, new AbstractRecipeMeta(meta.id(), RecipeType.COOKING_RECIPE, meta.craftTimeMs(), meta.requirements(), meta.ingredients(), meta.successResult(), meta.failResult(), meta.successXp(), meta.cost()));
 
         mainRequirement = super.getRequirements().stream()
                 .filter(req -> req.type() == SkillType.COOKING)
