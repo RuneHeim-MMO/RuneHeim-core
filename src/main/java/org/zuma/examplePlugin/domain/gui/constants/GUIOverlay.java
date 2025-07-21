@@ -7,7 +7,8 @@ public enum GUIOverlay {
     ANVIL_OVERLAY("⽰"),
     CRAFTING_TABLE_OVERLAY("⼟"),
     FUSION_MASTER_OVERLAY("⾭"),
-    SHOP("⿸");
+    SHOP_OVERLAY("⿸"),
+    SPINNING_WHEEL_OVERLAY("⼥");
 
     private final String glyph;
 

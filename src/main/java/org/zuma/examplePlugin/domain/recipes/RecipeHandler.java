@@ -153,7 +153,7 @@ public class RecipeHandler {
                         player.setPouchCoins(player.getPouchCoins() - totalCost);
                         HudService.showCoinsChangeBubble(player, -totalCost);
                     }
-                    
+
                     if (successCrafts > 0) {
                         // Can be null for recipes that dont produce items (e.g. campfires)
                         if (recipe.getSuccessResult() != null) {
@@ -187,8 +187,8 @@ public class RecipeHandler {
     }
 
     public boolean handleInventoryRecipeClick(RunePlayer player, Inventory inventory, AbstractItemType firstItem, AbstractItemType secondItem) {
-
         List<AbstractRecipe> matchingRecipes = validInventoryRecipes.stream()
+                .filter(recipe -> recipe.getType() == RecipeType.INVENTORY_RECIPE || recipe.getType() == RecipeType.CAMPFIRE_RECIPE)
                 .filter(recipe -> {
                     boolean hasFirstItem = false;
                     boolean hasSecondItem = false;

@@ -173,6 +173,7 @@ public enum ItemId {
 
     WOOL(2300),
     BONES(2301),
+    BALL_OF_WOOL(2302),
 
     SHORT_BOW(2400),
     BIRCH_SHORT_BOW(2401),
@@ -191,7 +192,6 @@ public enum ItemId {
     MITHRIL_CROSSBOW(2412),
     ADAMANT_CROSSBOW(2413),
     RUNITE_CROSSBOW(2414);
-
 
 
     private final int id;

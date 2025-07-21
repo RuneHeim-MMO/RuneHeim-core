@@ -9,7 +9,8 @@ public enum InventoryId {
     ANVIL(3),
     CRAFTING_TABLE(4),
     FUSION_MASTER(5),
-    GENERAL_STORE(6);
+    GENERAL_STORE(6),
+    SPINNING_WHEEL(7);
 
     private final int id;
 

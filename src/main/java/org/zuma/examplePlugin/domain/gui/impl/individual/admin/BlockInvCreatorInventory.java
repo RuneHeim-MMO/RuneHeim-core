@@ -46,11 +46,10 @@ public class BlockInvCreatorInventory extends IndividualGUI {
         put(InventoryId.FIRE.asInt(), new InventoryOpenerMeta(InventoryId.FIRE.asInt(), Material.CAMPFIRE, null, MarkerType.FIRE_SOURCE, "Campfire", "Campfire", Icon.FIRE.get()));
         put(InventoryId.ANVIL.asInt(), new InventoryOpenerMeta(InventoryId.ANVIL.asInt(), Material.ANVIL, null, MarkerType.ANVIL, "Anvil", "Anvil", Icon.ANVIL.get()));
         put(InventoryId.CRAFTING_TABLE.asInt(), new InventoryOpenerMeta(InventoryId.CRAFTING_TABLE.asInt(), Material.CRAFTING_TABLE, null, MarkerType.CRAFTING_TABLE, "Crafting Table", "Crafting Table", Icon.CRAFTING.get()));
-        put(InventoryId.BASIC_FURNACE.asInt(), new InventoryOpenerMeta(InventoryId.BASIC_FURNACE.asInt(), Material.BARRIER, null, MarkerType.SMELTING_FURNACE, "Smelting Furnace", "Smelting Furnace", Icon.FIRE.get()));
+        put(InventoryId.BASIC_FURNACE.asInt(), new InventoryOpenerMeta(InventoryId.BASIC_FURNACE.asInt(), Material.BLAST_FURNACE, null, MarkerType.SMELTING_FURNACE, "Smelting Furnace", "Smelting Furnace", Icon.FIRE.get()));
         put(InventoryId.FUSION_MASTER.asInt(), new InventoryOpenerMeta(InventoryId.FUSION_MASTER.asInt(), Material.BARRIER, null, null, "Fusion Master", "Fusion Master", Icon.SCROLL_RED.get()));
-
+        put(InventoryId.SPINNING_WHEEL.asInt(), new InventoryOpenerMeta(InventoryId.SPINNING_WHEEL.asInt(), Material.BARRIER, null, MarkerType.SPINNING_WHEEL, "Spinning Wheel", "Spinning Wheel", Icon.MATERIAL.get()));
     }};
-
 
     public BlockInvCreatorInventory(String title, int id, BlockLoader loader, GUIHandler guiHandler) {
         super(title, id, 6);
@@ -68,19 +67,26 @@ public class BlockInvCreatorInventory extends IndividualGUI {
         List<Integer> inventories = guiHandler.getRegistry().getAllInventoryIds().stream().filter(META_MAP::containsKey).toList();
 
         for (int i = 0; i < inventories.size(); i++) {
-
             if (i >= super.getSlots() - 1) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, title + " inventory is overflowing.");
                 continue;
             }
 
-            ItemStack item = new ItemStack(Material.BARRIER);
-            ItemMeta meta = item.getItemMeta();
-            meta.displayName(Component.text(META_MAP.get(i).markerLabel(), NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
-            IllegalItemWatchdog.tagIllegalItem(meta);
-            item.setItemMeta(meta);
+            int inventoryId = inventories.get(i);
+            InventoryOpenerMeta meta = META_MAP.get(inventoryId);
 
-            super.assignMenuValue(item, i);
+            if (meta == null) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "No meta found for inventory ID: " + inventoryId);
+                continue;
+            }
+
+            ItemStack item = new ItemStack(Material.BARRIER);
+            ItemMeta itemMeta = item.getItemMeta();
+            itemMeta.displayName(Component.text(meta.markerLabel(), NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
+            IllegalItemWatchdog.tagIllegalItem(itemMeta);
+            item.setItemMeta(itemMeta);
+
+            super.assignMenuValue(item, inventoryId);
             inventory.setItem(i, item);
         }
 

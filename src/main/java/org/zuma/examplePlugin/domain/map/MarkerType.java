@@ -31,10 +31,12 @@ public enum MarkerType {
     ADAMANTITE("ore-adamantite-markers", "Adamantite ore veins", "https://i.imgur.com/XyrJr1T.png"),
     RUNITE("ore-runite-markers", "Runite ore veins", "https://i.imgur.com/7hiGFYY.png"),
 
+    // TODO
     FIRE_SOURCE("fire-source-markers", "Fire sources", ""),
     SMELTING_FURNACE("smelting-furnace-markers", "Smelting furnaces", ""),
     ANVIL("anvil-markers", "Anvils", ""),
-    CRAFTING_TABLE("crafting-table-markers", "Crafting tables", "");
+    CRAFTING_TABLE("crafting-table-markers", "Crafting tables", ""),
+    SPINNING_WHEEL("spinning-wheel-markers", "Spinning wheels", "");
 
 
     private final String id, label, iconURL;

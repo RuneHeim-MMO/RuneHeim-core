@@ -21,6 +21,15 @@ public class RecipeRepository {
     public List<RecipeEntity> getAll() {
         return List.of(
 
+                // Spinning wheel
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.BALL_OF_WOOL_RECIPE.getId(), RecipeType.SPINNING_WHEEL_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 1)),
+                        List.of(new IngredientRecord(ItemId.WOOL, 1, true, true)),
+                        new ItemRecord(ItemId.BALL_OF_WOOL, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.CRAFTING, 2.5)), null
+                ), null),
+
                 // Campfires
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.LOG_CAMPFIRE.getId(), RecipeType.CAMPFIRE_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.FIREMAKING, 1)),

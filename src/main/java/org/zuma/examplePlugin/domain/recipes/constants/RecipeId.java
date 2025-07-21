@@ -90,7 +90,10 @@ public enum RecipeId {
     MAPLE_CAMPFIRE(1102),
     YEW_CAMPFIRE(1103),
     MAHOGANY_CAMPFIRE(1104),
-    MAGIC_LOG_CAMPFIRE(1105);
+    MAGIC_LOG_CAMPFIRE(1105),
+
+    BALL_OF_WOOL_RECIPE(1200),
+    FLAG_RECIPE(1201);
 
 
     private final int id;
