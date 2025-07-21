@@ -23,6 +23,13 @@
     },
     {
       "type": "bitmap",
+      "file": "minecraft:font/gui/spinning_wheel.png",
+      "ascent": 13,
+      "height": 168,
+      "chars": ["⼥"]
+    },
+    {
+      "type": "bitmap",
       "file": "minecraft:font/gui/crafting_table.png",
       "ascent": 13,
       "height": 222,

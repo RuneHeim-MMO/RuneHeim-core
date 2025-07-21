@@ -216,6 +216,10 @@ public class ItemRepository {
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BALL_OF_WOOL.asInt(), Material.COAL, ItemRarity.COMMON, "Ball of Wool", List.of("Spun from soft tufts of raw wool.", "Used in various crafting recipes."), null, null), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.WOOL.asInt(), Material.COAL, ItemRarity.COMMON, "Wool", List.of("Soft tufts of freshly shorn wool", "Requires spinning before use."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.FLAX.asInt(), Material.COAL, ItemRarity.COMMON, "Flax", List.of("A bundle of fibrous plant stalks.", "Can be spun into bow string."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BOW_STRING.asInt(), Material.COAL, ItemRarity.COMMON, "Bow String", List.of("Spun from processed flax.", "Used in bow crafting."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_STRING.asInt(), Material.COAL, ItemRarity.COMMON, "Magic String", List.of("Spun from flax and a magic ingredient.", "Used to string magic amulets or bows."), null, null), null),
+
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.BONES.asInt(), Material.COAL, ItemRarity.COMMON, "Bones", List.of("Remains of a fallen creature."), null, null), null),
 
