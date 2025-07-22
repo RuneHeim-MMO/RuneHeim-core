@@ -149,6 +149,108 @@ public class ItemRepository {
 
                 new ItemEntity(new AbstractItemMeta(ItemType.COINS, ItemId.COINS.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Coins", List.of("If you have this item in your inventory, please submit a bug report."), null, null), null),
 
+
+                // NEW ARMOR
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.COIF.asInt(), Material.LEATHER_HELMET, ItemRarity.COMMON, "Coif", List.of("Simple bronze helmet offering minimal head protection."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(0, 255, 0)),
+                        toVersionedJson(
+                                new EquipableTypeMeta(null,
+                                        List.of(new Modifier(ModifierType.DEFENCE_STAB, 1), new Modifier(ModifierType.DEFENCE_SLASH, 1), new Modifier(ModifierType.DEFENCE_CRUSH, 1)),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
+                                )
+                                , 1)
+                ),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.COWL.asInt(), Material.LEATHER_HELMET, ItemRarity.COMMON, "Cowl", List.of("A light hood offering minimal protection."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(0, 255, 0)),
+                        toVersionedJson(
+                                new EquipableTypeMeta(null,
+                                        List.of(new Modifier(ModifierType.DEFENCE_STAB, 1), new Modifier(ModifierType.DEFENCE_SLASH, 1), new Modifier(ModifierType.DEFENCE_CRUSH, 1)),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
+                                )
+                                , 1)
+                ),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.LEATHER_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Leather Body", List.of("Basic leather torso armor."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(0, 255, 0)),
+                        toVersionedJson(
+                                new EquipableTypeMeta(null,
+                                        List.of(new Modifier(ModifierType.DEFENCE_STAB, 1), new Modifier(ModifierType.DEFENCE_SLASH, 1), new Modifier(ModifierType.DEFENCE_CRUSH, 1)),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
+                                )
+                                , 1)
+                ),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.HARD_LEATHER_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Hard Leather Body", List.of("Stiffened leather torso protection."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(0, 255, 0)),
+                        toVersionedJson(
+                                new EquipableTypeMeta(null,
+                                        List.of(new Modifier(ModifierType.DEFENCE_STAB, 1), new Modifier(ModifierType.DEFENCE_SLASH, 1), new Modifier(ModifierType.DEFENCE_CRUSH, 1)),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
+                                )
+                                , 1)
+                ),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STUDDED_LEATHER_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Studded Body", List.of("Leather armor reinforced with studs."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(0, 255, 0)),
+                        toVersionedJson(
+                                new EquipableTypeMeta(null,
+                                        List.of(new Modifier(ModifierType.DEFENCE_STAB, 1), new Modifier(ModifierType.DEFENCE_SLASH, 1), new Modifier(ModifierType.DEFENCE_CRUSH, 1)),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
+                                )
+                                , 1)
+                ),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.GREEN_DHIDE_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Green D'hide Body", List.of("Torso armor made of green dragonhide."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(0, 255, 0)),
+                        toVersionedJson(
+                                new EquipableTypeMeta(null,
+                                        List.of(new Modifier(ModifierType.DEFENCE_STAB, 1), new Modifier(ModifierType.DEFENCE_SLASH, 1), new Modifier(ModifierType.DEFENCE_CRUSH, 1)),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
+                                )
+                                , 1)
+                ),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.LEATHER_LEGGINGS.asInt(), Material.LEATHER_LEGGINGS, ItemRarity.COMMON, "Leather Chaps", List.of("Basic leather leg armor."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(0, 255, 0)),
+                        toVersionedJson(
+                                new EquipableTypeMeta(null,
+                                        List.of(new Modifier(ModifierType.DEFENCE_STAB, 1), new Modifier(ModifierType.DEFENCE_SLASH, 1), new Modifier(ModifierType.DEFENCE_CRUSH, 1)),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
+                                )
+                                , 1)
+                ),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.HARD_LEATHER_LEGGINGS.asInt(), Material.LEATHER_LEGGINGS, ItemRarity.COMMON, "Hard Leather Chaps", List.of("Stiffened leather leg protection."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(0, 255, 0)),
+                        toVersionedJson(
+                                new EquipableTypeMeta(null,
+                                        List.of(new Modifier(ModifierType.DEFENCE_STAB, 1), new Modifier(ModifierType.DEFENCE_SLASH, 1), new Modifier(ModifierType.DEFENCE_CRUSH, 1)),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
+                                )
+                                , 1)
+                ),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STUDDED_LEATHER_LEGGINGS.asInt(), Material.LEATHER_LEGGINGS, ItemRarity.COMMON, "Studded Chaps", List.of("Leather chaps reinforced with studs."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(0, 255, 0)),
+                        toVersionedJson(
+                                new EquipableTypeMeta(null,
+                                        List.of(new Modifier(ModifierType.DEFENCE_STAB, 1), new Modifier(ModifierType.DEFENCE_SLASH, 1), new Modifier(ModifierType.DEFENCE_CRUSH, 1)),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
+                                )
+                                , 1)
+                ),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.GREEN_DHIDE_LEGGINGS.asInt(), Material.LEATHER_LEGGINGS, ItemRarity.COMMON, "Green D'hide Chaps", List.of("Leg armor made of green dragonhide."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(0, 255, 0)),
+                        toVersionedJson(
+                                new EquipableTypeMeta(null,
+                                        List.of(new Modifier(ModifierType.DEFENCE_STAB, 1), new Modifier(ModifierType.DEFENCE_SLASH, 1), new Modifier(ModifierType.DEFENCE_CRUSH, 1)),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
+                                )
+                                , 1)
+                ),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.LEATHER_BOOTS.asInt(), Material.LEATHER_BOOTS, ItemRarity.COMMON, "Leather Boots", List.of("Basic leather footwear."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(0, 255, 0)),
+                        toVersionedJson(
+                                new EquipableTypeMeta(null,
+                                        List.of(new Modifier(ModifierType.DEFENCE_STAB, 1), new Modifier(ModifierType.DEFENCE_SLASH, 1), new Modifier(ModifierType.DEFENCE_CRUSH, 1)),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
+                                )
+                                , 1)
+                ),
+
+
+                // Arrows
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BRONZE_ARROW.asInt(), Material.ARROW, ItemRarity.COMMON, "Bronze Arrow", List.of("A basic bronze-tipped arrow.", "Useful for training ranged skills."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.IRON_ARROW.asInt(), Material.ARROW, ItemRarity.COMMON, "Iron Arrow", List.of("Stronger than bronze arrows.", "Commonly used by beginner archers."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.STEEL_ARROW.asInt(), Material.ARROW, ItemRarity.UNCOMMON, "Steel Arrow", List.of("A sturdy steel-tipped arrow.", "Offers good damage and durability."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MITHRIL_ARROW.asInt(), Material.ARROW, ItemRarity.UNCOMMON, "Mithril Arrow", List.of("Lightweight yet powerful.", "Favored by mid-level rangers."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ADAMANT_ARROW.asInt(), Material.ARROW, ItemRarity.RARE, "Adamant Arrow", List.of("Forged from adamantite.", "High damage for experienced archers."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RUNITE_ARROW.asInt(), Material.ARROW, ItemRarity.RARE, "Runite Arrow", List.of("Top-tier arrow made from runite.", "Delivers deadly ranged attacks."), null, null), null),
+
+
+                // Tools
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.SMITHING_HAMMER.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Hammer", List.of("A sturdy hammer used for refining and forging equipment."), null, null),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
@@ -218,7 +320,13 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.WOOL.asInt(), Material.COAL, ItemRarity.COMMON, "Wool", List.of("Soft tufts of freshly shorn wool", "Requires spinning before use."), null, null), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.FLAX.asInt(), Material.COAL, ItemRarity.COMMON, "Flax", List.of("A bundle of fibrous plant stalks.", "Can be spun into bow string."), null, null), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BOW_STRING.asInt(), Material.COAL, ItemRarity.COMMON, "Bow String", List.of("Spun from processed flax.", "Used in bow crafting."), null, null), null),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_STRING.asInt(), Material.COAL, ItemRarity.COMMON, "Magic String", List.of("Spun from flax and a magic ingredient.", "Used to string magic amulets or bows."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_BOW_STRING.asInt(), Material.COAL, ItemRarity.COMMON, "Magic Bow String", List.of("Spun from flax and a magic ingredient.", "Used to string magic amulets or bows."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ARROW_SHAFT.asInt(), Material.COAL, ItemRarity.COMMON, "Arrow Shaft", List.of("A basic shaft for making arrows.", "Needs feathers to complete."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.DRAGON_LEATHER.asInt(), Material.COAL, ItemRarity.RARE, "Dragon Leather", List.of("Tough and scaly leather from a dragon.", "Used to craft powerful armor."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.FEATHER.asInt(), Material.COAL, ItemRarity.COMMON, "Feather", List.of("Light and soft bird feather.", "Useful for fletching arrows."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.HARD_LEATHER.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Hard Leather", List.of("Treated for durability.", "Used to craft sturdy gear."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.HEADLESS_ARROW.asInt(), Material.COAL, ItemRarity.COMMON, "Headless Arrow", List.of("An unfinished arrow lacking a tip.", "Needs a metal head to be complete."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.LEATHER.asInt(), Material.COAL, ItemRarity.COMMON, "Leather", List.of("Tanned animal hide.", "Used in basic crafting and armor."), null, null), null),
 
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.BONES.asInt(), Material.COAL, ItemRarity.COMMON, "Bones", List.of("Remains of a fallen creature."), null, null), null),

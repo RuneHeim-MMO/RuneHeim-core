@@ -428,14 +428,98 @@
                 }
             },
             {
-                "threshold": 2301,
+                "threshold": 2302,
                 "model": {
                     "type": "model",
                     "model": "item/custom/misc/bones"
                 }
             },
             {
-                "threshold": 2205,
+                "threshold": 2300,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/wool"
+                }
+            },
+            {
+                "threshold": 2301,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/ball_of_wool"
+                }
+            },
+            {
+                "threshold": 2302,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/flax"
+                }
+            },
+            {
+                "threshold": 2303,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/arrow_shaft"
+                }
+            },
+            {
+                "threshold": 2304,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/dragon_leather"
+                }
+            },
+            {
+                "threshold": 2305,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/feather"
+                }
+            },
+            {
+                "threshold": 2306,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/hard_leather"
+                }
+            },
+            {
+                "threshold": 2307,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/headless_arrow"
+                }
+            },
+            {
+                "threshold": 2308,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/leather"
+                }
+            },
+            {
+                "threshold": 2309,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/bow_string"
+                }
+            },
+            {
+                "threshold": 2310,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/magic_bow_string"
+                }
+            },
+            {
+                "threshold": 2600,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/misc/bones"
+                }
+            },
+            {
+                "threshold": 2209,
                 "model": {
                     "type": "model",
                     "model": "item/coal"
