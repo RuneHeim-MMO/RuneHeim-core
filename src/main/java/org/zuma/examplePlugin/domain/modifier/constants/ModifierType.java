@@ -18,6 +18,8 @@ public enum ModifierType {
     DEFENCE_STAB("Stab Defence", Icon.STAB_DEFENCE.get()),
     DEFENCE_SLASH("Slash Defence", Icon.ARMOR.get()),
     DEFENCE_CRUSH("Crush Defence", Icon.HELMET.get()),
+    DEFENCE_RANGED("Ranged Defence", Icon.BOW.get()),
+    DEFENCE_MAGIC("Magic Defence", Icon.BOW.get()),
 
     STRENGTH_BONUS("Strength Bonus", Icon.STRENGTH.get()),
     RANGED_STRENGTH("Ranged Strength", Icon.RANGED_STR.get()),

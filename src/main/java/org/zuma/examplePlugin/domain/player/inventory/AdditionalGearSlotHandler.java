@@ -53,6 +53,7 @@ public class AdditionalGearSlotHandler {
             ItemStack atSlot = inventory.getItem(slot);
 
             if (GUIControl.isGuiItem(atSlot)) {
+                atSlot.setAmount(1);
                 return;
             }
 

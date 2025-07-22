@@ -26,6 +26,9 @@ public class InteractionSpeedHandler implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.getPlayer().isOp()) {
+            return;
+        }
 
         if (interactionSpeedHandler.isCooledDown(event.getPlayer())) {
             event.setCancelled(true);
@@ -59,6 +62,10 @@ public class InteractionSpeedHandler implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerBlockInteract(PlayerInteractEvent event) {
+        if (event.getPlayer().isOp()) {
+            return;
+        }
+
         if (event.useInteractedBlock() == Event.Result.DENY ||
                 event.useItemInHand() == Event.Result.DENY) {
             return;

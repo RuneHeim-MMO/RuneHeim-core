@@ -57,7 +57,6 @@ public class BowDrawHelper implements Listener {
         // Player released right click but no arrow shot? Clean up
         drawStartTimes.remove(event.getPlayer().getUniqueId());
         plingPlayed.remove(event.getPlayer().getUniqueId());
-        System.out.println("15");
     }
 
     private boolean hasAmmo(Player player, ItemStack bow) {

@@ -29,6 +29,28 @@ public class RecipeRepository {
                         null,
                         List.of(new SkillXpRecord(SkillType.CRAFTING, 2.5)), null
                 ), null),
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.BOW_STRING_RECIPE.getId(), RecipeType.SPINNING_WHEEL_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 8)),
+                        List.of(new IngredientRecord(ItemId.FLAX, 1, true, true)),
+                        new ItemRecord(ItemId.BOW_STRING, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.CRAFTING, 15)), null
+                ), null),
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.FISHING_NET_RECIPE.getId(), RecipeType.SPINNING_WHEEL_RECIPE, 6000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 15)),
+                        List.of(new IngredientRecord(ItemId.FLAX, 3, true, true)),
+                        new ItemRecord(ItemId.FISHING_NET, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.CRAFTING, 30)), null
+                ), null),
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAGIC_BOW_STRING_RECIPE.getId(), RecipeType.SPINNING_WHEEL_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 30)),
+                        List.of(new IngredientRecord(ItemId.BOW_STRING, 1, true, true),
+                                new IngredientRecord(ItemId.MAGIC_ASHES, 3, true, true)),
+                        new ItemRecord(ItemId.MAGIC_BOW_STRING, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.CRAFTING, 40)), null
+                ), null),
 
                 // Campfires
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.LOG_CAMPFIRE.getId(), RecipeType.CAMPFIRE_RECIPE, 3000,

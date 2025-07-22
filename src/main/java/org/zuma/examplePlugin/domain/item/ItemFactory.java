@@ -45,10 +45,30 @@ public class ItemFactory {
             case MISC -> createMiscItem(meta);
             case EMPTY_CONTAINER -> createEmptyContainer(meta, json);
             case COINS -> new CoinsItem(meta);
+            case ARROW -> createArrowItem(meta, json);
             default -> throw new IllegalArgumentException("Unknown item type: " + meta.type());
         };
     }
 
+    private Arrow createArrowItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create " + meta.type() + " " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                EquipableTypeMeta deserialized = new Gson().fromJson(json.meta(), EquipableTypeMeta.class);
+                Arrow item = new Arrow(meta);
+
+                item.addModifiers(deserialized.modifiers());
+                item.addRequirements(deserialized.requirements());
+                item.addSkillModifiers(deserialized.skillModifiers());
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
+    }
 
     private EmptyContainer createEmptyContainer(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {

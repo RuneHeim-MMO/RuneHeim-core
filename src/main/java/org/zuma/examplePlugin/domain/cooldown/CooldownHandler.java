@@ -30,11 +30,6 @@ public class CooldownHandler {
     }
 
     public void startCooldown(Player player, Long delay) {
-
-        if (player.isOp()) {
-            return;
-        }
-
         cooldownDelays.put(player.getUniqueId(), System.currentTimeMillis() + delay);
     }
 

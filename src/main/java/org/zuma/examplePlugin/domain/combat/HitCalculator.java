@@ -120,9 +120,11 @@ public class HitCalculator {
             int attackerRanged = getEntitySkillLevel(attacker, SkillType.RANGED);
             int defenderDefence = getEntitySkillLevel(defender, SkillType.DEFENCE);
 
-            double defBonus = getCombinedDefenceBonus(defender);
-
+            double meleeDefBonus = getCombinedDefenceBonus(defender);
+            double defenderRangeDef = getEntityModifierLevel(defender, ModifierType.DEFENCE_RANGED);
             double attackerRangeAcc = getEntityModifierLevel(attacker, ModifierType.RANGED_ACCURACY);
+
+            double defBonus = 0.7 * defenderRangeDef + 0.3 * meleeDefBonus;
 
             double attackRoll = attackerRanged * (attackerRangeAcc + BASE_BONUS);
             double defenceRoll = defenderDefence * (defBonus + BASE_BONUS);

@@ -93,7 +93,9 @@ public enum RecipeId {
     MAGIC_LOG_CAMPFIRE(1105),
 
     BALL_OF_WOOL_RECIPE(1200),
-    FLAG_RECIPE(1201);
+    BOW_STRING_RECIPE(1201),
+    FISHING_NET_RECIPE(1202),
+    MAGIC_BOW_STRING_RECIPE(1203);
 
 
     private final int id;

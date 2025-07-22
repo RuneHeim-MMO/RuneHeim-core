@@ -18,7 +18,8 @@ public enum ItemType {
     FAIRY(14),
     EMPTY_CONTAINER(15),
     COINS(16),
-    RANGED_WEAPON(17);
+    RANGED_WEAPON(17),
+    ARROW(18);
 
     private final int key;
 

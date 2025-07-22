@@ -15,7 +15,8 @@ public enum ReservedSlot {
     RING_1_SLOT(11, "Ring Slot", ReservedSlotItemType.RING, SoundType.JEWELERY_EQUIP, SoundType.JEWELERY_UNEQUIP),
     RING_2_SLOT(12, "Ring Slot", ReservedSlotItemType.RING, SoundType.JEWELERY_EQUIP, SoundType.JEWELERY_UNEQUIP),
     FAIRY_SLOT(13, "Fairy Slot", ReservedSlotItemType.FAIRY, SoundType.FAIRY_EQUIP, SoundType.FAIRY_UNEQUIP),
-    FAIRY_FOOD_SLOT(14, "Fairy Food Slot", ReservedSlotItemType.FAIRY_FOOD, SoundType.FAIRY_FOOD_EQUIP, SoundType.FAIRY_FOOD_UNEQUIP);
+    FAIRY_FOOD_SLOT(14, "Fairy Food Slot", ReservedSlotItemType.FAIRY_FOOD, SoundType.FAIRY_FOOD_EQUIP, SoundType.FAIRY_FOOD_UNEQUIP),
+    ARROW_SLOT(15, "Arrow Slot", ReservedSlotItemType.ARROW, SoundType.ARROW_EQUIP, SoundType.ARROW_UNEQUIP);
 
     private static final Map<Integer, ReservedSlot> SLOT_LOOKUP;
 
@@ -64,6 +65,7 @@ public enum ReservedSlot {
             case RING -> false;
             case FAIRY -> itemType.type == ItemType.FAIRY;
             case FAIRY_FOOD -> itemType.type == ItemType.FAIRY_FOOD;
+            case ARROW -> itemType.type == ItemType.ARROW;
         };
     }
 
