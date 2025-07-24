@@ -16,7 +16,8 @@ public enum SkillType {
 
     CRAFTING(11, "Crafting", 0, Icon.CRAFTING),
     SMITHING(12, "Smithing", 0, Icon.ANVIL),
-    MINING(13, "Mining", 0, Icon.PICKAXE);
+    MINING(13, "Mining", 0, Icon.PICKAXE),
+    FLETCHING(14, "Fletching", 0, Icon.BOW);
 
     /*
         HERBLORE(15, "Herblore", 0),

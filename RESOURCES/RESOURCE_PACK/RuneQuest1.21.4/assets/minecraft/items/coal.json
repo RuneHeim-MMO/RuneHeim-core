@@ -428,7 +428,7 @@
                 }
             },
             {
-                "threshold": 2302,
+                "threshold": 2600,
                 "model": {
                     "type": "model",
                     "model": "item/custom/misc/bones"
@@ -512,10 +512,115 @@
                 }
             },
             {
-                "threshold": 2600,
+                "threshold": 2311,
                 "model": {
                     "type": "model",
-                    "model": "item/custom/misc/bones"
+                    "model": "item/custom/materials/bronze_arrow_tips"
+                }
+            },
+            {
+                "threshold": 2312,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/iron_arrow_tips"
+                }
+            },
+            {
+                "threshold": 2313,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/steel_arrow_tips"
+                }
+            },
+            {
+                "threshold": 2314,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/mithril_arrow_tips"
+                }
+            },
+            {
+                "threshold": 2315,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/adamantite_arrow_tips"
+                }
+            },
+            {
+                "threshold": 2316,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/runite_arrow_tips"
+                }
+            },
+            {
+                "threshold": 2317,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/shortbow_unf"
+                }
+            },
+            {
+                "threshold": 2318,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/longbow_unf"
+                }
+            },
+            {
+                "threshold": 2319,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/birch_shortbow_unf"
+                }
+            },
+            {
+                "threshold": 2320,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/birch_longbow_unf"
+                }
+            },
+            {
+                "threshold": 2321,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/maple_longbow_unf"
+                }
+            },
+            {
+                "threshold": 2322,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/maple_shortbow_unf"
+                }
+            },
+            {
+                "threshold": 2323,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/yew_shortbow_unf"
+                }
+            },
+            {
+                "threshold": 2324,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/yew_longbow_unf"
+                }
+            },
+            {
+                "threshold": 2325,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/magic_shortbow_unf"
+                }
+            },
+            {
+                "threshold": 2326,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/magic_longbow_unf"
                 }
             },
             {

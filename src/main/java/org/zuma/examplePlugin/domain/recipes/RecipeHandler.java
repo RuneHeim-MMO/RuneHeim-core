@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
+import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.utils.CurrencyUtils;
@@ -49,9 +50,7 @@ public class RecipeHandler {
 
         Component resultComponent = recipe.getDisplayItemstack(player, itemRegistry).displayName().color(NamedTextColor.WHITE);
         String recipeResultNameString = times + "x " + TextUtils.extractPlainText(resultComponent);
-        List<ItemRecord> totalIngredients = multiplyItemRecords(recipe.getIngredients().stream()
-                .map(record -> new ItemRecord(record.itemId(), record.amount())).toList(), times);
-
+        List<ItemRecord> totalIngredients = getIngredients(recipe, times);
 
         if (player.getPouchCoins() < totalCost) {
             HudService.sendFailMessage(player, Component.text("You do not have enough money to " + type.getVerb().toLowerCase() + " ")
@@ -184,6 +183,22 @@ public class RecipeHandler {
                 }, () -> recipe.handleRecipeCraftingAborted(player));
 
         return true;
+    }
+
+    private static @NotNull List<ItemRecord> getIngredients(AbstractRecipe recipe, int times) {
+        List<ItemRecord> totalIngredients = new ArrayList<>();
+        List<IngredientRecord> recipeIngredients = recipe.getIngredients();
+
+        recipeIngredients.forEach(ingredientRecord -> {
+            if (!ingredientRecord.isConsumedOnSuccess() && !ingredientRecord.isConsumedOnFail()) {
+                // It's a tool, or the quantity does not matter - so, set as required quantity to be 1;
+                totalIngredients.add(new ItemRecord(ingredientRecord.itemId(), ingredientRecord.amount()));
+            } else {
+                totalIngredients.add(new ItemRecord(ingredientRecord.itemId(), ingredientRecord.amount() * times));
+            }
+
+        });
+        return totalIngredients;
     }
 
     public boolean handleInventoryRecipeClick(RunePlayer player, Inventory inventory, AbstractItemType firstItem, AbstractItemType secondItem) {

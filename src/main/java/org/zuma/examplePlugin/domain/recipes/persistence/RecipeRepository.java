@@ -21,6 +21,340 @@ public class RecipeRepository {
     public List<RecipeEntity> getAll() {
         return List.of(
 
+                // Fletching
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.SHORTBOW.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 5)),
+                        List.of(
+                                new IngredientRecord(ItemId.SHORTBOW_UNFINISHED, 1, true, false),
+                                new IngredientRecord(ItemId.BOW_STRING, 1, true, false)
+                        ),
+                        new ItemRecord(ItemId.SHORT_BOW, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 5.0)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.LONGBOW.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 10)),
+                        List.of(
+                                new IngredientRecord(ItemId.LONGBOW_UNFINISHED, 1, true, false),
+                                new IngredientRecord(ItemId.BOW_STRING, 1, true, false)
+                        ),
+                        new ItemRecord(ItemId.LONG_BOW, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 10.0)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.BIRCH_SHORTBOW.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 20)),
+                        List.of(
+                                new IngredientRecord(ItemId.BIRCH_SHORTBOW_UNFINISHED, 1, true, false),
+                                new IngredientRecord(ItemId.BOW_STRING, 1, true, false)
+                        ),
+                        new ItemRecord(ItemId.BIRCH_SHORT_BOW, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 16.5)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.BIRCH_LONGBOW.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 25)),
+                        List.of(
+                                new IngredientRecord(ItemId.BIRCH_LONGBOW_UNFINISHED, 1, true, false),
+                                new IngredientRecord(ItemId.BOW_STRING, 1, true, false)
+                        ),
+                        new ItemRecord(ItemId.BIRCH_LONG_BOW, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 25.0)), null), null),
+
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAPLE_SHORTBOW.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 50)),
+                        List.of(
+                                new IngredientRecord(ItemId.MAPLE_SHORTBOW_UNFINISHED, 1, true, false),
+                                new IngredientRecord(ItemId.BOW_STRING, 1, true, false)
+                        ),
+                        new ItemRecord(ItemId.MAPLE_SHORT_BOW, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 58.3)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAPLE_LONGBOW.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 55)),
+                        List.of(
+                                new IngredientRecord(ItemId.MAPLE_LONGBOW_UNFINISHED, 1, true, false),
+                                new IngredientRecord(ItemId.BOW_STRING, 1, true, false)
+                        ),
+                        new ItemRecord(ItemId.MAPLE_LONG_BOW, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 58.3)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.YEW_SHORTBOW.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 65)),
+                        List.of(
+                                new IngredientRecord(ItemId.YEW_SHORTBOW_UNFINISHED, 1, true, false),
+                                new IngredientRecord(ItemId.BOW_STRING, 1, true, false)
+                        ),
+                        new ItemRecord(ItemId.YEW_SHORT_BOW, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 67.5)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.YEW_LONGBOW.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 70)),
+                        List.of(
+                                new IngredientRecord(ItemId.YEW_LONGBOW_UNFINISHED, 1, true, false),
+                                new IngredientRecord(ItemId.BOW_STRING, 1, true, false)
+                        ),
+                        new ItemRecord(ItemId.YEW_LONG_BOW, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 75.0)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAGIC_SHORTBOW.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 80)),
+                        List.of(
+                                new IngredientRecord(ItemId.MAGIC_SHORTBOW_UNFINISHED, 1, true, false),
+                                new IngredientRecord(ItemId.MAGIC_BOW_STRING, 1, true, false)
+                        ),
+                        new ItemRecord(ItemId.MAGIC_SHORT_BOW, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 83.3)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAGIC_LONGBOW.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 85)),
+                        List.of(
+                                new IngredientRecord(ItemId.MAGIC_LONGBOW_UNFINISHED, 1, true, false),
+                                new IngredientRecord(ItemId.MAGIC_BOW_STRING, 1, true, false)
+                        ),
+                        new ItemRecord(ItemId.MAGIC_LONG_BOW, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 91.5)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.SHORTBOW_UNFINISHED.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 5)),
+                        List.of(
+                                new IngredientRecord(ItemId.LOG, 1, true, false),
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.SHORTBOW_UNFINISHED, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 5.0)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.LONGBOW_UNFINISHED.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 10)),
+                        List.of(
+                                new IngredientRecord(ItemId.LOG, 1, true, false),
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.LONGBOW_UNFINISHED, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 10.0)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.BIRCH_SHORTBOW_UNFINISHED.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 20)),
+                        List.of(
+                                new IngredientRecord(ItemId.BIRCH_LOG, 1, true, false),
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.BIRCH_SHORTBOW_UNFINISHED, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 16.5)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.BIRCH_LONGBOW_UNFINISHED.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 25)),
+                        List.of(
+                                new IngredientRecord(ItemId.BIRCH_LOG, 1, true, false),
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.BIRCH_LONGBOW_UNFINISHED, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 25.0)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAPLE_SHORTBOW_UNFINISHED.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 50)),
+                        List.of(
+                                new IngredientRecord(ItemId.MAPLE_LOG, 1, true, false),
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.MAPLE_SHORTBOW_UNFINISHED, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 41.5)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAPLE_LONGBOW_UNFINISHED.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 55)),
+                        List.of(
+                                new IngredientRecord(ItemId.MAPLE_LOG, 1, true, false),
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.MAPLE_LONGBOW_UNFINISHED, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 58.3)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.YEW_SHORTBOW_UNFINISHED.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 65)),
+                        List.of(
+                                new IngredientRecord(ItemId.YEW_LOG, 1, true, false),
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.YEW_SHORTBOW_UNFINISHED, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 67.5)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.YEW_LONGBOW_UNFINISHED.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 70)),
+                        List.of(
+                                new IngredientRecord(ItemId.YEW_LOG, 1, true, false),
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.YEW_LONGBOW_UNFINISHED, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 75.0)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAGIC_SHORTBOW_UNFINISHED.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 80)),
+                        List.of(
+                                new IngredientRecord(ItemId.MAGIC_LOG, 1, true, false),
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.MAGIC_SHORTBOW_UNFINISHED, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 83.3)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAGIC_LONGBOW_UNFINISHED.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 85)),
+                        List.of(
+                                new IngredientRecord(ItemId.MAGIC_LOG, 1, true, false),
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.MAGIC_LONGBOW_UNFINISHED, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 91.5)), null), null),
+
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.BRONZE_ARROW.getId(), RecipeType.INVENTORY_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 1)),
+                        List.of(
+                                new IngredientRecord(ItemId.BRONZE_ARROW_TIPS, 15, true, false),
+                                new IngredientRecord(ItemId.HEADLESS_ARROW, 15, true, false)
+                        ),
+                        new ItemRecord(ItemId.BRONZE_ARROW, 15),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 15.0)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.IRON_ARROW.getId(), RecipeType.INVENTORY_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 15)),
+                        List.of(
+                                new IngredientRecord(ItemId.IRON_ARROW_TIPS, 15, true, false),
+                                new IngredientRecord(ItemId.HEADLESS_ARROW, 15, true, false)
+                        ),
+                        new ItemRecord(ItemId.IRON_ARROW, 15),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 37.5)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.STEEL_ARROW.getId(), RecipeType.INVENTORY_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 30)),
+                        List.of(
+                                new IngredientRecord(ItemId.STEEL_ARROW_TIPS, 15, true, false),
+                                new IngredientRecord(ItemId.HEADLESS_ARROW, 15, true, false)
+                        ),
+                        new ItemRecord(ItemId.STEEL_ARROW, 15),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 75.0)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.MITHRIL_ARROW.getId(), RecipeType.INVENTORY_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 45)),
+                        List.of(
+                                new IngredientRecord(ItemId.MITHRIL_ARROW_TIPS, 15, true, false),
+                                new IngredientRecord(ItemId.HEADLESS_ARROW, 15, true, false)
+                        ),
+                        new ItemRecord(ItemId.MITHRIL_ARROW, 15),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 112.5)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANT_ARROW.getId(), RecipeType.INVENTORY_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 60)),
+                        List.of(
+                                new IngredientRecord(ItemId.ADAMANTITE_ARROW_TIPS, 15, true, false),
+                                new IngredientRecord(ItemId.HEADLESS_ARROW, 15, true, false)
+                        ),
+                        new ItemRecord(ItemId.ADAMANT_ARROW, 15),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 150.0)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNITE_ARROW.getId(), RecipeType.INVENTORY_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 75)),
+                        List.of(
+                                new IngredientRecord(ItemId.RUNITE_ARROW_TIPS, 15, true, false),
+                                new IngredientRecord(ItemId.HEADLESS_ARROW, 15, true, false)
+                        ),
+                        new ItemRecord(ItemId.RUNITE_ARROW, 15),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 187.5)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.HEADLESS_ARROW.getId(), RecipeType.INVENTORY_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 1)),
+                        List.of(
+                                new IngredientRecord(ItemId.ARROW_SHAFT, 15, true, false),
+                                new IngredientRecord(ItemId.FEATHER, 15, true, false)
+                        ),
+                        new ItemRecord(ItemId.HEADLESS_ARROW, 15),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 15.0)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.LOG_ARROW_SHAFT.getId(), RecipeType.INVENTORY_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 1)),
+                        List.of(
+                                new IngredientRecord(ItemId.LOG, 1, true, false),
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.ARROW_SHAFT, 15),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 15.0)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.BIRCH_ARROW_SHAFT.getId(), RecipeType.INVENTORY_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 20)),
+                        List.of(
+                                new IngredientRecord(ItemId.BIRCH_LOG, 1, true, false),
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.ARROW_SHAFT, 15),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 25.0)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAPLE_ARROW_SHAFT.getId(), RecipeType.INVENTORY_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 35)),
+                        List.of(
+                                new IngredientRecord(ItemId.MAPLE_LOG, 1, true, false),
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.ARROW_SHAFT, 15),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 35.0)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.YEW_ARROW_SHAFT.getId(), RecipeType.INVENTORY_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 50)),
+                        List.of(
+                                new IngredientRecord(ItemId.YEW_LOG, 1, true, false),
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.ARROW_SHAFT, 15),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 45.0)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAHOGANY_ARROW_SHAFT.getId(), RecipeType.INVENTORY_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 55)),
+                        List.of(
+                                new IngredientRecord(ItemId.MAHOGANY_LOG, 1, true, false),
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.ARROW_SHAFT, 15),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 50.0)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAGIC_ARROW_SHAFT.getId(), RecipeType.INVENTORY_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 75)),
+                        List.of(
+                                new IngredientRecord(ItemId.MAGIC_LOG, 1, true, false),
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.ARROW_SHAFT, 15),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 60.0)), null), null),
+
+
                 // Spinning wheel
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.BALL_OF_WOOL_RECIPE.getId(), RecipeType.SPINNING_WHEEL_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 1)),
@@ -50,6 +384,18 @@ public class RecipeRepository {
                         new ItemRecord(ItemId.MAGIC_BOW_STRING, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.CRAFTING, 40)), null
+                ), null),
+
+                // Tools
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.KNIFE.getId(), RecipeType.SMITHING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 8)),
+                        List.of(
+                                new IngredientRecord(ItemId.IRON_BAR, 1, true, false),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.KNIFE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 20)), null
                 ), null),
 
                 // Campfires
@@ -126,6 +472,54 @@ public class RecipeRepository {
                 ), new VersionedJson(gson.toJson(
                         new CampfireRecipeMeta("Magic Logs", "Magic Campfire", 600, true, new ItemRecord(ItemId.MAGIC_ASHES, 1))), 1)),
 
+                // Arrow Tips
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.BRONZE_ARROW_TIPS.getId(), RecipeType.SMITHING_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 5)),
+                        List.of(new IngredientRecord(ItemId.BRONZE_BAR, 1, true, false),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)),
+                        new ItemRecord(ItemId.BRONZE_ARROW_TIPS, 15),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 12.5)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.IRON_ARROW_TIPS.getId(), RecipeType.SMITHING_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 20)),
+                        List.of(new IngredientRecord(ItemId.IRON_BAR, 1, true, false),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)),
+                        new ItemRecord(ItemId.IRON_ARROW_TIPS, 15),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 25.0)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.STEEL_ARROW_TIPS.getId(), RecipeType.SMITHING_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 35)),
+                        List.of(new IngredientRecord(ItemId.STEEL_BAR, 1, true, false),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)),
+                        new ItemRecord(ItemId.STEEL_ARROW_TIPS, 15),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 37.5)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.MITHRIL_ARROW_TIPS.getId(), RecipeType.SMITHING_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 50)),
+                        List.of(new IngredientRecord(ItemId.MITHRIL_BAR, 1, true, false),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)),
+                        new ItemRecord(ItemId.MITHRIL_ARROW_TIPS, 15),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 50.0)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANTITE_ARROW_TIPS.getId(), RecipeType.SMITHING_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 70)),
+                        List.of(new IngredientRecord(ItemId.ADAMANTITE_BAR, 1, true, false),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)),
+                        new ItemRecord(ItemId.ADAMANTITE_ARROW_TIPS, 15),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 62.5)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNITE_ARROW_TIPS.getId(), RecipeType.SMITHING_RECIPE, 500,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 90)),
+                        List.of(new IngredientRecord(ItemId.RUNITE_BAR, 1, true, false),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)),
+                        new ItemRecord(ItemId.RUNITE_ARROW_TIPS, 15),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 75.0)), null), null),
 
                 // Bars
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.BRONZE_BAR.getId(), RecipeType.SMELTING_RECIPE, 3000,

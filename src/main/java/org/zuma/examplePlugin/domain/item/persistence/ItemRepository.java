@@ -223,7 +223,16 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.CHISEL.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Chisel", List.of("Used for carving or shaping materials."), null, null),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
-                                        null, null), 1)),
+                                        List.of(
+                                                new Modifier(ModifierType.ATTACK_STAB, 4),
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 2)
+                                        ), null), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.KNIFE.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Knife", List.of("A small, sharp blade.", "Used for cutting, carving, and crafting."), null, null),
+                        toVersionedJson(new EquipableTypeMeta(null, List.of(
+                                new Modifier(ModifierType.ATTACK_SLASH, 6),
+                                new Modifier(ModifierType.STRENGTH_BONUS, 2)
+                        ), null), 1)),
 
 
                 // Materials
@@ -274,7 +283,22 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.HARD_LEATHER.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Hard Leather", List.of("Treated for durability.", "Used to craft sturdy gear."), null, null), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.HEADLESS_ARROW.asInt(), Material.COAL, ItemRarity.COMMON, "Headless Arrow", List.of("An unfinished arrow lacking a tip.", "Needs a metal head to be complete."), null, null), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.LEATHER.asInt(), Material.COAL, ItemRarity.COMMON, "Leather", List.of("Tanned animal hide.", "Used in basic crafting and armor."), null, null), null),
-
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BRONZE_ARROW_TIPS.asInt(), Material.COAL, ItemRarity.COMMON, "Bronze Arrowtips", List.of("Forged from bronze.", "Used to make basic arrows."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.IRON_ARROW_TIPS.asInt(), Material.COAL, ItemRarity.COMMON, "Iron Arrowtips", List.of("Sharpened iron points.", "Commonly used for training."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.STEEL_ARROW_TIPS.asInt(), Material.COAL, ItemRarity.COMMON, "Steel Arrowtips", List.of("Harder than iron.", "Used for stronger arrows."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MITHRIL_ARROW_TIPS.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Mithril Arrowtips", List.of("Lightweight and sharp.", "Favored by skilled archers."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ADAMANTITE_ARROW_TIPS.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Adamantite Arrowtips", List.of("Tough and deadly.", "Crafted for elite arrows."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RUNITE_ARROW_TIPS.asInt(), Material.COAL, ItemRarity.RARE, "Runite Arrowtips", List.of("Forged from rare runite.", "Used in mastercrafted ammunition."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.SHORTBOW_UNFINISHED.asInt(), Material.COAL, ItemRarity.COMMON, "Shortbow (unfinished)", List.of("An unstrung shortbow.", "Needs a bowstring to complete."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.LONGBOW_UNFINISHED.asInt(), Material.COAL, ItemRarity.COMMON, "Longbow (unfinished)", List.of("An unstrung longbow.", "Needs a bowstring to complete."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BIRCH_SHORTBOW_UNFINISHED.asInt(), Material.COAL, ItemRarity.COMMON, "Birch Shortbow (unfinished)", List.of("An unstrung birch shortbow.", "Needs a bowstring to complete."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BIRCH_LONGBOW_UNFINISHED.asInt(), Material.COAL, ItemRarity.COMMON, "Birch Longbow (unfinished)", List.of("An unstrung birch longbow.", "Needs a bowstring to complete."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAPLE_LONGBOW_UNFINISHED.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Maple Longbow (unfinished)", List.of("An unstrung maple longbow.", "Needs a bowstring to complete."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAPLE_SHORTBOW_UNFINISHED.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Maple Shortbow (unfinished)", List.of("An unstrung maple shortbow.", "Needs a bowstring to complete."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.YEW_SHORTBOW_UNFINISHED.asInt(), Material.COAL, ItemRarity.RARE, "Yew Shortbow (unfinished)", List.of("An unstrung yew shortbow.", "Needs a bowstring to complete."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.YEW_LONGBOW_UNFINISHED.asInt(), Material.COAL, ItemRarity.RARE, "Yew Longbow (unfinished)", List.of("An unstrung yew longbow.", "Needs a bowstring to complete."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_SHORTBOW_UNFINISHED.asInt(), Material.COAL, ItemRarity.COMMON, "Magic Shortbow (unfinished)", List.of("An unstrung magic shortbow.", "Needs a bowstring to complete."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_LONGBOW_UNFINISHED.asInt(), Material.COAL, ItemRarity.COMMON, "Magic Longbow (unfinished)", List.of("An unstrung magic longbow.", "Needs a bowstring to complete."), null, null), null),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.BONES.asInt(), Material.COAL, ItemRarity.COMMON, "Bones", List.of("Remains of a fallen creature."), null, null), null),
 
