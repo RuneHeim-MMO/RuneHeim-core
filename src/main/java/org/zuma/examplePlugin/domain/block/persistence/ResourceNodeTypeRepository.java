@@ -19,6 +19,13 @@ public class ResourceNodeTypeRepository {
     public List<ResourceNodeType> getAll() {
         return List.of(
 
+                new ResourceNodeType(ResourceNodeTypeId.FLAX.asInt(), MarkerType.FLAX,
+                        "Flax", Material.BLUE_ORCHID, null, null, 500, 60,
+                        new ItemRecord(ItemId.FLAX, 1),
+                        "", "Picking",
+                        SoundType.PICKING_UP_PLANT_START, null, SoundType.PICKING_UP_PLANT_END,
+                        List.of()),
+
                 // Trees
                 new ResourceNodeType(ResourceNodeTypeId.TREE.asInt(), MarkerType.TREE,
                         "Tree", Material.OAK_LOG,

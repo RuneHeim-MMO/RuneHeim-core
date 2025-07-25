@@ -97,6 +97,8 @@ public enum SoundType {
 
     SHOP_MOVE_ITEM("ITEM_ARMOR_EQUIP_GENERIC", false, 0.6f, 1.2f),
 
+    PICKING_UP_PLANT_START("BLOCK_ROOTED_DIRT_BREAK", false, 1.0f, 1.0f),
+    PICKING_UP_PLANT_END("BLOCK_MOSS_BREAK", false, 1.0f, 0.9f),
 
     // AMBIENT
     VILLAGER_MAN_AMBIENT_1("vocal_villagers:entity.villager.ambient", true, 1, 0.75f),

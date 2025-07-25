@@ -36,7 +36,8 @@ public enum MarkerType {
     SMELTING_FURNACE("smelting-furnace-markers", "Smelting furnaces", ""),
     ANVIL("anvil-markers", "Anvils", ""),
     CRAFTING_TABLE("crafting-table-markers", "Crafting tables", ""),
-    SPINNING_WHEEL("spinning-wheel-markers", "Spinning wheels", "");
+    SPINNING_WHEEL("spinning-wheel-markers", "Spinning wheels", ""),
+    FLAX("flax-markers", "Flax", "");
 
 
     private final String id, label, iconURL;
@@ -58,4 +59,4 @@ public enum MarkerType {
     public String getIconURL() {
         return iconURL;
     }
-}
+    }

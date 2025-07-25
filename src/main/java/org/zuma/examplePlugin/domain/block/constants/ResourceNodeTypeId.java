@@ -2,6 +2,8 @@ package org.zuma.examplePlugin.domain.block.constants;
 
 public enum ResourceNodeTypeId {
 
+    FLAX(300),
+
     TREE(200),
     BIRCH_TREE(201),
     MAPLE_TREE(203),

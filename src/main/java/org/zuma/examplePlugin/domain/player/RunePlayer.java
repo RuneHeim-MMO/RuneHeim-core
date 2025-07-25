@@ -162,7 +162,7 @@ public class RunePlayer implements CombatEntity {
     }
 
     // Busy state management
-    public void useBusyState(int durationMs, String action, String successAction, SoundType stepSound, SoundType successSound, Runnable onSuccess, @Nullable Runnable onFailure) {
+    public void useBusyState(int durationMs, String action, String successAction, @Nullable SoundType stepSound,@Nullable SoundType successSound, Runnable onSuccess, @Nullable Runnable onFailure) {
         this.busyStateHandler.useBusyState(durationMs, action, successAction, stepSound, successSound, onSuccess, onFailure);
     }
 

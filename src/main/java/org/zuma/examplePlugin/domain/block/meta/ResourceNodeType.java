@@ -9,7 +9,9 @@ import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.SkillXpRecord;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ResourceNodeType {
     private final int id;
@@ -25,13 +27,12 @@ public class ResourceNodeType {
     @Nullable
     private final ModifierType toolModifier;
 
-    public ResourceNodeType(int id, MarkerType markerType, String label, Material material, List<SkillRequirement> requirements, @Nullable ModifierType toolRequiresModifier,
-                            int baseGatheringDurationMs, int respawnDurationSecs, ItemRecord drop, String wrongToolMsg, String actionVerb, SoundType startSound, SoundType stepSound, SoundType gatherSuccessSound, List<SkillXpRecord> xpReward) {
+    public ResourceNodeType(int id, MarkerType markerType, String label, Material material, @Nullable List<SkillRequirement> requirements, @Nullable ModifierType toolRequiresModifier,
+                            int baseGatheringDurationMs, int respawnDurationSecs, ItemRecord drop, String wrongToolMsg, String actionVerb, SoundType startSound, SoundType stepSound, SoundType gatherSuccessSound, @Nullable List<SkillXpRecord> xpReward) {
         this.id = id;
         this.markerType = markerType;
         this.label = label;
         this.material = material;
-        this.requirements = requirements;
         this.toolModifier = toolRequiresModifier;
         this.baseGatheringDurationMs = baseGatheringDurationMs;
         this.respawnDurationSecs = respawnDurationSecs;
@@ -41,7 +42,9 @@ public class ResourceNodeType {
         this.startSound = startSound;
         this.stepSound = stepSound;
         this.gatherSuccessSound = gatherSuccessSound;
-        this.xpReward = xpReward;
+
+        this.requirements = Objects.requireNonNullElseGet(requirements, ArrayList::new);
+        this.xpReward = Objects.requireNonNullElseGet(xpReward, ArrayList::new);
     }
 
     public Material getMaterial() {
@@ -49,6 +52,7 @@ public class ResourceNodeType {
     }
 
     public int getBaseGatheringDurationMillis() {
+
         return baseGatheringDurationMs;
     }
 
@@ -81,10 +85,12 @@ public class ResourceNodeType {
         return actionVerb;
     }
 
+    @Nullable
     public SoundType getStepSound() {
         return stepSound;
     }
 
+    @Nullable
     public SoundType getGatherSuccessSound() {
         return gatherSuccessSound;
     }
@@ -97,6 +103,7 @@ public class ResourceNodeType {
         return xpReward;
     }
 
+    @Nullable
     public SoundType getStartSound() {
         return startSound;
     }

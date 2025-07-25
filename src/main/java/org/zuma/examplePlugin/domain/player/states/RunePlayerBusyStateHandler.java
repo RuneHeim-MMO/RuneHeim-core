@@ -27,7 +27,7 @@ public class RunePlayerBusyStateHandler {
         this.player = player;
     }
 
-    public void useBusyState(int durationMs, String action, String successAction, SoundType stepSound, SoundType successSound, Runnable onSuccess, @Nullable Runnable onFailure) {
+    public void useBusyState(int durationMs, String action, String successAction, @Nullable SoundType stepSound, @Nullable SoundType successSound, Runnable onSuccess, @Nullable Runnable onFailure) {
         UUID uuid = player.getUUID();
         int steps = 10;
         long stepDuration = Math.max(1L, (durationMs / 50L) / steps);
@@ -70,7 +70,7 @@ public class RunePlayerBusyStateHandler {
                     isBusy = false;
                     this.cancel();
 
-                    successSound.play(onlinePlayer, true);
+                    if (successSound != null) successSound.play(onlinePlayer, true);
                     onlinePlayer.showTitle(Title.title(
                             Component.empty(),
                             Component.text(successAction).color(Color.SUCCESS.asColor()),
@@ -95,7 +95,7 @@ public class RunePlayerBusyStateHandler {
                         .fillColor(Color.BUSY_BAR_FILL.asColor())
                         .build();
 
-                stepSound.play(onlinePlayer, true);
+                if (stepSound != null) stepSound.play(onlinePlayer, true);
                 onlinePlayer.swingMainHand();
                 onlinePlayer.showTitle(Title.title(progressBar,
                         Component.text("[" + secondsLeft + "s] ").color(Color.SUCCESS.asColor())

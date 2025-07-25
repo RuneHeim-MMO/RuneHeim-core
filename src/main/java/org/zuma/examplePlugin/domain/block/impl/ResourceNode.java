@@ -24,6 +24,7 @@ import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.constants.EquipableType;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
+import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.events.block.ResourceNodeGatheredEvent;
@@ -61,6 +62,10 @@ public class ResourceNode extends AbstractInteractableBlock {
 
         blockType.getRequirements().forEach(req -> hologramContent.add(Color.ACCENT.asSpigotHex() +
                 "Req. §f" + req.type().getSymbol() + Color.ACCENT.asSpigotHex() + " " + req.minimumLevel() + " Level"));
+
+        if (blockType.getRequirements().isEmpty()) {
+            hologramContent.add("");
+        }
 
 
         setHologram(DHAPI.createHologram(UUID.randomUUID().toString(), getHologramLocation(), hologramContent));
@@ -112,7 +117,8 @@ public class ResourceNode extends AbstractInteractableBlock {
 
 
     private void startGatheringAction(RunePlayer player, double modifier) {
-        blockType.getStartSound().play(player, true);
+        if (blockType.getStartSound() != null) blockType.getStartSound().play(player, true);
+
         player.useBusyState((int) (blockType.getBaseGatheringDurationMillis() / modifier), blockType.getActionVerb() + " " + blockType.getLabel(),
                 "", blockType.getStepSound(), blockType.getGatherSuccessSound(), () -> onGather(player), null);
     }
@@ -139,7 +145,7 @@ public class ResourceNode extends AbstractInteractableBlock {
     public void depleteResource() {
         isDepleted = true;
 
-        this.spawn(Material.BARRIER);
+        this.spawn(Material.AIR);
 
         DHAPI.setHologramLine(this.getHologram(), this.getHologram().size() + 1, "");
         DHAPI.setHologramLine(this.getHologram(), 0, Color.DEPLETED_RESOURCE.asSpigotHex() + "❌ " + blockType.getLabel());
@@ -189,7 +195,7 @@ public class ResourceNode extends AbstractInteractableBlock {
         if (schematicHandler != null) {
             schematicHandler.updateNodeModel(this);
 
-            if (material.equals(Material.BARRIER)) {
+            if (material.equals(Material.AIR)) {
                 return;
             }
         }
@@ -221,30 +227,32 @@ public class ResourceNode extends AbstractInteractableBlock {
             return;
         }
 
-        // Ensure the item in hand is equipable and valid for gathering
-        if (!(itemInHand instanceof EquipableItemType gearItemInHand && gearItemInHand.getEquipableType().equals(EquipableType.HANDHELD))) {
-            HudService.sendFailMessage(player, Component.text(blockType.getWrongToolMessage()));
-            return;
-        }
 
-        // Determine if a specific tool modifier is required and attempt to retrieve it
-        boolean hasRequiredModifier = blockType.getRequiredToolModifier() != null;
-        Optional<Modifier> requiredToolModifier = gearItemInHand.getModifierByType(blockType.getRequiredToolModifier());
+        // Check if a tool modifier is required
+        ModifierType requiredModifierType = blockType.getRequiredToolModifier();
+        boolean requiresTool = requiredModifierType != null;
 
-        // If a required modifier exists but the item lacks it, fail the interaction
-        if (hasRequiredModifier && requiredToolModifier.isEmpty()) {
-            HudService.sendFailMessage(player, Component.text(blockType.getWrongToolMessage()));
-            return;
-        }
+        if (requiresTool) {
+            // If a tool is required, ensure the item in hand is a valid handheld equipable
+            if (!(itemInHand instanceof EquipableItemType gearItemInHand &&
+                    gearItemInHand.getEquipableType().equals(EquipableType.HANDHELD))) {
+                HudService.sendFailMessage(player, Component.text(blockType.getWrongToolMessage()));
+                return;
+            }
 
-        // Start the mining action, using the modifier amount if present
-        if (hasRequiredModifier) {
-            requiredToolModifier.ifPresent(modifier -> {
-                startGatheringAction(player, modifier.amount());
-            });
-            return;
+            // Check if the held item has the required modifier
+            Optional<Modifier> requiredToolModifier = gearItemInHand.getModifierByType(requiredModifierType);
+
+            if (requiredToolModifier.isEmpty()) {
+                HudService.sendFailMessage(player, Component.text(blockType.getWrongToolMessage()));
+                return;
+            }
+
+            // Start action using the modifier’s amount
+            startGatheringAction(player, requiredToolModifier.get().amount());
         } else {
-            startGatheringAction(player, 0);
+            // No tool is required, just start the action with default amount
+            startGatheringAction(player, 1);
         }
     }
 
