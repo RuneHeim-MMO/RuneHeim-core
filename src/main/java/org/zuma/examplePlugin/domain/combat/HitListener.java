@@ -1,6 +1,8 @@
 package org.zuma.examplePlugin.domain.combat;
 
 import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -59,6 +61,18 @@ public class HitListener implements Listener {
         }
 
     }
+
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    public void onProjectileHitMob(EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof Mob mobEntity)) return;
+
+        if (event.getDamager() instanceof Arrow arrow && arrow.getShooter() instanceof Player shooter) {
+            AttributeInstance followRange = mobEntity.getAttribute(Attribute.GENERIC_FOLLOW_RANGE);
+            if (followRange != null) followRange.setBaseValue(100);
+            mobEntity.setTarget(shooter);
+        }
+    }
+
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onEntityAttackEntityProjectile(EntityDamageByEntityEvent event) {

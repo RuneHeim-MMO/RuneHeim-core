@@ -7,6 +7,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.MathUtils;
+import org.zuma.examplePlugin.core.utils.MobUtils;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneHandler;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneMobRecord;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneType;
@@ -99,7 +100,6 @@ public abstract class AbstractSpawnZone {
 
         mobRecords.forEach(record -> {
             if (RANDOM.nextInt(101) >= record.spawnChancePercentage()) {
-                System.out.println("fail chance");
                 return;
             }
 
@@ -109,10 +109,28 @@ public abstract class AbstractSpawnZone {
                     return;
                 }
 
-                Location mobLocation = getNextMobLocation();
+                Location mobLocation = null;
+                int maxRetries = 3;
+                int attempts = 0;
+
+                while (attempts < maxRetries) {
+                    Location candidate = getNextMobLocation();
+
+                    if (candidate == null) {
+                        RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Spawn location candidate was null for mob in Drop Zone ID: " + id + " type: " + this.type);
+                        continue;
+                    }
+
+                    if (MobUtils.isSafeMobLocation(candidate)) {
+                        mobLocation = candidate;
+                        break; // valid location found, exit loop
+                    }
+                    attempts++;
+                }
+
 
                 if (mobLocation == null) {
-                    RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Spawn location was null for mob in Drop Zone ID: " + id + " type: " + this.type);
+                    // Skip if failed getting location
                     continue;
                 }
 
@@ -126,7 +144,6 @@ public abstract class AbstractSpawnZone {
                 this.lastWaveSpawnedAmount++;
                 spawnedEntity.getPersistentDataContainer().set(SpawnZoneHandler.ZONE_KEY, PersistentDataType.INTEGER, this.id);
                 spawnedAndLoadedEntities.add(spawnedEntity.getUniqueId());
-                System.out.println(mobLocation);
             }
         });
 
@@ -134,19 +151,16 @@ public abstract class AbstractSpawnZone {
 
     private void waveSpawnTick() {
         if (System.currentTimeMillis() - lastWaveAttemptOccurred <= waveRateSeconds * 1000L) {
-            System.out.println("too fast");
             return;
         }
 
         double deadPercentage = getDeadEntitiesPercentage();
 
         if (!spawnedAndLoadedEntities.isEmpty() && deadPercentage < deadThresholdForWave) {
-            System.out.println("dead " + deadPercentage + " need min threshold " + deadThresholdForWave + " last spawned amnt: " + lastWaveSpawnedAmount + " max mobs " + maximumMobs + " total uuids " + spawnedAndLoadedEntities.size());
+            // System.out.println("dead " + deadPercentage + " need min threshold " + deadThresholdForWave + " last spawned amnt: " + lastWaveSpawnedAmount + " max mobs " + maximumMobs + " total uuids " + spawnedAndLoadedEntities.size());
             return;
         }
 
-        System.out.println("dead " + deadPercentage + " need min threshold " + deadThresholdForWave + " last spawned amnt: " + lastWaveSpawnedAmount + " max mobs " + maximumMobs + " total uuids " + spawnedAndLoadedEntities.size());
-        System.out.println("should spawn");
         spawnWave();
     }
 
@@ -210,7 +224,6 @@ public abstract class AbstractSpawnZone {
     public int getLastWaveSpawnedAmount() {
         return lastWaveSpawnedAmount;
     }
-
 
 
 }

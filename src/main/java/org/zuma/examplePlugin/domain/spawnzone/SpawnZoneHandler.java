@@ -134,6 +134,11 @@ public class SpawnZoneHandler {
     public void initializeFromDb() {
         this.repository.getAll().forEach(record -> {
             AbstractSpawnZone zone = factory.createZone(record.meta(), record.json());
+
+            if (spawnZones.containsKey(zone.getId())) {
+                throw new IllegalStateException("Spawn zone with id " + zone.getId() + " already exists!");
+            }
+
             spawnZones.put(zone.getId(), zone);
         });
 

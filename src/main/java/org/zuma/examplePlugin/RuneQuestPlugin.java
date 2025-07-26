@@ -30,7 +30,6 @@ import org.zuma.examplePlugin.domain.droptable.DropTableHandler;
 import org.zuma.examplePlugin.domain.droptable.persistence.DropTableRepository;
 import org.zuma.examplePlugin.domain.fairy.FairyHandler;
 import org.zuma.examplePlugin.domain.fairy.FairyListener;
-import org.zuma.examplePlugin.domain.combat.ranged.BowDrawHelper;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
 import org.zuma.examplePlugin.domain.gui.GUIListener;
 import org.zuma.examplePlugin.domain.gui.GUIRegistry;
@@ -107,7 +106,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         WeaponSpeedHandler weaponSpeedHandler = new WeaponSpeedHandler();
         BowSpeedHandler bowSpeedHandler = new BowSpeedHandler();
         BowVelocityHandler bowVelocityHandler = new BowVelocityHandler();
-        BowDrawHelper bowDrawHelper = new BowDrawHelper();
+        // BowDrawHelper bowDrawHelper = new BowDrawHelper();
 
         visualMeleeSpeedHandler = new VisualMeleeSpeedHandler();
         visualMeleeSpeedHandler.startEffectsLoop();
@@ -116,7 +115,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(weaponSpeedHandler, pluginInstance);
         getServer().getPluginManager().registerEvents(bowSpeedHandler, pluginInstance);
         getServer().getPluginManager().registerEvents(bowVelocityHandler, pluginInstance);
-        getServer().getPluginManager().registerEvents(bowDrawHelper, pluginInstance);
+        // getServer().getPluginManager().registerEvents(bowDrawHelper, pluginInstance);
 
 
         ConfigManager configManager = new ConfigManager();
@@ -193,12 +192,14 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(fairyListener, pluginInstance);
         fairyHandler.startLoop();
 
-
         spawnZoneHandler = new SpawnZoneHandler(new SpawnZoneRepository());
         SpawnZoneListener spawnZoneListener = new SpawnZoneListener(spawnZoneHandler);
         getServer().getPluginManager().registerEvents(spawnZoneListener, pluginInstance);
         spawnZoneHandler.initializeFromDb();
         spawnZoneHandler.startLoop();
+
+        CityGuardHandler cityGuardHandler = new CityGuardHandler();
+        getServer().getPluginManager().registerEvents(cityGuardHandler, pluginInstance);
 
         initializeMap();
 

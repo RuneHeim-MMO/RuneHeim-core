@@ -23,11 +23,12 @@ public class ResourceNodeType {
     private final SoundType startSound, stepSound, gatherSuccessSound;
     private final List<SkillXpRecord> xpReward;
     private final MarkerType markerType;
+    private final boolean displayResultInHologram;
 
     @Nullable
     private final ModifierType toolModifier;
 
-    public ResourceNodeType(int id, MarkerType markerType, String label, Material material, @Nullable List<SkillRequirement> requirements, @Nullable ModifierType toolRequiresModifier,
+    public ResourceNodeType(int id, MarkerType markerType, String label, Material material, boolean displayResultInHologram, @Nullable List<SkillRequirement> requirements, @Nullable ModifierType toolRequiresModifier,
                             int baseGatheringDurationMs, int respawnDurationSecs, ItemRecord drop, String wrongToolMsg, String actionVerb, SoundType startSound, SoundType stepSound, SoundType gatherSuccessSound, @Nullable List<SkillXpRecord> xpReward) {
         this.id = id;
         this.markerType = markerType;
@@ -42,6 +43,7 @@ public class ResourceNodeType {
         this.startSound = startSound;
         this.stepSound = stepSound;
         this.gatherSuccessSound = gatherSuccessSound;
+        this.displayResultInHologram = displayResultInHologram;
 
         this.requirements = Objects.requireNonNullElseGet(requirements, ArrayList::new);
         this.xpReward = Objects.requireNonNullElseGet(xpReward, ArrayList::new);
@@ -110,5 +112,9 @@ public class ResourceNodeType {
 
     public MarkerType getMarkerType() {
         return markerType;
+    }
+
+    public boolean isDisplayResultInHologram() {
+        return displayResultInHologram;
     }
 }

@@ -11,16 +11,13 @@ public enum MobType {
     GOBLIN_LOW_LVL_5("goblin_low_lvl_5"),
 
 
-
-
     GENERIC_SHOPKEEPER("generic_shopkeeper"),
     FUSION_MASTER("fusion_master"),
     SHEEP("sheep"), // Can shear wool off these
 
     // City guards (disguised iron golems to kill aggressive mobs near and inside of the cities)
-    CITY_GUARD_CLOSE_DISTANCE("city_guard_close_distance"),
-    CITY_GUARD_MEDIUM_DISTANCE("city_guard_medium_distance"),
-    CITY_GUARD_LONG_DISTANCE("city_guard_long_distance"),
+    CITY_GUARD_STATIC("city_guard_static"),
+    CITY_GUARD_WALKING("city_guard_walking"),
 
     // Boars
     BOAR_BROWN_ALPHA("yungwilder_isles_boar_brown_alpha"),

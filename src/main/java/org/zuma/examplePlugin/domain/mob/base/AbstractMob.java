@@ -75,7 +75,6 @@ public abstract class AbstractMob {
         this.baseMob = meta.baseEntity();
         this.silent = meta.silent();
 
-
         disguise = null;
         model = null;
         behavior = null;
@@ -85,7 +84,6 @@ public abstract class AbstractMob {
         maxWalkDistance = -1; // -1 means no limits, can walk anywhere.
         customAttributes = new HashMap<>();
         dropTableIds = new ArrayList<>();
-
         healthBarSafeName = this instanceof CombatantMob ? "" : getDisplayName();
     }
 
@@ -101,6 +99,10 @@ public abstract class AbstractMob {
         }
 
         return entity;
+    }
+
+    public HashMap<Attribute, Double> getCustomAttributes() {
+        return this.customAttributes;
     }
 
     public void setBaseEntity(EntityType type) {
@@ -351,6 +353,10 @@ public abstract class AbstractMob {
     }
 
     public void onPlayerInteractWithEntity(PlayerInteractAtEntityEvent event, RunePlayer player) {
+
+    }
+
+    public void onEntityAttackEntity(EntityDamageByEntityEvent event, Entity attacker) {
 
     }
 

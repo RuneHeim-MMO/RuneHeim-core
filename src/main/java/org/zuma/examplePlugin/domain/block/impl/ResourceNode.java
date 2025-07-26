@@ -41,16 +41,21 @@ public class ResourceNode extends AbstractInteractableBlock {
     private boolean isDepleted;
     private final BlockManager manager;
     private final Location origin;
-    private ItemStack dropItemStack = new ItemStack(Material.AIR);
-    private boolean isRemoved = false;
+    private ItemStack displayItemStack;
+    private boolean isRemoved;
+    private boolean displayResultInHologram;
 
     @Nullable
-    private ResourceNodeSchematicHandler schematicHandler = null;
+    private ResourceNodeSchematicHandler schematicHandler;
 
 
     public ResourceNode(BlockManager manager, AbstractInteractableBlockMeta meta) {
         super(meta, null, null);
+        this.displayItemStack = new ItemStack(Material.AIR);
+        this.isRemoved = false;
         this.isDepleted = false;
+        this.displayResultInHologram = false;
+        this.schematicHandler = null;
         this.origin = meta.location();
         this.manager = manager;
     }
@@ -69,7 +74,7 @@ public class ResourceNode extends AbstractInteractableBlock {
 
 
         setHologram(DHAPI.createHologram(UUID.randomUUID().toString(), getHologramLocation(), hologramContent));
-        DHAPI.addHologramLine(this.getHologram(), dropItemStack);
+        if (displayResultInHologram) DHAPI.addHologramLine(this.getHologram(), displayItemStack);
 
     }
 
@@ -94,7 +99,8 @@ public class ResourceNode extends AbstractInteractableBlock {
         }
 
         this.blockType = type;
-        this.dropItemStack = drop.createItemStackOfType();
+        this.displayItemStack = drop.createItemStackOfType();
+        this.displayResultInHologram = type.isDisplayResultInHologram();
         super.setMarkerType(type.getMarkerType());
         super.setMarkerLabel(type.getLabel());
         this.spawn(type.getMaterial());
@@ -147,14 +153,16 @@ public class ResourceNode extends AbstractInteractableBlock {
 
         this.spawn(Material.AIR);
 
-        DHAPI.setHologramLine(this.getHologram(), this.getHologram().size() + 1, "");
+        if (displayResultInHologram) DHAPI.setHologramLine(this.getHologram(), this.getHologram().size() + 1, "");
         DHAPI.setHologramLine(this.getHologram(), 0, Color.DEPLETED_RESOURCE.asSpigotHex() + "❌ " + blockType.getLabel());
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
             isDepleted = false;
             respawnBlock();
 
-            DHAPI.setHologramLine(this.getHologram(), this.getHologram().size() + 1, dropItemStack);
+            if (displayResultInHologram)
+                DHAPI.setHologramLine(this.getHologram(), this.getHologram().size() + 1, displayItemStack);
+
             DHAPI.setHologramLine(this.getHologram(), 0, Color.INTERACTABLE_ENTITY.asSpigotHex() + blockType.getLabel());
         }, blockType.getRespawnDurationSeconds() * 20L);
     }

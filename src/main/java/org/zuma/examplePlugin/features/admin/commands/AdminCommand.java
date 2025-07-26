@@ -159,10 +159,6 @@ public class AdminCommand implements BasicCommand {
 
         }
 
-        if (Objects.equals(args[0], "guard")) {
-            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.CITY_GUARD_LONG_DISTANCE.getId());
-        }
-
         if (Objects.equals(args[0], "mob1")) {
             RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.GOBLIN_LOW_LVL_1.getId());
             RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.GOBLIN_LOW_LVL_2.getId());

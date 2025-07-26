@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -150,6 +151,12 @@ public class AdditionalGearSlotHandler {
 
     @Nullable
     public ItemStack getSlotItem(RunePlayer player, ReservedSlot slot) {
-        return player.asBukkitPlayer().getInventory().getItem(slot.getSlot());
+        Player bukkitPlayer = player.asBukkitPlayer();
+
+        if (bukkitPlayer == null || !bukkitPlayer.isOnline()) {
+            return null;
+        }
+
+        return bukkitPlayer.getInventory().getItem(slot.getSlot());
     }
 }

@@ -62,6 +62,10 @@ public class MobHandler {
         mob.onPlayerAttackEntity(event, player);
     }
 
+    public void onEntityAttackEntity(EntityDamageByEntityEvent event, AbstractMob mob, Entity attacker) {
+        mob.onEntityAttackEntity(event, attacker);
+    }
+
     public void onEntityAttackPlayer(EntityDamageByEntityEvent event, AbstractMob mob, RunePlayer player) {
         mob.onEntityAttackPlayer(event, player);
 
