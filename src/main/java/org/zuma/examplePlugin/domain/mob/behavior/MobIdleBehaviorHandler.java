@@ -5,8 +5,10 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.utils.MobUtils;
 import org.zuma.examplePlugin.domain.mob.MobRegistry;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 
@@ -20,9 +22,11 @@ public class MobIdleBehaviorHandler {
 
     // Stores next allowed idle sound play time per mob UUID
     private final Map<UUID, Long> nextIdleSoundTimes = new HashMap<>();
+    private final List<UUID> walkingBackMobs = new ArrayList<>();
 
     private final long baseCooldownMillis = 10000; // 10 seconds base cooldown
     private final long jitterMillisMax = 5000;     // up to 5 seconds random jitter
+
 
     public MobIdleBehaviorHandler(MobRegistry registry) {
         this.registry = registry;
@@ -48,7 +52,25 @@ public class MobIdleBehaviorHandler {
                     if (hasWalkingLimit && !mobLocations.containsKey(mobUUID)) {
                         mobLocations.put(mobUUID, entity.getLocation());
                     } else if (hasWalkingLimit && entity.getLocation().distanceSquared(mobLocations.get(mobUUID)) > mob.getMaxWalkDistance()) {
-                        entity.teleport(mobLocations.get(mobUUID));
+
+                        if (entity instanceof Mob mobEntity) {
+
+                            if (!walkingBackMobs.contains(mobUUID)) {
+                                walkingBackMobs.add(mobUUID);
+                                MobUtils.moveToWithCallback(mobEntity, mobLocations.get(mobUUID), 3000,
+                                        () -> {
+                                            walkingBackMobs.remove(mobUUID);
+                                        },
+                                        () -> {
+                                            entity.teleport(mobLocations.get(mobUUID));
+                                            walkingBackMobs.remove(mobUUID);
+                                        });
+                            }
+
+                        } else {
+                            walkingBackMobs.remove(mobUUID);
+                            entity.teleport(mobLocations.get(mobUUID));
+                        }
                     }
 
                     var behavior = mob.getBehavior();

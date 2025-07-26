@@ -16,6 +16,8 @@ import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
 import org.zuma.examplePlugin.domain.mob.meta.CombatantMobMeta;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.skill.SkillLevelRecord;
+import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -30,7 +32,12 @@ public class CityGuardMob extends GenericCombatant {
 
     public CityGuardMob(String displayName, @Nullable String skin, @Nullable String model,
                         @Nullable DisguiseType disguiseType, int walkingDistance, double restWalkingSpeed, double engagedWalkingSpeed) {
-        super(displayName, EquipmentSet.RUNE_SET_BATTLEAXE, getBaseSkills(99), null, null, restWalkingSpeed, false, false, 9999, skin, model, disguiseType, List.of());
+        super(displayName, EquipmentSet.RUNE_SET_BATTLEAXE, List.of(
+                new SkillLevelRecord(SkillType.ATTACK, 99),
+                new SkillLevelRecord(SkillType.HITPOINTS, 99),
+                new SkillLevelRecord(SkillType.STRENGTH, 99),
+                new SkillLevelRecord(SkillType.DEFENCE, 99)
+        ), null, null, restWalkingSpeed, false, false, 9999, skin, model, disguiseType, List.of());
 
         this.initialWalkingDistance = walkingDistance;
         this.restWalkingSpeed = restWalkingSpeed;
@@ -52,16 +59,6 @@ public class CityGuardMob extends GenericCombatant {
         event.setCancelled(true);
     }
 
-    private void setLivingEntitySpeedAttr(LivingEntity entity, double speed) {
-        AttributeInstance entityAttr = entity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
-
-        if (entityAttr == null) {
-            return;
-        }
-
-        entityAttr.setBaseValue(speed);
-    }
-
     public void engage(LivingEntity target) {
         Entity thisEntity = this.getEntity();
 
@@ -74,7 +71,7 @@ public class CityGuardMob extends GenericCombatant {
         }
 
         mob.setTarget(target);
-        setLivingEntitySpeedAttr(livingEntity, engagedWalkingSpeed);
+        setLivingEntitySpeedAttr(engagedWalkingSpeed);
         this.beforeEngagementLocation = thisEntity.getLocation();
         this.setMaxWalkDistance(1024);
         this.engaged = true;
@@ -103,7 +100,7 @@ public class CityGuardMob extends GenericCombatant {
     }
 
     private void handleEndEngagement(LivingEntity entity) {
-        setLivingEntitySpeedAttr(entity, restWalkingSpeed);
+        setLivingEntitySpeedAttr(restWalkingSpeed);
         setMaxWalkDistance(initialWalkingDistance);
     }
 

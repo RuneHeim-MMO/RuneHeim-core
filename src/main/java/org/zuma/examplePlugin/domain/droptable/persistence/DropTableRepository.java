@@ -25,6 +25,14 @@ public class DropTableRepository {
 
                 new DropTableDBEntry(DropTableId.WOOL.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropItemEntry(ItemId.WOOL.asInt(), 1, 1, 4)
+                ))), 1)),
+
+                new DropTableDBEntry(DropTableId.CHICKEN_MEAT.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropItemEntry(ItemId.RAW_CHICKEN.asInt(), 1, 1, 1)
+                        ))), 1)),
+
+                new DropTableDBEntry(DropTableId.FEATHERS.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropItemEntry(ItemId.FEATHER.asInt(), 1, 15, 2)
                 ))), 1))
 
         );

@@ -29,13 +29,13 @@ public class Common {
                 "Chicken", null, List.of(new SkillLevelRecord(SkillType.ATTACK, 1), new SkillLevelRecord(SkillType.DEFENCE, 1)),
                 null, MobBehaviors.CHICKEN.getBehavior(),
                 0.2, false, false, 3, null, null, DisguiseType.CHICKEN,
-                List.of(DropTableId.BONES.asInt()) // TODO: add chicken meat
+                List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt(), DropTableId.CHICKEN_MEAT.asInt())
         ));
 
         registry.register(MobType.RAT.getId(), () -> new GenericCombatant(
                 "Rat", null, List.of(new SkillLevelRecord(SkillType.ATTACK, 1)),
                 null, MobBehaviors.RAT.getBehavior(),
-                0.40, false, false, 3, null, null, DisguiseType.SILVERFISH,
+                0.23, false, false, 3, null, null, DisguiseType.SILVERFISH,
                 List.of(DropTableId.BONES.asInt())
         ));
 
@@ -75,9 +75,9 @@ public class Common {
         ));
 
         registry.register(MobType.FOX.getId(), () -> new GenericCombatant(
-                "Fox", null, List.of(new SkillLevelRecord(SkillType.ATTACK, 1)),
+                "Fox", null, getBaseSkills(40),
                 null, MobBehaviors.FOX.getBehavior(),
-                0.36, false, false, 3, null, null, DisguiseType.FOX,
+                0.36, false, false, 60, null, null, DisguiseType.FOX,
                 List.of(DropTableId.BONES.asInt())
         ));
 

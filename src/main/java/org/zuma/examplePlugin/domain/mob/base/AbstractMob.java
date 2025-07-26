@@ -326,6 +326,19 @@ public abstract class AbstractMob {
         behavior.playSound(entity, type);
     }
 
+    public void setLivingEntitySpeedAttr(double speed) {
+        if (!(this.getEntity() instanceof LivingEntity livingEntity)) {
+            return;
+        }
+        AttributeInstance entityAttr = livingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
+
+        if (entityAttr == null) {
+            return;
+        }
+
+        entityAttr.setBaseValue(speed);
+    }
+
     public void rollDrops(Location dropLocation) {
         this.dropTableIds.forEach(id -> {
             DropTable table = RuneQuestPlugin.getDropTableHandler().getByID(id);

@@ -19,8 +19,6 @@ public class MobUtils {
      */
     public static void moveToWithCallback(Mob mob, Location target, long maxTimeTicks, Runnable onArrive, Runnable onFail) {
         Location clonedTarget = target.clone();
-        mob.getPathfinder().moveTo(clonedTarget);
-
         new BukkitRunnable() {
             long elapsed = 0;
 
@@ -31,11 +29,13 @@ public class MobUtils {
                 }
 
                 // Reached destination
-                if (mob.getLocation().distanceSquared(clonedTarget) < 2.0) {
+                if (mob.getLocation().distanceSquared(clonedTarget) < 1.0) {
                     onArrive.run();
                     cancel();
                     return;
                 }
+
+                mob.getPathfinder().moveTo(clonedTarget);
 
                 // Timeout check
                 elapsed += 10;
