@@ -14,7 +14,7 @@ public class MobTypeRegistry {
 
     public void register(String id, Supplier<AbstractMob> supplier) {
         if (registry.get(id) != null) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot register id" + id + "! Mob type with this id already exists.");
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot register id " + id + "! Mob type with this id already exists.");
             return;
         }
 

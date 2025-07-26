@@ -32,7 +32,6 @@ public class MobTypesLoader {
     }
 
     public static void registerMobs(MobTypeRegistry registry) {
-        registry.register(MobType.FUSION_MASTER.getId(), () -> new FusionMaster(Icon.SCROLL_RED.get() + " Fusion Master", MobBehaviors.FUSION_MASTER.getBehavior(), 0));
 
         Common.registerMobs(registry);
         Shopkeepers.registerMobs(registry);

@@ -24,7 +24,7 @@ public class GUIRegistry {
 
     public void register(int id, Supplier<AbstractGUI> supplier) {
         if (types.get(id) != null) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot register id" + id + " " + supplier.get().getTitle() + "! Inventory with this ID already exists.");
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot register id " + id + " " + supplier.get().getTitle() + "! Inventory with this ID already exists.");
             return;
         }
 
