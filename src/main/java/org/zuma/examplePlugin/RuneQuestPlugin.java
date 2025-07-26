@@ -204,6 +204,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
 
         // TODO: Load inventory from DB & Verify their meta
+        // TODO: despawn all dropped item on restart
 
     }
 
