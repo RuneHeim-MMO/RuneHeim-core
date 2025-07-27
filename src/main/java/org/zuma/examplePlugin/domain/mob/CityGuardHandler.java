@@ -14,8 +14,6 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.impl.CityGuardMob;
 
-import java.util.HashMap;
-
 public class CityGuardHandler implements Listener {
 
 
@@ -42,11 +40,6 @@ public class CityGuardHandler implements Listener {
             LivingEntity target = mob.getTarget();
 
             if (target == null || target.isDead()) {
-
-                if (!((CityGuardMob) cityGuard).isEngaged()) {
-                    return;
-                }
-                System.out.println("disengage");
                 ((CityGuardMob) cityGuard).disengage();
             }
         });
@@ -70,7 +63,7 @@ public class CityGuardHandler implements Listener {
                 continue;
             }
 
-            if (!cityGuardMob.isEngaged()) cityGuardMob.engage(damagerMob);
+            cityGuardMob.onWitnessAttack(damagerMob);
         }
     }
 }

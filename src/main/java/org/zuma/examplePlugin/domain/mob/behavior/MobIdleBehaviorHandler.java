@@ -8,6 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.core.utils.MobUtils;
 import org.zuma.examplePlugin.domain.mob.MobRegistry;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
@@ -24,12 +25,90 @@ public class MobIdleBehaviorHandler {
     private final Map<UUID, Long> nextIdleSoundTimes = new HashMap<>();
     private final List<UUID> walkingBackMobs = new ArrayList<>();
 
-    private final long baseCooldownMillis = 10000; // 10 seconds base cooldown
-    private final long jitterMillisMax = 5000;     // up to 5 seconds random jitter
-
 
     public MobIdleBehaviorHandler(MobRegistry registry) {
         this.registry = registry;
+    }
+
+    private void teleportMobHome(Entity entity, AbstractMob mobInstance) {
+        UUID mobUUID = mobInstance.getUUID();
+        walkingBackMobs.remove(mobUUID);
+        entity.teleport(mobLocations.get(mobUUID));
+    }
+
+    private void walkMobHome(Mob entity, AbstractMob mobInstance) {
+        UUID mobUUID = mobInstance.getUUID();
+
+        if (walkingBackMobs.contains(mobUUID)) {
+            return;
+        }
+
+        walkingBackMobs.add(mobUUID);
+        Location homeLocation = mobLocations.get(mobUUID);
+
+        MobUtils.moveToWithCallback(entity, homeLocation, 10 * 20L,
+                () -> walkingBackMobs.remove(mobUUID),
+                () -> teleportMobHome(entity, mobInstance));
+    }
+
+    private void maybeReturnHome(Entity entity, AbstractMob mobInstance) {
+        UUID mobUUID = mobInstance.getUUID();
+        boolean hasWalkingLimit = mobInstance.getMaxWalkDistance() != -1; // -1 = infinite distance, 0 - no walking, x - amnt of blocks
+
+        if (mobInstance.getSpawnLocation() == null) {
+            return;
+        }
+
+        if (hasWalkingLimit && !mobLocations.containsKey(mobUUID)) {
+            mobLocations.put(mobUUID, mobInstance.getSpawnLocation());
+            return;
+        }
+
+        Location homeLocation = mobLocations.get(mobUUID);
+
+        if (hasWalkingLimit && entity.getLocation().distanceSquared(homeLocation) > mobInstance.getMaxWalkDistance()) {
+            // Is too far away
+
+            if (entity instanceof Mob mobEntity) {
+                walkMobHome(mobEntity, mobInstance);
+                return;
+            }
+
+            // Not a mob, teleport
+            teleportMobHome(entity, mobInstance);
+        }
+    }
+
+    private void maybePlayIdleSound(AbstractMob mob, LivingEntity entity, Long now) {
+        MobBehavior behavior = mob.getBehavior();
+        if (behavior == null) return;
+
+        UUID id = entity.getUniqueId();
+        long nextAllowed = nextIdleSoundTimes.getOrDefault(id, 0L);
+
+        if (now < nextAllowed) {
+            return; // cooldown active for this mob
+        }
+
+        if (random.nextDouble() < 0.15) {
+            behavior.playSound(entity, MobBehavior.MobSoundType.IDLE);
+
+            // Schedule next allowed sound time with base cooldown + random jitter
+            // up to 5 seconds random jitter
+            long jitterMillisMax = 5000;
+            long jitter = (long) (random.nextDouble() * jitterMillisMax);
+            // 10 seconds base cooldown
+            long baseCooldownMillis = 10000;
+            nextIdleSoundTimes.put(id, now + baseCooldownMillis + jitter);
+        }
+    }
+
+    private void tickOneMob(LivingEntity entity, Long now) {
+        AbstractMob mob = this.registry.getMob(entity);
+        if (mob == null) return;
+
+        maybeReturnHome(entity, mob);
+        maybePlayIdleSound(mob, entity, now);
     }
 
     public void start() {
@@ -43,55 +122,9 @@ public class MobIdleBehaviorHandler {
                     if (!(entity instanceof LivingEntity living)) continue;
                     if (living.isDead() || (entity instanceof Player)) continue;
 
-                    AbstractMob mob = this.registry.getMob(entity);
-                    if (mob == null) continue;
-
-                    UUID mobUUID = mob.getUUID();
-                    boolean hasWalkingLimit = mob.getMaxWalkDistance() != -1; // -1 = infinite distance, 0 - no walking, x - amnt of blocks
-
-                    if (hasWalkingLimit && !mobLocations.containsKey(mobUUID)) {
-                        mobLocations.put(mobUUID, entity.getLocation());
-                    } else if (hasWalkingLimit && entity.getLocation().distanceSquared(mobLocations.get(mobUUID)) > mob.getMaxWalkDistance()) {
-
-                        if (entity instanceof Mob mobEntity) {
-
-                            if (!walkingBackMobs.contains(mobUUID)) {
-                                walkingBackMobs.add(mobUUID);
-                                MobUtils.moveToWithCallback(mobEntity, mobLocations.get(mobUUID), 3000,
-                                        () -> {
-                                            walkingBackMobs.remove(mobUUID);
-                                        },
-                                        () -> {
-                                            entity.teleport(mobLocations.get(mobUUID));
-                                            walkingBackMobs.remove(mobUUID);
-                                        });
-                            }
-
-                        } else {
-                            walkingBackMobs.remove(mobUUID);
-                            entity.teleport(mobLocations.get(mobUUID));
-                        }
-                    }
-
-                    var behavior = mob.getBehavior();
-                    if (behavior == null) continue;
-
-                    UUID id = entity.getUniqueId();
-                    long nextAllowed = nextIdleSoundTimes.getOrDefault(id, 0L);
-
-                    if (now < nextAllowed) {
-                        continue; // cooldown active for this mob
-                    }
-
-                    if (random.nextDouble() < 0.15) {
-                        behavior.playSound(living, MobBehavior.MobSoundType.IDLE);
-
-                        // Schedule next allowed sound time with base cooldown + random jitter
-                        long jitter = (long) (random.nextDouble() * jitterMillisMax);
-                        nextIdleSoundTimes.put(id, now + baseCooldownMillis + jitter);
-                    }
+                    tickOneMob(living, now);
                 }
             }
-        }, delay, delay);
+        }, 0L, delay);
     }
 }

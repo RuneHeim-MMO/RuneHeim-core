@@ -60,6 +60,10 @@ public class CityGuardMob extends GenericCombatant {
     }
 
     public void engage(LivingEntity target) {
+        if (this.engaged) {
+            return;
+        }
+
         Entity thisEntity = this.getEntity();
 
         if (!(thisEntity instanceof LivingEntity livingEntity)) {
@@ -78,6 +82,10 @@ public class CityGuardMob extends GenericCombatant {
     }
 
     public void disengage() {
+        if (!this.engaged) {
+            return;
+        }
+
         Entity thisEntity = this.getEntity();
 
         if (!(thisEntity instanceof LivingEntity livingEntity)) {
@@ -102,6 +110,14 @@ public class CityGuardMob extends GenericCombatant {
     private void handleEndEngagement(LivingEntity entity) {
         setLivingEntitySpeedAttr(restWalkingSpeed);
         setMaxWalkDistance(initialWalkingDistance);
+    }
+
+    public void onWitnessAttack(LivingEntity attacker) {
+        if (this.engaged) {
+            return;
+        }
+
+        this.engage(attacker);
     }
 
     public int getInitialWalkingDistance() {

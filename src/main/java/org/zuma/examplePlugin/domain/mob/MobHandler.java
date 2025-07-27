@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.mob;
 
 import me.libraryaddict.disguise.DisguiseAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -11,7 +12,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.world.ChunkLoadEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
@@ -20,6 +21,7 @@ import org.zuma.examplePlugin.domain.mob.behavior.MobIdleBehaviorHandler;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
+import java.util.List;
 import java.util.UUID;
 
 public class MobHandler {
@@ -33,7 +35,6 @@ public class MobHandler {
 
     // Clears all mobs with MOB_UUID data keys.
     public void cleanup() {
-
         for (World world : Bukkit.getWorlds()) {
             world.getEntities().forEach(entity -> {
                 NamespacedKey key = new NamespacedKey(RuneQuestPlugin.getInstance(), MobDataKey.MOB_UUID.asString());
@@ -75,7 +76,9 @@ public class MobHandler {
     }
 
     public void onEntityDeath(EntityDeathEvent event, AbstractMob mob) {
-        mob.rollDrops(event.getEntity().getLocation());
+        List<ItemStack> drops = mob.rollDropTables();
+        Location dropLocation = event.getEntity().getLocation();
+        drops.forEach(drop -> dropLocation.getWorld().dropItem(dropLocation, drop));
 
         if (mob.getBehavior() != null && !event.isCancelled()) {
             mob.getBehavior().playSound(event.getEntity(), MobBehavior.MobSoundType.DEATH);
@@ -100,12 +103,6 @@ public class MobHandler {
 
         mob.onEntityDamaged(event);
     }
-
-    /*
-    public void onChunkLoad(ChunkLoadEvent event, AbstractMob mob) {
-        mob.reapplyMetaToEntity(event);
-    }
-    */
 
     public void handleRedisguisingOnPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();

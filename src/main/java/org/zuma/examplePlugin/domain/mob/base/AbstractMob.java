@@ -20,6 +20,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -46,28 +47,18 @@ public abstract class AbstractMob {
     private Component displayName;
     private EntityType baseMob;
     private boolean silent;
-
-    @Nullable
-    private Disguise disguise;
-
-    @Nullable
-    private String model;
-
-    @Nullable
-    private MobBehavior behavior;
-
-    @Nullable
-    private MobEquipmentMeta mobEquipment;
     private boolean isBaby, isInvulnerable;
     private int maxWalkDistance;
-
-    @Nullable
-    private Entity entity;
-
     private HashMap<Attribute, Double> customAttributes;
     private List<Integer> dropTableIds;
-
     private String healthBarSafeName = "";
+
+    private @Nullable Entity entity;
+    private @Nullable Location spawnLocation;
+    private @Nullable MobEquipmentMeta mobEquipment;
+    private @Nullable Disguise disguise;
+    private @Nullable String model;
+    private @Nullable MobBehavior behavior;
 
     public AbstractMob(AbstractMobMeta meta) {
         this.ai = meta.ai();
@@ -87,10 +78,16 @@ public abstract class AbstractMob {
         healthBarSafeName = this instanceof CombatantMob ? "" : getDisplayName();
     }
 
-    public Entity spawn(UUID uuid, Location location) {
+
+    public Entity spawn(UUID uuid, Location location) throws IllegalStateException {
+        if (this.entity != null) {
+            throw new IllegalStateException("Cannot spawn second mob in the same instance!");
+        }
+
         Entity entity = location.getWorld().spawnEntity(location, baseMob);
         this.entity = entity;
         this.uuid = uuid;
+        this.spawnLocation = location.clone();
 
         this.setEntityPersistenceKey(entity);
 
@@ -339,7 +336,9 @@ public abstract class AbstractMob {
         entityAttr.setBaseValue(speed);
     }
 
-    public void rollDrops(Location dropLocation) {
+    public List<ItemStack> rollDropTables() {
+        List<ItemStack> drops = new ArrayList<>();
+
         this.dropTableIds.forEach(id -> {
             DropTable table = RuneQuestPlugin.getDropTableHandler().getByID(id);
 
@@ -361,8 +360,34 @@ public abstract class AbstractMob {
                 return;
             }
 
-            dropLocation.getWorld().dropItem(dropLocation, type.createItemStackOfType(drop.getAmount()));
+            drops.add(type.createItemStackOfType(drop.getAmount()));
         });
+
+        return drops;
+    }
+
+
+    @Nullable
+    public Disguise getDisguise() {
+        if (disguise == null) return null;
+        return disguise.clone();
+    }
+
+    public void setModel(@Nullable String model) {
+        this.model = model;
+    }
+
+    public boolean isInvulnerable() {
+        return isInvulnerable;
+    }
+
+    public void setInvulnerable(boolean invulnerable) {
+        isInvulnerable = invulnerable;
+    }
+
+    @Nullable
+    public Location getSpawnLocation() {
+        return spawnLocation;
     }
 
     public void onPlayerInteractWithEntity(PlayerInteractAtEntityEvent event, RunePlayer player) {
@@ -383,24 +408,5 @@ public abstract class AbstractMob {
 
     public void onEntityDamaged(EntityDamageEvent event) {
 
-    }
-
-
-    @Nullable
-    public Disguise getDisguise() {
-        if (disguise == null) return null;
-        return disguise.clone();
-    }
-
-    public void setModel(@Nullable String model) {
-        this.model = model;
-    }
-
-    public boolean isInvulnerable() {
-        return isInvulnerable;
-    }
-
-    public void setInvulnerable(boolean invulnerable) {
-        isInvulnerable = invulnerable;
     }
 }

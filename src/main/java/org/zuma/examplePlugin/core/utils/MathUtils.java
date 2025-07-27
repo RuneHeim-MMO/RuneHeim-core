@@ -4,6 +4,8 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class MathUtils {
     public static BlockFace yawToFace(float yaw) {
         int rot = Math.round(yaw / 90f) & 0x3;
@@ -34,5 +36,19 @@ public class MathUtils {
         double dx = loc1.getX() - loc2.getX();
         double dz = loc1.getZ() - loc2.getZ();
         return Math.sqrt(dx * dx + dz * dz);
+    }
+
+    public static Location randomPointInCircle(Location center, double radius) {
+        ThreadLocalRandom rnd = ThreadLocalRandom.current();
+
+        // random angle 0–2π
+        double theta = rnd.nextDouble(0, 2 * Math.PI);
+        // random r in [0, radius), weighted so points are uniform in the circle
+        double r = Math.sqrt(rnd.nextDouble()) * radius;
+
+        double offsetX = r * Math.cos(theta);
+        double offsetZ = r * Math.sin(theta);
+
+        return center.clone().add(offsetX, 0, offsetZ);
     }
 }
