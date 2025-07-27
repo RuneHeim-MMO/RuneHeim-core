@@ -59,12 +59,31 @@ public class SpawnZoneRepository {
 
                 // Drakkar city guards end
 
-        new SpawnZoneRecord(new AbstractSpawnZoneMeta(6, SpawnZoneType.AREA, 30, 20,
-                new Location(Bukkit.getWorld("world"), 191, 73, -72)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                new SpawnZoneMobRecord(MobType.RAT, 50, 100)
-        ), 200, false), 1))
+                // Drakkar and surroundings
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(6, SpawnZoneType.AREA, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 191, 73, -72)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.RAT, 10, 100)
+                ), 200, false), 1)),
 
-        );
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(7, SpawnZoneType.AREA, 2, 15,
+                        new Location(Bukkit.getWorld("world"), 199, 68, -192)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.GOBLIN_LOW_LVL_1, 5, 100),
+                        new SpawnZoneMobRecord(MobType.GOBLIN_LOW_LVL_2, 5, 100),
+                        new SpawnZoneMobRecord(MobType.GOBLIN_LOW_LVL_3, 5, 100),
+                        new SpawnZoneMobRecord(MobType.GOBLIN_LOW_LVL_4, 5, 100),
+                        new SpawnZoneMobRecord(MobType.GOBLIN_LOW_LVL_5, 5, 100)
+                ), 50, false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(8, SpawnZoneType.AREA, 2, 15,
+                        new Location(Bukkit.getWorld("world"), 63, 68, -81)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.GOBLIN_LOW_LVL_1, 5, 100),
+                        new SpawnZoneMobRecord(MobType.GOBLIN_LOW_LVL_2, 5, 100),
+                        new SpawnZoneMobRecord(MobType.GOBLIN_LOW_LVL_3, 5, 100),
+                        new SpawnZoneMobRecord(MobType.GOBLIN_LOW_LVL_4, 5, 100),
+                        new SpawnZoneMobRecord(MobType.GOBLIN_LOW_LVL_5, 5, 100)
+                ), 50, false), 1))
+
+                );
     }
 }
 

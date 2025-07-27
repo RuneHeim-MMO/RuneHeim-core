@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.mob.impl;
 
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -11,6 +12,7 @@ import org.bukkit.entity.Mob;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.MobUtils;
 import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
@@ -21,14 +23,15 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static org.zuma.examplePlugin.domain.mob.MobTypesLoader.getBaseSkills;
 
 public class CityGuardMob extends GenericCombatant {
     private final int initialWalkingDistance;
     private final double restWalkingSpeed, engagedWalkingSpeed;
-    private Location beforeEngagementLocation;
     private boolean engaged = false;
+    private boolean walkingBack = false;
 
     public CityGuardMob(String displayName, @Nullable String skin, @Nullable String model,
                         @Nullable DisguiseType disguiseType, int walkingDistance, double restWalkingSpeed, double engagedWalkingSpeed) {
@@ -64,6 +67,7 @@ public class CityGuardMob extends GenericCombatant {
             return;
         }
 
+        Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> SoundType.GUARD_TARGETED_MOB_SOUND.play(target.getLocation()), ThreadLocalRandom.current().nextInt(0, 21));
         Entity thisEntity = this.getEntity();
 
         if (!(thisEntity instanceof LivingEntity livingEntity)) {
@@ -76,9 +80,9 @@ public class CityGuardMob extends GenericCombatant {
 
         mob.setTarget(target);
         setLivingEntitySpeedAttr(engagedWalkingSpeed);
-        this.beforeEngagementLocation = thisEntity.getLocation();
         this.setMaxWalkDistance(1024);
         this.engaged = true;
+        SoundType.GUARD_ENGAGE.play(thisEntity.getLocation());
     }
 
     public void disengage() {
@@ -98,22 +102,38 @@ public class CityGuardMob extends GenericCombatant {
 
 
         this.engaged = false;
+        walkingBack = true;
+        mob.setTarget(null);
 
-        if (beforeEngagementLocation != null) {
-            mob.getPathfinder().moveTo(beforeEngagementLocation);
-            MobUtils.moveToWithCallback(mob, beforeEngagementLocation, 5 * 20, () -> handleEndEngagement(livingEntity), () -> handleEndEngagement(livingEntity));
-            this.beforeEngagementLocation = null;
+        Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> SoundType.GUARD_DISENGAGE.play(thisEntity.getLocation()), ThreadLocalRandom.current().nextInt(0, 21));
 
-        }
+        MobUtils.moveToWithCallback(mob, this.getSpawnLocation(), 10 * 20L,
+                this::handleArrivedAtSpawn,
+                () -> {
+                    if (this.getSpawnLocation() == null) {
+                        return;
+                    }
+                    thisEntity.teleport(this.getSpawnLocation());
+                    this.handleArrivedAtSpawn();
+                });
+
+
     }
 
-    private void handleEndEngagement(LivingEntity entity) {
-        setLivingEntitySpeedAttr(restWalkingSpeed);
-        setMaxWalkDistance(initialWalkingDistance);
+    private void handleArrivedAtSpawn() {
+        walkingBack = false;
+        this.setMaxWalkDistance(initialWalkingDistance);
+        this.setLivingEntitySpeedAttr(restWalkingSpeed);
+
+        if (this.getEntity() != null) {
+            SoundType.GUARD_DISENGAGE_REST.play(this.getEntity().getLocation());
+        }
+
+
     }
 
     public void onWitnessAttack(LivingEntity attacker) {
-        if (this.engaged) {
+        if (this.engaged || this.walkingBack) {
             return;
         }
 

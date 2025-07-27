@@ -88,7 +88,7 @@ public abstract class AbstractMob {
         Entity entity = location.getWorld().spawnEntity(location, baseMob);
         this.entity = entity;
         this.uuid = uuid;
-        this.spawnLocation = location.clone();
+        this.spawnLocation = entity.getLocation().clone();
 
         this.setEntityPersistenceKey(entity);
 

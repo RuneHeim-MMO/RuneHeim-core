@@ -18,55 +18,48 @@ import java.util.*;
 public class MobIdleBehaviorHandler {
     private final MobRegistry registry;
     private final Random random = new Random();
-    private final HashMap<UUID, Location> mobLocations = new HashMap<>();
     private final List<World> worlds = Bukkit.getWorlds();
 
     // Stores next allowed idle sound play time per mob UUID
     private final Map<UUID, Long> nextIdleSoundTimes = new HashMap<>();
-    private final List<UUID> walkingBackMobs = new ArrayList<>();
-
 
     public MobIdleBehaviorHandler(MobRegistry registry) {
         this.registry = registry;
     }
 
     private void teleportMobHome(Entity entity, AbstractMob mobInstance) {
-        UUID mobUUID = mobInstance.getUUID();
-        walkingBackMobs.remove(mobUUID);
-        entity.teleport(mobLocations.get(mobUUID));
-    }
-
-    private void walkMobHome(Mob entity, AbstractMob mobInstance) {
-        UUID mobUUID = mobInstance.getUUID();
-
-        if (walkingBackMobs.contains(mobUUID)) {
+        if (mobInstance.getSpawnLocation() == null) {
             return;
         }
 
-        walkingBackMobs.add(mobUUID);
-        Location homeLocation = mobLocations.get(mobUUID);
+        entity.teleport(mobInstance.getSpawnLocation());
+    }
+
+    private void walkMobHome(Mob entity, AbstractMob mobInstance) {
+        Location homeLocation = mobInstance.getSpawnLocation();
 
         MobUtils.moveToWithCallback(entity, homeLocation, 10 * 20L,
-                () -> walkingBackMobs.remove(mobUUID),
+                () -> {
+                },
                 () -> teleportMobHome(entity, mobInstance));
+
+
     }
 
     private void maybeReturnHome(Entity entity, AbstractMob mobInstance) {
-        UUID mobUUID = mobInstance.getUUID();
         boolean hasWalkingLimit = mobInstance.getMaxWalkDistance() != -1; // -1 = infinite distance, 0 - no walking, x - amnt of blocks
 
         if (mobInstance.getSpawnLocation() == null) {
             return;
         }
 
-        if (hasWalkingLimit && !mobLocations.containsKey(mobUUID)) {
-            mobLocations.put(mobUUID, mobInstance.getSpawnLocation());
+        if (!hasWalkingLimit) {
             return;
         }
 
-        Location homeLocation = mobLocations.get(mobUUID);
+        Location homeLocation = mobInstance.getSpawnLocation();
 
-        if (hasWalkingLimit && entity.getLocation().distanceSquared(homeLocation) > mobInstance.getMaxWalkDistance()) {
+        if (entity.getLocation().distanceSquared(homeLocation) > mobInstance.getMaxWalkDistance()) {
             // Is too far away
 
             if (entity instanceof Mob mobEntity) {
