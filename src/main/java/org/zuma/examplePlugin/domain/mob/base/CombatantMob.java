@@ -9,6 +9,7 @@ import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
@@ -16,6 +17,7 @@ import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
+import org.zuma.examplePlugin.domain.xp.PendingXPHandler;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
 import org.zuma.examplePlugin.domain.mob.meta.CombatantMobMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
@@ -24,7 +26,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
-import java.util.EnumMap;
+import java.util.*;
 
 public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     private final EnumMap<ModifierType, Modifier> modifiers = new EnumMap<>(ModifierType.class);
@@ -32,10 +34,14 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     private final int maxHealth, combatLvl;
     private int health;
 
+    private final PendingXPHandler xpHandler;
+
+
     public CombatantMob(CombatantMobMeta meta) {
         super(new AbstractMobMeta(true, true, Component.empty(), meta.baseEntity()));
         this.health = meta.maxHealth();
         this.maxHealth = meta.maxHealth();
+        this.xpHandler = new PendingXPHandler();
 
         setModel(meta.model());
         setDropTableIds(meta.dropTableIds());
@@ -60,74 +66,13 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         }
     }
 
+
     public void setBaseEntity(EntityType type) {
         super.setBaseEntity(type);
     }
 
     public int getCombatLvl() {
         return this.combatLvl;
-    }
-
-    @Override
-    public void onPlayerInteractWithEntity(PlayerInteractAtEntityEvent event, RunePlayer player) {
-        event.setCancelled(true);
-    }
-
-    @Override
-    public void onPlayerAttackEntity(EntityDamageByEntityEvent event, RunePlayer player) {
-        player.asBukkitPlayer().sendMessage(getDisplayName() + " HP: " + health);
-
-    }
-
-
-    @Override
-    public void onEntityDamaged(EntityDamageEvent event) {
-        if (event.getCause() != EntityDamageEvent.DamageCause.CUSTOM) {
-            event.setDamage(0);
-        }
-
-        Entity entity = this.getEntity();
-
-        if (entity == null) {
-            return;
-        }
-
-        if (health == 0) {
-            if (entity instanceof LivingEntity livingEntity) {
-                livingEntity.setHealth(0.0);
-            } else {
-                entity.remove();
-            }
-        }
-    }
-
-    @Override
-    public void onEntityAttackPlayer(EntityDamageByEntityEvent event, RunePlayer runePlayer) {
-        Entity hit = getEntity();
-        if (hit != null) {
-            ModeledEntity me = ModelEngineAPI.getModeledEntity(hit);
-
-            if (me != null) {
-                me.getModels().values().forEach(am -> {
-                    am.getAnimationHandler().playAnimation("attack", 0f, 0.3f, 1, true);
-                });
-            }
-
-        }
-        // Remove iron golem upwards vel on attack.
-        if (event.getDamager() instanceof IronGolem) {
-            Player player = runePlayer.asBukkitPlayer();
-
-            Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                Vector vel = player.getVelocity();
-
-                if (vel.getY() > 0.3) {
-                    double newY = vel.getY() - 0.5;
-                    if (newY < 0) newY = 0;
-                    player.setVelocity(new Vector(vel.getX(), newY, vel.getZ()));
-                }
-            });
-        }
     }
 
     public EnumMap<ModifierType, Modifier> getModifiers() {
@@ -166,7 +111,79 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         scaledHealth = Math.max(0, Math.min(maxHealth, scaledHealth));
 
         // Apply the scaled health to the entity
+        this.xpHandler.calculatePendingXP(hit);
         living.setHealth(scaledHealth);
+    }
+
+    @Override
+    public void onPlayerInteractWithEntity(PlayerInteractAtEntityEvent event, RunePlayer player) {
+        event.setCancelled(true);
+    }
+
+    @Override
+    public void onPlayerAttackEntity(EntityDamageByEntityEvent event, RunePlayer player) {
+        player.asBukkitPlayer().sendMessage(getDisplayName() + " HP: " + health);
+
+    }
+
+    @Override
+    public void onEntityDamaged(EntityDamageEvent event) {
+        if (event.getCause() != EntityDamageEvent.DamageCause.CUSTOM) {
+            event.setDamage(0);
+        }
+
+        Entity entity = this.getEntity();
+
+        if (entity == null) {
+            return;
+        }
+
+        if (health == 0) {
+            if (entity instanceof LivingEntity livingEntity) {
+                livingEntity.setHealth(0.0);
+            } else {
+                entity.remove();
+            }
+        }
+    }
+
+    @Override
+    public void onEntityAttackEntity(EntityDamageByEntityEvent event, Entity attacker) {
+        // Remove iron golem upwards vel on attack.
+        if (event.getDamager() instanceof IronGolem) {
+            Entity victim = event.getEntity();
+
+            Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+                Vector vel = victim.getVelocity();
+
+                if (vel.getY() > 0.3) {
+                    double newY = vel.getY() - 0.5;
+                    if (newY < 0) newY = 0;
+                    victim.setVelocity(new Vector(vel.getX(), newY, vel.getZ()));
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onEntityAttackPlayer(EntityDamageByEntityEvent event, RunePlayer runePlayer) {
+        Entity hit = getEntity();
+        if (hit != null) {
+            ModeledEntity me = ModelEngineAPI.getModeledEntity(hit);
+
+            if (me != null) {
+                me.getModels().values().forEach(am -> {
+                    am.getAnimationHandler().playAnimation("attack", 0f, 0.3f, 1, true);
+                });
+            }
+
+        }
+
+    }
+
+    @Override
+    public void onEntityDeath(EntityDeathEvent event) {
+        this.xpHandler.distributePendingXP();
     }
 
 }

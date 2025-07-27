@@ -25,6 +25,7 @@ import org.zuma.examplePlugin.domain.player.handlers.PlayerXpHandler;
 import org.zuma.examplePlugin.domain.player.states.RunePlayerBusyStateHandler;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
+import org.zuma.examplePlugin.domain.xp.PendingXPHandler;
 import org.zuma.examplePlugin.events.player.RunePlayerHealthChangedEvent;
 
 import java.util.EnumMap;
@@ -37,6 +38,7 @@ public class RunePlayer implements CombatEntity {
     private final UUID uuid;
     private final PlayerCombatData combatData;
     private @Nullable Party party;
+    private final PendingXPHandler pendingXPHandler;
 
     private final EnumMap<ModifierType, Modifier> modifiers;
     private final EnumMap<SkillType, SkillModifier> skillModifiers;
@@ -62,6 +64,8 @@ public class RunePlayer implements CombatEntity {
         busyStateHandler = new RunePlayerBusyStateHandler(this);
         itemHandler = new PlayerItemDistributor(this);
         xpHandler = new PlayerXpHandler(this);
+        pendingXPHandler = new PendingXPHandler();
+
 
         pouchCoins = 0;
 
@@ -158,11 +162,12 @@ public class RunePlayer implements CombatEntity {
     }
 
     public void takeHit(Hit hit) {
-        combatData.takeHit(hit);
+        this.pendingXPHandler.calculatePendingXP(hit);
+        this.combatData.takeHit(hit);
     }
 
     // Busy state management
-    public void useBusyState(int durationMs, String action, String successAction, @Nullable SoundType stepSound,@Nullable SoundType successSound, Runnable onSuccess, @Nullable Runnable onFailure) {
+    public void useBusyState(int durationMs, String action, String successAction, @Nullable SoundType stepSound, @Nullable SoundType successSound, Runnable onSuccess, @Nullable Runnable onFailure) {
         this.busyStateHandler.useBusyState(durationMs, action, successAction, stepSound, successSound, onSuccess, onFailure);
     }
 
@@ -214,6 +219,11 @@ public class RunePlayer implements CombatEntity {
     public void setPouchCoins(long coins) {
         SoundType.COINS_DROP.play(this.asBukkitPlayer(), true);
         this.pouchCoins = coins;
+    }
+
+    public void onDeath(Hit lastHit) {
+        asBukkitPlayer().sendMessage("Welp, you died!");
+        this.pendingXPHandler.distributePendingXP();
     }
 
 

@@ -93,6 +93,7 @@ public class MobHandler {
             registry.removeMob(mob.getUUID());
         }
 
+        mob.onEntityDeath(event);
     }
 
 

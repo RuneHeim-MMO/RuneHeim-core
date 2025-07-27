@@ -17,6 +17,7 @@ import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.EntityEquipment;
@@ -407,6 +408,10 @@ public abstract class AbstractMob {
     }
 
     public void onEntityDamaged(EntityDamageEvent event) {
+
+    }
+
+    public void onEntityDeath(EntityDeathEvent event) {
 
     }
 }

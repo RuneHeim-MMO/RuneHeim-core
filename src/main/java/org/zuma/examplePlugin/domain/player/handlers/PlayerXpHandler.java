@@ -80,10 +80,12 @@ public class PlayerXpHandler {
     }
 
     public void distributeXp(SkillType type, double xp) {
+        double roundedXP = Math.round(xp * 100.0) / 100.0;
+
         if (player.getParty() != null) {
-            player.getParty().splitXPBetweenMembers(type, xp);
+            player.getParty().splitXPBetweenMembers(type, roundedXP);
         } else {
-            addXp(type, xp, XpSource.PERSONAL);
+            addXp(type, roundedXP, XpSource.PERSONAL);
         }
     }
 
