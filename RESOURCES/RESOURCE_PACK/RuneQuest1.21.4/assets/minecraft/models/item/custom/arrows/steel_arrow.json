@@ -2,5 +2,12 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "item/arrows/steel_arrow"
+  },
+  "display": {
+    "gui": {
+      "scale": [1.25, 1.25, 1.25],
+      "translation": [0, 0, 0],
+      "rotation": [0, 0, 0]
+    }
   }
 }

@@ -614,7 +614,7 @@ public class ItemRepository {
 
 
                 // Armor - Helmets
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.COIF.asInt(), Material.LEATHER_HELMET, ItemRarity.COMMON, "Coif", List.of("Simple leather helmet offering minimal head protection."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(74, 56, 7)),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.COIF.asInt(), Material.LEATHER_HELMET, ItemRarity.COMMON, "Coif", List.of("Simple leather helmet offering minimal head protection."), HeadTexture.BRONZE_MED_HELM.asBase64(), Color.fromRGB(74, 56, 7)),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(
@@ -628,7 +628,7 @@ public class ItemRepository {
                                 ), 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.COWL.asInt(), Material.LEATHER_HELMET, ItemRarity.COMMON, "Cowl", List.of("A light hood offering minimal protection."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(74, 56, 7)),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.COWL.asInt(), Material.LEATHER_HELMET, ItemRarity.COMMON, "Cowl", List.of("A light hood offering minimal protection."), HeadTexture.BRONZE_MED_HELM.asBase64(), Color.fromRGB(74, 56, 7)),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(
@@ -642,7 +642,7 @@ public class ItemRepository {
                                 ), 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.BRONZE_HELMET.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Bronze Helmet", List.of("Simple bronze helmet offering minimal head protection."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(210, 170, 120)),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.BRONZE_MEDHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Bronze Med Helm", List.of("Simple bronze helmet offering minimal head protection."), HeadTexture.BRONZE_MED_HELM.asBase64(), Color.fromRGB(210, 170, 120)),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 1), new Modifier(ModifierType.DEFENCE_SLASH, 1), new Modifier(ModifierType.DEFENCE_CRUSH, 1)),
@@ -650,7 +650,7 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.IRON_HELMET.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Iron Helmet", List.of("Sturdy iron helmet to guard against blows."), HeadTexture.IRON_HELM.asBase64(), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.IRON_MEDHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Iron Med Helm", List.of("Sturdy iron helmet to guard against blows."), HeadTexture.IRON_MED_HELM.asBase64(), null),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 3), new Modifier(ModifierType.DEFENCE_SLASH, 4), new Modifier(ModifierType.DEFENCE_CRUSH, 2)),
@@ -658,7 +658,7 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STEEL_HELMET.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Steel Helmet", List.of("Well-crafted steel helmet for enhanced defense."), HeadTexture.STEEL_HELM.asBase64(), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STEEL_MEDHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Steel Med Helm", List.of("Well-crafted steel helmet for enhanced defense."), HeadTexture.STEEL_MED_HELM.asBase64(), null),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 5), new Modifier(ModifierType.DEFENCE_SLASH, 6), new Modifier(ModifierType.DEFENCE_CRUSH, 5)),
@@ -666,7 +666,7 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MITHRIL_HELMET.asInt(), Material.PLAYER_HEAD, ItemRarity.UNCOMMON, "Mithril Helmet", List.of("Lightweight mithril helmet, combining agility and defense."), HeadTexture.MITHRIL_HELM.asBase64(), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MITHRIL_MEDHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.UNCOMMON, "Mithril Med Helm", List.of("Lightweight mithril helmet, combining agility and defense."), HeadTexture.MITHRIL_MED_HELM.asBase64(), null),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 8), new Modifier(ModifierType.DEFENCE_SLASH, 9), new Modifier(ModifierType.DEFENCE_CRUSH, 7)),
@@ -674,7 +674,7 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANTITE_HELMET.asInt(), Material.PLAYER_HEAD, ItemRarity.UNCOMMON, "Adamantite Helmet", List.of("Heavy adamantite helmet, favored by elite warriors."), HeadTexture.ADAMANT_HELM.asBase64(), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANT_MEDHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.UNCOMMON, "Adamantite Med Helm", List.of("Heavy adamantite helmet, favored by elite warriors."), HeadTexture.ADAMANT_MED_HELM.asBase64(), null),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 12), new Modifier(ModifierType.DEFENCE_SLASH, 13), new Modifier(ModifierType.DEFENCE_CRUSH, 11)),
@@ -682,7 +682,7 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.RUNITE_HELMET.asInt(), Material.PLAYER_HEAD, ItemRarity.RARE, "Runite Helmet", List.of("Runite helmet radiating magical protection."), HeadTexture.RUNE_HELM.asBase64(), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.RUNE_MEDHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.RARE, "Runite Med Helm", List.of("Runite helmet radiating magical protection."), HeadTexture.RUNE_MED_HELM.asBase64(), null),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 18), new Modifier(ModifierType.DEFENCE_SLASH, 19), new Modifier(ModifierType.DEFENCE_CRUSH, 17)),
@@ -691,8 +691,81 @@ public class ItemRepository {
                                 , 1)
                 ),
 
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.BRONZE_FULLHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Bronze Full Helm", List.of("A full bronze helmet that offers basic protection."), HeadTexture.BRONZE_FULL_HELM.asBase64(), Color.fromRGB(210, 170, 120)),
+                        toVersionedJson(
+                                new EquipableTypeMeta(null,
+                                        List.of(
+                                                new Modifier(ModifierType.DEFENCE_STAB, 2),
+                                                new Modifier(ModifierType.DEFENCE_SLASH, 3),
+                                                new Modifier(ModifierType.DEFENCE_CRUSH, 4)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
+                                ), 1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.IRON_FULLHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Iron Full Helm", List.of("A sturdy iron full helm for better protection."), HeadTexture.IRON_FULL_HELM.asBase64(), null),
+                        toVersionedJson(
+                                new EquipableTypeMeta(null,
+                                        List.of(
+                                                new Modifier(ModifierType.DEFENCE_STAB, 5),
+                                                new Modifier(ModifierType.DEFENCE_SLASH, 6),
+                                                new Modifier(ModifierType.DEFENCE_CRUSH, 7)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
+                                ), 1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STEEL_FULLHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Steel Full Helm", List.of("A well-made steel full helm that offers decent defense."), HeadTexture.STEEL_FULL_HELM.asBase64(), null),
+                        toVersionedJson(
+                                new EquipableTypeMeta(null,
+                                        List.of(
+                                                new Modifier(ModifierType.DEFENCE_STAB, 7),
+                                                new Modifier(ModifierType.DEFENCE_SLASH, 8),
+                                                new Modifier(ModifierType.DEFENCE_CRUSH, 9)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 5))
+                                ), 1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MITHRIL_FULLHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.UNCOMMON, "Mithril Full Helm", List.of("A lightweight mithril full helm with solid defense."), HeadTexture.MITHRIL_FULL_HELM.asBase64(), null),
+                        toVersionedJson(
+                                new EquipableTypeMeta(null,
+                                        List.of(
+                                                new Modifier(ModifierType.DEFENCE_STAB, 10),
+                                                new Modifier(ModifierType.DEFENCE_SLASH, 11),
+                                                new Modifier(ModifierType.DEFENCE_CRUSH, 12)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 20))
+                                ), 1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANT_FULLHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.UNCOMMON, "Adamant Full Helm", List.of("A heavy adamant full helm for superior defense."), HeadTexture.ADAMANT_FULL_HELM.asBase64(), null),
+                        toVersionedJson(
+                                new EquipableTypeMeta(null,
+                                        List.of(
+                                                new Modifier(ModifierType.DEFENCE_STAB, 14),
+                                                new Modifier(ModifierType.DEFENCE_SLASH, 15),
+                                                new Modifier(ModifierType.DEFENCE_CRUSH, 16)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 30))
+                                ), 1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.RUNE_FULLHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.RARE, "Rune Full Helm", List.of("A full helmet forged from runite, offering excellent defense."), HeadTexture.RUNE_FULL_HELM.asBase64(), null),
+                        toVersionedJson(
+                                new EquipableTypeMeta(null,
+                                        List.of(
+                                                new Modifier(ModifierType.DEFENCE_STAB, 20),
+                                                new Modifier(ModifierType.DEFENCE_SLASH, 22),
+                                                new Modifier(ModifierType.DEFENCE_CRUSH, 21)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 40))
+                                ), 1)
+                ),
+
+
                 // Armor - Chestplates
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.LEATHER_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Leather Body", List.of("Basic leather torso armor."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(74, 56, 7)),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.LEATHER_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Leather Body", List.of("Basic leather torso armor."), HeadTexture.BRONZE_MED_HELM.asBase64(), Color.fromRGB(74, 56, 7)),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(
@@ -705,7 +778,7 @@ public class ItemRepository {
                                         null
                                 ), 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.HARD_LEATHER_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Hard Leather Body", List.of("Stiffened leather torso protection."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(33, 15, 2)),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.HARD_LEATHER_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Hard Leather Body", List.of("Stiffened leather torso protection."), HeadTexture.BRONZE_MED_HELM.asBase64(), Color.fromRGB(33, 15, 2)),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(
@@ -719,7 +792,7 @@ public class ItemRepository {
                                 ), 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STUDDED_LEATHER_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Studded Body", List.of("Leather armor reinforced with studs."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(38, 29, 15)),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STUDDED_LEATHER_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Studded Body", List.of("Leather armor reinforced with studs."), HeadTexture.BRONZE_MED_HELM.asBase64(), Color.fromRGB(38, 29, 15)),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(
@@ -733,7 +806,7 @@ public class ItemRepository {
                                 ), 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.GREEN_DHIDE_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Green D'hide Body", List.of("Torso armor made of green dragonhide."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(12, 130, 12)),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.GREEN_DHIDE_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Green D'hide Body", List.of("Torso armor made of green dragonhide."), HeadTexture.BRONZE_MED_HELM.asBase64(), Color.fromRGB(12, 130, 12)),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(
@@ -825,7 +898,7 @@ public class ItemRepository {
                 ),
 
                 // Armor - platelegs
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.LEATHER_LEGGINGS.asInt(), Material.LEATHER_LEGGINGS, ItemRarity.COMMON, "Leather Chaps", List.of("Basic leather leg armor."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(74, 56, 7)),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.LEATHER_LEGGINGS.asInt(), Material.LEATHER_LEGGINGS, ItemRarity.COMMON, "Leather Chaps", List.of("Basic leather leg armor."), HeadTexture.BRONZE_MED_HELM.asBase64(), Color.fromRGB(74, 56, 7)),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(
@@ -839,7 +912,7 @@ public class ItemRepository {
                                 ), 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.HARD_LEATHER_LEGGINGS.asInt(), Material.LEATHER_LEGGINGS, ItemRarity.COMMON, "Hard Leather Chaps", List.of("Stiffened leather leg protection."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(33, 15, 2)),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.HARD_LEATHER_LEGGINGS.asInt(), Material.LEATHER_LEGGINGS, ItemRarity.COMMON, "Hard Leather Chaps", List.of("Stiffened leather leg protection."), HeadTexture.BRONZE_MED_HELM.asBase64(), Color.fromRGB(33, 15, 2)),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(
@@ -853,7 +926,7 @@ public class ItemRepository {
                                 ), 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STUDDED_LEATHER_LEGGINGS.asInt(), Material.LEATHER_LEGGINGS, ItemRarity.COMMON, "Studded Chaps", List.of("Leather chaps reinforced with studs."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(38, 29, 15)),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STUDDED_LEATHER_LEGGINGS.asInt(), Material.LEATHER_LEGGINGS, ItemRarity.COMMON, "Studded Chaps", List.of("Leather chaps reinforced with studs."), HeadTexture.BRONZE_MED_HELM.asBase64(), Color.fromRGB(38, 29, 15)),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(
@@ -867,7 +940,7 @@ public class ItemRepository {
                                 ), 1)
                 ),
                 new ItemEntity(
-                        new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.GREEN_DHIDE_LEGGINGS.asInt(), Material.LEATHER_LEGGINGS, ItemRarity.COMMON, "Green D'hide Chaps", List.of("Leg armor made of green dragonhide."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(12, 130, 12)),
+                        new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.GREEN_DHIDE_LEGGINGS.asInt(), Material.LEATHER_LEGGINGS, ItemRarity.COMMON, "Green D'hide Chaps", List.of("Leg armor made of green dragonhide."), HeadTexture.BRONZE_MED_HELM.asBase64(), Color.fromRGB(12, 130, 12)),
                         toVersionedJson(
                                 new EquipableTypeMeta(null, List.of(
                                         new Modifier(ModifierType.DEFENCE_STAB, 6),
@@ -953,7 +1026,7 @@ public class ItemRepository {
 
                 // Armor - Boots
                 new ItemEntity(
-                        new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.LEATHER_BOOTS.asInt(), Material.LEATHER_BOOTS, ItemRarity.COMMON, "Leather Boots", List.of("Basic leather footwear."), HeadTexture.BRONZE_HELM.asBase64(), Color.fromRGB(74, 56, 7)),
+                        new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.LEATHER_BOOTS.asInt(), Material.LEATHER_BOOTS, ItemRarity.COMMON, "Leather Boots", List.of("Basic leather footwear."), HeadTexture.BRONZE_MED_HELM.asBase64(), Color.fromRGB(74, 56, 7)),
                         toVersionedJson(
                                 new EquipableTypeMeta(null, List.of(
                                         new Modifier(ModifierType.DEFENCE_STAB, 1),

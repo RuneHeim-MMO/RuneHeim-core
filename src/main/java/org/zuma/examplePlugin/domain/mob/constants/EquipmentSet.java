@@ -16,7 +16,7 @@ public enum EquipmentSet {
     ))),
 
     RUNE_SET_BATTLEAXE(new MobEquipmentMeta(List.of(
-            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.RUNITE_HELMET), 100),
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.RUNE_FULLHELM), 100),
             new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNITE_BODY), 100),
             new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNITE_PLATELEGS), 100),
             new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.RUNITE_BOOTS), 100),
