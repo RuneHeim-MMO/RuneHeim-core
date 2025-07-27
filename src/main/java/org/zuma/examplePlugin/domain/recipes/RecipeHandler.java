@@ -28,195 +28,26 @@ import static org.zuma.examplePlugin.core.utils.ItemUtils.multiplyItemRecords;
 
 public class RecipeHandler {
     private final RecipeRegistry registry;
-    private final ItemRegistry itemRegistry;
     private final ArrayList<AbstractRecipe> validInventoryRecipes = new ArrayList<>();
 
 
-    public RecipeHandler(RecipeRegistry registry, ItemRegistry itemRegistry) {
+    public RecipeHandler(RecipeRegistry registry) {
         this.registry = registry;
-        this.itemRegistry = itemRegistry;
 
         validInventoryRecipes.addAll(registry.getRecipesByType(RecipeType.INVENTORY_RECIPE, false));
         validInventoryRecipes.addAll(registry.getRecipesByType(RecipeType.CAMPFIRE_RECIPE, false));
     }
 
     public boolean craftRecipe(RunePlayer player, AbstractRecipe recipe, int times) {
-        if (times <= 0) {
-            return false;
-        }
-
-        RecipeType type = recipe.getType();
-        long totalCost = times * recipe.getRecipeCost();
-
-        Component resultComponent = recipe.getDisplayItemstack(player, itemRegistry).displayName().color(NamedTextColor.WHITE);
-        String recipeResultNameString = times + "x " + TextUtils.extractPlainText(resultComponent);
-        List<ItemRecord> totalIngredients = getIngredients(recipe, times);
-
-        if (player.getPouchCoins() < totalCost) {
-            HudService.sendFailMessage(player, Component.text("You do not have enough money to " + type.getVerb().toLowerCase() + " ")
-                    .append(resultComponent)
-                    .append(Component.text("! You need at least "))
-                    .append(CurrencyUtils.getCurrencyComponent(totalCost)).append(Component.text(" coins.")));
-            return false;
-        }
-
-        if (player.isBusy()) {
-            HudService.sendFailMessage(player, Component.text("You are already busy with something else!"));
-            return false;
-        }
-
-        if (!player.meetsRequirements(recipe)) {
-            HudService.sendFailMessage(player, Component.text("You do not meet requirements to " + type.getVerb().toLowerCase() + " ").append(resultComponent));
-            return false;
-        }
-
-        if (!PlayerUtils.hasItems(player, totalIngredients)) {
-            HudService.sendFailMessage(player, Component.text("You do not have required ingredients to " + type.getVerb().toLowerCase() + " " + times + "x ").append(resultComponent));
-            return false;
-        }
-
-        PlayerCraftingStartEvent event = new PlayerCraftingStartEvent(player, recipe, times);
-        Bukkit.getServer().getPluginManager().callEvent(event);
-
-        if (event.isCancelled()) {
-            return false;
-        }
-
-        type.getStartSound().play(player, true);
-        recipe.handleRecipeCraftingStart(player);
-
-        player.useBusyState(recipe.getCraftTimeMs() * times,
-                type.getContinuousVerb() + " " + recipeResultNameString, "", type.getStepSound(), type.getFinishSound(), () -> {
-
-                    // If players inventory gets modified during waiting for the craft (e.g. player drops item)
-                    if (!PlayerUtils.hasItems(player, totalIngredients)) {
-                        HudService.sendFailMessage(player, Component.text("You do not have required ingredients to " + type.getVerb().toLowerCase() + " " + times + "x ").append(resultComponent));
-                        recipe.handleRecipeCraftingAborted(player);
-                        return;
-                    }
-
-
-                    int successCrafts = getSuccessCraftsAmount(player, recipe, times);
-                    int failedCrafts = times - successCrafts;
-
-
-                    if (failedCrafts > 0) {
-                        List<ItemRecord> consumedOnFailIngredients = multiplyItemRecords(recipe.getIngredients().stream()
-                                .filter(IngredientRecord::isConsumedOnFail)
-                                .map(record -> new ItemRecord(record.itemId(), record.amount())).toList(), failedCrafts);
-
-                        boolean itemsRemoveSuccess = PlayerUtils.removeItems(player, consumedOnFailIngredients);
-
-                        if (!itemsRemoveSuccess) {
-                            HudService.sendFailMessage(player, Component.text("Failed removing items from player inventory."));
-                            recipe.handleRecipeCraftingAborted(player);
-                            return;
-                        }
-
-                    }
-
-                    if (successCrafts > 0) {
-                        List<ItemRecord> consumedOnSuccessIngredients = multiplyItemRecords(recipe.getIngredients().stream()
-                                .filter(IngredientRecord::isConsumedOnSuccess)
-                                .map(record -> new ItemRecord(record.itemId(), record.amount())).toList(), successCrafts);
-
-                        boolean itemsRemoveSuccess = PlayerUtils.removeItems(player, consumedOnSuccessIngredients);
-
-                        if (!itemsRemoveSuccess) {
-                            HudService.sendFailMessage(player, Component.text("Failed removing items from player inventory."));
-                            recipe.handleRecipeCraftingAborted(player);
-                            return;
-                        }
-
-                    }
-
-                    if (player.getPouchCoins() < totalCost) {
-                        HudService.sendFailMessage(player, Component.text("You do not have enough money to " + type.getVerb().toLowerCase() + " ")
-                                .append(resultComponent)
-                                .append(Component.text("! You need at least "))
-                                .append(CurrencyUtils.getCurrencyComponent(totalCost)).append(Component.text(" coins.")));
-                        recipe.handleRecipeCraftingAborted(player);
-                        return;
-                    }
-
-
-                    PlayerCraftingFinishEvent successEvent = new PlayerCraftingFinishEvent(player, recipe, successCrafts, failedCrafts);
-                    Bukkit.getServer().getPluginManager().callEvent(successEvent);
-
-                    if (successEvent.isCancelled()) {
-                        recipe.handleRecipeCraftingAborted(player);
-                        return;
-                    }
-
-                    if (totalCost > 0) {
-                        player.setPouchCoins(player.getPouchCoins() - totalCost);
-                        HudService.showCoinsChangeBubble(player, -totalCost);
-                    }
-
-                    if (successCrafts > 0) {
-                        // Can be null for recipes that dont produce items (e.g. campfires)
-                        if (recipe.getSuccessResult() != null) {
-                            player.giveItemOrDrop(new ItemRecord(recipe.getSuccessResult().getItemId(), recipe.getSuccessResult().getAmount() * successCrafts));
-                        }
-
-                        recipe.onCraftFinish(player, successCrafts);
-                        recipe.handleRecipeCraftingSuccess(player);
-                        player.asBukkitPlayer().sendMessage(Component.text("Successfully " + type.getPastTenseVerb().toLowerCase() + " " + successCrafts + "x ").append(resultComponent).color(Color.SUCCESS.asColor()));
-                        type.getFinishSound().play(player, true);
-                    } else {
-
-                        if (times == 1) {
-                            recipe.handleRecipeCraftingAborted(player);
-                        }
-                    }
-
-                    if (failedCrafts > 0 && recipe.getFailResult() != null) {
-                        int itemsYieldAmntOnSuccess = recipe.getSuccessResult() != null ? recipe.getSuccessResult().getAmount() : 1;
-                        player.giveItemOrDrop(new ItemRecord(recipe.getFailResult().getItemId(), itemsYieldAmntOnSuccess * failedCrafts));
-                    }
-
-                    if (times == 1 && failedCrafts == 1) {
-                        player.asBukkitPlayer().sendMessage(Icon.ERROR.asComponent().append(Component.text("Failed to " + type.getVerb().toLowerCase() + " a ").append(resultComponent).color(Color.ERROR.asColor())));
-                    }
-
-
-                }, () -> recipe.handleRecipeCraftingAborted(player));
-
-        return true;
+        return recipe.craftRecipe(player, times);
     }
 
-    private static @NotNull List<ItemRecord> getIngredients(AbstractRecipe recipe, int times) {
-        List<ItemRecord> totalIngredients = new ArrayList<>();
-        List<IngredientRecord> recipeIngredients = recipe.getIngredients();
-
-        recipeIngredients.forEach(ingredientRecord -> {
-            if (!ingredientRecord.isConsumedOnSuccess() && !ingredientRecord.isConsumedOnFail()) {
-                // It's a tool, or the quantity does not matter - so, set as required quantity to be 1;
-                totalIngredients.add(new ItemRecord(ingredientRecord.itemId(), ingredientRecord.amount()));
-            } else {
-                totalIngredients.add(new ItemRecord(ingredientRecord.itemId(), ingredientRecord.amount() * times));
-            }
-
-        });
-        return totalIngredients;
-    }
 
     public boolean handleInventoryRecipeClick(RunePlayer player, Inventory inventory, AbstractItemType firstItem, AbstractItemType secondItem) {
         List<AbstractRecipe> matchingRecipes = validInventoryRecipes.stream()
                 .filter(recipe -> recipe.getType() == RecipeType.INVENTORY_RECIPE || recipe.getType() == RecipeType.CAMPFIRE_RECIPE)
-                .filter(recipe -> {
-                    boolean hasFirstItem = false;
-                    boolean hasSecondItem = false;
-
-                    for (IngredientRecord record : recipe.getIngredients()) {
-                        int id = record.itemId().asInt();
-                        if (firstItem.id == id) hasFirstItem = true;
-                        if (secondItem.id == id) hasSecondItem = true;
-                        if (hasFirstItem && hasSecondItem) return true;
-                    }
-                    return false;
-                }).toList();
-
+                .filter(recipe -> recipe.matchesItemPair(firstItem, secondItem))
+                .toList();
 
         if (matchingRecipes.isEmpty()) {
             return false;
@@ -224,19 +55,6 @@ public class RecipeHandler {
 
         AbstractRecipe matchingRecipe = matchingRecipes.getFirst();
         return craftRecipe(player, matchingRecipe, 1);
-    }
-
-
-    private int getSuccessCraftsAmount(RunePlayer player, AbstractRecipe recipe, int craftAmount) {
-        int successCrafts = 0;
-
-        for (int i = 0; i < craftAmount; i++) {
-            if (recipe.isCraftSuccessful(player)) {
-                successCrafts++;
-            }
-        }
-
-        return successCrafts;
     }
 
 

@@ -169,7 +169,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         recipeRegistry = new RecipeRegistry();
         RecipeLoader recipeLoader = new RecipeLoader(itemRegistry, recipeRegistry, new RecipeRepository(), new RecipeFactory());
         recipeLoader.loadAllRecipes();
-        recipeHandler = new RecipeHandler(recipeRegistry, itemRegistry);
+        recipeHandler = new RecipeHandler(recipeRegistry);
         RecipeListener recipeListener = new RecipeListener(recipeHandler);
         getServer().getPluginManager().registerEvents(recipeListener, pluginInstance);
 
