@@ -16,7 +16,9 @@ import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
+import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +35,24 @@ public class PlayerUtils {
 
     public static ItemStack getItemStackInHand(Player player) {
         return player.getInventory().getItemInMainHand();
+    }
+
+    public static int getLastSkillPercent(RunePlayer player) {
+        player.asBukkitPlayer().setLevel(player.getCombatLvl());
+
+        SkillType lastXPGainedSkillType = player.getLastXPGainedSkillType();
+
+        if (lastXPGainedSkillType == null) {
+            return 0;
+        }
+
+        Skill skill = player.getSkill(lastXPGainedSkillType);
+
+        if (skill == null) {
+            return 0;
+        }
+
+        return XpUtils.getProgressPercent((int) skill.getXp(), skill.getBaseLevel());
     }
 
     public static boolean hasItems(RunePlayer player, List<ItemRecord> requiredItems) {

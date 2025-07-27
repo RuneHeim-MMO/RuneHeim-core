@@ -10,7 +10,10 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.utils.PlayerUtils;
+import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import javax.annotation.Nullable;
 
@@ -35,7 +38,8 @@ public class PlayerScoreboardManager {
 
     private void setDefaultScoreboardContent(Scoreboard scoreboard) {
         Objective o = scoreboard.getObjective("stats");
-        String partyString = player.getParty() == null ? "§fNone" : "§6" + player.getParty().getOwnerUsername() + "'s party";
+        String partyString = player.getParty() == null ? "§fNone" : "§6" + player.getParty().getOwnerUsername();
+        SkillType lastXPGainedSkillType = player.getLastXPGainedSkillType();
 
         if (o == null) {
             return;
@@ -44,21 +48,17 @@ public class PlayerScoreboardManager {
         o.getScore("").setScore(15);
 
         o.getScore("§7Party: " + partyString).setScore(14);
-        o.getScore("§7Combat Level: §3" + player.getCombatLvl()).setScore(13);
+        o.getScore("§7Combat Level: §3" + TextUtils.getLegacyColorCodeForLevel(player.getCombatLvl()) + player.getCombatLvl()).setScore(13);
 
-        /*o.getScore("§6Coins: §f" + ticks + " ".repeat(13)).setScore(13);
-        o.getScore("§6Kills: §f" + ticks + " ".repeat(12)).setScore(12);
-        o.getScore("§6Deaths: §f" + ticks + " ".repeat(11)).setScore(11);
-        o.getScore("§6Coins: §f" + ticks + " ".repeat(10)).setScore(10);
-        o.getScore("§6Kills: §f" + ticks + " ".repeat(9)).setScore(9);
-        o.getScore("§6Deaths: §f" + ticks + " ".repeat(8)).setScore(8);
-        o.getScore("§6Coins: §f" + ticks + " ".repeat(7)).setScore(7);
-        o.getScore("§6Kills: §f" + ticks + " ".repeat(6)).setScore(6);
-        o.getScore("§6Deaths: §f" + ticks + " ".repeat(5)).setScore(5);
-        o.getScore("§6Coins: §f" + ticks + " ".repeat(4)).setScore(4);
-        o.getScore("§6Kills: §f" + ticks + " ".repeat(3)).setScore(3);
-        o.getScore("§6Deaths: §f" + ticks + " ".repeat(2)).setScore(2);
-        o.getScore("§6Coins: §f" + ticks + " ".repeat(1)).setScore(1);*/
+        o.getScore(" ").setScore(12);
+        o.getScore("§7Skill Progression:").setScore(11);
+        if (lastXPGainedSkillType != null) {
+
+            o.getScore("  §f" + lastXPGainedSkillType.getSymbol() + " §7" + lastXPGainedSkillType.getLabel() + " §f"
+                    + TextUtils.getLegacyColorCodeForPercent(PlayerUtils.getLastSkillPercent(player)) + PlayerUtils.getLastSkillPercent(player) + "%  ").setScore(10);
+        } else {
+            o.getScore("   §fNo recent skill   ").setScore(10);
+        }
 
         ticks += 1;
     }

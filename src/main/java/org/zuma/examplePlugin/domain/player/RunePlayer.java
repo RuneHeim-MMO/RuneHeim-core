@@ -127,7 +127,7 @@ public class RunePlayer implements CombatEntity {
 
     public void setSkills(EnumMap<SkillType, Skill> skills) {
         this.skills.putAll(skills);
-        combatData.setCombatLvl(Math.min(3, XpUtils.getCombatLevelFromSkills(skills)));
+        combatData.setCombatLvl(Math.max(3, XpUtils.getCombatLevelFromSkills(this.skills)));
         HudService.updateVanillaGUI(this);
     }
 

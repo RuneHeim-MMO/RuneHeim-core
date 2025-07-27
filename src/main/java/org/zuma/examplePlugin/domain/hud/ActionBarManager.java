@@ -108,7 +108,7 @@ public class ActionBarManager {
 
     public void showLevelUp(Skill skill, int newRecipesAmount) {
         queueFrame(Component.text(skill.getType().getSymbol() + " ", NamedTextColor.WHITE)
-                .append(Component.text(skill.getType().getLabel() + " leveled up to level" + skill.getBaseLevel() + " !", Color.SUCCESS.asColor())), 40);
+                .append(Component.text(skill.getType().getLabel() + " leveled up to level " + skill.getBaseLevel() + "!", Color.SUCCESS.asColor())), 40);
 
         if (newRecipesAmount > 0) {
             String text = "Unlocked " + newRecipesAmount + " new crafting recipes!";

@@ -21,10 +21,7 @@ import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
-import org.zuma.examplePlugin.core.utils.CurrencyUtils;
-import org.zuma.examplePlugin.core.utils.FireworkUtils;
-import org.zuma.examplePlugin.core.utils.TextUtils;
-import org.zuma.examplePlugin.core.utils.XpUtils;
+import org.zuma.examplePlugin.core.utils.*;
 import org.zuma.examplePlugin.domain.combat.constants.AttackType;
 import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.combat.constants.HitType;
@@ -289,22 +286,7 @@ public class HudService {
     }
 
     private static void updateXpBarLevel(RunePlayer player) {
-        player.asBukkitPlayer().setLevel(player.getCombatLvl());
-
-        SkillType lastXPGainedSkillType = player.getLastXPGainedSkillType();
-
-        if (lastXPGainedSkillType == null) {
-            return;
-        }
-
-        Skill skill = player.getSkill(lastXPGainedSkillType);
-
-        if (skill == null) {
-            return;
-        }
-
-        int progressPercent = XpUtils.getProgressPercent((int) skill.getXp(), skill.getBaseLevel());
-        player.asBukkitPlayer().setExp((float) progressPercent / 100);
+        player.asBukkitPlayer().setExp((float) PlayerUtils.getLastSkillPercent(player) / 100);
     }
 
     public static void updateVanillaGUI(RunePlayer player) {

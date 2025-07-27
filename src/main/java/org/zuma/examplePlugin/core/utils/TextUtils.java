@@ -168,4 +168,14 @@ public class TextUtils {
         if (level < 75) return "§6"; // gold
         return "§c";                 // red
     }
+
+    public static String getLegacyColorCodeForPercent(double percent) {
+        if (percent <= 0) return "§c";      // red
+        if (percent < 25) return "§6";      // gold (orange/gold)
+        if (percent < 50) return "§e";      // yellow
+        if (percent < 70) return "§2";      // dark green
+        if (percent < 85) return "§a";      // green
+        if (percent <= 100) return "§b";     // aqua (bright greenish/blue)
+        return "§f";
+    }
 }
