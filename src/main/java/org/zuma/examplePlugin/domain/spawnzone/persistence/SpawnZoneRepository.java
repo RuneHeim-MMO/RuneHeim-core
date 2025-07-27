@@ -8,7 +8,6 @@ import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneMobRecord;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneRecord;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneType;
-import org.zuma.examplePlugin.domain.spawnzone.impl.PointSpawnZone;
 import org.zuma.examplePlugin.domain.spawnzone.meta.AbstractSpawnZoneMeta;
 import org.zuma.examplePlugin.domain.spawnzone.meta.v1.AreaSpawnZoneMeta;
 import org.zuma.examplePlugin.domain.spawnzone.meta.v1.PointSpawnZoneMeta;
@@ -81,9 +80,35 @@ public class SpawnZoneRepository {
                         new SpawnZoneMobRecord(MobType.GOBLIN_LOW_LVL_3, 5, 100),
                         new SpawnZoneMobRecord(MobType.GOBLIN_LOW_LVL_4, 5, 100),
                         new SpawnZoneMobRecord(MobType.GOBLIN_LOW_LVL_5, 5, 100)
-                ), 50, false), 1))
+                ), 50, false), 1)),
 
-                );
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(9, SpawnZoneType.POINT, 30, 1,
+                        new Location(Bukkit.getWorld("world"), 173, 73, -50)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.GENERAL_STORE, 1, 100)
+                ), false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(10, SpawnZoneType.POINT, 30, 1,
+                        new Location(Bukkit.getWorld("world"), 209, 73, -98)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.DRAKKAR_BLACKSMITH, 1, 100)
+                ), false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(11, SpawnZoneType.POINT, 30, 1,
+                        new Location(Bukkit.getWorld("world"), 257.5, 73, -58.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANK_TELLER_1, 1, 100)
+                ), false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(12, SpawnZoneType.POINT, 30, 1,
+                        new Location(Bukkit.getWorld("world"), 257.5, 73, -63.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANK_TELLER_2, 1, 100)
+                ), false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(13, SpawnZoneType.POINT, 30, 1,
+                        new Location(Bukkit.getWorld("world"), 257.5, 73, -68.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANK_TELLER_3, 1, 100)
+                ), false), 1))
+
+
+        );
     }
 }
 

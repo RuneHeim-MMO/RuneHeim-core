@@ -7,7 +7,6 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
@@ -28,11 +27,8 @@ import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
 import org.zuma.examplePlugin.features.admin.inventories.ItemRegistryInventory;
 import org.zuma.examplePlugin.features.admin.inventories.RecipesInventory;
 import com.ticxo.modelengine.api.ModelEngineAPI;
-import com.ticxo.modelengine.api.entity.BukkitEntity;
-import com.ticxo.modelengine.api.ModelEngineAPI;
 import com.ticxo.modelengine.api.model.ActiveModel;
 import com.ticxo.modelengine.api.model.ModeledEntity;
-import org.bukkit.entity.ArmorStand;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -254,7 +250,7 @@ public class AdminCommand implements BasicCommand {
         }
 
         if (Objects.equals(args[0], "shop")) {
-            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.GENERIC_SHOPKEEPER.getId());
+            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.GENERAL_STORE.getId());
         }
 
         if (args.length == 1 && Objects.equals(args[0], "illegal")) {

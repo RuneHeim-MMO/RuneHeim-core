@@ -25,7 +25,18 @@ public class ShopRepository {
     public List<ShopConfig> getAll() {
         return List.of(
 
-                new ShopConfig(ShopId.GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)));
+                new ShopConfig(ShopId.GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
+
+                new ShopConfig(ShopId.DRAKKAR_BLACKSMITH.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                        new ShopItemConfig(ItemId.SMITHING_HAMMER.asInt(), 8, 30, 90L, 20L),
+                        new ShopItemConfig(ItemId.BRONZE_BAR.asInt(), 8, 30, 250L, 30L),
+                        new ShopItemConfig(ItemId.IRON_BAR.asInt(), 8, 30, 350L, 50L),
+                        new ShopItemConfig(ItemId.STEEL_BAR.asInt(), 8, 30, 450L, 70L),
+                        new ShopItemConfig(ItemId.COAL_ORE.asInt(), 4, 30, 80L, 20L)
+                ))), 1))
+
+
+        );
 
 
     }

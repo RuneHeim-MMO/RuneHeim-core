@@ -11,7 +11,12 @@ public enum MobType {
     GOBLIN_LOW_LVL_5("goblin_low_lvl_5"),
 
 
-    GENERIC_SHOPKEEPER("generic_shopkeeper"),
+    BANK_TELLER_1("bank_teller_1"),
+    BANK_TELLER_2("bank_teller_2"),
+    BANK_TELLER_3("bank_teller_3"),
+
+    DRAKKAR_BLACKSMITH("drakkar_blacksmith"),
+    GENERAL_STORE("generic_shopkeeper"),
     FUSION_MASTER("fusion_master"),
     SHEEP("sheep"), // Can shear wool off these
 

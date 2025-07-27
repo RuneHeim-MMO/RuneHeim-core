@@ -107,6 +107,11 @@ public class CityGuardMob extends GenericCombatant {
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> SoundType.GUARD_DISENGAGE.play(thisEntity.getLocation()), ThreadLocalRandom.current().nextInt(0, 21));
 
+        if(initialWalkingDistance > 10) {
+            handleArrivedAtSpawn();
+            return;
+        }
+
         MobUtils.moveToWithCallback(mob, this.getSpawnLocation(), 10 * 20L,
                 this::handleArrivedAtSpawn,
                 () -> {

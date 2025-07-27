@@ -61,7 +61,8 @@ public class GUIHandler {
         this.registry.register(InventoryId.ADMIN_NODE_CREATE.asInt(), () -> new NodeCreatorInventory("[A] Create Resource Node", InventoryId.ADMIN_NODE_CREATE.asInt(), blockLoader));
         this.registry.register(InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), () -> new BlockInvCreatorInventory("[A] Create Inventory Opener", InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), blockLoader, this));
         this.registry.register(InventoryId.GENERAL_STORE.asInt(), () -> new ShopInventory(GUIOverlay.SHOP_OVERLAY.asGlyph() + "§f" + Icon.CHEST.get() + "§f General Store", InventoryId.GENERAL_STORE.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.GENERAL_STORE.asInt())));
-        this.registry.register(InventoryId.SPINNING_WHEEL.asInt(), () -> new SpinningWheelInventory(GUIOverlay.SPINNING_WHEEL_OVERLAY.asGlyph() + "§f" + Icon.MATERIAL.get() + "§f Spinning Wheel", InventoryId.GENERAL_STORE.asInt()));
+        this.registry.register(InventoryId.SPINNING_WHEEL.asInt(), () -> new SpinningWheelInventory(GUIOverlay.SPINNING_WHEEL_OVERLAY.asGlyph() + "§f" + Icon.MATERIAL.get() + "§f Spinning Wheel", InventoryId.SPINNING_WHEEL.asInt()));
+        this.registry.register(InventoryId.DRAKKAR_BLACKSMITH.asInt(), () -> new ShopInventory(GUIOverlay.SHOP_OVERLAY.asGlyph() + "§f" + Icon.TOOL.get() + "§f Blacksmith", InventoryId.DRAKKAR_BLACKSMITH.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_BLACKSMITH.asInt())));
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
     }

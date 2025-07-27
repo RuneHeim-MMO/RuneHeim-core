@@ -10,7 +10,8 @@ public enum InventoryId {
     CRAFTING_TABLE(4),
     FUSION_MASTER(5),
     GENERAL_STORE(6),
-    SPINNING_WHEEL(7);
+    SPINNING_WHEEL(7),
+    DRAKKAR_BLACKSMITH(8);
 
     private final int id;
 

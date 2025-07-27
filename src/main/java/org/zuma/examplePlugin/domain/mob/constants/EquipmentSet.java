@@ -27,6 +27,10 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.PAPER), 100)
     ))),
 
+    BLACKSMITH(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.SMITHING_HAMMER), 100)
+    ))),
+
     GOBLIN(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.IRON_BODY), 5),
             new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.BRONZE_BOOTS), 30),

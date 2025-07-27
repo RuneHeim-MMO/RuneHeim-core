@@ -11,10 +11,11 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
 
-public class GenericShopkeeper extends AbstractInventoryOpener {
-    public GenericShopkeeper(String displayName, EquipmentSet equipmentSet, MobBehavior behavior, @Nullable String skin, @Nullable String model, int inventoryId, int maxWalkDistance) {
-        super(new FriendlyImmortalMobMeta(Component.text(displayName), EntityType.SHEEP, true), inventoryId, skin, model, maxWalkDistance);
-        super.setMobEquipment(equipmentSet.asMobEquipmentMeta());
+public class InventoryOpenedMob extends AbstractInventoryOpener {
+    public InventoryOpenedMob(String displayName, @Nullable EquipmentSet equipmentSet, MobBehavior behavior, @Nullable String skin, @Nullable String model, int inventoryId, int maxWalkDistance) {
+        super(new FriendlyImmortalMobMeta(Component.text(displayName), EntityType.VILLAGER, true), inventoryId, skin, model, maxWalkDistance);
+
+        if (equipmentSet != null) super.setMobEquipment(equipmentSet.asMobEquipmentMeta());
         super.setBehavior(behavior);
     }
 
