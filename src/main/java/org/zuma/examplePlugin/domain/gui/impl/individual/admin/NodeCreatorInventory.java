@@ -73,7 +73,7 @@ public class NodeCreatorInventory extends IndividualGUI {
             }
 
             ResourceNodeType type = types.get(i);
-            AbstractItemType dropItem = RuneQuestPlugin.getItemRegistry().getItem(type.getDrop().getItemId());
+            AbstractItemType dropItem = RuneQuestPlugin.getItemRegistry().getType(type.getDrop().getItemId());
 
             if (dropItem == null) {
                 return false;

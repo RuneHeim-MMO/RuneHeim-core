@@ -60,7 +60,7 @@ public class AdditionalGearSlotHandler {
 
             if (atSlot == null) return;
 
-            AbstractItemType type = RuneQuestPlugin.getItemRegistry().getItem(atSlot);
+            AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(atSlot);
 
             if (type == null || !def.isValidItem(type)) {
                 ItemStack cloned = atSlot.clone();
@@ -113,7 +113,7 @@ public class AdditionalGearSlotHandler {
             return;
         }
 
-        AbstractItemType cursorItemType = RuneQuestPlugin.getItemRegistry().getItem(cursor);
+        AbstractItemType cursorItemType = RuneQuestPlugin.getItemRegistry().getType(cursor);
 
         if (cursorItemType instanceof SkillRestrictable restrictable && !player.meetsRequirements(restrictable)) {
             HudService.sendFailMessage(player, Component.text("You do not meet requirements to use " + cursorItemType.displayName + "."));

@@ -354,7 +354,7 @@ public abstract class AbstractMob {
             if (drop == null) {
                 return;
             }
-            AbstractItemType type = RuneQuestPlugin.getItemRegistry().getItem(drop.getItemId());
+            AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(drop.getItemId());
 
             if (type == null) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot spawn drop for " + this.displayName + "! The item id (" + drop.getItemId() + ") in table (" + id + ") is invalid!");

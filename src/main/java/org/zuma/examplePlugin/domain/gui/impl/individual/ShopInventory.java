@@ -79,7 +79,7 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
 
     @Nullable
     private ItemStack createItemStack(ShopItem item) {
-        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getItem(item.getItemId());
+        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(item.getItemId());
 
         if (type == null) {
             return null;

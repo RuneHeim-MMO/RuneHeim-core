@@ -39,7 +39,7 @@ public class RecipeLoader {
             ItemStack itemStack = new ItemStack(Material.BARRIER);
 
             if (meta.successResult() != null) {
-                AbstractItemType item = this.itemRegistry.getItem(meta.successResult().getItemId());
+                AbstractItemType item = this.itemRegistry.getType(meta.successResult().getItemId());
 
                 if (item == null) {
                     RuneQuestPlugin.getRuneLogger().logWithStack(LogLevel.WARN, "Cannot register " + meta.type().name() + " recipe. Recipe result ItemRecord id is invalid.");

@@ -162,7 +162,7 @@ public class FusionMasterInventory extends IndividualGUI {
             return false;
         }
 
-        AbstractItemType itemType = RuneQuestPlugin.getItemRegistry().getItem(itemStack);
+        AbstractItemType itemType = RuneQuestPlugin.getItemRegistry().getType(itemStack);
         List<ItemType> socketedTypes = List.of(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemType.MELEE_WEAPON_WITH_GEM_SOCKETS);
 
         if (itemType == null) {
@@ -353,7 +353,7 @@ public class FusionMasterInventory extends IndividualGUI {
         int insertedGems = 0;
 
         for (int gemSlot : ACTIVE_GEM_SLOTS) {
-            AbstractItemType gem = RuneQuestPlugin.getItemRegistry().getItem(inventory.getItem(gemSlot));
+            AbstractItemType gem = RuneQuestPlugin.getItemRegistry().getType(inventory.getItem(gemSlot));
             if (gem == null || gem.type != ItemType.GEM) continue;
 
             try {
@@ -367,7 +367,7 @@ public class FusionMasterInventory extends IndividualGUI {
         }
 
         ItemStack socketableSlotItem = inventory.getItem(SOCKETABLE_SLOT);
-        AbstractItemType equipment = RuneQuestPlugin.getItemRegistry().getItem(socketableSlotItem);
+        AbstractItemType equipment = RuneQuestPlugin.getItemRegistry().getType(socketableSlotItem);
         if (equipment == null || socketableSlotItem == null) return;
 
         if (insertedGems > 0) {

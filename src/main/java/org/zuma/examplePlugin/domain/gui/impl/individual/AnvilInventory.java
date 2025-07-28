@@ -1,10 +1,8 @@
 package org.zuma.examplePlugin.domain.gui.impl.individual;
 
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
-import org.zuma.examplePlugin.domain.gui.base.PaginatedIndividualGUI;
 import org.zuma.examplePlugin.domain.gui.base.RecipeInventory;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -31,7 +29,7 @@ public class AnvilInventory extends RecipeInventory {
     @Override
     public boolean attemptOpenInventory(RunePlayer player) {
         ItemStack inHand = PlayerUtils.getItemStackInHand(player.asBukkitPlayer());
-        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getItem(inHand);
+        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(inHand);
 
 
         if (type == null || type.id != ItemId.SMITHING_HAMMER.asInt()) {

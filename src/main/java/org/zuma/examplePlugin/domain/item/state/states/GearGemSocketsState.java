@@ -9,7 +9,6 @@ import org.zuma.examplePlugin.domain.item.impl.Gem;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
-import org.zuma.examplePlugin.domain.item.state.meta.v1.FairyStateMeta;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.GearGemSocketsStateMeta;
 
 import java.util.ArrayList;
@@ -62,7 +61,7 @@ public class GearGemSocketsState extends AbstractState {
         List<Gem> list = new ArrayList<>();
 
         getInsertedGemIds().forEach(id -> {
-            AbstractItemType item = RuneQuestPlugin.getItemRegistry().getItem(id);
+            AbstractItemType item = RuneQuestPlugin.getItemRegistry().getType(id);
 
             if (item == null) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot retrieve gem item: Socket state contains invalid item id " + id + "!");

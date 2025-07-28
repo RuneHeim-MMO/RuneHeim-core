@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class PouchCommand implements BasicCommand {
-    private static final AbstractItemType coinsType = RuneQuestPlugin.getItemRegistry().getItem(ItemId.COINS.asInt());
+    private static final AbstractItemType coinsType = RuneQuestPlugin.getItemRegistry().getType(ItemId.COINS.asInt());
     private static final HashMap<UUID, Long> dropTimes = new HashMap<>(); // Prevent coins spamming.
     private static final int DROP_COOLDOWN_SECONDS = 5;
 

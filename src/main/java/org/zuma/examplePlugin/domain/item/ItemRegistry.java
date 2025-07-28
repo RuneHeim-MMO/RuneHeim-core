@@ -1,7 +1,6 @@
 package org.zuma.examplePlugin.domain.item;
 
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -32,7 +31,7 @@ public class ItemRegistry {
     }
 
     @Nullable
-    public AbstractItemType getItem(@Nullable ItemStack item) {
+    public AbstractItemType getType(@Nullable ItemStack item) {
         if (item == null || item.getType() == Material.AIR) {
             return null;
         }
@@ -43,19 +42,19 @@ public class ItemRegistry {
             PersistentDataContainer container = meta.getPersistentDataContainer();
             Integer value = container.get(PersistenceDataKey.ITEM_ID.key(RuneQuestPlugin.getInstance()), PersistentDataType.INTEGER);
 
-            return value != null ? getItem(value) : null;
+            return value != null ? getType(value) : null;
         }
 
         return null;
     }
 
     @Nullable
-    public AbstractItemType getItem(ItemId id) {
-        return getItem(id.asInt());
+    public AbstractItemType getType(ItemId id) {
+        return getType(id.asInt());
     }
 
     @Nullable
-    public AbstractItemType getItem(int id) {
+    public AbstractItemType getType(int id) {
         return items.get(id);
     }
 

@@ -4,29 +4,22 @@ import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import me.libraryaddict.disguise.disguisetypes.watchers.SheepWatcher;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.domain.droptable.DropTableId;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
-import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
-import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
-import org.zuma.examplePlugin.domain.mob.meta.CombatantMobMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.skill.SkillLevelRecord;
 
 import javax.annotation.Nullable;
@@ -107,7 +100,7 @@ public class ShearableSheep extends GenericCombatant {
             return;
         }
 
-        AbstractItemType item = RuneQuestPlugin.getItemRegistry().getItem(inHand);
+        AbstractItemType item = RuneQuestPlugin.getItemRegistry().getType(inHand);
 
         if (item == null) {
             return;

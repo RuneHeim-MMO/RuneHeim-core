@@ -39,7 +39,7 @@ public enum EquipmentSet {
 
 
     private static ItemStack getRuneItem(ItemId id) {
-        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getItem(id);
+        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(id);
 
         if (type == null) return new ItemStack(Material.AIR);
         return type.createItemStackOfType();

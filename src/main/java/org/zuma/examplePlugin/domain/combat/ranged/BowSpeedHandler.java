@@ -31,7 +31,7 @@ public class BowSpeedHandler implements Listener {
 
         if (inHandStack == null || inHandStack.getType().isAir()) return;
 
-        AbstractItemType itemType = RuneQuestPlugin.getItemRegistry().getItem(inHandStack);
+        AbstractItemType itemType = RuneQuestPlugin.getItemRegistry().getType(inHandStack);
         if (itemType == null) return;
 
         RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(shooter);

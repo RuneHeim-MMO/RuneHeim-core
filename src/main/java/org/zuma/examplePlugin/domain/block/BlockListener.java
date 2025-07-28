@@ -15,7 +15,6 @@ import org.bukkit.inventory.InventoryHolder;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
-import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
 import org.zuma.examplePlugin.domain.gui.IDHolder;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -55,7 +54,7 @@ public class BlockListener implements Listener {
         }
 
 
-        AbstractItemType itemInHand = itemRegistry.getItem(PlayerUtils.getItemStackInHand(player));
+        AbstractItemType itemInHand = itemRegistry.getType(PlayerUtils.getItemStackInHand(player));
         block.onPlayerInteractEvent(runePlayer, event.getAction(), event, itemInHand);
 
     }

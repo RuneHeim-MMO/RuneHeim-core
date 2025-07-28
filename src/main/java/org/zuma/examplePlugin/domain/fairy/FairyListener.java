@@ -43,8 +43,8 @@ public class FairyListener implements Listener {
         ItemStack clickedOn = event.getCurrentItem();
         ItemStack cursor = event.getCursor();
 
-        AbstractItemType clickedAbstract = RuneQuestPlugin.getItemRegistry().getItem(clickedOn);
-        AbstractItemType cursorAbstract = RuneQuestPlugin.getItemRegistry().getItem(cursor);
+        AbstractItemType clickedAbstract = RuneQuestPlugin.getItemRegistry().getType(clickedOn);
+        AbstractItemType cursorAbstract = RuneQuestPlugin.getItemRegistry().getType(cursor);
 
         if (clickedAbstract instanceof Fairy fairy && cursorAbstract instanceof FairyFruit fruit) {
             event.setCancelled(true);

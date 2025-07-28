@@ -86,7 +86,7 @@ public class ResourceNode extends AbstractInteractableBlock {
             return;
         }
 
-        AbstractItemType drop = RuneQuestPlugin.getItemRegistry().getItem(type.getDrop().getItemId());
+        AbstractItemType drop = RuneQuestPlugin.getItemRegistry().getType(type.getDrop().getItemId());
 
         if (drop == null) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Could not initialize resource node! ResourceNodeType with ID " + resourceTypeId + " has an invalid drop item id.");

@@ -60,7 +60,7 @@ public class Shop {
     }
 
     public long getItemSalePrice(ItemStack item) {
-        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getItem(item);
+        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(item);
 
         if (type == null) {
             return 0;
@@ -76,7 +76,7 @@ public class Shop {
     }
 
     public boolean isItemStackSellable(@Nullable ItemStack item) throws IllegalStateException {
-        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getItem(item);
+        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(item);
 
         if (type == null || item == null) {
             throw new IllegalStateException("Invalid item");
@@ -104,7 +104,7 @@ public class Shop {
             return;
         }
 
-        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getItem(item);
+        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(item);
 
         if (type == null) {
             throw new IllegalStateException("Unknown item");
@@ -144,7 +144,7 @@ public class Shop {
             throw new IllegalStateException("You don't have enough money! You need at least " + totalOrderPrice + " coins.");
         }
 
-        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getItem(item.getItemId());
+        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(item.getItemId());
 
         if (type == null) {
             throw new IllegalStateException("Unknown item id " + item.getItemId());

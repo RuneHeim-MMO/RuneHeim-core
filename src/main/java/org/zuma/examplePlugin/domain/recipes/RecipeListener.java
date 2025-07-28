@@ -48,8 +48,8 @@ public class RecipeListener implements Listener {
             return;
         }
 
-        AbstractItemType customClicked = RuneQuestPlugin.getItemRegistry().getItem(clicked);
-        AbstractItemType customCursor = RuneQuestPlugin.getItemRegistry().getItem(cursor);
+        AbstractItemType customClicked = RuneQuestPlugin.getItemRegistry().getType(clicked);
+        AbstractItemType customCursor = RuneQuestPlugin.getItemRegistry().getType(cursor);
 
         if (customClicked == null || customCursor == null) {
             return;

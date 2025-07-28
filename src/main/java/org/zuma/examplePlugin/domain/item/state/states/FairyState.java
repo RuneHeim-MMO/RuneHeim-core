@@ -182,7 +182,7 @@ public class FairyState extends AbstractState {
         List<FairyFruit> list = new ArrayList<>();
 
         upgradeIds.forEach(id -> {
-            AbstractItemType item = RuneQuestPlugin.getItemRegistry().getItem(id);
+            AbstractItemType item = RuneQuestPlugin.getItemRegistry().getType(id);
 
             if (item == null) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot retrieve fairy upgrade item: State contains invalid item id " + id + "!");

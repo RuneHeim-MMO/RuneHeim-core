@@ -1,7 +1,6 @@
 package org.zuma.examplePlugin.domain.item.state;
 
 import com.google.gson.Gson;
-import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -52,7 +51,7 @@ public class StateManager {
     @Nullable
     public AbstractState getItemState(ItemStack item) throws IllegalStateException {
         UUID uuid = getItemStackStateUuid(item);
-        AbstractItemType abstractItemType = itemHandler.getRegistry().getItem(item);
+        AbstractItemType abstractItemType = itemHandler.getRegistry().getType(item);
 
         if (uuid == null) {
             return null;

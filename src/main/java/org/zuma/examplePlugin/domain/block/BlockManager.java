@@ -71,7 +71,7 @@ public class BlockManager {
             AbstractInteractableBlock abstractInteractableBlock = (AbstractInteractableBlock) block;
             Location blockLocation = abstractInteractableBlock.getLocation();
 
-            AbstractItemType drop = RuneQuestPlugin.getItemRegistry().getItem(despawnDrop.getItemId());
+            AbstractItemType drop = RuneQuestPlugin.getItemRegistry().getType(despawnDrop.getItemId());
 
             if (drop == null) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Could not produce a drop on despawn for " + ((AbstractInteractableBlock) block).getType() + ". It has an invalid item id in item record..");

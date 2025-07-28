@@ -9,7 +9,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
@@ -17,19 +16,15 @@ import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
-import org.zuma.examplePlugin.core.utils.ItemUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
-import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.constants.EquipableType;
-import org.zuma.examplePlugin.domain.item.constants.WeaponSpeed;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.events.item.PlayerArmorEquipEvent;
 
-import javax.annotation.Nullable;
 import java.util.function.BiConsumer;
 
 public class ItemListener implements Listener {
@@ -49,7 +44,7 @@ public class ItemListener implements Listener {
     private void withItemAndPlayer(Player bukkitPlayer, ItemStack itemStack, BiConsumer<AbstractItemType, RunePlayer> consumer) {
         if (itemStack == null || itemStack.getType().isAir()) return;
 
-        AbstractItemType item = itemRegistry.getItem(itemStack);
+        AbstractItemType item = itemRegistry.getType(itemStack);
         if (item == null) return;
 
         RunePlayer player = playerHandler.getRunePlayer(bukkitPlayer);

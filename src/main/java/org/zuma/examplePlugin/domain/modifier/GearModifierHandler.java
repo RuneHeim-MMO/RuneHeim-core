@@ -51,7 +51,7 @@ public class GearModifierHandler {
         items.addAll(additionalGearSlotHandler.getSlotItems(player));
 
 
-        if (itemRegistry.getItem(itemInHand) instanceof EquipableItemType gearItem) {
+        if (itemRegistry.getType(itemInHand) instanceof EquipableItemType gearItem) {
             if (gearItem.getEquipableType().equals(EquipableType.HANDHELD)) items.add(itemInHand);
         }
 
@@ -59,7 +59,7 @@ public class GearModifierHandler {
         items.stream()
                 .filter(Objects::nonNull)
                 .flatMap(itemStack -> {
-                    AbstractItemType item = itemRegistry.getItem(itemStack);
+                    AbstractItemType item = itemRegistry.getType(itemStack);
                     return item != null
                             ? Stream.of(Map.entry(itemStack, item))
                             : Stream.empty();

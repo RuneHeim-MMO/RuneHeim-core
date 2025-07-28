@@ -27,7 +27,7 @@ public class PlayerItemDistributor {
     }
 
     public void addItemOrDrop(ItemRecord item) {
-        AbstractItemType customItem = RuneQuestPlugin.getItemRegistry().getItem(item.getItemId());
+        AbstractItemType customItem = RuneQuestPlugin.getItemRegistry().getType(item.getItemId());
 
         if (customItem == null) {
             RuneQuestPlugin.getRuneLogger().logWithStack(LogLevel.WARN, "Cannot add item with id " + item.getItemId() + " to players inventory. Item does not exist in registry.");

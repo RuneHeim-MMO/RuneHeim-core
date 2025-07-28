@@ -61,7 +61,7 @@ public class EmptyContainer extends AbstractItemType {
             return;
         }
 
-        AbstractItemType filled = RuneQuestPlugin.getItemRegistry().getItem(matchingFilledItem);
+        AbstractItemType filled = RuneQuestPlugin.getItemRegistry().getType(matchingFilledItem);
 
         if (filled == null) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Item of container type: " + super.displayName + " contains invalid filled item id (" + matchingFilledItem + ")! No such item exists.");

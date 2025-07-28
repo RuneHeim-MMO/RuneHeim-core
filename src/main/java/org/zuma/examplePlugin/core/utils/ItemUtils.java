@@ -103,7 +103,7 @@ public class ItemUtils {
             return null;
         }
 
-        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getItem(item);
+        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(item);
 
         if (!(type instanceof Weapon weapon)) {
             return null;

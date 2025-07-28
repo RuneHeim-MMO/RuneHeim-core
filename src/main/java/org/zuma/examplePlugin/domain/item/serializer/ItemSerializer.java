@@ -29,6 +29,13 @@ public class ItemSerializer {
 
 
     public static String serializeItemStackWithPDC(ItemStack item, JavaPlugin plugin) throws IllegalArgumentException {
+        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(item);
+
+        /* TODO: SAFE BANK SAVE & RETRIEVAL */
+        if (type == null) {
+            throw new IllegalArgumentException("Cannot serialize an item " + TextUtils.extractPlainText(item.displayName()) + "! It is not in registry.");
+        }
+
         Map<String, Object> serialized = new HashMap<>();
         ItemMeta meta = item.getItemMeta();
 
@@ -51,8 +58,6 @@ public class ItemSerializer {
             }
         }
         serialized.put("pdc", customData);
-
-
         return gson.toJson(serialized);
     }
 
@@ -95,7 +100,7 @@ public class ItemSerializer {
 
             if (rawKey.equals(itemIdKey.toString())) {
                 if (rawValue instanceof Number) {
-                    matchedType = RuneQuestPlugin.getItemRegistry().getItem(((Number) rawValue).intValue());
+                    matchedType = RuneQuestPlugin.getItemRegistry().getType(((Number) rawValue).intValue());
                 } else {
                     throw new IllegalArgumentException("Cannot deserialize an item (" + storedName + "). ID is invalid. " + rawValue + " is not a number.");
                 }

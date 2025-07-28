@@ -205,7 +205,7 @@ public class FairyHandler {
                 return;
             }
 
-            AbstractItemType itemType = RuneQuestPlugin.getItemRegistry().getItem(itemStack);
+            AbstractItemType itemType = RuneQuestPlugin.getItemRegistry().getType(itemStack);
 
             if (!(itemType instanceof Fairy fairy)) {
                 player.getActionBar().setFairyStatus(FairyStatus.NONE);
@@ -277,7 +277,7 @@ public class FairyHandler {
 
             RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
             ItemStack item = player.getInventory().getItem(ReservedSlot.FAIRY_SLOT.getSlot());
-            AbstractItemType runeItem = RuneQuestPlugin.getItemRegistry().getItem(item);
+            AbstractItemType runeItem = RuneQuestPlugin.getItemRegistry().getType(item);
             FairyState state = fairy.getState(item);
 
             if (runePlayer == null || item == null || runeItem == null || state == null) {
@@ -293,7 +293,7 @@ public class FairyHandler {
 
             // Feeding
             ItemStack food = player.getInventory().getItem(ReservedSlot.FAIRY_FOOD_SLOT.getSlot());
-            AbstractItemType abstractFood = RuneQuestPlugin.getItemRegistry().getItem(food);
+            AbstractItemType abstractFood = RuneQuestPlugin.getItemRegistry().getType(food);
 
             if (food == null || !(abstractFood instanceof FairyFood fairyFood)) {
                 return;

@@ -101,7 +101,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
     }
 
     private Component getLoreForRequiredItem(ItemRegistry registry, ItemRecord record, RunePlayer player) {
-        AbstractItemType ingredient = registry.getItem(record.getItemId());
+        AbstractItemType ingredient = registry.getType(record.getItemId());
 
         if (ingredient == null) {
             RuneQuestPlugin.getRuneLogger().logWithStack(LogLevel.WARN, "Unknown item id! ID: " + record.getItemId());
@@ -136,11 +136,11 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         itemLore.add(Component.text("⏱ " + chanceOfSuccess + "% chance of success", Color.coloredProgressValue(chanceOfSuccess, 0, 100, false)));
 
         List<ItemRecord> recipeIngredients = !ingredients.isEmpty() ? ingredients.stream()
-                .filter(record -> registry.getItem(record.itemId()) instanceof org.zuma.examplePlugin.domain.item.impl.Material)
+                .filter(record -> registry.getType(record.itemId()) instanceof org.zuma.examplePlugin.domain.item.impl.Material)
                 .map(record -> new ItemRecord(record.itemId(), record.amount())).toList() : new ArrayList<>();
 
         List<ItemRecord> requiredTools = !ingredients.isEmpty() ? ingredients.stream()
-                .filter(record -> registry.getItem(record.itemId()) instanceof Tool)
+                .filter(record -> registry.getType(record.itemId()) instanceof Tool)
                 .map(record -> new ItemRecord(record.itemId(), record.amount())).toList() : new ArrayList<>();
 
 
