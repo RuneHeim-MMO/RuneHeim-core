@@ -339,19 +339,19 @@ public class ItemRepository {
 
 
                 // Fairy
-                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY, ItemId.FAIRY_OF_HOPE.asInt(), Material.KNOWLEDGE_BOOK, ItemRarity.LEGENDARY, "Fairy of Hope", List.of("A gentle sprite whose presence inspires courage and renewal."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY, ItemId.FAIRY_OF_HOPE.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Fairy of Hope", List.of("A gentle sprite whose presence inspires courage and renewal."), null, null),
                         toVersionedJson(new FairyMeta("cubee-swamps", 1), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY, ItemId.FAIRY_OF_LIGHT.asInt(), Material.KNOWLEDGE_BOOK, ItemRarity.LEGENDARY, "Fairy of Light", List.of("A radiant fairy that illuminates the darkest paths with pure brilliance."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY, ItemId.FAIRY_OF_LIGHT.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Fairy of Light", List.of("A radiant fairy that illuminates the darkest paths with pure brilliance."), null, null),
                         toVersionedJson(new FairyMeta("cubee-good", 1), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY, ItemId.FAIRY_OF_SILENCE.asInt(), Material.KNOWLEDGE_BOOK, ItemRarity.LEGENDARY, "Fairy of Silence", List.of("Whispers softly in the quiet, muffling sound and calm unrest."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY, ItemId.FAIRY_OF_SILENCE.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Fairy of Silence", List.of("Whispers softly in the quiet, muffling sound and calm unrest."), null, null),
                         toVersionedJson(new FairyMeta("cubee-stone", 1), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY, ItemId.FAIRY_OF_DARKNESS.asInt(), Material.KNOWLEDGE_BOOK, ItemRarity.LEGENDARY, "Fairy of Darkness", List.of("A shadowy companion that thrives where light dares not linger."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY, ItemId.FAIRY_OF_DARKNESS.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Fairy of Darkness", List.of("A shadowy companion that thrives where light dares not linger."), null, null),
                         toVersionedJson(new FairyMeta("cubee-skeleton", 1), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY, ItemId.FAIRY_OF_FROST.asInt(), Material.KNOWLEDGE_BOOK, ItemRarity.LEGENDARY, "Fairy of Frost", List.of("A chilly wisp that freezes the air and slows the fiercest foes."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.FAIRY, ItemId.FAIRY_OF_FROST.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Fairy of Frost", List.of("A chilly wisp that freezes the air and slows the fiercest foes."), null, null),
                         toVersionedJson(new FairyMeta("cubee-snow", 1), 1)),
 
                 // Fairy Upgrade

@@ -373,6 +373,13 @@
     },
     {
       "type": "bitmap",
+      "file": "minecraft:font/icons/furnace.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⌰"]
+    },
+    {
+      "type": "bitmap",
       "file": "minecraft:font/icons/fish.png",
       "ascent": 9,
       "height": 12,

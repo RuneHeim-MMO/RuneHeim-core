@@ -55,6 +55,7 @@ public enum Icon {
     RANGED_STR("⫨"),
     RANGED_ACCURACY("⥹"),
     WIND("ⶉ"),
+    FURNACE("⌰"),
 
     SCROLL_RED("ⵣ"),
     SCROLL_GRAY("⁝"),

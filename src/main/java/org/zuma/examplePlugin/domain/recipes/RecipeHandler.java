@@ -10,6 +10,7 @@ import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
+import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
@@ -29,6 +30,7 @@ import static org.zuma.examplePlugin.core.utils.ItemUtils.multiplyItemRecords;
 public class RecipeHandler {
     private final RecipeRegistry registry;
     private final ArrayList<AbstractRecipe> validInventoryRecipes = new ArrayList<>();
+    private final CooldownHandler cooldownHandler = new CooldownHandler();
 
 
     public RecipeHandler(RecipeRegistry registry) {

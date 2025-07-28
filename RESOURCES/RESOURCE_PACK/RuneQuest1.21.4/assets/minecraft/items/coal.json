@@ -393,6 +393,41 @@
                 }
             },
             {
+                "threshold": 2100,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/fairy/fairy_of_hope"
+                }
+            },
+            {
+                "threshold": 2101,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/fairy/fairy_of_light"
+                }
+            },
+            {
+                "threshold": 2102,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/fairy/fairy_of_silence"
+                }
+            },
+            {
+                "threshold": 2103,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/fairy/fairy_of_darkness"
+                }
+            },
+            {
+                "threshold": 2104,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/fairy/fairy_of_frost"
+                }
+            },
+            {
                 "threshold": 2200,
                 "model": {
                     "type": "model",

@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerBlock;
+import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
 import org.zuma.examplePlugin.domain.gui.base.AbstractGUI;
 import org.zuma.examplePlugin.domain.gui.constants.GUIOverlay;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
@@ -37,6 +38,7 @@ public class GUIHandler {
     // Inventory UUID : List<PlayerUUID>
     private final HashMap<UUID, List<UUID>> inventoryViewers = new HashMap<>();
     private final HashMap<UUID, Runnable> closeRunnables = new HashMap<>();
+    private final CooldownHandler cooldownHandler = new CooldownHandler();
 
     public GUIHandler(GUIRegistry registry, RunePlayerManager playerManager) {
         this.registry = registry;
@@ -52,7 +54,7 @@ public class GUIHandler {
     }
 
     public void initializeInventories(BlockLoader blockLoader) {
-        this.registry.register(InventoryId.BASIC_FURNACE.asInt(), () -> new FurnaceInventory(GUIOverlay.FURNACE_OVERLAY.asGlyph() + "§f" + Icon.FIRE.get() + "§f Furnace", InventoryId.BASIC_FURNACE.asInt()));
+        this.registry.register(InventoryId.BASIC_FURNACE.asInt(), () -> new FurnaceInventory(GUIOverlay.FURNACE_OVERLAY.asGlyph() + "§f" + Icon.FURNACE.get() + "§f Furnace", InventoryId.BASIC_FURNACE.asInt()));
         this.registry.register(InventoryId.STOVE.asInt(), () -> new CookingInventory(GUIOverlay.COOKING_OVERLAY.asGlyph() + "§f" + Icon.FIRE.get() + "§f Stove", InventoryId.STOVE.asInt()));
         this.registry.register(InventoryId.FIRE.asInt(), () -> new CookingInventory(GUIOverlay.CAMPFIRE_OVERLAY.asGlyph() + "§f" + Icon.FIRE.get() + "§f Campfire", InventoryId.FIRE.asInt()));
         this.registry.register(InventoryId.ANVIL.asInt(), () -> new AnvilInventory(GUIOverlay.ANVIL_OVERLAY.asGlyph() + "§f" + Icon.ANVIL.get() + "§f Anvil", InventoryId.ANVIL.asInt()));
@@ -191,6 +193,13 @@ public class GUIHandler {
         if (player == null) {
             return;
         }
+
+        if (cooldownHandler.isCooledDown(player)) {
+            event.setCancelled(true);
+            return;
+        }
+
+        cooldownHandler.startCooldown(player, 250L);
 
         AbstractGUI matchingGUI = this.registry.getInstance(bukkitPlayer.getUniqueId(), inventoryId);
 

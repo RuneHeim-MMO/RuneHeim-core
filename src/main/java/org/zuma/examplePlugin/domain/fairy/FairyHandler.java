@@ -174,7 +174,7 @@ public class FairyHandler {
 
     @Nullable
     private Entity spawnFairyModel(Player owner, Fairy fairy) {
-        ArmorStand entity = (ArmorStand) owner.getWorld().spawnEntity(owner.getLocation(), EntityType.ARMOR_STAND);
+        ArmorStand entity = (ArmorStand) owner.getWorld().spawnEntity(owner.getLocation().clone().add(0, 128, 0), EntityType.ARMOR_STAND);
         entity.setSilent(true);
         entity.setInvulnerable(true);
         entity.setMarker(true);

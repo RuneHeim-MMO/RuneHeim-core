@@ -46,7 +46,7 @@ public class BlockInvCreatorInventory extends IndividualGUI {
         put(InventoryId.FIRE.asInt(), new InventoryOpenerMeta(InventoryId.FIRE.asInt(), Material.CAMPFIRE, null, MarkerType.FIRE_SOURCE, "Campfire", "Campfire", Icon.FIRE.get()));
         put(InventoryId.ANVIL.asInt(), new InventoryOpenerMeta(InventoryId.ANVIL.asInt(), Material.ANVIL, null, MarkerType.ANVIL, "Anvil", "Anvil", Icon.ANVIL.get()));
         put(InventoryId.CRAFTING_TABLE.asInt(), new InventoryOpenerMeta(InventoryId.CRAFTING_TABLE.asInt(), Material.CRAFTING_TABLE, null, MarkerType.CRAFTING_TABLE, "Crafting Table", "Crafting Table", Icon.CRAFTING.get()));
-        put(InventoryId.BASIC_FURNACE.asInt(), new InventoryOpenerMeta(InventoryId.BASIC_FURNACE.asInt(), Material.BLAST_FURNACE, null, MarkerType.SMELTING_FURNACE, "Smelting Furnace", "Smelting Furnace", Icon.FIRE.get()));
+        put(InventoryId.BASIC_FURNACE.asInt(), new InventoryOpenerMeta(InventoryId.BASIC_FURNACE.asInt(), Material.BLAST_FURNACE, null, MarkerType.SMELTING_FURNACE, "Smelting Furnace", "Smelting Furnace", Icon.FURNACE.get()));
         put(InventoryId.FUSION_MASTER.asInt(), new InventoryOpenerMeta(InventoryId.FUSION_MASTER.asInt(), Material.BARRIER, null, null, "Fusion Master", "Fusion Master", Icon.SCROLL_RED.get()));
         put(InventoryId.SPINNING_WHEEL.asInt(), new InventoryOpenerMeta(InventoryId.SPINNING_WHEEL.asInt(), Material.BARRIER, null, MarkerType.SPINNING_WHEEL, "Spinning Wheel", "Spinning Wheel", Icon.MATERIAL.get()));
     }};
