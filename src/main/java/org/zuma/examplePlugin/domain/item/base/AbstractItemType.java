@@ -70,11 +70,29 @@ public abstract class AbstractItemType {
     }
 
     public ItemStack createItemStackOfType() {
-        return creator.createItemStackOfType(1);
+        return this.createItemStackOfType(1, false);
     }
 
     public ItemStack createItemStackOfType(int amount) {
-        return creator.createItemStackOfType(amount);
+        return this.createItemStackOfType(amount, false);
+    }
+
+    public ItemStack createItemStackOfType(boolean deferMeta) {
+        return this.createItemStackOfType(1, deferMeta);
+    }
+
+    public ItemStack createItemStackOfType(int amount, boolean deferMeta) {
+        ItemStack item = creator.createItemStackOfType(amount);
+
+        if (!deferMeta) {
+            creator.setItemStackMeta(item, amount);
+        }
+
+        return item;
+    }
+
+    public void applyItemStackMeta(ItemStack stack, int amount) {
+        this.creator.setItemStackMeta(stack, amount);
     }
 
     @Nullable

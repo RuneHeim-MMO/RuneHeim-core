@@ -175,13 +175,14 @@ public class MetaGenerator {
 
     public void setItemStackProps(ItemStack item) {
         ItemMeta meta = item.getItemMeta();
-
-        NamespacedKey IdKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.ITEM_ID.asString());
-        meta.getPersistentDataContainer().set(IdKey, PersistentDataType.INTEGER, itemType.id);
+        meta.getPersistentDataContainer().set(PersistenceDataKey.ITEM_ID.key(RuneQuestPlugin.getInstance()), PersistentDataType.INTEGER, itemType.id);
 
         if (itemType.stateType != null) {
-            NamespacedKey stateUuid = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.STATE_UUID.asString());
-            meta.getPersistentDataContainer().set(stateUuid, PersistentDataType.STRING, UUID.randomUUID().toString());
+            NamespacedKey stateUuid = PersistenceDataKey.STATE_UUID.key(RuneQuestPlugin.getInstance());
+
+            if (!meta.getPersistentDataContainer().has(stateUuid)) {
+                meta.getPersistentDataContainer().set(stateUuid, PersistentDataType.STRING, UUID.randomUUID().toString());
+            }
         }
 
         // To set it's state uuid so lore generation fn can access it's state.

@@ -40,8 +40,7 @@ public class StateManager {
             return null;
         }
 
-        NamespacedKey stateType = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.STATE_UUID.asString());
-        String uuidStr = meta.getPersistentDataContainer().get(stateType, PersistentDataType.STRING);
+        String uuidStr = meta.getPersistentDataContainer().get(PersistenceDataKey.STATE_UUID.key(RuneQuestPlugin.getInstance()), PersistentDataType.STRING);
 
         if (uuidStr == null) {
             return null;

@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.handlers.IllegalItemWatchdog;
+import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.block.BlockManager;
@@ -18,6 +19,7 @@ import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockReposito
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
+import org.zuma.examplePlugin.domain.item.serializer.ItemSerializer;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipes.RecipeRegistry;
@@ -26,9 +28,6 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
 import org.zuma.examplePlugin.features.admin.inventories.ItemRegistryInventory;
 import org.zuma.examplePlugin.features.admin.inventories.RecipesInventory;
-import com.ticxo.modelengine.api.ModelEngineAPI;
-import com.ticxo.modelengine.api.model.ActiveModel;
-import com.ticxo.modelengine.api.model.ModeledEntity;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -102,19 +101,12 @@ public class AdminCommand implements BasicCommand {
 
         }
 
-        if (args[0].equalsIgnoreCase("model")) {
-            Location location = player.getLocation();
-            // Spawn a new entity
-            Pig pig = location.getWorld().spawn(location, Pig.class);
-// Create a new ModeledEntity from the spawned entity
-            ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(pig);
-// Create a new ActiveModel using the ID of a model
-// Will throw an error if the model does not exist
-            ActiveModel activeModel = ModelEngineAPI.createActiveModel("yungwilder_isles_wolf_gray_dark");
-// Add the model to the entity
-            modeledEntity.addModel(activeModel, true);
+        if (args[0].equalsIgnoreCase("serialize")) {
+            System.out.println(ItemSerializer.serializeItemStackWithPDC(PlayerUtils.getItemStackInHand(player), RuneQuestPlugin.getInstance()));
+        }
 
-
+        if (args[0].equalsIgnoreCase("deserialize")) {
+            runePlayer.giveItemOrDrop(ItemSerializer.deserializeItemStackWithPDC("{\"amount\":1,\"name\":\"Fairy of Light\",\"pdc\":{\"runequest-core:state_uuid\":\"19e421fe-b636-4857-a383-ff6531c6c4cd\",\"runequest-core:item_id\":2101}}", RuneQuestPlugin.getInstance()));
         }
 
         if (args.length == 2 && Objects.equals(args[0], "pouch") & TypeUtils.isInteger(args[1])) {

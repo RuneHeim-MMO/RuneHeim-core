@@ -18,12 +18,14 @@ public class ItemStackCreator {
     }
 
     public ItemStack createItemStackOfType(int amount) {
-
         if (amount <= 0) {
             throw new Error("Cannot get ItemStack of " + itemType.id + ":" + itemType.material + " with amount less than 1");
         }
 
-        ItemStack itemStack = new ItemStack(itemType.material);
+        return new ItemStack(itemType.material);
+    }
+
+    public void setItemStackMeta(ItemStack itemStack, int amount) {
         itemType.getMetaGenerator().setItemStackProps(itemStack);
 
         if (itemType.material == Material.PLAYER_HEAD && itemType.headTexture != null) {
@@ -37,6 +39,5 @@ public class ItemStackCreator {
         }
 
         itemStack.setAmount(amount);
-        return itemStack;
     }
 }

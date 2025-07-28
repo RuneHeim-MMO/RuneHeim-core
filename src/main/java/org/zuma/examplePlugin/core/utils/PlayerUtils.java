@@ -57,7 +57,7 @@ public class PlayerUtils {
 
     public static boolean hasItems(RunePlayer player, List<ItemRecord> requiredItems) {
         Map<Integer, Integer> itemCounts = new HashMap<>();
-        NamespacedKey itemIdKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.ITEM_ID.asString());
+        NamespacedKey itemIdKey = PersistenceDataKey.ITEM_ID.key(RuneQuestPlugin.getInstance());
 
         // Count all item IDs in the player's main inventory (excluding armor/offhand)
         for (ItemStack stack : player.asBukkitPlayer().getInventory().getStorageContents()) {
@@ -111,7 +111,7 @@ public class PlayerUtils {
             return false;
         }
 
-        NamespacedKey itemIdKey = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.ITEM_ID.asString());
+        NamespacedKey itemIdKey = PersistenceDataKey.ITEM_ID.key(RuneQuestPlugin.getInstance());
         PlayerInventory inventory = player.asBukkitPlayer().getInventory();
         ItemStack[] contents = inventory.getStorageContents();
         ItemStack cursor = player.asBukkitPlayer().getItemOnCursor();

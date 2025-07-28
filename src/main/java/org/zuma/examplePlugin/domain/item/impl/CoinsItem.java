@@ -16,7 +16,7 @@ import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class CoinsItem extends MiscItem {
-    private static final NamespacedKey COINS_AMOUNT_KEY = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.COINS_AMOUNT.asString());
+    private static final NamespacedKey COINS_AMOUNT_KEY = PersistenceDataKey.COINS_AMOUNT.key(RuneQuestPlugin.getInstance());
 
     public CoinsItem(AbstractItemMeta meta) {
         super(meta);

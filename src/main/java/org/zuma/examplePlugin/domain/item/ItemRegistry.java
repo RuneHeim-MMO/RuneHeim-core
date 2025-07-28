@@ -41,8 +41,7 @@ public class ItemRegistry {
 
         if (meta != null) {
             PersistentDataContainer container = meta.getPersistentDataContainer();
-            NamespacedKey key = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.ITEM_ID.asString());
-            Integer value = container.get(key, PersistentDataType.INTEGER);
+            Integer value = container.get(PersistenceDataKey.ITEM_ID.key(RuneQuestPlugin.getInstance()), PersistentDataType.INTEGER);
 
             return value != null ? getItem(value) : null;
         }

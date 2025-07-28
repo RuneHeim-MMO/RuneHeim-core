@@ -1,18 +1,32 @@
 package org.zuma.examplePlugin.domain.item.constants;
 
+import org.bukkit.NamespacedKey;
+import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.java.JavaPlugin;
+
 public enum PersistenceDataKey {
-    ITEM_ID("item_id"),
-    STATE_UUID("state_uuid"),
-    COINS_AMOUNT("coins_amount"),
-    ILLEGAL_ITEM("illegal_item");
+    ITEM_ID("item_id", PersistentDataType.INTEGER),
+    STATE_UUID("state_uuid", PersistentDataType.STRING),
+    COINS_AMOUNT("coins_amount", PersistentDataType.INTEGER),
+    ILLEGAL_ITEM("illegal_item", PersistentDataType.INTEGER);
 
-    private final String key;
+    private final String keyName;
+    private final PersistentDataType<?, ?> type;
 
-    PersistenceDataKey(String key) {
-        this.key = key;
+    PersistenceDataKey(String keyName, PersistentDataType<?, ?> type) {
+        this.keyName = keyName;
+        this.type = type;
     }
 
-    public String asString() {
-        return key;
+    public NamespacedKey key(JavaPlugin plugin) {
+        return new NamespacedKey(plugin, keyName);
+    }
+
+    public String keyAsString() {
+        return keyName;
+    }
+
+    public PersistentDataType<?, ?> getType() {
+        return type;
     }
 }
