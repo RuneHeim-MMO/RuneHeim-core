@@ -4,14 +4,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
+import org.zuma.examplePlugin.core.interfaces.SerializableItemContainer;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
+import org.zuma.examplePlugin.domain.gui.ItemStackSlotPair;
 import org.zuma.examplePlugin.domain.hud.ActionBarManager;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.hud.PlayerScoreboardManager;
@@ -28,13 +31,14 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.domain.xp.PendingXPHandler;
 import org.zuma.examplePlugin.events.player.RunePlayerHealthChangedEvent;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class RunePlayer implements CombatEntity {
+public class RunePlayer implements CombatEntity, SerializableItemContainer {
     private final UUID uuid;
     private final PlayerCombatData combatData;
     private @Nullable Party party;
@@ -211,7 +215,6 @@ public class RunePlayer implements CombatEntity {
         return this.actionBarManager;
     }
 
-
     public long getPouchCoins() {
         return pouchCoins;
     }
@@ -226,5 +229,26 @@ public class RunePlayer implements CombatEntity {
         this.pendingXPHandler.distributePendingXP();
     }
 
+    public List<ItemStackSlotPair> getContent() {
+        List<ItemStackSlotPair> itemPairs = new ArrayList<>();
+        PlayerInventory inv = asBukkitPlayer().getInventory();
+
+        for (int slot = 0; slot <= 40; slot++) {
+            ItemStack item = inv.getItem(slot);
+
+            if (item == null) {
+                continue;
+            }
+
+            itemPairs.add(new ItemStackSlotPair(slot, item));
+        }
+
+        return itemPairs;
+    }
+
+    public void setInventoryContent(List<ItemStackSlotPair> pairs) {
+        PlayerInventory inv = asBukkitPlayer().getInventory();
+        pairs.forEach(pair -> inv.setItem(pair.slot(), pair.itemStack()));
+    }
 
 }

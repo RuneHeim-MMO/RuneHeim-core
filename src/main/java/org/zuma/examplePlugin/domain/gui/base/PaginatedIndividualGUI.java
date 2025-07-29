@@ -9,6 +9,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.core.handlers.IllegalItemWatchdog;
+import org.zuma.examplePlugin.core.interfaces.SerializableItemContainer;
+import org.zuma.examplePlugin.domain.gui.ItemStackSlotPair;
 import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public abstract class PaginatedIndividualGUI extends IndividualGUI {
+public abstract class PaginatedIndividualGUI extends IndividualGUI implements SerializableItemContainer {
     private static final int ITEMS_IN_ROW = 9;   // Always 9
     private final int usableRows = rows - 1;
     private final Inventory inventory;
@@ -28,7 +30,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
     private int indexStart = 0;
     private int indexEnd = 0;
     private int maxPages = 1;
-    private List<ItemStack> items;
+    private List<ItemStackSlotPair> items;
     @Nullable
     private final Set<Integer> ignoredSlots;
 
@@ -75,9 +77,23 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
         }
     }
 
-    public void setContent(List<ItemStack> items) {
+    public void setStackContent(List<ItemStack> items, boolean tagIllegal) {
+        List<ItemStackSlotPair> slotPairs = new ArrayList<>();
+
+        for (int i = 0; i < items.size(); i++) {
+            slotPairs.add(new ItemStackSlotPair(i, items.get(i)));
+        }
+
+        this.setPairsContent(slotPairs, tagIllegal);
+    }
+
+
+    public void setPairsContent(List<ItemStackSlotPair> items, boolean tagIllegal) {
         this.totalItems = items.size();
-        this.items = List.copyOf(items).stream().peek(IllegalItemWatchdog::tagIllegalItem).toList();
+
+        if (tagIllegal) {
+            this.items = List.copyOf(items).stream().peek(i -> IllegalItemWatchdog.tagIllegalItem(i.itemStack())).toList();
+        }
 
         int usableSlots = getUsableSlotsCount();
 
@@ -133,6 +149,12 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
         return icon;
     }
 
+
+    @Override
+    public List<ItemStackSlotPair> getContent() {
+        return this.items;
+    }
+
     @Override
     public Inventory getBaseInventory() {
         // Clear entire inventory first
@@ -140,7 +162,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
             inventory.clear(i);
         }
 
-        List<ItemStack> pageItems = items.subList(indexStart, indexEnd);
+        List<ItemStackSlotPair> pageItems = items.subList(indexStart, indexEnd);
         int itemIndex = 0;
 
         // Fill non-ignored slots in usable rows
@@ -154,7 +176,8 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
                 break;
             }
 
-            inventory.setItem(i, pageItems.get(itemIndex));
+            ItemStackSlotPair pair = pageItems.get(itemIndex);
+            inventory.setItem(pair.slot(), pair.itemStack());
             itemIndex++;
         }
 

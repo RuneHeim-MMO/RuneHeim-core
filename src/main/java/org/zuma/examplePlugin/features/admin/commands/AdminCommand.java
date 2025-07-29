@@ -18,6 +18,7 @@ import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
+import org.zuma.examplePlugin.domain.gui.serializer.ItemContainerContentSerializer;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.serializer.ItemSerializer;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
@@ -102,12 +103,9 @@ public class AdminCommand implements BasicCommand {
         }
 
         if (args[0].equalsIgnoreCase("serialize")) {
-            System.out.println(ItemSerializer.serializeItemStackWithPDC(PlayerUtils.getItemStackInHand(player), RuneQuestPlugin.getInstance()));
+            System.out.println(ItemContainerContentSerializer.serializeItemContainerContent(runePlayer));
         }
 
-        if (args[0].equalsIgnoreCase("deserialize")) {
-            runePlayer.giveItemOrDrop(ItemSerializer.deserializeItemStackWithPDC("{\"amount\":1,\"name\":\"Fairy of Light\",\"pdc\":{\"runequest-core:state_uuid\":\"19e421fe-b636-4857-a383-ff6531c6c4cd\",\"runequest-core:item_id\":2101}}", RuneQuestPlugin.getInstance()));
-        }
 
         if (args.length == 2 && Objects.equals(args[0], "pouch") & TypeUtils.isInteger(args[1])) {
             runePlayer.setPouchCoins(Long.parseLong(args[1]));

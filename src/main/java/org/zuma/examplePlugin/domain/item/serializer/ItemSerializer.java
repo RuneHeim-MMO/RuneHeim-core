@@ -45,8 +45,9 @@ public class ItemSerializer {
 
         String displayName = TextUtils.extractPlainText(meta.displayName()).replaceAll("\\[", "").replaceAll("\\]", "");
 
-        serialized.put("name", displayName);
+        serialized.put("name", displayName); // Not used in deserialization
         serialized.put("amount", item.getAmount());
+
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
         Map<String, Object> customData = new HashMap<>();
 
