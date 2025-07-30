@@ -109,7 +109,6 @@ public class BankInventory extends PaginatedBankGUI {
         try {
             String serialized = ItemContainerContentSerializer.serializeItemContainerContent(this);
             this.bankQueryLockController.save(this.playerUUID, serialized);
-
         } catch (Exception e) {
             Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                 RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(this.playerUUID);
@@ -143,5 +142,10 @@ public class BankInventory extends PaginatedBankGUI {
         if (!this.isLoaded) {
             player.asBukkitPlayer().closeInventory();
         }
+    }
+
+    @Override
+    public int getPaginationControlsOffset() {
+        return 0;
     }
 }

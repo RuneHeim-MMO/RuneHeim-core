@@ -105,6 +105,12 @@ public class MobListener implements Listener {
         AbstractMob mob = mobRegistry.getMob(entity);
         if (mob == null) return;
 
+        if (event.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION) {
+            event.setDamage(0);
+            event.setCancelled(true);
+            return;
+        }
+
         mobHandler.onEntityDamaged(event, mob);
     }
 

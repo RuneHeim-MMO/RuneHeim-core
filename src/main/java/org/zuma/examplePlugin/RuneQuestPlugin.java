@@ -256,6 +256,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
             runePlayerManager.handleOnEnable();
         }
 
+        if (guiHandler != null) {
+            guiHandler.closeAllInventories();
+        }
+
     }
 
     @Override

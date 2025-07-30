@@ -40,4 +40,9 @@ public class AnvilInventory extends RecipeInventory {
         return super.attemptOpenInventory(player, onFail);
     }
 
+    @Override
+    public int getPaginationControlsOffset() {
+        return 0;
+    }
+
 }

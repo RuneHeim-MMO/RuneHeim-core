@@ -31,4 +31,8 @@ public class CraftingTableInventory extends RecipeInventory {
                 .toList();
     }
 
+    @Override
+    public int getPaginationControlsOffset() {
+        return 0;
+    }
 }

@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.handlers.IllegalItemWatchdog;
 import org.zuma.examplePlugin.core.interfaces.SerializableItemContainer;
 import org.zuma.examplePlugin.domain.gui.ItemStackSlotPair;
@@ -15,10 +16,7 @@ import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public abstract class PaginatedIndividualGUI extends IndividualGUI {
     private static final int ITEMS_IN_ROW = 9;   // Always 9
@@ -31,7 +29,6 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
     private int indexEnd = 0;
     private int maxPages = 1;
     private List<ItemStack> items;
-    @Nullable
     private final Set<Integer> ignoredSlots;
 
     public PaginatedIndividualGUI(String title, int id, int rows, @Nullable Set<Integer> ignoredSlots) {
@@ -39,7 +36,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
 
         this.inventory = super.getBaseInventory();
         this.items = new ArrayList<>();
-        this.ignoredSlots = ignoredSlots;
+        this.ignoredSlots = ignoredSlots == null ? new HashSet<>() : ignoredSlots;
 
         if (rows < 2) {
             throw new IllegalStateException("PaginatedIndividualGUI can have minimum of 2 rows!");
@@ -116,27 +113,20 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
     }
 
     public ItemStack nextPageIcon() {
-        if (page >= maxPages) {
-            return new ItemStack(Material.AIR);
-        }
+        boolean enabled = page < maxPages;
+        ItemStack icon = (enabled ? GUIControl.CHEVRON_RIGHT : GUIControl.CHEVRON_RIGHT_DISABLED).asItemstack(Component.text("Next page", NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
+        if (enabled) super.assignMenuValue(icon, 10000);
 
-        ItemStack icon = GUIControl.CHEVRON_RIGHT.asItemstack(Component.text("Next", NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
-
-        super.assignMenuValue(icon, 10000);
         return icon;
     }
 
     public ItemStack previousPageIcon() {
-        if (page <= 1) {
-            return new ItemStack(Material.AIR);
-        }
+        boolean enabled = page > 1;
+        ItemStack icon = (enabled ? GUIControl.CHEVRON_LEFT : GUIControl.CHEVRON_LEFT_DISABLED).asItemstack(Component.text("Previous page", NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
+        if (enabled) super.assignMenuValue(icon, -10000);
 
-        ItemStack icon = GUIControl.CHEVRON_LEFT.asItemstack(Component.text("Previous", NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
-
-        super.assignMenuValue(icon, -10000);
         return icon;
     }
-
 
     @Override
     public Inventory getBaseInventory() {
@@ -167,8 +157,9 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
         // Place pagination icons in the last row (full row assumed)
         int lastRowStart = (rows - 1) * ITEMS_IN_ROW;
 
-        inventory.setItem(lastRowStart + ITEMS_IN_ROW - 2, previousPageIcon());
-        inventory.setItem(lastRowStart + ITEMS_IN_ROW - 1, nextPageIcon());
+        inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 6, previousPageIcon());
+        inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 5, GUIControl.fromNumber(page).asItemstack(Component.text("Page: " + page)));
+        inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 4, nextPageIcon());
 
         return inventory;
     }
@@ -186,9 +177,11 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
 
         if (menuValue != null && menuValue == 10000) {
             nextPage();
+            SoundType.UI_CLICK.play(player, false);
             event.setCancelled(true);
         } else if (menuValue != null && menuValue == -10000) {
             previousPage();
+            SoundType.UI_CLICK.play(player, false);
             event.setCancelled(true);
         } else {
             handleInventoryClick(event, slot, player);
@@ -196,4 +189,6 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
     }
 
     public abstract void handleInventoryClick(InventoryClickEvent event, int slot, RunePlayer player);
+
+    public abstract int getPaginationControlsOffset();
 }

@@ -17,7 +17,25 @@ public enum GUIControl {
     YES(3),
     NO(4),
     TRANSPARENT(5),
-    INFO(6);
+    INFO(6),
+
+    NUM_1(7),
+    NUM_2(8),
+    NUM_3(9),
+    NUM_4(10),
+    NUM_5(11),
+    NUM_6(12),
+    NUM_7(13),
+    NUM_8(14),
+    NUM_9(15),
+    NUM_10(16),
+    NUM_PLUS10(17),
+    NUM_0(18),
+    NUM_UNKNOWN(19),
+
+    CHEVRON_RIGHT_DISABLED(20),
+    CHEVRON_LEFT_DISABLED(21);
+
 
     private final int modelId;
 
@@ -62,5 +80,26 @@ public enum GUIControl {
             return false;
         }
         return IllegalItemWatchdog.getItemStackStatus(item) != IllegalItemWatchdog.LegalityType.LEGAL;
+    }
+
+    public static GUIControl fromNumber(int number) {
+        if (number < 0) {
+            return NUM_UNKNOWN;
+        }
+
+        return switch (number) {
+            case 0 -> NUM_0;
+            case 1 -> NUM_1;
+            case 2 -> NUM_2;
+            case 3 -> NUM_3;
+            case 4 -> NUM_4;
+            case 5 -> NUM_5;
+            case 6 -> NUM_6;
+            case 7 -> NUM_7;
+            case 8 -> NUM_8;
+            case 9 -> NUM_9;
+            case 10 -> NUM_10;
+            default -> NUM_PLUS10;
+        };
     }
 }

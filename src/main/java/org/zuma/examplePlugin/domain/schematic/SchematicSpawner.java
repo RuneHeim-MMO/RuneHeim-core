@@ -132,7 +132,7 @@ public class SchematicSpawner {
             Operations.complete(clearOperation);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Unable to clear last paste schemtic", e);
         }
     }
 }

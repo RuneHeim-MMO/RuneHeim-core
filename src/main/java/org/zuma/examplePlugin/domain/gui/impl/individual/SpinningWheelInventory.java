@@ -18,4 +18,9 @@ public class SpinningWheelInventory extends RecipeInventory {
     public List<AbstractRecipe> getRecipes() {
         return RuneQuestPlugin.getRecipeRegistry().getRecipesByType(RecipeType.SPINNING_WHEEL_RECIPE, true);
     }
+
+    @Override
+    public int getPaginationControlsOffset() {
+        return 3;
+    }
 }

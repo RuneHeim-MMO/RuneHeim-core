@@ -24,4 +24,9 @@ public class FurnaceInventory extends RecipeInventory {
     public List<AbstractRecipe> getRecipes() {
         return RuneQuestPlugin.getRecipeRegistry().getRecipesByType(RecipeType.SMELTING_RECIPE, true);
     }
+
+    @Override
+    public int getPaginationControlsOffset() {
+        return 3;
+    }
 }

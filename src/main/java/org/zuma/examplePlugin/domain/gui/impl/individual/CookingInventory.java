@@ -26,4 +26,9 @@ public class CookingInventory extends RecipeInventory {
     public List<AbstractRecipe> getRecipes() {
         return RuneQuestPlugin.getRecipeRegistry().getRecipesByType(RecipeType.COOKING_RECIPE, true);
     }
+
+    @Override
+    public int getPaginationControlsOffset() {
+        return 3;
+    }
 }

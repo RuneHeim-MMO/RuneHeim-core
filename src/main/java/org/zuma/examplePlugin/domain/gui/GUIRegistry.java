@@ -94,11 +94,14 @@ public class GUIRegistry {
             Player player = Bukkit.getPlayer(uuid);
 
             if (instance instanceof BankInventory bankGUI) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Attempting to save " + uuid + "'s bank contents.");
                 bankGUI.saveBankSync(true);
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, uuid + "'s bank contents saved successfully.");
             }
 
             if (player == null) {
                 // Too bad.
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Couldn't forward onInventoryClose event to GUI instance! Player with uuid " + uuid + " not found.");
                 return;
             }
 
