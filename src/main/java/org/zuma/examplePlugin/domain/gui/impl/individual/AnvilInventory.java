@@ -27,7 +27,7 @@ public class AnvilInventory extends RecipeInventory {
     }
 
     @Override
-    public boolean attemptOpenInventory(RunePlayer player) {
+    public boolean attemptOpenInventory(RunePlayer player, Runnable onFail) {
         ItemStack inHand = PlayerUtils.getItemStackInHand(player.asBukkitPlayer());
         AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(inHand);
 
@@ -37,7 +37,7 @@ public class AnvilInventory extends RecipeInventory {
             return false;
         }
 
-        return super.attemptOpenInventory(player);
+        return super.attemptOpenInventory(player, onFail);
     }
 
 }

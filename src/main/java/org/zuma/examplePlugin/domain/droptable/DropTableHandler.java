@@ -47,7 +47,7 @@ public class DropTableHandler {
             }
 
         } catch (Exception e) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to load drop table with id " + id + "! " + e.getMessage());
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to load drop table with id " + id + "! ", e);
         }
     }
 }

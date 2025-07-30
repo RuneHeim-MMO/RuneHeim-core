@@ -81,7 +81,6 @@ public class ItemSerializer {
             String rawKey = entry.getKey();
             Object rawValue = entry.getValue();
 
-            System.out.println(rawKey + ":" + rawValue);
             NamespacedKey key = NamespacedKey.fromString(rawKey);
             if (key == null) continue;
 
@@ -158,7 +157,6 @@ public class ItemSerializer {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     private static void applyPDCValue(PersistentDataContainer pdc, PDCValue value) {
-        System.out.println("setting " + value.key + " value: " + value.value);
         pdc.set(value.key, (PersistentDataType) value.type, value.value);
     }
 

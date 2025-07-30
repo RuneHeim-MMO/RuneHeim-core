@@ -57,7 +57,7 @@ public class NodeCreatorInventory extends IndividualGUI {
     }
 
     @Override
-    public boolean attemptOpenInventory(RunePlayer player) {
+    public boolean attemptOpenInventory(RunePlayer player, Runnable onFail) {
         if (!player.asBukkitPlayer().isOp()) {
             return false;
         }

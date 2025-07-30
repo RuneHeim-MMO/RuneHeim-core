@@ -8,7 +8,8 @@ public enum GUIOverlay {
     CRAFTING_TABLE_OVERLAY("⼟"),
     FUSION_MASTER_OVERLAY("⾭"),
     SHOP_OVERLAY("⿸"),
-    SPINNING_WHEEL_OVERLAY("⼥");
+    SPINNING_WHEEL_OVERLAY("⼥"),
+    BANK_OVERLAY("╄");
 
     private final String glyph;
 

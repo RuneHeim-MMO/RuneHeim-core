@@ -1,12 +1,18 @@
 package org.zuma.examplePlugin.domain.gui;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.gui.base.AbstractGUI;
 import org.zuma.examplePlugin.domain.gui.base.IndividualGUI;
+import org.zuma.examplePlugin.domain.gui.base.PaginatedBankGUI;
 import org.zuma.examplePlugin.domain.gui.base.SharedGUI;
+import org.zuma.examplePlugin.domain.gui.impl.individual.BankInventory;
 
+import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -37,6 +43,7 @@ public class GUIRegistry {
         types.put(id, supplier);
     }
 
+    @Nullable
     public AbstractGUI getInstance(UUID playerUUID, int id) {
         Supplier<AbstractGUI> supplier = types.get(id);
 
@@ -52,20 +59,26 @@ public class GUIRegistry {
             matchingInstance = sharedInstances.get(id);
         }
 
-        if (matchingInstance == null || matchingInstance.getId() != id) {
-            AbstractGUI newGui = supplier.get();
+        return matchingInstance;
+    }
 
-            if (newGui instanceof IndividualGUI individualGUI) {
-                individualGUI.setOwner(playerUUID);
-                individualInstances.put(playerUUID, individualGUI);
-            } else if (newGui instanceof SharedGUI sharedGUI) {
-                sharedInstances.put(id, sharedGUI);
-            }
+    public AbstractGUI createInstance(UUID playerUUID, int id) {
+        Supplier<AbstractGUI> supplier = types.get(id);
 
-            return newGui;
+        if (supplier == null) {
+            throw new IllegalArgumentException("Unknown inventory id: " + id);
         }
 
-        return matchingInstance;
+        AbstractGUI newGui = supplier.get();
+
+        if (newGui instanceof IndividualGUI individualGUI) {
+            individualGUI.setOwner(playerUUID);
+            individualInstances.put(playerUUID, individualGUI);
+        } else if (newGui instanceof SharedGUI sharedGUI) {
+            sharedInstances.put(id, sharedGUI);
+        }
+
+        return newGui;
     }
 
     public void removePlayersActiveInstance(UUID playerUUID) {
@@ -74,6 +87,26 @@ public class GUIRegistry {
 
     public List<Integer> getAllInventoryIds() {
         return types.keySet().stream().toList();
+    }
+
+    public void gracefullyForceCloseIndividualInstances() {
+        individualInstances.forEach((uuid, instance) -> {
+            Player player = Bukkit.getPlayer(uuid);
+
+            if (instance instanceof BankInventory bankGUI) {
+                bankGUI.saveBankSync(true);
+            }
+
+            if (player == null) {
+                // Too bad.
+                return;
+            }
+
+
+            instance.onInventoryClose(null, RuneQuestPlugin.getPlayerManager().getRunePlayer(player));
+            player.closeInventory();
+
+        });
     }
 
 }

@@ -117,7 +117,7 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
     }
 
     @Override
-    public boolean attemptOpenInventory(RunePlayer player) {
+    public boolean attemptOpenInventory(RunePlayer player, Runnable onFail) {
         shop.subscribe(this);
         initialPlayerCoins = player.getPouchCoins();
         updateShopItems();
@@ -289,8 +289,13 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
     }
 
     @Override
-    public void onInventoryClose(InventoryCloseEvent event, RunePlayer player) {
+    public void onInventoryClose(@Nullable InventoryCloseEvent event, @Nullable RunePlayer player) {
         shop.unsubscribe(this);
+
+        if (player == null) {
+            return;
+        }
+
         InventoryUtils.returnPlayerItemFromInventory(shopInventory, player);
 
         long change = player.getPouchCoins() - initialPlayerCoins;

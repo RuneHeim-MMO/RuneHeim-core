@@ -73,7 +73,7 @@ public class SchematicSpawner {
 
 
         } catch (Exception e) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Unable to paste schematic " + schematicFile.getAbsolutePath() + "! " + e.getMessage());
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Unable to paste schematic " + schematicFile.getAbsolutePath() + "! ", e);
         }
 
         return null;

@@ -82,7 +82,7 @@ public class PendingXPHandler {
                 });
 
             } catch (Exception e) {
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to distribute XP: " + e.getMessage());
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to distribute XP: ", e);
             }
         });
     }

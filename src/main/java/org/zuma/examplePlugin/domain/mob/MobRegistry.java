@@ -58,7 +58,7 @@ public class MobRegistry {
 
             return spawnedEntity;
         } catch (Exception e) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to spawn a " + mob.getDisplayName() + " mob! " + e.getMessage());
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to spawn a " + mob.getDisplayName() + " mob! ", e);
         }
 
         return null;

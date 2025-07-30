@@ -179,7 +179,7 @@ public class FusionMasterInventory extends IndividualGUI {
     }
 
     @Override
-    public boolean attemptOpenInventory(RunePlayer player) {
+    public boolean attemptOpenInventory(RunePlayer player, Runnable onFail) {
         updateInventory(player);
 
         super.assignMenuValue(cancelItem, 0);
@@ -388,7 +388,11 @@ public class FusionMasterInventory extends IndividualGUI {
 
 
     @Override
-    public void onInventoryClose(InventoryCloseEvent event, RunePlayer player) {
+    public void onInventoryClose(@Nullable InventoryCloseEvent event, @Nullable RunePlayer player) {
+        if (player == null) {
+            return;
+        }
+
         InventoryUtils.returnPlayerItemFromInventory(inventory, player);
     }
 

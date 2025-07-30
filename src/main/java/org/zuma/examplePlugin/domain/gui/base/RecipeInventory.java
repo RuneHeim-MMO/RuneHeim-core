@@ -32,15 +32,15 @@ public abstract class RecipeInventory extends PaginatedIndividualGUI {
     public abstract List<AbstractRecipe> getRecipes();
 
     @Override
-    public boolean attemptOpenInventory(RunePlayer player) {
-        setStackContent(getRecipes().stream().map(recipe -> {
+    public boolean attemptOpenInventory(RunePlayer player, Runnable onFail) {
+        setContent(getRecipes().stream().map(recipe -> {
             ItemStack icon = recipe.getDisplayItemstack(player, RuneQuestPlugin.getItemRegistry());
 
             super.assignMenuValue(icon, recipe.getId());
             super.setActionsLore(icon, this.actionLabel + " x" + this.LEFT_CLICK_CRAFT_AMOUNT, this.actionLabel + " x" + SHIFT_CLICK_CRAFT_AMOUNT);
 
             return icon;
-        }).toList(), true);
+        }).toList());
 
         player.asBukkitPlayer().openInventory(getBaseInventory());
         return true;

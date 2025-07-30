@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public abstract class PaginatedIndividualGUI extends IndividualGUI implements SerializableItemContainer {
+public abstract class PaginatedIndividualGUI extends IndividualGUI {
     private static final int ITEMS_IN_ROW = 9;   // Always 9
     private final int usableRows = rows - 1;
     private final Inventory inventory;
@@ -30,7 +30,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI implements Se
     private int indexStart = 0;
     private int indexEnd = 0;
     private int maxPages = 1;
-    private List<ItemStackSlotPair> items;
+    private List<ItemStack> items;
     @Nullable
     private final Set<Integer> ignoredSlots;
 
@@ -77,23 +77,11 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI implements Se
         }
     }
 
-    public void setStackContent(List<ItemStack> items, boolean tagIllegal) {
-        List<ItemStackSlotPair> slotPairs = new ArrayList<>();
 
-        for (int i = 0; i < items.size(); i++) {
-            slotPairs.add(new ItemStackSlotPair(i, items.get(i)));
-        }
-
-        this.setPairsContent(slotPairs, tagIllegal);
-    }
-
-
-    public void setPairsContent(List<ItemStackSlotPair> items, boolean tagIllegal) {
+    public void setContent(List<ItemStack> items) {
         this.totalItems = items.size();
 
-        if (tagIllegal) {
-            this.items = List.copyOf(items).stream().peek(i -> IllegalItemWatchdog.tagIllegalItem(i.itemStack())).toList();
-        }
+        this.items = List.copyOf(items).stream().peek(IllegalItemWatchdog::tagIllegalItem).toList();
 
         int usableSlots = getUsableSlotsCount();
 
@@ -151,18 +139,13 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI implements Se
 
 
     @Override
-    public List<ItemStackSlotPair> getContent() {
-        return this.items;
-    }
-
-    @Override
     public Inventory getBaseInventory() {
         // Clear entire inventory first
         for (int i = 0; i < inventory.getSize(); i++) {
             inventory.clear(i);
         }
 
-        List<ItemStackSlotPair> pageItems = items.subList(indexStart, indexEnd);
+        List<ItemStack> pageItems = items.subList(indexStart, indexEnd);
         int itemIndex = 0;
 
         // Fill non-ignored slots in usable rows
@@ -176,8 +159,8 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI implements Se
                 break;
             }
 
-            ItemStackSlotPair pair = pageItems.get(itemIndex);
-            inventory.setItem(pair.slot(), pair.itemStack());
+            ItemStack item = pageItems.get(itemIndex);
+            inventory.setItem(i, item);
             itemIndex++;
         }
 

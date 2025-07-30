@@ -12,6 +12,10 @@ public class Logger {
     public Logger() {
     }
 
+    public void log(LogLevel level, String message, Throwable throwable) {
+        Bukkit.getLogger().log(level.getLoggingLevel(), PREFIX + " [" + level.getString() + "]: " + message, throwable);
+    }
+
     public void log(LogLevel level, String message) {
         Bukkit.getLogger().log(level.getLoggingLevel(), PREFIX + " [" + level.getString() + "]: " + message);
     }

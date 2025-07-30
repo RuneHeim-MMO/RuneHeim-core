@@ -57,7 +57,7 @@ public class RecipeLoader {
             AbstractRecipe newRecipe = factory.createRecipe(itemStack, meta, json);
             recipeRegistry.registerRecipe(newRecipe.getId(), newRecipe);
         } catch (Exception e) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to recipe " + meta.id() + "! Error: " + e.getMessage());
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to recipe " + meta.id() + "! Error: ", e);
         }
     }
 }

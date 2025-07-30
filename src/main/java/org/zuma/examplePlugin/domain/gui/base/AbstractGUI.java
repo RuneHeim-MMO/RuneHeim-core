@@ -123,13 +123,13 @@ public abstract class AbstractGUI {
     }
 
     // Returns true if inventory opening succeeded. (It might fail if trying to open anvil without hammer in hands for example)
-    public abstract boolean attemptOpenInventory(RunePlayer player);
+    public abstract boolean attemptOpenInventory(RunePlayer player, Runnable onFail);
 
     public void onInventoryClick(InventoryClickEvent event, int slot, RunePlayer player) {
 
     }
 
-    public void onInventoryClose(InventoryCloseEvent event, RunePlayer player) {
+    public void onInventoryClose(@Nullable InventoryCloseEvent event, @Nullable RunePlayer player) {
 
     }
 

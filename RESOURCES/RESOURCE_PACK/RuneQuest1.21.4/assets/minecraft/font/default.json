@@ -2,6 +2,13 @@
   "providers": [
     {
       "type": "bitmap",
+      "file": "minecraft:font/gui/bank.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": ["╄"]
+    },
+    {
+      "type": "bitmap",
       "file": "minecraft:font/gui/shop.png",
       "ascent": 13,
       "height": 222,
@@ -90,6 +97,13 @@
       "ascent": 9,
       "height": 12,
       "chars": ["ⶉ"]
+   },
+   {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/money_bag.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["ⓩ"]
    },
    {
       "type": "bitmap",

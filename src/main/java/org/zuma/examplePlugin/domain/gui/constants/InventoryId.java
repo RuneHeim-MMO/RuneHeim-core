@@ -11,7 +11,8 @@ public enum InventoryId {
     FUSION_MASTER(5),
     GENERAL_STORE(6),
     SPINNING_WHEEL(7),
-    DRAKKAR_BLACKSMITH(8);
+    DRAKKAR_BLACKSMITH(8),
+    BANK(9);
 
     private final int id;
 

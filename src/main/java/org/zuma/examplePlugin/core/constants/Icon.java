@@ -38,6 +38,7 @@ public enum Icon {
     PICKAXE("⛏"),
     POTION("☀"),
     TOOL("≜"),
+    MONEY_BAG("ⓩ"),
     SWORD_2("⯴"),
     SHIELD_3("⤜"),
     SHIELD_2("▒"),

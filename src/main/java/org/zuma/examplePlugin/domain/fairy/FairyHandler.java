@@ -186,7 +186,7 @@ public class FairyHandler {
             modeledEntity.addModel(activeModel, true);
         } catch (Exception e) {
             entity.remove();
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to spawn fairy model for " + owner.getName() + " " + e.getMessage());
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to spawn fairy model for " + owner.getName() + " ", e);
             return null;
         }
 

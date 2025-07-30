@@ -11,6 +11,8 @@ import org.zuma.examplePlugin.core.handlers.*;
 import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
 import org.zuma.examplePlugin.core.logger.Logger;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.domain.bank.BankContentRepository;
+import org.zuma.examplePlugin.domain.bank.BankQueryLockController;
 import org.zuma.examplePlugin.domain.block.BlockFactory;
 import org.zuma.examplePlugin.domain.block.BlockListener;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
@@ -181,7 +183,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         guiHandler = new GUIHandler(new GUIRegistry(), runePlayerManager);
         GUIListener guiListener = new GUIListener(guiHandler);
         getServer().getPluginManager().registerEvents(guiListener, pluginInstance);
-        guiHandler.initializeInventories(blockLoader);
+        guiHandler.initializeInventories(blockLoader, new BankQueryLockController(new BankContentRepository(pool)));
 
         HitHandler hitHandler = new HitHandler();
         HitListener hitListener = new HitListener(hitHandler, runePlayerManager, mobRegistry);

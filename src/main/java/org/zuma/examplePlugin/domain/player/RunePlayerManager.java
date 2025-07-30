@@ -93,7 +93,7 @@ public class RunePlayerManager {
             } catch (Exception e) {
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                     player.kick(TextUtils.getErrorKickScreen("Failed to load data for player " + player.getName() + "\n" + e.getMessage()));
-                    RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to load data for player " + player.getName() + " : " + e.getMessage());
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to load data for player " + player.getName(),e);
                 });
             }
         });
@@ -124,7 +124,7 @@ public class RunePlayerManager {
             } catch (Exception e) {
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                     player.kick(TextUtils.getBrandKickScreen(Component.text("Failed to save player data " + player.getName() + "\n" + e.getMessage()).color(Color.ERROR.asColor())));
-                    RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to save player data " + player.getName() + " :" + e.getMessage());
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to save player data " + player.getName(),e);
                 });
             }
         });

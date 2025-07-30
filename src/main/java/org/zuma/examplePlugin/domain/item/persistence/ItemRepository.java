@@ -121,7 +121,7 @@ public class ItemRepository {
             }
 
         } catch (SQLException e) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Could not load the items! " + e.getMessage());
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Could not load the items! ", e);
         }
 
         return items;

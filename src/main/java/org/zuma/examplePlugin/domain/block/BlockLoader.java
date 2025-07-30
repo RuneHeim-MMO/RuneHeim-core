@@ -97,7 +97,7 @@ public class BlockLoader {
 
             return block;
         } catch (Exception e) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to load interactable block " + meta.type().name() + " : ID: " + meta.id() + "! Error: " + e.getMessage());
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to load interactable block " + meta.type().name() + " : ID: " + meta.id() + "! Error: ", e);
         }
 
         return null;

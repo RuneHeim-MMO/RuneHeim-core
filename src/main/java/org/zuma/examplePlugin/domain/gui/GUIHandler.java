@@ -9,6 +9,8 @@ import org.bukkit.inventory.InventoryHolder;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.domain.bank.BankContentRepository;
+import org.zuma.examplePlugin.domain.bank.BankQueryLockController;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerBlock;
 import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
@@ -50,10 +52,11 @@ public class GUIHandler {
     }
 
     public void closeAllInventories() {
+        this.registry.gracefullyForceCloseIndividualInstances();
         Bukkit.getOnlinePlayers().forEach(HumanEntity::closeInventory);
     }
 
-    public void initializeInventories(BlockLoader blockLoader) {
+    public void initializeInventories(BlockLoader blockLoader, BankQueryLockController bankQueryLockController) {
         this.registry.register(InventoryId.BASIC_FURNACE.asInt(), () -> new FurnaceInventory(GUIOverlay.FURNACE_OVERLAY.asGlyph() + "§f" + Icon.FURNACE.get() + "§f Furnace", InventoryId.BASIC_FURNACE.asInt()));
         this.registry.register(InventoryId.STOVE.asInt(), () -> new CookingInventory(GUIOverlay.COOKING_OVERLAY.asGlyph() + "§f" + Icon.FIRE.get() + "§f Stove", InventoryId.STOVE.asInt()));
         this.registry.register(InventoryId.FIRE.asInt(), () -> new CookingInventory(GUIOverlay.CAMPFIRE_OVERLAY.asGlyph() + "§f" + Icon.FIRE.get() + "§f Campfire", InventoryId.FIRE.asInt()));
@@ -65,6 +68,7 @@ public class GUIHandler {
         this.registry.register(InventoryId.GENERAL_STORE.asInt(), () -> new ShopInventory(GUIOverlay.SHOP_OVERLAY.asGlyph() + "§f" + Icon.CHEST.get() + "§f General Store", InventoryId.GENERAL_STORE.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.GENERAL_STORE.asInt())));
         this.registry.register(InventoryId.SPINNING_WHEEL.asInt(), () -> new SpinningWheelInventory(GUIOverlay.SPINNING_WHEEL_OVERLAY.asGlyph() + "§f" + Icon.MATERIAL.get() + "§f Spinning Wheel", InventoryId.SPINNING_WHEEL.asInt()));
         this.registry.register(InventoryId.DRAKKAR_BLACKSMITH.asInt(), () -> new ShopInventory(GUIOverlay.SHOP_OVERLAY.asGlyph() + "§f" + Icon.TOOL.get() + "§f Blacksmith", InventoryId.DRAKKAR_BLACKSMITH.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_BLACKSMITH.asInt())));
+        this.registry.register(InventoryId.BANK.asInt(), () -> new BankInventory(GUIOverlay.BANK_OVERLAY.asGlyph() + "§f" + Icon.MONEY_BAG.get() + "§f Bank", InventoryId.BANK.asInt(), bankQueryLockController));
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
     }
@@ -79,6 +83,10 @@ public class GUIHandler {
         AbstractGUI matchingGUI = this.registry.getInstance(player.getUUID(), id);
 
         if (matchingGUI == null) {
+            matchingGUI = this.registry.createInstance(player.getUUID(), id);
+        }
+
+        if (matchingGUI == null) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, player.asBukkitPlayer().getName() + " attempted to open a non existent inventory instance with id:uuid " + id + ":" + player.getUUID() + "!");
             return null;
         }
@@ -91,7 +99,16 @@ public class GUIHandler {
         Bukkit.getServer().getPluginManager().callEvent(event);
 
         // Revert new instance if inventory failed to open
-        if (event.isCancelled() || !matchingGUI.attemptOpenInventory(player)) {
+        if (event.isCancelled() || !matchingGUI.attemptOpenInventory(player, () -> {
+            if (onClose != null) {
+                onClose.run();
+            }
+            inventoryViewers.remove(instanceUUID);
+            registry.removePlayersActiveInstance(player.getUUID());
+        })) {
+            if (onClose != null) {
+                onClose.run();
+            }
             registry.removePlayersActiveInstance(player.getUUID());
             return null;
         }
@@ -128,6 +145,7 @@ public class GUIHandler {
 
         Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> inventoryViewers.put(inventoryUUID, new ArrayList<>()));
     }
+
 
     public void onInventoryClose(InventoryCloseEvent event) {
         InventoryHolder holder = event.getInventory().getHolder();
@@ -172,8 +190,6 @@ public class GUIHandler {
         if (viewerUUIDs.isEmpty()) {
             inventoryViewers.remove(instanceUUID);
         }
-
-
     }
 
     public void onInventoryClick(InventoryClickEvent event) {
