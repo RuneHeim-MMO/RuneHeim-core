@@ -125,43 +125,49 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
         return true;
     }
 
-    private boolean tryAddOrStackToShopSlots(ItemStack itemToAdd) {
-        int amountToAdd = itemToAdd.getAmount();
+    private int tryAddOrStackToShopSlots(ItemStack cursorStack) {
+        if (cursorStack == null || cursorStack.getAmount() <= 0) return 0;
 
-        // First try to stack onto existing stacks of the same item
+        int remaining = cursorStack.getAmount();
+        int original = remaining;
+        int maxStack = cursorStack.getMaxStackSize();
+        boolean didAny = false;
+
+        // 1) Stack onto existing
         for (int slot = SELLING_SLOTS_START; slot <= SELLING_SLOT_END; slot++) {
-            ItemStack current = shopInventory.getItem(slot);
-            if (current != null && current.isSimilar(itemToAdd)) {
-                int maxStack = current.getMaxStackSize();
-                int currentAmount = current.getAmount();
-                int spaceLeft = maxStack - currentAmount;
-
-                if (spaceLeft > 0) {
-                    int addAmount = Math.min(spaceLeft, amountToAdd);
-                    current.setAmount(currentAmount + addAmount);
-                    amountToAdd -= addAmount;
-
-                    if (amountToAdd <= 0) {
-                        // All items added by stacking
-                        return true;
-                    }
+            ItemStack shopStack = shopInventory.getItem(slot);
+            if (shopStack != null && shopStack.isSimilar(cursorStack)) {
+                int space = maxStack - shopStack.getAmount();
+                if (space > 0) {
+                    int toMove = Math.min(space, remaining);
+                    shopStack.setAmount(shopStack.getAmount() + toMove);
+                    remaining -= toMove;
+                    didAny = true;
+                    if (remaining == 0) break;
                 }
             }
         }
 
-        // Then try to put remaining items in empty slots
+        // If we stacked anything, return how many went in
+        if (didAny) {
+            int moved = original - remaining;
+            cursorStack.setAmount(remaining);
+            return moved;
+        }
+
+        // 2) No stacking → try an empty slot
         for (int slot = SELLING_SLOTS_START; slot <= SELLING_SLOT_END; slot++) {
             if (shopInventory.getItem(slot) == null) {
-                // Put remaining items here
-                ItemStack newStack = itemToAdd.clone();
-                newStack.setAmount(amountToAdd);
-                shopInventory.setItem(slot, newStack);
-                return true;
+                // move the *whole* stack
+                ItemStack clone = cursorStack.clone();
+                shopInventory.setItem(slot, clone);
+                cursorStack.setAmount(0);
+                return original;
             }
         }
 
-        // No space to stack or put item
-        return false;
+        // 3) Nothing moved
+        return 0;
     }
 
     private void updateConfirmButton() {
@@ -256,15 +262,21 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
 
             try {
                 shop.isItemStackSellable(clickedStack);
-                ItemStack cloned = clickedStack.clone();
+                int moved = tryAddOrStackToShopSlots(clickedStack);
 
-                if (tryAddOrStackToShopSlots(cloned)) {
-                    clickedStack.setAmount(0);
-                    playerInventory.setItem(playerInvSlot, null);
+                if (moved > 0) {
+                    // play sound etc
                     SoundType.SHOP_MOVE_ITEM.play(player, false);
                     updateConfirmButton();
-                }
 
+                    // write back to player inventory:
+                    if (clickedStack.getAmount() <= 0) {
+                        playerInventory.setItem(playerInvSlot, null);
+                    } else {
+                        // necessary if your Inventory implementation copies on getItem()
+                        playerInventory.setItem(playerInvSlot, clickedStack);
+                    }
+                }
             } catch (Exception e) {
                 HudService.sendFailMessage(player, Component.text(e.getMessage()));
             }
