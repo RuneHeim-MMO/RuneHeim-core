@@ -2,7 +2,8 @@ package org.zuma.examplePlugin.domain.shop.constants;
 
 public enum ShopId {
     GENERAL_STORE(1),
-    DRAKKAR_BLACKSMITH(2);
+    DRAKKAR_BLACKSMITH(2),
+    INVESTMENT_BANKER(3);
 
     private final int id;
 

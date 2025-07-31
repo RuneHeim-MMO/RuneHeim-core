@@ -12,7 +12,8 @@ public enum InventoryId {
     GENERAL_STORE(6),
     SPINNING_WHEEL(7),
     DRAKKAR_BLACKSMITH(8),
-    BANK(9);
+    BANK(9),
+    INVESTMENT_BANKER(10);
 
     private final int id;
 

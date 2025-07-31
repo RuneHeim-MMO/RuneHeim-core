@@ -9,7 +9,8 @@ public enum GUIOverlay {
     FUSION_MASTER_OVERLAY("⾭"),
     SHOP_OVERLAY("⿸"),
     SPINNING_WHEEL_OVERLAY("⼥"),
-    BANK_OVERLAY("╄");
+    BANK_OVERLAY("╄"),
+    INVESTMENT_BANKER_OVERLAY("┠");
 
     private final String glyph;
 

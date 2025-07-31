@@ -242,7 +242,9 @@ public enum ItemId {
     ADAMANT_ARROW(2504),
     RUNITE_ARROW(2505),
 
-    BONES(2600);
+    BONES(2600),
+
+    PLATINUM_TOKEN(2700);
 
     private final int id;
 

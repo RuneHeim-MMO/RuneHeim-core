@@ -46,8 +46,13 @@ public class ItemFactory {
             case EMPTY_CONTAINER -> createEmptyContainer(meta, json);
             case COINS -> new CoinsItem(meta);
             case ARROW -> createArrowItem(meta, json);
+            case CURRENCY -> createCurrencyItem(meta);
             default -> throw new IllegalArgumentException("Unknown item type: " + meta.type());
         };
+    }
+
+    private Currency createCurrencyItem(AbstractItemMeta meta) {
+        return new Currency(meta);
     }
 
     private Arrow createArrowItem(AbstractItemMeta meta, @Nullable VersionedJson json) {

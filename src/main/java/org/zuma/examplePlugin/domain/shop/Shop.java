@@ -97,7 +97,7 @@ public class Shop {
             throw new IllegalStateException("You cannot sell this item to this shop!");
         }
 
-        if (shopItem.getCurrentStock() + item.getAmount() >= 1024) {
+        if (shopItem.getCurrentStock() + item.getAmount() >= 10000) {
             throw new IllegalStateException("This shop is full and can't accept more of this item.");
         }
 

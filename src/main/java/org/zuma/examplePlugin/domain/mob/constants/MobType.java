@@ -14,6 +14,7 @@ public enum MobType {
     BANK_TELLER_1("bank_teller_1"),
     BANK_TELLER_2("bank_teller_2"),
     BANK_TELLER_3("bank_teller_3"),
+    INVESTMENT_BANKER("investment_banker"),
 
     DRAKKAR_BLACKSMITH("drakkar_blacksmith"),
     GENERAL_STORE("generic_shopkeeper"),

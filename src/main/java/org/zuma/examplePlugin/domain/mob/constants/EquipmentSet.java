@@ -31,6 +31,18 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.SMITHING_HAMMER), 100)
     ))),
 
+    INVESTMENT_BANKER(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.GOLD_INGOT), 10),
+            new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.GOLD_BLOCK), 10)
+    ))),
+
+    BANK_TELLER(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.COINS, 10000), 1),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.COINS, 1000), 5),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.COINS, 100), 20),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.COINS, 1), 30)
+    ))),
+
     GOBLIN(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.IRON_BODY), 5),
             new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.BRONZE_BOOTS), 30),
@@ -39,10 +51,14 @@ public enum EquipmentSet {
 
 
     private static ItemStack getRuneItem(ItemId id) {
+        return getRuneItem(id, 1);
+    }
+
+    private static ItemStack getRuneItem(ItemId id, int amount) {
         AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(id);
 
         if (type == null) return new ItemStack(Material.AIR);
-        return type.createItemStackOfType();
+        return type.createItemStackOfType(amount);
     }
 
     private final MobEquipmentMeta meta;
