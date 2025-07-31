@@ -16,6 +16,13 @@
     },
     {
       "type": "bitmap",
+      "file": "minecraft:font/gui/investment_banker.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": ["┠"]
+    },
+    {
+      "type": "bitmap",
       "file": "minecraft:font/gui/fusion_master.png",
       "ascent": 13,
       "height": 222,

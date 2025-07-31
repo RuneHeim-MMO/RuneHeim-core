@@ -659,10 +659,10 @@
                 }
             },
             {
-                "threshold": 2209,
+                "threshold": 2700,
                 "model": {
                     "type": "model",
-                    "model": "item/coal"
+                    "model": "item/custom/currency/platinum_token"
                 }
             }
         ]
