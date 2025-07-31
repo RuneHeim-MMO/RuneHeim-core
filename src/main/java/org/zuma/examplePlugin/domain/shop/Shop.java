@@ -34,7 +34,8 @@ public class Shop {
                     config.stockReplenishmentSeconds(),
                     config.buyPrice(),
                     config.sellPrice(),
-                    config.customCurrencyId(),
+                    config.buyCustomCurrencyId(),
+                    config.sellCustomCurrencyId(),
                     config.sellPrice() != null,
                     config.buyPrice() != null));
         });
@@ -123,8 +124,8 @@ public class Shop {
         long totalOrderPrice = item.getAmount() * shopItem.getSellPrice();
         shopItem.setCurrentStock(shopItem.getCurrentStock() + item.getAmount());
 
-        if (shopItem.getCurrency() != null) {
-            player.giveItemOrDrop(new ItemRecord(shopItem.getCurrency().id, Math.toIntExact(totalOrderPrice)));
+        if (shopItem.getSellCurrency() != null) {
+            player.giveItemOrDrop(new ItemRecord(shopItem.getSellCurrency().id, Math.toIntExact(totalOrderPrice)));
             SoundType.SHOP_BUY_WITH_CUSTOM_CURRENCY.play(player, true);
         } else {
             player.setPouchCoins(player.getPouchCoins() + totalOrderPrice);
@@ -157,17 +158,17 @@ public class Shop {
         long totalOrderPrice = item.getBuyPrice() * amount;
         item.setCurrentStock(item.getCurrentStock() - amount);
 
-        if (item.getCurrency() != null) {
-            boolean currencyDeductSuccess = PlayerUtils.removeItems(player, List.of(new ItemRecord(item.getCurrency().id, Math.toIntExact(totalOrderPrice))));
+        if (item.getBuyCurrency() != null) {
+            boolean currencyDeductSuccess = PlayerUtils.removeItems(player, List.of(new ItemRecord(item.getBuyCurrency().id, Math.toIntExact(totalOrderPrice))));
 
             if (currencyDeductSuccess) {
                 SoundType.SHOP_BUY_WITH_CUSTOM_CURRENCY.play(player, true);
             } else {
-                throw new IllegalStateException("You don't have enough money! You need at least " + totalOrderPrice + "x " + item.getCurrency().displayName + "!");
+                throw new IllegalStateException("You cannot afford this! You need at least " + totalOrderPrice + "x " + item.getBuyCurrency().displayName + "!");
             }
         } else {
             if (player.getPouchCoins() < totalOrderPrice) {
-                throw new IllegalStateException("You don't have enough money! You need at least " + totalOrderPrice + " coins.");
+                throw new IllegalStateException("You cannot afford this! You need at least " + totalOrderPrice + " coins.");
             }
 
             player.setPouchCoins(player.getPouchCoins() - totalOrderPrice);

@@ -101,7 +101,7 @@ public class ActionBarManager {
                 .append(playerHasFairy ? fairyIcon : Component.empty())
                 .append(manaBar)
                 .append(Component.text(" ".repeat(2)))
-                .append(CurrencyUtils.getCurrencyComponent(coins))
+                .append(CurrencyUtils.getCoinsCurrencyComponent(coins))
                 .append(Component.text("", CurrencyUtils.getCurrencyColor(coins).asColor()));
 
     }

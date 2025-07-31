@@ -28,8 +28,8 @@ public class ShopItemLore implements LoreCreator {
         }
 
         if (item.isBuyable() && isInStock) {
-            lore.add(Component.text("Buy 1x for ", Color.SHOP_DESCRIPTION.asColor()).append(item.getCurrencyAmountComponent(item.getBuyPrice())).append(net.kyori.adventure.text.Component.text(" (Click)", Color.SHOP_DESCRIPTION.asColor())));
-            lore.add(Component.text("Buy 5x for ", Color.SHOP_DESCRIPTION.asColor()).append(item.getCurrencyAmountComponent(item.getBuyPrice() * 5)).append(Component.text(" (Shift + Click)", Color.SHOP_DESCRIPTION.asColor())));
+            lore.add(Component.text("Buy 1x for ", Color.SHOP_DESCRIPTION.asColor()).append(CurrencyUtils.getCustomCurrencyComponent(item.getBuyCurrency(), item.getBuyPrice())).append(net.kyori.adventure.text.Component.text(" (Click)", Color.SHOP_DESCRIPTION.asColor())));
+            lore.add(Component.text("Buy 5x for ", Color.SHOP_DESCRIPTION.asColor()).append(CurrencyUtils.getCustomCurrencyComponent(item.getBuyCurrency(), item.getBuyPrice() * 5)).append(Component.text(" (Shift + Click)", Color.SHOP_DESCRIPTION.asColor())));
 
             if (item.isSellable()) {
                 lore.add(Component.empty());
@@ -37,7 +37,7 @@ public class ShopItemLore implements LoreCreator {
         }
 
         if (item.isSellable()) {
-            lore.add(Component.text("Sell 1x for ", Color.SHOP_DESCRIPTION.asColor()).append(item.getCurrencyAmountComponent(item.getSellPrice())).append(Component.text(" (Click in own inventory)", Color.SHOP_DESCRIPTION.asColor())));
+            lore.add(Component.text("Sell 1x for ", Color.SHOP_DESCRIPTION.asColor()).append(CurrencyUtils.getCustomCurrencyComponent(item.getSellCurrency(), item.getSellPrice())).append(Component.text(" (Click in own inventory)", Color.SHOP_DESCRIPTION.asColor())));
         }
 
 

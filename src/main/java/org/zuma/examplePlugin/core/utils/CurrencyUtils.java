@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 
 import javax.annotation.Nullable;
 
@@ -32,15 +33,27 @@ public class CurrencyUtils {
         }
     }
 
-    public static Component getCurrencyComponent(long number) {
-        return getCurrencyComponent(number, null);
+    public static Component getCoinsCurrencyComponent(long number) {
+        return getCoinsCurrencyComponent(number, null);
     }
 
-    public static Component getCurrencyComponent(long number, @Nullable String suffix) {
+    public static Component getCoinsCurrencyComponent(long number, @Nullable String suffix) {
         String suffixFormatted = suffix == null ? "" : " " + suffix;
 
         return Component.text(getCurrencyIcon(number).get(), NamedTextColor.WHITE)
                 .append(Component.text(" " + formatCurrencyString(number) + suffixFormatted, getCurrencyColor(number).asColor()));
+    }
+
+    public static Component getCustomCurrencyComponent(@Nullable AbstractItemType currencyType, Long amount) {
+        if (currencyType == null) {
+            // Regular gold coins
+            return CurrencyUtils.getCoinsCurrencyComponent(amount);
+        }
+
+        // Custom currency
+
+        return Component.text(CurrencyUtils.formatCurrencyString(amount) + " x " + currencyType.displayName, CurrencyUtils.getCurrencyColor(amount).asColor());
+
     }
 
     public static Icon getCurrencyIcon(long number) {

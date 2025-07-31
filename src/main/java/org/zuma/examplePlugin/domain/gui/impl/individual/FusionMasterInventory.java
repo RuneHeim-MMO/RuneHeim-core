@@ -116,7 +116,7 @@ public class FusionMasterInventory extends IndividualGUI {
             int validGemsCount = getValidGemsCount();
 
             ItemStack confirmItem = GUIControl.YES.asItemstack(Component.text("Confirm fusion", Color.SUCCESS.asColor()),
-                    List.of(Component.text("Fusion cost: ", NamedTextColor.WHITE).append(CurrencyUtils.getCurrencyComponent((long) validGemsCount * COST_PER_GEM))));
+                    List.of(Component.text("Fusion cost: ", NamedTextColor.WHITE).append(CurrencyUtils.getCoinsCurrencyComponent((long) validGemsCount * COST_PER_GEM))));
             super.assignMenuValue(confirmItem, 1);
 
             inventory.setItem(CONFIRM_SLOT, confirmItem);
@@ -345,7 +345,7 @@ public class FusionMasterInventory extends IndividualGUI {
 
         if (player.getPouchCoins() < totalCost) {
             HudService.sendFailMessage(player, Component.text("You need at least ")
-                    .append(CurrencyUtils.getCurrencyComponent(totalCost))
+                    .append(CurrencyUtils.getCoinsCurrencyComponent(totalCost))
                     .append(Component.text(" in order to fuse the gems!")));
             return;
         }

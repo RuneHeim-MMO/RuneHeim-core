@@ -1,7 +1,6 @@
 package org.zuma.examplePlugin.domain.shop;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
@@ -31,10 +30,7 @@ public class ShopItem {
     private boolean buyable;
 
     @Nullable
-    private AbstractItemType currency;
-
-    @Nullable
-    private String currencyDisplayName;
+    private AbstractItemType buyCustomCurrency, sellCustomCurrency;
 
 
     // Constructor
@@ -45,7 +41,8 @@ public class ShopItem {
                     @Nullable Integer stockReplenishmentSeconds,
                     @Nullable Long buyPrice,
                     @Nullable Long sellPrice,
-                    @Nullable Integer currencyId,
+                    @Nullable Integer buyCustomCurrencyId,
+                    @Nullable Integer sellCustomCurrencyId,
                     boolean sellable,
                     boolean buyable) {
         this.itemId = itemId;
@@ -58,18 +55,28 @@ public class ShopItem {
         this.sellable = sellable;
         this.buyable = buyable;
 
-        if (currencyId != null) {
-            AbstractItemType currencyType = RuneQuestPlugin.getItemRegistry().getType(currencyId);
+        if (buyCustomCurrencyId != null) {
+            AbstractItemType currencyType = RuneQuestPlugin.getItemRegistry().getType(buyCustomCurrencyId);
 
             if (currencyType == null) {
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Couldn't set custom currency for a shop item! ItemId: " + itemId + " CurrencyId: " + currencyId);
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Couldn't set custom currency for a shop item! ItemId: " + itemId + " CurrencyId: " + buyCustomCurrencyId);
                 this.sellPrice = 0L;
                 this.buyPrice = null;
             } else {
-                this.currency = RuneQuestPlugin.getItemRegistry().getType(currencyId);
-                this.currencyDisplayName = currencyType.displayName;
+                this.buyCustomCurrency = currencyType;
             }
+        }
 
+        if (sellCustomCurrencyId != null) {
+            AbstractItemType currencyType = RuneQuestPlugin.getItemRegistry().getType(sellCustomCurrencyId);
+
+            if (currencyType == null) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Couldn't set custom currency for a shop item! ItemId: " + itemId + " CurrencyId: " + buyCustomCurrencyId);
+                this.sellPrice = 0L;
+                this.buyPrice = null;
+            } else {
+                this.sellCustomCurrency = currencyType;
+            }
         }
     }
 
@@ -122,17 +129,14 @@ public class ShopItem {
     }
 
     @Nullable
-    public AbstractItemType getCurrency() {
-        return this.currency;
+    public AbstractItemType getBuyCurrency() {
+        return this.buyCustomCurrency;
     }
 
-    public String getCurrencyDisplayName() {
-        if (this.currencyDisplayName == null) {
-            return "[UNKNOWN ITEM]";
-        }
-
-        return this.currencyDisplayName;
+    public AbstractItemType getSellCurrency() {
+        return this.sellCustomCurrency;
     }
+
 
     public void setBuyPrice(@Nullable Long buyPrice) {
         this.buyPrice = buyPrice;
@@ -163,15 +167,4 @@ public class ShopItem {
         this.buyable = buyable;
     }
 
-    public Component getCurrencyAmountComponent(Long amount) {
-        if (getCurrency() == null) {
-            // Regular gold coins
-            return CurrencyUtils.getCurrencyComponent(amount).append(Component.text(" coins.", Color.SHOP_DESCRIPTION.asColor()));
-        }
-
-        // Custom currency
-
-        return Component.text(CurrencyUtils.formatCurrencyString(amount) + " x " + getCurrencyDisplayName(), CurrencyUtils.getCurrencyColor(amount).asColor());
-
-    }
 }

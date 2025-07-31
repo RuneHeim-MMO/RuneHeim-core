@@ -58,7 +58,7 @@ public class PouchCommand implements BasicCommand {
 
             if (amount > runePlayer.getPouchCoins()) {
                 HudService.sendFailMessage(runePlayer, Component.text("You do not have ")
-                        .append(CurrencyUtils.getCurrencyComponent(amount))
+                        .append(CurrencyUtils.getCoinsCurrencyComponent(amount))
                         .append(Component.text(" coins in your pouch!")));
                 return;
             }

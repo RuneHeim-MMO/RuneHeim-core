@@ -31,7 +31,6 @@ import org.zuma.examplePlugin.domain.shop.lore.ShopItemLore;
 
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class ShopInventory extends IndividualGUI implements ShopSubscriber {
@@ -178,64 +177,68 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
         }
 
         if (isVisible) {
-            AtomicLong salePrice = new AtomicLong();
-            Map<Integer, Long> customCurrencies = new HashMap<>();
-
-            List<Component> invoice = new ArrayList<>(toBeSold.stream().map(itemStack -> {
-                ShopItem item = shop.getShopItem(itemStack);
-
-                if (item == null || item.getSellPrice() == null) {
-                    return Component.text("Unknown Item");
-                }
-
-                long itemPrice = item.getSellPrice() * itemStack.getAmount();
-
-                if (item.getCurrency() == null) {
-                    salePrice.addAndGet(itemPrice);
-                } else {
-                    if (!customCurrencies.containsKey(item.getCurrency().id)) {
-                        customCurrencies.put(item.getCurrency().id, itemPrice);
-                    } else {
-                        customCurrencies.put(item.getCurrency().id, customCurrencies.get(item.getCurrency().id) + itemPrice);
-                    }
-                }
-
-                return Component.text(CurrencyUtils.formatCurrencyString(itemPrice) + " x ", CurrencyUtils.getCurrencyColor(itemPrice).asColor())
-                        .append(itemStack.displayName())
-                        .append(Component.text(" - ", NamedTextColor.WHITE))
-                        .append(item.getCurrencyAmountComponent(itemPrice));
-
-            }).toList());
-
-
-            invoice.add(Component.empty());
-            invoice.add(Component.text("Total: ", Color.SHOP_DESCRIPTION.asColor())
-                    .append(CurrencyUtils.getCurrencyComponent(salePrice.get()))
-                    .append(Component.text(" coins.", Color.SHOP_DESCRIPTION.asColor()))
-                    .decoration(TextDecoration.ITALIC, false));
-
-            customCurrencies.forEach((itemId, amount) -> {
-                AbstractItemType currencyType = RuneQuestPlugin.getItemRegistry().getType(itemId);
-
-                if (currencyType == null) {
-                    return;
-                }
-
-                invoice.add(Component.text("Total: ", Color.SHOP_DESCRIPTION.asColor())
-                        .append(Component.text(CurrencyUtils.formatCurrencyString(amount) + " x ", CurrencyUtils.getCurrencyColor(amount).asColor()))
-                        .append(Component.text(currencyType.displayName, Color.SHOP_DESCRIPTION.asColor())
-                                .decoration(TextDecoration.ITALIC, false)));
-            });
-
-
             ItemStack confirmIcon = GUIControl.YES.asItemstack(
-                    Component.text("Sell items", Color.SUCCESS.asColor()), invoice);
+                    Component.text("Sell items", Color.SUCCESS.asColor()), generateInvoice(toBeSold));
             assignMenuValue(confirmIcon, CONFIRM_MENU_VALUE);
 
             shopInventory.setItem(SELLING_CONFIRM_SLOT, confirmIcon);
         } else {
             shopInventory.setItem(SELLING_CONFIRM_SLOT, null);
         }
+    }
+
+    private List<Component> generateInvoice(List<ItemStack> toBeSold) {
+        AtomicLong salePrice = new AtomicLong();
+        Map<Integer, Long> customCurrencies = new HashMap<>();
+
+        List<Component> invoice = new ArrayList<>(toBeSold.stream().map(itemStack -> {
+            ShopItem item = shop.getShopItem(itemStack);
+
+            if (item == null || item.getSellPrice() == null) {
+                return Component.text("Unknown Item");
+            }
+
+            long itemPrice = item.getSellPrice() * itemStack.getAmount();
+            @Nullable AbstractItemType currency = item.getSellCurrency();
+
+            if (currency == null) {
+                salePrice.addAndGet(itemPrice);
+            } else {
+                if (!customCurrencies.containsKey(currency.id)) {
+                    customCurrencies.put(currency.id, itemPrice);
+                } else {
+                    customCurrencies.put(currency.id, customCurrencies.get(currency.id) + itemPrice);
+                }
+            }
+
+            return Component.text(CurrencyUtils.formatCurrencyString(itemStack.getAmount()) + " x ", CurrencyUtils.getCurrencyColor(itemPrice).asColor())
+                    .append(itemStack.displayName())
+                    .append(Component.text(" for ", Color.SHOP_DESCRIPTION.asColor()))
+                    .append(CurrencyUtils.getCustomCurrencyComponent(currency, itemPrice));
+
+        }).toList());
+
+
+        invoice.add(Component.empty());
+        invoice.add(Component.text("Total: ", Color.SHOP_DESCRIPTION.asColor())
+                .append(CurrencyUtils.getCoinsCurrencyComponent(salePrice.get()))
+                .append(Component.text(" coins.", Color.SHOP_DESCRIPTION.asColor()))
+                .decoration(TextDecoration.ITALIC, false));
+
+        customCurrencies.forEach((itemId, amount) -> {
+            AbstractItemType currencyType = RuneQuestPlugin.getItemRegistry().getType(itemId);
+
+            if (currencyType == null) {
+                return;
+            }
+
+            invoice.add(Component.text("Total: ", Color.SHOP_DESCRIPTION.asColor())
+                    .append(Component.text(CurrencyUtils.formatCurrencyString(amount) + " x ", CurrencyUtils.getCurrencyColor(amount).asColor()))
+                    .append(Component.text(currencyType.displayName, Color.SHOP_DESCRIPTION.asColor())
+                            .decoration(TextDecoration.ITALIC, false)));
+        });
+
+        return invoice;
     }
 
     @Override

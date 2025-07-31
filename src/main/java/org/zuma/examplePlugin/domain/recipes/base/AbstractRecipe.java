@@ -194,7 +194,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         if (cost != null && cost > 0) {
             itemLore.add(Component.empty());
             itemLore.add(Component.text("Cost: ", Color.ITEM_CATEGORY_LABEL.asColor()));
-            itemLore.add(CurrencyUtils.getCurrencyComponent(cost));
+            itemLore.add(CurrencyUtils.getCoinsCurrencyComponent(cost));
         }
 
         meta.lore(itemLore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());
@@ -245,7 +245,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
             return Optional.of(Component.text("You do not have enough money to " + type.getVerb().toLowerCase() + " ")
                     .append(resultComponent)
                     .append(Component.text("! You need at least "))
-                    .append(CurrencyUtils.getCurrencyComponent(getRecipeCost() * times)).append(Component.text(" coins.")));
+                    .append(CurrencyUtils.getCoinsCurrencyComponent(getRecipeCost() * times)).append(Component.text(" coins.")));
         }
 
         if (player.isBusy()) {

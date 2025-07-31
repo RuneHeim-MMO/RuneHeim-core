@@ -12,13 +12,13 @@ public class ShopRepository {
     private final Gson gson = new Gson();
 
     private static final List<ShopItemConfig> GENERAL_STORE_ITEMS = List.of(
-            new ShopItemConfig(ItemId.SMITHING_HAMMER.asInt(), 8, 30, 100L, 20L, null),
-            new ShopItemConfig(ItemId.SHEARS.asInt(), 8, 30, 35L, 10L, null),
-            new ShopItemConfig(ItemId.CHISEL.asInt(), 8, 30, 35L, 10L, null),
-            new ShopItemConfig(ItemId.FLINT_AND_STEEL.asInt(), 8, 30, 40L, 12L, null),
-            new ShopItemConfig(ItemId.EMPTY_POT.asInt(), 8, 30, 10L, 3L, null),
-            new ShopItemConfig(ItemId.EMPTY_BUCKET.asInt(), 8, 30, 10L, 3L, null),
-            new ShopItemConfig(ItemId.POT_OF_FLOUR.asInt(), 0, 10, 25L, 8L, null)
+            new ShopItemConfig(ItemId.SMITHING_HAMMER.asInt(), 8, 30, 100L, 20L, null, null),
+            new ShopItemConfig(ItemId.SHEARS.asInt(), 8, 30, 35L, 10L, null, null),
+            new ShopItemConfig(ItemId.CHISEL.asInt(), 8, 30, 35L, 10L, null, null),
+            new ShopItemConfig(ItemId.FLINT_AND_STEEL.asInt(), 8, 30, 40L, 12L, null, null),
+            new ShopItemConfig(ItemId.EMPTY_POT.asInt(), 8, 30, 10L, 3L, null, null),
+            new ShopItemConfig(ItemId.EMPTY_BUCKET.asInt(), 8, 30, 10L, 3L, null, null),
+            new ShopItemConfig(ItemId.POT_OF_FLOUR.asInt(), 0, 10, 25L, 8L, null, null)
     );
 
 
@@ -28,11 +28,11 @@ public class ShopRepository {
                 new ShopConfig(ShopId.GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
 
                 new ShopConfig(ShopId.DRAKKAR_BLACKSMITH.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
-                        new ShopItemConfig(ItemId.SMITHING_HAMMER.asInt(), 8, 30, 90L, 20L, null),
-                        new ShopItemConfig(ItemId.BRONZE_BAR.asInt(), 8, 30, 250L, 30L, null),
-                        new ShopItemConfig(ItemId.IRON_BAR.asInt(), 8, 30, 350L, 50L, null),
-                        new ShopItemConfig(ItemId.STEEL_BAR.asInt(), 8, 30, 450L, 70L, null),
-                        new ShopItemConfig(ItemId.COAL_ORE.asInt(), 4, 30, 80L, 20L, null)
+                        new ShopItemConfig(ItemId.SMITHING_HAMMER.asInt(), 8, 30, 90L, 20L, null, null),
+                        new ShopItemConfig(ItemId.BRONZE_BAR.asInt(), 8, 30, 250L, 30L, null, null),
+                        new ShopItemConfig(ItemId.IRON_BAR.asInt(), 8, 30, 350L, 50L, null, null),
+                        new ShopItemConfig(ItemId.STEEL_BAR.asInt(), 8, 30, 450L, 70L, null, null),
+                        new ShopItemConfig(ItemId.COAL_ORE.asInt(), 4, 30, 80L, 20L, null, null)
                 ))), 1))
 
 
