@@ -1,5 +1,13 @@
 package org.zuma.examplePlugin.domain.shop;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.CurrencyUtils;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+
 import javax.annotation.Nullable;
 
 public class ShopItem {
@@ -22,6 +30,13 @@ public class ShopItem {
     private boolean sellable;
     private boolean buyable;
 
+    @Nullable
+    private AbstractItemType currency;
+
+    @Nullable
+    private String currencyDisplayName;
+
+
     // Constructor
     public ShopItem(int itemId,
                     int defaultStock,
@@ -30,6 +45,7 @@ public class ShopItem {
                     @Nullable Integer stockReplenishmentSeconds,
                     @Nullable Long buyPrice,
                     @Nullable Long sellPrice,
+                    @Nullable Integer currencyId,
                     boolean sellable,
                     boolean buyable) {
         this.itemId = itemId;
@@ -41,6 +57,20 @@ public class ShopItem {
         this.sellPrice = sellPrice;
         this.sellable = sellable;
         this.buyable = buyable;
+
+        if (currencyId != null) {
+            AbstractItemType currencyType = RuneQuestPlugin.getItemRegistry().getType(currencyId);
+
+            if (currencyType == null) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Couldn't set custom currency for a shop item! ItemId: " + itemId + " CurrencyId: " + currencyId);
+                this.sellPrice = 0L;
+                this.buyPrice = null;
+            } else {
+                this.currency = RuneQuestPlugin.getItemRegistry().getType(currencyId);
+                this.currencyDisplayName = currencyType.displayName;
+            }
+
+        }
     }
 
     // Getters and setters
@@ -91,6 +121,19 @@ public class ShopItem {
         return buyPrice;
     }
 
+    @Nullable
+    public AbstractItemType getCurrency() {
+        return this.currency;
+    }
+
+    public String getCurrencyDisplayName() {
+        if (this.currencyDisplayName == null) {
+            return "[UNKNOWN ITEM]";
+        }
+
+        return this.currencyDisplayName;
+    }
+
     public void setBuyPrice(@Nullable Long buyPrice) {
         this.buyPrice = buyPrice;
     }
@@ -118,5 +161,17 @@ public class ShopItem {
 
     public void setBuyable(boolean buyable) {
         this.buyable = buyable;
+    }
+
+    public Component getCurrencyAmountComponent(Long amount) {
+        if (getCurrency() == null) {
+            // Regular gold coins
+            return CurrencyUtils.getCurrencyComponent(amount).append(Component.text(" coins.", Color.SHOP_DESCRIPTION.asColor()));
+        }
+
+        // Custom currency
+
+        return Component.text(CurrencyUtils.formatCurrencyString(amount) + " x " + getCurrencyDisplayName(), CurrencyUtils.getCurrencyColor(amount).asColor());
+
     }
 }

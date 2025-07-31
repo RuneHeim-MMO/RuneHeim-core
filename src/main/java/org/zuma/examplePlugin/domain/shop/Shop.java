@@ -2,7 +2,10 @@ package org.zuma.examplePlugin.domain.shop;
 
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.Throttler;
+import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.shop.persistence.ShopItemConfig;
@@ -31,6 +34,7 @@ public class Shop {
                     config.stockReplenishmentSeconds(),
                     config.buyPrice(),
                     config.sellPrice(),
+                    config.customCurrencyId(),
                     config.sellPrice() != null,
                     config.buyPrice() != null));
         });
@@ -59,20 +63,20 @@ public class Shop {
         updateThrottler.throttle(() -> updateSubscribers.forEach(ShopSubscriber::onShopUpdate));
     }
 
-    public long getItemSalePrice(ItemStack item) {
+    public ShopItem getShopItem(ItemStack item) {
         AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(item);
 
         if (type == null) {
-            return 0;
+            return null;
         }
 
         ShopItem shopItem = stock.get(type.id);
 
         if (shopItem == null || shopItem.getSellPrice() == null) {
-            return 0;
+            return null;
         }
 
-        return shopItem.getSellPrice() * item.getAmount();
+        return shopItem;
     }
 
     public boolean isItemStackSellable(@Nullable ItemStack item) throws IllegalStateException {
@@ -117,9 +121,15 @@ public class Shop {
         }
 
         long totalOrderPrice = item.getAmount() * shopItem.getSellPrice();
-
         shopItem.setCurrentStock(shopItem.getCurrentStock() + item.getAmount());
-        player.setPouchCoins(player.getPouchCoins() + totalOrderPrice);
+
+        if (shopItem.getCurrency() != null) {
+            player.giveItemOrDrop(new ItemRecord(shopItem.getCurrency().id, Math.toIntExact(totalOrderPrice)));
+            SoundType.SHOP_BUY_WITH_CUSTOM_CURRENCY.play(player, true);
+        } else {
+            player.setPouchCoins(player.getPouchCoins() + totalOrderPrice);
+        }
+
         notifyStockSubscribers();
 
     }
@@ -138,20 +148,31 @@ public class Shop {
             throw new IllegalStateException("Cannot buy more items than in stock!");
         }
 
-        long totalOrderPrice = item.getBuyPrice() * amount;
-
-        if (player.getPouchCoins() < totalOrderPrice) {
-            throw new IllegalStateException("You don't have enough money! You need at least " + totalOrderPrice + " coins.");
-        }
-
         AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(item.getItemId());
 
         if (type == null) {
             throw new IllegalStateException("Unknown item id " + item.getItemId());
         }
 
+        long totalOrderPrice = item.getBuyPrice() * amount;
         item.setCurrentStock(item.getCurrentStock() - amount);
-        player.setPouchCoins(player.getPouchCoins() - totalOrderPrice);
+
+        if (item.getCurrency() != null) {
+            boolean currencyDeductSuccess = PlayerUtils.removeItems(player, List.of(new ItemRecord(item.getCurrency().id, Math.toIntExact(totalOrderPrice))));
+
+            if (currencyDeductSuccess) {
+                SoundType.SHOP_BUY_WITH_CUSTOM_CURRENCY.play(player, true);
+            } else {
+                throw new IllegalStateException("You don't have enough money! You need at least " + totalOrderPrice + "x " + item.getCurrency().displayName + "!");
+            }
+        } else {
+            if (player.getPouchCoins() < totalOrderPrice) {
+                throw new IllegalStateException("You don't have enough money! You need at least " + totalOrderPrice + " coins.");
+            }
+
+            player.setPouchCoins(player.getPouchCoins() - totalOrderPrice);
+        }
+
         player.giveItemOrDrop(type.createItemStackOfType(amount));
         notifyStockSubscribers();
     }

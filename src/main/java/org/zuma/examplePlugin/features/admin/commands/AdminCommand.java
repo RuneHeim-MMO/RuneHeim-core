@@ -1,16 +1,23 @@
 package org.zuma.examplePlugin.features.admin.commands;
 
 
+import eu.decentsoftware.holograms.api.utils.location.LocationUtils;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
+import org.bukkit.util.Transformation;
 import org.jetbrains.annotations.NotNull;
+import org.joml.AxisAngle4f;
+import org.joml.Vector3f;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.handlers.IllegalItemWatchdog;
+import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
@@ -20,6 +27,7 @@ import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepositor
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.gui.serializer.ItemContainerContentSerializer;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
+import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.item.serializer.ItemSerializer;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -102,8 +110,21 @@ public class AdminCommand implements BasicCommand {
 
         }
 
-        if (args[0].equalsIgnoreCase("serialize")) {
-            System.out.println(ItemContainerContentSerializer.serializeItemContainerContent(runePlayer));
+        if (args[0].equalsIgnoreCase("spawn")) {
+            Location displayLocation = MathUtils.roundLocation(player.getLocation());
+            ItemDisplay display = player.getWorld().spawn(displayLocation, ItemDisplay.class);
+            display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
+            display.setItemStack(RuneQuestPlugin.getItemRegistry().getType(ItemId.BRONZE_SWORD).createItemStackOfType());
+            display.setPersistent(false);
+
+            display.setTransformation(
+                    new Transformation(
+                            new Vector3f(), // no translation
+                            new AxisAngle4f(), // no left rotation
+                            new Vector3f(5, 5, 5), // scale up by a factor of 2 on all axes
+                            new AxisAngle4f() // no right rotation
+                    )
+            );
         }
 
 

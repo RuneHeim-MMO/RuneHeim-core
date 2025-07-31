@@ -58,7 +58,8 @@ public class ItemListener implements Listener {
         event.setCancelled(true);
     }
 
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = false) // Some fucking shithead is cancelling this SOMEWHERE for no reason...
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = false)
+    // Some fucking shithead is cancelling this SOMEWHERE for no reason...
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getHand() != EquipmentSlot.HAND) {
             return;

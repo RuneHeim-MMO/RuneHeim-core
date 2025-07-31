@@ -31,6 +31,7 @@ import org.zuma.examplePlugin.domain.shop.lore.ShopItemLore;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class ShopInventory extends IndividualGUI implements ShopSubscriber {
@@ -178,14 +179,31 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
 
         if (isVisible) {
             AtomicLong salePrice = new AtomicLong();
-            List<Component> invoice = new ArrayList<>(toBeSold.stream().map(itemStack -> {
-                long itemPrice = shop.getItemSalePrice(itemStack);
-                salePrice.addAndGet(itemPrice);
+            Map<Integer, Long> customCurrencies = new HashMap<>();
 
-                return Component.text(itemStack.getAmount() + "x ", NamedTextColor.WHITE)
+            List<Component> invoice = new ArrayList<>(toBeSold.stream().map(itemStack -> {
+                ShopItem item = shop.getShopItem(itemStack);
+
+                if (item == null || item.getSellPrice() == null) {
+                    return Component.text("Unknown Item");
+                }
+
+                long itemPrice = item.getSellPrice() * itemStack.getAmount();
+
+                if (item.getCurrency() == null) {
+                    salePrice.addAndGet(itemPrice);
+                } else {
+                    if (!customCurrencies.containsKey(item.getCurrency().id)) {
+                        customCurrencies.put(item.getCurrency().id, itemPrice);
+                    } else {
+                        customCurrencies.put(item.getCurrency().id, customCurrencies.get(item.getCurrency().id) + itemPrice);
+                    }
+                }
+
+                return Component.text(CurrencyUtils.formatCurrencyString(itemPrice) + " x ", CurrencyUtils.getCurrencyColor(itemPrice).asColor())
                         .append(itemStack.displayName())
                         .append(Component.text(" - ", NamedTextColor.WHITE))
-                        .append(CurrencyUtils.getCurrencyComponent(itemPrice));
+                        .append(item.getCurrencyAmountComponent(itemPrice));
 
             }).toList());
 
@@ -195,6 +213,19 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
                     .append(CurrencyUtils.getCurrencyComponent(salePrice.get()))
                     .append(Component.text(" coins.", Color.SHOP_DESCRIPTION.asColor()))
                     .decoration(TextDecoration.ITALIC, false));
+
+            customCurrencies.forEach((itemId, amount) -> {
+                AbstractItemType currencyType = RuneQuestPlugin.getItemRegistry().getType(itemId);
+
+                if (currencyType == null) {
+                    return;
+                }
+
+                invoice.add(Component.text("Total: ", Color.SHOP_DESCRIPTION.asColor())
+                        .append(Component.text(CurrencyUtils.formatCurrencyString(amount) + " x ", CurrencyUtils.getCurrencyColor(amount).asColor()))
+                        .append(Component.text(currencyType.displayName, Color.SHOP_DESCRIPTION.asColor())
+                                .decoration(TextDecoration.ITALIC, false)));
+            });
 
 
             ItemStack confirmIcon = GUIControl.YES.asItemstack(

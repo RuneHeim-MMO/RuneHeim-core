@@ -10,10 +10,12 @@ public class DefaultMobDisabler implements Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onMobSpawn(CreatureSpawnEvent event) {
         CreatureSpawnEvent.SpawnReason reason = event.getSpawnReason();
-
-        if (reason != CreatureSpawnEvent.SpawnReason.CUSTOM) {
-            event.setCancelled(true);
+        
+        if (reason == CreatureSpawnEvent.SpawnReason.CUSTOM || reason == CreatureSpawnEvent.SpawnReason.DEFAULT || reason == CreatureSpawnEvent.SpawnReason.COMMAND) {
+            return;
         }
+
+        event.setCancelled(true);
     }
 
 }

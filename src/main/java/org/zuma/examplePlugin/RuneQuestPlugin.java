@@ -2,7 +2,12 @@ package org.zuma.examplePlugin;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Display;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.TextDisplay;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
@@ -247,6 +252,12 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         initializeMySQL();
         initializePlugin();
         registerCommands();
+
+        for (Entity entity : Bukkit.getWorld("world").getEntities()) {
+            if (entity instanceof Display display) {
+                display.remove();
+            }
+        }
 
         if (mobHandler != null) {
             mobHandler.cleanup();

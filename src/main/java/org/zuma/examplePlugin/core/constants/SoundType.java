@@ -45,6 +45,7 @@ public enum SoundType {
     SMITHING_SUCCESS("BLOCK_ANVIL_USE", false, 0.25f, 0.75f),
 
     COINS_DROP("runequest.coins.drop", true, 1f, 1f),
+    SHOP_BUY_WITH_CUSTOM_CURRENCY("item.trident.return", true, 1f, 1f),
 
     CRAFT_START("BLOCK_WOOD_PLACE", false, 0.8f, 1.0f),
     CRAFT_STEP("ITEM_ARMOR_EQUIP_GENERIC", false, 0.8f, 0.8f),

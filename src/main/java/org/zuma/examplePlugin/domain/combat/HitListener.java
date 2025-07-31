@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.domain.combat;
 
+import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -49,7 +50,9 @@ public class HitListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onEntityAttackEntityMelee(EntityDamageByEntityEvent event) {
-        event.setDamage(0); // Cancel real damage
+        if (!(event.getDamager() instanceof Player player && player.isOp() && player.getGameMode() == GameMode.CREATIVE)) {
+            event.setDamage(0);
+        }
 
         if (!(event.getEntity() instanceof LivingEntity defenderEntity)) return;
 
@@ -76,7 +79,10 @@ public class HitListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onEntityAttackEntityProjectile(EntityDamageByEntityEvent event) {
-        event.setDamage(0); // Cancel real damage
+
+        if (!(event.getDamager() instanceof Player player && player.isOp() && player.getGameMode() == GameMode.CREATIVE)) {
+            event.setDamage(0);
+        }
 
         if (!(event.getEntity() instanceof LivingEntity defenderEntity)) {
             return;
