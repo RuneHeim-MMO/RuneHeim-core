@@ -79,9 +79,6 @@ public class MobUtils {
         boolean feetClear = blockAtFeet.isPassable();
         boolean headClear = blockAtHead.isPassable();
 
-        // 2. Block below must be solid (so mob can stand)
-        boolean hasGround = blockBelow.getType().isSolid();
-
-        return feetClear && headClear && hasGround;
+        return feetClear && headClear;
     }
 }

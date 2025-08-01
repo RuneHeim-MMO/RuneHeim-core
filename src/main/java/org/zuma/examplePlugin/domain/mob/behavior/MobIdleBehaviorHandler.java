@@ -57,9 +57,13 @@ public class MobIdleBehaviorHandler {
             return;
         }
 
-        Location homeLocation = mobInstance.getSpawnLocation();
+        Location homeLocation = mobInstance.getSpawnLocation().clone();
+        Location entityLocation = entity.getLocation().clone();
 
-        if (entity.getLocation().distanceSquared(homeLocation) > mobInstance.getMaxWalkDistance()) {
+        homeLocation.setY(0);
+        entityLocation.setY(0);
+
+        if (entityLocation.distanceSquared(homeLocation) > mobInstance.getMaxWalkDistance()) {
             // Is too far away
 
             if (entity instanceof Mob mobEntity) {

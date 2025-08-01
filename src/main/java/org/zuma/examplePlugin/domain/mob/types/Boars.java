@@ -16,7 +16,7 @@ public class Boars {
 
         registry.register(MobType.BOAR_BROWN.getId(), () -> new GenericCombatant(
                 "Brown Boar", null,
-                getBaseSkills(7),
+                getBaseSkills(3),
                 null,
                 MobBehaviors.BOAR.getBehavior(),
                 "yungwilder_isles_boar_brown",
@@ -26,7 +26,7 @@ public class Boars {
 
         registry.register(MobType.BOAR_LIGHT_BROWN.getId(), () -> new GenericCombatant(
                 "Light Brown Boar", null,
-                getBaseSkills(7),
+                getBaseSkills(3),
                 null,
                 MobBehaviors.BOAR.getBehavior(),
                 "yungwilder_isles_boar_light_brown",
@@ -36,7 +36,7 @@ public class Boars {
 
         registry.register(MobType.BOAR_GRAY.getId(), () -> new GenericCombatant(
                 "Gray Boar", null,
-                getBaseSkills(7),
+                getBaseSkills(3),
                 null,
                 MobBehaviors.BOAR.getBehavior(),
                 "yungwilder_isles_boar_gray",
@@ -46,7 +46,7 @@ public class Boars {
 
         registry.register(MobType.BOAR_BROWN_ALPHA.getId(), () -> new GenericCombatant(
                 "Alpha Brown Boar", null,
-                getBaseSkills(15),
+                getBaseSkills(7),
                 null,
                 MobBehaviors.BOAR.getBehavior(),
                 "yungwilder_isles_boar_brown_alpha",
@@ -57,7 +57,7 @@ public class Boars {
 
         registry.register(MobType.BOAR_GRAY_ALPHA.getId(), () -> new GenericCombatant(
                 "Alpha Gray Boar", null,
-                getBaseSkills(15),
+                getBaseSkills(12),
                 null,
                 MobBehaviors.BOAR.getBehavior(),
                 "yungwilder_isles_boar_gray_alpha",
@@ -67,7 +67,7 @@ public class Boars {
 
         registry.register(MobType.BOAR_LIGHT_BROWN_ALPHA.getId(), () -> new GenericCombatant(
                 "Alpha Light Brown Boar", null,
-                getBaseSkills(15),
+                getBaseSkills(14),
                 null,
                 MobBehaviors.BOAR.getBehavior(),
                 "yungwilder_isles_boar_light_brown_alpha",

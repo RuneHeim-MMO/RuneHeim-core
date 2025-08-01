@@ -14,9 +14,9 @@ public class Wolves {
 
     public static void registerMobs(MobTypeRegistry registry) {
 
-        registry.register(MobType.WOLF_BLACK.getId(), () -> new GenericCombatant(
+        registry.register(MobType.WOLF_BLACK_BASE_9.getId(), () -> new GenericCombatant(
                 "Black Wolf", null,
-                getBaseSkills(7),
+                getBaseSkills(9),
                 null,
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_black",
@@ -24,9 +24,9 @@ public class Wolves {
                 List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
         ));
 
-        registry.register(MobType.WOLF_BLONDE.getId(), () -> new GenericCombatant(
+        registry.register(MobType.WOLF_BLONDE_BASE_9.getId(), () -> new GenericCombatant(
                 "Blonde Wolf", null,
-                getBaseSkills(7),
+                getBaseSkills(9),
                 null,
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_blonde",
@@ -35,9 +35,9 @@ public class Wolves {
         ));
 
 
-        registry.register(MobType.WOLF_GRAY_DARK.getId(), () -> new GenericCombatant(
+        registry.register(MobType.WOLF_GRAY_DARK_BASE_9.getId(), () -> new GenericCombatant(
                 "Dark Gray Wolf", null,
-                getBaseSkills(7),
+                getBaseSkills(9),
                 null,
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_gray_dark",
@@ -45,9 +45,9 @@ public class Wolves {
                 List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
         ));
 
-        registry.register(MobType.WOLF_GRAY_LIGHT.getId(), () -> new GenericCombatant(
+        registry.register(MobType.WOLF_GRAY_LIGHT_BASE_9.getId(), () -> new GenericCombatant(
                 "Light Gray Wolf", null,
-                getBaseSkills(7),
+                getBaseSkills(9),
                 null,
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_gray_light",
@@ -55,43 +55,43 @@ public class Wolves {
                 List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
         ));
 
-        registry.register(MobType.WOLF_BLONDE_ALPHA.getId(), () -> new GenericCombatant(
+        registry.register(MobType.WOLF_BLONDE_ALPHA_BASE_20.getId(), () -> new GenericCombatant(
                 "Alpha Blonde Wolf", null,
-                getBaseSkills(15),
+                getBaseSkills(22),
                 null,
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_blonde_alpha",
-                0.33, true, false, 11,
+                0.33, true, false, 16,
                 List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
         ));
 
-        registry.register(MobType.WOLF_GRAY_DARK_ALPHA.getId(), () -> new GenericCombatant(
+        registry.register(MobType.WOLF_GRAY_DARK_ALPHA_BASE_20.getId(), () -> new GenericCombatant(
                 "Alpha Dark Gray Wolf", null,
-                getBaseSkills(15),
+                getBaseSkills(19),
                 null,
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_gray_dark_alpha",
-                0.33, true, false, 12,
+                0.33, true, false, 15,
                 List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
         ));
 
-        registry.register(MobType.WOLF_GRAY_LIGHT_ALPHA.getId(), () -> new GenericCombatant(
+        registry.register(MobType.WOLF_GRAY_LIGHT_ALPHA_BASE_20.getId(), () -> new GenericCombatant(
                 "Alpha Light Gray Wolf", null,
-                getBaseSkills(15),
+                getBaseSkills(21),
                 null,
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_gray_light_alpha",
-                0.32, true, false, 12,
+                0.32, true, false, 14,
                 List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
         ));
 
-        registry.register(MobType.WOLF_BLACK_ALPHA.getId(), () -> new GenericCombatant(
+        registry.register(MobType.WOLF_BLACK_ALPHA_BASE_20.getId(), () -> new GenericCombatant(
                 "Alpha Black Wolf", null,
-                getBaseSkills(15),
+                getBaseSkills(20),
                 null,
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_black_alpha",
-                0.34, true, false, 11,
+                0.34, true, false, 14,
                 List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
         ));
 

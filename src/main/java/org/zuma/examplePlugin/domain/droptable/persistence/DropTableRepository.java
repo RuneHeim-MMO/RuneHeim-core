@@ -111,8 +111,9 @@ public class DropTableRepository {
                 // Fishing
                 new DropTableDBEntry(DropTableId.FISHING_RARE_DROPTABLE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.COINS.asInt(), 1, 10, 10, DropTableEntry.Type.ITEM),
-                        new DropTableEntry(ItemId.COINS.asInt(), 1, 50, 50, DropTableEntry.Type.ITEM)
-                ))), 1)),
+                        new DropTableEntry(ItemId.COINS.asInt(), 1, 50, 50, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.SCRATCH_CARD.asInt(), 1, 1, 150, DropTableEntry.Type.ITEM)
+                        ))), 1)),
                 new DropTableDBEntry(DropTableId.HERRING_NODE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.RAW_HERRING.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
                 ))), 1)),

@@ -22,8 +22,8 @@ public class Common {
 
         registry.register(MobType.FUSION_MASTER.getId(), () -> new FusionMaster(Icon.SCROLL_RED.get() + " Fusion Master", MobBehaviors.FUSION_MASTER.getBehavior(), 1));
 
-        registry.register(MobType.CHICKEN.getId(), () -> new GenericCombatant(
-                "Chicken", null, List.of(new SkillLevelRecord(SkillType.ATTACK, 1), new SkillLevelRecord(SkillType.DEFENCE, 1)),
+        registry.register(MobType.CHICKEN_BASE_2.getId(), () -> new GenericCombatant(
+                "Chicken", null, getBaseSkills(2),
                 null, MobBehaviors.CHICKEN.getBehavior(),
                 0.2, false, false, 3, null, null, DisguiseType.CHICKEN,
                 List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt(), DropTableId.CHICKEN_MEAT.asInt())
@@ -92,10 +92,10 @@ public class Common {
                 List.of(DropTableId.BONES.asInt())
         ));
 
-        registry.register(MobType.HOGLIN.getId(), () -> new GenericCombatant(
-                "Hoglin", null, List.of(new SkillLevelRecord(SkillType.ATTACK, 1)),
+        registry.register(MobType.HOGLIN_BASE_5.getId(), () -> new GenericCombatant(
+                "Hoglin", null, getBaseSkills(5),
                 null, MobBehaviors.HOGLIN.getBehavior(),
-                0.24, false, false, 3, null, null, DisguiseType.HOGLIN,
+                0.24, false, false, 9, null, null, DisguiseType.HOGLIN,
                 List.of(DropTableId.BONES.asInt())
         ));
 
@@ -170,7 +170,7 @@ public class Common {
         ));
 
         registry.register(MobType.TURTLE.getId(), () -> new GenericCombatant(
-                "Turtle", null, List.of(new SkillLevelRecord(SkillType.ATTACK, 5),new SkillLevelRecord(SkillType.STRENGTH, 5),new SkillLevelRecord(SkillType.DEFENCE, 10)),
+                "Turtle", null, List.of(new SkillLevelRecord(SkillType.ATTACK, 5), new SkillLevelRecord(SkillType.STRENGTH, 5), new SkillLevelRecord(SkillType.DEFENCE, 10)),
                 null, MobBehaviors.TURTLE.getBehavior(),
                 0.12, false, false, 3, null, null, DisguiseType.TURTLE,
                 List.of(DropTableId.BONES.asInt())

@@ -1,14 +1,18 @@
 package org.zuma.examplePlugin.domain.mob.constants;
 
 public enum MobType {
-    AGGRESSIVE_BANDIT_1("aggressive_bandit_1"),
-    AGGRESSIVE_BANDIT_2("aggressive_bandit_2"),
+    GOBLIN_1_BASE_1("goblin_low_lvl_1"),
+    GOBLIN_2_BASE_1("goblin_low_lvl_2"),
+    GOBLIN_3_BASE_1("goblin_low_lvl_3"),
+    GOBLIN_4_BASE_1("goblin_low_lvl_4"),
+    GOBLIN_5_BASE_1("goblin_low_lvl_5"),
 
-    GOBLIN_LOW_LVL_1("goblin_low_lvl_1"),
-    GOBLIN_LOW_LVL_2("goblin_low_lvl_2"),
-    GOBLIN_LOW_LVL_3("goblin_low_lvl_3"),
-    GOBLIN_LOW_LVL_4("goblin_low_lvl_4"),
-    GOBLIN_LOW_LVL_5("goblin_low_lvl_5"),
+    GOBLIN_1_BASE_4("goblin_low_lvl_1_base_4"),
+    GOBLIN_2_BASE_4("goblin_low_lvl_2_base_4"),
+    GOBLIN_3_BASE_4("goblin_low_lvl_3_base_4"),
+    GOBLIN_4_BASE_4("goblin_low_lvl_4_base_4"),
+    GOBLIN_5_BASE_4("goblin_low_lvl_5_base_4"),
+
 
 
     BANK_TELLER_1("bank_teller_1"),
@@ -35,16 +39,16 @@ public enum MobType {
     BOAR_LIGHT_BROWN("yungwilder_isles_boar_light_brown"),
 
     // Wolves
-    WOLF_BLACK_ALPHA("yungwilder_isles_wolf_black_alpha"),
-    WOLF_BLACK("yungwilder_isles_wolf_black"),
-    WOLF_BLONDE_ALPHA("yungwilder_isles_wolf_blonde_alpha"),
-    WOLF_BLONDE("yungwilder_isles_wolf_blonde"),
-    WOLF_GRAY_DARK_ALPHA("yungwilder_isles_wolf_gray_dark_alpha"),
-    WOLF_GRAY_DARK("yungwilder_isles_wolf_gray_dark"),
-    WOLF_GRAY_LIGHT_ALPHA("yungwilder_isles_wolf_gray_light_alpha"),
-    WOLF_GRAY_LIGHT("yungwilder_isles_wolf_gray_light"),
+    WOLF_BLACK_ALPHA_BASE_20("yungwilder_isles_wolf_black_alpha"),
+    WOLF_BLACK_BASE_9("yungwilder_isles_wolf_black"),
+    WOLF_BLONDE_ALPHA_BASE_20("yungwilder_isles_wolf_blonde_alpha"),
+    WOLF_BLONDE_BASE_9("yungwilder_isles_wolf_blonde"),
+    WOLF_GRAY_DARK_ALPHA_BASE_20("yungwilder_isles_wolf_gray_dark_alpha"),
+    WOLF_GRAY_DARK_BASE_9("yungwilder_isles_wolf_gray_dark"),
+    WOLF_GRAY_LIGHT_ALPHA_BASE_20("yungwilder_isles_wolf_gray_light_alpha"),
+    WOLF_GRAY_LIGHT_BASE_9("yungwilder_isles_wolf_gray_light"),
 
-    CHICKEN("chicken"),
+    CHICKEN_BASE_2("chicken"),
     RAT("rat"),
     AXOLOTL("axolotl"),
     ARMADILLO("armadillo"),
@@ -54,7 +58,7 @@ public enum MobType {
     FOX("fox"),
     FROG("frog"),
     GOAT("goat"),
-    HOGLIN("hoglin"),
+    HOGLIN_BASE_5("hoglin"),
     HUSK("husk"),
     LLAMA("llama"),
     PANDA("panda"),
