@@ -9,6 +9,13 @@
     },
     {
       "type": "bitmap",
+      "file": "minecraft:font/gui/jeweler.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": ["⽂"]
+    },
+    {
+      "type": "bitmap",
       "file": "minecraft:font/gui/shop.png",
       "ascent": 13,
       "height": 222,
@@ -104,6 +111,20 @@
       "ascent": 9,
       "height": 12,
       "chars": ["ⶉ"]
+   },
+   {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/accessory_ring.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⤪"]
+   },
+   {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/blue_gem.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["∉"]
    },
    {
       "type": "bitmap",

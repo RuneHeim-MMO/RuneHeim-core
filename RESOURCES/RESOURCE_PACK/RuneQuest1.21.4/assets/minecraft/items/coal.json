@@ -658,6 +658,70 @@
                     "model": "item/custom/materials/magic_longbow_unf"
                 }
             },
+
+            {
+                "threshold": 2800,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/uncut_sapphire"
+                }
+            },
+            {
+                "threshold": 2801,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/sapphire"
+                }
+            },
+            {
+                "threshold": 2802,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/uncut_emerald"
+                }
+            },
+            {
+                "threshold": 2803,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/emerald"
+                }
+            },
+            {
+                "threshold": 2804,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/uncut_ruby"
+                }
+            },
+            {
+                "threshold": 2805,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/ruby"
+                }
+            },
+            {
+                "threshold": 2806,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/uncut_diamond"
+                }
+            },
+            {
+                "threshold": 2807,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/diamond"
+                }
+            },
+            {
+                "threshold": 2808,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/materials/uncut_sapphire"
+                }
+            },
             {
                 "threshold": 2700,
                 "model": {

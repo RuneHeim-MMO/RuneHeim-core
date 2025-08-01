@@ -70,7 +70,6 @@ public class RunePlayer implements CombatEntity, SerializableItemContainer {
         xpHandler = new PlayerXpHandler(this);
         pendingXPHandler = new PendingXPHandler();
 
-
         pouchCoins = 0;
 
         HudService.updateVanillaGUI(this);
@@ -194,6 +193,10 @@ public class RunePlayer implements CombatEntity, SerializableItemContainer {
 
     @Nullable
     public SkillType getLastXPGainedSkillType() {
+        if (xpHandler == null) {
+            return null;
+        }
+
         return xpHandler.getLastXPGainedSkillType();
     }
 
