@@ -59,6 +59,7 @@ public enum Icon {
     FURNACE("⌰"),
     BLUE_GEM("∉"),
     ACCESSORY_RING("⤪"),
+    CLOVER("Ⅹ"),
 
     SCROLL_RED("ⵣ"),
     SCROLL_GRAY("⁝"),

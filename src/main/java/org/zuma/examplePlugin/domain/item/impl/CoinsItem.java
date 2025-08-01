@@ -58,6 +58,10 @@ public class CoinsItem extends MiscItem {
         ItemStack item = event.getItem().getItemStack().clone();
         event.getItem().setItemStack(new ItemStack(Material.AIR));
 
+        creditPlayer(item, player);
+    }
+
+    public void creditPlayer(ItemStack item, RunePlayer player) {
         ItemMeta meta = item.getItemMeta();
         PersistentDataContainer container = meta.getPersistentDataContainer();
 

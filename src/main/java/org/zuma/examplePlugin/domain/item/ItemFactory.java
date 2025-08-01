@@ -47,8 +47,29 @@ public class ItemFactory {
             case COINS -> new CoinsItem(meta);
             case ARROW -> createArrowItem(meta, json);
             case CURRENCY -> createCurrencyItem(meta);
+            case CHANCE_ITEM -> createChanceItem(meta, json);
             default -> throw new IllegalArgumentException("Unknown item type: " + meta.type());
         };
+    }
+
+    private ChanceItem createChanceItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create " + meta.type() + " " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                ChanceItemMeta deserialized = new Gson().fromJson(json.meta(), ChanceItemMeta.class);
+                ChanceItem item = new ChanceItem(meta);
+
+                item.setDropTableIds(deserialized.dropTableIds());
+                item.setSounds(deserialized.openSound(), deserialized.openFinishSound());
+
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
     }
 
     private Currency createCurrencyItem(AbstractItemMeta meta) {

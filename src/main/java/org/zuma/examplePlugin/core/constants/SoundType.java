@@ -107,6 +107,9 @@ public enum SoundType {
     PICKING_UP_PLANT_START("BLOCK_ROOTED_DIRT_BREAK", false, 1.0f, 1.0f),
     PICKING_UP_PLANT_END("BLOCK_MOSS_BREAK", false, 1.0f, 0.9f),
 
+    SCRATCH_TICKET_START("ITEM_BOOK_PAGE_TURN", false, 1.0f, 1.0f),
+    SCRATCH_TICKET_FINISH("BLOCK_ANCIENT_DEBRIS_PLACE", false, 1.0f, 0.9f),
+
     // AMBIENT
     VILLAGER_MAN_AMBIENT_1("vocal_villagers:entity.villager.ambient", true, 1, 0.75f),
     VILLAGER_MAN_AMBIENT_2("vocal_villagers:entity.villager.ambient", true, 1, 0.80f),

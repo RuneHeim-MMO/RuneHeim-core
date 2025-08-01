@@ -93,6 +93,13 @@
    },
    {
       "type": "bitmap",
+      "file": "minecraft:font/icons/clover.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["Ⅹ"]
+   },
+   {
+      "type": "bitmap",
       "file": "minecraft:font/icons/ranged_strength.png",
       "ascent": 9,
       "height": 12,

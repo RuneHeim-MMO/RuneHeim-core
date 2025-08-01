@@ -20,7 +20,8 @@ public enum ItemType {
     COINS(16),
     RANGED_WEAPON(17),
     ARROW(18),
-    CURRENCY(19);
+    CURRENCY(19),
+    CHANCE_ITEM(20);
 
     private final int key;
 

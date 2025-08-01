@@ -39,7 +39,9 @@ public enum DropTableId {
     TURTLE_NODE(310),
     RAY_NODE(3111),
 
-    FLAX_NODE(400);
+    FLAX_NODE(400),
+
+    SCRATCH_CARD_COINS_UNDER_2K_COINS(500);
 
 
     private final int id;

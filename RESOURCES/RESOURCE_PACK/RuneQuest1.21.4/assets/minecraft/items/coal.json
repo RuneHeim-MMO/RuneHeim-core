@@ -728,6 +728,13 @@
                     "type": "model",
                     "model": "item/custom/currency/platinum_token"
                 }
+            },
+            {
+                "threshold": 2900,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/misc/scratch_card"
+                }
             }
         ]
     }

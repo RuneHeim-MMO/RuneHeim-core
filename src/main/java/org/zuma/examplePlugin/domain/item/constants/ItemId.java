@@ -253,7 +253,9 @@ public enum ItemId {
     UNCUT_RUBY(2804),
     RUBY(2805),
     UNCUT_DIAMOND(2806),
-    DIAMOND(2807);
+    DIAMOND(2807),
+
+    SCRATCH_CARD(2900);
 
     private final int id;
 

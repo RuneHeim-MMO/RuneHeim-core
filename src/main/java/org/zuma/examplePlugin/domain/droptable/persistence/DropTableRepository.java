@@ -15,6 +15,20 @@ public class DropTableRepository {
     public List<DropTableDBEntry> getAll() {
         return List.of(
 
+                // Chance items
+                new DropTableDBEntry(DropTableId.SCRATCH_CARD_COINS_UNDER_2K_COINS.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.COINS.asInt(), 2000, 2000, 4, DropTableEntry.Type.ITEM),  // 1/4 = 25%
+                        new DropTableEntry(ItemId.COINS.asInt(), 1500, 1500, 5, DropTableEntry.Type.ITEM),  // (3/4)*(1/5) = 15%
+
+                        new DropTableEntry(ItemId.COINS.asInt(), 5, 5, 20, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.COINS.asInt(), 50, 50, 20, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.COINS.asInt(), 100, 100, 10, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.COINS.asInt(), 300, 300, 7, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.COINS.asInt(), 600, 600, 7, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.COINS.asInt(), 800, 800, 10, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.COINS.asInt(), 1000, 1000, 7, DropTableEntry.Type.ITEM)
+                ))), 1)),
+
                 // General
                 new DropTableDBEntry(DropTableId.GEM_DROP_TABLE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.UNCUT_SAPPHIRE.asInt(), 1, 1, 4, DropTableEntry.Type.ITEM),
