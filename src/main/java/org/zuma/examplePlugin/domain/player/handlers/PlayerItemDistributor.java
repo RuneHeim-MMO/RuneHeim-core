@@ -15,6 +15,7 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.HashMap;
@@ -47,12 +48,19 @@ public class PlayerItemDistributor {
     }
 
     private void addItemStackOrDrop(ItemStack item, String dropMessage) {
+        boolean isCoins = RuneQuestPlugin.getItemRegistry().getType(item) == RuneQuestPlugin.getItemRegistry().getType(ItemId.COINS.asInt());
         Player player = runePlayer.asBukkitPlayer();
+        Location dropLocation = player.getLocation();
+
+        if (isCoins) {
+            player.getWorld().dropItemNaturally(dropLocation, item);
+            return;
+        }
+
         HashMap<Integer, ItemStack> leftovers = player.getInventory().addItem(item);
 
 
         if (!leftovers.isEmpty()) {
-            Location dropLocation = player.getLocation();
             leftovers.values().forEach(leftover ->
                     player.getWorld().dropItemNaturally(dropLocation, leftover)
             );

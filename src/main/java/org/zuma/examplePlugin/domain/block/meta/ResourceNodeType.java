@@ -1,7 +1,10 @@
 package org.zuma.examplePlugin.domain.block.meta;
 
 import org.bukkit.Material;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.domain.droptable.DropTable;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.map.MarkerType;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
@@ -19,7 +22,8 @@ public class ResourceNodeType {
     private final Material material;
     private final List<SkillRequirement> requirements;
     private final int baseGatheringDurationMs, respawnDurationSecs;
-    private final ItemRecord drop;
+    private final List<DropTable> dropTables;
+    private final int displayItemStackID;
     private final SoundType startSound, stepSound, gatherSuccessSound;
     private final List<SkillXpRecord> xpReward;
     private final MarkerType markerType;
@@ -29,7 +33,7 @@ public class ResourceNodeType {
     private final ModifierType toolModifier;
 
     public ResourceNodeType(int id, MarkerType markerType, String label, Material material, boolean displayResultInHologram, @Nullable List<SkillRequirement> requirements, @Nullable ModifierType toolRequiresModifier,
-                            int baseGatheringDurationMs, int respawnDurationSecs, ItemRecord drop, String wrongToolMsg, String actionVerb, SoundType startSound, SoundType stepSound, SoundType gatherSuccessSound, @Nullable List<SkillXpRecord> xpReward) {
+                            int baseGatheringDurationMs, int respawnDurationSecs, List<Integer> dropTableIds, int displayItemStackID, String wrongToolMsg, String actionVerb, SoundType startSound, SoundType stepSound, SoundType gatherSuccessSound, @Nullable List<SkillXpRecord> xpReward) {
         this.id = id;
         this.markerType = markerType;
         this.label = label;
@@ -37,7 +41,7 @@ public class ResourceNodeType {
         this.toolModifier = toolRequiresModifier;
         this.baseGatheringDurationMs = baseGatheringDurationMs;
         this.respawnDurationSecs = respawnDurationSecs;
-        this.drop = drop;
+        this.displayItemStackID = displayItemStackID;
         this.wrongToolMessage = wrongToolMsg;
         this.actionVerb = actionVerb;
         this.startSound = startSound;
@@ -47,6 +51,16 @@ public class ResourceNodeType {
 
         this.requirements = Objects.requireNonNullElseGet(requirements, ArrayList::new);
         this.xpReward = Objects.requireNonNullElseGet(xpReward, ArrayList::new);
+
+        this.dropTables = dropTableIds.stream().map(dropTableId -> {
+            DropTable table = RuneQuestPlugin.getDropTableHandler().getByID(dropTableId);
+
+            if (table == null) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed adding drop table id " + dropTableId + " to " + label + " node! Drop table does not exist.");
+            }
+
+            return table;
+        }).toList();
     }
 
     public Material getMaterial() {
@@ -66,8 +80,22 @@ public class ResourceNodeType {
         return respawnDurationSecs;
     }
 
-    public ItemRecord getDrop() {
-        return drop;
+
+    public ItemRecord getDisplayItemStackID() {
+        return new ItemRecord(displayItemStackID, 1);
+    }
+
+    public List<ItemRecord> rollGatheringDrops() {
+        List<ItemRecord> drops = new ArrayList<>();
+
+        this.dropTables.forEach(dropTable -> {
+            ItemRecord drop = dropTable.roll();
+
+            if (drop != null) drops.add(drop);
+
+        });
+
+        return drops;
     }
 
     public List<SkillRequirement> getRequirements() {

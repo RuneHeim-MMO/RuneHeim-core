@@ -132,6 +132,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         RunePlayerListener runePlayerListener = new RunePlayerListener(runePlayerManager);
         getServer().getPluginManager().registerEvents(runePlayerListener, pluginInstance);
 
+        dropTableHandler = new DropTableHandler(new DropTableRepository());
+        dropTableHandler.initialize();
 
         itemRegistry = new ItemRegistry();
         ItemRepository itemRepository = new ItemRepository();
@@ -165,8 +167,6 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         MobTypesLoader.registerMobs(mobTypeRegistry);
 
         MobSessionManager mobSessionManager = new MobSessionManager();
-        dropTableHandler = new DropTableHandler(new DropTableRepository());
-        dropTableHandler.initialize();
         mobRegistry = new MobRegistry(mobTypeRegistry);
         mobHandler = new MobHandler(mobRegistry);
         MobListener mobListener = new MobListener(runePlayerManager, mobHandler, mobRegistry);

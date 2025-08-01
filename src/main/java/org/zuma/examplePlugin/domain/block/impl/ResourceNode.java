@@ -20,6 +20,7 @@ import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
 import org.zuma.examplePlugin.domain.hud.HudService;
+import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.constants.EquipableType;
@@ -86,7 +87,7 @@ public class ResourceNode extends AbstractInteractableBlock {
             return;
         }
 
-        AbstractItemType drop = RuneQuestPlugin.getItemRegistry().getType(type.getDrop().getItemId());
+        AbstractItemType drop = RuneQuestPlugin.getItemRegistry().getType(type.getDisplayItemStackID().getItemId());
 
         if (drop == null) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Could not initialize resource node! ResourceNodeType with ID " + resourceTypeId + " has an invalid drop item id.");
@@ -142,7 +143,10 @@ public class ResourceNode extends AbstractInteractableBlock {
         }
 
         depleteResource();
-        player.giveItemOrDrop(blockType.getDrop());
+
+        List<ItemRecord> gatheringDrops = blockType.rollGatheringDrops();
+        gatheringDrops.forEach(player::giveItemOrDrop);
+
         blockType.getXpReward().forEach(reward -> player.distributeXp(reward.type(), reward.xp()));
 
 
