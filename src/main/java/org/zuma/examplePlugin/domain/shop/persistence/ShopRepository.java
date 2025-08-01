@@ -25,6 +25,18 @@ public class ShopRepository {
     public List<ShopConfig> getAll() {
         return List.of(
 
+                new ShopConfig(ShopId.JEWLER.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                        new ShopItemConfig(ItemId.UNCUT_SAPPHIRE.asInt(), 4, 30, 300L, 60L, null, null),
+                        new ShopItemConfig(ItemId.UNCUT_EMERALD.asInt(), 3, 30, 400L, 80L, null, null),
+                        new ShopItemConfig(ItemId.UNCUT_RUBY.asInt(), 2, 30, 600L, 120L, null, null),
+                        new ShopItemConfig(ItemId.UNCUT_DIAMOND.asInt(), 1, 30, 900L, 180L, null, null),
+
+                        new ShopItemConfig(ItemId.SAPPHIRE.asInt(), 0, 300, 600L, 120L, null, null),
+                        new ShopItemConfig(ItemId.EMERALD.asInt(), 0, 300, 800L, 160L, null, null),
+                        new ShopItemConfig(ItemId.RUBY.asInt(), 0, 300, 1200L, 240L, null, null),
+                        new ShopItemConfig(ItemId.DIAMOND.asInt(), 0, 300, 1800L, 360L, null, null)
+                ))), 1)),
+
                 new ShopConfig(ShopId.INVESTMENT_BANKER.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
                         new ShopItemConfig(ItemId.PLATINUM_TOKEN.asInt(), 1000, 30, 1000L, 1000L, null, null)
                 ))), 1)),

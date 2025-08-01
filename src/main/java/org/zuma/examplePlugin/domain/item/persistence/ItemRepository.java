@@ -300,6 +300,17 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_SHORTBOW_UNFINISHED.asInt(), Material.COAL, ItemRarity.COMMON, "Magic Shortbow (unfinished)", List.of("An unstrung magic shortbow.", "Needs a bowstring to complete."), null, null), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_LONGBOW_UNFINISHED.asInt(), Material.COAL, ItemRarity.COMMON, "Magic Longbow (unfinished)", List.of("An unstrung magic longbow.", "Needs a bowstring to complete."), null, null), null),
 
+                // Gems
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNCUT_SAPPHIRE.asInt(), Material.COAL, ItemRarity.COMMON, "Uncut Sapphire", List.of("A rough, uncut sapphire.", "Can be cut with a chisel."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.SAPPHIRE.asInt(), Material.COAL, ItemRarity.COMMON, "Sapphire", List.of("A polished sapphire gem.", "Used for crafting jewelry."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNCUT_EMERALD.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Uncut Emerald", List.of("A rough, uncut emerald.", "Can be cut with a chisel."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.EMERALD.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Emerald", List.of("A polished emerald gem.", "Used for crafting jewelry."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNCUT_RUBY.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Uncut Ruby", List.of("A rough, uncut ruby.", "Can be cut with a chisel."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RUBY.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Ruby", List.of("A polished ruby gem.", "Used for crafting jewelry."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNCUT_DIAMOND.asInt(), Material.COAL, ItemRarity.RARE, "Uncut Diamond", List.of("A rough, uncut diamond.", "Can be cut with a chisel."), null, null), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.DIAMOND.asInt(), Material.COAL, ItemRarity.RARE, "Diamond", List.of("A polished diamond gem.", "Used for crafting jewelry."), null, null), null),
+
+
                 new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.BONES.asInt(), Material.COAL, ItemRarity.COMMON, "Bones", List.of("Remains of a fallen creature."), null, null), null),
 
 

@@ -244,7 +244,16 @@ public enum ItemId {
 
     BONES(2600),
 
-    PLATINUM_TOKEN(2700);
+    PLATINUM_TOKEN(2700),
+
+    UNCUT_SAPPHIRE(2800),
+    SAPPHIRE(2801),
+    UNCUT_EMERALD(2802),
+    EMERALD(2803),
+    UNCUT_RUBY(2804),
+    RUBY(2805),
+    UNCUT_DIAMOND(2806),
+    DIAMOND(2807);
 
     private final int id;
 

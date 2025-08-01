@@ -18,6 +18,8 @@ public class Shopkeepers {
         registry.register(MobType.DRAKKAR_BLACKSMITH.getId(), () -> new InventoryOpenedMob(Icon.TOOL.get() + " Blacksmith", EquipmentSet.BLACKSMITH,
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "blacksmith", null, InventoryId.DRAKKAR_BLACKSMITH.asInt(), 40));
 
+        registry.register(MobType.JEWLER.getId(), () -> new InventoryOpenedMob(Icon.BLUE_GEM.get() + " Jeweler", EquipmentSet.JEWELER,
+                MobBehaviors.VILLAGER_MAN_3.getBehavior(), "jeweler", null, InventoryId.JEWELER.asInt(), 40));
 
     }
 }

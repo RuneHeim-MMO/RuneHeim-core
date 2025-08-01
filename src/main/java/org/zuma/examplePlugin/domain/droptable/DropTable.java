@@ -42,7 +42,13 @@ public class DropTable {
                     return null;
                 }
 
-                return matchingTable.roll();
+
+                for (int i = 0; i < amount; i++) {
+                    ItemRecord currentRoll = matchingTable.roll();
+                    if (currentRoll != null) return currentRoll;
+                }
+                return null;
+
             }
         }
 

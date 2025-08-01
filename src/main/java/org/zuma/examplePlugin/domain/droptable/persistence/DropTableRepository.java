@@ -15,6 +15,14 @@ public class DropTableRepository {
     public List<DropTableDBEntry> getAll() {
         return List.of(
 
+                // General
+                new DropTableDBEntry(DropTableId.GEM_DROP_TABLE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.UNCUT_SAPPHIRE.asInt(), 1, 1, 4, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.UNCUT_EMERALD.asInt(), 1, 1, 8, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.UNCUT_RUBY.asInt(), 1, 1, 16, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.UNCUT_DIAMOND.asInt(), 1, 1, 64, DropTableEntry.Type.ITEM)
+                ))), 1)),
+
                 // Nodes
                 new DropTableDBEntry(DropTableId.FLAX_NODE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.FLAX.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
@@ -25,7 +33,7 @@ public class DropTableRepository {
                 new DropTableDBEntry(DropTableId.WOODCUTTING_RARE_DROPTABLE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.COINS.asInt(), 1, 10, 10, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.COINS.asInt(), 1, 50, 50, DropTableEntry.Type.ITEM)
-                        ))), 1)),
+                ))), 1)),
 
                 new DropTableDBEntry(DropTableId.TREE_NODE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.LOG.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
@@ -58,7 +66,8 @@ public class DropTableRepository {
                 // Mining
                 new DropTableDBEntry(DropTableId.MINING_RARE_DROPTABLE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.COINS.asInt(), 1, 10, 10, DropTableEntry.Type.ITEM),
-                        new DropTableEntry(ItemId.COINS.asInt(), 1, 50, 50, DropTableEntry.Type.ITEM)
+                        new DropTableEntry(ItemId.COINS.asInt(), 1, 50, 50, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(DropTableId.GEM_DROP_TABLE.asInt(), 1, 1, 50, DropTableEntry.Type.NESTED_DROP_TABLE)
                 ))), 1)),
                 new DropTableDBEntry(DropTableId.COPPER_NODE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.COPPER_ORE.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)

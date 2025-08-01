@@ -31,6 +31,14 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.SMITHING_HAMMER), 100)
     ))),
 
+    JEWELER(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.SAPPHIRE), 20),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.EMERALD), 20),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUBY), 20),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.DIAMOND), 20),
+            new EquipmentSetRecord(EquipmentSlot.OFFHAND, getRuneItem(ItemId.COINS, 100), 80)
+    ))),
+
     INVESTMENT_BANKER(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.GOLD_INGOT), 10),
             new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.GOLD_BLOCK), 10)

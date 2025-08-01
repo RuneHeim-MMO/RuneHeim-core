@@ -145,7 +145,12 @@ public enum RecipeId {
     YEW_SHORTBOW(1606),
     YEW_LONGBOW(1607),
     MAGIC_SHORTBOW(1608),
-    MAGIC_LONGBOW(1609);
+    MAGIC_LONGBOW(1609),
+
+    SAPPHIRE(1700),
+    EMERALD(1701),
+    RUBY(1702),
+    DIAMOND(1703);
 
 
     private final int id;

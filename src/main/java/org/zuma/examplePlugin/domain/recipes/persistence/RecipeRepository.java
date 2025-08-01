@@ -21,6 +21,47 @@ public class RecipeRepository {
     public List<RecipeEntity> getAll() {
         return List.of(
 
+                // Gems cutting (crafting)
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.SAPPHIRE.getId(), RecipeType.INVENTORY_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 20)),
+                        List.of(
+                                new IngredientRecord(ItemId.UNCUT_SAPPHIRE, 1, true, false),
+                                new IngredientRecord(ItemId.CHISEL, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.SAPPHIRE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.CRAFTING, 50.0)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.EMERALD.getId(), RecipeType.INVENTORY_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 27)),
+                        List.of(
+                                new IngredientRecord(ItemId.UNCUT_EMERALD, 1, true, false),
+                                new IngredientRecord(ItemId.CHISEL, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.EMERALD, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.CRAFTING, 67.5)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUBY.getId(), RecipeType.INVENTORY_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 34)),
+                        List.of(
+                                new IngredientRecord(ItemId.UNCUT_RUBY, 1, true, false),
+                                new IngredientRecord(ItemId.CHISEL, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.RUBY, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.CRAFTING, 85.0)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.DIAMOND.getId(), RecipeType.INVENTORY_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 43)),
+                        List.of(
+                                new IngredientRecord(ItemId.UNCUT_DIAMOND, 1, true, false),
+                                new IngredientRecord(ItemId.CHISEL, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.DIAMOND, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.CRAFTING, 107.5)), null), null),
+
                 // Fletching
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.SHORTBOW.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.FLETCHING, 5)),
