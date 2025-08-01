@@ -1,5 +1,7 @@
 package org.zuma.examplePlugin.domain.droptable;
 
+import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 
 import javax.annotation.Nullable;
@@ -8,10 +10,10 @@ import java.util.Random;
 
 public class DropTable {
     private static final Random rand = new Random();
-    private final List<DropItemEntry> drops;
+    private final List<DropTableEntry> drops;
     private final int id;
 
-    public DropTable(int id, List<DropItemEntry> drops) {
+    public DropTable(int id, List<DropTableEntry> drops) {
         this.id = id;
         this.drops = drops;
     }
@@ -19,16 +21,29 @@ public class DropTable {
     @Nullable
     public ItemRecord roll() {
 
-        for (DropItemEntry drop : drops) {
-            boolean isMatch = rand.nextInt(drop.oneInNChance()) == 0;
+        for (DropTableEntry drop : drops) {
+            boolean isMatch = rand.nextInt(drop.oneInNChance) == 0;
 
             if (!isMatch) {
                 continue;
             }
 
-            int amount = rand.nextInt(drop.max() - drop.min() + 1) + drop.min();
+            int amount = rand.nextInt(drop.max - drop.min + 1) + drop.min;
 
-            return new ItemRecord(drop.itemId(), amount);
+            if (drop.type == DropTableEntry.Type.ITEM) {
+                return new ItemRecord(drop.id, amount);
+            }
+
+            if (drop.type == DropTableEntry.Type.NESTED_DROP_TABLE) {
+                DropTable matchingTable = RuneQuestPlugin.getDropTableHandler().getByID(drop.id);
+
+                if (matchingTable == null) {
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Drop table id " + id + " has rolled a nested drop table id " + drop.id + " but it is a null.");
+                    return null;
+                }
+
+                return matchingTable.roll();
+            }
         }
 
         return null;
