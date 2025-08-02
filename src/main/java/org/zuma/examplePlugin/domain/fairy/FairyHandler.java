@@ -71,7 +71,7 @@ public class FairyHandler {
         }
 
         FairyUpgradeEvent newEvent = new FairyUpgradeEvent(player, fruit, fairy, state);
-        Bukkit.getServer().getPluginManager().callEvent(event);
+        Bukkit.getServer().getPluginManager().callEvent(newEvent);
 
         if (newEvent.isCancelled()) {
             return;
