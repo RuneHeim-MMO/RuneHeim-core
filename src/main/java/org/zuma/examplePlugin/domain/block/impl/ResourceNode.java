@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
@@ -32,19 +33,17 @@ import org.zuma.examplePlugin.events.block.ResourceNodeGatheredEvent;
 import org.zuma.examplePlugin.events.block.ResourceNodeRespawnedEvent;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class ResourceNode extends AbstractInteractableBlock {
+    private final Random random = new Random();
     private ResourceNodeType blockType;
     private boolean isDepleted;
     private final BlockManager manager;
     private final Location origin;
     private ItemStack displayItemStack;
     private boolean isRemoved;
-    private boolean displayResultInHologram;
+    private boolean displayResultInHologram, requiresTool;
 
     @Nullable
     private ResourceNodeSchematicHandler schematicHandler;
@@ -59,6 +58,8 @@ public class ResourceNode extends AbstractInteractableBlock {
         this.schematicHandler = null;
         this.origin = meta.location();
         this.manager = manager;
+
+
     }
 
     private void initializeHologram() {
@@ -102,6 +103,7 @@ public class ResourceNode extends AbstractInteractableBlock {
         this.blockType = type;
         this.displayItemStack = drop.createItemStackOfType();
         this.displayResultInHologram = type.isDisplayResultInHologram();
+        this.requiresTool = type.getRequiredToolModifier() != null;
         super.setMarkerType(type.getMarkerType());
         super.setMarkerLabel(type.getLabel());
         this.spawn(type.getMaterial());
@@ -143,12 +145,24 @@ public class ResourceNode extends AbstractInteractableBlock {
         }
 
         depleteResource();
-
-        List<ItemRecord> gatheringDrops = blockType.rollGatheringDrops();
-        gatheringDrops.forEach(player::giveItemOrDrop);
-
+        rollDropTableLoot(player);
         blockType.getXpReward().forEach(reward -> player.distributeXp(reward.type(), reward.xp()));
 
+    }
+
+    private void rollDropTableLoot(RunePlayer player) {
+        Modifier gatheringLuck = player.getModifiers().get(ModifierType.GATHERING_LUCK);
+        double gatheringLuckPercentage = gatheringLuck != null ? gatheringLuck.amount() : 0;
+
+        List<ItemRecord> gatheringDrops = blockType.rollGatheringDrops();
+
+        // Do not allow double loot for items that don't require tools.
+        if (random.nextDouble() * 100 < gatheringLuckPercentage && requiresTool) {
+            gatheringDrops.addAll(blockType.rollGatheringDrops());
+            SoundType.LUCKY_DROP_TABLE_SECOND_ROLL.play(player, true);
+        }
+
+        gatheringDrops.forEach(player::giveItemOrDrop);
 
     }
 
@@ -242,7 +256,6 @@ public class ResourceNode extends AbstractInteractableBlock {
 
         // Check if a tool modifier is required
         ModifierType requiredModifierType = blockType.getRequiredToolModifier();
-        boolean requiresTool = requiredModifierType != null;
 
         if (requiresTool) {
             // If a tool is required, ensure the item in hand is a valid handheld equipable

@@ -150,7 +150,7 @@ public class ItemRepository {
                 ),
 
                 //Lotteries
-                new ItemEntity(new AbstractItemMeta(ItemType.CHANCE_ITEM, ItemId.SCRATCH_CARD.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Scratch card", List.of("A mysterious ticket covered in silvery foil.",  "Scratch away the surface to reveal your fortune.", "Win up to §62000§r coins - if luck’s on your side!"), null, null), toVersionedJson(
+                new ItemEntity(new AbstractItemMeta(ItemType.CHANCE_ITEM, ItemId.SCRATCH_CARD.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Scratch card", List.of("A mysterious ticket covered in silvery foil.", "Scratch away the surface to reveal your fortune.", "Win up to §62000§r coins - if luck’s on your side!"), null, null), toVersionedJson(
                         new ChanceItemMeta(List.of(DropTableId.SCRATCH_CARD_COINS_UNDER_2K_COINS.asInt()), SoundType.SCRATCH_TICKET_START, SoundType.SCRATCH_TICKET_FINISH), 1)),
 
 
@@ -531,7 +531,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.RUNITE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.RARE, "Runite Pickaxe", List.of("Runite pickaxe, enchanted for maximum yield."), null, null),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
-                                        List.of(new Modifier(ModifierType.MINING_BOOST, 1.8)),
+                                        List.of(new Modifier(ModifierType.MINING_BOOST, 1.8), new Modifier(ModifierType.GATHERING_LUCK, 50)),
                                         List.of(new SkillRequirement(SkillType.MINING, 41))
                                 )
                                 , 1)

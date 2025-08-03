@@ -14,6 +14,7 @@ public class SocketedMeleeWeapon extends SocketedEquipableItemType implements We
     public SocketedMeleeWeapon(AbstractItemMeta meta, WeaponSpeed speed) {
         super(meta);
         this.speed = speed;
+        super.setTypeLore("Melee Weapon", Icon.SWORD_2.get());
     }
 
     @Override
