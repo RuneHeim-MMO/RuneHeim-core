@@ -30,9 +30,11 @@ public class ItemFactory {
             case EQUIPMENT -> createGearItem(meta, json);
             case EQUIPMENT_WITH_GEM_SOCKETS -> createGearWithSockets(meta, json);
             case TOOL -> createToolItem(meta, json);
+            case TOOL_WITH_GEM_SOCKETS -> createToolWithSockets(meta, json);
             case MELEE_WEAPON -> createMeleeWeaponItem(meta, json);
             case MELEE_WEAPON_WITH_GEM_SOCKETS -> createMeleeWeaponWithSockets(meta, json);
             case RANGED_WEAPON -> createRangedWeaponItem(meta, json);
+            case RANGED_WEAPON_WITH_SOCKETS -> createRangedWeaponWithSockets(meta, json);
             case QUEST -> createQuestItem(meta, json);
             case MATERIAL -> createMaterialItem(meta);
             case POTION -> createPotionItem(meta, json);
@@ -50,6 +52,58 @@ public class ItemFactory {
             case CHANCE_ITEM -> createChanceItem(meta, json);
             default -> throw new IllegalArgumentException("Unknown item type: " + meta.type());
         };
+    }
+
+    private SocketedTool createToolWithSockets(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create " + meta.type() + " " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                SocketedToolMeta deserialized = new Gson().fromJson(json.meta(), SocketedToolMeta.class);
+                SocketedTool item = new SocketedTool(meta);
+                List<Integer> gemIds = deserialized.defaultGemIds();
+
+                if (gemIds == null) {
+                    gemIds = new ArrayList<>();
+                }
+
+                item.addModifiers(deserialized.equipableTypeMeta().modifiers());
+                item.addRequirements(deserialized.equipableTypeMeta().requirements());
+                item.addSkillModifiers(deserialized.equipableTypeMeta().skillModifiers());
+                item.setDefaultStateTemplate(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
+    }
+
+    private SocketedRangedWeapon createRangedWeaponWithSockets(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create " + meta.type() + " " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                SocketedWeaponEquipableMeta deserialized = new Gson().fromJson(json.meta(), SocketedWeaponEquipableMeta.class);
+                SocketedRangedWeapon item = new SocketedRangedWeapon(meta, deserialized.equipableTypeMeta().speed());
+                List<Integer> gemIds = deserialized.defaultGemIds();
+
+                if (gemIds == null) {
+                    gemIds = new ArrayList<>();
+                }
+
+                item.addModifiers(deserialized.equipableTypeMeta().modifiers());
+                item.addRequirements(deserialized.equipableTypeMeta().requirements());
+                item.addSkillModifiers(deserialized.equipableTypeMeta().skillModifiers());
+                item.setDefaultStateTemplate(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
     }
 
     private ChanceItem createChanceItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
@@ -357,15 +411,15 @@ public class ItemFactory {
 
     }
 
-    private SocketedMeleeWeapon createGearWithSockets(AbstractItemMeta meta, @Nullable VersionedJson json) {
+    private SocketedGear createGearWithSockets(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {
             throw new UnsupportedOperationException("Cannot create " + meta.type() + " " + meta.displayName() + " required json is null!");
         }
 
         switch (json.version()) {
             case 1 -> {
-                SocketedWeaponEquipableMeta deserialized = new Gson().fromJson(json.meta(), SocketedWeaponEquipableMeta.class);
-                SocketedMeleeWeapon item = new SocketedMeleeWeapon(meta, deserialized.equipableTypeMeta().speed());
+                SocketedEquipableMeta deserialized = new Gson().fromJson(json.meta(), SocketedEquipableMeta.class);
+                SocketedGear item = new SocketedGear(meta);
                 List<Integer> gemIds = deserialized.defaultGemIds();
 
                 if (gemIds == null) {

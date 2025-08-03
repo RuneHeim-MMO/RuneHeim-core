@@ -528,12 +528,12 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.RUNITE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.RARE, "Runite Pickaxe", List.of("Runite pickaxe, enchanted for maximum yield."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.TOOL_WITH_GEM_SOCKETS, ItemId.RUNITE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.RARE, "Runite Pickaxe", List.of("Runite pickaxe, enchanted for maximum yield."), null, null),
                         toVersionedJson(
-                                new EquipableTypeMeta(null,
+                                new SocketedToolMeta(new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.MINING_BOOST, 1.8), new Modifier(ModifierType.GATHERING_LUCK, 50)),
                                         List.of(new SkillRequirement(SkillType.MINING, 41))
-                                )
+                                ), null, 1)
                                 , 1)
                 ),
 
@@ -577,12 +577,12 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.RUNITE_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.RARE, "Runite axe", List.of("Runite axe glowing with magical energy."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.TOOL_WITH_GEM_SOCKETS, ItemId.RUNITE_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.RARE, "Runite axe", List.of("Runite axe glowing with magical energy."), null, null),
                         toVersionedJson(
-                                new EquipableTypeMeta(null,
+                                new SocketedToolMeta(new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.8)),
                                         List.of(new SkillRequirement(SkillType.WOODCUTTING, 41))
-                                )
+                                ), null, 1)
                                 , 1)
                 ),
 
@@ -701,12 +701,12 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.RUNE_MEDHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.RARE, "Runite Med Helm", List.of("Runite helmet radiating magical protection."), HeadTexture.RUNE_MED_HELM.asBase64(), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNE_MEDHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.RARE, "Runite Med Helm", List.of("Runite helmet radiating magical protection."), HeadTexture.RUNE_MED_HELM.asBase64(), null),
                         toVersionedJson(
-                                new EquipableTypeMeta(null,
+                                new SocketedEquipableMeta(new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 18), new Modifier(ModifierType.DEFENCE_SLASH, 19), new Modifier(ModifierType.DEFENCE_CRUSH, 17)),
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 40))
-                                )
+                                ), null, 1)
                                 , 1)
                 ),
 
@@ -770,16 +770,16 @@ public class ItemRepository {
                                 ), 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.RUNE_FULLHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.RARE, "Rune Full Helm", List.of("A full helmet forged from runite, offering excellent defense."), HeadTexture.RUNE_FULL_HELM.asBase64(), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNE_FULLHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.RARE, "Rune Full Helm", List.of("A full helmet forged from runite, offering excellent defense."), HeadTexture.RUNE_FULL_HELM.asBase64(), null),
                         toVersionedJson(
-                                new EquipableTypeMeta(null,
+                                new SocketedEquipableMeta(new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 20),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 22),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 21)
                                         ),
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 40))
-                                ), 1)
+                                ), null, 1), 1)
                 ),
 
 
@@ -903,17 +903,16 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.RUNITE_BODY.asInt(), Material.NETHERITE_CHESTPLATE, ItemRarity.RARE, "Runite Body", List.of("Runite chestplate enchanted for extra resilience."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNITE_BODY.asInt(), Material.NETHERITE_CHESTPLATE, ItemRarity.RARE, "Runite Body", List.of("Runite chestplate enchanted for extra resilience."), null, null),
                         toVersionedJson(
-                                new EquipableTypeMeta(null,
+                                new SocketedEquipableMeta(new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 40),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 42),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 38)
                                         ),
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 40))
-                                )
-                                , 1)
+                                ), null, 1), 1)
                 ),
 
                 // Armor - platelegs
@@ -1030,16 +1029,16 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.RUNITE_PLATELEGS.asInt(), Material.NETHERITE_LEGGINGS, ItemRarity.RARE, "Runite Platelegs", List.of("Runite platelegs shimmering with magical energy."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNITE_PLATELEGS.asInt(), Material.NETHERITE_LEGGINGS, ItemRarity.RARE, "Runite Platelegs", List.of("Runite platelegs shimmering with magical energy."), null, null),
                         toVersionedJson(
-                                new EquipableTypeMeta(null,
+                                new SocketedEquipableMeta(new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 28),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 30),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 26)
                                         ),
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 40))
-                                )
+                                ), null, 1)
                                 , 1)
                 ),
 
@@ -1114,16 +1113,16 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.RUNITE_BOOTS.asInt(), Material.NETHERITE_BOOTS, ItemRarity.RARE, "Runite Boots", List.of("Runite boots imbued with arcane power."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNITE_BOOTS.asInt(), Material.NETHERITE_BOOTS, ItemRarity.RARE, "Runite Boots", List.of("Runite boots imbued with arcane power."), null, null),
                         toVersionedJson(
-                                new EquipableTypeMeta(null,
+                                new SocketedEquipableMeta(new EquipableTypeMeta(null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 10),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 11),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 9)
                                         ),
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 40))
-                                )
+                                ), null, 1)
                                 , 1)
                 ),
 
@@ -1173,16 +1172,15 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON_WITH_GEM_SOCKETS, ItemId.ADAMANTITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Sword", List.of("Adamantite sword, powerful and heavy."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.ADAMANTITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Sword", List.of("Adamantite sword, powerful and heavy."), null, null),
                         toVersionedJson(
-                                new SocketedWeaponEquipableMeta(new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
+                                new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 21),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 19)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 30))
-                                ), null, 2)
-                                , 1)
+                                ), 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON_WITH_GEM_SOCKETS, ItemId.RUNITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Sword", List.of("Runite sword crackling with magical energy."), null, null),
                         toVersionedJson(
@@ -1192,7 +1190,7 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 29)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 40))
-                                ), null, 3)
+                                ), null, 1)
                                 , 1)
                 ),
 
@@ -1205,8 +1203,7 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 2)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 1))
-                                )
-                                , 1)
+                                ), 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.IRON_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Iron Dagger", List.of("Iron dagger, sharp and practical."), null, null),
                         toVersionedJson(
@@ -1252,16 +1249,15 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.RUNITE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Dagger", List.of("Runite dagger glowing with mystical power."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON_WITH_GEM_SOCKETS, ItemId.RUNITE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Dagger", List.of("Runite dagger glowing with mystical power."), null, null),
                         toVersionedJson(
-                                new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
+                                new SocketedWeaponEquipableMeta(new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 24),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 19)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 40))
-                                )
-                                , 1)
+                                ), null, 1), 1)
                 ),
 
                 // Weapons - Battleaxes
@@ -1325,16 +1321,16 @@ public class ItemRepository {
                                 )
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.RUNITE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Battleaxe", List.of("Runite battleaxe, imbued with arcane fury."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON_WITH_GEM_SOCKETS, ItemId.RUNITE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Battleaxe", List.of("Runite battleaxe, imbued with arcane fury."), null, null),
                         toVersionedJson(
-                                new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
+                                new SocketedWeaponEquipableMeta(new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 32),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 33),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 34)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 40))
-                                ),
+                                ), null, 1),
                                 1)
                 ),
 
@@ -1513,15 +1509,15 @@ public class ItemRepository {
                                 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON, ItemId.RUNITE_CROSSBOW.asInt(), Material.CROSSBOW, ItemRarity.LEGENDARY, "Runite Crossbow", List.of("The ultimate runite crossbow with unmatched precision."), null, null),
+                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON_WITH_SOCKETS, ItemId.RUNITE_CROSSBOW.asInt(), Material.CROSSBOW, ItemRarity.LEGENDARY, "Runite Crossbow", List.of("The ultimate runite crossbow with unmatched precision."), null, null),
                         toVersionedJson(
-                                new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
+                                new SocketedWeaponEquipableMeta(new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 42),
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 45)
                                         ),
                                         List.of(new SkillRequirement(SkillType.RANGED, 60))
-                                ),
+                                ), null, 1),
                                 1)
                 )
 

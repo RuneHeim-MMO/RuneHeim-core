@@ -13,7 +13,6 @@ public class WeaponLore implements LoreCreator {
     private final List<Component> lore = new ArrayList<>();
 
     public WeaponLore(Weapon item) {
-
         lore.add(Component.empty());
 
         if (item.getMaterial() == Material.CROSSBOW) {

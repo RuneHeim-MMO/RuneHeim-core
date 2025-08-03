@@ -163,7 +163,7 @@ public class FusionMasterInventory extends IndividualGUI {
         }
 
         AbstractItemType itemType = RuneQuestPlugin.getItemRegistry().getType(itemStack);
-        List<ItemType> socketedTypes = List.of(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemType.MELEE_WEAPON_WITH_GEM_SOCKETS);
+        List<ItemType> socketedTypes = List.of(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemType.MELEE_WEAPON_WITH_GEM_SOCKETS, ItemType.RANGED_WEAPON_WITH_SOCKETS, ItemType.TOOL_WITH_GEM_SOCKETS);
 
         if (itemType == null) {
             return false;
