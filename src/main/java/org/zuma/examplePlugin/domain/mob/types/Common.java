@@ -20,7 +20,7 @@ public class Common {
 
     public static void registerMobs(MobTypeRegistry registry) {
 
-        registry.register(MobType.FUSION_MASTER.getId(), () -> new FusionMaster(Icon.SCROLL_RED.get() + " Fusion Master", MobBehaviors.FUSION_MASTER.getBehavior(), 1));
+        registry.register(MobType.FUSION_MASTER.getId(), () -> new FusionMaster(Icon.SCROLL_RED.get() + " Fusion Master", MobBehaviors.FUSION_MASTER.getBehavior(), 0));
 
         registry.register(MobType.CHICKEN_BASE_2.getId(), () -> new GenericCombatant(
                 "Chicken", null, getBaseSkills(2),

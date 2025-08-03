@@ -16,7 +16,7 @@ import java.util.List;
 public class CityGuards {
 
     public static void registerMobs(MobTypeRegistry registry) {
-        registry.register(MobType.CITY_GUARD_STATIC.getId(), () -> new CityGuardMob("City Guard", null, null, null, 1, 0.23, 0.5));
-        registry.register(MobType.CITY_GUARD_WALKING.getId(), () -> new CityGuardMob("City Guard", null, null, null, 128, 0.23, 0.5));
+        registry.register(MobType.CITY_GUARD_STATIC.getId(), () -> new CityGuardMob("City Guard", null, null, null, 1, 0.23, 55));
+        registry.register(MobType.CITY_GUARD_WALKING.getId(), () -> new CityGuardMob("City Guard", null, null, null, 128, 0.23, 55));
     }
 }

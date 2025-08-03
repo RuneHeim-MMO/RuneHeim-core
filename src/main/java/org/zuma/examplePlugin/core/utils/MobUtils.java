@@ -48,7 +48,8 @@ public class MobUtils {
 
                 // Reached destination
                 if (mob.getLocation().distanceSquared(clonedTarget) < 1.0) {
-                    onArrive.run();
+                    if (onArrive != null)
+                        onArrive.run();
                     walkingMobs.remove(uuid);
                     cancel();
                     return;
@@ -59,7 +60,8 @@ public class MobUtils {
                 elapsed += 10;
                 if (elapsed >= maxTimeTicks) {
                     walkingMobs.remove(uuid);
-                    onFail.run();
+                    if (onFail != null)
+                        onFail.run();
                     cancel();
                 }
             }
@@ -73,7 +75,6 @@ public class MobUtils {
 
         Block blockAtFeet = world.getBlockAt(location);
         Block blockAtHead = world.getBlockAt(location.clone().add(0, 1, 0));
-        Block blockBelow = world.getBlockAt(location.clone().add(0, -1, 0));
 
         // 1. Must be air or passable at feet and head
         boolean feetClear = blockAtFeet.isPassable();
