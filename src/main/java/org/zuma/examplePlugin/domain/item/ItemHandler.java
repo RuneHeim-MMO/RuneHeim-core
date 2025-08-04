@@ -1,22 +1,19 @@
 package org.zuma.examplePlugin.domain.item;
 
 import net.kyori.adventure.text.Component;
-import org.bukkit.event.EventHandler;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.*;
-import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.core.utils.ItemUtils;
-import org.zuma.examplePlugin.core.utils.PlayerUtils;
-import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
+import org.bukkit.inventory.Inventory;
+import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.item.constants.WeaponSpeed;
-import org.zuma.examplePlugin.domain.item.impl.equipable.RangedWeapon;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.item.PlayerArmorEquipEvent;
 
-import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.UUID;
 
 public class ItemHandler {
     private final ItemRegistry registry;
@@ -54,6 +51,26 @@ public class ItemHandler {
     }
 
     public void onPlayerPickupItem(PlayerAttemptPickupItemEvent event, AbstractItemType item, RunePlayer player, StateManager itemStateManager) {
+        if (event.isCancelled()) {
+            return;
+        }
+
+        if (item.isTradeable) {
+            return;
+        }
+
+        UUID untradeableOwnerUUID = item.getUntradeableOwnerUUID(event.getItem().getItemStack());
+
+        if (untradeableOwnerUUID == null) {
+            item.setUntradeableOwnerUUID(event.getItem().getItemStack(), player.getUUID());
+            return;
+        }
+
+        if (!player.getUUID().equals(untradeableOwnerUUID)) {
+            HudService.sendFailMessage(player, Component.text("Cannot pick up item. It is untradeable and not owned by you."));
+            event.setCancelled(true);
+        }
+
         item.onPlayerPickupItem(event, player, itemStateManager);
     }
 
@@ -62,4 +79,26 @@ public class ItemHandler {
         consumedItem.onPlayerConsumeItem(event, player, itemStateManager);
         event.setCancelled(true); // Prevent vanilla items consumption.
     }
+
+    public void checkForUnclaimedUntradeablesInInventory(Inventory inventory, HumanEntity player) {
+        Arrays.stream(inventory.getContents()).toList().forEach(stack -> {
+
+            if (stack == null) {
+                return;
+            }
+
+            AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(stack);
+
+            if (type == null || type.isTradeable) {
+                return;
+            }
+
+            type.setUntradeableOwnerUUID(stack, player.getUniqueId());
+
+        });
+
+
+    }
+
+
 }

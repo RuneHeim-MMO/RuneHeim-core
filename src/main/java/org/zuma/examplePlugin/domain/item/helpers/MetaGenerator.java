@@ -15,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
 import org.zuma.examplePlugin.domain.item.Weapon;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -123,6 +124,10 @@ public class MetaGenerator {
 
         if (itemType.rarity != ItemRarity.NOT_APPLICABLE) {
             lore.add(itemType.rarity.getComponent().decoration(TextDecoration.ITALIC, false));
+        }
+
+        if (!itemType.isTradeable()) {
+            lore.add(Icon.ERROR.asComponent().append(Component.text("Untradeable", Color.ERROR.asColor())));
         }
 
         return lore.stream().map(component -> component.decoration(TextDecoration.ITALIC, false)).toList();

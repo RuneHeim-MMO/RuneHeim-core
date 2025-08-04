@@ -11,5 +11,5 @@ import java.util.List;
 public record AbstractItemMeta(ItemType type, int id, Material material, ItemRarity rarity, String displayName,
                                List<String> lore,
                                @Nullable String headTexture,
-                               @Nullable Color leatherColor) {
+                               @Nullable Color leatherColor, boolean isTradeable) {
 }

@@ -8,7 +8,8 @@ public enum PersistenceDataKey {
     ITEM_ID("item_id", PersistentDataType.INTEGER),
     STATE_UUID("state_uuid", PersistentDataType.STRING),
     COINS_AMOUNT("coins_amount", PersistentDataType.INTEGER),
-    ILLEGAL_ITEM("illegal_item", PersistentDataType.INTEGER);
+    ILLEGAL_ITEM("illegal_item", PersistentDataType.INTEGER),
+    UNTRADEABLE_OWNER_UUID("untradeable_owner_uuid", PersistentDataType.STRING);
 
     private final String keyName;
     private final PersistentDataType<?, ?> type;

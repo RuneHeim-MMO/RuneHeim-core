@@ -3,13 +3,21 @@ package org.zuma.examplePlugin.domain.item.base;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.utils.TextUtils;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.constants.CustomModelId;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
+import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.item.helpers.ItemStackCreator;
 import org.zuma.examplePlugin.domain.item.helpers.MetaGenerator;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
@@ -21,6 +29,7 @@ import org.zuma.examplePlugin.events.item.PlayerArmorEquipEvent;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class AbstractItemType {
     private final MetaGenerator metaGenerator;
@@ -33,6 +42,7 @@ public abstract class AbstractItemType {
     public final String displayName;
     public final List<Component> typeLore;
     public final List<String> descriptionLore;
+    public final boolean isTradeable;
     public int customModelData;
     @Nullable
     public StateType stateType;
@@ -40,6 +50,9 @@ public abstract class AbstractItemType {
     public final String headTexture;
     @Nullable
     public final org.bukkit.Color leatherColor;
+
+    NamespacedKey untradeableOwnerUUIDKey = PersistenceDataKey.UNTRADEABLE_OWNER_UUID.key(RuneQuestPlugin.getInstance());
+    PersistentDataType<?, String> untradeableOwnerUUIDType = (PersistentDataType<?, String>) PersistenceDataKey.UNTRADEABLE_OWNER_UUID.getType();
 
 
     public AbstractItemType(AbstractItemMeta meta) {
@@ -51,9 +64,10 @@ public abstract class AbstractItemType {
         this.rarity = meta.rarity();
         this.headTexture = meta.headTexture();
         this.leatherColor = meta.leatherColor();
-        stateType = null;
-        typeLore = new ArrayList<>();
-        descriptionLore = new ArrayList<>();
+        this.isTradeable = meta.isTradeable();
+        this.stateType = null;
+        this.typeLore = new ArrayList<>();
+        this.descriptionLore = new ArrayList<>();
 
         if (meta.lore() != null) {
             this.descriptionLore.addAll(meta.lore());
@@ -107,6 +121,32 @@ public abstract class AbstractItemType {
     public void setCustomModelData(CustomModelId id) {
         customModelData = id.asInt();
     }
+
+    public boolean isTradeable() {
+        return this.isTradeable;
+    }
+
+    @Nullable
+    public UUID getUntradeableOwnerUUID(ItemStack itemStack) {
+        ItemMeta meta = itemStack.getItemMeta();
+        PersistentDataContainer pdc = meta.getPersistentDataContainer();
+
+        String ownerUUID = pdc.get(untradeableOwnerUUIDKey, untradeableOwnerUUIDType);
+
+        if (ownerUUID == null) {
+            return null;
+        }
+
+        return UUID.fromString(ownerUUID);
+    }
+
+    public void setUntradeableOwnerUUID(ItemStack itemStack, UUID ownerUUID) {
+        ItemMeta meta = itemStack.getItemMeta();
+        PersistentDataContainer pdc = meta.getPersistentDataContainer();
+        pdc.set(untradeableOwnerUUIDKey, untradeableOwnerUUIDType, ownerUUID.toString());
+        itemStack.setItemMeta(meta);
+    }
+
 
     public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player, StateManager itemStateManager) {
     }

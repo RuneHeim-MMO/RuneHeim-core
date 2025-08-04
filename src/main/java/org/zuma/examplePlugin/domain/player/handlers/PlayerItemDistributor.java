@@ -53,13 +53,16 @@ public class PlayerItemDistributor {
         Player player = runePlayer.asBukkitPlayer();
         Location dropLocation = player.getLocation();
 
+        if (type != null && !type.isTradeable) {
+            type.setUntradeableOwnerUUID(item, runePlayer.getUUID());
+        }
+
         if (type instanceof CoinsItem) {
             ((CoinsItem) type).creditPlayer(item, runePlayer);
             return;
         }
 
         HashMap<Integer, ItemStack> leftovers = player.getInventory().addItem(item);
-
 
         if (!leftovers.isEmpty()) {
             leftovers.values().forEach(leftover ->
