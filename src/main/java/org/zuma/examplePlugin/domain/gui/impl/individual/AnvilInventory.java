@@ -8,8 +8,8 @@ import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.recipes.base.AbstractRecipe;
-import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
+import org.zuma.examplePlugin.domain.recipe.base.AbstractRecipe;
+import org.zuma.examplePlugin.domain.recipe.constants.RecipeType;
 
 import java.util.Arrays;
 import java.util.HashSet;

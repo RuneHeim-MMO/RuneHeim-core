@@ -5,11 +5,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.core.handlers.IllegalItemWatchdog;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.recipes.RecipeRegistry;
-import org.zuma.examplePlugin.domain.recipes.base.AbstractRecipe;
+import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
+import org.zuma.examplePlugin.domain.recipe.base.AbstractRecipe;
 
 import java.util.List;
 

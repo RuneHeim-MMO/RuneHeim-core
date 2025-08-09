@@ -25,7 +25,7 @@ import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.recipes.RecipeRegistry;
+import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;

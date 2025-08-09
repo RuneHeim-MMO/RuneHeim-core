@@ -5,7 +5,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.recipes.base.AbstractRecipe;
+import org.zuma.examplePlugin.domain.recipe.base.AbstractRecipe;
 
 public class PlayerCraftingStartEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();

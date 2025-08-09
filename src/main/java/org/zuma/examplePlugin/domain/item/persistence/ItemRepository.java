@@ -6,7 +6,7 @@ import org.bukkit.Material;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.droptable.DropTableId;
-import org.zuma.examplePlugin.domain.heads.HeadTexture;
+import org.zuma.examplePlugin.domain.head.HeadTexture;
 import org.zuma.examplePlugin.domain.item.constants.*;
 import org.zuma.examplePlugin.domain.item.impl.EmptyContainer;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;

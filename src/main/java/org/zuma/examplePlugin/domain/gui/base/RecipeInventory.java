@@ -1,21 +1,13 @@
 package org.zuma.examplePlugin.domain.gui.base;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.utils.PlayerUtils;
-import org.zuma.examplePlugin.domain.hud.HudService;
-import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.recipes.base.AbstractRecipe;
-import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
+import org.zuma.examplePlugin.domain.recipe.base.AbstractRecipe;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public abstract class RecipeInventory extends PaginatedIndividualGUI {
     private final int LEFT_CLICK_CRAFT_AMOUNT;

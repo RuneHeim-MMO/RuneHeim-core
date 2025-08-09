@@ -2,8 +2,8 @@ package org.zuma.examplePlugin.domain.gui.impl.individual;
 
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.gui.base.RecipeInventory;
-import org.zuma.examplePlugin.domain.recipes.base.AbstractRecipe;
-import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
+import org.zuma.examplePlugin.domain.recipe.base.AbstractRecipe;
+import org.zuma.examplePlugin.domain.recipe.constants.RecipeType;
 
 import java.util.Arrays;
 import java.util.HashSet;
