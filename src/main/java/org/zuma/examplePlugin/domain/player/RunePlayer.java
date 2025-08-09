@@ -1,5 +1,7 @@
 package org.zuma.examplePlugin.domain.player;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -9,12 +11,14 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.core.interfaces.InteractiveActionStrategy;
 import org.zuma.examplePlugin.core.interfaces.SerializableItemContainer;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
+import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.gui.ItemStackSlotPair;
@@ -189,8 +193,13 @@ public class RunePlayer implements CombatEntity, SerializableItemContainer {
     }
 
     public void cancelActionTask(boolean interrupted) {
-        if (interrupted) {
-            HudService.showFailTitle(this, "Task cancelled.");
+        if (interrupted && isBusy()) {
+            this.asBukkitPlayer().showTitle(Title.title(
+                    Component.empty(),
+                    Component.text("Task interrupted.").color(Color.ERROR.asColor()),
+                    TextUtils.getGenericDuration()
+            ));
+            SoundType.INTERRUPT_ACTION.play(this, false);
         }
 
         this.pendingActions.forEach(InteractiveActionStrategy::cancelTask);

@@ -35,8 +35,32 @@ public class ProgressBarAction implements InteractiveActionStrategy {
 
     public InteractiveActionStrategy startAction(ActionParams params) {
         UUID uuid = player.getUUID();
-        int steps = 10;
-        long stepDuration = Math.max(1L, (params.getDurationMs() / 50L) / steps);
+
+        // Calculate total ticks for duration (1 tick = 50 ms)
+        long totalTicks = params.getDurationMs() / 50L;
+
+        // Initial step count
+        int baseSteps = 10;
+
+        final long maxStepDuration = 20L; // 20 ticks = 1 second max
+
+        long stepDuration;  // Declare here
+
+        int steps;
+
+        // Calculate initial step duration (ticks per step)
+        long calculatedStepDuration = totalTicks / baseSteps;
+
+        if (calculatedStepDuration <= maxStepDuration) {
+            // Step duration is less than or equal to max, keep base steps
+            stepDuration = calculatedStepDuration;
+            steps = baseSteps;
+        } else {
+            // Step duration too long, cap to maxStepDuration and increase steps accordingly
+            stepDuration = maxStepDuration;
+            steps = (int) Math.ceil((double) totalTicks / stepDuration);
+        }
+
         AtomicInteger currentSteps = new AtomicInteger();
 
         this.task = new BukkitRunnable() {
@@ -50,18 +74,14 @@ public class ProgressBarAction implements InteractiveActionStrategy {
                     return;
                 }
 
-
                 if (isCancelled) {
-                    HudService.showFailTitle(player, "Task cancelled.");
                     this.cancel();
 
                     if (params.getOnFailure() != null) {
                         params.getOnFailure().run();
                     }
-
                     return;
                 }
-
 
                 if (currentSteps.incrementAndGet() >= steps) {
                     player.cancelActionTask(false);
@@ -76,11 +96,10 @@ public class ProgressBarAction implements InteractiveActionStrategy {
 
                     params.getOnSuccess().run();
                     return;
-
                 }
 
-                // Progress bar
                 int secondsLeft = (int) Math.ceil(((params.getDurationMs() / (double) steps) * (steps - currentSteps.get())) / 1000.0);
+
                 Component progressBar = new LoadingBarBuilder()
                         .totalSteps(steps)
                         .currentStep(currentSteps.get())
@@ -100,17 +119,16 @@ public class ProgressBarAction implements InteractiveActionStrategy {
                                 .append(Component.text(params.getActionLabel()).color(Color.SUBTITLE.asColor())),
                         Title.Times.times(
                                 Duration.ZERO,
-                                Duration.ofSeconds(stepDuration),
+                                Duration.ofSeconds(20L),  // convert ticks to seconds
                                 Duration.ofMillis(500)
                         )
                 ));
-
-
             }
         }.runTaskTimer(RuneQuestPlugin.getInstance(), 0L, stepDuration);
 
         return this;
     }
+
 
 
     @Override

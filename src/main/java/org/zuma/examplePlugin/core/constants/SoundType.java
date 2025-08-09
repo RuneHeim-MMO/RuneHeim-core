@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import javax.annotation.Nullable;
 
 public enum SoundType {
+    INTERRUPT_ACTION("ENTITY_ARMOR_STAND_BREAK", false, 1.0f, 1.0f),
     FAIL_ACTION("ENTITY_VILLAGER_NO", false, 1.0f, 1.0f),
     SUCCESS_ACTION("BLOCK_BEACON_POWER_SELECT", false, 1.0f, 1.2f),
     PLAYER_LEVEL_UP("UI_TOAST_CHALLENGE_COMPLETE", false, 1.0f, 0.9f),
@@ -72,7 +73,7 @@ public enum SoundType {
     FISHING_START_REINFORCED_ROD("ENTITY_FISHING_BOBBER_THROW", false, 0.7f, 1.5f),
     FISHING_START_NET("ENTITY_PLAYER_SWIM", false, 0.7f, 1.0f),
     FISHING_START_TRAP("BLOCK_TRIPWIRE_ATTACH", false, 0.7f, 1.0f),
-    FISHING_STEP("BLOCK_BUBBLE_COLUMN_UPWARDS_AMBIENT", false, 0.2f, 1.0f),
+    FISHING_STEP("BLOCK_BUBBLE_COLUMN_UPWARDS_AMBIENT", false, 1f, 1.0f),
     FISHING_SUCCESS("ENTITY_FISH_SWIM", false, 1.0f, 1.4f),
 
     CAMPFIRE_RECIPE_START("BLOCK_LAVA_POP", false, 1.0f, 1.3f),
