@@ -42,7 +42,9 @@ public class RunePlayerListener implements Listener {
     @EventHandler
     public void onRunePlayerLoaded(RunePlayerLoadedEvent event) {
         event.getBukkitPlayer().sendMessage(Component.text(TextUtils.repeatString("-", 53)).color(Color.SUCCESS.asColor()).decorate(TextDecoration.STRIKETHROUGH));
-        event.getBukkitPlayer().sendMessage(TextUtils.centerText("Players data successfully loaded!", 72).color(Color.SUCCESS.asColor()));
+        event.getBukkitPlayer().sendMessage(Component.empty());
+        event.getBukkitPlayer().sendMessage(Component.text(TextUtils.centerText("Players data successfully loaded!", 70)).color(Color.SUCCESS.asColor()));
+        event.getBukkitPlayer().sendMessage(Component.empty());
         event.getBukkitPlayer().sendMessage(Component.text(TextUtils.repeatString("-", 53)).color(Color.SUCCESS.asColor()).decorate(TextDecoration.STRIKETHROUGH));
     }
 

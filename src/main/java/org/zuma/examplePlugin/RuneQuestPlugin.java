@@ -63,6 +63,8 @@ import org.zuma.examplePlugin.domain.shop.persistence.ShopRepository;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneHandler;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneListener;
 import org.zuma.examplePlugin.domain.spawnzone.persistence.SpawnZoneRepository;
+import org.zuma.examplePlugin.domain.territory.TerritoryHandler;
+import org.zuma.examplePlugin.domain.territory.TerritoryRepository;
 import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
 
 import java.util.ArrayList;
@@ -88,6 +90,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private static DropTableHandler dropTableHandler;
     private static VisualMeleeSpeedHandler visualMeleeSpeedHandler;
     private static SpawnZoneHandler spawnZoneHandler;
+    private static TerritoryHandler territoryHandler;
 
     private MobHandler mobHandler;
     private HikariPool pool;
@@ -204,6 +207,9 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
         CityGuardHandler cityGuardHandler = new CityGuardHandler();
         getServer().getPluginManager().registerEvents(cityGuardHandler, pluginInstance);
+
+        territoryHandler = new TerritoryHandler(new TerritoryRepository());
+        territoryHandler.initialize();
 
         initializeMap();
 
@@ -359,5 +365,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         return spawnZoneHandler;
     }
 
+    public static TerritoryHandler getTerritoryHandler() {
+        return territoryHandler;
+    }
 
 }

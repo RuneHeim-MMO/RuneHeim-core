@@ -62,6 +62,7 @@ public class RunePlayer implements CombatEntity, SerializableItemContainer {
 
     private long pouchCoins;
     private final List<InteractiveActionStrategy> pendingActions;
+    private final List<String> discoveredTerritoryIds;
 
 
     public RunePlayer(UUID uuid, EnumMap<SkillType, Skill> skills) {
@@ -79,6 +80,7 @@ public class RunePlayer implements CombatEntity, SerializableItemContainer {
 
         this.pouchCoins = 0;
         this.pendingActions = new ArrayList<>();
+        this.discoveredTerritoryIds = new ArrayList<>();
 
         HudService.updateVanillaGUI(this);
     }
@@ -278,4 +280,7 @@ public class RunePlayer implements CombatEntity, SerializableItemContainer {
         pairs.forEach(pair -> inv.setItem(pair.slot(), pair.itemStack()));
     }
 
+    public List<String> getDiscoveredTerritoryIds() {
+        return discoveredTerritoryIds;
+    }
 }

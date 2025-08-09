@@ -12,16 +12,19 @@ import java.time.Duration;
 
 public class TextUtils {
 
-    public static Component centerText(String text, int width) {
-        // Calculate how much padding is needed on the left to center the text
-        int textLength = text.length();
-        int paddingLength = (width - textLength) / 2;
+    public static String centerText(String text, int width) {
+        String plainText = text.replaceAll("§.", "");
+        int textLength = plainText.length();
 
-        // Create a string with the necessary spaces (padding) and append the original text
-        String paddedText = " ".repeat(Math.max(0, paddingLength)) + text;
+        if (textLength >= width) {
+            return text;
+        }
 
-        // Return the text as a Component with center alignment (you can apply colors here too)
-        return Component.text(paddedText);
+        int totalPadding = width - textLength;
+        int paddingLeft = totalPadding / 2;
+        int paddingRight = totalPadding - paddingLeft;
+
+        return " ".repeat(paddingLeft) + text + " ".repeat(paddingRight);
     }
 
     public static String repeatString(String text, int times) {

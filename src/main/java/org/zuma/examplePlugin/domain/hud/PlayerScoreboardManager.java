@@ -14,10 +14,13 @@ import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
+import org.zuma.examplePlugin.domain.territory.Territory;
+import org.zuma.examplePlugin.domain.territory.TerritoryHandler;
 
 import javax.annotation.Nullable;
 
 public class PlayerScoreboardManager {
+    private final static int CENTERING_PADDING = 20;
     private final RunePlayer player;
     private BukkitTask activeTask = null;
     private boolean tick = false; // Ticktock counter
@@ -40,6 +43,7 @@ public class PlayerScoreboardManager {
         Objective o = scoreboard.getObjective("stats");
         String partyString = player.getParty() == null ? "§fNone" : "§6" + player.getParty().getOwnerUsername();
         SkillType lastXPGainedSkillType = player.getLastXPGainedSkillType();
+        Territory territory = RuneQuestPlugin.getTerritoryHandler().getPlayersTerritory(player);
 
         if (o == null) {
             return;
@@ -53,11 +57,19 @@ public class PlayerScoreboardManager {
         o.getScore(" ").setScore(12);
         o.getScore("§7Skill Progression:").setScore(11);
         if (lastXPGainedSkillType != null) {
-
-            o.getScore("  §f" + lastXPGainedSkillType.getSymbol() + " §7" + lastXPGainedSkillType.getLabel() + " §f"
-                    + TextUtils.getLegacyColorCodeForPercent(PlayerUtils.getLastSkillPercent(player)) + PlayerUtils.getLastSkillPercent(player) + "%  ").setScore(10);
+            o.getScore(TextUtils.centerText("§f" + lastXPGainedSkillType.getSymbol() + " §f" + lastXPGainedSkillType.getLabel() + " §f"
+                    + TextUtils.getLegacyColorCodeForPercent(PlayerUtils.getLastSkillPercent(player)) + PlayerUtils.getLastSkillPercent(player) + "%", PlayerScoreboardManager.CENTERING_PADDING)).setScore(10);
         } else {
-            o.getScore("   §fNo recent skill   ").setScore(10);
+            o.getScore(TextUtils.centerText("§fNo recent skill", PlayerScoreboardManager.CENTERING_PADDING)).setScore(10);
+        }
+
+        o.getScore("  ").setScore(9);
+        o.getScore("§7Current Location:").setScore(8);
+
+        if (territory != null) {
+            o.getScore("§3" + TextUtils.centerText(territory.getName(), PlayerScoreboardManager.CENTERING_PADDING)).setScore(7);
+        } else {
+            o.getScore("§2" + TextUtils.centerText("Wilderness", PlayerScoreboardManager.CENTERING_PADDING)).setScore(7);
         }
 
         ticks += 1;
