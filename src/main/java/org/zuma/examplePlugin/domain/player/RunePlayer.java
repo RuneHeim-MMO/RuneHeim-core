@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
+import org.zuma.examplePlugin.core.interfaces.InteractiveActionStrategy;
 import org.zuma.examplePlugin.core.interfaces.SerializableItemContainer;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
@@ -23,9 +24,10 @@ import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.SkillModifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.party.Party;
+import org.zuma.examplePlugin.domain.player.actions.ActionParams;
 import org.zuma.examplePlugin.domain.player.handlers.PlayerItemDistributor;
 import org.zuma.examplePlugin.domain.player.handlers.PlayerXpHandler;
-import org.zuma.examplePlugin.domain.player.states.RunePlayerBusyStateHandler;
+import org.zuma.examplePlugin.domain.player.actions.ProgressBarAction;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.domain.xp.PendingXPHandler;
@@ -49,11 +51,11 @@ public class RunePlayer implements CombatEntity, SerializableItemContainer {
     private final EnumMap<SkillType, Skill> skills;
     private final PlayerXpHandler xpHandler;
     private final PlayerItemDistributor itemHandler;
-    private final RunePlayerBusyStateHandler busyStateHandler;
     private final ActionBarManager actionBarManager;
     private final PlayerScoreboardManager scoreboardManager;
 
     private long pouchCoins;
+    private boolean isBusy;
 
 
     public RunePlayer(UUID uuid, EnumMap<SkillType, Skill> skills) {
@@ -61,16 +63,16 @@ public class RunePlayer implements CombatEntity, SerializableItemContainer {
         this.skills = skills;
         this.combatData = new PlayerCombatData(this, skills.get(SkillType.HITPOINTS).getBaseLevel(), Math.min(3, XpUtils.getCombatLevelFromSkills(skills)));
 
-        modifiers = new EnumMap<>(ModifierType.class);
-        skillModifiers = new EnumMap<>(SkillType.class);
-        actionBarManager = new ActionBarManager(this);
-        scoreboardManager = new PlayerScoreboardManager(this);
-        busyStateHandler = new RunePlayerBusyStateHandler(this);
-        itemHandler = new PlayerItemDistributor(this);
-        xpHandler = new PlayerXpHandler(this);
-        pendingXPHandler = new PendingXPHandler();
+        this.modifiers = new EnumMap<>(ModifierType.class);
+        this.skillModifiers = new EnumMap<>(SkillType.class);
+        this.actionBarManager = new ActionBarManager(this);
+        this.scoreboardManager = new PlayerScoreboardManager(this);
+        this.itemHandler = new PlayerItemDistributor(this);
+        this.xpHandler = new PlayerXpHandler(this);
+        this.pendingXPHandler = new PendingXPHandler();
 
-        pouchCoins = 0;
+        this.pouchCoins = 0;
+        this.isBusy = false;
 
         HudService.updateVanillaGUI(this);
     }
@@ -170,16 +172,25 @@ public class RunePlayer implements CombatEntity, SerializableItemContainer {
     }
 
     // Busy state management
-    public void useBusyState(int durationMs, String action, String successAction, @Nullable SoundType stepSound, @Nullable SoundType successSound, Runnable onSuccess, @Nullable Runnable onFailure) {
-        this.busyStateHandler.useBusyState(durationMs, action, successAction, stepSound, successSound, onSuccess, onFailure);
+    public void startAction(InteractiveActionStrategy strategy, ActionParams params) {
+        if (isBusy) {
+            HudService.showFailTitle(this, "You are already busy!");
+            return;
+        }
+        isBusy = true;
+        strategy.startAction(params);
+    }
+
+    public void setBusy(boolean busy) {
+        this.isBusy = busy;
     }
 
     public boolean isBusy() {
-        return busyStateHandler.isBusy();
+        return this.isBusy;
     }
 
-    public void cancelBusyState() {
-        busyStateHandler.cancelTask();
+    public void cancelActionTask() {
+        this.isBusy = false;
     }
 
     // XP handling

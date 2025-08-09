@@ -47,7 +47,7 @@ public class RunePlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerBusyStateInterruptedByMovement(PlayerMoveEvent event) {
+    public void onPlayerActionInterruptedByMovement(PlayerMoveEvent event) {
         Location from = event.getFrom();
         Location to = event.getTo();
 
@@ -57,16 +57,16 @@ public class RunePlayerListener implements Listener {
             return;
         }
 
-        playerHandler.handleBusyStateInterruption(event.getPlayer());
+        playerHandler.handleActionInterruption(event.getPlayer());
     }
 
     @EventHandler
-    public void onPlayerBusyStateInterruptedByDamage(EntityDamageEvent event) {
+    public void onPlayerActionInterruptedByDamage(EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Player player)) {
             return;
         }
 
-        playerHandler.handleBusyStateInterruption(player);
+        playerHandler.handleActionInterruption(player);
     }
 
     @EventHandler

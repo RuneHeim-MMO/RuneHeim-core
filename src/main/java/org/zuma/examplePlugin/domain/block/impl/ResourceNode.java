@@ -28,6 +28,8 @@ import org.zuma.examplePlugin.domain.item.constants.EquipableType;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.player.actions.ActionParams;
+import org.zuma.examplePlugin.domain.player.actions.ProgressBarAction;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.events.block.ResourceNodeGatheredEvent;
 import org.zuma.examplePlugin.events.block.ResourceNodeRespawnedEvent;
@@ -128,8 +130,17 @@ public class ResourceNode extends AbstractInteractableBlock {
     private void startGatheringAction(RunePlayer player, double modifier) {
         if (blockType.getStartSound() != null) blockType.getStartSound().play(player, true);
 
-        player.useBusyState((int) (blockType.getBaseGatheringDurationMillis() / modifier), blockType.getActionVerb() + " " + blockType.getLabel(),
-                "", blockType.getStepSound(), blockType.getGatherSuccessSound(), () -> onGather(player), null);
+        ActionParams params = new ActionParams.Builder()
+                .durationMs((int) (blockType.getBaseGatheringDurationMillis() / modifier))
+                .actionLabel(blockType.getActionVerb() + " " + blockType.getLabel())
+                .successActionLabel("")
+                .stepSound(blockType.getStepSound())
+                .successSound(blockType.getGatherSuccessSound())
+                .onSuccess(() -> onGather(player))
+                .onFailure(null)
+                .build();
+
+        player.startAction(new ProgressBarAction(player), params);
     }
 
     private void onGather(RunePlayer player) {

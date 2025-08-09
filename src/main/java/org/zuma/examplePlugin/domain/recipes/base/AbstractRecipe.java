@@ -24,6 +24,8 @@ import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.impl.equipable.Tool;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.player.actions.ActionParams;
+import org.zuma.examplePlugin.domain.player.actions.ProgressBarAction;
 import org.zuma.examplePlugin.domain.recipes.IngredientRecord;
 import org.zuma.examplePlugin.domain.recipes.constants.RecipeType;
 import org.zuma.examplePlugin.domain.recipes.meta.AbstractRecipeMeta;
@@ -288,8 +290,17 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         type.getStartSound().play(player, true);
         this.handleRecipeCraftingStart(player);
 
-        player.useBusyState(this.craftTimeMs * times,
-                type.getContinuousVerb() + " " + recipeResultNameString, "", type.getStepSound(), type.getFinishSound(), () -> executeCraft(player, times, totalCost, resultComponent), () -> this.handleRecipeCraftingAborted(player));
+        ActionParams params = new ActionParams.Builder()
+                .durationMs(this.craftTimeMs * times)
+                .actionLabel(type.getContinuousVerb() + " " + recipeResultNameString)
+                .successActionLabel("")
+                .stepSound(type.getStepSound())
+                .successSound(type.getFinishSound())
+                .onSuccess(() -> executeCraft(player, times, totalCost, resultComponent))
+                .onFailure(() -> this.handleRecipeCraftingAborted(player))
+                .build();
+
+        player.startAction(new ProgressBarAction(player), params);
 
         return true;
     }
