@@ -1,15 +1,20 @@
 package org.zuma.examplePlugin.domain.gui.impl.individual;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.RayTraceResult;
@@ -53,7 +58,7 @@ public class XPLampInventory extends IndividualGUI {
         super(title, id, 3);
     }
 
-    private List<Component> getSkillTypeLore(RunePlayer player, SkillType type) {
+    private List<Component> getSkillTypeLore(RunePlayer player, SkillType type, double rewardXp) {
         Skill skill = player.getSkill(type);
         List<Component> result = new ArrayList<>();
 
@@ -81,10 +86,35 @@ public class XPLampInventory extends IndividualGUI {
                 .fillColor(Color.SKILL_BAR_FILL.asColor())
                 .build();
 
+        result.add(Component.text("Click to add " + rewardXp + " experience to this skill.", Color.SUCCESS.asColor()));
+        result.add(Component.empty());
         result.add(progressBar.append(Component.text(" " + formattedXp + " XP" + "/" + formattedNextLevelXp + " XP", Color.ACCENT.asColor())));
+        result.add(Component.empty());
+        result.add(Icon.INFO.asComponent().append(Component.text(type.getDescription(), Color.INFO.asColor())));
+
 
         return result;
 
+    }
+
+    private ItemStack getSkillDisplayItem(RunePlayer player, SkillType type, double rewardXp) {
+        Skill skill = player.getSkill(type);
+        ItemStack item = new ItemStack(type.getMaterial());
+        ItemMeta meta = item.getItemMeta();
+
+        meta.displayName(Component.text(type.getSymbol(), NamedTextColor.WHITE)
+                .append(Component.text("  " + type.getLabel() + ": " + skill.getBaseLevel() + " level", NamedTextColor.GRAY)).decoration(TextDecoration.ITALIC, false));
+
+        meta.lore(getSkillTypeLore(player, type, rewardXp).stream().map(component -> component.decoration(TextDecoration.ITALIC, false)).toList());
+
+        Multimap<Attribute, AttributeModifier> emptyModifiers = ArrayListMultimap.create();
+        meta.setAttributeModifiers(emptyModifiers);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(ItemFlag.HIDE_DYE);
+
+        item.setItemMeta(meta);
+
+        return item;
     }
 
     @Nullable
@@ -113,24 +143,14 @@ public class XPLampInventory extends IndividualGUI {
 
         int slot = 0;
         int index = 0;
-        for (SkillType skill : types) {
+        for (SkillType skillType : types) {
             // Find the next slot that is NOT in ignoredSlots
             while (ignoredSlots.contains(slot)) {
                 slot++;
             }
-            Skill playerSkill = player.getSkill(skill);
 
-            ItemStack item = new ItemStack(Material.PAPER);
-            ItemMeta meta = item.getItemMeta();
-
-            meta.displayName(Component.text(skill.getSymbol(), NamedTextColor.WHITE)
-                    .append(Component.text("  " + skill.getLabel() + ": " + playerSkill.getBaseLevel(), NamedTextColor.GRAY)).decoration(TextDecoration.ITALIC, false));
-
-            meta.lore(getSkillTypeLore(player, skill).stream().map(component -> component.decoration(TextDecoration.ITALIC, false)).toList());
-
-            item.setItemMeta(meta);
+            ItemStack item = getSkillDisplayItem(player, skillType, inHandLamp.getXpReward());
             IllegalItemWatchdog.tagIllegalItem(item);
-
             super.assignMenuValue(item, index);
             inventory.setItem(slot, item);
 

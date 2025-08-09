@@ -735,6 +735,13 @@
                     "type": "model",
                     "model": "item/custom/misc/scratch_card"
                 }
+            },
+            {
+                "threshold": 3000,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/misc/xp_lamp"
+                }
             }
         ]
     }
