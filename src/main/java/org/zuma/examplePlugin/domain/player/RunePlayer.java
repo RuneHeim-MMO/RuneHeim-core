@@ -5,6 +5,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.core.constants.SoundType;
@@ -55,7 +57,7 @@ public class RunePlayer implements CombatEntity, SerializableItemContainer {
     private final PlayerScoreboardManager scoreboardManager;
 
     private long pouchCoins;
-    private boolean isBusy;
+    private final List<InteractiveActionStrategy> pendingActions;
 
 
     public RunePlayer(UUID uuid, EnumMap<SkillType, Skill> skills) {
@@ -72,7 +74,7 @@ public class RunePlayer implements CombatEntity, SerializableItemContainer {
         this.pendingXPHandler = new PendingXPHandler();
 
         this.pouchCoins = 0;
-        this.isBusy = false;
+        this.pendingActions = new ArrayList<>();
 
         HudService.updateVanillaGUI(this);
     }
@@ -173,24 +175,26 @@ public class RunePlayer implements CombatEntity, SerializableItemContainer {
 
     // Busy state management
     public void startAction(InteractiveActionStrategy strategy, ActionParams params) {
-        if (isBusy) {
+        if (isBusy()) {
             HudService.showFailTitle(this, "You are already busy!");
             return;
         }
-        isBusy = true;
-        strategy.startAction(params);
-    }
 
-    public void setBusy(boolean busy) {
-        this.isBusy = busy;
+        InteractiveActionStrategy action = strategy.startAction(params);
+        pendingActions.add(action);
     }
 
     public boolean isBusy() {
-        return this.isBusy;
+        return !this.pendingActions.isEmpty();
     }
 
-    public void cancelActionTask() {
-        this.isBusy = false;
+    public void cancelActionTask(boolean interrupted) {
+        if (interrupted) {
+            HudService.showFailTitle(this, "Task cancelled.");
+        }
+
+        this.pendingActions.forEach(InteractiveActionStrategy::cancelTask);
+        this.pendingActions.clear();
     }
 
     // XP handling

@@ -5,6 +5,7 @@ import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
@@ -14,6 +15,7 @@ import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.hud.LoadingBarBuilder;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
+import javax.annotation.Nullable;
 import java.time.Duration;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -21,30 +23,35 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ProgressBarAction implements InteractiveActionStrategy {
     private final RunePlayer player;
 
+    @Nullable
+    private BukkitTask task;
+    private boolean isCancelled;
+
     public ProgressBarAction(RunePlayer player) {
         this.player = player;
+        this.task = null;
+        this.isCancelled = false;
     }
 
-    public void startAction(ActionParams params) {
+    public InteractiveActionStrategy startAction(ActionParams params) {
         UUID uuid = player.getUUID();
         int steps = 10;
         long stepDuration = Math.max(1L, (params.getDurationMs() / 50L) / steps);
         AtomicInteger currentSteps = new AtomicInteger();
 
-        new BukkitRunnable() {
+        this.task = new BukkitRunnable() {
             @Override
             public void run() {
                 Player onlinePlayer = Bukkit.getPlayer(uuid);
 
-
                 if (onlinePlayer == null || !onlinePlayer.isOnline()) {
-                    player.setBusy(false);
+                    player.cancelActionTask(true);
                     this.cancel();
                     return;
                 }
 
 
-                if (!player.isBusy()) {
+                if (isCancelled) {
                     HudService.showFailTitle(player, "Task cancelled.");
                     this.cancel();
 
@@ -57,7 +64,7 @@ public class ProgressBarAction implements InteractiveActionStrategy {
 
 
                 if (currentSteps.incrementAndGet() >= steps) {
-                    player.setBusy(false);
+                    player.cancelActionTask(false);
                     this.cancel();
 
                     if (params.getSuccessSound() != null) params.getSuccessSound().play(onlinePlayer, true);
@@ -101,6 +108,14 @@ public class ProgressBarAction implements InteractiveActionStrategy {
 
             }
         }.runTaskTimer(RuneQuestPlugin.getInstance(), 0L, stepDuration);
+
+        return this;
+    }
+
+
+    @Override
+    public void cancelTask() {
+        isCancelled = true;
     }
 
 }

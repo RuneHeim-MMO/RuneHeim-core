@@ -139,10 +139,10 @@ public class RunePlayerManager {
     public void handleActionInterruption(Player player) {
         RunePlayer runePlayer = players.get(player.getUniqueId());
 
-        if (runePlayer == null) {
+        if (runePlayer == null || !runePlayer.isBusy()) {
             return;
         }
 
-        runePlayer.cancelActionTask();
+        runePlayer.cancelActionTask(true);
     }
 }
