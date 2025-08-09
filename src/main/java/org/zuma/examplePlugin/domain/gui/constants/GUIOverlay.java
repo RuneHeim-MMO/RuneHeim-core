@@ -11,7 +11,8 @@ public enum GUIOverlay {
     SPINNING_WHEEL_OVERLAY("⼥"),
     BANK_OVERLAY("╄"),
     INVESTMENT_BANKER_OVERLAY("┠"),
-    JEWELER_SHOP_OVERLAY("⽂");
+    JEWELER_SHOP_OVERLAY("⽂"),
+    XP_INVENTORY_OVERLAY("┒");
 
     private final String glyph;
 

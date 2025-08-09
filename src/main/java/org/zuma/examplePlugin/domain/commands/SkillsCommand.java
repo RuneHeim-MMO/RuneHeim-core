@@ -50,7 +50,7 @@ public class SkillsCommand implements BasicCommand {
 
             result = result
                     .append(progressBar)
-                    .append(Component.text(skill.getType().getSymbol(), NamedTextColor.WHITE))
+                    .append(Component.text(" " + skill.getType().getSymbol(), NamedTextColor.WHITE))
                     .append(Component.text("  " + skill.getType().getLabel() + ": " + skill.getBaseLevel(), NamedTextColor.GRAY))
                     .append(skill.getBonus() > 0 ? Component.text("+" + skill.getBonus(), NamedTextColor.GREEN) : Component.text(""))
                     .append(Component.text(" - ", NamedTextColor.GRAY))

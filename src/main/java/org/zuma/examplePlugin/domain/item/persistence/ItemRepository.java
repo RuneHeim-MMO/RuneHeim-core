@@ -149,7 +149,12 @@ public class ItemRepository {
                                 , 1)
                 ),
 
-                //Lotteries
+                // XP Lamps
+                new ItemEntity(new AbstractItemMeta(ItemType.XP_LAMP, ItemId.GENIE_XP_LAMP.asInt(), Material.COAL, ItemRarity.RARE, "Genie XP Lamp",
+                        List.of("Grants a magical XP boost.", "Use wisely to level up faster."), null, null, false), toVersionedJson(new XPLampMeta(500, List.of()), 1)),
+
+
+                // Lotteries
                 new ItemEntity(new AbstractItemMeta(ItemType.CHANCE_ITEM, ItemId.SCRATCH_CARD.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Scratch card", List.of("A mysterious ticket covered in silvery foil.", "Scratch away the surface to reveal your fortune.", "Win up to §62000§r coins - if luck’s on your side!"), null, null, true), toVersionedJson(
                         new ChanceItemMeta(List.of(DropTableId.SCRATCH_CARD_COINS_UNDER_2K_COINS.asInt()), SoundType.SCRATCH_TICKET_START, SoundType.SCRATCH_TICKET_FINISH), 1)),
 

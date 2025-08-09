@@ -14,7 +14,8 @@ public enum InventoryId {
     DRAKKAR_BLACKSMITH(8),
     BANK(9),
     INVESTMENT_BANKER(10),
-    JEWELER(11);
+    JEWELER(11),
+    XP_LAMP(12);
 
     private final int id;
 

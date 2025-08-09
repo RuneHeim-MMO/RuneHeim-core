@@ -2,6 +2,13 @@
   "providers": [
     {
       "type": "bitmap",
+      "file": "minecraft:font/gui/xp_lamp.png",
+      "ascent": 13,
+      "height": 168,
+      "chars": ["┒"]
+    },
+    {
+      "type": "bitmap",
       "file": "minecraft:font/gui/bank.png",
       "ascent": 13,
       "height": 222,

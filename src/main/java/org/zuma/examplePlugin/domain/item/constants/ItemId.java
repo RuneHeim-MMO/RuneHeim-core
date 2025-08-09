@@ -255,7 +255,9 @@ public enum ItemId {
     UNCUT_DIAMOND(2806),
     DIAMOND(2807),
 
-    SCRATCH_CARD(2900);
+    SCRATCH_CARD(2900),
+
+    GENIE_XP_LAMP(3000);
 
     private final int id;
 

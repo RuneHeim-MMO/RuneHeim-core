@@ -112,6 +112,9 @@ public enum SoundType {
     SCRATCH_TICKET_START("ITEM_BOOK_PAGE_TURN", false, 1.0f, 1.0f),
     SCRATCH_TICKET_FINISH("BLOCK_ANCIENT_DEBRIS_PLACE", false, 1.0f, 0.9f),
 
+    XP_LAMP_INVENTORY_OPEN("BLOCK_ENCHANTMENT_TABLE_USE", false, 1.0f, 1.5f),
+    XP_LAMP_SKILL_SELECT("ENTITY_PLAYER_LEVELUP", false, 1.0f, 1.2f),
+
     // AMBIENT
     VILLAGER_MAN_AMBIENT_1("vocal_villagers:entity.villager.ambient", true, 1, 0.75f),
     VILLAGER_MAN_AMBIENT_2("vocal_villagers:entity.villager.ambient", true, 1, 0.80f),

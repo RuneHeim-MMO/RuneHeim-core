@@ -23,7 +23,8 @@ public enum ItemType {
     RANGED_WEAPON_WITH_SOCKETS(19),
     ARROW(20),
     CURRENCY(21),
-    CHANCE_ITEM(22);
+    CHANCE_ITEM(22),
+    XP_LAMP(23);
 
     private final int key;
 

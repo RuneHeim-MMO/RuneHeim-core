@@ -1,0 +1,181 @@
+package org.zuma.examplePlugin.domain.gui.impl.individual;
+
+import com.google.gson.Gson;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.RayTraceResult;
+import org.bukkit.util.Vector;
+import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.constants.Icon;
+import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.core.handlers.IllegalItemWatchdog;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.meta.VersionedJson;
+import org.zuma.examplePlugin.core.utils.MathUtils;
+import org.zuma.examplePlugin.core.utils.PlayerUtils;
+import org.zuma.examplePlugin.core.utils.XpUtils;
+import org.zuma.examplePlugin.domain.block.BlockLoader;
+import org.zuma.examplePlugin.domain.block.constants.BlockType;
+import org.zuma.examplePlugin.domain.block.constants.ResourceNodeTypeId;
+import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
+import org.zuma.examplePlugin.domain.block.meta.HologramSide;
+import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
+import org.zuma.examplePlugin.domain.block.meta.v1.ResourceNodeMeta;
+import org.zuma.examplePlugin.domain.block.persistence.BlockEntity;
+import org.zuma.examplePlugin.domain.gui.base.IndividualGUI;
+import org.zuma.examplePlugin.domain.hud.HudService;
+import org.zuma.examplePlugin.domain.hud.LoadingBarBuilder;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.impl.XPLamp;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.skill.Skill;
+import org.zuma.examplePlugin.domain.skill.constants.SkillType;
+
+import javax.annotation.Nullable;
+import java.text.NumberFormat;
+import java.util.*;
+
+
+public class XPLampInventory extends IndividualGUI {
+    private final Set<Integer> ignoredSlots = new HashSet<>(Set.of(0, 1, 9, 10));
+
+    public XPLampInventory(String title, int id) {
+        super(title, id, 3);
+    }
+
+    private List<Component> getSkillTypeLore(RunePlayer player, SkillType type) {
+        Skill skill = player.getSkill(type);
+        List<Component> result = new ArrayList<>();
+
+        int currentLevel = skill.getBaseLevel();
+        int totalXp = (int) Math.round(skill.getXp());
+        boolean isMaxed = XpUtils.isMaxLevel(currentLevel);
+        int percentToNextLevel = isMaxed ? 100 : XpUtils.getProgressPercent(totalXp, currentLevel);
+        String formattedXp = NumberFormat.getNumberInstance().format(totalXp);
+
+        String formattedNextLevelXp;
+        if (isMaxed) {
+            formattedNextLevelXp = "MAX";
+        } else {
+            formattedNextLevelXp = NumberFormat.getNumberInstance().format(XpUtils.getXpForLevel(currentLevel + 1));
+        }
+
+        Component progressBar = new LoadingBarBuilder()
+                .totalSteps(100)
+                .currentStep(isMaxed ? 100 : percentToNextLevel)
+                .barLength(15)
+                .segment(Icon.PROGRESS_SHORT_SEGMENT.get())
+                .start(Icon.PROGRESS_SHORT_START.get())
+                .stop(Icon.PROGRESS_SHORT_END.get())
+                .emptyColor(Color.SKILL_BAR_EMPTY.asColor())
+                .fillColor(Color.SKILL_BAR_FILL.asColor())
+                .build();
+
+        result.add(progressBar.append(Component.text(" " + formattedXp + " XP" + "/" + formattedNextLevelXp + " XP", Color.ACCENT.asColor())));
+
+        return result;
+
+    }
+
+    @Nullable
+    public XPLamp getXPLampInHand(RunePlayer player) {
+        ItemStack inHand = PlayerUtils.getItemStackInHand(player.asBukkitPlayer());
+        AbstractItemType inHandType = RuneQuestPlugin.getItemRegistry().getType(inHand);
+
+        if (!(inHandType instanceof XPLamp lamp)) {
+            HudService.sendFailMessage(player, Component.text("Item in hand is not an XP lamp!"));
+            return null;
+        }
+
+        return lamp;
+    }
+
+    @Override
+    public boolean attemptOpenInventory(RunePlayer player, Runnable onFail) {
+        XPLamp inHandLamp = getXPLampInHand(player);
+
+        if (inHandLamp == null) {
+            return false;
+        }
+
+        Inventory inventory = getBaseInventory();
+        List<SkillType> types = Arrays.stream(SkillType.values()).filter(type -> !inHandLamp.getDisabledSkills().contains(type)).toList();
+
+        int slot = 0;
+        int index = 0;
+        for (SkillType skill : types) {
+            // Find the next slot that is NOT in ignoredSlots
+            while (ignoredSlots.contains(slot)) {
+                slot++;
+            }
+            Skill playerSkill = player.getSkill(skill);
+
+            ItemStack item = new ItemStack(Material.PAPER);
+            ItemMeta meta = item.getItemMeta();
+
+            meta.displayName(Component.text(skill.getSymbol(), NamedTextColor.WHITE)
+                    .append(Component.text("  " + skill.getLabel() + ": " + playerSkill.getBaseLevel(), NamedTextColor.GRAY)).decoration(TextDecoration.ITALIC, false));
+
+            meta.lore(getSkillTypeLore(player, skill).stream().map(component -> component.decoration(TextDecoration.ITALIC, false)).toList());
+
+            item.setItemMeta(meta);
+            IllegalItemWatchdog.tagIllegalItem(item);
+
+            super.assignMenuValue(item, index);
+            inventory.setItem(slot, item);
+
+            slot++;
+            index++;
+        }
+
+        SoundType.XP_LAMP_INVENTORY_OPEN.play(player, true);
+        player.asBukkitPlayer().openInventory(inventory);
+        return true;
+    }
+
+    @Override
+    public void onInventoryClick(InventoryClickEvent event, int slot, RunePlayer player) {
+        event.setCancelled(true);
+
+        ItemStack currentItem = event.getCurrentItem();
+
+        if (currentItem == null) {
+            return;
+        }
+
+        Integer menuValue = getMenuValue(currentItem);
+
+        if (menuValue == null) {
+            return;
+        }
+
+        XPLamp inHandLamp = getXPLampInHand(player);
+
+        if (inHandLamp == null) {
+            return;
+        }
+
+        List<SkillType> types = Arrays.stream(SkillType.values()).filter(type -> !inHandLamp.getDisabledSkills().contains(type)).toList();
+        SkillType selectedSkill = types.get(menuValue);
+
+        if (selectedSkill == null) {
+            return;
+        }
+
+        PlayerUtils.subtractOneFromMainHand(player);
+        player.distributeXp(selectedSkill, inHandLamp.getXpReward());
+        player.asBukkitPlayer().closeInventory();
+        SoundType.XP_LAMP_SKILL_SELECT.play(player, true);
+    }
+
+}

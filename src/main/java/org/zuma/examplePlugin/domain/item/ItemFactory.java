@@ -50,9 +50,31 @@ public class ItemFactory {
             case ARROW -> createArrowItem(meta, json);
             case CURRENCY -> createCurrencyItem(meta);
             case CHANCE_ITEM -> createChanceItem(meta, json);
+            case XP_LAMP -> createXPLampItem(meta, json);
             default -> throw new IllegalArgumentException("Unknown item type: " + meta.type());
         };
     }
+
+    private XPLamp createXPLampItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create " + meta.type() + " " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                XPLampMeta deserialized = new Gson().fromJson(json.meta(), XPLampMeta.class);
+                XPLamp item = new XPLamp(meta);
+
+                item.setDisabledSkills(deserialized.disabledSkills());
+                item.setXpReward(deserialized.xpReward());
+
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
+    }
+
 
     private SocketedTool createToolWithSockets(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {

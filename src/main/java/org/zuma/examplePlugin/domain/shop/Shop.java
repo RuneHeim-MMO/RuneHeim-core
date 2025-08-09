@@ -87,6 +87,10 @@ public class Shop {
             throw new IllegalStateException("Invalid item");
         }
 
+        if (!type.isTradeable) {
+            throw new IllegalStateException("This item is untradeable!");
+        }
+
         if (!stock.containsKey(type.id)) {
             throw new IllegalStateException("You cannot sell this item to this shop!");
         }
