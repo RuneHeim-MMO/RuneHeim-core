@@ -9,6 +9,13 @@
     },
     {
       "type": "bitmap",
+      "file": "minecraft:font/gui/location_discovery.png",
+      "ascent": 13,
+      "height": 222,
+      "chars": ["╣"]
+    },
+    {
+      "type": "bitmap",
       "file": "minecraft:font/gui/bank.png",
       "ascent": 13,
       "height": 222,
@@ -132,6 +139,13 @@
       "ascent": 9,
       "height": 12,
       "chars": ["⤪"]
+   },
+   {
+      "type": "bitmap",
+      "file": "minecraft:font/icons/map.png",
+      "ascent": 9,
+      "height": 12,
+      "chars": ["⏜"]
    },
    {
       "type": "bitmap",
@@ -479,14 +493,14 @@
     {
       "type": "bitmap",
       "file": "minecraft:font/icons/error.png",
-      "ascent": 10,
+      "ascent": 8,
       "height": 10,
       "chars": ["ⵅ"]
     },
     {
       "type": "bitmap",
       "file": "minecraft:font/icons/info.png",
-      "ascent": 10,
+      "ascent": 9,
       "height": 10,
       "chars": ["ⓤ"]
     },

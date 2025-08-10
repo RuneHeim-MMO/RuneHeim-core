@@ -214,6 +214,11 @@ public class ItemRepository {
 
 
                 // Tools
+                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.COMPASS.asInt(), Material.COMPASS, ItemRarity.COMMON, "Compass", List.of("A simple tool to help you find your way."), null, null, true),
+                        toVersionedJson(
+                                new EquipableTypeMeta(null,
+                                        null, null), 1)),
+
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.SMITHING_HAMMER.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Hammer", List.of("A sturdy hammer used for refining and forging equipment."), null, null, true),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,

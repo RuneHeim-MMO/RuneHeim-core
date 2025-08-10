@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.gui.impl.individual;
+package org.zuma.examplePlugin.domain.gui.impl.individual.recipe;
 
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.gui.base.RecipeInventory;
@@ -9,14 +9,14 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
-public class SpinningWheelInventory extends RecipeInventory {
-    public SpinningWheelInventory(String title, int id) {
-        super(title, id, 3, "Spin", 1, 5, new HashSet<>(Arrays.asList(0, 1, 9, 10)));
+public class FurnaceInventory extends RecipeInventory {
+    public FurnaceInventory(String title, int id) {
+        super(title, id, 2, "Smelt", 1, 5, new HashSet<>(Arrays.asList(0, 1, 9, 10)));
     }
 
     @Override
     public List<AbstractRecipe> getRecipes() {
-        return RuneQuestPlugin.getRecipeRegistry().getRecipesByType(RecipeType.SPINNING_WHEEL_RECIPE, true);
+        return RuneQuestPlugin.getRecipeRegistry().getRecipesByType(RecipeType.SMELTING_RECIPE, true);
     }
 
     @Override

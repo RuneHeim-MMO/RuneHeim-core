@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.gui.impl.individual;
+package org.zuma.examplePlugin.domain.gui.impl.individual.recipe;
 
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;

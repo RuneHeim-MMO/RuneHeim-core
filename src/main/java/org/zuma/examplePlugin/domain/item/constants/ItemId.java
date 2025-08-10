@@ -13,6 +13,7 @@ public enum ItemId {
     SHEARS(3),
     CHISEL(4),
     KNIFE(5),
+    COMPASS(6),
 
     COPPER_ORE(100),
     IRON_ORE(101),

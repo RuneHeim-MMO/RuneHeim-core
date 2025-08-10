@@ -9,7 +9,6 @@ import org.bukkit.inventory.InventoryHolder;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.domain.bank.BankContentRepository;
 import org.zuma.examplePlugin.domain.bank.BankQueryLockController;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerBlock;
@@ -20,6 +19,7 @@ import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.gui.impl.individual.*;
 import org.zuma.examplePlugin.domain.gui.impl.individual.admin.BlockInvCreatorInventory;
 import org.zuma.examplePlugin.domain.gui.impl.individual.admin.NodeCreatorInventory;
+import org.zuma.examplePlugin.domain.gui.impl.individual.recipe.*;
 import org.zuma.examplePlugin.domain.mob.base.AbstractInventoryOpener;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
@@ -71,6 +71,7 @@ public class GUIHandler {
         this.registry.register(InventoryId.BANK.asInt(), () -> new BankInventory(GUIOverlay.BANK_OVERLAY.asGlyph() + "§f" + Icon.MONEY_BAG.get() + "§f Bank", InventoryId.BANK.asInt(), bankQueryLockController));
         this.registry.register(InventoryId.INVESTMENT_BANKER.asInt(), () -> new ShopInventory(GUIOverlay.INVESTMENT_BANKER_OVERLAY.asGlyph() + "§f" + Icon.COIN_PILE.get() + "§f Investment Banker", InventoryId.INVESTMENT_BANKER.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.INVESTMENT_BANKER.asInt())));
         this.registry.register(InventoryId.XP_LAMP.asInt(), () -> new XPLampInventory(GUIOverlay.XP_INVENTORY_OVERLAY.asGlyph() + "§f" + Icon.EXPERIENCE.get() + "§f XP Lamp", InventoryId.XP_LAMP.asInt()));
+        this.registry.register(InventoryId.TERRITORY_INVENTORY.asInt(), () -> new TerritoriesInventory(GUIOverlay.LOCATION_DISCOVERY_OVERLAY.asGlyph() + "§f" + Icon.MAP.get() + "§f Discovered Locations", InventoryId.TERRITORY_INVENTORY.asInt()));
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
     }

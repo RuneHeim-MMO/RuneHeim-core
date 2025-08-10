@@ -133,7 +133,8 @@ public enum RecipeId {
     SAPPHIRE(1700),
     EMERALD(1701),
     RUBY(1702),
-    DIAMOND(1703);
+    DIAMOND(1703),
+    COMPASS(1800);
 
 
     private final int id;

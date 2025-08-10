@@ -428,6 +428,18 @@ public class RecipeRepository {
                 ), null),
 
                 // Tools
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.COMPASS.getId(), RecipeType.SMITHING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 7)),
+                        List.of(
+                                new IngredientRecord(ItemId.IRON_BAR, 1, true, false),
+                                new IngredientRecord(ItemId.LOG, 1, true, false),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.COMPASS, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 20)), null
+                ), null),
+
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.KNIFE.getId(), RecipeType.SMITHING_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 8)),
                         List.of(

@@ -39,7 +39,8 @@ public enum MarkerType {
     FLAX("flax-markers", "Flax", "./assets/markers/flax.png"),
 
     // TODO
-    FUSION_MASTER("fusion-masters","Fusion Masters", "");
+    FUSION_MASTER("fusion-masters", "Fusion Masters", ""),
+    AREAS("areas", "Areas", "");
 
 
     private final String id, label, iconURL;
@@ -61,4 +62,4 @@ public enum MarkerType {
     public String getIconURL() {
         return iconURL;
     }
-    }
+}

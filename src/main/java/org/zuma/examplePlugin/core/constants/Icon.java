@@ -77,6 +77,7 @@ public enum Icon {
     EXPERIENCE("⭮"),
     LEVEL("┚"),
     SPROUT("✦"),
+    MAP("⏜"),
 
     GREEN_GEM("⮩"),
 

@@ -5,14 +5,13 @@ import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.MathUtils;
-import org.zuma.examplePlugin.domain.hud.HudService;
+import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
@@ -38,6 +37,10 @@ public class TerritoryHandler {
     @Nullable
     public Territory getPlayersTerritory(RunePlayer player) {
         return lastPlayerTerritory.get(player.getUUID());
+    }
+
+    public List<Territory> getTerritoryList() {
+        return this.territoryList;
     }
 
     private void loadTerritories() {
@@ -105,8 +108,9 @@ public class TerritoryHandler {
             runePlayer.getDiscoveredTerritoryIds().add(territory.getId());
             SoundType.TERRITORY_DISCOVERY.play(player, false);
 
-            Component hoverText = Component.text(territory.getDescription(), Color.SUBTITLE.asColor());
-            player.sendMessage(Icon.INFO.asComponent().append(Component.text("New location discovered: " + territory.getName() + "!", NamedTextColor.AQUA)).hoverEvent(HoverEvent.showText(hoverText)));
+            Component hoverText = TextUtils.getChatTerritoryHoverComponent(runePlayer, territory);
+            player.sendMessage(Icon.INFO.asComponent().append(Component.text("New location discovered: ", Color.INFO.asColor())
+                    .append(Icon.MAP.asComponent().append(Component.text(territory.getName() + "!", NamedTextColor.AQUA)).hoverEvent(HoverEvent.showText(hoverText)))));
         }
 
         player.showTitle(Title.title(

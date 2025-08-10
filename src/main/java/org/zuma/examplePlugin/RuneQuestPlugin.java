@@ -63,6 +63,7 @@ import org.zuma.examplePlugin.domain.shop.persistence.ShopRepository;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneHandler;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneListener;
 import org.zuma.examplePlugin.domain.spawnzone.persistence.SpawnZoneRepository;
+import org.zuma.examplePlugin.domain.territory.Territory;
 import org.zuma.examplePlugin.domain.territory.TerritoryHandler;
 import org.zuma.examplePlugin.domain.territory.TerritoryRepository;
 import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
@@ -185,6 +186,9 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         ShopHandler shopHandler = new ShopHandler(shopRegistry, shopRepository);
         shopHandler.initializeShops();
 
+        territoryHandler = new TerritoryHandler(new TerritoryRepository());
+        territoryHandler.initialize();
+
         guiHandler = new GUIHandler(new GUIRegistry(), runePlayerManager);
         GUIListener guiListener = new GUIListener(guiHandler);
         getServer().getPluginManager().registerEvents(guiListener, pluginInstance);
@@ -208,9 +212,6 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         CityGuardHandler cityGuardHandler = new CityGuardHandler();
         getServer().getPluginManager().registerEvents(cityGuardHandler, pluginInstance);
 
-        territoryHandler = new TerritoryHandler(new TerritoryRepository());
-        territoryHandler.initialize();
-
         initializeMap();
 
 
@@ -233,9 +234,11 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static void reloadMarkers() {
         Collection<POIMarkerable> poiMarkers = new ArrayList<>(blockManager.getAllBlocks());
+        Collection<Territory> territories = new ArrayList<>(territoryHandler.getTerritoryList());
 
         markerHandler.clearMarkers();
         markerHandler.renderMarkers(poiMarkers);
+        markerHandler.renderAreas(territories);
     }
 
     private void registerCommands() {

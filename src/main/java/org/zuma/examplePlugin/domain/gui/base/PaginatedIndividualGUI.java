@@ -115,7 +115,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
     public ItemStack nextPageIcon() {
         boolean enabled = page < maxPages;
         ItemStack icon = (enabled ? GUIControl.CHEVRON_RIGHT : GUIControl.CHEVRON_RIGHT_DISABLED).asItemstack(Component.text("Next page", NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
-        if (enabled) super.assignMenuValue(icon, 10000);
+        super.assignMenuValue(icon, 10000);
 
         return icon;
     }
@@ -123,7 +123,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
     public ItemStack previousPageIcon() {
         boolean enabled = page > 1;
         ItemStack icon = (enabled ? GUIControl.CHEVRON_LEFT : GUIControl.CHEVRON_LEFT_DISABLED).asItemstack(Component.text("Previous page", NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
-        if (enabled) super.assignMenuValue(icon, -10000);
+        super.assignMenuValue(icon, -10000);
 
         return icon;
     }
@@ -173,7 +173,6 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
         }
 
         Integer menuValue = getMenuValue(currentItem);
-
 
         if (menuValue != null && menuValue == 10000) {
             nextPage();

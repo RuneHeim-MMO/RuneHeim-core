@@ -7,10 +7,50 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.kyori.adventure.title.Title;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.territory.Territory;
 
+import java.text.DecimalFormat;
 import java.time.Duration;
+import java.util.List;
 
 public class TextUtils {
+    private final static DecimalFormat df = new DecimalFormat("#,###");
+
+    private static List<Component> buildTerritoryComponents(RunePlayer player, Territory territory) {
+        int area = (int) (Math.PI * territory.getRadius() * territory.getRadius());
+        boolean isUnlocked = player.getDiscoveredTerritoryIds().contains(territory.getId());
+
+        return List.of(
+                Component.text(territory.getDescription(), Color.ITEM_LORE_DESCRIPTION.asColor()),
+
+                Component.text("Area: ", Color.ITEM_LORE_DESCRIPTION.asColor())
+                        .append(Component.text(df.format(area) + " blocks.", Color.INFO.asColor())),
+
+                Component.empty(),
+
+                Component.text(isUnlocked ? "Discovered" : "Not Discovered")
+                        .color(isUnlocked ? Color.SUCCESS.asColor() : Color.ERROR.asColor()),
+
+                Component.text("Level Range: ", Color.ITEM_LORE_DESCRIPTION.asColor())
+                        .append(Component.text(TextUtils.getLegacyColorCodeForLevel(territory.getMinLevel()) + territory.getMinLevel()))
+                        .append(Component.text(" - ", Color.ITEM_LORE_DESCRIPTION.asColor()))
+                        .append(Component.text(TextUtils.getLegacyColorCodeForLevel(territory.getMaxLevel()) + territory.getMaxLevel()))
+        );
+    }
+
+    public static List<Component> getLoreTerritoryDescription(RunePlayer player, Territory territory) {
+        return buildTerritoryComponents(player, territory);
+    }
+
+    public static Component getChatTerritoryHoverComponent(RunePlayer player, Territory territory) {
+        List<Component> components = buildTerritoryComponents(player, territory);
+        Component result = Component.empty();
+        for (Component c : components) {
+            result = result.append(c).append(Component.newline());
+        }
+        return result;
+    }
 
     public static String centerText(String text, int width) {
         String plainText = text.replaceAll("§.", "");
