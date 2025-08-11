@@ -11,7 +11,6 @@ import java.util.UUID;
 public class DialogHandler {
     private final HashMap<UUID, Dialog> activeDialogs = new HashMap<>();
 
-
     public void abortDialog(RunePlayer player) {
         this.abortDialog(player.getUUID());
     }
@@ -46,6 +45,11 @@ public class DialogHandler {
 
     @Nullable
     public Dialog getActivePlayerDialog(RunePlayer player) {
-        return activeDialogs.get(player.getUUID());
+        return this.getActivePlayerDialog(player.getUUID());
+    }
+
+    @Nullable
+    public Dialog getActivePlayerDialog(UUID uuid) {
+        return activeDialogs.get(uuid);
     }
 }

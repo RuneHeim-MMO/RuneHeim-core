@@ -99,6 +99,11 @@ public abstract class DialogStep {
             @Override
             public void run() {
 
+                if (parent.isAborted()) {
+                    this.cancel();
+                    return;
+                }
+
                 if (player == null || player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) {
                     parent.cleanUp();
                     this.cancel();

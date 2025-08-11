@@ -20,6 +20,7 @@ public class Dialog {
     private int nextStepIndex, initialHeldSlot;
     private final UUID dialogHolderUUID;
     private UUID participantUUID;
+    private boolean aborted = false;
 
     @Nullable
     private Runnable onDialogFinish;
@@ -50,6 +51,7 @@ public class Dialog {
     }
 
     public void cleanUp() {
+        aborted = true;
         scenario.forEach(DialogStep::cleanUp);
     }
 
@@ -117,5 +119,9 @@ public class Dialog {
 
     public String getId() {
         return id;
+    }
+
+    public boolean isAborted() {
+        return aborted;
     }
 }

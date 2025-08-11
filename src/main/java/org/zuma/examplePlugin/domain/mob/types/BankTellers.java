@@ -23,19 +23,19 @@ public class BankTellers {
     public static void registerMobs(MobTypeRegistry registry) {
         registry.register(MobType.INVESTMENT_BANKER.getId(), () -> new InventoryOpenerMob(Icon.COIN_PILE.get() + " Investment Banker", EquipmentSet.INVESTMENT_BANKER,
                 MobBehaviors.VILLAGER_MAN_4.getBehavior(), "investment_banker", null, InventoryId.INVESTMENT_BANKER.asInt(), 25)
-                .attachDialog(investmentBankerDialog, "Wanna trade?", "§aSure", "§cNo", "Bye!"));
+                .attachDialog(investmentBankerDialog, "Wanna trade?", "§aSure" + " §f" + Icon.COIN_HANDFUL.get(), "§cNo", "Bye!"));
 
         registry.register(MobType.BANK_TELLER_1.getId(), () -> new InventoryOpenerMob(Icon.MONEY_BAG.get() + " Bank Teller", EquipmentSet.BANK_TELLER,
                 MobBehaviors.VILLAGER_MAN_4.getBehavior(), "bank_teller_1", null, InventoryId.BANK.asInt(), 0)
-                .attachDialog(bankerDialog, "I’ve kept everything just as you left it.", "§aOpen bank", "§cCancel", "See you!"));
+                .attachDialog(bankerDialog, "I’ve kept everything just as you left it.", "§aOpen bank" + " §f" + Icon.MONEY_BAG.get(), "§cCancel", "See you!"));
 
         registry.register(MobType.BANK_TELLER_2.getId(), () -> new InventoryOpenerMob(Icon.MONEY_BAG.get() + " Bank Teller", EquipmentSet.BANK_TELLER,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "bank_teller_2", null, InventoryId.BANK.asInt(), 0)
-                .attachDialog(bankerDialog, "Your valuables are safe and sound. Want to see them?", "§aOpen bank", "§cCancel", "See you!"));
+                .attachDialog(bankerDialog, "Your valuables are safe and sound. Want to see them?", "§aOpen bank" + " §f" + Icon.MONEY_BAG.get(), "§cCancel", "See you!"));
 
         registry.register(MobType.BANK_TELLER_3.getId(), () -> new InventoryOpenerMob(Icon.MONEY_BAG.get() + " Bank Teller", EquipmentSet.BANK_TELLER,
                 MobBehaviors.VILLAGER_WOMAN_3.getBehavior(), "bank_teller_3", null, InventoryId.BANK.asInt(), 0)
-                .attachDialog(bankerDialog, "Do you need to make a deposit or withdrawal?", "§aOpen bank", "§cCancel", "See you!"));
+                .attachDialog(bankerDialog, "Do you need to make a deposit or withdrawal?", "§aOpen bank" + " §f" + Icon.MONEY_BAG.get(), "§cCancel", "See you!"));
 
 
     }
