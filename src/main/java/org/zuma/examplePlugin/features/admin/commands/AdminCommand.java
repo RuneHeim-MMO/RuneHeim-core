@@ -20,6 +20,12 @@ import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
+import org.zuma.examplePlugin.domain.dialog.Dialog;
+import org.zuma.examplePlugin.domain.dialog.DialogBuilder;
+import org.zuma.examplePlugin.domain.dialog.DialogText;
+import org.zuma.examplePlugin.domain.dialog.InteractiveDialogOption;
+import org.zuma.examplePlugin.domain.dialog.impl.InteractiveDialogStep;
+import org.zuma.examplePlugin.domain.dialog.impl.PassiveDialogStep;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
@@ -162,8 +168,44 @@ public class AdminCommand implements BasicCommand {
 
         if (Objects.equals(args[0], "map")) {
             RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.TERRITORY_INVENTORY.asInt(), runePlayer, null);
-
         }
+/*
+        if (Objects.equals(args[0], "dialog")) {
+            var dialog = DialogBuilder.create("some id")
+                    .passiveStep(p -> p
+                            .text("Hello there stranger!")
+                    )
+                    .passiveStep(p -> p
+                            .text("Uhhh, I am having a problem")
+                    )
+                    .interactiveStep(i -> i
+                            .text("Would u like to solve it for $500?")
+                            .option("Yes", o -> o
+                                    .followupSteps(f -> f
+                                            .passiveStep(p -> p
+                                                    .text("Awesome, lets get it started then!")
+                                                    .text("We can continue it, right?")
+                                            )
+                                            .interactiveStep(ii -> ii
+                                                    .text("Continue?")
+                                                    .option("Yes", oo -> oo.action(() -> player.sendMessage("You pressed yes")))
+                                                    .option("No", oo -> oo.action(() -> player.sendMessage("You pressed nope")))
+                                            )
+                                    )
+                                    .action(() -> player.sendMessage("You pressed yes"))
+                            )
+                            .option("No", o -> o
+                                    .followupSteps(f -> f
+                                            .passiveStep(p -> p.text("RIP!"))
+                                    )
+                                    .action(() -> player.sendMessage("You pressed nope"))
+                            )
+                    )
+
+
+            RuneQuestPlugin.getDialogHandler().startDialog(runePlayer, dialog);
+
+        }*/
 
         if (Objects.equals(args[0], "mob") && args.length == 2) {
             String input = args[1].toLowerCase();

@@ -27,10 +27,13 @@ public abstract class AbstractInventoryOpener extends FriendlyImmortalMob {
             return;
         }
 
+        super.playSound(MobBehavior.MobSoundType.IDLE);;
+
         RuneQuestPlugin.getGUIHandler().openInventory(inventoryId, player, () -> {
             onInventoryClose(event, player);
+            super.playSound(MobBehavior.MobSoundType.IDLE);
         }, this, null);
-        super.playSound(MobBehavior.MobSoundType.IDLE);
+
         event.setCancelled(true);
     }
 

@@ -30,6 +30,8 @@ import org.zuma.examplePlugin.domain.command.SkillsCommand;
 import org.zuma.examplePlugin.domain.combat.ranged.BowSpeedHandler;
 import org.zuma.examplePlugin.domain.cooldown.InteractionSpeedHandler;
 import org.zuma.examplePlugin.domain.combat.melee.WeaponSpeedHandler;
+import org.zuma.examplePlugin.domain.dialog.DialogHandler;
+import org.zuma.examplePlugin.domain.dialog.DialogListener;
 import org.zuma.examplePlugin.domain.droptable.DropTableHandler;
 import org.zuma.examplePlugin.domain.droptable.persistence.DropTableRepository;
 import org.zuma.examplePlugin.domain.fairy.FairyHandler;
@@ -92,6 +94,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private static VisualMeleeSpeedHandler visualMeleeSpeedHandler;
     private static SpawnZoneHandler spawnZoneHandler;
     private static TerritoryHandler territoryHandler;
+    private static DialogHandler dialogHandler;
 
     private MobHandler mobHandler;
     private HikariPool pool;
@@ -212,6 +215,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         CityGuardHandler cityGuardHandler = new CityGuardHandler();
         getServer().getPluginManager().registerEvents(cityGuardHandler, pluginInstance);
 
+        dialogHandler = new DialogHandler();
+        DialogListener dialogListener = new DialogListener(dialogHandler);
+        getServer().getPluginManager().registerEvents(dialogListener, pluginInstance);
+
         initializeMap();
 
 
@@ -258,12 +265,6 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         initializeMySQL();
         initializePlugin();
         registerCommands();
-
-        for (Entity entity : Bukkit.getWorld("world").getEntities()) {
-            if (entity instanceof Display display) {
-                display.remove();
-            }
-        }
 
         if (mobHandler != null) {
             mobHandler.cleanup();
@@ -370,6 +371,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static TerritoryHandler getTerritoryHandler() {
         return territoryHandler;
+    }
+
+    public static DialogHandler getDialogHandler() {
+        return dialogHandler;
     }
 
 }

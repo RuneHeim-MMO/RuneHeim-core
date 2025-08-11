@@ -17,7 +17,6 @@ public class SpawnZoneListener implements Listener {
     @EventHandler
     public void onChunkUnload(ChunkUnloadEvent event) {
         handler.onChunkUnload(event);
-
     }
 
     @EventHandler
