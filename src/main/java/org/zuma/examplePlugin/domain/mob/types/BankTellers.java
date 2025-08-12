@@ -31,11 +31,11 @@ public class BankTellers {
 
         registry.register(MobType.BANK_TELLER_2.getId(), () -> new InventoryOpenerMob(Icon.MONEY_BAG.get() + " Bank Teller", EquipmentSet.BANK_TELLER,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "bank_teller_2", null, InventoryId.BANK.asInt(), 0)
-                .attachDialog(bankerDialog, "Your valuables are safe and sound. Want to see them?", "§aOpen bank" + " §f" + Icon.MONEY_BAG.get(), "§cCancel", "See you!"));
+                .attachDialog(bankerDialog, "Want to see your valuables?", "§aOpen bank" + " §f" + Icon.MONEY_BAG.get(), "§cCancel", "See you!"));
 
         registry.register(MobType.BANK_TELLER_3.getId(), () -> new InventoryOpenerMob(Icon.MONEY_BAG.get() + " Bank Teller", EquipmentSet.BANK_TELLER,
                 MobBehaviors.VILLAGER_WOMAN_3.getBehavior(), "bank_teller_3", null, InventoryId.BANK.asInt(), 0)
-                .attachDialog(bankerDialog, "Do you need to make a deposit or withdrawal?", "§aOpen bank" + " §f" + Icon.MONEY_BAG.get(), "§cCancel", "See you!"));
+                .attachDialog(bankerDialog, "Do you need to make a deposit?", "§aOpen bank" + " §f" + Icon.MONEY_BAG.get(), "§cCancel", "See you!"));
 
 
     }

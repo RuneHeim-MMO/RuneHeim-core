@@ -25,6 +25,7 @@ import org.zuma.examplePlugin.domain.combat.ranged.BowVelocityHandler;
 import org.zuma.examplePlugin.domain.combat.HitHandler;
 import org.zuma.examplePlugin.domain.combat.HitListener;
 import org.zuma.examplePlugin.domain.combat.melee.VisualMeleeSpeedHandler;
+import org.zuma.examplePlugin.domain.command.ConsoleActionCommand;
 import org.zuma.examplePlugin.domain.command.PouchCommand;
 import org.zuma.examplePlugin.domain.command.SkillsCommand;
 import org.zuma.examplePlugin.domain.combat.ranged.BowSpeedHandler;
@@ -256,6 +257,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                 event -> event.registrar().register("skills", new SkillsCommand()));
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("pouch", new PouchCommand()));
+
+        this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("action", new ConsoleActionCommand()));
+
 
     }
 
