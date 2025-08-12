@@ -259,7 +259,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                 event -> event.registrar().register("pouch", new PouchCommand()));
 
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> event.registrar().register("action", new ConsoleActionCommand()));
+                event -> event.registrar().register("actions", new ConsoleActionCommand()));
 
 
     }

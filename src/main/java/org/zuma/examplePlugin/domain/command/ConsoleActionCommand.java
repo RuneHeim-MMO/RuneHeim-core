@@ -23,7 +23,7 @@ public class ConsoleActionCommand implements BasicCommand {
 
         if (sender instanceof Player bukkitPlayer) {
             if (args.length != 1) {
-                sender.sendMessage(Component.text("Invalid /action format! Use /action {action}.").color(Color.ERROR.asColor()));
+                sender.sendMessage(Component.text("Invalid /actions format! Use /actions {actions}.").color(Color.ERROR.asColor()));
                 return;
             }
 
@@ -33,11 +33,11 @@ public class ConsoleActionCommand implements BasicCommand {
             }
 
             RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(bukkitPlayer);
-            ScriptedActionHandler.executeAction(args[0], runePlayer, null, new ScriptedActionHandler.ActionCaller(ScriptedActionHandler.ActionCallerType.PLAYER_COMMAND, "{username: " + bukkitPlayer.getName() + "}"));
+            ScriptedActionHandler.executeAction(args[0], runePlayer, null, new ScriptedActionHandler.ActionCaller(ScriptedActionHandler.ActionCallerType.PLAYER_COMMAND, "{username: " + bukkitPlayer.getName() + "}"), null);
         } else {
 
             if (args.length != 3) {
-                sender.sendMessage(Component.text("Invalid /action format! Use /action {target_player} {action} {executor_identifier}.").color(Color.ERROR.asColor()));
+                sender.sendMessage(Component.text("Invalid /actions format! Use /actions {target_player} {actions} {executor_identifier}.").color(Color.ERROR.asColor()));
                 return;
             }
 
@@ -55,7 +55,7 @@ public class ConsoleActionCommand implements BasicCommand {
                 return;
             }
 
-            ScriptedActionHandler.executeAction(args[1], runePlayer, null, new ScriptedActionHandler.ActionCaller(ScriptedActionHandler.ActionCallerType.CONSOLE_COMMAND, args[2]));
+            ScriptedActionHandler.executeAction(args[1], runePlayer, null, new ScriptedActionHandler.ActionCaller(ScriptedActionHandler.ActionCallerType.CONSOLE_COMMAND, args[2]), null);
 
         }
 

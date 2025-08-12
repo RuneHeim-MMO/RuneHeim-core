@@ -3,7 +3,6 @@ package org.zuma.examplePlugin.domain.mob.impl;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.EntityType;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.mob.base.AbstractInventoryOpener;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
@@ -18,7 +17,7 @@ public class FusionMaster extends AbstractInventoryOpener {
     }
 
     @Override
-    public void onInventoryClose(PlayerInteractAtEntityEvent event, RunePlayer player) {
+    public void onInventoryClose(RunePlayer player) {
         super.playSound(MobBehavior.MobSoundType.NEGATIVE);
     }
 }

@@ -16,32 +16,38 @@ import java.util.function.Supplier;
 public class BankTellers {
 
     private static final Supplier<DialogBuilder> bankerDialog = () -> DialogBuilder.create("banker-dialog")
-            .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()));
+            .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()))
+            .interactiveStep(c -> c.text("Open bank?")
+                    .option("§aYes" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
+                    .option("§cNo")).passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList()));
 
     private static final Supplier<DialogBuilder> investmentBankerDialog = () -> DialogBuilder.create("investment-banker-dialog")
             .passiveStep(p -> p.randomText(List.of("Welcome, {PLAYER_NAME}.",
                     "Good to see you, {PLAYER_NAME}.",
                     "Ready to invest?",
                     "Greetings, {PLAYER_NAME}.",
-                    "Let’s talk business.")));
+                    "Let’s talk business.")))
+            .interactiveStep(c -> c.randomText(DialogPreset.WANT_TO_SEE_STOCK.getList())
+                    .option("§aSure" + " §f" + Icon.COIN_HANDFUL.get(), b -> b.action("dialog_holder_forward_interaction"))
+                    .option("§cNot now")).passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList()));
 
 
     public static void registerMobs(MobTypeRegistry registry) {
         registry.register(MobType.INVESTMENT_BANKER.getId(), () -> new InventoryOpenerMob(Icon.COIN_PILE.get() + " Investment Banker", EquipmentSet.INVESTMENT_BANKER,
                 MobBehaviors.VILLAGER_MAN_4.getBehavior(), "investment_banker", null, InventoryId.INVESTMENT_BANKER.asInt(), 25)
-                .attachDialog(investmentBankerDialog, "Wanna trade?", "§aSure" + " §f" + Icon.COIN_HANDFUL.get(), "§cNo", "Bye!"));
+                .attachDialog(investmentBankerDialog));
 
         registry.register(MobType.BANK_TELLER_1.getId(), () -> new InventoryOpenerMob(Icon.MONEY_BAG.get() + " Bank Teller", EquipmentSet.BANK_TELLER,
                 MobBehaviors.VILLAGER_MAN_4.getBehavior(), "bank_teller_1", null, InventoryId.BANK.asInt(), 0)
-                .attachDialog(bankerDialog, "I’ve kept everything just as you left it.", "§aOpen bank" + " §f" + Icon.MONEY_BAG.get(), "§cCancel", "See you!"));
+                .attachDialog(bankerDialog));
 
         registry.register(MobType.BANK_TELLER_2.getId(), () -> new InventoryOpenerMob(Icon.MONEY_BAG.get() + " Bank Teller", EquipmentSet.BANK_TELLER,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "bank_teller_2", null, InventoryId.BANK.asInt(), 0)
-                .attachDialog(bankerDialog, "Want to see your valuables?", "§aOpen bank" + " §f" + Icon.MONEY_BAG.get(), "§cCancel", "See you!"));
+                .attachDialog(bankerDialog));
 
         registry.register(MobType.BANK_TELLER_3.getId(), () -> new InventoryOpenerMob(Icon.MONEY_BAG.get() + " Bank Teller", EquipmentSet.BANK_TELLER,
                 MobBehaviors.VILLAGER_WOMAN_3.getBehavior(), "bank_teller_3", null, InventoryId.BANK.asInt(), 0)
-                .attachDialog(bankerDialog, "Do you need to make a deposit?", "§aOpen bank" + " §f" + Icon.MONEY_BAG.get(), "§cCancel", "See you!"));
+                .attachDialog(bankerDialog));
 
 
     }

@@ -4,28 +4,25 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.action.ScriptedActionHandler;
-import org.zuma.examplePlugin.domain.dialog.Dialog;
 import org.zuma.examplePlugin.domain.dialog.DialogText;
-import org.zuma.examplePlugin.domain.dialog.InteractiveDialogOption;
 import org.zuma.examplePlugin.domain.dialog.base.DialogStep;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PassiveDialogStep extends DialogStep {
     private boolean timerCancelled = false;
     private final int contentLength;
-    private String action = null;
+    private final List<String> actions;
     private Runnable runnable = null;
 
-    public PassiveDialogStep(List<DialogText> content, @Nullable String action, @Nullable Runnable runnable) {
+    public PassiveDialogStep(List<DialogText> content, List<String> actions, @Nullable Runnable runnable) {
         super(content);
         this.contentLength = content.stream()
                 .mapToInt(item -> item.line().length())
                 .sum();
-        this.action = action;
+        this.actions = actions;
         this.runnable = runnable;
     }
 
@@ -36,8 +33,10 @@ public class PassiveDialogStep extends DialogStep {
                 return;
             }
 
-            if (action != null) {
-                ScriptedActionHandler.executeAction(action, player, null, new ScriptedActionHandler.ActionCaller(ScriptedActionHandler.ActionCallerType.DIALOG, "{dialog_id:" + parent.getId() + "}"));
+            if (actions != null) {
+                actions.forEach(ac ->
+                        ScriptedActionHandler.executeAction(ac, player, null, new ScriptedActionHandler.ActionCaller(ScriptedActionHandler.ActionCallerType.DIALOG, "{dialog_id:" + parent.getId() + "}"), this.parent)
+                );
             }
 
             if (runnable != null) {

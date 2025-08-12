@@ -1,16 +1,13 @@
 package org.zuma.examplePlugin.domain.dialog.impl;
 
 import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.domain.action.ScriptedActionHandler;
-import org.zuma.examplePlugin.domain.dialog.Dialog;
 import org.zuma.examplePlugin.domain.dialog.DialogText;
 import org.zuma.examplePlugin.domain.dialog.InteractiveDialogOption;
 import org.zuma.examplePlugin.domain.dialog.base.DialogStep;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -48,8 +45,10 @@ public class InteractiveDialogStep extends DialogStep {
             return;
         }
 
-        if (clickedOption.action() != null) {
-            ScriptedActionHandler.executeAction(clickedOption.action(), player, null, new ScriptedActionHandler.ActionCaller(ScriptedActionHandler.ActionCallerType.DIALOG, "{dialog_id:" + parent.getId() + "}"));
+        if (clickedOption.actions() != null) {
+            clickedOption.actions().forEach(ac -> {
+                ScriptedActionHandler.executeAction(ac, player, null, new ScriptedActionHandler.ActionCaller(ScriptedActionHandler.ActionCallerType.DIALOG, "{dialog_id:" + parent.getId() + "}"), this.parent);
+            });
         }
 
         if (clickedOption.runnable() != null) {

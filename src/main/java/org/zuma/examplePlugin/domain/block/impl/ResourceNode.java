@@ -284,10 +284,10 @@ public class ResourceNode extends AbstractInteractableBlock {
                 return;
             }
 
-            // Start action using the modifier’s amount
+            // Start actions using the modifier’s amount
             startGatheringAction(player, requiredToolModifier.get().amount());
         } else {
-            // No tool is required, just start the action with default amount
+            // No tool is required, just start the actions with default amount
             startGatheringAction(player, 1);
         }
     }

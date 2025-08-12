@@ -18,29 +18,38 @@ import java.util.stream.Stream;
 public class Shopkeepers {
 
     private static final Supplier<DialogBuilder> generalStoreDialog = () -> DialogBuilder.create("general-store-dialog")
-            .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()));
+            .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()))
+            .interactiveStep(c -> c.randomText(DialogPreset.WANT_TO_SEE_STOCK.getList())
+                    .option("§aYes" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
+                    .option("§cNo")).passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList()));
+
 
     private static final Supplier<DialogBuilder> blacksmithDialog = () -> DialogBuilder.create("blacksmith-dialog")
-            .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()));
+            .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()))
+            .interactiveStep(c -> c.randomText(DialogPreset.WANT_TO_SEE_STOCK.getList())
+                    .option("§aYes" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
+                    .option("§cNo")).passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList()));
 
     private static final Supplier<DialogBuilder> jewlerDialog = () -> DialogBuilder.create("jeweler-dialog")
             .passiveStep(p -> p.randomText(Stream.concat(DialogPreset.WELCOME.getList().stream(), Stream.of("Have you seen my sapphire?"))
-                    .collect(Collectors.toList())));
+                    .collect(Collectors.toList()))).interactiveStep(c -> c.randomText(DialogPreset.WANT_TO_SEE_STOCK.getList())
+                    .option("§aYes" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
+                    .option("§cNo")).passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList()));
 
 
     public static void registerMobs(MobTypeRegistry registry) {
 
         registry.register(MobType.GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1,
                 MobBehaviors.VILLAGER_MAN_1.getBehavior(), "shopkeeper", null, InventoryId.GENERAL_STORE.asInt(), 40)
-                .attachDialog(generalStoreDialog, "Want to see what's in stock?", "§aYes" + " §f" + Icon.COIN_HANDFUL.get(), "§cNo", "See you!"));
+                .attachDialog(generalStoreDialog));
 
         registry.register(MobType.DRAKKAR_BLACKSMITH.getId(), () -> new InventoryOpenerMob(Icon.TOOL.get() + " Blacksmith", EquipmentSet.BLACKSMITH,
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "blacksmith", null, InventoryId.DRAKKAR_BLACKSMITH.asInt(), 40)
-                .attachDialog(blacksmithDialog, "Wanna trade?", "§aSure" + " §f" + Icon.COIN_HANDFUL.get(), "§cNo", "Oh ok."));
+                .attachDialog(blacksmithDialog));
 
         registry.register(MobType.JEWLER.getId(), () -> new InventoryOpenerMob(Icon.BLUE_GEM.get() + " Jeweler", EquipmentSet.JEWELER,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "jeweler", null, InventoryId.JEWELER.asInt(), 40)
-                .attachDialog(jewlerDialog, "Where did I put it?", "§aOpen shop" + " §f" + Icon.COIN_HANDFUL.get(), "§cNo", "Bye!"));
+                .attachDialog(jewlerDialog));
 
 
     }

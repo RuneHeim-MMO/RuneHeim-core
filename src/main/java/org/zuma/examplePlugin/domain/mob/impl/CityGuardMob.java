@@ -2,26 +2,19 @@ package org.zuma.examplePlugin.domain.mob.impl;
 
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.MobUtils;
 import org.zuma.examplePlugin.domain.dialog.Dialog;
 import org.zuma.examplePlugin.domain.dialog.DialogBuilder;
-import org.zuma.examplePlugin.domain.dialog.DialogHandler;
-import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
-import org.zuma.examplePlugin.domain.mob.meta.CombatantMobMeta;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.SkillLevelRecord;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -30,8 +23,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
-
-import static org.zuma.examplePlugin.domain.mob.MobTypesLoader.getBaseSkills;
 
 public class CityGuardMob extends GenericCombatant {
     private final int initialWalkingDistance;

@@ -21,8 +21,8 @@ public class DialogBuilder {
     private final String id;
     public final List<DialogStep> steps = new ArrayList<>();
 
-    public static String serialize(DialogBuilder template) {
-        return gson.toJson(template);
+    public String serialize() {
+        return gson.toJson(this);
     }
 
     public static DialogBuilder deserialize(String json) {
@@ -58,7 +58,7 @@ public class DialogBuilder {
     // Inner builder for passive steps
     public static class PassiveStepBuilder {
         private final List<DialogText> texts = new ArrayList<>();
-        private String action = null;
+        private List<String> actions = new ArrayList<>();
         private Runnable runnable = null;
 
         public PassiveStepBuilder text(List<String> content, boolean flag) {
@@ -80,12 +80,11 @@ public class DialogBuilder {
 
         public PassiveStepBuilder randomText(List<String> content) {
             String randomLine = content.get(new Random().nextInt(content.size()));
-
             return text(List.of(randomLine), true);
         }
 
         public PassiveStepBuilder action(String action) {
-            this.action = action;
+            this.actions.add(action);
             return this;
         }
 
@@ -95,7 +94,7 @@ public class DialogBuilder {
         }
 
         public PassiveDialogStep build() {
-            return new PassiveDialogStep(texts, action, runnable);
+            return new PassiveDialogStep(texts, actions, runnable);
         }
     }
 
@@ -109,13 +108,26 @@ public class DialogBuilder {
             this.parentId = parentId;
         }
 
-        public InteractiveStepBuilder text(String content, boolean flag) {
-            texts.add(new DialogText(content, flag));
+        public InteractiveStepBuilder text(List<String> content, boolean flag) {
+            content.forEach(c -> texts.add(new DialogText(c, flag)));
             return this;
         }
 
-        public InteractiveStepBuilder text(String content) {
+        public InteractiveStepBuilder text(List<String> content) {
             return text(content, true);
+        }
+
+        public InteractiveStepBuilder text(String content) {
+            return text(List.of(content), true);
+        }
+
+        public InteractiveStepBuilder randomTextMultiline(List<List<String>> content) {
+            return text(content.get(new Random().nextInt(content.size())), true);
+        }
+
+        public InteractiveStepBuilder randomText(List<String> content) {
+            String randomLine = content.get(new Random().nextInt(content.size()));
+            return text(List.of(randomLine), true);
         }
 
         public InteractiveStepBuilder option(String label, Consumer<OptionBuilder> optionConsumer) {
@@ -139,7 +151,7 @@ public class DialogBuilder {
     public static class OptionBuilder {
         private final String label;
         private List<DialogStep> followupSteps = null;
-        private String action = null;
+        private List<String> actions = new ArrayList<>();
         private Runnable runnable = null;
         private final String parentId;
 
@@ -156,13 +168,13 @@ public class DialogBuilder {
         }
 
         public OptionBuilder action(String action, Consumer<DialogBuilder> dialogBuilderConsumer) {
-            this.action = action;
+            this.actions.add(action);
             this.followupSteps(dialogBuilderConsumer);
             return this;
         }
 
         public OptionBuilder action(String action) {
-            this.action = action;
+            this.actions.add(action);
             return this;
         }
 
@@ -178,7 +190,7 @@ public class DialogBuilder {
         }
 
         public InteractiveDialogOption build() {
-            return new InteractiveDialogOption(label, followupSteps, action, runnable);
+            return new InteractiveDialogOption(label, followupSteps, actions, runnable);
         }
     }
 }

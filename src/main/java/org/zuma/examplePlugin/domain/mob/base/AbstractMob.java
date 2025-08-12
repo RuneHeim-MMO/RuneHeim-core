@@ -391,6 +391,26 @@ public abstract class AbstractMob {
         return spawnLocation;
     }
 
+    public void freezeMob() {
+        // Prevent mob from walking/jumping when player clicks it.
+        if (this.getEntity() instanceof LivingEntity living) {
+            living.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, Integer.MAX_VALUE, 254, false, false, false)); // 255 is reserved for mobs that NEVER walk.
+        }
+    }
+
+    public void unfreezeMob() {
+        if (this.getEntity() instanceof LivingEntity living) {
+            var effect = living.getPotionEffect(PotionEffectType.SLOWNESS);
+            if (effect != null && effect.getAmplifier() == 254) {
+                living.removePotionEffect(PotionEffectType.SLOWNESS);
+            }
+        }
+    }
+
+    public void handleInteraction(RunePlayer player) {
+
+    }
+
     public void onPlayerInteractWithEntity(PlayerInteractAtEntityEvent event, RunePlayer player) {
 
     }

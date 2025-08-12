@@ -188,17 +188,17 @@ public class AdminCommand implements BasicCommand {
                                             )
                                             .interactiveStep(ii -> ii
                                                     .text("Continue?")
-                                                    .option("Yes", oo -> oo.action(() -> player.sendMessage("You pressed yes")))
-                                                    .option("No", oo -> oo.action(() -> player.sendMessage("You pressed nope")))
+                                                    .option("Yes", oo -> oo.actions(() -> player.sendMessage("You pressed yes")))
+                                                    .option("No", oo -> oo.actions(() -> player.sendMessage("You pressed nope")))
                                             )
                                     )
-                                    .action(() -> player.sendMessage("You pressed yes"))
+                                    .actions(() -> player.sendMessage("You pressed yes"))
                             )
                             .option("No", o -> o
                                     .followupSteps(f -> f
                                             .passiveStep(p -> p.text("RIP!"))
                                     )
-                                    .action(() -> player.sendMessage("You pressed nope"))
+                                    .actions(() -> player.sendMessage("You pressed nope"))
                             )
                     )
 

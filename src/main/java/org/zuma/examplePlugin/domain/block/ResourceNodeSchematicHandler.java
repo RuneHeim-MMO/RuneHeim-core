@@ -55,7 +55,7 @@ public class ResourceNodeSchematicHandler {
 
     }
 
-    // Update interactive elements (e.g action block, holograms) positions according to schematic
+    // Update interactive elements (e.g actions block, holograms) positions according to schematic
     private void handleElementReassignation(List<InteractiveElement> elements, ResourceNode node) {
         elements.forEach(el -> {
 

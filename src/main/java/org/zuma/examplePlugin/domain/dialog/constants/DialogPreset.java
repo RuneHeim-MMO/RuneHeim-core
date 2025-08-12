@@ -22,8 +22,41 @@ public enum DialogPreset {
             "What's up, {PLAYER_NAME}?",
             "Welcome!",
             "How goes it, {PLAYER_NAME}?"
-    ));
+    )),
 
+    FAREWELL(List.of("Bye!",
+            "See ya!",
+            "Later!",
+            "Cheers!",
+            "Cya!",
+            "Peace!",
+            "Adios!",
+            "Take care!",
+            "Farewell!",
+            "So long!",
+            "Catch ya!",
+            "Goodbye!",
+            "Stay safe!",
+            "Till then!",
+            "Bye now!")),
+
+    WANT_TO_SEE_STOCK(List.of(
+            "Want to see what's in stock?",
+            "Want to take a look at my goods?",
+            "Interested in my wares?",
+            "See what I have for sale?",
+            "Check out my inventory?",
+            "Care to browse my stock?",
+            "Got some nice stuff here?",
+            "Looking for something special?",
+            "Have a look around?",
+            "See anything you like?",
+            "Feel free to browse?",
+            "Let me know if you want something?",
+            "Got fresh goods here?",
+            "See what I brought today?",
+            "Take your time checking out?"
+    ));
 
     private final List<String> preset;
 

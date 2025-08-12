@@ -1,4 +1,5 @@
 package org.zuma.examplePlugin.core.adapters;
+
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
@@ -47,8 +48,13 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
                 for (InteractiveDialogOption opt : options) {
                     out.beginObject();
                     out.name("label").value(opt.content());
-                    if (opt.action() != null) {
-                        out.name("action").value(opt.action());
+                    if (opt.actions() != null) {
+                        out.name("actions");
+                        out.beginArray();
+                        for (String action : opt.actions()) {
+                            out.value(action);
+                        }
+                        out.endArray();
                     }
                     if (opt.subContent() != null && !opt.subContent().isEmpty()) {
                         out.name("followup");
@@ -148,7 +154,7 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
                             String optName = in.nextName();
                             switch (optName) {
                                 case "label" -> label = in.nextString();
-                                case "action" -> action = in.nextString();
+                                case "actions" -> action = in.nextString();
                                 case "followup" -> followupBuilder = read(in);
                                 default -> in.skipValue();
                             }
@@ -173,7 +179,11 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
         } else if ("InteractiveDialogStep".equals(type)) {
             builder.interactiveStep(interactive -> {
                 for (DialogText dt : content) {
-                    interactive.text(dt.line(), dt.typewriter());
+                    List<String> lines = content.stream()
+                            .map(DialogText::line)
+                            .toList();
+
+                    interactive.text(lines, dt.typewriter());
                 }
                 for (OptionData opt : options) {
                     interactive.option(opt.label, option -> {
@@ -197,6 +207,7 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
         String label;
         String action;
         DialogBuilder followup;
+
         OptionData(String label, String action, DialogBuilder followup) {
             this.label = label;
             this.action = action;

@@ -18,7 +18,9 @@ public enum ScriptedAction {
     SPAWN_MOB("spawn_mob", "type", "world", "x", "y", "z"),
     GIVE_DISTRIBUTED_XP("give_distributed_xp", "skill", "xp"),
     GIVE_PERSONAL_XP("give_personal_xp", "skill", "xp"),
-    TELEPORT_PLAYER("teleport_player", "world", "x", "y", "z");
+    TELEPORT_PLAYER("teleport_player", "world", "x", "y", "z"),
+    DIALOG_HOLDER_SOUND("dialog_holder_sound","sound"),
+    DIALOG_HOLDER_FORWARD_INTERACTION("dialog_holder_forward_interaction");
 
     private final String trigger;
     private final List<String> argsTemplates;
@@ -37,7 +39,7 @@ public enum ScriptedAction {
             }
         }
 
-        throw new MalformedParametersException("Invalid action " + input);
+        throw new MalformedParametersException("Invalid actions " + input);
     }
 
     public boolean sameTypeAndArgs(ScriptedAction action) {
@@ -71,7 +73,7 @@ public enum ScriptedAction {
         HashMap<String, String> result = new HashMap<>();
 
         if (splitArgs.size() != this.argsTemplates.size()) {
-            throw new MalformedParametersException("Invalid amount of arguments found in " + this.trigger + " action. Expected " + String.join(", ", this.argsTemplates) + ", found " + String.join(", ", splitArgs) + " args.");
+            throw new MalformedParametersException("Invalid amount of arguments found in " + this.trigger + " actions. Expected " + String.join(", ", this.argsTemplates) + ", found " + String.join(", ", splitArgs) + " args.");
         }
 
         for (String splitArg : splitArgs) {
@@ -88,7 +90,7 @@ public enum ScriptedAction {
             }
 
             if (matchingTemplate == null) {
-                throw new MalformedParametersException("Invalid argument found in " + this.trigger + " action. " + splitArg + " does not exist in " + String.join(", ", this.argsTemplates) + ".");
+                throw new MalformedParametersException("Invalid argument found in " + this.trigger + " actions. " + splitArg + " does not exist in " + String.join(", ", this.argsTemplates) + ".");
             }
 
             String value = extractArgument(noBrackets, matchingTemplate);
@@ -97,7 +99,7 @@ public enum ScriptedAction {
         }
 
         if (result.size() != this.argsTemplates.size()) {
-            throw new MalformedParametersException("Invalid argument found in " + this.trigger + " action. Parsed arguments count differs from the actions template count.");
+            throw new MalformedParametersException("Invalid argument found in " + this.trigger + " actions. Parsed arguments count differs from the actions template count.");
         }
 
         return result;
@@ -107,7 +109,7 @@ public enum ScriptedAction {
         String remainder = noBrackets.replace(matchingTemplate + "_", "");
 
         if (remainder.isEmpty()) {
-            throw new MalformedParametersException("Invalid argument found in " + this.trigger + " action. Remainder is empty. Forgot to append integers?");
+            throw new MalformedParametersException("Invalid argument found in " + this.trigger + " actions. Remainder is empty. Forgot to append integers?");
         }
 
         return remainder;
