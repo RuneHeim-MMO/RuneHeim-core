@@ -1,7 +1,9 @@
 package org.zuma.examplePlugin.domain.dialog.impl;
 
 import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.domain.action.ScriptedActionHandler;
 import org.zuma.examplePlugin.domain.dialog.Dialog;
 import org.zuma.examplePlugin.domain.dialog.DialogText;
 import org.zuma.examplePlugin.domain.dialog.InteractiveDialogOption;
@@ -31,11 +33,11 @@ public class InteractiveDialogStep extends DialogStep {
     @Override
     public void onDialogFinishRendering(RunePlayer player) {
         SoundType.DIALOG_CHOICE_SOUND.play(player, false);
+        parent.setSlotLocked(true);
     }
 
     @Override
     public void onHotbarSlotChange(PlayerItemHeldEvent event, RunePlayer player, int newSlot) {
-
         if (newSlot >= interactiveContent.size()) {
             return;
         }
@@ -46,9 +48,12 @@ public class InteractiveDialogStep extends DialogStep {
             return;
         }
 
-        if (clickedOption.onPress() != null) {
-            clickedOption.onPress().run();
+        if (clickedOption.action() != null) {
+            ScriptedActionHandler.executeAction(clickedOption.action(), player, null, new ScriptedActionHandler.ActionCaller(ScriptedActionHandler.ActionCallerType.DIALOG, "{dialog_id:" + parent.getId() + "}"));
+        }
 
+        if (clickedOption.runnable() != null) {
+            clickedOption.runnable().run();
         }
 
         if (clickedOption.subContent() != null) {

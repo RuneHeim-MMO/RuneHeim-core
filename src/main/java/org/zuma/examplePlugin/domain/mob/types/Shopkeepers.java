@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.mob.types;
 
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.domain.dialog.DialogBuilder;
+import org.zuma.examplePlugin.domain.dialog.constants.DialogPreset;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.mob.MobTypeRegistry;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehaviors;
@@ -9,18 +10,22 @@ import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.mob.impl.InventoryOpenerMob;
 
+import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Shopkeepers {
 
     private static final Supplier<DialogBuilder> generalStoreDialog = () -> DialogBuilder.create("general-store-dialog")
-            .passiveStep(p -> p.text("Hey, {PLAYER_NAME}!"));
+            .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()));
 
     private static final Supplier<DialogBuilder> blacksmithDialog = () -> DialogBuilder.create("blacksmith-dialog")
-            .passiveStep(p -> p.text("Hi!"));
+            .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()));
 
     private static final Supplier<DialogBuilder> jewlerDialog = () -> DialogBuilder.create("jeweler-dialog")
-            .passiveStep(p -> p.text("Have you seen my sapphire?"));
+            .passiveStep(p -> p.randomText(Stream.concat(DialogPreset.WELCOME.getList().stream(), Stream.of("Have you seen my sapphire?"))
+                    .collect(Collectors.toList())));
 
 
     public static void registerMobs(MobTypeRegistry registry) {

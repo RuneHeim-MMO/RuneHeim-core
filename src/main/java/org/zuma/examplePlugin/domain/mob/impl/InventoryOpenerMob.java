@@ -62,8 +62,8 @@ public class InventoryOpenerMob extends AbstractInventoryOpener {
             newDialogTemplate.interactiveStep(
                     c -> c
                             .text(this.preposition)
-                            .option(this.positiveOption, o -> o.action(() -> super.onPlayerInteractWithEntity(event, player)))
-                            .option(this.negativeOption, v -> v.action(() -> super.playSound(MobBehavior.MobSoundType.NEGATIVE))
+                            .option(this.positiveOption, o -> o.runnable(() -> super.onPlayerInteractWithEntity(event, player)))
+                            .option(this.negativeOption, v -> v.runnable(() -> super.playSound(MobBehavior.MobSoundType.NEGATIVE))
                                     .followupSteps(o -> o.passiveStep(s -> s.text(this.farewell))))
 
             );

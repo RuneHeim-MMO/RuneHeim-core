@@ -39,6 +39,7 @@ public class DialogHandler {
             if (onFinishCancel != null) {
                 onFinishCancel.run();
             }
+
         });
         dialog.startDialog(player);
     }

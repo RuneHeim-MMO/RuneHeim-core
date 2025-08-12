@@ -10,11 +10,16 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.MobUtils;
+import org.zuma.examplePlugin.domain.dialog.Dialog;
+import org.zuma.examplePlugin.domain.dialog.DialogBuilder;
+import org.zuma.examplePlugin.domain.dialog.DialogHandler;
 import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
+import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
 import org.zuma.examplePlugin.domain.mob.meta.CombatantMobMeta;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -24,6 +29,7 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Supplier;
 
 import static org.zuma.examplePlugin.domain.mob.MobTypesLoader.getBaseSkills;
 
@@ -107,7 +113,7 @@ public class CityGuardMob extends GenericCombatant {
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> SoundType.GUARD_DISENGAGE.play(thisEntity.getLocation()), ThreadLocalRandom.current().nextInt(0, 21));
 
-        if(initialWalkingDistance > 10) {
+        if (initialWalkingDistance > 10) {
             handleArrivedAtSpawn();
             return;
         }
@@ -159,5 +165,34 @@ public class CityGuardMob extends GenericCombatant {
 
     public boolean isEngaged() {
         return engaged;
+    }
+
+    @Override
+    public void onPlayerInteractWithEntity(PlayerInteractAtEntityEvent event, RunePlayer player) {
+        Supplier<DialogBuilder> dialogTemplate;
+
+        if (this.engaged) {
+            dialogTemplate = () -> DialogBuilder.create("city-guard-dialog")
+                    .passiveStep(p -> p.text("I'm busy!"));
+
+            this.playSound(MobBehavior.MobSoundType.NEGATIVE);
+        } else {
+            dialogTemplate = () -> DialogBuilder.create("city-guard-dialog")
+                    .passiveStep(p -> p.randomTextMultiline(List.of(
+                            List.of("Halt! You’ve got my attention."),
+                            List.of("No funny business, traveler."),
+                            List.of("I used to be an adventurer like you...",
+                                    "Then I took an arrow in the knee."),
+                            List.of("Watch your step around here."),
+                            List.of("Stay out of trouble, or else!"),
+                            List.of("By the Nine Divines, keep your hands where I can see them.")
+                    )));
+
+            this.playSound(MobBehavior.MobSoundType.IDLE);
+        }
+
+        Dialog dialog = dialogTemplate.get().build(this.getUUID());
+        RuneQuestPlugin.getDialogHandler().startDialog(player, dialog, null);
+
     }
 }

@@ -41,8 +41,15 @@ public class DialogListener implements Listener {
             return;
         }
 
-        event.setCancelled(true);
-        step.handleHotbarSlotChange(event, player);
+        if (playerDialog.isAborted()) {
+            return;
+        }
+
+        if (playerDialog.isSlotLocked()) {
+            event.setCancelled(true);
+            step.handleHotbarSlotChange(event, player);
+        }
+
     }
 
     @EventHandler

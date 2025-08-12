@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.mob.types;
 
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.domain.dialog.DialogBuilder;
+import org.zuma.examplePlugin.domain.dialog.constants.DialogPreset;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.mob.MobTypeRegistry;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehaviors;
@@ -9,15 +10,20 @@ import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.mob.impl.InventoryOpenerMob;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 public class BankTellers {
 
     private static final Supplier<DialogBuilder> bankerDialog = () -> DialogBuilder.create("banker-dialog")
-            .passiveStep(p -> p.text("Hello, {PLAYER_NAME}!"));
+            .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()));
 
     private static final Supplier<DialogBuilder> investmentBankerDialog = () -> DialogBuilder.create("investment-banker-dialog")
-            .passiveStep(p -> p.text("Tulip prices jumped 293% in just two days!"));
+            .passiveStep(p -> p.randomText(List.of("Welcome, {PLAYER_NAME}.",
+                    "Good to see you, {PLAYER_NAME}.",
+                    "Ready to invest?",
+                    "Greetings, {PLAYER_NAME}.",
+                    "Let’s talk business.")));
 
 
     public static void registerMobs(MobTypeRegistry registry) {

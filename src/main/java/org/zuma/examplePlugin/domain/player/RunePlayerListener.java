@@ -11,6 +11,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.events.player.RunePlayerLoadedEvent;
@@ -50,6 +51,12 @@ public class RunePlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerActionInterruptedByMovement(PlayerMoveEvent event) {
+        RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(event.getPlayer());
+
+        if (runePlayer == null || !runePlayer.isBusy()) {
+            return;
+        }
+
         Location from = event.getFrom();
         Location to = event.getTo();
 
@@ -59,7 +66,7 @@ public class RunePlayerListener implements Listener {
             return;
         }
 
-        playerHandler.handleActionInterruption(event.getPlayer());
+        runePlayer.cancelActionTask(true);
     }
 
     @EventHandler
@@ -68,7 +75,14 @@ public class RunePlayerListener implements Listener {
             return;
         }
 
-        playerHandler.handleActionInterruption(player);
+        RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
+
+        if (runePlayer == null || !runePlayer.isBusy()) {
+            return;
+        }
+
+
+        runePlayer.cancelActionTask(true);
     }
 
     @EventHandler

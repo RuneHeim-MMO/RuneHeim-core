@@ -55,7 +55,6 @@ public abstract class DialogStep {
         return dialogLocation;
     }
 
-
     public void setParent(Dialog parent) {
         this.parent = parent;
     }
@@ -99,6 +98,7 @@ public abstract class DialogStep {
             @Override
             public void run() {
 
+
                 if (parent.isAborted()) {
                     this.cancel();
                     return;
@@ -108,6 +108,16 @@ public abstract class DialogStep {
                     parent.cleanUp();
                     this.cancel();
                     return;
+                }
+
+                AbstractMob holder = parent.getDialogHolder();
+                if (holder != null) {
+                    Entity holderEntity = holder.getEntity();
+
+                    if (holderEntity != null && !holderEntity.isDead() && holderEntity.isValid()) {
+                        Location dialogLoc = getDialogLocationBetween(holderEntity, player.asBukkitPlayer(), 1, 0.25);
+                        DHAPI.moveHologram(hologram, dialogLoc);
+                    }
                 }
 
 

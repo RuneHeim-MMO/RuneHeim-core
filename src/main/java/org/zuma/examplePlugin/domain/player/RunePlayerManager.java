@@ -136,13 +136,4 @@ public class RunePlayerManager {
         loadingStateHandler.setPlayerLoaded(player); // Restore effects before disconnection if player disconnected while he was loading.
     }
 
-    public void handleActionInterruption(Player player) {
-        RunePlayer runePlayer = players.get(player.getUniqueId());
-
-        if (runePlayer == null || !runePlayer.isBusy()) {
-            return;
-        }
-
-        runePlayer.cancelActionTask(true);
-    }
 }

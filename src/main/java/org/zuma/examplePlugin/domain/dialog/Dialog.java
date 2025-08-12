@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.dialog.base.DialogStep;
+import org.zuma.examplePlugin.domain.dialog.impl.InteractiveDialogStep;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
@@ -21,6 +22,7 @@ public class Dialog {
     private final UUID dialogHolderUUID;
     private UUID participantUUID;
     private boolean aborted = false;
+    private boolean slotLocked = false;
 
     @Nullable
     private Runnable onDialogFinish;
@@ -33,6 +35,7 @@ public class Dialog {
         this.dialogHolderUUID = dialogHolderUUID;
         this.scenario = scenario;
         this.nextStepIndex = 0;
+        this.initialHeldSlot = 0;
         this.currentStep = null;
 
         this.scenario.forEach(step -> step.setParent(this));
@@ -46,13 +49,14 @@ public class Dialog {
         nextStepIndex = 0;
         participantUUID = player.getUUID();
         initialHeldSlot = player.asBukkitPlayer().getInventory().getHeldItemSlot();
-        player.asBukkitPlayer().getInventory().setHeldItemSlot(Dialog.HOT_BAR_LOCK_SLOT_DURING_DIALOG);
         advanceDialogStep();
     }
 
     public void cleanUp() {
         aborted = true;
+        slotLocked = false;
         scenario.forEach(DialogStep::cleanUp);
+        this.restoreInitialSlot();
     }
 
     public void advanceDialogStep() {
@@ -66,9 +70,8 @@ public class Dialog {
             if (onDialogFinish != null) {
                 onDialogFinish.run();
             }
-            if (participant != null) {
-                participant.asBukkitPlayer().getInventory().setHeldItemSlot(initialHeldSlot);
-            }
+
+            restoreInitialSlot();
             return;
         }
 
@@ -76,7 +79,6 @@ public class Dialog {
         currentStep = nextStep;
         nextStepIndex++;
 
-        Dialog.selectHotbarSlotToDialogSlot(participant);
         nextStep.showDialogStep(participant);
     }
 
@@ -121,7 +123,28 @@ public class Dialog {
         return id;
     }
 
+    public void restoreInitialSlot() {
+        RunePlayer participant = getPlayerParticipant();
+
+        if (participant != null) {
+            setSlotLocked(false);
+            participant.asBukkitPlayer().getInventory().setHeldItemSlot(initialHeldSlot);
+        }
+    }
+
     public boolean isAborted() {
         return aborted;
+    }
+
+    public boolean isSlotLocked() {
+        return slotLocked;
+    }
+
+    public void setSlotLocked(boolean slotLocked) {
+        if (slotLocked && getPlayerParticipant() != null) {
+            selectHotbarSlotToDialogSlot(getPlayerParticipant());
+        }
+
+        this.slotLocked = slotLocked;
     }
 }

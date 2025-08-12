@@ -6,6 +6,7 @@ import org.zuma.examplePlugin.domain.dialog.impl.PassiveDialogStep;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -42,18 +43,44 @@ public class DialogBuilder {
     // Inner builder for passive steps
     public static class PassiveStepBuilder {
         private final List<DialogText> texts = new ArrayList<>();
+        private String action = null;
+        private Runnable runnable = null;
 
-        public PassiveStepBuilder text(String content, boolean flag) {
-            texts.add(new DialogText(content, flag));
+        public PassiveStepBuilder text(List<String> content, boolean flag) {
+            content.forEach(c -> texts.add(new DialogText(c, flag)));
             return this;
         }
 
-        public PassiveStepBuilder text(String content) {
+        public PassiveStepBuilder text(List<String> content) {
             return text(content, true);
         }
 
+        public PassiveStepBuilder text(String content) {
+            return text(List.of(content), true);
+        }
+
+        public PassiveStepBuilder randomTextMultiline(List<List<String>> content) {
+            return text(content.get(new Random().nextInt(content.size())), true);
+        }
+
+        public PassiveStepBuilder randomText(List<String> content) {
+            String randomLine = content.get(new Random().nextInt(content.size()));
+
+            return text(List.of(randomLine), true);
+        }
+
+        public PassiveStepBuilder action(String action) {
+            this.action = action;
+            return this;
+        }
+
+        public PassiveStepBuilder runnable(Runnable runnable) {
+            this.runnable = runnable;
+            return this;
+        }
+
         public PassiveDialogStep build() {
-            return new PassiveDialogStep(texts);
+            return new PassiveDialogStep(texts, action, runnable);
         }
     }
 
@@ -84,7 +111,7 @@ public class DialogBuilder {
         }
 
         public InteractiveStepBuilder option(String label) {
-            options.add(new InteractiveDialogOption(label, null, null));
+            options.add(new InteractiveDialogOption(label, null, null, null));
             return this;
         }
 
@@ -97,7 +124,8 @@ public class DialogBuilder {
     public static class OptionBuilder {
         private final String label;
         private List<DialogStep> followupSteps = null;
-        private Runnable action = null;
+        private String action = null;
+        private Runnable runnable = null;
         private final String parentId;
 
         public OptionBuilder(String label, String parentId) {
@@ -112,19 +140,30 @@ public class DialogBuilder {
             return this;
         }
 
-        public OptionBuilder action(Runnable action, Consumer<DialogBuilder> dialogBuilderConsumer) {
+        public OptionBuilder action(String action, Consumer<DialogBuilder> dialogBuilderConsumer) {
             this.action = action;
             this.followupSteps(dialogBuilderConsumer);
             return this;
         }
 
-        public OptionBuilder action(Runnable action) {
+        public OptionBuilder action(String action) {
             this.action = action;
             return this;
         }
 
+        public OptionBuilder runnable(Runnable runnable, Consumer<DialogBuilder> dialogBuilderConsumer) {
+            this.runnable = runnable;
+            this.followupSteps(dialogBuilderConsumer);
+            return this;
+        }
+
+        public OptionBuilder runnable(Runnable runnable) {
+            this.runnable = runnable;
+            return this;
+        }
+
         public InteractiveDialogOption build() {
-            return new InteractiveDialogOption(label, followupSteps, action);
+            return new InteractiveDialogOption(label, followupSteps, action, runnable);
         }
     }
 }

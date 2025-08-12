@@ -20,7 +20,7 @@ public class ScriptedActionHandler {
     }
 
     public enum ActionCallerType {
-        PLAYER_COMMAND, CONSOLE_COMMAND,
+        PLAYER_COMMAND, CONSOLE_COMMAND, DIALOG
     }
 
     public static void executeAction(String input, RunePlayer player, @Nullable Runnable callback, ActionCaller executor) {
@@ -65,7 +65,7 @@ public class ScriptedActionHandler {
                             "\u001B[36m identifier: " +
                             "\u001B[93m" + executor.identifier +
                             "\u001B[0m.");
-            
+
         } catch (Exception e) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Could not execute the action " + input, e);
         }
