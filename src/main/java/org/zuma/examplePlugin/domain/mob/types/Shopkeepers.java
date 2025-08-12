@@ -21,20 +21,20 @@ public class Shopkeepers {
             .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()))
             .interactiveStep(c -> c.randomText(DialogPreset.WANT_TO_SEE_STOCK.getList())
                     .option("§aYes" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
-                    .option("§cNo")).passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList()));
+                    .option("§cNo", n -> n.followupSteps(d -> d.passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList())))));
 
 
     private static final Supplier<DialogBuilder> blacksmithDialog = () -> DialogBuilder.create("blacksmith-dialog")
             .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()))
             .interactiveStep(c -> c.randomText(DialogPreset.WANT_TO_SEE_STOCK.getList())
                     .option("§aYes" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
-                    .option("§cNo")).passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList()));
+                    .option("§cNo", n -> n.followupSteps(d -> d.passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList())))));
 
     private static final Supplier<DialogBuilder> jewlerDialog = () -> DialogBuilder.create("jeweler-dialog")
             .passiveStep(p -> p.randomText(Stream.concat(DialogPreset.WELCOME.getList().stream(), Stream.of("Have you seen my sapphire?"))
                     .collect(Collectors.toList()))).interactiveStep(c -> c.randomText(DialogPreset.WANT_TO_SEE_STOCK.getList())
                     .option("§aYes" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
-                    .option("§cNo")).passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList()));
+                    .option("§cNo", n -> n.followupSteps(d -> d.passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList())))));
 
 
     public static void registerMobs(MobTypeRegistry registry) {

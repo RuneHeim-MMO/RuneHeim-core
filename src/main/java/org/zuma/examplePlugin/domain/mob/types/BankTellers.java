@@ -19,7 +19,7 @@ public class BankTellers {
             .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()))
             .interactiveStep(c -> c.text("Open bank?")
                     .option("§aYes" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
-                    .option("§cNo")).passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList()));
+                    .option("§cNo", n -> n.followupSteps(d -> d.passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList())))));
 
     private static final Supplier<DialogBuilder> investmentBankerDialog = () -> DialogBuilder.create("investment-banker-dialog")
             .passiveStep(p -> p.randomText(List.of("Welcome, {PLAYER_NAME}.",
@@ -29,7 +29,7 @@ public class BankTellers {
                     "Let’s talk business.")))
             .interactiveStep(c -> c.randomText(DialogPreset.WANT_TO_SEE_STOCK.getList())
                     .option("§aSure" + " §f" + Icon.COIN_HANDFUL.get(), b -> b.action("dialog_holder_forward_interaction"))
-                    .option("§cNot now")).passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList()));
+                    .option("§cNot now", n -> n.followupSteps(d -> d.passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList())))));
 
 
     public static void registerMobs(MobTypeRegistry registry) {
