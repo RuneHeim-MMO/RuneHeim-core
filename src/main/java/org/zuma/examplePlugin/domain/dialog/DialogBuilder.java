@@ -1,5 +1,8 @@
 package org.zuma.examplePlugin.domain.dialog;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.zuma.examplePlugin.core.adapters.DialogBuilderAdapter;
 import org.zuma.examplePlugin.domain.dialog.base.DialogStep;
 import org.zuma.examplePlugin.domain.dialog.impl.InteractiveDialogStep;
 import org.zuma.examplePlugin.domain.dialog.impl.PassiveDialogStep;
@@ -11,10 +14,22 @@ import java.util.UUID;
 import java.util.function.Consumer;
 
 public class DialogBuilder {
-    private final String id;
-    private final List<DialogStep> steps = new ArrayList<>();
+    private static final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(DialogBuilder.class, new DialogBuilderAdapter())
+            .create();
 
-    private DialogBuilder(String id) {
+    private final String id;
+    public final List<DialogStep> steps = new ArrayList<>();
+
+    public static String serialize(DialogBuilder template) {
+        return gson.toJson(template);
+    }
+
+    public static DialogBuilder deserialize(String json) {
+        return gson.fromJson(json, DialogBuilder.class);
+    }
+
+    public DialogBuilder(String id) {
         this.id = id;
     }
 
