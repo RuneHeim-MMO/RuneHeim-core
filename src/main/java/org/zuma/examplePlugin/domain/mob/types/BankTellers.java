@@ -17,6 +17,11 @@ public class BankTellers {
 
     private static final Supplier<DialogBuilder> bankerDialog = () -> DialogBuilder.create("banker-dialog")
             .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()))
+            /*.conditionStep(s -> s.condition("is_username_{username_AsyncBagel}")
+                    .falsyFollowUp(g -> g.passiveStep(t -> t.text(List.of("You are not AsyncBagel!", "No special treatment for you!", "Go away now, {PLAYER_NAME}"))
+                            .action("give_item_{id_1700}_{amount_1}")))
+                    .truthyFollowUp(g -> g.passiveStep(t -> t.text("Heyy! It's really you!")
+                            .action("give_item_{id_0}_{amount_5000000}"))))*/
             .interactiveStep(c -> c.text("Open bank?")
                     .option("§aYes" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
                     .option("§cNo", n -> n.followupSteps(d -> d.passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList())))));

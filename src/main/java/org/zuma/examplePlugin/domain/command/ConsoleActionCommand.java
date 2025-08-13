@@ -8,8 +8,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.domain.action.ScriptedAction;
-import org.zuma.examplePlugin.domain.action.ScriptedActionHandler;
+import org.zuma.examplePlugin.domain.runescript.ScriptParser;
+import org.zuma.examplePlugin.domain.runescript.action.ScriptedAction;
+import org.zuma.examplePlugin.domain.runescript.action.ScriptedActionHandler;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.*;
@@ -63,7 +64,7 @@ public class ConsoleActionCommand implements BasicCommand {
 
     @Override
     public Collection<String> suggest(CommandSourceStack commandSourceStack, String[] args) {
-        return Arrays.stream(ScriptedAction.values()).map(ScriptedAction::getPreview).toList();
+        return Arrays.stream(ScriptedAction.values()).map(ScriptParser::getPreview).toList();
     }
 
 

@@ -5,8 +5,10 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import org.zuma.examplePlugin.domain.dialog.DialogBuilder;
+import org.zuma.examplePlugin.domain.dialog.DialogCondition;
 import org.zuma.examplePlugin.domain.dialog.DialogText;
 import org.zuma.examplePlugin.domain.dialog.InteractiveDialogOption;
+import org.zuma.examplePlugin.domain.dialog.impl.ConditionStep;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,6 +70,31 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
                 out.endArray();
             }
 
+            // condition step specific serialization
+            if (ConditionStep.class.isAssignableFrom(step.getClass())) {
+                DialogCondition cond = getCondition(step);
+                if (cond != null) {
+                    // raw condition string
+                    out.name("condition").value(cond.condition());
+
+                    // truthy followup
+                    if (cond.truthyFollowUp() != null && !cond.truthyFollowUp().isEmpty()) {
+                        out.name("truthyFollowup");
+                        DialogBuilder truthyBuilder = new DialogBuilder(getId(builder));
+                        truthyBuilder.steps.addAll(cond.truthyFollowUp());
+                        write(out, truthyBuilder);
+                    }
+
+                    // falsy followup
+                    if (cond.falsyFollowUp() != null && !cond.falsyFollowUp().isEmpty()) {
+                        out.name("falsyFollowup");
+                        DialogBuilder falsyBuilder = new DialogBuilder(getId(builder));
+                        falsyBuilder.steps.addAll(cond.falsyFollowUp());
+                        write(out, falsyBuilder);
+                    }
+                }
+            }
+
             out.endObject();
         }
         out.endArray();
@@ -116,6 +143,11 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
         List<DialogText> content = new ArrayList<>();
         List<OptionData> options = new ArrayList<>();
 
+        // Condition-specific temporary holders
+        String conditionRaw = null;
+        DialogBuilder truthyFollowupBuilder = null;
+        DialogBuilder falsyFollowupBuilder = null;
+
         while (in.hasNext()) {
             String name = in.nextName();
             switch (name) {
@@ -154,7 +186,15 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
                             String optName = in.nextName();
                             switch (optName) {
                                 case "label" -> label = in.nextString();
-                                case "actions" -> action = in.nextString();
+                                case "actions" -> {
+                                    // actions is an array in write(); read first element (legacy behavior preserved)
+                                    in.beginArray();
+                                    if (in.hasNext()) {
+                                        action = in.nextString();
+                                    }
+                                    while (in.hasNext()) in.skipValue();
+                                    in.endArray();
+                                }
                                 case "followup" -> followupBuilder = read(in);
                                 default -> in.skipValue();
                             }
@@ -164,6 +204,9 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
                     }
                     in.endArray();
                 }
+                case "condition" -> conditionRaw = in.nextString();
+                case "truthyFollowup" -> truthyFollowupBuilder = read(in);
+                case "falsyFollowup" -> falsyFollowupBuilder = read(in);
                 default -> in.skipValue();
             }
         }
@@ -194,6 +237,19 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
                             option.followupSteps(fb -> fb.steps.addAll(opt.followup.steps));
                         }
                     });
+                }
+            });
+        } else if ("ConditionStep".equals(type)) {
+            String finalConditionRaw = conditionRaw;
+            DialogBuilder finalTruthyFollowupBuilder = truthyFollowupBuilder;
+            DialogBuilder finalFalsyFollowupBuilder = falsyFollowupBuilder;
+            builder.conditionStep(cond -> {
+                if (finalConditionRaw != null) cond.condition(finalConditionRaw);
+                if (finalTruthyFollowupBuilder != null) {
+                    cond.truthyFollowUp(fb -> fb.steps.addAll(finalTruthyFollowupBuilder.steps));
+                }
+                if (finalFalsyFollowupBuilder != null) {
+                    cond.falsyFollowUp(fb -> fb.steps.addAll(finalFalsyFollowupBuilder.steps));
                 }
             });
         } else {
@@ -253,6 +309,16 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
             var f = step.getClass().getDeclaredField("interactiveContent");
             f.setAccessible(true);
             return (List<InteractiveDialogOption>) f.get(step);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private DialogCondition getCondition(Object step) {
+        try {
+            var f = step.getClass().getDeclaredField("condition");
+            f.setAccessible(true);
+            return (DialogCondition) f.get(step);
         } catch (Exception e) {
             return null;
         }

@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.action;
+package org.zuma.examplePlugin.domain.runescript.action;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.runescript.ScriptParser;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import javax.annotation.Nullable;
@@ -29,8 +30,8 @@ public class ScriptedActionHandler {
 
     public static void executeAction(String input, RunePlayer player, @Nullable Runnable callback, ActionCaller executor, @Nullable Dialog parentDialog) {
         try {
-            ScriptedAction action = ScriptedAction.toAction(input);
-            HashMap<String, String> args = action.parseArgs(input);
+            ScriptedAction action = ScriptParser.matchInputToStatement(input, ScriptedAction.class);
+            HashMap<String, String> args = ScriptParser.parseArgs(input, action);
             AbstractMob holder = getHolder(input, parentDialog, action);
 
             switch (action) {
@@ -66,10 +67,12 @@ public class ScriptedActionHandler {
                     Location loc = new Location(Bukkit.getWorld(args.get("world")), Integer.parseInt(args.get("x")), Integer.parseInt(args.get("y")), Integer.parseInt(args.get("z")));
                     player.asBukkitPlayer().teleport(loc);
                 }
+                default ->
+                        RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "[SCRIPT] Unknown action " + action + " in " + input + "!");
             }
 
             RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO,
-                    "\u001B[36m[ScriptedAction] Action " +
+                    "\u001B[36m[SCRIPT] Action " +
                             "\u001B[93m" + input +
                             "\u001B[36m executed by " +
                             "\u001B[93m" + executor.type +
@@ -80,7 +83,7 @@ public class ScriptedActionHandler {
                             "\u001B[0m.");
 
         } catch (Exception e) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Could not execute the actions " + input, e);
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "[SCRIPT] Could not execute the actions " + input, e);
         }
     }
 
@@ -90,13 +93,13 @@ public class ScriptedActionHandler {
 
         if (typesRequireDialogHolder.contains(action)) {
             if (parentDialog == null) {
-                throw new IllegalStateException("Cannot run " + input + " action is executed outside of dialog context!");
+                throw new IllegalStateException("[SCRIPT] Cannot run " + input + " action is executed outside of dialog context!");
             }
 
             holder = parentDialog.getDialogHolder();
 
             if (holder == null) {
-                throw new IllegalStateException("Cannot run " + input + " dialog holder is null!");
+                throw new IllegalStateException("[SCRIPT] Cannot run " + input + " dialog holder is null!");
             }
         }
         return holder;

@@ -6,6 +6,7 @@ import org.zuma.examplePlugin.core.adapters.DialogBuilderAdapter;
 import org.zuma.examplePlugin.domain.dialog.base.DialogStep;
 import org.zuma.examplePlugin.domain.dialog.impl.InteractiveDialogStep;
 import org.zuma.examplePlugin.domain.dialog.impl.PassiveDialogStep;
+import org.zuma.examplePlugin.domain.dialog.impl.ConditionStep;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,14 @@ public class DialogBuilder {
 
     public DialogBuilder interactiveStep(Consumer<InteractiveStepBuilder> stepConsumer) {
         InteractiveStepBuilder builder = new InteractiveStepBuilder(id);
+        stepConsumer.accept(builder);
+        steps.add(builder.build());
+        return this;
+    }
+
+    // New: condition step
+    public DialogBuilder conditionStep(Consumer<ConditionStepBuilder> stepConsumer) {
+        ConditionStepBuilder builder = new ConditionStepBuilder(id);
         stepConsumer.accept(builder);
         steps.add(builder.build());
         return this;
@@ -144,6 +153,41 @@ public class DialogBuilder {
 
         public InteractiveDialogStep build() {
             return new InteractiveDialogStep(texts, options);
+        }
+    }
+
+    // Inner builder for condition steps
+    public static class ConditionStepBuilder {
+        private final String parentId;
+        private String conditionRaw = null;
+        private List<DialogStep> truthyFollowUp = null;
+        private List<DialogStep> falsyFollowUp = null;
+
+        public ConditionStepBuilder(String parentId) {
+            this.parentId = parentId;
+        }
+
+        public ConditionStepBuilder condition(String rawCondition) {
+            this.conditionRaw = rawCondition;
+            return this;
+        }
+
+        public ConditionStepBuilder truthyFollowUp(Consumer<DialogBuilder> followupBuilderConsumer) {
+            DialogBuilder followup = new DialogBuilder(parentId);
+            followupBuilderConsumer.accept(followup);
+            this.truthyFollowUp = followup.steps;
+            return this;
+        }
+
+        public ConditionStepBuilder falsyFollowUp(Consumer<DialogBuilder> followupBuilderConsumer) {
+            DialogBuilder followup = new DialogBuilder(parentId);
+            followupBuilderConsumer.accept(followup);
+            this.falsyFollowUp = followup.steps;
+            return this;
+        }
+
+        public ConditionStep build() {
+            return new ConditionStep(new DialogCondition(conditionRaw, truthyFollowUp, falsyFollowUp));
         }
     }
 
