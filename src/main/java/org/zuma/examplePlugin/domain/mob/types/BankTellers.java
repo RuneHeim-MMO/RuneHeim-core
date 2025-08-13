@@ -4,6 +4,9 @@ import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.domain.dialog.DialogBuilder;
 import org.zuma.examplePlugin.domain.dialog.constants.DialogPreset;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
+import org.zuma.examplePlugin.domain.heimscript.action.ScriptedAction;
+import org.zuma.examplePlugin.domain.heimscript.condition.ScriptedCondition;
+import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.mob.MobTypeRegistry;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehaviors;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
@@ -17,11 +20,11 @@ public class BankTellers {
 
     private static final Supplier<DialogBuilder> bankerDialog = () -> DialogBuilder.create("banker-dialog")
             .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()))
-            /*.conditionStep(s -> s.condition("is_username_{username_AsyncBagel}")
-                    .falsyFollowUp(g -> g.passiveStep(t -> t.text(List.of("You are not AsyncBagel!", "No special treatment for you!", "Go away now, {PLAYER_NAME}"))
+            .conditionStep(s -> s.condition(ScriptedCondition.combatGreaterThanEquals(50)).condition(ScriptedCondition.combatGreaterThan(70))
+                    .falsyFollowUp(g -> g.passiveStep(t -> t.text(List.of("Nope! Your level is too low", "No special treatment for you!", "Go away now, {PLAYER_NAME}"))
                             .action("give_item_{id_1700}_{amount_1}")))
-                    .truthyFollowUp(g -> g.passiveStep(t -> t.text("Heyy! It's really you!")
-                            .action("give_item_{id_0}_{amount_5000000}"))))*/
+                    .truthyFollowUp(g -> g.passiveStep(t -> t.text("Hey, you are so high level!")
+                            .action(ScriptedAction.giveItem(ItemId.COINS, 123)))))
             .interactiveStep(c -> c.text("Open bank?")
                     .option("§aYes" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
                     .option("§cNo", n -> n.followupSteps(d -> d.passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList())))));

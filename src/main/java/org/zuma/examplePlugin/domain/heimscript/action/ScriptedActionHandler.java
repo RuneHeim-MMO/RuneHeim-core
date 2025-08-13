@@ -1,17 +1,18 @@
-package org.zuma.examplePlugin.domain.runescript.action;
+package org.zuma.examplePlugin.domain.heimscript.action;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.dialog.Dialog;
 import org.zuma.examplePlugin.domain.droptable.DropTable;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.runescript.ScriptParser;
+import org.zuma.examplePlugin.domain.heimscript.ScriptParser;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import javax.annotation.Nullable;
@@ -66,6 +67,12 @@ public class ScriptedActionHandler {
                 case TELEPORT_PLAYER -> {
                     Location loc = new Location(Bukkit.getWorld(args.get("world")), Integer.parseInt(args.get("x")), Integer.parseInt(args.get("y")), Integer.parseInt(args.get("z")));
                     player.asBukkitPlayer().teleport(loc);
+                }
+                case TAKE_POUCH_COINS -> {
+                    player.setPouchCoins(player.getPouchCoins() - Long.parseLong(args.get("amount")));
+                }
+                case TAKE_INVENTORY_ITEM -> {
+                    PlayerUtils.removeItems(player, List.of(new ItemRecord(Integer.parseInt(args.get("item_id")), Integer.parseInt(args.get("amount")))));
                 }
                 default ->
                         RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "[SCRIPT] Unknown action " + action + " in " + input + "!");

@@ -1,34 +1,46 @@
 package org.zuma.examplePlugin.domain.dialog.impl;
 
-import org.zuma.examplePlugin.domain.dialog.DialogCondition;
 import org.zuma.examplePlugin.domain.dialog.base.DialogStep;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.runescript.condition.ScriptedConditionHandler;
+import org.zuma.examplePlugin.domain.heimscript.condition.ScriptedConditionHandler;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ConditionStep extends DialogStep {
-    private final DialogCondition condition;
+    private final List<String> conditions;
+    private final List<DialogStep> truthyFollowUp;
+    private final List<DialogStep> falsyFollowUp;
 
-    public ConditionStep(DialogCondition condition) {
+    public ConditionStep(List<String> conditions, @Nullable List<DialogStep> truthyFollowUp,
+                         @Nullable List<DialogStep> falsyFollowUp) {
         super(List.of());
-        this.condition = condition;
+        this.conditions = conditions;
+        this.truthyFollowUp = truthyFollowUp;
+        this.falsyFollowUp = falsyFollowUp;
     }
 
     @Override
     public void onDialogFinishRendering(RunePlayer player) {
-        String rawCondition = condition.condition();
-
-        boolean isConditionTruthy = ScriptedConditionHandler.executeCondition(rawCondition, player, null, this.parent);
+        boolean isResultTruthy = true;
         List<DialogStep> followUpSteps = new ArrayList<>();
 
-        if (isConditionTruthy) {
-            if (condition.truthyFollowUp() != null)
-                followUpSteps.addAll(condition.truthyFollowUp());
+        for (String rawCondition : this.conditions) {
+            boolean isConditionTruthy = ScriptedConditionHandler.executeCondition(rawCondition, player, null, this.parent);
+
+            if (!isConditionTruthy) {
+                isResultTruthy = false;
+            }
+
+        }
+
+        if (isResultTruthy) {
+            if (this.truthyFollowUp != null)
+                followUpSteps.addAll(this.truthyFollowUp);
         } else {
-            if (condition.falsyFollowUp() != null)
-                followUpSteps.addAll(condition.falsyFollowUp());
+            if (this.falsyFollowUp != null)
+                followUpSteps.addAll(this.falsyFollowUp);
         }
 
         followUpSteps.forEach(step -> {

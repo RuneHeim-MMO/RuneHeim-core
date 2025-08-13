@@ -8,9 +8,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.domain.runescript.ScriptParser;
-import org.zuma.examplePlugin.domain.runescript.action.ScriptedAction;
-import org.zuma.examplePlugin.domain.runescript.action.ScriptedActionHandler;
+import org.zuma.examplePlugin.domain.heimscript.ScriptParser;
+import org.zuma.examplePlugin.domain.heimscript.action.ScriptedAction;
+import org.zuma.examplePlugin.domain.heimscript.action.ScriptedActionHandler;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.*;

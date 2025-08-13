@@ -3,7 +3,7 @@ package org.zuma.examplePlugin.domain.dialog.impl;
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.domain.runescript.action.ScriptedActionHandler;
+import org.zuma.examplePlugin.domain.heimscript.action.ScriptedActionHandler;
 import org.zuma.examplePlugin.domain.dialog.DialogText;
 import org.zuma.examplePlugin.domain.dialog.base.DialogStep;
 import org.zuma.examplePlugin.domain.player.RunePlayer;

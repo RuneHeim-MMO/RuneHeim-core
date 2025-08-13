@@ -49,6 +49,10 @@ public abstract class AbstractInventoryOpener extends FriendlyImmortalMob {
         freezeMob();
 
         if (dialogTemplate != null) {
+            if (RuneQuestPlugin.getDialogHandler().getActivePlayerDialog(player) != null) {
+                return;
+            }
+
             DialogBuilder newDialogTemplate = dialogTemplate.get();
             System.out.println(newDialogTemplate.serialize());
             Dialog dialog = newDialogTemplate.build(super.getUUID());

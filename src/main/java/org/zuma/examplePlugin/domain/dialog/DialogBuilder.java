@@ -7,6 +7,7 @@ import org.zuma.examplePlugin.domain.dialog.base.DialogStep;
 import org.zuma.examplePlugin.domain.dialog.impl.InteractiveDialogStep;
 import org.zuma.examplePlugin.domain.dialog.impl.PassiveDialogStep;
 import org.zuma.examplePlugin.domain.dialog.impl.ConditionStep;
+import org.zuma.examplePlugin.domain.heimscript.ScriptedStatementInstance;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +68,7 @@ public class DialogBuilder {
     // Inner builder for passive steps
     public static class PassiveStepBuilder {
         private final List<DialogText> texts = new ArrayList<>();
-        private List<String> actions = new ArrayList<>();
+        private final List<String> actions = new ArrayList<>();
         private Runnable runnable = null;
 
         public PassiveStepBuilder text(List<String> content, boolean flag) {
@@ -92,8 +93,13 @@ public class DialogBuilder {
             return text(List.of(randomLine), true);
         }
 
-        public PassiveStepBuilder action(String action) {
-            this.actions.add(action);
+        public PassiveStepBuilder action(String rawAction) {
+            this.actions.add(rawAction);
+            return this;
+        }
+
+        public PassiveStepBuilder action(ScriptedStatementInstance statementInstance) {
+            this.actions.add(statementInstance.toRawStatement());
             return this;
         }
 
@@ -159,7 +165,7 @@ public class DialogBuilder {
     // Inner builder for condition steps
     public static class ConditionStepBuilder {
         private final String parentId;
-        private String conditionRaw = null;
+        private List<String> rawConditions = new ArrayList<>();
         private List<DialogStep> truthyFollowUp = null;
         private List<DialogStep> falsyFollowUp = null;
 
@@ -168,7 +174,12 @@ public class DialogBuilder {
         }
 
         public ConditionStepBuilder condition(String rawCondition) {
-            this.conditionRaw = rawCondition;
+            this.rawConditions.add(rawCondition);
+            return this;
+        }
+
+        public ConditionStepBuilder condition(ScriptedStatementInstance statementInstance) {
+            this.rawConditions.add(statementInstance.toRawStatement());
             return this;
         }
 
@@ -187,7 +198,7 @@ public class DialogBuilder {
         }
 
         public ConditionStep build() {
-            return new ConditionStep(new DialogCondition(conditionRaw, truthyFollowUp, falsyFollowUp));
+            return new ConditionStep(rawConditions, truthyFollowUp, falsyFollowUp);
         }
     }
 

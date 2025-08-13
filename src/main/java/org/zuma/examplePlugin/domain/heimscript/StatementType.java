@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.runescript;
+package org.zuma.examplePlugin.domain.heimscript;
 
 public enum StatementType {
     ACTION, CONDITION
