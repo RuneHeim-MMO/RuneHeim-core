@@ -61,8 +61,8 @@ public enum ReservedSlot {
         }
         return switch (type) {
             case MOUNT -> false;
-            case AMULET -> false;
-            case RING -> false;
+            case AMULET -> itemType.type == ItemType.ACCESSORY_AMULET;
+            case RING -> itemType.type == ItemType.ACCESSORY_RING;
             case FAIRY -> itemType.type == ItemType.FAIRY;
             case FAIRY_FOOD -> itemType.type == ItemType.FAIRY_FOOD;
             case ARROW -> itemType.type == ItemType.ARROW;

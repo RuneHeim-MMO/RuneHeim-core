@@ -28,6 +28,8 @@ public class ItemFactory {
     public AbstractItemType createItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
         return switch (meta.type()) {
             case EQUIPMENT -> createGearItem(meta, json);
+            case ACCESSORY_AMULET -> createAccessoryAmulet(meta, json);
+            case ACCESSORY_RING -> createAccessoryRing(meta, json);
             case EQUIPMENT_WITH_GEM_SOCKETS -> createGearWithSockets(meta, json);
             case TOOL -> createToolItem(meta, json);
             case TOOL_WITH_GEM_SOCKETS -> createToolWithSockets(meta, json);
@@ -53,6 +55,46 @@ public class ItemFactory {
             case XP_LAMP -> createXPLampItem(meta, json);
             default -> throw new IllegalArgumentException("Unknown item type: " + meta.type());
         };
+    }
+
+    private AccessoryRing createAccessoryRing(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create " + meta.type() + " " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                EquipableTypeMeta deserialized = new Gson().fromJson(json.meta(), EquipableTypeMeta.class);
+                AccessoryRing item = new AccessoryRing(meta);
+
+                item.addModifiers(deserialized.modifiers());
+                item.addRequirements(deserialized.requirements());
+                item.addSkillModifiers(deserialized.skillModifiers());
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
+    }
+
+    private AccessoryAmulet createAccessoryAmulet(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create " + meta.type() + " " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                EquipableTypeMeta deserialized = new Gson().fromJson(json.meta(), EquipableTypeMeta.class);
+                AccessoryAmulet item = new AccessoryAmulet(meta);
+
+                item.addModifiers(deserialized.modifiers());
+                item.addRequirements(deserialized.requirements());
+                item.addSkillModifiers(deserialized.skillModifiers());
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
     }
 
     private XPLamp createXPLampItem(AbstractItemMeta meta, @Nullable VersionedJson json) {

@@ -149,6 +149,203 @@ public class ItemRepository {
                                 , 1)
                 ),
 
+                // Accessories
+                // Rings
+
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_RING, ItemId.BRONZE_RING.asInt(), Material.COAL, ItemRarity.COMMON, "Bronze Ring", List.of("A simple ring that slightly improves your combat."), null, null, true),
+                        toVersionedJson(new EquipableTypeMeta(null,
+                                List.of(
+                                        new Modifier(ModifierType.ATTACK_STAB, 1),
+                                        new Modifier(ModifierType.DEFENCE_STAB, 1)
+                                ), List.of(new SkillRequirement(SkillType.ATTACK, 1),
+                                new SkillRequirement(SkillType.DEFENCE, 1))
+                        ), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_RING, ItemId.IRON_RING.asInt(), Material.COAL, ItemRarity.COMMON, "Iron Ring", List.of("A sturdy ring that provides minor attack and defence bonuses."), null, null, true),
+                        toVersionedJson(new EquipableTypeMeta(null,
+                                List.of(
+                                        new Modifier(ModifierType.ATTACK_SLASH, 2),
+                                        new Modifier(ModifierType.DEFENCE_SLASH, 2)
+                                ), List.of(new SkillRequirement(SkillType.ATTACK, 5),
+                                new SkillRequirement(SkillType.DEFENCE, 5))
+                        ), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_RING, ItemId.MITHRIL_RING.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Mithril Ring", List.of("A well-crafted ring that slightly boosts attack and defence."), null, null, true),
+                        toVersionedJson(new EquipableTypeMeta(null,
+                                List.of(
+                                        new Modifier(ModifierType.ATTACK_CRUSH, 3),
+                                        new Modifier(ModifierType.DEFENCE_CRUSH, 3)
+                                ), List.of(new SkillRequirement(SkillType.ATTACK, 20),
+                                new SkillRequirement(SkillType.DEFENCE, 20))
+                        ), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_RING, ItemId.ADAMANTITE_RING.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Adamantite Ring", List.of("A strong ring offering moderate boosts to attack and defence."), null, null, true),
+                        toVersionedJson(new EquipableTypeMeta(null,
+                                List.of(
+                                        new Modifier(ModifierType.ATTACK_STAB, 4),
+                                        new Modifier(ModifierType.ATTACK_SLASH, 4),
+                                        new Modifier(ModifierType.DEFENCE_STAB, 4),
+                                        new Modifier(ModifierType.DEFENCE_SLASH, 4)
+                                ), List.of(new SkillRequirement(SkillType.ATTACK, 30),
+                                new SkillRequirement(SkillType.DEFENCE, 30))
+                        ), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_RING, ItemId.RUNITE_RING.asInt(), Material.COAL, ItemRarity.RARE, "Runite Ring", List.of("A rare ring that greatly improves your combat prowess."), null, null, true),
+                        toVersionedJson(new EquipableTypeMeta(null,
+                                List.of(
+                                        new Modifier(ModifierType.ATTACK_STAB, 6),
+                                        new Modifier(ModifierType.ATTACK_SLASH, 6),
+                                        new Modifier(ModifierType.ATTACK_CRUSH, 6),
+                                        new Modifier(ModifierType.DEFENCE_STAB, 6),
+                                        new Modifier(ModifierType.DEFENCE_SLASH, 6),
+                                        new Modifier(ModifierType.DEFENCE_CRUSH, 6),
+                                        new Modifier(ModifierType.STRENGTH_BONUS, 3)
+                                ), List.of(new SkillRequirement(SkillType.ATTACK, 40),
+                                new SkillRequirement(SkillType.DEFENCE, 40))
+                        ), 1)),
+
+                // Defence Amulets
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_GUARDING.asInt(), Material.COAL, ItemRarity.COMMON, "Amulet of Guarding", List.of("Reduces damage taken from all melee attacks."), null, null, true),
+                        toVersionedJson(new EquipableTypeMeta(null,
+                                List.of(
+                                        new Modifier(ModifierType.DEFENCE_STAB, 1),
+                                        new Modifier(ModifierType.DEFENCE_SLASH, 1),
+                                        new Modifier(ModifierType.DEFENCE_CRUSH, 1)
+                                ), List.of(new SkillRequirement(SkillType.DEFENCE, 1))
+                        ), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_THE_PROTECTOR.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Amulet of the Protector", List.of("Better protection against all attacks."), null, null, true),
+                        toVersionedJson(new EquipableTypeMeta(null,
+                                List.of(
+                                        new Modifier(ModifierType.DEFENCE_STAB, 3),
+                                        new Modifier(ModifierType.DEFENCE_SLASH, 3),
+                                        new Modifier(ModifierType.DEFENCE_CRUSH, 3),
+                                        new Modifier(ModifierType.DEFENCE_MAGIC, 1)
+                                ), List.of(new SkillRequirement(SkillType.DEFENCE, 10))
+                        ), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_FORTITUDE.asInt(), Material.COAL, ItemRarity.RARE, "Amulet of Fortitude", List.of("Significantly increases your defensive capabilities."), null, null, true),
+                        toVersionedJson(new EquipableTypeMeta(null,
+                                List.of(
+                                        new Modifier(ModifierType.DEFENCE_STAB, 5),
+                                        new Modifier(ModifierType.DEFENCE_SLASH, 5),
+                                        new Modifier(ModifierType.DEFENCE_CRUSH, 5),
+                                        new Modifier(ModifierType.DEFENCE_MAGIC, 3)
+                                ), List.of(new SkillRequirement(SkillType.DEFENCE, 20))
+                        ), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_THE_WARD.asInt(), Material.COAL, ItemRarity.EPIC, "Amulet of the Ward", List.of("Greatly enhances your defensive strength."), null, null, true),
+                        toVersionedJson(new EquipableTypeMeta(null,
+                                List.of(
+                                        new Modifier(ModifierType.DEFENCE_STAB, 8),
+                                        new Modifier(ModifierType.DEFENCE_SLASH, 8),
+                                        new Modifier(ModifierType.DEFENCE_CRUSH, 8),
+                                        new Modifier(ModifierType.DEFENCE_MAGIC, 5)
+                                ), List.of(new SkillRequirement(SkillType.DEFENCE, 40))
+                        ), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_INVINCIBILITY.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Amulet of Invincibility", List.of("Provides maximum protection against all forms of attack."), null, null, true),
+                        toVersionedJson(new EquipableTypeMeta(null,
+                                List.of(
+                                        new Modifier(ModifierType.DEFENCE_STAB, 12),
+                                        new Modifier(ModifierType.DEFENCE_SLASH, 12),
+                                        new Modifier(ModifierType.DEFENCE_CRUSH, 12),
+                                        new Modifier(ModifierType.DEFENCE_MAGIC, 8)
+                                ), List.of(new SkillRequirement(SkillType.DEFENCE, 60))
+                        ), 1)),
+
+                // Offensive Amulets
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_THE_NOVICE_BLADE.asInt(), Material.COAL, ItemRarity.COMMON, "Amulet of the Novice Blade", List.of("Slightly increases melee attack and strength."), null, null, true),
+                        toVersionedJson(new EquipableTypeMeta(null,
+                                List.of(
+                                        new Modifier(ModifierType.ATTACK_STAB, 1),
+                                        new Modifier(ModifierType.ATTACK_SLASH, 1),
+                                        new Modifier(ModifierType.ATTACK_CRUSH, 1),
+                                        new Modifier(ModifierType.STRENGTH_BONUS, 1)
+                                ), List.of(new SkillRequirement(SkillType.ATTACK, 1))
+                        ), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_MIGHT.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Amulet of Might", List.of("Boosts your attack and strength more effectively."), null, null, true),
+                        toVersionedJson(new EquipableTypeMeta(null,
+                                List.of(
+                                        new Modifier(ModifierType.ATTACK_STAB, 3),
+                                        new Modifier(ModifierType.ATTACK_SLASH, 3),
+                                        new Modifier(ModifierType.ATTACK_CRUSH, 3),
+                                        new Modifier(ModifierType.STRENGTH_BONUS, 3)
+                                ), List.of(new SkillRequirement(SkillType.ATTACK, 10))
+                        ), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_THE_DUELIST.asInt(), Material.COAL, ItemRarity.RARE, "Amulet of the Duelist", List.of("Greatly enhances your melee combat effectiveness."), null, null, true),
+                        toVersionedJson(new EquipableTypeMeta(null,
+                                List.of(
+                                        new Modifier(ModifierType.ATTACK_STAB, 5),
+                                        new Modifier(ModifierType.ATTACK_SLASH, 5),
+                                        new Modifier(ModifierType.ATTACK_CRUSH, 5),
+                                        new Modifier(ModifierType.STRENGTH_BONUS, 5)
+                                ), List.of(new SkillRequirement(SkillType.ATTACK, 20))
+                        ), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_THE_GLADIATOR.asInt(), Material.COAL, ItemRarity.EPIC, "Amulet of the Gladiator", List.of("Significantly boosts melee attack and strength."), null, null, true),
+                        toVersionedJson(new EquipableTypeMeta(null,
+                                List.of(
+                                        new Modifier(ModifierType.ATTACK_STAB, 8),
+                                        new Modifier(ModifierType.ATTACK_SLASH, 8),
+                                        new Modifier(ModifierType.ATTACK_CRUSH, 8),
+                                        new Modifier(ModifierType.STRENGTH_BONUS, 8)
+                                ), List.of(new SkillRequirement(SkillType.ATTACK, 40))
+                        ), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_ULTIMATE_POWER.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Amulet of Ultimate Power", List.of("Maximizes your melee attack and strength."), null, null, true),
+                        toVersionedJson(new EquipableTypeMeta(null,
+                                List.of(
+                                        new Modifier(ModifierType.ATTACK_STAB, 12),
+                                        new Modifier(ModifierType.ATTACK_SLASH, 12),
+                                        new Modifier(ModifierType.ATTACK_CRUSH, 12),
+                                        new Modifier(ModifierType.STRENGTH_BONUS, 12)
+                                ), List.of(new SkillRequirement(SkillType.ATTACK, 60))
+                        ), 1)),
+
+                // Ranged Amulets
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_THE_ARCHER.asInt(), Material.COAL, ItemRarity.COMMON, "Amulet of the Archer", List.of("Slightly improves ranged accuracy and strength."), null, null, true),
+                        toVersionedJson(new EquipableTypeMeta(null,
+                                List.of(
+                                        new Modifier(ModifierType.RANGED_ACCURACY, 1),
+                                        new Modifier(ModifierType.RANGED_STRENGTH, 1)
+                                ), List.of(new SkillRequirement(SkillType.RANGED, 1))
+                        ), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_PRECISION.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Amulet of Precision", List.of("Increases your ranged combat capabilities."), null, null, true),
+                        toVersionedJson(new EquipableTypeMeta(null,
+                                List.of(
+                                        new Modifier(ModifierType.RANGED_ACCURACY, 3),
+                                        new Modifier(ModifierType.RANGED_STRENGTH, 3)
+                                ), List.of(new SkillRequirement(SkillType.RANGED, 10))
+                        ), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_THE_HUNTER.asInt(), Material.COAL, ItemRarity.RARE, "Amulet of the Hunter", List.of("Significantly boosts ranged combat effectiveness."), null, null, true),
+                        toVersionedJson(new EquipableTypeMeta(null,
+                                List.of(
+                                        new Modifier(ModifierType.RANGED_ACCURACY, 5),
+                                        new Modifier(ModifierType.RANGED_STRENGTH, 5)
+                                ), List.of(new SkillRequirement(SkillType.RANGED, 20))
+                        ), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_THE_SHARPSHOOTER.asInt(), Material.COAL, ItemRarity.EPIC, "Amulet of the Sharpshooter", List.of("Greatly enhances ranged attacks."), null, null, true),
+                        toVersionedJson(new EquipableTypeMeta(null,
+                                List.of(
+                                        new Modifier(ModifierType.RANGED_ACCURACY, 8),
+                                        new Modifier(ModifierType.RANGED_STRENGTH, 8)
+                                ), List.of(new SkillRequirement(SkillType.RANGED, 40))
+                        ), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_THE_EAGLE_EYE.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Amulet of the Eagle Eye", List.of("Maximizes your ranged attack and strength."), null, null, true),
+                        toVersionedJson(new EquipableTypeMeta(null,
+                                List.of(
+                                        new Modifier(ModifierType.RANGED_ACCURACY, 12),
+                                        new Modifier(ModifierType.RANGED_STRENGTH, 12)
+                                ), List.of(new SkillRequirement(SkillType.RANGED, 60))
+                        ), 1)),
+
                 // XP Lamps
                 new ItemEntity(new AbstractItemMeta(ItemType.XP_LAMP, ItemId.GENIE_XP_LAMP.asInt(), Material.COAL, ItemRarity.RARE, "Genie XP Lamp",
                         List.of("Grants a magical XP boost.", "Use wisely to level up faster."), null, null, false), toVersionedJson(new XPLampMeta(500, List.of()), 1)),

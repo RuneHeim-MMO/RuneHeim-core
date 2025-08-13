@@ -24,7 +24,9 @@ public enum ItemType {
     ARROW(20),
     CURRENCY(21),
     CHANCE_ITEM(22),
-    XP_LAMP(23);
+    XP_LAMP(23),
+    ACCESSORY_AMULET(24),
+    ACCESSORY_RING(25);
 
     private final int key;
 

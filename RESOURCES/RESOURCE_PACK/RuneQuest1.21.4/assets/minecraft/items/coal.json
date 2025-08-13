@@ -742,6 +742,146 @@
                     "type": "model",
                     "model": "item/custom/misc/xp_lamp"
                 }
+            },
+            {
+                "threshold": 3100,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/accessories/amulets/guarding"
+                }
+            },
+            {
+                "threshold": 3101,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/accessories/amulets/protection"
+                }
+            },
+            {
+                "threshold": 3102,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/accessories/amulets/fortitude"
+                }
+            },
+            {
+                "threshold": 3103,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/accessories/amulets/the_ward"
+                }
+            },
+            {
+                "threshold": 3104,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/accessories/amulets/invicibility"
+                }
+            },
+            {
+                "threshold": 3105,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/accessories/amulets/novice_blade"
+                }
+            },
+            {
+                "threshold": 3106,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/accessories/amulets/might"
+                }
+            },
+            {
+                "threshold": 3107,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/accessories/amulets/duelist"
+                }
+            },
+            {
+                "threshold": 3108,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/accessories/amulets/gladiator"
+                }
+            },
+            {
+                "threshold": 3109,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/accessories/amulets/ultimate_power"
+                }
+            },
+            {
+                "threshold": 3110,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/accessories/amulets/archer"
+                }
+            },
+            {
+                "threshold": 3111,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/accessories/amulets/precision"
+                }
+            },
+            {
+                "threshold": 3112,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/accessories/amulets/hunter"
+                }
+            },
+            {
+                "threshold": 3113,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/accessories/amulets/sharpshooter"
+                }
+            },
+            {
+                "threshold": 3114,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/accessories/amulets/eagle_eye"
+                }
+            },
+            {
+                "threshold": 3200,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/accessories/rings/bronze"
+                }
+            },
+            {
+                "threshold": 3201,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/accessories/rings/iron"
+                }
+            },
+            {
+                "threshold": 3202,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/accessories/rings/mithril"
+                }
+            },
+            {
+                "threshold": 3203,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/accessories/rings/adamant"
+                }
+            },
+            {
+                "threshold": 3204,
+                "model": {
+                    "type": "model",
+                    "model": "item/custom/accessories/rings/runite"
+                }
             }
         ]
     }
