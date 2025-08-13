@@ -3,8 +3,6 @@ package org.zuma.examplePlugin;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Display;
-import org.bukkit.entity.Entity;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
@@ -110,7 +108,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new InteractionDisabler(), pluginInstance);
         getServer().getPluginManager().registerEvents(new BlockProtector(), pluginInstance);
         getServer().getPluginManager().registerEvents(new DefaultMobDisabler(), pluginInstance);
-        getServer().getPluginManager().registerEvents(new FireworkDamageDisabler(), pluginInstance);
+        getServer().getPluginManager().registerEvents(new VanillaDamageDisabler(), pluginInstance);
         getServer().getPluginManager().registerEvents(new DurabilityDisabler(), pluginInstance);
         getServer().getPluginManager().registerEvents(new HungerLocker(), pluginInstance);
 
