@@ -52,6 +52,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayerListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotListener;
+import org.zuma.examplePlugin.domain.player.persistence.RunePlayerRepository;
 import org.zuma.examplePlugin.domain.recipe.RecipeFactory;
 import org.zuma.examplePlugin.domain.recipe.RecipeHandler;
 import org.zuma.examplePlugin.domain.recipe.RecipeListener;
@@ -131,7 +132,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         ConfigManager configManager = new ConfigManager();
         configManager.initializeFolders();
 
-        runePlayerManager = new RunePlayerManager();
+        runePlayerManager = new RunePlayerManager(new RunePlayerRepository(pool));
         RunePlayerListener runePlayerListener = new RunePlayerListener(runePlayerManager);
         getServer().getPluginManager().registerEvents(runePlayerListener, pluginInstance);
 
@@ -295,10 +296,6 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
             blockManager.onDisable();
         }
 
-        if (pool != null) {
-            pool.closeConnection();
-        }
-
         if (mobHandler != null) {
             mobHandler.cleanup();
         }
@@ -313,6 +310,14 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
         if (spawnZoneHandler != null) {
             spawnZoneHandler.onDisable();
+        }
+
+        if (runePlayerManager != null) {
+            runePlayerManager.handleOnDisable();
+        }
+
+        if (pool != null) {
+            pool.closeConnection();
         }
 
         Bukkit.getScheduler().cancelTasks(this);

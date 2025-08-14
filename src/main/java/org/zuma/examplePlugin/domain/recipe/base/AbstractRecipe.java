@@ -325,7 +325,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         }
 
         if (totalCost > 0) {
-            player.setPouchCoins(player.getPouchCoins() - totalCost);
+            player.setPouchCoins(player.getPouchCoins() - totalCost, false);
             HudService.showCoinsChangeBubble(player, -totalCost);
         }
 

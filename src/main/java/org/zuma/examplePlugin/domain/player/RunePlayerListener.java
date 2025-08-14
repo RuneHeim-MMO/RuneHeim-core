@@ -34,10 +34,7 @@ public class RunePlayerListener implements Listener {
     @EventHandler
     public void onPlayerDisconnect(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-
         playerHandler.handlePlayerDisconnect(player);
-        playerHandler.savePlayerData(player, true);
-
     }
 
     @EventHandler

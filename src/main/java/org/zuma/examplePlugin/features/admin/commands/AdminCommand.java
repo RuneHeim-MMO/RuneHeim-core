@@ -20,12 +20,6 @@ import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
-import org.zuma.examplePlugin.domain.dialog.Dialog;
-import org.zuma.examplePlugin.domain.dialog.DialogBuilder;
-import org.zuma.examplePlugin.domain.dialog.DialogText;
-import org.zuma.examplePlugin.domain.dialog.InteractiveDialogOption;
-import org.zuma.examplePlugin.domain.dialog.impl.InteractiveDialogStep;
-import org.zuma.examplePlugin.domain.dialog.impl.PassiveDialogStep;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
@@ -129,7 +123,7 @@ public class AdminCommand implements BasicCommand {
 
 
         if (args.length == 2 && Objects.equals(args[0], "pouch") & TypeUtils.isInteger(args[1])) {
-            runePlayer.setPouchCoins(Long.parseLong(args[1]));
+            runePlayer.setPouchCoins(Long.parseLong(args[1]), false);
         }
 
         if (Objects.equals(args[0], "zone")) {

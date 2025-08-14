@@ -12,13 +12,26 @@ public class Logger {
     public Logger() {
     }
 
-    public void log(LogLevel level, String message, Throwable throwable) {
-        Bukkit.getLogger().log(level.getLoggingLevel(), PREFIX + " [" + level.getString() + "]: " + message, throwable);
+    public void log(LogLevel level, String message) {
+        log(level, message, null);
     }
 
-    public void log(LogLevel level, String message) {
-        Bukkit.getLogger().log(level.getLoggingLevel(), PREFIX + " [" + level.getString() + "]: " + message);
+    public void log(LogLevel level, String message, Throwable throwable) {
+        String incidentPrefix = (level != LogLevel.INFO) ? "[Incident #" + System.currentTimeMillis() + "] " : "";
+
+        String formattedMessage = incidentPrefix + PREFIX + " [" + level.getString() + "]: " + message;
+
+        if (level == LogLevel.INFO) {
+            formattedMessage = "\u001B[96m" + formattedMessage + "\u001B[0m";
+        }
+
+        if (throwable != null) {
+            Bukkit.getLogger().log(level.getLoggingLevel(), formattedMessage, throwable);
+        } else {
+            Bukkit.getLogger().log(level.getLoggingLevel(), formattedMessage);
+        }
     }
+
 
     public void logWithStack(LogLevel level, String message) {
         String stackTrace = getStackTrace(message);

@@ -69,7 +69,7 @@ public class CoinsItem extends MiscItem {
         int amount = ((storedAmount != null) ? storedAmount : 1) * item.getAmount(); // In case 2 same item stacks with same amounts stack together.;
 
         HudService.showCoinsChangeBubble(player, amount);
-        player.setPouchCoins(player.getPouchCoins() + amount);
+        player.setPouchCoins(player.getPouchCoins() + amount, false);
     }
 
 }

@@ -1,0 +1,141 @@
+package org.zuma.examplePlugin.domain.player.persistence;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.database.HikariPool;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+
+import javax.security.auth.login.AccountNotFoundException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.UUID;
+
+public class RunePlayerRepository {
+    private final HikariPool pool;
+
+    public RunePlayerRepository(HikariPool pool) {
+        this.pool = pool;
+    }
+
+    public SerializedPlayerContainer getPlayerByUUID(UUID uuid) throws AccountNotFoundException, IllegalAccessException {
+        String sql = "SELECT p.uuid, p.last_username, p.online, p.json, pic.json AS inventory_json " +
+                "FROM players p " +
+                "INNER JOIN player_inventory_contents pic ON p.uuid = pic.uuid " +
+                "WHERE p.uuid = ?";
+
+        try (Connection conn = pool.getDataSource().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, uuid.toString());
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (!rs.next()) {
+                    throw new AccountNotFoundException("Player not found with UUID: " + uuid);
+                }
+
+                String json = rs.getString("json");
+                String lastUsername = rs.getString("last_username");
+                String inventoryData = rs.getString("inventory_json");
+                boolean isOnline = rs.getBoolean("online");
+
+                if (isOnline) {
+                    throw new IllegalAccessException("Player is already online.");
+                }
+
+                return new SerializedPlayerContainer(uuid, lastUsername, json, inventoryData == null ? "{}" : inventoryData);
+            }
+
+        } catch (IllegalAccessException | AccountNotFoundException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to retrieve player." + System.currentTimeMillis(), e);
+        }
+    }
+
+    public void upsertPlayer(SerializedPlayerContainer container) {
+        String playerSql = """
+                INSERT INTO players (uuid, last_username, online, json, updated_at)
+                VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)
+                ON DUPLICATE KEY UPDATE
+                    last_username = VALUES(last_username),
+                    online = VALUES(online),
+                    json = VALUES(json),
+                    updated_at = CURRENT_TIMESTAMP
+                """;
+
+        String inventorySql = """
+                INSERT INTO player_inventory_contents (uuid, json, updated_at)
+                VALUES (?, ?, CURRENT_TIMESTAMP)
+                ON DUPLICATE KEY UPDATE
+                    json = VALUES(json),
+                    updated_at = CURRENT_TIMESTAMP
+                """;
+
+        Connection conn = null;
+        try {
+            conn = pool.getDataSource().getConnection();
+            conn.setAutoCommit(false); // start transaction
+
+            try (PreparedStatement playerStmt = conn.prepareStatement(playerSql);
+                 PreparedStatement inventoryStmt = conn.prepareStatement(inventorySql)) {
+
+                // Upsert player
+                playerStmt.setString(1, container.uuid().toString());
+                playerStmt.setString(2, container.username());
+                playerStmt.setBoolean(3, false);
+                playerStmt.setString(4, container.playerData());
+                playerStmt.executeUpdate();
+
+                // Upsert inventory
+                inventoryStmt.setString(1, container.uuid().toString());
+                inventoryStmt.setString(2, container.inventoryData());
+                inventoryStmt.executeUpdate();
+
+                // Commit transaction
+                conn.commit();
+            }
+
+        } catch (Exception e) {
+            // Rollback transaction if something failed
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (Exception rollbackEx) {
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL,
+                            "Rollback failed for player " + container.username() + "!", rollbackEx);
+                }
+            }
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL,
+                    "Failed to upsert player " + container.username() + " data!", e);
+        } finally {
+            // Close connection safely
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true); // reset autocommit
+                    conn.close();
+                } catch (Exception closeEx) {
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL,
+                            "Failed to close connection for player " + container.username() + "!", closeEx);
+                }
+            }
+        }
+    }
+
+    public void setPlayerOnline(UUID uuid, boolean online) {
+        String sql = "UPDATE players SET online = ? WHERE uuid = ?";
+
+        try (Connection conn = pool.getDataSource().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setBoolean(1, online);
+            stmt.setString(2, uuid.toString());
+
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to update player online status", e);
+        }
+    }
+
+}

@@ -132,7 +132,7 @@ public class Shop {
             player.giveItemOrDrop(new ItemRecord(shopItem.getSellCurrency().id, Math.toIntExact(totalOrderPrice)));
             SoundType.SHOP_BUY_WITH_CUSTOM_CURRENCY.play(player, true);
         } else {
-            player.setPouchCoins(player.getPouchCoins() + totalOrderPrice);
+            player.setPouchCoins(player.getPouchCoins() + totalOrderPrice, false);
         }
 
         notifyStockSubscribers();
@@ -175,7 +175,7 @@ public class Shop {
                 throw new IllegalStateException("You cannot afford this! You need at least " + totalOrderPrice + " coins.");
             }
 
-            player.setPouchCoins(player.getPouchCoins() - totalOrderPrice);
+            player.setPouchCoins(player.getPouchCoins() - totalOrderPrice, false);
         }
 
         player.giveItemOrDrop(type.createItemStackOfType(amount));

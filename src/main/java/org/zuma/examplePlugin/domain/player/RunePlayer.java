@@ -6,9 +6,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.core.constants.Color;
@@ -16,12 +13,10 @@ import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.core.interfaces.InteractiveActionStrategy;
-import org.zuma.examplePlugin.core.interfaces.SerializableItemContainer;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
-import org.zuma.examplePlugin.domain.gui.ItemStackSlotPair;
 import org.zuma.examplePlugin.domain.hud.ActionBarManager;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.hud.PlayerScoreboardManager;
@@ -33,7 +28,6 @@ import org.zuma.examplePlugin.domain.party.Party;
 import org.zuma.examplePlugin.domain.player.actions.ActionParams;
 import org.zuma.examplePlugin.domain.player.handlers.PlayerItemDistributor;
 import org.zuma.examplePlugin.domain.player.handlers.PlayerXpHandler;
-import org.zuma.examplePlugin.domain.player.actions.ProgressBarAction;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.domain.xp.PendingXPHandler;
@@ -46,7 +40,7 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class RunePlayer implements CombatEntity, SerializableItemContainer {
+public class RunePlayer implements CombatEntity {
     private final UUID uuid;
     private final PlayerCombatData combatData;
     private @Nullable Party party;
@@ -62,8 +56,7 @@ public class RunePlayer implements CombatEntity, SerializableItemContainer {
 
     private long pouchCoins;
     private final List<InteractiveActionStrategy> pendingActions;
-    private final List<String> discoveredTerritoryIds;
-
+    private List<String> discoveredTerritoryIds;
 
     public RunePlayer(UUID uuid, EnumMap<SkillType, Skill> skills) {
         this.uuid = uuid;
@@ -248,8 +241,10 @@ public class RunePlayer implements CombatEntity, SerializableItemContainer {
         return pouchCoins;
     }
 
-    public void setPouchCoins(long coins) {
-        SoundType.COINS_DROP.play(this.asBukkitPlayer(), true);
+    public void setPouchCoins(long coins, boolean silent) {
+        if (!silent)
+            SoundType.COINS_DROP.play(this.asBukkitPlayer(), true);
+
         this.pouchCoins = coins;
     }
 
@@ -258,29 +253,11 @@ public class RunePlayer implements CombatEntity, SerializableItemContainer {
         this.pendingXPHandler.distributePendingXP();
     }
 
-    public List<ItemStackSlotPair> getContent() {
-        List<ItemStackSlotPair> itemPairs = new ArrayList<>();
-        PlayerInventory inv = asBukkitPlayer().getInventory();
-
-        for (int slot = 0; slot <= 40; slot++) {
-            ItemStack item = inv.getItem(slot);
-
-            if (item == null) {
-                continue;
-            }
-
-            itemPairs.add(new ItemStackSlotPair(slot, item));
-        }
-
-        return itemPairs;
-    }
-
-    public void setInventoryContent(List<ItemStackSlotPair> pairs) {
-        PlayerInventory inv = asBukkitPlayer().getInventory();
-        pairs.forEach(pair -> inv.setItem(pair.slot(), pair.itemStack()));
-    }
-
     public List<String> getDiscoveredTerritoryIds() {
         return discoveredTerritoryIds;
+    }
+
+    public void setDiscoveredTerritoryIds(List<String> list) {
+        this.discoveredTerritoryIds = list;
     }
 }

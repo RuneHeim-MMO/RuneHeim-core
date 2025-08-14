@@ -8,7 +8,7 @@ public class Skill {
     private double xp;
     private int bonus;
 
-    public Skill(SkillType type, int xp) {
+    public Skill(SkillType type, double xp) {
         this.type = type;
         this.xp = xp;
     }

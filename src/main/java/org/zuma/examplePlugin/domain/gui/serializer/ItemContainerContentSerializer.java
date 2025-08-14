@@ -2,7 +2,9 @@ package org.zuma.examplePlugin.domain.gui.serializer;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.interfaces.SerializableItemContainer;
 import org.zuma.examplePlugin.domain.gui.ItemStackSlotPair;
@@ -17,10 +19,10 @@ import java.util.Map;
 public class ItemContainerContentSerializer {
     private static final Gson gson = new Gson();
 
-    public static String serializeItemContainerContent(SerializableItemContainer container) throws IllegalArgumentException {
+    public static String serializeItemSlotPairs(List<ItemStackSlotPair> pairs) throws IllegalArgumentException {
         Map<String, String> serialized = new HashMap<>();
 
-        container.getContent().forEach(pair -> {
+        pairs.forEach(pair -> {
             ItemStack stack = pair.itemStack();
 
             if (GUIControl.isGuiItem(stack)) {
@@ -31,6 +33,10 @@ public class ItemContainerContentSerializer {
         });
 
         return gson.toJson(serialized);
+    }
+
+    public static String serializeItemContainerContent(SerializableItemContainer container) throws IllegalArgumentException {
+        return serializeItemSlotPairs(container.getContent());
     }
 
     public static List<ItemStackSlotPair> deserializeItemContainerContent(String json) throws IllegalArgumentException {
@@ -48,4 +54,5 @@ public class ItemContainerContentSerializer {
 
         return deserialized;
     }
+
 }
