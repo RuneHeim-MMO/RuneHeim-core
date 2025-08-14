@@ -14,7 +14,7 @@ public class Boars {
 
     public static void registerMobs(MobTypeRegistry registry) {
 
-        registry.register(MobType.BOAR_BROWN.getId(), () -> new GenericCombatant(
+        registry.register(MobType.BOAR_BROWN_BASE_3.getId(), () -> new GenericCombatant(
                 "Brown Boar", null,
                 getBaseSkills(3),
                 null,
@@ -24,7 +24,7 @@ public class Boars {
                 List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
         ));
 
-        registry.register(MobType.BOAR_LIGHT_BROWN.getId(), () -> new GenericCombatant(
+        registry.register(MobType.BOAR_LIGHT_BROWN_BASE_3.getId(), () -> new GenericCombatant(
                 "Light Brown Boar", null,
                 getBaseSkills(3),
                 null,
@@ -34,7 +34,7 @@ public class Boars {
                 List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
         ));
 
-        registry.register(MobType.BOAR_GRAY.getId(), () -> new GenericCombatant(
+        registry.register(MobType.BOAR_GRAY_BASE_3.getId(), () -> new GenericCombatant(
                 "Gray Boar", null,
                 getBaseSkills(3),
                 null,
@@ -44,9 +44,9 @@ public class Boars {
                 List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
         ));
 
-        registry.register(MobType.BOAR_BROWN_ALPHA.getId(), () -> new GenericCombatant(
+        registry.register(MobType.BOAR_BROWN_ALPHA_BASE10.getId(), () -> new GenericCombatant(
                 "Alpha Brown Boar", null,
-                getBaseSkills(7),
+                getBaseSkills(10),
                 null,
                 MobBehaviors.BOAR.getBehavior(),
                 "yungwilder_isles_boar_brown_alpha",
@@ -55,7 +55,7 @@ public class Boars {
         ));
 
 
-        registry.register(MobType.BOAR_GRAY_ALPHA.getId(), () -> new GenericCombatant(
+        registry.register(MobType.BOAR_GRAY_ALPHA_BASE_12.getId(), () -> new GenericCombatant(
                 "Alpha Gray Boar", null,
                 getBaseSkills(12),
                 null,
@@ -65,7 +65,7 @@ public class Boars {
                 List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
         ));
 
-        registry.register(MobType.BOAR_LIGHT_BROWN_ALPHA.getId(), () -> new GenericCombatant(
+        registry.register(MobType.BOAR_LIGHT_BROWN_ALPHA_BASE_14.getId(), () -> new GenericCombatant(
                 "Alpha Light Brown Boar", null,
                 getBaseSkills(14),
                 null,

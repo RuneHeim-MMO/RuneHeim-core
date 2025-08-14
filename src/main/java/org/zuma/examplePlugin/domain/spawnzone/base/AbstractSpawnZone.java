@@ -138,7 +138,7 @@ public abstract class AbstractSpawnZone {
                     continue;
                 }
 
-                Entity spawnedEntity = RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), mobLocation, record.mobId().getId());
+                Entity spawnedEntity = RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), MobUtils.getGroundLocation(mobLocation), record.mobId().getId());
 
                 if (spawnedEntity == null) {
                     RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Unable to spawn entity. Entity not found. Drop Zone ID: " + id + " Entity ID: " + record.mobId() + " (numeric: " + record.mobId().getId() + ")");

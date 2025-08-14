@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.core.utils;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Mob;
@@ -81,5 +82,25 @@ public class MobUtils {
         boolean headClear = blockAtHead.isPassable();
 
         return feetClear && headClear;
+    }
+
+    public static Location getGroundLocation(Location loc) {
+        World world = loc.getWorld();
+        int blockX = loc.getBlockX();
+        int blockZ = loc.getBlockZ();
+        int blockY = loc.getBlockY();
+
+        int safeY = blockY;
+
+        // Search downward from current Y
+        for (int y = blockY; y >= world.getMinHeight(); y--) {
+            Material type = world.getBlockAt(blockX, y, blockZ).getType();
+            if (type.isSolid() && !type.name().endsWith("_LEAVES")) {
+                safeY = y + 1; // place just above solid non-leaf block
+                break;
+            }
+        }
+
+        return new Location(world, loc.getX(), safeY + 0.5, loc.getZ());
     }
 }

@@ -141,7 +141,7 @@ public class MapMarkerHandler {
 
             String label = "Spawn Zone ID: " + zone.getId();
 
-            String avgLevelColorCode = TextUtils.getLegacyColorCodeForLevel(99);
+            String avgLevelColorCode = zone.getMobRecords().isEmpty() ? "§1" : "§b";
             Color lineColor = MinecraftColorConverter.fromMinecraftColorCode(avgLevelColorCode, 1F);
             Color fillColor = MinecraftColorConverter.fromMinecraftColorCode(avgLevelColorCode, 0.2F);
 
