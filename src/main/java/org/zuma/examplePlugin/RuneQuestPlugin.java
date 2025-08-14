@@ -64,6 +64,7 @@ import org.zuma.examplePlugin.domain.shop.ShopRegistry;
 import org.zuma.examplePlugin.domain.shop.persistence.ShopRepository;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneHandler;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneListener;
+import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
 import org.zuma.examplePlugin.domain.spawnzone.persistence.SpawnZoneRepository;
 import org.zuma.examplePlugin.domain.territory.Territory;
 import org.zuma.examplePlugin.domain.territory.TerritoryHandler;
@@ -242,10 +243,12 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     public static void reloadMarkers() {
         Collection<POIMarkerable> poiMarkers = new ArrayList<>(blockManager.getAllBlocks());
         Collection<Territory> territories = new ArrayList<>(territoryHandler.getTerritoryList());
+        Collection<AbstractSpawnZone> zones = new ArrayList<>(spawnZoneHandler.getZones());
 
         markerHandler.clearMarkers();
         markerHandler.renderMarkers(poiMarkers);
-        markerHandler.renderAreas(territories);
+        markerHandler.renderTerritories(territories);
+        markerHandler.renderSpawnZones(zones);
     }
 
     private void registerCommands() {

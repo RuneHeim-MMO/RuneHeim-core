@@ -24,7 +24,7 @@ public abstract class AbstractSpawnZone {
     private List<SpawnZoneMobRecord> mobRecords;
     private final SpawnZoneType type;
     private final int id, waveRateSeconds, deadThresholdForWave;
-    private final Location location;
+    private final Location centerPoint;
     private Long lastWaveAttemptOccurred;
 
     private final Set<UUID> spawnedAndLoadedEntities;
@@ -35,7 +35,7 @@ public abstract class AbstractSpawnZone {
         this.mobRecords = new ArrayList<>();
         this.type = type;
         this.id = meta.id();
-        this.location = meta.location();
+        this.centerPoint = meta.location();
         this.waveRateSeconds = meta.waveRateSeconds();
         this.deadThresholdForWave = meta.deadThresholdForWave();
         this.spawnedAndLoadedEntities = ConcurrentHashMap.newKeySet();
@@ -55,6 +55,10 @@ public abstract class AbstractSpawnZone {
     public void setMobRecords(List<SpawnZoneMobRecord> mobRecords) {
         this.mobRecords = mobRecords;
         mobRecords.forEach(record -> maximumMobs += record.amount());
+    }
+
+    public List<SpawnZoneMobRecord> getMobRecords() {
+        return this.mobRecords;
     }
 
     public int getId() {
@@ -178,7 +182,7 @@ public abstract class AbstractSpawnZone {
             }
 
             Location entityLocation = entity.getLocation();
-            if (MathUtils.getLocationsDistanceXZ(location, entityLocation) > BLOCK_DISTANCE_FROM_CENTER_KILL_THRESHOLD) {
+            if (MathUtils.getLocationsDistanceXZ(centerPoint, entityLocation) > BLOCK_DISTANCE_FROM_CENTER_KILL_THRESHOLD) {
                 entity.remove();
                 iterator.remove();
             }
@@ -187,7 +191,7 @@ public abstract class AbstractSpawnZone {
     }
 
     public void runTickIfDue() {
-        if (!this.getLocation().getWorld().isChunkLoaded(this.getLocation().getBlockX() >> 4, this.getLocation().getBlockZ() >> 4)) {
+        if (!this.getCenterPoint().getWorld().isChunkLoaded(this.getCenterPoint().getBlockX() >> 4, this.getCenterPoint().getBlockZ() >> 4)) {
             return;
         }
 
@@ -205,8 +209,8 @@ public abstract class AbstractSpawnZone {
         return deadThresholdForWave;
     }
 
-    public Location getLocation() {
-        return location;
+    public Location getCenterPoint() {
+        return centerPoint;
     }
 
     public SpawnZoneType getType() {

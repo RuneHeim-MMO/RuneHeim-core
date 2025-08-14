@@ -40,7 +40,8 @@ public enum MarkerType {
 
     // TODO
     FUSION_MASTER("fusion-masters", "Fusion Masters", ""),
-    AREAS("areas", "Areas", "");
+    AREAS("areas", "Areas", ""),
+    SPAWN_ZONE("spawn_zone", "Mob Spawn Zones", "");
 
 
     private final String id, label, iconURL;

@@ -140,11 +140,11 @@ public class AdminCommand implements BasicCommand {
             message.append("§eZone ID: §f").append(zone.getId()).append("\n");
             message.append("§eType: §f").append(zone.getType().name()).append("\n");
 
-            if (zone.getLocation() != null) {
-                message.append("§eLocation: §fWorld: ").append(zone.getLocation().getWorld().getName())
-                        .append(", X: ").append(zone.getLocation().getBlockX())
-                        .append(", Y: ").append(zone.getLocation().getBlockY())
-                        .append(", Z: ").append(zone.getLocation().getBlockZ()).append("\n");
+            if (zone.getCenterPoint() != null) {
+                message.append("§eLocation: §fWorld: ").append(zone.getCenterPoint().getWorld().getName())
+                        .append(", X: ").append(zone.getCenterPoint().getBlockX())
+                        .append(", Y: ").append(zone.getCenterPoint().getBlockY())
+                        .append(", Z: ").append(zone.getCenterPoint().getBlockZ()).append("\n");
             } else {
                 message.append("§eLocation: §fN/A\n");
             }

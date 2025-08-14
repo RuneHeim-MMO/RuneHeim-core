@@ -3,12 +3,9 @@ package org.zuma.examplePlugin.domain.spawnzone.impl;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneMobRecord;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneType;
 import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
 import org.zuma.examplePlugin.domain.spawnzone.meta.AbstractSpawnZoneMeta;
-
-import java.util.List;
 
 public class ChunkSpawnZone extends AbstractSpawnZone {
     private final boolean spawnAtHighestBlock;
@@ -20,7 +17,7 @@ public class ChunkSpawnZone extends AbstractSpawnZone {
 
     @Override
     public Location getNextMobLocation() {
-        Location base = super.getLocation();
+        Location base = super.getCenterPoint();
         Chunk chunk = base.getChunk();
         World world = chunk.getWorld();
 

@@ -1,12 +1,9 @@
 package org.zuma.examplePlugin.domain.spawnzone.impl;
 
 import org.bukkit.Location;
-import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneMobRecord;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneType;
 import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
 import org.zuma.examplePlugin.domain.spawnzone.meta.AbstractSpawnZoneMeta;
-
-import java.util.List;
 
 public class PointSpawnZone extends AbstractSpawnZone {
     private final boolean spawnAtHighestBlock;
@@ -18,7 +15,7 @@ public class PointSpawnZone extends AbstractSpawnZone {
 
     @Override
     public Location getNextMobLocation() {
-        Location base = super.getLocation();
+        Location base = super.getCenterPoint();
 
         if (spawnAtHighestBlock) {
             int highestY = base.getWorld().getHighestBlockYAt(base.getBlockX(), base.getBlockZ());

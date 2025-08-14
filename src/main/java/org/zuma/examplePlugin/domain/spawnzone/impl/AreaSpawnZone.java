@@ -1,12 +1,9 @@
 package org.zuma.examplePlugin.domain.spawnzone.impl;
 
 import org.bukkit.Location;
-import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneMobRecord;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneType;
 import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
 import org.zuma.examplePlugin.domain.spawnzone.meta.AbstractSpawnZoneMeta;
-
-import java.util.List;
 
 public class AreaSpawnZone extends AbstractSpawnZone {
     private final int radius;
@@ -20,7 +17,7 @@ public class AreaSpawnZone extends AbstractSpawnZone {
 
     @Override
     public Location getNextMobLocation() {
-        Location center = super.getLocation();
+        Location center = super.getCenterPoint();
 
         // Generate random angle (0 to 2π)
         double angle = Math.random() * 2 * Math.PI;
@@ -40,5 +37,9 @@ public class AreaSpawnZone extends AbstractSpawnZone {
         }
 
         return mobLocation;
+    }
+
+    public int getRadius() {
+        return this.radius;
     }
 }

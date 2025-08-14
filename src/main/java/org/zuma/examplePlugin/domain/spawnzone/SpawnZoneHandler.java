@@ -7,23 +7,19 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.MathUtils;
-import org.zuma.examplePlugin.domain.mob.MobSessionManager;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
 import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
 import org.zuma.examplePlugin.domain.spawnzone.persistence.SpawnZoneRepository;
 
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class SpawnZoneHandler {
     public static final NamespacedKey ZONE_KEY =
@@ -41,6 +37,10 @@ public class SpawnZoneHandler {
         this.factory = new SpawnZoneFactory();
     }
 
+    public Collection<AbstractSpawnZone> getZones() {
+        return this.spawnZones.values();
+    }
+
     @Nullable
     public AbstractSpawnZone getClosest(Location loc) {
         if (spawnZones.isEmpty() || loc == null) {
@@ -51,7 +51,7 @@ public class SpawnZoneHandler {
         double closestDistance = Double.MAX_VALUE;
 
         for (AbstractSpawnZone zone : spawnZones.values()) {
-            Location zoneLoc = zone.getLocation();
+            Location zoneLoc = zone.getCenterPoint();
             if (zoneLoc == null) continue;
 
             double distance = MathUtils.getLocationsDistanceXZ(loc, zoneLoc);

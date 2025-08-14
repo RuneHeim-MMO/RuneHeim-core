@@ -14,6 +14,10 @@ import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.MinecraftColorConverter;
 import org.zuma.examplePlugin.core.utils.TextUtils;
+import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneType;
+import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
+import org.zuma.examplePlugin.domain.spawnzone.impl.AreaSpawnZone;
+import org.zuma.examplePlugin.domain.spawnzone.impl.ChunkSpawnZone;
 import org.zuma.examplePlugin.domain.territory.Territory;
 
 import java.util.Arrays;
@@ -83,25 +87,25 @@ public class MapMarkerHandler {
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + count.get() + " POI markers for BlueMap.");
     }
 
-    public void renderAreas(Collection<Territory> entities) {
+    public void renderTerritories(Collection<Territory> territories) {
         AtomicInteger count = new AtomicInteger();
 
-        entities.forEach(entity -> {
+        territories.forEach(territory -> {
             MarkerType markerType = MarkerType.AREAS;
-            Shape circleShape = MapShapeGenerator.generateCircleShapeAsShape((int) entity.getCenterPoint().x(), (int) entity.getCenterPoint().z(), entity.getRadius(), 20);
+            Shape circleShape = MapShapeGenerator.generateCircleShapeAsShape((int) territory.getCenterPoint().x(), (int) territory.getCenterPoint().z(), territory.getRadius(), 20);
 
-            String label = entity.getName().replaceAll("§.", "");
-            String avgLevelColorCode = TextUtils.getLegacyColorCodeForLevel(entity.getMinLevel() + entity.getMaxLevel() / 2);
+            String label = territory.getName().replaceAll("§.", "");
+            String avgLevelColorCode = TextUtils.getLegacyColorCodeForLevel(territory.getMinLevel() + territory.getMaxLevel() / 2);
             Color lineColor = MinecraftColorConverter.fromMinecraftColorCode(avgLevelColorCode, 0.8F);
             Color fillColor = MinecraftColorConverter.fromMinecraftColorCode(avgLevelColorCode, 0.2F);
 
             ExtrudeMarker marker = ExtrudeMarker.builder()
-                    .position(entity.getCenterPoint().x(), entity.getCenterPoint().y(), entity.getCenterPoint().z())
+                    .position(territory.getCenterPoint().x(), territory.getCenterPoint().y(), territory.getCenterPoint().z())
                     .shape(circleShape, 0, 256)
                     .lineColor(lineColor)
                     .fillColor(fillColor)
                     .listed(true)
-                    .detail("<b>" + label + "</b><br/>" + entity.getDescription() + "<br/><br/> Level range: <b>" + entity.getMinLevel() + " - " + entity.getMaxLevel() + "</b>")
+                    .detail("<b>" + label + "</b><br/>" + territory.getDescription() + "<br/><br/> Level range: <b>" + territory.getMinLevel() + " - " + territory.getMaxLevel() + "</b>")
                     .label(label)
                     .build();
 
@@ -118,6 +122,58 @@ public class MapMarkerHandler {
         });
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + count.get() + " area markers for BlueMap.");
+    }
+
+    public void renderSpawnZones(Collection<AbstractSpawnZone> zones) {
+        AtomicInteger count = new AtomicInteger();
+
+        zones.forEach(zone -> {
+            MarkerType markerType = MarkerType.SPAWN_ZONE;
+            int radius = 1;
+
+            if (zone instanceof AreaSpawnZone areaSpawnZone) {
+                radius = areaSpawnZone.getRadius();
+            } else if (zone instanceof ChunkSpawnZone chunkSpawnZone) {
+                radius = 16;
+            }
+
+            Shape circleShape = MapShapeGenerator.generateCircleShapeAsShape((int) zone.getCenterPoint().x(), (int) zone.getCenterPoint().z(), radius, 20);
+
+            String label = "Spawn Zone ID: " + zone.getId();
+
+            String avgLevelColorCode = TextUtils.getLegacyColorCodeForLevel(99);
+            Color lineColor = MinecraftColorConverter.fromMinecraftColorCode(avgLevelColorCode, 1F);
+            Color fillColor = MinecraftColorConverter.fromMinecraftColorCode(avgLevelColorCode, 0.2F);
+
+            final String[] list = {""};
+
+            zone.getMobRecords().forEach(spawnZoneMobRecord -> {
+                list[0] = list[0] + "</br>" + spawnZoneMobRecord.amount() + "x " + spawnZoneMobRecord.mobId() + ": " + spawnZoneMobRecord.spawnChancePercentage() + "%";
+            });
+
+            ShapeMarker marker = ShapeMarker.builder()
+                    .position(zone.getCenterPoint().x(), zone.getCenterPoint().y(), zone.getCenterPoint().z())
+                    .shape(circleShape, 256)
+                    .lineColor(lineColor)
+                    .fillColor(fillColor)
+                    .listed(true)
+                    .detail("<b>" + label + "</b>" + list[0])
+                    .label(label)
+                    .build();
+
+            MarkerSet set = markerSets.get(markerType);
+
+            if (set != null) {
+                set.getMarkers()
+                        .put(UUID.randomUUID().toString(), marker);
+                count.getAndIncrement();
+            } else {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "MarkerSet for " + markerType.getLabel() + " is missing");
+            }
+
+        });
+
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + count.get() + " spawn zone markers for BlueMap.");
     }
 
     public void clearMarkers() {
