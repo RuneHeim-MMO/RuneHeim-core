@@ -13,9 +13,9 @@ import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.TextUtils;
+import org.zuma.examplePlugin.domain.item.instance.ItemOwnershipHandler;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.item.impl.CoinsItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
@@ -66,7 +66,20 @@ public class PlayerItemDistributor {
 
         if (!leftovers.isEmpty()) {
             leftovers.values().forEach(leftover ->
-                    player.getWorld().dropItemNaturally(dropLocation, leftover)
+                    {
+                        int amount = leftover.getAmount();
+                        int maxStack = leftover.getMaxStackSize();
+
+                        while (amount > 0) {
+                            int dropAmount = Math.min(amount, maxStack);
+                            ItemStack dropStack = leftover.clone();
+                            dropStack.setAmount(dropAmount);
+
+                            ItemOwnershipHandler.setDroppedItemPrivate(dropStack, runePlayer);
+                            player.getWorld().dropItemNaturally(dropLocation, dropStack);
+                            amount -= dropAmount;
+                        }
+                    }
             );
 
             if (dropMessage != null && !dropMessage.isEmpty()) {

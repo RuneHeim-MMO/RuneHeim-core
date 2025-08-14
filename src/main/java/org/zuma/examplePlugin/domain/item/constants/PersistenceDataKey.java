@@ -9,7 +9,10 @@ public enum PersistenceDataKey {
     STATE_UUID("state_uuid", PersistentDataType.STRING),
     COINS_AMOUNT("coins_amount", PersistentDataType.INTEGER),
     ILLEGAL_ITEM("illegal_item", PersistentDataType.INTEGER),
-    UNTRADEABLE_OWNER_UUID("untradeable_owner_uuid", PersistentDataType.STRING);
+    UNTRADEABLE_OWNER_UUID("untradeable_owner_uuid", PersistentDataType.STRING),
+
+    LOCKED_TO_OWNER_UUID("locked_to_owner", PersistentDataType.STRING),
+    LOCKED_TO_OWNER_UNTIL("locked_to_owner_until", PersistentDataType.LONG);
 
     private final String keyName;
     private final PersistentDataType<?, ?> type;

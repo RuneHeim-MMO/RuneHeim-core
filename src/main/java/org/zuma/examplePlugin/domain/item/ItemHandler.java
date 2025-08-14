@@ -5,9 +5,12 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.instance.ItemOwnershipHandler;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.item.PlayerArmorEquipEvent;
@@ -17,9 +20,11 @@ import java.util.UUID;
 
 public class ItemHandler {
     private final ItemRegistry registry;
+    private final CooldownHandler cooldownHandler;
 
     public ItemHandler(ItemRegistry registry) {
         this.registry = registry;
+        this.cooldownHandler = new CooldownHandler();
     }
 
     public ItemRegistry getRegistry() {
@@ -55,14 +60,21 @@ public class ItemHandler {
             return;
         }
 
+        ItemStack itemStack = event.getItem().getItemStack();
+
+        if (!ItemOwnershipHandler.isPickupableBy(itemStack, player)) {
+            event.setCancelled(true);
+            return;
+        }
+
         if (item.isTradeable) {
             return;
         }
 
-        UUID untradeableOwnerUUID = item.getUntradeableOwnerUUID(event.getItem().getItemStack());
+        UUID untradeableOwnerUUID = item.getUntradeableOwnerUUID(itemStack);
 
         if (untradeableOwnerUUID == null) {
-            item.setUntradeableOwnerUUID(event.getItem().getItemStack(), player.getUUID());
+            item.setUntradeableOwnerUUID(itemStack, player.getUUID());
             return;
         }
 

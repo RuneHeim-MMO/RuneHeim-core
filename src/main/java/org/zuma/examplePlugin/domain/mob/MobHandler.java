@@ -15,6 +15,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.domain.item.instance.ItemOwnershipHandler;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.behavior.MobIdleBehaviorHandler;
@@ -78,7 +79,14 @@ public class MobHandler {
     public void onEntityDeath(EntityDeathEvent event, AbstractMob mob) {
         List<ItemStack> drops = mob.rollDropTables();
         Location dropLocation = event.getEntity().getLocation();
-        drops.forEach(drop -> dropLocation.getWorld().dropItem(dropLocation, drop));
+
+        drops.forEach(drop -> {
+            if (event.getEntity().hasMetadata("killer")) {
+                ItemOwnershipHandler.setDroppedItemPrivate(drop, UUID.fromString(event.getEntity().getMetadata("killer").getFirst().asString()));
+            }
+
+            dropLocation.getWorld().dropItem(dropLocation, drop);
+        });
 
         if (mob.getBehavior() != null && !event.isCancelled()) {
             mob.getBehavior().playSound(event.getEntity(), MobBehavior.MobSoundType.DEATH);

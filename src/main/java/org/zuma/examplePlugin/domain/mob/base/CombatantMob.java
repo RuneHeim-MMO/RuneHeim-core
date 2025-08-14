@@ -11,6 +11,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
@@ -109,6 +110,11 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         double scaledHealth = maxHealth * ((double) this.health / this.maxHealth);
 
         scaledHealth = Math.max(0, Math.min(maxHealth, scaledHealth));
+
+        // Set killer metadata on last hit
+        if (scaledHealth == 0 && hit.attacker().getEntity() instanceof Player playerAttacker) {
+            living.setMetadata("killer", new FixedMetadataValue(RuneQuestPlugin.getInstance(), playerAttacker.getUniqueId().toString()));
+        }
 
         // Apply the scaled health to the entity
         this.xpHandler.calculatePendingXP(hit);
