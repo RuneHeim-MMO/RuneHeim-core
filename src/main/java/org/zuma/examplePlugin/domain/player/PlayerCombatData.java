@@ -29,13 +29,15 @@ public class PlayerCombatData {
     }
 
     public void setHealth(int health, RunePlayerHealthChangedEvent.Cause cause) {
-        RunePlayerHealthChangedEvent event = new RunePlayerHealthChangedEvent(player, health, cause);
-        Bukkit.getServer().getPluginManager().callEvent(event);
+        if(cause != RunePlayerHealthChangedEvent.Cause.INITIALIZATION){
+            RunePlayerHealthChangedEvent event = new RunePlayerHealthChangedEvent(player, health, cause);
+            Bukkit.getServer().getPluginManager().callEvent(event);
 
-        if (event.isCancelled()) {
-            return;
+            if (event.isCancelled()) {
+                return;
+            }
+
         }
-
         this.health = health;
     }
 

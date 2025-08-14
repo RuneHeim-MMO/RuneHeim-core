@@ -359,7 +359,7 @@ public class FusionMasterInventory extends IndividualGUI {
             try {
                 state.insertGem(gem);
                 inventory.setItem(gemSlot, null);
-                player.setPouchCoins(player.getPouchCoins() - COST_PER_GEM);
+                player.setPouchCoins(player.getPouchCoins() - COST_PER_GEM, false);
                 insertedGems++;
             } catch (IllegalStateException e) {
                 HudService.sendFailMessage(player, Component.text(e.getMessage()));

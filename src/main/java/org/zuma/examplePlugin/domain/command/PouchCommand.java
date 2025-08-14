@@ -68,7 +68,7 @@ public class PouchCommand implements BasicCommand {
             }
 
             HudService.showCoinsChangeBubble(runePlayer, -amount);
-            runePlayer.setPouchCoins(runePlayer.getPouchCoins() - amount);
+            runePlayer.setPouchCoins(runePlayer.getPouchCoins() - amount, false);
             dropTimes.put(runePlayer.getUUID(), System.currentTimeMillis());
 
             // Simulate as if player has dropped it;

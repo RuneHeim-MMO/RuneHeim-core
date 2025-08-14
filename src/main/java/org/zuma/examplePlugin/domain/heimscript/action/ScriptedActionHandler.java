@@ -69,7 +69,7 @@ public class ScriptedActionHandler {
                     player.asBukkitPlayer().teleport(loc);
                 }
                 case TAKE_POUCH_COINS -> {
-                    player.setPouchCoins(player.getPouchCoins() - Long.parseLong(args.get("amount")));
+                    player.setPouchCoins(player.getPouchCoins() - Long.parseLong(args.get("amount")), false);
                 }
                 case TAKE_INVENTORY_ITEM -> {
                     PlayerUtils.removeItems(player, List.of(new ItemRecord(Integer.parseInt(args.get("item_id")), Integer.parseInt(args.get("amount")))));

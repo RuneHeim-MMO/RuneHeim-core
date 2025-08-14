@@ -36,7 +36,7 @@ public class RunePlayerListener implements Listener {
         Player player = event.getPlayer();
 
         playerHandler.handlePlayerDisconnect(player);
-        playerHandler.savePlayerData(player, true);
+        playerHandler.savePlayerDataAsync(player, player.getName(), true);
 
     }
 
