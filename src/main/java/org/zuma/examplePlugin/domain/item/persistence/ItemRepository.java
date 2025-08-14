@@ -152,7 +152,7 @@ public class ItemRepository {
                 // Accessories
                 // Rings
 
-                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_RING, ItemId.BRONZE_RING.asInt(), Material.COAL, ItemRarity.COMMON, "Bronze Ring", List.of("A simple ring that slightly improves your combat."), null, null, false),
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_RING, ItemId.BRONZE_RING.asInt(), Material.COAL, ItemRarity.COMMON, "Bronze Ring", List.of("A simple ring that slightly improves your combat."), null, null, true),
                         toVersionedJson(new EquipableTypeMeta(null,
                                 List.of(
                                         new Modifier(ModifierType.ATTACK_STAB, 1),

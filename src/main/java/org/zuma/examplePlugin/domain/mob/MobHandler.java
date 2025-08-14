@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.domain.item.instance.ItemOwnershipHandler;
+import org.zuma.examplePlugin.domain.item.ownership.ItemOwnershipHandler;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.behavior.MobIdleBehaviorHandler;

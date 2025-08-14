@@ -1,30 +1,25 @@
 package org.zuma.examplePlugin.domain.item;
 
-import net.kyori.adventure.text.Component;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
-import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.item.instance.ItemOwnershipHandler;
+import org.zuma.examplePlugin.domain.item.ownership.ItemPickupHandler;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.item.PlayerArmorEquipEvent;
 
 import java.util.Arrays;
-import java.util.UUID;
 
 public class ItemHandler {
     private final ItemRegistry registry;
-    private final CooldownHandler cooldownHandler;
+    private final ItemPickupHandler pickupHandler;
 
     public ItemHandler(ItemRegistry registry) {
         this.registry = registry;
-        this.cooldownHandler = new CooldownHandler();
+        this.pickupHandler = new ItemPickupHandler();
     }
 
     public ItemRegistry getRegistry() {
@@ -56,31 +51,10 @@ public class ItemHandler {
     }
 
     public void onPlayerPickupItem(PlayerAttemptPickupItemEvent event, AbstractItemType item, RunePlayer player, StateManager itemStateManager) {
+        pickupHandler.onPlayerPickupItem(event, item, player);
+
         if (event.isCancelled()) {
             return;
-        }
-
-        ItemStack itemStack = event.getItem().getItemStack();
-
-        if (!ItemOwnershipHandler.isPickupableBy(itemStack, player)) {
-            event.setCancelled(true);
-            return;
-        }
-
-        if (item.isTradeable) {
-            return;
-        }
-
-        UUID untradeableOwnerUUID = item.getUntradeableOwnerUUID(itemStack);
-
-        if (untradeableOwnerUUID == null) {
-            item.setUntradeableOwnerUUID(itemStack, player.getUUID());
-            return;
-        }
-
-        if (!player.getUUID().equals(untradeableOwnerUUID)) {
-            HudService.sendFailMessage(player, Component.text("Cannot pick up item. It is untradeable and not owned by you."));
-            event.setCancelled(true);
         }
 
         item.onPlayerPickupItem(event, player, itemStateManager);
