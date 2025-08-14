@@ -81,8 +81,8 @@ public class TextUtils {
                 .append(Component.text("@ www.runequest.com @").color(Color.SERVER_BRAND.asColor()));
     }
 
-    public static Component getErrorKickScreen(String error) {
-        return TextUtils.getBrandKickScreen(Component.text(error).color(Color.ERROR.asColor()));
+    public static Component getErrorKickScreen(String error, boolean unexpected) {
+        return TextUtils.getBrandKickScreen(Component.text(error + (unexpected ? "\n\nPlease report this issue. Incident ID #" + System.currentTimeMillis() : "")).color(Color.ERROR.asColor()));
     }
 
     public static Component resetTextDecoration(Component component) {

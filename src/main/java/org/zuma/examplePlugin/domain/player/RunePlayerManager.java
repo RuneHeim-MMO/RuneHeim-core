@@ -4,13 +4,14 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.gui.ItemStackSlotPair;
-import org.zuma.examplePlugin.domain.gui.serializer.ItemContainerContentSerializer;
+import org.zuma.examplePlugin.core.exception.PlayerDataLoadException;
 import org.zuma.examplePlugin.domain.player.persistence.RunePlayerRepository;
+import org.zuma.examplePlugin.domain.player.persistence.RunePlayerSerializer;
+import org.zuma.examplePlugin.domain.player.persistence.SerializedPlayerContainer;
 import org.zuma.examplePlugin.domain.player.states.RunePlayerLoadingStateHandler;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -20,13 +21,16 @@ import org.zuma.examplePlugin.events.player.RunePlayerSavedEvent;
 import javax.annotation.Nullable;
 import javax.security.auth.login.AccountNotFoundException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class RunePlayerManager {
 
     private static final int AUTOSAVE_DELAY_SECONDS = 60;
-    private final Map<UUID, RunePlayer> players = new HashMap<>();
+    private final ConcurrentHashMap<UUID, RunePlayer> players = new ConcurrentHashMap<>();
+    private final Set<UUID> uuidsAccessingDB = ConcurrentHashMap.newKeySet();
     private final RunePlayerLoadingStateHandler loadingStateHandler;
     private final RunePlayerRepository repository;
 
@@ -54,7 +58,7 @@ public class RunePlayerManager {
     }
 
     public Collection<RunePlayer> getOnlinePlayers() {
-        return players.values();
+        return new ArrayList<>(players.values());
     }
 
     // -------------------- Lifecycle --------------------
@@ -65,7 +69,7 @@ public class RunePlayerManager {
     }
 
     public void handleOnDisable() {
-        players.values().forEach(player -> savePlayerSync(player, player.asBukkitPlayer().getName(), true));
+        players.values().forEach(player -> savePlayerSync(player, true));
         players.clear();
     }
 
@@ -79,115 +83,192 @@ public class RunePlayerManager {
     }
 
     // -------------------- Player Loading --------------------
-
     public void loadPlayerData(Player player) {
         UUID uuid = player.getUniqueId();
-        player.getInventory().clear();
+        wipeInventory(player);
 
         if (players.containsKey(uuid)) {
-            kickPlayer(player, "Player " + uuid + " is already online.");
+            kickPlayer(player, "Player " + uuid + " is already online.", false);
             return;
         }
 
         loadingStateHandler.setPlayerLoading(player);
+        uuidsAccessingDB.add(uuid);
 
         runAsync(() -> {
-            RunePlayer runePlayer = null;
-            List<ItemStackSlotPair> inventory = Collections.emptyList();
-
             try {
-                runePlayer = repository.getPlayerByUUID(uuid);
-                inventory = ItemContainerContentSerializer.deserializeItemContainerContent(repository.getInventoryByUUID(uuid));
-            } catch (AccountNotFoundException e) {
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Creating new profile for " + player.getName());
-                runePlayer = new RunePlayer(uuid, new EnumMap<>(defaultSkills));
-                repository.upsertPlayer(runePlayer, player.getName(), "{}");
-            } catch (IllegalAccessException e) {
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Player " + player.getName() + " has been kicked because he is already online.");
-                kickPlayer(player, e.getMessage());
-                return;
-            } catch (Exception e) {
-                kickPlayer(player, "Failed to load data: " + e.getMessage());
-                logCritical("Failed to load data for player " + player.getName(), e);
-                return;
+                AbstractMap.SimpleEntry<RunePlayer, List<ItemStackSlotPair>> data = fetchOrCreatePlayerData(player);
+
+                runSync(() -> {
+                    if (!player.isOnline()) {
+                        cleanup(uuid);
+                        return;
+                    }
+                    setPlayerOnlineAndFinalize(player, data);
+                });
+
+            } catch (PlayerDataLoadException e) {
+                runSync(() -> kickPlayer(player, e.getMessage(), e.isCritical()));
+                cleanup(uuid);
             }
-
-            repository.setPlayerOnline(uuid, true);
-            RunePlayer finalRunePlayer = runePlayer;
-            List<ItemStackSlotPair> finalInventory = inventory;
-
-            runSync(() -> {
-                if (Bukkit.getPlayer(uuid) == null || finalRunePlayer == null) return;
-
-                players.put(uuid, finalRunePlayer);
-                ItemContainerContentSerializer.setPlayerInventoryContent(player, finalInventory);
-                loadingStateHandler.setPlayerLoaded(player);
-                Bukkit.getServer().getPluginManager().callEvent(new RunePlayerLoadedEvent(finalRunePlayer));
-            });
         });
     }
+
+    private AbstractMap.SimpleEntry<RunePlayer, List<ItemStackSlotPair>> fetchOrCreatePlayerData(Player player) throws PlayerDataLoadException {
+        UUID uuid = player.getUniqueId();
+
+        try {
+            return RunePlayerSerializer.deserializePlayer(repository.getPlayerByUUID(uuid));
+        } catch (AccountNotFoundException e) {
+            return createNewProfile(player);
+        } catch (IllegalAccessException e) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Player " + player.getName() + " kicked: DB online flag already set.");
+            throw new PlayerDataLoadException(e.getMessage(), false);
+        } catch (Exception e) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to load data for " + player.getName(), e);
+            throw new PlayerDataLoadException("Failed to load data: " + e.getMessage(), true);
+        }
+    }
+
+    private AbstractMap.SimpleEntry<RunePlayer, List<ItemStackSlotPair>> createNewProfile(Player player) throws PlayerDataLoadException {
+        UUID uuid = player.getUniqueId();
+        try {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Creating new profile for " + player.getName());
+            RunePlayer newPlayer = new RunePlayer(uuid, new EnumMap<>(defaultSkills));
+            SerializedPlayerContainer serialized = RunePlayerSerializer.serializePlayer(newPlayer, player);
+            repository.upsertPlayer(serialized);
+            return new AbstractMap.SimpleEntry<>(newPlayer, new ArrayList<>());
+        } catch (Exception e) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed creating new player for " + player.getName(), e);
+            throw new PlayerDataLoadException("Failed creating new user profile.", true);
+        }
+    }
+
+    private void setPlayerOnlineAndFinalize(Player player, AbstractMap.SimpleEntry<RunePlayer, List<ItemStackSlotPair>> data) {
+        UUID uuid = player.getUniqueId();
+        runAsync(() -> {
+            try {
+                repository.setPlayerOnline(uuid, true);
+                runSync(() -> finalizePlayerLoad(player, data));
+            } catch (Exception e) {
+                runSync(() -> {
+                    kickPlayer(player, "Failed to mark online: " + e.getMessage(), true);
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to mark player online in DB for " + player.getName(), e);
+                    cleanup(uuid);
+                });
+            }
+        });
+    }
+
+    private void finalizePlayerLoad(Player player, AbstractMap.SimpleEntry<RunePlayer, List<ItemStackSlotPair>> data) {
+        UUID uuid = player.getUniqueId();
+        if (!player.isOnline()) {
+            cleanup(uuid);
+            return;
+        }
+        players.put(uuid, data.getKey());
+        RunePlayerSerializer.setPlayerInventoryContent(player, data.getValue());
+        loadingStateHandler.setPlayerLoaded(player);
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.getName() + " loaded successfully.");
+        Bukkit.getServer().getPluginManager().callEvent(new RunePlayerLoadedEvent(data.getKey()));
+        cleanup(uuid);
+    }
+
+    private void cleanup(UUID uuid) {
+        uuidsAccessingDB.remove(uuid);
+    }
+
 
     // -------------------- Player Saving --------------------
 
     public void saveAllPlayersAsync() {
-        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Auto-saving " + Bukkit.getOnlinePlayers().size() + " players.");
-        Bukkit.getOnlinePlayers().forEach(p -> savePlayerDataAsync(p, p.getName(), false));
+        AtomicInteger remaining = new AtomicInteger(players.size());
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Auto-saving " + players.size() + " players.");
+
+        Bukkit.getOnlinePlayers().forEach(p -> {
+            savePlayerDataAsync(p, false, false, () -> {
+                if (remaining.decrementAndGet() == 0) {
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Auto-saved " + players.size() + " players.");
+                }
+            });
+        });
     }
 
-    public void savePlayerDataAsync(Player player, String lastUsername, boolean unmount) {
+    public void savePlayerDataAsync(Player player, boolean unmount, boolean log, @Nullable Runnable onComplete) {
         RunePlayer runePlayer = getRunePlayer(player.getUniqueId());
+        UUID uuid = player.getUniqueId();
 
         if (loadingStateHandler.isPlayerLoading(player)) return;
 
-        if (runePlayer == null) {
-            kickPlayer(player, "Cannot save player data: instance not found.");
+        if (!player.isOnline()) {
             return;
         }
 
+        if (runePlayer == null) {
+            kickPlayer(player, "Cannot save player data: instance not found.", true);
+            return;
+        }
+
+        if (uuidsAccessingDB.contains(player.getUniqueId())) {
+            return; // Is busy
+        }
+
+        uuidsAccessingDB.add(uuid);
+
+        SerializedPlayerContainer serializedContainer = RunePlayerSerializer.serializePlayer(runePlayer, player);
+
         runAsync(() -> {
             try {
-                repository.upsertPlayer(runePlayer, lastUsername, serializeInventory(player));
-
+                repository.upsertPlayer(serializedContainer);
                 if (unmount) repository.setPlayerOnline(player.getUniqueId(), false);
 
                 runSync(() -> {
                     if (unmount) players.remove(player.getUniqueId());
+                    if (log)
+                        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.getName() + " data has been saved. Unmounted: " + unmount);
+                    if (onComplete != null) onComplete.run();
+                    uuidsAccessingDB.remove(uuid);
                     Bukkit.getServer().getPluginManager().callEvent(new RunePlayerSavedEvent(player));
                 });
             } catch (Exception e) {
-                kickPlayer(player, "Failed to save data: " + e.getMessage());
-                logCritical("Failed to save player data " + player.getName(), e);
+                uuidsAccessingDB.remove(uuid);
+                kickPlayer(player, "Failed to save data: " + e.getMessage(), true);
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to save player data " + player.getName(), e);
             }
         });
     }
 
-    public void savePlayerSync(RunePlayer player, String lastUsername, boolean unmount) {
+    public void savePlayerSync(RunePlayer player, boolean unmount) {
+        UUID uuid = player.getUUID();
+
         if (loadingStateHandler.isPlayerLoading(player.asBukkitPlayer())) return;
 
-        repository.upsertPlayer(player, lastUsername, serializeInventory(player.asBukkitPlayer()));
-        player.asBukkitPlayer().getInventory().clear();
+        if (uuidsAccessingDB.contains(uuid)) {
+            return; // Is busy
+        }
+
+        uuidsAccessingDB.add(uuid);
+        repository.upsertPlayer(RunePlayerSerializer.serializePlayer(player, player.asBukkitPlayer()));
+        wipeInventory(player.asBukkitPlayer());
 
         if (unmount) repository.setPlayerOnline(player.getUUID(), false);
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.asBukkitPlayer().getName() + " data has been saved. Unmounted: true");
+        uuidsAccessingDB.remove(uuid);
     }
 
     // -------------------- Utilities --------------------
 
-    private String serializeInventory(Player player) {
-        return ItemContainerContentSerializer.serializeItemSlotPairs(
-                ItemContainerContentSerializer.getPlayerInventoryContent(player)
-        );
+    private void wipeInventory(Player player) {
+        player.getInventory().clear();
+        player.getInventory().setArmorContents(null);
+        player.getInventory().setItemInOffHand(null);
     }
 
-    private void kickPlayer(Player player, String message) {
+    private void kickPlayer(Player player, String message, boolean unexpected) {
         runSync(() -> {
-            Component kickScreen = TextUtils.getErrorKickScreen(message);
+            Component kickScreen = TextUtils.getErrorKickScreen(message, unexpected);
             player.kick(kickScreen);
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, message);
         });
-    }
-
-    private void logCritical(String message, Exception e) {
-        RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, message, e);
     }
 
     private void runAsync(Runnable task) {
@@ -199,6 +280,11 @@ public class RunePlayerManager {
     }
 
     public void handlePlayerDisconnect(Player player) {
-        loadingStateHandler.setPlayerLoaded(player); // restore effects if they disconnected while loading
+        try {
+            loadingStateHandler.setPlayerLoaded(player); // restore effects if they disconnected while loading
+            this.savePlayerDataAsync(player, true, true, null);
+        } catch (Exception e) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to save player " + player.getName() + "!", e);
+        }
     }
 }

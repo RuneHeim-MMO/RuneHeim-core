@@ -55,26 +55,4 @@ public class ItemContainerContentSerializer {
         return deserialized;
     }
 
-    public static List<ItemStackSlotPair> getPlayerInventoryContent(Player player) {
-        List<ItemStackSlotPair> itemPairs = new ArrayList<>();
-        PlayerInventory inv = player.getInventory();
-
-        for (int slot = 0; slot <= 40; slot++) {
-            ItemStack item = inv.getItem(slot);
-
-            if (item == null) {
-                continue;
-            }
-
-            itemPairs.add(new ItemStackSlotPair(slot, item));
-        }
-
-        return itemPairs;
-    }
-
-    public static void setPlayerInventoryContent(Player player, List<ItemStackSlotPair> pairs) {
-        PlayerInventory inv = player.getInventory();
-        pairs.forEach(pair -> inv.setItem(pair.slot(), pair.itemStack()));
-    }
-
 }
