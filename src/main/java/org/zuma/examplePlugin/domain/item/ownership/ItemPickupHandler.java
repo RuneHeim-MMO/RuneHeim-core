@@ -3,6 +3,8 @@ package org.zuma.examplePlugin.domain.item.ownership;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.player.PlayerAttemptPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -43,7 +45,10 @@ public class ItemPickupHandler {
 
         if (!canPickupItem(player, item, itemStack)) {
             event.setCancelled(true);
+            return;
         }
+
+        ItemOwnershipHandler.removeOwnershipKeys(itemStack);
 
     }
 }

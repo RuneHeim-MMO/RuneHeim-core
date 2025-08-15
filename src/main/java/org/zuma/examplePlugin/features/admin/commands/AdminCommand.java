@@ -5,8 +5,12 @@ import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Transformation;
 import org.jetbrains.annotations.NotNull;
 import org.joml.AxisAngle4f;
@@ -163,43 +167,40 @@ public class AdminCommand implements BasicCommand {
         if (Objects.equals(args[0], "map")) {
             RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.TERRITORY_INVENTORY.asInt(), runePlayer, null);
         }
-/*
-        if (Objects.equals(args[0], "dialog")) {
-            var dialog = DialogBuilder.create("some id")
-                    .passiveStep(p -> p
-                            .text("Hello there stranger!")
-                    )
-                    .passiveStep(p -> p
-                            .text("Uhhh, I am having a problem")
-                    )
-                    .interactiveStep(i -> i
-                            .text("Would u like to solve it for $500?")
-                            .option("Yes", o -> o
-                                    .followupSteps(f -> f
-                                            .passiveStep(p -> p
-                                                    .text("Awesome, lets get it started then!")
-                                                    .text("We can continue it, right?")
-                                            )
-                                            .interactiveStep(ii -> ii
-                                                    .text("Continue?")
-                                                    .option("Yes", oo -> oo.actions(() -> player.sendMessage("You pressed yes")))
-                                                    .option("No", oo -> oo.actions(() -> player.sendMessage("You pressed nope")))
-                                            )
-                                    )
-                                    .actions(() -> player.sendMessage("You pressed yes"))
-                            )
-                            .option("No", o -> o
-                                    .followupSteps(f -> f
-                                            .passiveStep(p -> p.text("RIP!"))
-                                    )
-                                    .actions(() -> player.sendMessage("You pressed nope"))
-                            )
-                    )
+        if (Objects.equals(args[0], "pdc")) {
+            ItemStack item = player.getInventory().getItemInMainHand();
+            PersistentDataContainer pdc = item.getItemMeta().getPersistentDataContainer();
 
+            for (NamespacedKey key : pdc.getKeys()) {
+                Object value = null;
 
-            RuneQuestPlugin.getDialogHandler().startDialog(runePlayer, dialog);
+                // Try each common type
+                if (pdc.has(key, PersistentDataType.STRING)) {
+                    value = pdc.get(key, PersistentDataType.STRING);
+                } else if (pdc.has(key, PersistentDataType.INTEGER)) {
+                    value = pdc.get(key, PersistentDataType.INTEGER);
+                } else if (pdc.has(key, PersistentDataType.LONG)) {
+                    value = pdc.get(key, PersistentDataType.LONG);
+                } else if (pdc.has(key, PersistentDataType.DOUBLE)) {
+                    value = pdc.get(key, PersistentDataType.DOUBLE);
+                } else if (pdc.has(key, PersistentDataType.FLOAT)) {
+                    value = pdc.get(key, PersistentDataType.FLOAT);
+                } else if (pdc.has(key, PersistentDataType.BYTE)) {
+                    value = pdc.get(key, PersistentDataType.BYTE);
+                } else if (pdc.has(key, PersistentDataType.BYTE_ARRAY)) {
+                    value = Arrays.toString(pdc.get(key, PersistentDataType.BYTE_ARRAY));
+                } else if (pdc.has(key, PersistentDataType.INTEGER_ARRAY)) {
+                    value = Arrays.toString(pdc.get(key, PersistentDataType.INTEGER_ARRAY));
+                } else if (pdc.has(key, PersistentDataType.TAG_CONTAINER)) {
+                    value = pdc.get(key, PersistentDataType.TAG_CONTAINER);
+                } else if (pdc.has(key, PersistentDataType.TAG_CONTAINER_ARRAY)) {
+                    value = Arrays.toString(pdc.get(key, PersistentDataType.TAG_CONTAINER_ARRAY));
+                }
 
-        }*/
+                sender.sendMessage(key.toString() + " = " + (value != null ? value : "<unknown type>"));
+            }
+
+        }
 
         if (Objects.equals(args[0], "mob") && args.length == 2) {
             String input = args[1].toLowerCase();

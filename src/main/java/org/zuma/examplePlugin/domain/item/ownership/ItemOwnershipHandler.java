@@ -26,7 +26,17 @@ public class ItemOwnershipHandler implements Listener {
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
 
         pdc.set(ownerUUIDKey.key(RuneQuestPlugin.getInstance()), PersistentDataType.STRING, uuid.toString());
-        pdc.set(lockExpiry.key(RuneQuestPlugin.getInstance()), PersistentDataType.LONG, System.currentTimeMillis() + privateDropTime);
+        pdc.set(lockExpiry.key(RuneQuestPlugin.getInstance()), PersistentDataType.LONG, (System.currentTimeMillis() / (10_000L) + privateDropTime / 10_000L));
+        item.setItemMeta(meta);
+    }
+
+    public static void removeOwnershipKeys(ItemStack item) {
+        ItemMeta meta = item.getItemMeta();
+        PersistentDataContainer pdc = meta.getPersistentDataContainer();
+
+        pdc.remove(ownerUUIDKey.key(RuneQuestPlugin.getInstance()));
+        pdc.remove(lockExpiry.key(RuneQuestPlugin.getInstance()));
+
         item.setItemMeta(meta);
     }
 
@@ -41,7 +51,7 @@ public class ItemOwnershipHandler implements Listener {
             return true;
         }
 
-        if (System.currentTimeMillis() > lockExpiryMillis) {
+        if (System.currentTimeMillis() > lockExpiryMillis * 10_000L) {
             return true;
         }
 
