@@ -2,11 +2,14 @@ package org.zuma.examplePlugin.domain.combat;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.domain.combat.constants.AttackType;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.events.combat.RuneEntityDamageEntityEvent;
+
+import javax.annotation.Nullable;
 
 public class HitHandler {
 
@@ -48,7 +51,8 @@ public class HitHandler {
         }
     }
 
-    public void handleMeleeHit(CombatEntity attacker, CombatEntity defender) {
+    @Nullable
+    public Hit handleMeleeHit(CombatEntity attacker, CombatEntity defender) {
         AttackType type = AttackType.MELEE;
         Hit hit = HitCalculator.getNewHit(attacker, defender, type);
 
@@ -56,75 +60,48 @@ public class HitHandler {
         Bukkit.getServer().getPluginManager().callEvent(event);
 
         if (event.isCancelled()) {
-            return;
+            return null;
         }
-
 
         defender.takeHit(hit);
-
-        if (attacker.getEntity() instanceof Player p) {
-            p.sendMessage("Your max hit: " + HitCalculator.getMaxHit(attacker, AttackType.MELEE));
-        }
-
-        if (defender.getEntity() instanceof Player p) {
-            p.sendMessage("Attackers max hit: " + HitCalculator.getMaxHit(attacker, AttackType.MELEE));
-        }
-
-
         handleHitSound(defender, type, hit);
         HudService.showDamageBubble(defender, hit, type);
+        return hit;
     }
 
-    public void handleRangedHit(CombatEntity attacker, CombatEntity defender) {
+    @Nullable
+    public Hit handleRangedHit(CombatEntity attacker, CombatEntity defender) {
         AttackType type = AttackType.RANGED;
         Hit hit = HitCalculator.getNewHit(attacker, defender, type);
 
-        RuneEntityDamageEntityEvent event = new RuneEntityDamageEntityEvent(attacker, defender, hit, type);
-        Bukkit.getServer().getPluginManager().callEvent(event);
+        RuneEntityDamageEntityEvent newEvent = new RuneEntityDamageEntityEvent(attacker, defender, hit, type);
+        Bukkit.getServer().getPluginManager().callEvent(newEvent);
 
-        if (event.isCancelled()) {
-            return;
+        if (newEvent.isCancelled()) {
+            return null;
         }
-
 
         defender.takeHit(hit);
-
-        if (attacker.getEntity() instanceof Player p) {
-            p.sendMessage("Your max hit: " + HitCalculator.getMaxHit(attacker, type));
-        }
-
-        if (defender.getEntity() instanceof Player p) {
-            p.sendMessage("Attackers max hit: " + HitCalculator.getMaxHit(attacker, type));
-        }
-
-
         handleHitSound(defender, type, hit);
         HudService.showDamageBubble(defender, hit, type);
+        return hit;
     }
 
-    public void handleMagicHit(CombatEntity attacker, CombatEntity defender) {
+    @Nullable
+    public Hit handleMagicHit(CombatEntity attacker, CombatEntity defender) {
         AttackType type = AttackType.MAGIC;
         Hit hit = HitCalculator.getNewHit(attacker, defender, type);
 
-        RuneEntityDamageEntityEvent event = new RuneEntityDamageEntityEvent(attacker, defender, hit, type);
-        Bukkit.getServer().getPluginManager().callEvent(event);
+        RuneEntityDamageEntityEvent newEvent = new RuneEntityDamageEntityEvent(attacker, defender, hit, type);
+        Bukkit.getServer().getPluginManager().callEvent(newEvent);
 
-        if (event.isCancelled()) {
-            return;
+        if (newEvent.isCancelled()) {
+            return null;
         }
 
         defender.takeHit(hit);
-
-        if (attacker.getEntity() instanceof Player p) {
-            p.sendMessage("Your max hit: " + HitCalculator.getMaxHit(attacker, type));
-        }
-
-        if (defender.getEntity() instanceof Player p) {
-            p.sendMessage("Attackers max hit: " + HitCalculator.getMaxHit(attacker, type));
-        }
-
-
         handleHitSound(defender, type, hit);
         HudService.showDamageBubble(defender, hit, type);
+        return hit;
     }
 }

@@ -156,8 +156,6 @@ public class MobListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityCombust(EntityCombustEvent event) {
-        if (event.getEntity() instanceof Zombie) {
-            event.setCancelled(true); // Prevent burning in sunlight
-        }
+        event.setCancelled(true);
     }
 }

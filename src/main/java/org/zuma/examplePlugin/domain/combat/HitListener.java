@@ -58,11 +58,22 @@ public class HitListener implements Listener {
 
         CombatEntity attacker = getCombatEntity(event.getDamager());
         CombatEntity defender = getCombatEntity(defenderEntity);
+        @Nullable Hit hit = null;
 
         if (attacker != null && defender != null) {
-            hitHandler.handleMeleeHit(attacker, defender);
+            hit = hitHandler.handleMeleeHit(attacker, defender);
         }
 
+        if (hit != null && hit.damage() == 0) {
+            event.setCancelled(true);
+
+            // Even if hit is 0, set mobs target to attacker.
+            if (defender.getEntity() instanceof Mob mob && attacker.getEntity() instanceof LivingEntity livingAttacker) {
+                if (livingAttacker instanceof Player) {
+                    mob.setTarget(livingAttacker);
+                }
+            }
+        }
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
@@ -79,7 +90,6 @@ public class HitListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onEntityAttackEntityProjectile(EntityDamageByEntityEvent event) {
-
         if (!(event.getDamager() instanceof Player player && player.isOp() && player.getGameMode() == GameMode.CREATIVE)) {
             event.setDamage(0);
         }
@@ -106,10 +116,19 @@ public class HitListener implements Listener {
             if (typeString == null) return; // Unknown projectile
 
             ProjectileType type = ProjectileType.valueOf(typeString);
+            @Nullable Hit hit = null;
 
             switch (type) {
-                case RANGED -> hitHandler.handleRangedHit(attacker, defender);
-                case MAGIC -> hitHandler.handleMagicHit(attacker, defender);
+                case RANGED -> {
+                    hit = hitHandler.handleRangedHit(attacker, defender);
+                }
+                case MAGIC -> {
+                    hit = hitHandler.handleMagicHit(attacker, defender);
+                }
+            }
+
+            if (hit != null && hit.damage() == 0) {
+                event.setCancelled(true);
             }
 
         }
@@ -135,7 +154,6 @@ public class HitListener implements Listener {
             projectile.getPersistentDataContainer().set(projectileType, PersistentDataType.STRING, ProjectileType.RANGED.toString());
             arrow.setPickupStatus(AbstractArrow.PickupStatus.DISALLOWED);
             arrow.setCritical(false);
-            arrow.setDamage(0);
             return;
         }
 

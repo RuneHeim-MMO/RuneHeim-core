@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.combat;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.domain.combat.constants.AttackType;
 import org.zuma.examplePlugin.domain.combat.constants.HitType;
@@ -56,6 +57,14 @@ public class HitCalculator {
 
     public static Hit getNewHit(CombatEntity attacker, CombatEntity defender, AttackType type) {
         boolean hitSuccess = isHitSuccess(attacker, defender, type);
+
+        if (attacker.getEntity() instanceof Player p) {
+            p.sendMessage("Your max hit: " + HitCalculator.getMaxHit(attacker, type));
+        }
+
+        if (defender.getEntity() instanceof Player p) {
+            p.sendMessage("Attackers max hit: " + HitCalculator.getMaxHit(attacker, type));
+        }
 
         if (hitSuccess) {
             int maxHit = getMaxHit(attacker, type);
