@@ -13,7 +13,6 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import java.util.UUID;
 
 public class RunePlayerLevelUpEvent extends RedisEvent<RunePlayerLevelUpEvent.Payload> implements Cancellable {
-    private static final HandlerList HANDLERS = new HandlerList();
     private final RunePlayer player;
     private final SkillType type;
     private final int newLevel;
@@ -56,17 +55,6 @@ public class RunePlayerLevelUpEvent extends RedisEvent<RunePlayerLevelUpEvent.Pa
         this.cancelled = cancelled;
     }
 
-    @Override
-    public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public
-    static HandlerList getHandlerList() {
-        return HANDLERS;
-    }
-
-
     public int getNewLevel() {
         return newLevel;
     }
@@ -88,4 +76,5 @@ public class RunePlayerLevelUpEvent extends RedisEvent<RunePlayerLevelUpEvent.Pa
         return payload;
 
     }
+
 }

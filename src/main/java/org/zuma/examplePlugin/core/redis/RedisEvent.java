@@ -3,10 +3,13 @@ package org.zuma.examplePlugin.core.redis;
 import com.google.gson.Gson;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 
 public abstract class RedisEvent<T extends RedisEvent.RedisPayload> extends Event {
     protected final static Gson gson = new Gson();
+    private static final HandlerList HANDLERS = new HandlerList();
 
     public static class RedisPayload {
         public String event;
@@ -42,4 +45,15 @@ public abstract class RedisEvent<T extends RedisEvent.RedisPayload> extends Even
 
         return c.isCancelled();
     }
+
+    @Override
+    public @NotNull HandlerList getHandlers() {
+        return HANDLERS;
+    }
+
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
 }

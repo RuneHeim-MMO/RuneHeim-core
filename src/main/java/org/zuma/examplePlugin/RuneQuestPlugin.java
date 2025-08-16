@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.core.handlers.*;
 import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
 import org.zuma.examplePlugin.core.logger.Logger;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.redis.CatchAllListener;
 import org.zuma.examplePlugin.domain.bank.BankContentRepository;
 import org.zuma.examplePlugin.domain.bank.BankQueryLockController;
 import org.zuma.examplePlugin.domain.block.BlockFactory;
@@ -106,6 +107,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private void initializePlugin() {
         pluginInstance = this;
 
+        getServer().getPluginManager().registerEvents(new CatchAllListener(), pluginInstance);
         IllegalItemWatchdog illegalItemWatchdog = new IllegalItemWatchdog();
 
         getServer().getPluginManager().registerEvents(illegalItemWatchdog, pluginInstance);
