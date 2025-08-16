@@ -7,6 +7,9 @@ import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class RedisEvent<T extends RedisEvent.RedisPayload> extends Event {
     protected final static Gson gson = new Gson();
     private static final HandlerList HANDLERS = new HandlerList();
@@ -16,19 +19,23 @@ public abstract class RedisEvent<T extends RedisEvent.RedisPayload> extends Even
         public String event;
         public Integer serverId;
         public Long timestamp;
+        public List<Integer> targetServers; // Empty - broadcast to all
+        public boolean replayAtOrigin;
     }
 
     protected RedisEvent() {
     }
 
-    public String getSerializedPayload() {
+    public T getComposedPayload() {
         T composedPayload = composePayload();
 
         composedPayload.event = this.getClass().getSimpleName();
         composedPayload.serverId = RuneQuestPlugin.SERVER_ID;
         composedPayload.timestamp = System.currentTimeMillis();
+        composedPayload.targetServers = new ArrayList<>();
+        composedPayload.replayAtOrigin = true;
 
-        return gson.toJson(composedPayload);
+        return composedPayload;
     }
 
     public abstract T composePayload();

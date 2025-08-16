@@ -29,14 +29,17 @@ public class GlobalEventHandler {
                 return;
             }
 
-            handlers.forEach((eventClass, consumerList) -> {
+            handlers.forEach((eventClass, handlerList) -> {
 
                 if (!eventClass.equals(deserializeEvent.getKey())) {
                     return;
                 }
 
-                for (Consumer<RedisEvent.RedisPayload> consumer : consumerList) {
-                    consumer.accept(deserializeEvent.getValue());
+                for (Consumer<RedisEvent.RedisPayload> handler : handlerList) {
+                    var payload = deserializeEvent.getValue();
+
+                    if (shouldHandleEvent(payload))
+                        handler.accept(payload);
                 }
 
             });
@@ -60,5 +63,19 @@ public class GlobalEventHandler {
         handlers.computeIfAbsent(eventClass, k -> new ArrayList<>()).add(wrapper);
     }
 
+
+    public static boolean shouldHandleEvent(RedisEvent.RedisPayload payload) {
+        if (payload.targetServers.contains(RuneQuestPlugin.SERVER_ID)) {
+            return true;
+        }
+
+        if (payload.targetServers.isEmpty() && payload.serverId == RuneQuestPlugin.SERVER_ID && payload.replayAtOrigin) {
+            return true;
+        }
+
+
+        return false;
+
+    }
 
 }
