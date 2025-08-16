@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin;
 
+import com.google.gson.Gson;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.Bukkit;
@@ -12,6 +13,7 @@ import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
 import org.zuma.examplePlugin.core.logger.Logger;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.redis.CatchAllListener;
+import org.zuma.examplePlugin.core.redis.EventHandler;
 import org.zuma.examplePlugin.domain.bank.BankContentRepository;
 import org.zuma.examplePlugin.domain.bank.BankQueryLockController;
 import org.zuma.examplePlugin.domain.block.BlockFactory;
@@ -70,6 +72,7 @@ import org.zuma.examplePlugin.domain.spawnzone.persistence.SpawnZoneRepository;
 import org.zuma.examplePlugin.domain.territory.Territory;
 import org.zuma.examplePlugin.domain.territory.TerritoryHandler;
 import org.zuma.examplePlugin.domain.territory.TerritoryRepository;
+import org.zuma.examplePlugin.events.player.RunePlayerLevelUpEvent;
 import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
 
 import java.util.ArrayList;
@@ -106,6 +109,12 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     private void initializePlugin() {
         pluginInstance = this;
+
+        EventHandler.addListener(RunePlayerLevelUpEvent.class, e -> {
+            System.out.println("GOT PAYLOAD NICELY! " + new Gson().toJson(e));
+            System.out.println("player: " + e.playerName);
+
+        });
 
         getServer().getPluginManager().registerEvents(new CatchAllListener(), pluginInstance);
         IllegalItemWatchdog illegalItemWatchdog = new IllegalItemWatchdog();

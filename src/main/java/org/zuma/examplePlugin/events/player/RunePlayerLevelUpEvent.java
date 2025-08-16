@@ -1,10 +1,6 @@
 package org.zuma.examplePlugin.events.player;
 
-import com.google.gson.JsonObject;
 import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
-import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.redis.RedisEvent;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -57,11 +53,6 @@ public class RunePlayerLevelUpEvent extends RedisEvent<RunePlayerLevelUpEvent.Pa
 
     public int getNewLevel() {
         return newLevel;
-    }
-
-    @Override
-    protected Class<Payload> getPayloadClass() {
-        return RunePlayerLevelUpEvent.Payload.class;
     }
 
     @Override

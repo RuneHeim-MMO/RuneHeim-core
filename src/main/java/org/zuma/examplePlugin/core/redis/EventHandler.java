@@ -1,0 +1,57 @@
+package org.zuma.examplePlugin.core.redis;
+
+import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.events.player.RunePlayerLevelUpEvent;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+
+public class EventHandler {
+    private static final Map<Class<? extends RedisEvent<?>>, List<Consumer<RedisEvent.RedisPayload>>> handlers = new HashMap<>();
+
+    @SuppressWarnings("unchecked")
+    private static <T extends RedisEvent<?>> void acceptConsumer(Consumer<T> consumer, RedisEvent.RedisPayload payload, Class<?> payloadClass) {
+        consumer.accept((T) payloadClass.cast(payload));
+    }
+
+    public static void onRedisEventReceived(String payloadStr) {
+        try {
+            RedisEvent.RedisPayload deserializedPayload = EventDeserializer.deserializeEventPayload(payloadStr);
+
+            if (deserializedPayload == null) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Deserialized redis event payload is null.");
+                return;
+            }
+
+            handlers.forEach((eventClass, consumerList) -> {
+                for (Consumer<RedisEvent.RedisPayload> consumer : consumerList) {
+                    consumer.accept(deserializedPayload);
+                }
+
+            });
+        } catch (Exception e) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to handle redis payload! Input string: " + payloadStr, e);
+        }
+    }
+
+    public static <T extends RedisEvent.RedisPayload, E extends RedisEvent<T>> void addListener(
+            Class<E> eventClass,
+            Consumer<T> payloadConsumer
+    ) {
+        // wrapper takes RedisPayload at dispatch-time and forwards to user consumer after casting
+        Consumer<RedisEvent.RedisPayload> wrapper = (RedisEvent.RedisPayload payload) -> {
+            // safe cast is guaranteed by the runtime check in onRedisEventReceived()
+            @SuppressWarnings("unchecked")
+            T t = (T) payload;
+            payloadConsumer.accept(t);
+        };
+
+        handlers.computeIfAbsent(eventClass, k -> new ArrayList<>()).add(wrapper);
+    }
+
+
+}

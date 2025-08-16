@@ -18,6 +18,7 @@ import org.joml.Vector3f;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.handlers.IllegalItemWatchdog;
+import org.zuma.examplePlugin.core.redis.EventHandler;
 import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
@@ -166,6 +167,10 @@ public class AdminCommand implements BasicCommand {
 
         if (Objects.equals(args[0], "map")) {
             RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.TERRITORY_INVENTORY.asInt(), runePlayer, null);
+        }
+
+        if (Objects.equals(args[0], "redis")) {
+            EventHandler.onRedisEventReceived("{\"playerName\":\"ObscureCode\",\"playerUUID\":\"bbd1f293-911b-42d2-93df-ceb50c3523f0\",\"skillType\":\"ATTACK\",\"newLevel\":2,\"event\":\"RunePlayerLevelUpEvent\",\"serverId\":1,\"timestamp\":1755354190973}");
         }
         if (Objects.equals(args[0], "pdc")) {
             ItemStack item = player.getInventory().getItemInMainHand();

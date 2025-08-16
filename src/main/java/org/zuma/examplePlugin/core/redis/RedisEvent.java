@@ -10,6 +10,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 public abstract class RedisEvent<T extends RedisEvent.RedisPayload> extends Event {
     protected final static Gson gson = new Gson();
     private static final HandlerList HANDLERS = new HandlerList();
+    boolean isForwarded = false;
 
     public static class RedisPayload {
         public String event;
@@ -18,12 +19,6 @@ public abstract class RedisEvent<T extends RedisEvent.RedisPayload> extends Even
     }
 
     protected RedisEvent() {
-    }
-
-    protected abstract Class<T> getPayloadClass();
-
-    public T getPayload(String payload) {
-        return gson.fromJson(payload, getPayloadClass());
     }
 
     public String getSerializedPayload() {
@@ -55,5 +50,14 @@ public abstract class RedisEvent<T extends RedisEvent.RedisPayload> extends Even
     static HandlerList getHandlerList() {
         return HANDLERS;
     }
+
+    public boolean isForwarded() {
+        return isForwarded;
+    }
+
+    public void setForwarded(boolean forwarded) {
+        isForwarded = forwarded;
+    }
+
 
 }
