@@ -77,6 +77,8 @@ import java.util.Collection;
 @SuppressWarnings("UnstableApiUsage")
 public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private static final Dotenv dotenv = Dotenv.configure().directory(ConfigManager.ENVIRONMENT_CONFIG.toString()).load();
+    public static final int SERVER_ID = Integer.parseInt(dotenv.get("SERVER_ID"));
+
     public static final Logger logger = new Logger();
     private static RuneQuestPlugin pluginInstance;
     private static RunePlayerManager runePlayerManager;

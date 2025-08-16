@@ -51,7 +51,7 @@ dependencies {
 
 tasks {
     tasks.named("shadowJar", com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar).configure {
-        archiveFileName.set("RuneQuestCore.jar")
+        archiveFileName.set("${project.name}-${project.version}.jar")
         destinationDirectory.set(file("/home/sp/Desktop/Servert/plugins"))
     }
     runServer {

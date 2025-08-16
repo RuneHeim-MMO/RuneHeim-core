@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 public class Logger {
-    private final static String PREFIX = "[RuneHeim Core]";
+    private final static String PREFIX = "[RuneHeim]";
 
     public Logger() {
     }

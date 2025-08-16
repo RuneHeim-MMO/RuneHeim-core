@@ -1,20 +1,31 @@
 package org.zuma.examplePlugin.events.player;
 
+import com.google.gson.JsonObject;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.core.constants.XpSource;
+import org.zuma.examplePlugin.core.redis.RedisEvent;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
-public class RunePlayerLevelUpEvent extends Event implements Cancellable {
+import java.util.UUID;
+
+public class RunePlayerLevelUpEvent extends RedisEvent<RunePlayerLevelUpEvent.Payload> implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
     private final RunePlayer player;
     private final SkillType type;
     private final int newLevel;
     private final XpSource source;
     private boolean cancelled;
+
+    public static class Payload extends RedisPayload {
+        public String playerName;
+        public UUID playerUUID;
+        public SkillType skillType;
+        public int newLevel;
+    }
 
     public RunePlayerLevelUpEvent(RunePlayer player, SkillType type, int newLevel, XpSource source) {
         this.player = player;
@@ -58,5 +69,23 @@ public class RunePlayerLevelUpEvent extends Event implements Cancellable {
 
     public int getNewLevel() {
         return newLevel;
+    }
+
+    @Override
+    protected Class<Payload> getPayloadClass() {
+        return RunePlayerLevelUpEvent.Payload.class;
+    }
+
+    @Override
+    public Payload composePayload() {
+        Payload payload = new Payload();
+
+        payload.playerName = this.player.asBukkitPlayer().getName();
+        payload.playerUUID = this.player.getUUID();
+        payload.skillType = this.type;
+        payload.newLevel = this.newLevel;
+
+        return payload;
+
     }
 }
