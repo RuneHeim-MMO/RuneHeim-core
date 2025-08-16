@@ -13,7 +13,7 @@ import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
 import org.zuma.examplePlugin.core.logger.Logger;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.redis.CatchAllListener;
-import org.zuma.examplePlugin.core.redis.EventHandler;
+import org.zuma.examplePlugin.core.redis.GlobalEventHandler;
 import org.zuma.examplePlugin.domain.bank.BankContentRepository;
 import org.zuma.examplePlugin.domain.bank.BankQueryLockController;
 import org.zuma.examplePlugin.domain.block.BlockFactory;
@@ -110,7 +110,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private void initializePlugin() {
         pluginInstance = this;
 
-        EventHandler.addListener(RunePlayerLevelUpEvent.class, e -> {
+        GlobalEventHandler.addListener(RunePlayerLevelUpEvent.class, e -> {
             System.out.println("GOT PAYLOAD NICELY! " + new Gson().toJson(e));
             System.out.println("player: " + e.playerName);
 

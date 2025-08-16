@@ -2,7 +2,6 @@ package org.zuma.examplePlugin.core.redis;
 
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.events.player.RunePlayerLevelUpEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,8 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class EventHandler {
+public class GlobalEventHandler {
     private static final Map<Class<? extends RedisEvent<?>>, List<Consumer<RedisEvent.RedisPayload>>> handlers = new HashMap<>();
+
+    public static void registerEvent(Class<? extends RedisEvent<?>> eventClass, Class<? extends RedisEvent.RedisPayload> payloadClass) {
+        EventDeserializer.addEvent(eventClass, payloadClass);
+    }
 
     @SuppressWarnings("unchecked")
     private static <T extends RedisEvent<?>> void acceptConsumer(Consumer<T> consumer, RedisEvent.RedisPayload payload, Class<?> payloadClass) {
@@ -20,16 +23,20 @@ public class EventHandler {
 
     public static void onRedisEventReceived(String payloadStr) {
         try {
-            RedisEvent.RedisPayload deserializedPayload = EventDeserializer.deserializeEventPayload(payloadStr);
+            Map.Entry<Class<? extends RedisEvent<?>>, RedisEvent.RedisPayload> deserializeEvent = EventDeserializer.deserializeEvent(payloadStr);
 
-            if (deserializedPayload == null) {
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Deserialized redis event payload is null.");
+            if (deserializeEvent == null) {
                 return;
             }
 
             handlers.forEach((eventClass, consumerList) -> {
+
+                if (!eventClass.equals(deserializeEvent.getKey())) {
+                    return;
+                }
+
                 for (Consumer<RedisEvent.RedisPayload> consumer : consumerList) {
-                    consumer.accept(deserializedPayload);
+                    consumer.accept(deserializeEvent.getValue());
                 }
 
             });
