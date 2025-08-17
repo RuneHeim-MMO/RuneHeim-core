@@ -5,6 +5,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.database.HikariPool;
@@ -85,6 +86,7 @@ import java.util.Collection;
 public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private static final Dotenv dotenv = Dotenv.configure().directory(ConfigManager.ENVIRONMENT_CONFIG.toString()).load();
     public static final int SERVER_ID = Integer.parseInt(dotenv.get("SERVER_ID"));
+    private static final Plugin blueMap = Bukkit.getPluginManager().getPlugin("BlueMap");
 
     public static final Logger logger = new Logger();
     private static RuneQuestPlugin pluginInstance;
@@ -254,6 +256,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     }
 
     private void initializeMap() {
+        if (blueMap == null || !blueMap.isEnabled()) {
+            return;
+        }
+
         markerHandler = new MapMarkerHandler();
         markerHandler.initializeMarkerSets();
 
@@ -261,6 +267,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     }
 
     public static void reloadMarkers() {
+        if (blueMap == null || !blueMap.isEnabled()) {
+            return;
+        }
+
         Collection<POIMarkerable> poiMarkers = new ArrayList<>(blockManager.getAllBlocks());
         Collection<Territory> territories = new ArrayList<>(territoryHandler.getTerritoryList());
         Collection<AbstractSpawnZone> zones = new ArrayList<>(spawnZoneHandler.getZones());

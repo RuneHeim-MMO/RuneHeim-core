@@ -18,10 +18,7 @@ repositories {
         url = "https://oss.sonatype.org/content/groups/public/"
     }
     maven { url = 'https://jitpack.io' }
-    maven {
-        name = 'enginehub'
-        url = 'https://maven.enginehub.org/repo/'
-    }
+    maven { url = "https://repo.enginehub.org/repo/" }
     maven {
         name = 'ProtocolLib Repo'
         url = 'https://repo.dmulloy2.net/repository/public/'
@@ -30,17 +27,18 @@ repositories {
         url "https://repo.md-5.net/content/groups/public/"
     }
     maven { url 'https://repo.bluecolored.de/releases' }
+    maven { url = "https://repo.enginehub.org/repo/" }
 }
 
 build.dependsOn shadowJar
 
 dependencies {
-    compileOnly 'com.comphenix.protocol:ProtocolLib:5.1.0'
     compileOnly group: 'me.libraryaddict.disguises', name: 'libsdisguises', version: '11.0.0'
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
     compileOnly("com.github.decentsoftware-eu:decentholograms:2.8.17")
     compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.3.11'
     compileOnly files('libs/packetevents-spigot-2.8.0.jar')
+    compileOnly files('libs/ProtocolLib.jar')
     compileOnly files('libs/ModelEngine-4.0.8.jar')
     compileOnly 'de.bluecolored:bluemap-api:2.7.4'
     implementation 'com.google.code.gson:gson:2.11.0'
@@ -53,7 +51,6 @@ dependencies {
 tasks {
     tasks.named("shadowJar", com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar).configure {
         archiveFileName.set("${project.name}-${project.version}.jar")
-        destinationDirectory.set(file("/home/sp/Desktop/Servert/plugins"))
     }
     runServer {
         // Configure the Minecraft version for our task.
