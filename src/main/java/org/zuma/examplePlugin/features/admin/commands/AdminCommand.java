@@ -64,6 +64,21 @@ public class AdminCommand implements BasicCommand {
     public void execute(CommandSourceStack commandSourceStack, String @NotNull [] args) {
         CommandSender sender = commandSourceStack.getSender();
 
+        if (args.length >= 3 && Objects.equals(args[0], "restart")) {
+            String reason = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
+            long restartIn = Long.parseLong(args[1]) * 1000L;
+
+            String senderName = "Console";
+
+            if (sender instanceof Player player) {
+                senderName = player.getName();
+            }
+
+            NetworkRestartEvent.Payload payload = new NetworkRestartEvent.Payload(System.currentTimeMillis() + restartIn, reason, senderName);
+            Bukkit.getServer().getPluginManager().callEvent(new NetworkRestartEvent(payload));
+            return;
+        }
+
         if (!(sender instanceof Player player)) {
             sender.sendMessage(Component.text("This command can be only used by players").color(Color.ERROR.asColor()));
             return;

@@ -73,7 +73,7 @@ public class GlobalEventHandler {
             return true;
         }
 
-        if (payload.targetServers.isEmpty() && payload.serverId == RuneQuestPlugin.SERVER_ID && payload.replayAtOrigin) {
+        if (payload.targetServers.isEmpty() || payload.serverId == RuneQuestPlugin.SERVER_ID && payload.replayAtOrigin) {
             return true;
         }
 

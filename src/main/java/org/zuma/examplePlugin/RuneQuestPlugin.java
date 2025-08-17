@@ -9,6 +9,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.database.HikariPool;
+import org.zuma.examplePlugin.core.handlers.core.NetworkRestartHook;
 import org.zuma.examplePlugin.core.handlers.core.ScheduledRestartHandler;
 import org.zuma.examplePlugin.core.handlers.game.*;
 import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
@@ -81,10 +82,14 @@ import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 @SuppressWarnings("UnstableApiUsage")
 public final class RuneQuestPlugin extends JavaPlugin implements Listener {
-    private static final Dotenv dotenv = Dotenv.configure().directory(ConfigManager.ENVIRONMENT_CONFIG.toString()).load();
+    private static final Dotenv dotenv = Dotenv.configure()
+            .directory(ConfigManager.ENVIRONMENT_CONFIG != null ? ConfigManager.ENVIRONMENT_CONFIG.toString() : null)
+            .ignoreIfMissing()
+            .load();
     public static final int SERVER_ID = Integer.parseInt(dotenv.get("SERVER_ID"));
     private static final Plugin blueMap = Bukkit.getPluginManager().getPlugin("BlueMap");
 
@@ -246,6 +251,13 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         GlobalEventHandler.addListener(NetworkRestartEvent.class, e -> ScheduledRestartHandler.scheduleRestart(e.restartAt, e.reason));
     }
 
+    private void initializeHookServer() {
+        if (Objects.equals(dotenv.get("IS_LIVE_SERVER"), "false")) {
+            NetworkRestartHook.initializeServer(dotenv);
+        }
+    }
+
+
     private void initializeMySQL() {
         pool = new HikariPool();
         pool.initialize(dotenv);
@@ -304,6 +316,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         registerCommands();
         initializeRedis();
         initializeGlobalEventListeners();
+        initializeHookServer();
 
         if (mobHandler != null) {
             mobHandler.cleanup();
@@ -325,6 +338,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
         GlobalEventHandler.clearHandlers();
         RedisConnection.onDisable();
+        NetworkRestartHook.cleanUp();
 
         if (guiHandler != null) {
             guiHandler.closeAllInventories();

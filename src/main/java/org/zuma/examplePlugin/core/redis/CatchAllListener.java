@@ -14,8 +14,6 @@ public class CatchAllListener implements Listener {
 
         event.setForwarded(true);
         RedisConnection.broadcastEvent(payload);
-
-        GlobalEventHandler.onRedisEventReceived(payload);
     }
 
 

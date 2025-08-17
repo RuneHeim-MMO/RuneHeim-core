@@ -7,7 +7,6 @@ COPY gradlew .
 COPY gradle gradle
 COPY build.gradle .
 COPY settings.gradle .
-COPY .gradle .gradle
 
 # Copy source code
 COPY src src

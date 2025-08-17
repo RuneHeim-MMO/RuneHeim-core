@@ -21,6 +21,10 @@ public class ScheduledRestartHandler implements Listener {
     private static String restartReason = null;
 
     public static void scheduleRestart(Long restartAt, String reason) {
+        if (restartTask != null) {
+            return;
+        }
+
         ScheduledRestartHandler.restartAt = restartAt;
         ScheduledRestartHandler.restartReason = reason;
 
