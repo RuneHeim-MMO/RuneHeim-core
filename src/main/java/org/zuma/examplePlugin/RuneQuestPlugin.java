@@ -8,7 +8,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.database.HikariPool;
-import org.zuma.examplePlugin.core.handlers.*;
+import org.zuma.examplePlugin.core.handlers.core.ScheduledRestartHandler;
+import org.zuma.examplePlugin.core.handlers.game.*;
 import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
 import org.zuma.examplePlugin.core.logger.Logger;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
@@ -72,6 +73,7 @@ import org.zuma.examplePlugin.domain.spawnzone.persistence.SpawnZoneRepository;
 import org.zuma.examplePlugin.domain.territory.Territory;
 import org.zuma.examplePlugin.domain.territory.TerritoryHandler;
 import org.zuma.examplePlugin.domain.territory.TerritoryRepository;
+import org.zuma.examplePlugin.events.core.NetworkRestartEvent;
 import org.zuma.examplePlugin.events.player.RunePlayerLevelUpEvent;
 import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
 
@@ -109,12 +111,6 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     private void initializePlugin() {
         pluginInstance = this;
-
-        GlobalEventHandler.addListener(RunePlayerLevelUpEvent.class, e -> {
-            System.out.println("GOT PAYLOAD NICELY! " + new Gson().toJson(e));
-            System.out.println("player: " + e.playerName);
-
-        });
 
         getServer().getPluginManager().registerEvents(new CatchAllListener(), pluginInstance);
         IllegalItemWatchdog illegalItemWatchdog = new IllegalItemWatchdog();
@@ -233,12 +229,18 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         DialogListener dialogListener = new DialogListener(dialogHandler);
         getServer().getPluginManager().registerEvents(dialogListener, pluginInstance);
 
+        getServer().getPluginManager().registerEvents(new ScheduledRestartHandler(), pluginInstance);
+
         initializeMap();
 
 
         // TODO: Load inventory from DB & Verify their meta
         // TODO: despawn all dropped item on restart
 
+    }
+
+    private void initializeGlobalEventListeners() {
+        GlobalEventHandler.addListener(NetworkRestartEvent.class, e -> ScheduledRestartHandler.scheduleRestart(e.restartAt, e.reason));
     }
 
     private void initializeMySQL() {
@@ -285,6 +287,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         initializeMySQL();
         initializePlugin();
         registerCommands();
+        initializeGlobalEventListeners();
 
         if (mobHandler != null) {
             mobHandler.cleanup();
@@ -303,6 +306,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         getRuneLogger().log(LogLevel.INFO, "Disabling plugin...");
+
+        GlobalEventHandler.clearHandlers();
 
         if (guiHandler != null) {
             guiHandler.closeAllInventories();

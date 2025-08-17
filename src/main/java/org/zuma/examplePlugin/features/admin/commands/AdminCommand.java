@@ -4,6 +4,7 @@ package org.zuma.examplePlugin.features.admin.commands;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
@@ -17,7 +18,7 @@ import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.core.handlers.IllegalItemWatchdog;
+import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
 import org.zuma.examplePlugin.core.redis.GlobalEventHandler;
 import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
@@ -34,6 +35,7 @@ import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
+import org.zuma.examplePlugin.events.core.NetworkRestartEvent;
 import org.zuma.examplePlugin.features.admin.inventories.ItemRegistryInventory;
 import org.zuma.examplePlugin.features.admin.inventories.RecipesInventory;
 
@@ -169,9 +171,14 @@ public class AdminCommand implements BasicCommand {
             RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.TERRITORY_INVENTORY.asInt(), runePlayer, null);
         }
 
-        if (Objects.equals(args[0], "redis")) {
-            GlobalEventHandler.onRedisEventReceived("{\"playerName\":\"ObscureCode\",\"playerUUID\":\"bbd1f293-911b-42d2-93df-ceb50c3523f0\",\"skillType\":\"ATTACK\",\"newLevel\":2,\"event\":\"RunePlayerLevelUpEvent\",\"serverId\":1,\"timestamp\":1755354190973}");
+        if (args.length >= 2 && Objects.equals(args[0], "restart")) {
+            String reason = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
+            long restartIn = 60L * 1000L;
+
+            NetworkRestartEvent.Payload payload = new NetworkRestartEvent.Payload(System.currentTimeMillis() + restartIn, reason, player.getName());
+            Bukkit.getServer().getPluginManager().callEvent(new NetworkRestartEvent(payload));
         }
+
         if (Objects.equals(args[0], "pdc")) {
             ItemStack item = player.getInventory().getItemInMainHand();
             PersistentDataContainer pdc = item.getItemMeta().getPersistentDataContainer();

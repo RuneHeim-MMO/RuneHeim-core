@@ -16,6 +16,10 @@ public class GlobalEventHandler {
         EventDeserializer.addEvent(eventClass, payloadClass);
     }
 
+    public static void clearHandlers() {
+        handlers.clear();
+    }
+
     @SuppressWarnings("unchecked")
     private static <T extends RedisEvent<?>> void acceptConsumer(Consumer<T> consumer, RedisEvent.RedisPayload payload, Class<?> payloadClass) {
         consumer.accept((T) payloadClass.cast(payload));
@@ -72,7 +76,6 @@ public class GlobalEventHandler {
         if (payload.targetServers.isEmpty() && payload.serverId == RuneQuestPlugin.SERVER_ID && payload.replayAtOrigin) {
             return true;
         }
-
 
         return false;
 

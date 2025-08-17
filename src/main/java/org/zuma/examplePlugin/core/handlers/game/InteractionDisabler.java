@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.core.handlers;
+package org.zuma.examplePlugin.core.handlers.game;
 
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -19,7 +19,6 @@ import org.bukkit.event.player.PlayerShearEntityEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.zuma.examplePlugin.events.player.RunePlayerLevelUpEvent;
 
 public class InteractionDisabler implements Listener {
 

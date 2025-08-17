@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.core.handlers;
+package org.zuma.examplePlugin.core.handlers.game;
 
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;

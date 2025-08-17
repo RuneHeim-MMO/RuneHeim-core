@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.core.handlers;
+package org.zuma.examplePlugin.core.handlers.game;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

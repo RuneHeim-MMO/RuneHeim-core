@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.events.core.NetworkRestartEvent;
 import org.zuma.examplePlugin.events.player.RunePlayerLevelUpEvent;
 
 import javax.annotation.Nullable;
@@ -16,6 +17,7 @@ public class EventDeserializer {
 
     static {
         addEvent(RunePlayerLevelUpEvent.class, RunePlayerLevelUpEvent.Payload.class);
+        addEvent(NetworkRestartEvent.class, NetworkRestartEvent.Payload.class);
     }
 
     public static void addEvent(Class<? extends RedisEvent<?>> eventClass, Class<? extends RedisEvent.RedisPayload> payloadClass) {
