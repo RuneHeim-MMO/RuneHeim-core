@@ -15,6 +15,7 @@ import org.zuma.examplePlugin.core.logger.Logger;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.redis.CatchAllListener;
 import org.zuma.examplePlugin.core.redis.GlobalEventHandler;
+import org.zuma.examplePlugin.core.redis.RedisConnection;
 import org.zuma.examplePlugin.domain.bank.BankContentRepository;
 import org.zuma.examplePlugin.domain.bank.BankQueryLockController;
 import org.zuma.examplePlugin.domain.block.BlockFactory;
@@ -248,6 +249,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         pool.initialize(dotenv);
     }
 
+    private void initializeRedis() {
+        RedisConnection.init(dotenv);
+    }
+
     private void initializeMap() {
         markerHandler = new MapMarkerHandler();
         markerHandler.initializeMarkerSets();
@@ -287,6 +292,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         initializeMySQL();
         initializePlugin();
         registerCommands();
+        initializeRedis();
         initializeGlobalEventListeners();
 
         if (mobHandler != null) {
@@ -308,6 +314,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getRuneLogger().log(LogLevel.INFO, "Disabling plugin...");
 
         GlobalEventHandler.clearHandlers();
+        RedisConnection.onDisable();
 
         if (guiHandler != null) {
             guiHandler.closeAllInventories();

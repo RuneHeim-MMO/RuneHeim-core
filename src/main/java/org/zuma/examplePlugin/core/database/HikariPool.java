@@ -59,6 +59,8 @@ public class HikariPool {
     public void closeConnection() {
         if (this.ds != null)
             this.ds.close();
+
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "HikariPool connection closed.");
     }
 
 

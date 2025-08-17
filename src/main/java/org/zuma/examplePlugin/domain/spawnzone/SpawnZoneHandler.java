@@ -158,6 +158,8 @@ public class SpawnZoneHandler {
         if (loop != null) {
             loop.cancel();
         }
+
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Spawn zone loop stopped.");
     }
 
     private void tick() {

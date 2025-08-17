@@ -15,6 +15,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.ownership.ItemOwnershipHandler;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
@@ -54,6 +55,8 @@ public class MobHandler {
 
             });
         }
+
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "All mobs cleared.");
     }
 
     public void onPlayerInteractWithEntity(PlayerInteractAtEntityEvent event, AbstractMob mob, RunePlayer player) {

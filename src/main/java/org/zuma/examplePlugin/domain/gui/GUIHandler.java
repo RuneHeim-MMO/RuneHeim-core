@@ -54,6 +54,7 @@ public class GUIHandler {
     public void closeAllInventories() {
         this.registry.gracefullyForceCloseIndividualInstances();
         Bukkit.getOnlinePlayers().forEach(HumanEntity::closeInventory);
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Closing GUI's gracefully.");
     }
 
     public void initializeInventories(BlockLoader blockLoader, BankQueryLockController bankQueryLockController) {

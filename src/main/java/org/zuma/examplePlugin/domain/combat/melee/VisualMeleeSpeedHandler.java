@@ -5,6 +5,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.ItemUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.constants.WeaponSpeed;
@@ -32,6 +33,8 @@ public class VisualMeleeSpeedHandler {
         if (loop != null && !loop.isCancelled()) {
             loop.cancel();
         }
+
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "VisualMeleeSpeedHandler loop stopped.");
     }
 
     private void loopTick() {

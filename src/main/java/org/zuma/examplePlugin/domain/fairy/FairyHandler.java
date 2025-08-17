@@ -128,6 +128,8 @@ public class FairyHandler {
             fairyTickTask.cancel();
             fairyTickTask = null;
         }
+
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Fairy loops stopped.");
     }
 
     public void clearPlayerFairyInstances(UUID uuid) {

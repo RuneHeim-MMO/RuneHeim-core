@@ -132,6 +132,8 @@ public class BlockManager {
             this.blocks.values().forEach(AbstractInteractableBlock::onDisable);
             this.blocks.clear();
         }
+
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "All interactable blocks unmounted.");
     }
 
     public void removeStoredInventoryUUIDForBlock(IDHolder idHolder) {
