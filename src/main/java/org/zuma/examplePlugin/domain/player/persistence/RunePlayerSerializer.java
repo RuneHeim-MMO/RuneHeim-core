@@ -1,9 +1,14 @@
 package org.zuma.examplePlugin.domain.player.persistence;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.adapters.LocationAdapter;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.gui.ItemStackSlotPair;
 import org.zuma.examplePlugin.domain.gui.serializer.ItemContainerContentSerializer;
@@ -23,7 +28,9 @@ import java.util.ArrayList;
 import static org.zuma.examplePlugin.domain.player.RunePlayerManager.defaultSkills;
 
 public class RunePlayerSerializer {
-    private static final Gson gson = new Gson();
+    private static final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(Location.class, new LocationAdapter())
+            .create();
 
     public static SerializedPlayerContainer serializePlayer(RunePlayer runePlayer, Player player) {
         PlayerDataDeserializedJsonContainer container = new PlayerDataDeserializedJsonContainer(
@@ -34,12 +41,12 @@ public class RunePlayerSerializer {
         VersionedJson versionedPlayerData = new VersionedJson(gson.toJson(container), 1);
 
         String serializedPlayerData = gson.toJson(versionedPlayerData);
+        String serializedLocation = gson.toJson(player.getLocation());
         String inventoryData = ItemContainerContentSerializer.serializeItemSlotPairs(getPlayerInventoryContent(player));
-
-        return new SerializedPlayerContainer(runePlayer.getUUID(), player.getName(), serializedPlayerData, inventoryData);
+        return new SerializedPlayerContainer(runePlayer.getUUID(), player.getName(), serializedLocation, serializedPlayerData, inventoryData);
     }
 
-    public static AbstractMap.SimpleEntry<RunePlayer, List<ItemStackSlotPair>> deserializePlayer(SerializedPlayerContainer container) {
+    public static AbstractMap.SimpleEntry<RunePlayer, DeserializedPlayerEntity> deserializePlayer(SerializedPlayerContainer container) {
         VersionedJson playerData = gson.fromJson(container.playerData(), VersionedJson.class);
         String inventoryData = container.inventoryData();
 
@@ -55,8 +62,9 @@ public class RunePlayerSerializer {
                 player.setSkills(mappedSkills);
 
                 List<ItemStackSlotPair> inventory = ItemContainerContentSerializer.deserializeItemContainerContent(inventoryData);
+                Location location = gson.fromJson(container.location(), Location.class);
 
-                return new AbstractMap.SimpleEntry<>(player, inventory);
+                return new AbstractMap.SimpleEntry<>(player, new DeserializedPlayerEntity(inventory, location));
             }
 
             default ->
