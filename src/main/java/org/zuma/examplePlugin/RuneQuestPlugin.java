@@ -301,25 +301,30 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        ConfigManager.validateKeys();
-        ConfigManager.createFoldersIfMissing();
-        initializeMySQL();
-        initializeRedis();
-        initializeHookServer();
-        initializePlugin();
-        registerCommands();
-        initializeMap();
+        try {
+            ConfigManager.validateKeys();
+            ConfigManager.createFoldersIfMissing();
+            initializeMySQL();
+            initializeRedis();
+            initializeHookServer();
+            initializePlugin();
+            registerCommands();
+            initializeMap();
 
-        if (mobHandler != null) {
-            mobHandler.cleanup();
-        }
+            if (mobHandler != null) {
+                mobHandler.cleanup();
+            }
 
-        if (runePlayerManager != null) {
-            runePlayerManager.handleOnEnable();
-        }
+            if (runePlayerManager != null) {
+                runePlayerManager.handleOnEnable();
+            }
 
-        if (guiHandler != null) {
-            guiHandler.closeAllInventories();
+            if (guiHandler != null) {
+                guiHandler.closeAllInventories();
+            }
+        } catch (Exception e) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to initialize RuneHeim-core! Shutting down.", e);
+            Bukkit.getServer().shutdown();
         }
 
     }
