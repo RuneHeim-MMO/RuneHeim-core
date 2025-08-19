@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.core.config;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 
@@ -23,36 +24,31 @@ public class ConfigManager {
     private static final Dotenv dotenv = Dotenv.configure()
             .directory(ConfigManager.ENVIRONMENT_CONFIG != null ? Paths.get(System.getProperty("user.dir")).resolve("plugins").getParent().toString() : null)
             .ignoreIfMissing()
+            .systemProperties()
             .load();
 
     public ConfigManager() {
+
+    }
+
+    public static void initializeConfig() {
         try {
             String serverId = dotenv.get("SERVER_ID");
             String isLiveServer = dotenv.get("IS_LIVE_SERVER");
-
-            ConfigManager.isPreviewServer = Objects.equals(isLiveServer, "false");
+            
+            ConfigManager.isPreviewServer = "false".equalsIgnoreCase(isLiveServer != null ? isLiveServer.trim() : null);
             ConfigManager.serverId = Integer.parseInt(serverId);
+
+            validateKeys();
+            createFoldersIfMissing();
+
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid environment variables. SERVER_ID or IS_LIVE_SERVER is missing, or server ID is not a number.");
         }
     }
 
-    public static void validateKeys() {
-        List<String> requiredKeysInEnv = new ArrayList<>(Arrays.asList(
-                "GITHUB_TOKEN",
-                "IS_LIVE_SERVER",
-                "JDBC_URL",
-                "JVM_XMS",
-                "JVM_XMX",
-                "MINECRAFT_PORT",
-                "MYSQL_PASSWORD",
-                "MYSQL_USERNAME",
-                "REDIS_CON_STR",
-                "SERVER_ID"));
-
-        if (isPreviewServer) {
-            requiredKeysInEnv.add("WEB_HOOK_KEY");
-        }
+    private static void validateKeys() {
+        List<String> requiredKeysInEnv = getRequiredEnvKeys();
 
         List<String> missingKeys = new ArrayList<>();
 
@@ -63,11 +59,32 @@ public class ConfigManager {
         });
 
         if (!missingKeys.isEmpty()) {
-            throw new IllegalArgumentException("Invalid environment variables. Keys " + String.join(", ", requiredKeysInEnv) + " are missing.");
+            throw new IllegalArgumentException("Invalid environment variables. Keys " + String.join(", ", missingKeys) + " are missing.");
         }
     }
 
-    public static void createFoldersIfMissing() {
+    private static @NotNull List<String> getRequiredEnvKeys() {
+        List<String> requiredKeysInEnv = new ArrayList<>(Arrays.asList(
+                "GITHUB_TOKEN",
+                "IS_LIVE_SERVER",
+                "JDBC_URL",
+                "JVM_XMS",
+                "JVM_XMX",
+                "EXPOSE_MINECRAFT_PORT",
+                "MYSQL_PASSWORD",
+                "MYSQL_USERNAME",
+                "REDIS_CON_STR",
+                "SERVER_ID"));
+
+        if (isPreviewServer) {
+            requiredKeysInEnv.add("WEB_HOOK_KEY");
+            requiredKeysInEnv.add("EXPOSE_MAP_PORT");
+            requiredKeysInEnv.add("EXPOSE_HOOK_PORT");
+        }
+        return requiredKeysInEnv;
+    }
+
+    private static void createFoldersIfMissing() {
         List<Path> paths = List.of(ROOT_CONFIG_PATH, SCHEMATICS_PATH);
 
         paths.forEach(path -> {

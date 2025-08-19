@@ -246,6 +246,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     private void initializeHookServer() {
         if (!ConfigManager.getIsPreviewServer()) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Skipping hook HTTP server initialization, this is not a preview server.");
             return;
         }
 
@@ -302,8 +303,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         try {
-            ConfigManager.validateKeys();
-            ConfigManager.createFoldersIfMissing();
+            ConfigManager.initializeConfig();
             initializeMySQL();
             initializeRedis();
             initializeHookServer();

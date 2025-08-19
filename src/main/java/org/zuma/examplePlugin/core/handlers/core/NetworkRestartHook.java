@@ -14,16 +14,17 @@ import java.util.Arrays;
 import java.util.Map;
 
 public class NetworkRestartHook {
+    private static final int HTTP_PORT = 8080;
     private static HttpServer server;
 
     public static void initializeServer(Dotenv dotenv) {
         String secretKey = dotenv.get("WEB_HOOK_KEY", "43fk02309g235kg092309k4fk903");
 
         try {
-            server = HttpServer.create(new InetSocketAddress(8080), 0);
+            server = HttpServer.create(new InetSocketAddress(HTTP_PORT), 0);
             server.createContext("/restart", (HttpExchange exchange) -> {
                 if ("POST".equals(exchange.getRequestMethod())) {
-/* Test */
+                    /* Test */
                     try {
 
                         String query = exchange.getRequestURI().getQuery();
@@ -57,7 +58,7 @@ public class NetworkRestartHook {
                 }
             });
             server.start();
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Successfully started HTTP hook server.");
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Successfully started HTTP hook server at port " + HTTP_PORT);
         } catch (Exception e) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to start a HTTP hook server.", e);
         }
