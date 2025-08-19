@@ -14,16 +14,16 @@ import java.util.List;
 import java.util.Objects;
 
 public class ConfigManager {
-    private static final Dotenv dotenv = Dotenv.configure()
-            .directory(ConfigManager.ENVIRONMENT_CONFIG != null ? ConfigManager.ENVIRONMENT_CONFIG.toString() : null)
-            .ignoreIfMissing()
-            .load();
-
     public static final Path ENVIRONMENT_CONFIG = Paths.get(System.getProperty("user.dir")).resolve("plugins").getParent();
     public static final Path ROOT_CONFIG_PATH = Paths.get("plugins").resolve("RuneQuest");
     public static final Path SCHEMATICS_PATH = ROOT_CONFIG_PATH.resolve("schematics");
     public static boolean isPreviewServer = false;
     public static int serverId;
+
+    private static final Dotenv dotenv = Dotenv.configure()
+            .directory(ConfigManager.ENVIRONMENT_CONFIG != null ? Paths.get(System.getProperty("user.dir")).resolve("plugins").getParent().toString() : null)
+            .ignoreIfMissing()
+            .load();
 
     public ConfigManager() {
         try {
