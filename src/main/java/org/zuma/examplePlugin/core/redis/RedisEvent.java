@@ -6,6 +6,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.config.ConfigManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public abstract class RedisEvent<T extends RedisEvent.RedisPayload> extends Even
         T composedPayload = composePayload();
 
         composedPayload.event = this.getClass().getSimpleName();
-        composedPayload.serverId = RuneQuestPlugin.SERVER_ID;
+        composedPayload.serverId = ConfigManager.getServerId();
         composedPayload.timestamp = System.currentTimeMillis();
         composedPayload.targetServers = new ArrayList<>();
         composedPayload.replayAtOrigin = true;

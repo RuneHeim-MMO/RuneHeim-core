@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.core.redis;
 
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 
 import java.util.ArrayList;
@@ -69,11 +70,11 @@ public class GlobalEventHandler {
 
 
     public static boolean shouldHandleEvent(RedisEvent.RedisPayload payload) {
-        if (payload.targetServers.contains(RuneQuestPlugin.SERVER_ID)) {
+        if (payload.targetServers.contains(ConfigManager.getServerId())) {
             return true;
         }
 
-        if (payload.targetServers.isEmpty() || payload.serverId == RuneQuestPlugin.SERVER_ID && payload.replayAtOrigin) {
+        if (payload.targetServers.isEmpty() || payload.serverId == ConfigManager.getServerId() && payload.replayAtOrigin) {
             return true;
         }
 

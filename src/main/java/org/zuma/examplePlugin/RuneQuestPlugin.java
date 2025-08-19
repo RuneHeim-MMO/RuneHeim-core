@@ -1,7 +1,5 @@
 package org.zuma.examplePlugin;
 
-import com.google.gson.Gson;
-import io.github.cdimascio.dotenv.Dotenv;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -77,7 +75,6 @@ import org.zuma.examplePlugin.domain.territory.Territory;
 import org.zuma.examplePlugin.domain.territory.TerritoryHandler;
 import org.zuma.examplePlugin.domain.territory.TerritoryRepository;
 import org.zuma.examplePlugin.events.core.NetworkRestartEvent;
-import org.zuma.examplePlugin.events.player.RunePlayerLevelUpEvent;
 import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
 
 import java.util.ArrayList;
@@ -86,11 +83,6 @@ import java.util.Objects;
 
 @SuppressWarnings("UnstableApiUsage")
 public final class RuneQuestPlugin extends JavaPlugin implements Listener {
-    private static final Dotenv dotenv = Dotenv.configure()
-            .directory(ConfigManager.ENVIRONMENT_CONFIG != null ? ConfigManager.ENVIRONMENT_CONFIG.toString() : null)
-            .ignoreIfMissing()
-            .load();
-    public static final int SERVER_ID = Integer.parseInt(dotenv.get("SERVER_ID"));
     private static final Plugin blueMap = Bukkit.getPluginManager().getPlugin("BlueMap");
 
     public static final Logger logger = new Logger();
@@ -145,10 +137,6 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(bowSpeedHandler, pluginInstance);
         getServer().getPluginManager().registerEvents(bowVelocityHandler, pluginInstance);
         // getServer().getPluginManager().registerEvents(bowDrawHelper, pluginInstance);
-
-
-        ConfigManager configManager = new ConfigManager();
-        configManager.initializeFolders();
 
         runePlayerManager = new RunePlayerManager(new RunePlayerRepository(pool));
         RunePlayerListener runePlayerListener = new RunePlayerListener(runePlayerManager);
@@ -241,33 +229,35 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
         initializeMap();
 
-
-        // TODO: Load inventory from DB & Verify their meta
         // TODO: despawn all dropped item on restart
 
-    }
-
-    private void initializeGlobalEventListeners() {
-        GlobalEventHandler.addListener(NetworkRestartEvent.class, e -> ScheduledRestartHandler.scheduleRestart(e.restartAt, e.reason));
-    }
-
-    private void initializeHookServer() {
-        if (Objects.equals(dotenv.get("IS_LIVE_SERVER"), "false")) {
-            NetworkRestartHook.initializeServer(dotenv);
-        }
     }
 
 
     private void initializeMySQL() {
         pool = new HikariPool();
-        pool.initialize(dotenv);
+        pool.initialize(ConfigManager.getDotenv());
     }
 
     private void initializeRedis() {
-        RedisConnection.init(dotenv);
+        RedisConnection.init(ConfigManager.getDotenv());
+        GlobalEventHandler.addListener(NetworkRestartEvent.class, e -> ScheduledRestartHandler.scheduleRestart(e.restartAt, e.reason));
+    }
+
+    private void initializeHookServer() {
+        if (!ConfigManager.getIsPreviewServer()) {
+            return;
+        }
+
+        NetworkRestartHook.initializeServer(ConfigManager.getDotenv());
     }
 
     private void initializeMap() {
+        if (!ConfigManager.getIsPreviewServer()) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Skipping BlueMap initialization, this is not a preview server.");
+            return;
+        }
+
         if (blueMap == null || !blueMap.isEnabled()) {
             return;
         }
@@ -305,18 +295,20 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("actions", new ConsoleActionCommand()));
 
-
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Registered RuneHeim commands.");
     }
 
 
     @Override
     public void onEnable() {
+        ConfigManager.validateKeys();
+        ConfigManager.createFoldersIfMissing();
         initializeMySQL();
+        initializeRedis();
+        initializeHookServer();
         initializePlugin();
         registerCommands();
-        initializeRedis();
-        initializeGlobalEventListeners();
-        initializeHookServer();
+        initializeMap();
 
         if (mobHandler != null) {
             mobHandler.cleanup();
