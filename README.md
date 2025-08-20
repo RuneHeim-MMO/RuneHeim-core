@@ -12,4 +12,4 @@ IS_LIVE_SERVER=false
 WEB_HOOK_KEY=key (for live servers only)
 
 WEB HOOKS EXAMPLE:
-http://127.0.0.1:8080/restart?key=123&seconds=60&reason=Update%20test&sender=Me
+http://127.0.0.1:8080/restart?key=123&seconds=60&reason=Update%20test&sender=Me[Dockerfile](Dockerfile)[build.gradle](build.gradle)[build.gradle](build.gradle)

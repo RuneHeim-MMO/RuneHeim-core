@@ -10,6 +10,7 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -86,7 +87,7 @@ public class PlayerScoreboardManager {
     private void initializeScoreboard() {
         org.bukkit.scoreboard.ScoreboardManager manager = Bukkit.getScoreboardManager();
         Scoreboard board = manager.getNewScoreboard();
-        Objective objective = board.registerNewObjective("stats", Criteria.DUMMY, Component.text("◾"));
+        Objective objective = board.registerNewObjective("stats", Criteria.DUMMY, Component.text(Icon.LOGO.get()));
 
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         this.player.asBukkitPlayer().setScoreboard(board);

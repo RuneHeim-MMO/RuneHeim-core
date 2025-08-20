@@ -7,7 +7,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.database.HikariPool;
-import org.zuma.examplePlugin.core.handlers.core.NetworkRestartHook;
+import org.zuma.examplePlugin.core.handlers.core.WebHook;
 import org.zuma.examplePlugin.core.handlers.core.ScheduledRestartHandler;
 import org.zuma.examplePlugin.core.handlers.game.*;
 import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
@@ -79,7 +79,6 @@ import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Objects;
 
 @SuppressWarnings("UnstableApiUsage")
 public final class RuneQuestPlugin extends JavaPlugin implements Listener {
@@ -250,7 +249,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
             return;
         }
 
-        NetworkRestartHook.initializeServer(ConfigManager.getDotenv());
+        WebHook.initializeServer(ConfigManager.getDotenv());
     }
 
     private void initializeMap() {
@@ -335,7 +334,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
         GlobalEventHandler.clearHandlers();
         RedisConnection.onDisable();
-        NetworkRestartHook.cleanUp();
+        WebHook.cleanUp();
 
         if (guiHandler != null) {
             guiHandler.closeAllInventories();
