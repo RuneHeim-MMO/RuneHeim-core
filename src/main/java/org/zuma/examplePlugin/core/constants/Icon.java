@@ -89,7 +89,10 @@ public enum Icon {
 
     PROGRESS_SHORT_START("⸉"),
     PROGRESS_SHORT_END("≖"),
-    PROGRESS_SHORT_SEGMENT("⌨");
+    PROGRESS_SHORT_SEGMENT("⌨"),
+
+    LOGO("◾"),
+    LOGO_FULL("⍗");
 
 
     private final String icon;
