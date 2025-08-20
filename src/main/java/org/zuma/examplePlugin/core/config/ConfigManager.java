@@ -35,16 +35,15 @@ public class ConfigManager {
         try {
             String serverId = dotenv.get("SERVER_ID");
             String isLiveServer = dotenv.get("IS_LIVE_SERVER");
-            
+
             ConfigManager.isPreviewServer = "false".equalsIgnoreCase(isLiveServer != null ? isLiveServer.trim() : null);
             ConfigManager.serverId = Integer.parseInt(serverId);
-
-            validateKeys();
-            createFoldersIfMissing();
-
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid environment variables. SERVER_ID or IS_LIVE_SERVER is missing, or server ID is not a number.");
         }
+
+        validateKeys();
+        createFoldersIfMissing();
     }
 
     private static void validateKeys() {

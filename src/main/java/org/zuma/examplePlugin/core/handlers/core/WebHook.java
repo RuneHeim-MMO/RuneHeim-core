@@ -10,10 +10,9 @@ import org.zuma.examplePlugin.events.core.NetworkRestartEvent;
 
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import java.util.Arrays;
 import java.util.Map;
 
-public class NetworkRestartHook {
+public class WebHook {
     private static final int HTTP_PORT = 8080;
     private static HttpServer server;
 
@@ -43,13 +42,15 @@ public class NetworkRestartHook {
                                 NetworkRestartEvent.Payload payload = new NetworkRestartEvent.Payload(System.currentTimeMillis() + restartIn, reasonParam, senderParam);
                                 Bukkit.getServer().getPluginManager().callEvent(new NetworkRestartEvent(payload));
                             });
+
+
+                            String response = "OK";
+                            exchange.sendResponseHeaders(200, response.getBytes().length);
+                            try (OutputStream os = exchange.getResponseBody()) {
+                                os.write(response.getBytes());
+                            }
                         }
 
-                        String response = "OK";
-                        exchange.sendResponseHeaders(200, response.getBytes().length);
-                        try (OutputStream os = exchange.getResponseBody()) {
-                            os.write(response.getBytes());
-                        }
                     } catch (Exception e) {
                         exchange.sendResponseHeaders(400, -1);
                     }
