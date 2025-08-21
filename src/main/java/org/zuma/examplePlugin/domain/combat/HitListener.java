@@ -66,7 +66,6 @@ public class HitListener implements Listener {
 
         if (hit != null && hit.damage() == 0) {
             event.setCancelled(true);
-
             // Even if hit is 0, set mobs target to attacker.
             if (defender.getEntity() instanceof Mob mob && attacker.getEntity() instanceof LivingEntity livingAttacker) {
                 if (livingAttacker instanceof Player) {
@@ -76,7 +75,7 @@ public class HitListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = false)
     public void onProjectileHitMob(EntityDamageByEntityEvent event) {
         if (!(event.getEntity() instanceof Mob mobEntity)) return;
 
