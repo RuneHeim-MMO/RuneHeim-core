@@ -239,8 +239,12 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     }
 
     private void initializeRedis() {
-        RedisConnection.init(ConfigManager.getDotenv());
-        GlobalEventHandler.addListener(NetworkRestartEvent.class, e -> ScheduledRestartHandler.scheduleRestart(e.restartAt, e.reason));
+        try {
+            RedisConnection.init(ConfigManager.getDotenv());
+            GlobalEventHandler.addListener(NetworkRestartEvent.class, e -> ScheduledRestartHandler.scheduleRestart(e.restartAt, e.reason));
+        } catch (Throwable t) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Redis init failed, continuing anyway.", t);
+        }
     }
 
     private void initializeHookServer() {
