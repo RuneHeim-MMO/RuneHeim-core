@@ -26,6 +26,7 @@ import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
+import org.zuma.examplePlugin.domain.combat.HitHandler;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
@@ -51,8 +52,10 @@ public class AdminCommand implements BasicCommand {
     private final BlockManager blockManager;
     private final ResourceNodeTypeRepository oreTypeRepository;
     private final InteractableBlockRepository blockRepo;
+    private final HitHandler hitHandler;
 
-    public AdminCommand(InteractableBlockRepository blockRepo, ItemRegistry itemRegistry, RecipeRegistry recipeRegistry, BlockManager blockManager, ResourceNodeTypeRepository oreTypeRepository) {
+    public AdminCommand(HitHandler hitHandler, InteractableBlockRepository blockRepo, ItemRegistry itemRegistry, RecipeRegistry recipeRegistry, BlockManager blockManager, ResourceNodeTypeRepository oreTypeRepository) {
+        this.hitHandler = hitHandler;
         this.itemRegistry = itemRegistry;
         this.recipeRegistry = recipeRegistry;
         this.blockManager = blockManager;
@@ -184,6 +187,10 @@ public class AdminCommand implements BasicCommand {
 
         if (Objects.equals(args[0], "map")) {
             RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.TERRITORY_INVENTORY.asInt(), runePlayer, null);
+        }
+
+        if (Objects.equals(args[0], "combat-debug")) {
+            hitHandler.toggleCombatDebug(runePlayer);
         }
 
         if (args.length >= 2 && Objects.equals(args[0], "restart")) {

@@ -10,6 +10,8 @@ import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
+import java.util.Map;
+
 public class HitCalculator {
     private static final double BASE_BONUS = 128.0;
     private static final double MAX_HIT_DIVISOR = 640.0;
@@ -56,27 +58,21 @@ public class HitCalculator {
     }
 
     public static Hit getNewHit(CombatEntity attacker, CombatEntity defender, AttackType type) {
-        boolean hitSuccess = isHitSuccess(attacker, defender, type);
-
-        if (attacker.getEntity() instanceof Player p) {
-            p.sendMessage("Your max hit: " + HitCalculator.getMaxHit(attacker, type));
-        }
-
-        if (defender.getEntity() instanceof Player p) {
-            p.sendMessage("Attackers max hit: " + HitCalculator.getMaxHit(attacker, type));
-        }
+        Map.Entry<Boolean, Double> hitRollResult = isHitSuccess(attacker, defender, type);
+        boolean hitSuccess = hitRollResult.getKey();
+        double hitChance = hitRollResult.getValue();
+        int maxHit = getMaxHit(attacker, type);
 
         if (hitSuccess) {
-            int maxHit = getMaxHit(attacker, type);
             int baseDamage = (int) (Math.random() * (maxHit + 1));
-
             int damage = Math.min(defender.getHealth(), baseDamage);
-            return new Hit(attacker, defender, type, damage, getHitType(defender, damage));
+
+            return new Hit(attacker, defender, type, damage, getHitType(defender, damage), maxHit, hitChance);
         }
 
 
         int damage = Math.min(defender.getHealth(), 0);
-        return new Hit(attacker, defender, type, damage, getHitType(defender, damage));
+        return new Hit(attacker, defender, type, damage, getHitType(defender, damage), maxHit, hitChance);
 
     }
 
@@ -110,8 +106,8 @@ public class HitCalculator {
         return 0;
     }
 
-    public static boolean isHitSuccess(CombatEntity attacker, CombatEntity defender, AttackType type) {
-
+    // Returns Entry<isHitSuccess, chance>
+    public static Map.Entry<Boolean, Double> isHitSuccess(CombatEntity attacker, CombatEntity defender, AttackType type) {
         if (type == AttackType.MELEE) {
             int attackerAttack = getEntitySkillLevel(attacker, SkillType.ATTACK);
             int defenderDefence = getEntitySkillLevel(defender, SkillType.DEFENCE);
@@ -143,13 +139,13 @@ public class HitCalculator {
 
         if (type == AttackType.MAGIC) {
             // TODO: implement magic
-            return false;
+            return Map.entry(false, 0.0);
         }
 
-        return false;
+        return Map.entry(false, 0.0);
     }
 
-    private static boolean rollHitChance(double attackRoll, double defenceRoll) {
+    private static Map.Entry<Boolean, Double> rollHitChance(double attackRoll, double defenceRoll) {
         double chanceToHit;
 
         if (attackRoll > defenceRoll) {
@@ -157,9 +153,8 @@ public class HitCalculator {
         } else {
             chanceToHit = attackRoll / (2 * (defenceRoll + 1));
         }
-
-        Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage("Chance to hit: " + chanceToHit + "%"));
-        return Math.random() < chanceToHit;
+        
+        return Map.entry(Math.random() < chanceToHit, chanceToHit);
     }
 
 
