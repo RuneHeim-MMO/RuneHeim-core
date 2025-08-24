@@ -14,6 +14,36 @@ public class Boars {
 
     public static void registerMobs(MobTypeRegistry registry) {
 
+        registry.register(MobType.WILD_PIG_BASE_48.getId(), () -> new GenericCombatant(
+                "Wild Pig", null,
+                getBaseSkills(48),
+                null,
+                MobBehaviors.WILD_PIG.getBehavior(),
+                "boar_generic",
+                0.30, false, false, 34,
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
+        ));
+
+        registry.register(MobType.WILD_PIG_BASE_45.getId(), () -> new GenericCombatant(
+                "Wild Pig", null,
+                getBaseSkills(45),
+                null,
+                MobBehaviors.WILD_PIG.getBehavior(0.5F),
+                "boar_female",
+                0.30, true, false, 30,
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
+        ));
+
+        registry.register(MobType.WILD_PIG_BABY_BASE_40.getId(), () -> new GenericCombatant(
+                "Wild Pig Baby", null,
+                getBaseSkills(40),
+                null,
+                MobBehaviors.WILD_PIG.getBehavior(1F),
+                "boar_baby",
+                0.30, false, false, 18,
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
+        ));
+
         registry.register(MobType.BOAR_BROWN_BASE_3.getId(), () -> new GenericCombatant(
                 "Brown Boar", null,
                 getBaseSkills(3),

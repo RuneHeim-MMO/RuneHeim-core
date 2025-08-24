@@ -177,6 +177,10 @@ public class DropTableRepository {
                         new DropTableEntry(ItemId.RAW_CHICKEN.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
                 ))), 1)),
 
+                new DropTableDBEntry(DropTableId.RAW_ANIMAL_MEAT.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.RAW_MEAT.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                ))), 1)),
+
                 new DropTableDBEntry(DropTableId.FEATHERS.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.FEATHER.asInt(), 1, 15, 2, DropTableEntry.Type.ITEM)
                 ))), 1))

@@ -36,17 +36,25 @@ public class Common {
                 List.of(DropTableId.BONES.asInt())
         ));
 
+        registry.register(MobType.ARMADILLO_BASE_60.getId(), () -> new GenericCombatant(
+                "Armadillo", null, getBaseSkills(60),
+                null, MobBehaviors.ARMADILLO.getBehavior(),
+                0.3, true, false, 40, null, null, DisguiseType.ARMADILLO,
+                List.of(DropTableId.BONES.asInt())
+        ));
+
+        registry.register(MobType.ARMADILLO_NON_AGGRO_BASE_15.getId(), () -> new GenericCombatant(
+                "Armadillo", null, getBaseSkills(15),
+                null, MobBehaviors.ARMADILLO.getBehavior(),
+                0.3, false, false, 10, null, null, DisguiseType.ARMADILLO,
+                List.of(DropTableId.BONES.asInt())
+        ));
+
+
         registry.register(MobType.AXOLOTL.getId(), () -> new GenericCombatant(
                 "Axolotl", null, List.of(new SkillLevelRecord(SkillType.ATTACK, 1)),
                 null, MobBehaviors.AXOLOTL.getBehavior(),
                 0.25, false, false, 3, null, null, DisguiseType.AXOLOTL,
-                List.of(DropTableId.BONES.asInt())
-        ));
-
-        registry.register(MobType.ARMADILLO.getId(), () -> new GenericCombatant(
-                "Armadillo", null, List.of(new SkillLevelRecord(SkillType.ATTACK, 1)),
-                null, MobBehaviors.ARMADILLO.getBehavior(),
-                0.18, false, false, 3, null, null, DisguiseType.TURTLE,
                 List.of(DropTableId.BONES.asInt())
         ));
 

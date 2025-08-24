@@ -221,7 +221,8 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(28, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), -104, 87, 103)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.WOLF_BLACK_ALPHA_BASE_36, 3, 100),
-                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_LIGHT_ALPHA_BASE_34, 2, 100)
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_LIGHT_ALPHA_BASE_34, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 3, 100)
                 ), 80, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(29, SpawnZoneType.AREA, 30, 15,
@@ -242,14 +243,18 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(31, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), -140, 87, 338)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.WOLF_BLACK_ALPHA_BASE_36, 2, 100),
-                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_LIGHT_ALPHA_BASE_34, 4, 100)
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_LIGHT_ALPHA_BASE_34, 4, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 3, 100)
                 ), 150, false), 1)),
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(32, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), -260, 120, 122)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.WOLF_BLACK_ALPHA_BASE_36, 2, 100),
-                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_LIGHT_ALPHA_BASE_34, 4, 100)
+                        new SpawnZoneMobRecord(MobType.WOLF_BLACK_BASE_20, 2, 100),
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_LIGHT_BASE_26, 4, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 3, 100)
                 ), 150, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(33, SpawnZoneType.AREA, 30, 15,
@@ -312,53 +317,89 @@ public class SpawnZoneRepository {
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(42, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), -405, 150, -733)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BASE_34, 3, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 1, 100)
                 ), 150, false), 1)),
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(43, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), -187, 150, -600)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BASE_34, 3, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 1, 100)
                 ), 80, false), 1)),
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(44, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 205, 150, -622)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BASE_34, 10, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 5, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 3, 100)
                 ), 150, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(45, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), -21, 100, -400)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BASE_34, 3, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 5, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 1, 100)
                 ), 50, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(46, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), -136, 130, -437)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BASE_34, 3, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 1, 100)
                 ), 50, false), 1)),
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(47, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 400, 150, -554)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BASE_34, 10, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 4, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 3, 100)
                 ), 130, false), 1)),
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(48, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 79, 130, -429)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BASE_34, 3, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 1, 100)
                 ), 50, false), 1)),
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(49, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 265, 130, -425)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BASE_34, 6, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 6, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 3, 100)
                 ), 120, false), 1)),
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(50, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 669, 130, -484)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BASE_34, 10, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 4, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 3, 100)
                 ), 150, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(51, SpawnZoneType.AREA, 30, 15,
@@ -373,7 +414,11 @@ public class SpawnZoneRepository {
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(53, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 693, 110, -215)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BASE_34, 10, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 4, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 3, 100)
                 ), 100, false), 1)),
 
 
@@ -444,54 +489,85 @@ public class SpawnZoneRepository {
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(66, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 845, 120, -126)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BASE_34, 7, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 1, 100)
                 ), 80, false), 1)),
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(67, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 945, 100, -135)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BASE_34, 3, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 4, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 2, 100)
                 ), 80, false), 1)),
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(68, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 989, 100, -13)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BASE_34, 4, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 3, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 3, 100)
                 ), 80, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(69, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 1033, 100, 315)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BASE_34, 3, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 1, 100)
                 ), 80, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(70, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 478, 120, 241)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 8, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 3, 100)
                 ), 150, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(71, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 85, 130, 250)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 3, 100)
                 ), 80, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(72, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 275, 130, 250)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 3, 100)
                 ), 80, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(73, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 1100, 100, 130)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BASE_34, 5, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 3, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 2, 100)
                 ), 80, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(74, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 724, 100, 376)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BASE_34, 4, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 3, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 2, 100)
                 ), 80, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(75, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 730, 100, 505)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BASE_34, 8, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 3, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 3, 100)
                 ), 100, false), 1)),
 
 
@@ -567,13 +643,21 @@ public class SpawnZoneRepository {
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(89, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 707, 120, -14)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BASE_34, 5, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 3, 100)
                 ), 80, false), 1)),
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(90, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 906, 120, 391)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
+                        new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BASE_34, 5, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_FEMALE_BASE_29, 2, 100),
+                        new SpawnZoneMobRecord(MobType.DEER_BABY_BASE_15, 3, 100)
                 ), 80, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(91, SpawnZoneType.AREA, 30, 15,
@@ -583,13 +667,13 @@ public class SpawnZoneRepository {
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(92, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), -1156, 180, -484)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.ARMADILLO_BASE_60, 4, 100)
                 ), 150, false), 1)),
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(93, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), -1169, 180, -624)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.ARMADILLO_BASE_60, 4, 100)
                 ), 70, false), 1)),
 
 
@@ -601,29 +685,29 @@ public class SpawnZoneRepository {
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(95, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), -960, 120, -490)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.ARMADILLO_BASE_60, 4, 100)
                 ), 50, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(96, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), -893, 120, -689)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.ARMADILLO_BASE_60, 4, 100)
                 ), 70, false), 1)),
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(97, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), -893, 120, -781)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.ARMADILLO_BASE_60, 4, 100)
                 ), 70, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(98, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), -1160, 120, -867)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.ARMADILLO_BASE_60, 4, 100)
                 ), 50, false), 1)),
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(99, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), -914, 120, -573)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        // todo
+                        new SpawnZoneMobRecord(MobType.ARMADILLO_BASE_60, 4, 100)
                 ), 50, false), 1)),
 
 
@@ -651,13 +735,31 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(104, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), -837, 100, 323)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         // todo
-                ), 100, false), 1))
+                ), 100, false), 1)),
+
+            new SpawnZoneRecord(new AbstractSpawnZoneMeta(105, SpawnZoneType.AREA, 15, 15,
+                    new Location(Bukkit.getWorld("world"), -415, 80, 180)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                    new SpawnZoneMobRecord(MobType.ARMADILLO_NON_AGGRO_BASE_15, 20, 100)
+            ), 80, false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(106, SpawnZoneType.AREA, 15, 15,
+                        new Location(Bukkit.getWorld("world"), -328, 80, 290)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.ARMADILLO_NON_AGGRO_BASE_15, 20, 100)
+                ), 80, false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(107, SpawnZoneType.POINT, 20, 1,
+                        new Location(Bukkit.getWorld("world"), -440, 65, 206.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CITY_GUARD_STATIC, 1, 100)
+                ), false), 1)),
 
 
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(108, SpawnZoneType.POINT, 20, 1,
+                        new Location(Bukkit.getWorld("world"), -423.5, 65, 227)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CITY_GUARD_STATIC, 1, 100)
+                ), false), 1))
 
 
-
-                );
+        );
     }
 }
 

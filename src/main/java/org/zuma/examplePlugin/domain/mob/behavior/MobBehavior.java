@@ -1,33 +1,26 @@
 package org.zuma.examplePlugin.domain.mob.behavior;
 
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.zuma.examplePlugin.core.constants.SoundType;
-import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 
 import java.util.List;
 import java.util.Random;
 
 public class MobBehavior {
-    private final List<SoundType> idleSounds;
-    private final List<SoundType> interactionSuccessSounds;
-    private final List<SoundType> interactionFailSounds;
-    private final List<SoundType> damageSounds;
-    private final List<SoundType> deathSounds;
+    private final List<SoundType> idleSounds, interactionSuccessSounds, interactionFailSounds, damageSounds, deathSounds;
+    private float pitchModifier;
     private final Random random = new Random();
 
     public enum MobSoundType {
         POSITIVE, NEGATIVE, IDLE, HURT, DEATH
     }
 
-    public MobBehavior(List<SoundType> idleSounds,
+    public MobBehavior(float pitchModifier, List<SoundType> idleSounds,
                        List<SoundType> interactionSuccessSounds,
                        List<SoundType> interactionFailSounds,
                        List<SoundType> damageSounds,
                        List<SoundType> deathSounds) {
+        this.pitchModifier = pitchModifier;
         this.idleSounds = idleSounds;
         this.interactionSuccessSounds = interactionSuccessSounds;
         this.interactionFailSounds = interactionFailSounds;
@@ -48,7 +41,7 @@ public class MobBehavior {
     private void playRandomSound(Entity entity, List<SoundType> sounds) {
         if (sounds.isEmpty()) return;
         SoundType sound = sounds.get(random.nextInt(sounds.size()));
-        sound.play(entity.getLocation());
+        sound.play(entity.getLocation(), pitchModifier);
     }
 
 }
