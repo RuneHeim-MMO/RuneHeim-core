@@ -49,15 +49,22 @@ public class WebHook {
                             try (OutputStream os = exchange.getResponseBody()) {
                                 os.write(response.getBytes());
                             }
+                            exchange.close();
                         }
 
                     } catch (Exception e) {
                         exchange.sendResponseHeaders(400, -1);
+                    } finally {
+                        exchange.close();
                     }
                 } else {
                     exchange.sendResponseHeaders(405, -1); // Method Not Allowed
+                    exchange.close();
                 }
+
+
             });
+
             server.start();
             RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Successfully started HTTP hook server at port " + HTTP_PORT);
         } catch (Exception e) {
