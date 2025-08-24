@@ -2,12 +2,10 @@ package org.zuma.examplePlugin.domain.player.persistence;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.adapters.LocationAdapter;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.gui.ItemStackSlotPair;
@@ -41,7 +39,7 @@ public class RunePlayerSerializer {
         VersionedJson versionedPlayerData = new VersionedJson(gson.toJson(container), 1);
 
         String serializedPlayerData = gson.toJson(versionedPlayerData);
-        String serializedLocation = gson.toJson(player.getLocation());
+        String serializedLocation = gson.toJson(runePlayer.getGetSafeLocation() != null ? runePlayer.getGetSafeLocation() : player.getLocation());
         String inventoryData = ItemContainerContentSerializer.serializeItemSlotPairs(getPlayerInventoryContent(player));
         return new SerializedPlayerContainer(runePlayer.getUUID(), player.getName(), serializedLocation, serializedPlayerData, inventoryData);
     }

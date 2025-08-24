@@ -174,6 +174,7 @@ public class RunePlayerManager {
         RunePlayerSerializer.setPlayerInventoryContent(player, data.getValue().inventory());
         player.teleport(data.getValue().location());
         loadingStateHandler.setPlayerLoaded(player);
+        data.getKey().setSurvivalMode();
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.getName() + " loaded successfully.");
         Bukkit.getServer().getPluginManager().callEvent(new RunePlayerLoadedEvent(data.getKey()));
         cleanup(uuid);

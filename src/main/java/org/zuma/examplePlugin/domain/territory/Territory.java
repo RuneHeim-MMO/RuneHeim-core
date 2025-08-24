@@ -2,12 +2,14 @@ package org.zuma.examplePlugin.domain.territory;
 
 import org.bukkit.Location;
 
+import javax.annotation.Nullable;
+
 public class Territory {
-    private final Location centerPoint;
+    private final Location centerPoint, spawnPoint;
     private final int radius, minLevel, maxLevel;
     private final String name, description, id;
 
-    public Territory(String id, Location centerPoint, int radius, String name, String description, int minLevel, int maxLevel) {
+    public Territory(String id, Location centerPoint, @Nullable Location spawnPoint, int radius, String name, String description, int minLevel, int maxLevel) {
         this.centerPoint = centerPoint;
         this.radius = radius;
         this.minLevel = minLevel;
@@ -15,6 +17,7 @@ public class Territory {
         this.name = name;
         this.id = id;
         this.description = description;
+        this.spawnPoint = spawnPoint;
     }
 
     public Location getCenterPoint() {
@@ -43,5 +46,10 @@ public class Territory {
 
     public int getMaxLevel() {
         return maxLevel;
+    }
+
+    @Nullable
+    public Location getSpawnPoint() {
+        return spawnPoint;
     }
 }

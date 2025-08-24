@@ -3,6 +3,8 @@ package org.zuma.examplePlugin.domain.player;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -13,9 +15,7 @@ import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.core.interfaces.InteractiveActionStrategy;
-import org.zuma.examplePlugin.core.utils.PlayerUtils;
-import org.zuma.examplePlugin.core.utils.TextUtils;
-import org.zuma.examplePlugin.core.utils.XpUtils;
+import org.zuma.examplePlugin.core.utils.*;
 import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.hud.ActionBarManager;
 import org.zuma.examplePlugin.domain.hud.HudService;
@@ -26,6 +26,7 @@ import org.zuma.examplePlugin.domain.modifier.SkillModifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.party.Party;
 import org.zuma.examplePlugin.domain.player.actions.ActionParams;
+import org.zuma.examplePlugin.domain.player.handlers.DeathHandler;
 import org.zuma.examplePlugin.domain.player.handlers.PlayerItemDistributor;
 import org.zuma.examplePlugin.domain.player.handlers.PlayerXpHandler;
 import org.zuma.examplePlugin.domain.skill.Skill;
@@ -33,10 +34,7 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.domain.xp.PendingXPHandler;
 import org.zuma.examplePlugin.events.player.RunePlayerHealthChangedEvent;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -57,6 +55,7 @@ public class RunePlayer implements CombatEntity {
     private long pouchCoins;
     private final List<InteractiveActionStrategy> pendingActions;
     private List<String> discoveredTerritoryIds;
+    private Location getSafeLocation; // is set when player is is spectator mode.
 
     public RunePlayer(UUID uuid, EnumMap<SkillType, Skill> skills) {
         this.uuid = uuid;
@@ -249,7 +248,8 @@ public class RunePlayer implements CombatEntity {
     }
 
     public void onDeath(Hit lastHit) {
-        asBukkitPlayer().sendMessage("Welp, you died!");
+        DeathHandler.handlePlayerDeath(this);
+
         this.pendingXPHandler.distributePendingXP();
     }
 
@@ -259,5 +259,23 @@ public class RunePlayer implements CombatEntity {
 
     public void setDiscoveredTerritoryIds(List<String> list) {
         this.discoveredTerritoryIds = list;
+    }
+
+    public void setSpectatorMode(Location safeLocation) {
+        asBukkitPlayer().setGameMode(GameMode.SPECTATOR);
+        getSafeLocation = safeLocation;
+    }
+
+    public void setSurvivalMode() {
+        if (asBukkitPlayer().getGameMode() != GameMode.SPECTATOR) {
+            return;
+        }
+
+        asBukkitPlayer().setGameMode(GameMode.SURVIVAL);
+        getSafeLocation = null;
+    }
+
+    public Location getGetSafeLocation() {
+        return getSafeLocation;
     }
 }

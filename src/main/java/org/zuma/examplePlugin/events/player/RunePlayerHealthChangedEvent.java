@@ -8,7 +8,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class RunePlayerHealthChangedEvent extends Event implements Cancellable {
     public enum Cause {
-        COMBAT, HEALING, INITIALIZATION
+        COMBAT, HEALING, INITIALIZATION, RESPAWN
     }
 
     private static final HandlerList HANDLERS = new HandlerList();
