@@ -21,19 +21,17 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ProgressBarAction implements InteractiveActionStrategy {
-    private final RunePlayer player;
 
     @Nullable
     private BukkitTask task;
     private boolean isCancelled;
 
-    public ProgressBarAction(RunePlayer player) {
-        this.player = player;
+    public ProgressBarAction() {
         this.task = null;
         this.isCancelled = false;
     }
 
-    public InteractiveActionStrategy startAction(ActionParams params) {
+    public InteractiveActionStrategy startAction(RunePlayer player, ActionParams params) {
         UUID uuid = player.getUUID();
 
         // Calculate total ticks for duration (1 tick = 50 ms)
@@ -128,7 +126,6 @@ public class ProgressBarAction implements InteractiveActionStrategy {
 
         return this;
     }
-
 
 
     @Override
