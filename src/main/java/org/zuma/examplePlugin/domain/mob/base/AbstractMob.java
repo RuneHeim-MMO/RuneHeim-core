@@ -123,8 +123,9 @@ public abstract class AbstractMob {
         this.displayName = name;
     }
 
-    public void setBaby(boolean baby) {
+    public AbstractMob setBaby(boolean baby) {
         this.isBaby = baby;
+        return this;
     }
 
     public void setMaxWalkDistance(int distance) {

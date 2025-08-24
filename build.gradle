@@ -56,7 +56,7 @@ tasks {
     }
     tasks.register("devBuild", ShadowJar) {
         archiveFileName.set("dev-core.jar")
-        destinationDirectory.set(file("/home/sp/Desktop/ServerDocker/server/plugins"))
+        destinationDirectory.set(file("/home/sp/Desktop/RuneHeim/game-server-template/server/plugins"))
         from sourceSets.main.output
         configurations = [project.configurations.runtimeClasspath]
     }

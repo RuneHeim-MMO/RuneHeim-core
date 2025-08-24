@@ -103,6 +103,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private static SpawnZoneHandler spawnZoneHandler;
     private static TerritoryHandler territoryHandler;
     private static DialogHandler dialogHandler;
+    private static HitHandler hitHandler;
 
     private MobHandler mobHandler;
     private HikariPool pool;
@@ -202,7 +203,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(guiListener, pluginInstance);
         guiHandler.initializeInventories(blockLoader, new BankQueryLockController(new BankContentRepository(pool)));
 
-        HitHandler hitHandler = new HitHandler();
+        hitHandler = new HitHandler();
         HitListener hitListener = new HitListener(hitHandler, runePlayerManager, mobRegistry);
         getServer().getPluginManager().registerEvents(hitListener, pluginInstance);
 
@@ -239,8 +240,12 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     }
 
     private void initializeRedis() {
-        RedisConnection.init(ConfigManager.getDotenv());
-        GlobalEventHandler.addListener(NetworkRestartEvent.class, e -> ScheduledRestartHandler.scheduleRestart(e.restartAt, e.reason));
+        try {
+            RedisConnection.init(ConfigManager.getDotenv());
+            GlobalEventHandler.addListener(NetworkRestartEvent.class, e -> ScheduledRestartHandler.scheduleRestart(e.restartAt, e.reason));
+        } catch (Throwable t) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Redis init failed, continuing anyway.", t);
+        }
     }
 
     private void initializeHookServer() {
@@ -285,7 +290,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     private void registerCommands() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> event.registrar().register("admin", new AdminCommand(blockRepository, itemRegistry, recipeRegistry, blockManager, new ResourceNodeTypeRepository()))
+                event -> event.registrar().register("admin", new AdminCommand(hitHandler, blockRepository, itemRegistry, recipeRegistry, blockManager, new ResourceNodeTypeRepository()))
         );
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("skills", new SkillsCommand()));

@@ -179,7 +179,7 @@ public class RunePlayer implements CombatEntity {
             return;
         }
 
-        InteractiveActionStrategy action = strategy.startAction(params);
+        InteractiveActionStrategy action = strategy.startAction(this, params);
         pendingActions.add(action);
     }
 

@@ -140,7 +140,7 @@ public class ResourceNode extends AbstractInteractableBlock {
                 .onFailure(null)
                 .build();
 
-        player.startAction(new ProgressBarAction(player), params);
+        player.startAction(new ProgressBarAction(), params);
     }
 
     private void onGather(RunePlayer player) {

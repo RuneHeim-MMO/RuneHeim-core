@@ -127,12 +127,6 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     }
 
     @Override
-    public void onPlayerAttackEntity(EntityDamageByEntityEvent event, RunePlayer player) {
-        player.asBukkitPlayer().sendMessage(getDisplayName() + " HP: " + health);
-
-    }
-
-    @Override
     public void onEntityDamaged(EntityDamageEvent event) {
         if (event.getCause() != EntityDamageEvent.DamageCause.CUSTOM) {
             event.setDamage(0);

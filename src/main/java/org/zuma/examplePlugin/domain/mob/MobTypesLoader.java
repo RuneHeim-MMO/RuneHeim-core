@@ -27,6 +27,11 @@ public class MobTypesLoader {
         Wolves.registerMobs(registry);
         Goblin.registerMobs(registry);
         BankTellers.registerMobs(registry);
+        Deers.registerMobs(registry);
+        Bunnies.registerMobs(registry);
+        Eagles.registerMobs(registry);
+        Moles.registerMobs(registry);
+        Cows.registerMobs(registry);
 
         System.out.println("Loaded " + registry.getAvailable().size() + " mob types.");
 

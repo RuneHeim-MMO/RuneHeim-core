@@ -74,6 +74,7 @@ public class RedisConnection {
     public static void broadcastEvent(String data) {
         if (pubConnection == null) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed publishing event. Payload: " + data + ". pubConnection is null!");
+            return;
         }
 
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {

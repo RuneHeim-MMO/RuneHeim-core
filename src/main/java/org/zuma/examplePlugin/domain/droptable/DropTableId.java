@@ -7,7 +7,7 @@ public enum DropTableId {
     CHICKEN_MEAT(3),
     FEATHERS(4),
     GEM_DROP_TABLE(5),
-
+    RAW_ANIMAL_MEAT(6),
 
     WOODCUTTING_RARE_DROPTABLE(100),
     TREE_NODE(101),

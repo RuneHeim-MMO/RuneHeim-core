@@ -153,7 +153,6 @@ public class HudService {
         boolean isPartySource = source == org.zuma.examplePlugin.core.constants.XpSource.PARTY;
 
         spawnVerticalHologramBubble(player, Color.SUCCESS.asSpigotHex() + "+ " + xpStr + " " + (isPartySource ? "[Party]" : ""));
-        player.asBukkitPlayer().sendMessage(type.getLabel() + " +" + xp + "xp! Type: " + source.name());
     }
 
     public static void showDamageBubble(CombatEntity entity, Hit hit, AttackType type) {

@@ -225,6 +225,31 @@ public enum SoundType {
     PAPER_INSERT("ITEM_BOOK_PAGE_TURN", false, 1.0f, 1.1f),
     EQUIPMENT_INSERT("ITEM_ARMOR_EQUIP_GENERIC", false, 1.0f, 0.9f),
 
+    MOLE_AMBIENT_1("ENTITY_RABBIT_AMBIENT", false, 0.4f, 0.8f),
+    MOLE_HURT_1("ENTITY_RABBIT_HURT", false, 0.6f, 1.0f),
+    MOLE_DEATH_1("ENTITY_RABBIT_DEATH", false, 0.6f, 0.9f),
+    MOLE_ATTACK_1("ENTITY_RABBIT_ATTACK", false, 0.5f, 1.0f),
+
+    EAGLE_AMBIENT_1("ENTITY_PARROT_IMITATE_SKELETON", false, 0.6f, 1.5f),
+    EAGLE_HURT_1("ENTITY_PARROT_HURT", false, 0.8f, 1.6f),
+    EAGLE_DEATH_1("ENTITY_PARROT_DEATH", false, 0.8f, 1.5f),
+    EAGLE_ATTACK_1("ENTITY_PARROT_IMITATE_PHANTOM", false, 0.9f, 1.8f),
+
+    WILD_PIG_AMBIENT_1("ENTITY_HOGLIN_AMBIENT", false, 0.9f, 0.8f),
+    WILD_PIG_HURT_1("ENTITY_HOGLIN_HURT", false, 0.9f, 0.8f),
+    WILD_PIG_DEATH_1("ENTITY_HOGLIN_DEATH", false, 0.9f, 1f),
+    WILD_PIG_ATTACK_1("ENTITY_HOGLIN_ATTACK", false, 0.9f, 1.2f),
+
+    WILD_PIG_AMBIENT_2("ENTITY_PIG_AMBIENT", false, 0.9f, 0.8f),
+    WILD_PIG_HURT_2("ENTITY_PIG_HURT", false, 0.9f, 0.8f),
+    WILD_PIG_DEATH_2("ENTITY_PIG_DEATH", false, 0.9f, 1f),
+    WILD_PIG_ATTACK_2("ENTITY_HOGLIN_ATTACK", false, 0.9f, 1.1f),
+
+    WILD_PIG_BABY_AMBIENT_1("ENTITY_PIG_AMBIENT", false, 0.9f, 1.2f),
+    WILD_PIG_BABY_HURT_1("ENTITY_PIG_HURT", false, 0.9f, 1.2f),
+    WILD_PIG_BABY_DEATH_1("ENTITY_PIG_DEATH", false, 0.9f, 1.1f),
+    WILD_PIG_BABY_ATTACK_1("ENTITY_PIG_SAY", false, 0.9f, 1.2f),
+
     BOAR_AMBIENT_1("ENTITY_HOGLIN_AMBIENT", false, 0.9f, 0.8f),
     BOAR_HURT_1("ENTITY_HOGLIN_HURT", false, 0.9f, 0.8f),
     BOAR_DEATH_1("ENTITY_HOGLIN_DEATH", false, 0.9f, 0.8f),
@@ -244,6 +269,26 @@ public enum SoundType {
     WOLF_HURT_2("ENTITY_WOLF_HURT", false, 0.95f, 0.85f),
     WOLF_DEATH_2("ENTITY_WOLF_DEATH", false, 0.95f, 0.85f),
     WOLF_ATTACK_2("ENTITY_WOLF_GROWL", false, 0.95f, 0.85f),
+
+    DEER_AMBIENT_1("ENTITY_COW_AMBIENT", false, 0.7f, 1.3f),
+    DEER_HURT_1("ENTITY_COW_HURT", false, 0.9f, 1.4f),
+    DEER_DEATH_1("ENTITY_COW_DEATH", false, 1.0f, 1.3f),
+    DEER_ATTACK_1("ENTITY_LLAMA_SPIT", false, 0.8f, 1.2f),
+
+    COW_AMBIENT_1("ENTITY_COW_AMBIENT", false, 0.8f, 1.0f),
+    COW_HURT_1("ENTITY_COW_HURT", false, 0.9f, 1.2f),
+    COW_DEATH_1("ENTITY_COW_DEATH", false, 1.0f, 1.1f),
+    COW_ATTACK_1("ENTITY_LLAMA_SPIT", false, 0.7f, 1.0f),
+
+    DEER_AMBIENT_2("ENTITY_SHEEP_AMBIENT", false, 0.6f, 1.4f),
+    DEER_HURT_2("ENTITY_COW_HURT", false, 0.85f, 1.5f),
+    DEER_DEATH_2("ENTITY_COW_DEATH", false, 0.9f, 1.4f),
+    DEER_ATTACK_2("ENTITY_LLAMA_SPIT", false, 0.75f, 1.3f),
+
+    DEER_BABY_AMBIENT_1("ENTITY_COW_AMBIENT", false, 0.5f, 1.8f),
+    DEER_BABY_HURT_1("ENTITY_COW_HURT", false, 0.7f, 1.9f),
+    DEER_BABY_DEATH_1("ENTITY_COW_DEATH", false, 0.8f, 1.7f),
+    DEER_BABY_ATTACK_1("ENTITY_LLAMA_SPIT", false, 0.6f, 1.8f),
 
     CHICKEN_AMBIENT("ENTITY_CHICKEN_AMBIENT", false, 1.0f, 1.2f),
     CHICKEN_ATTACK("ENTITY_CHICKEN_HURT", false, 1.0f, 1.4f),
@@ -374,48 +419,53 @@ public enum SoundType {
     }
 
     public void play(Player player, boolean global) {
-        play(player.getLocation(), global ? player : null);
+        play(player.getLocation(), global ? player : null, 0F);
     }
 
     public void play(RunePlayer player, boolean global) {
-        play(player.asBukkitPlayer().getLocation(), global ? player.asBukkitPlayer() : null);
+        play(player.asBukkitPlayer().getLocation(), global ? player.asBukkitPlayer() : null, 0F);
     }
 
     public void play(Location location) {
-        play(location, null);
+        play(location, null, 0F);
     }
 
-    private void play(Location location, @Nullable Player targetPlayer) {
+
+    public void play(Location location, float pitchModifier) {
+        play(location, null, pitchModifier);
+    }
+
+    private void play(Location location, @Nullable Player targetPlayer, float pitchModifier) {
         SoundCategory category = SoundCategory.MASTER;
 
         if (isCustom) {
-            playSound(location, targetPlayer, soundKey, category);
+            playSound(location, targetPlayer, soundKey, category, pitchModifier);
             return;
         }
 
         try {
             Sound builtInSound = Sound.valueOf(soundKey);
-            playSound(location, targetPlayer, builtInSound, category);
+            playSound(location, targetPlayer, builtInSound, category, pitchModifier);
         } catch (IllegalArgumentException e) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Invalid built-in sound: " + soundKey);
         }
     }
 
-    private void playSound(Location location, @Nullable Player player, Object sound, SoundCategory category) {
+    private void playSound(Location location, @Nullable Player player, Object sound, SoundCategory category, float pitchModifier) {
         if (player != null) {
             if (sound instanceof String customKey) {
-                player.playSound(location, customKey, category, volume, pitch);
+                player.playSound(location, customKey, category, volume, pitch + pitchModifier);
 
 
             } else if (sound instanceof Sound builtIn) {
-                player.playSound(location, builtIn, volume, pitch);
+                player.playSound(location, builtIn, volume, pitch + pitchModifier);
 
             }
         } else {
             if (sound instanceof String customKey) {
-                location.getWorld().playSound(location, customKey, category, volume, pitch);
+                location.getWorld().playSound(location, customKey, category, volume, pitch + pitchModifier);
             } else if (sound instanceof Sound builtIn) {
-                location.getWorld().playSound(location, builtIn, category, volume, pitch);
+                location.getWorld().playSound(location, builtIn, category, volume, pitch + pitchModifier);
             }
         }
     }

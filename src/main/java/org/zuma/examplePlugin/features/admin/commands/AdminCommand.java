@@ -19,14 +19,16 @@ import org.joml.Vector3f;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
-import org.zuma.examplePlugin.core.redis.GlobalEventHandler;
 import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
+import org.zuma.examplePlugin.domain.combat.HitHandler;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
+import org.zuma.examplePlugin.domain.heimscript.ScriptParser;
+import org.zuma.examplePlugin.domain.heimscript.action.ScriptedAction;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
@@ -51,8 +53,10 @@ public class AdminCommand implements BasicCommand {
     private final BlockManager blockManager;
     private final ResourceNodeTypeRepository oreTypeRepository;
     private final InteractableBlockRepository blockRepo;
+    private final HitHandler hitHandler;
 
-    public AdminCommand(InteractableBlockRepository blockRepo, ItemRegistry itemRegistry, RecipeRegistry recipeRegistry, BlockManager blockManager, ResourceNodeTypeRepository oreTypeRepository) {
+    public AdminCommand(HitHandler hitHandler, InteractableBlockRepository blockRepo, ItemRegistry itemRegistry, RecipeRegistry recipeRegistry, BlockManager blockManager, ResourceNodeTypeRepository oreTypeRepository) {
+        this.hitHandler = hitHandler;
         this.itemRegistry = itemRegistry;
         this.recipeRegistry = recipeRegistry;
         this.blockManager = blockManager;
@@ -186,6 +190,10 @@ public class AdminCommand implements BasicCommand {
             RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.TERRITORY_INVENTORY.asInt(), runePlayer, null);
         }
 
+        if (Objects.equals(args[0], "combat-debug")) {
+            hitHandler.toggleCombatDebug(runePlayer);
+        }
+
         if (args.length >= 2 && Objects.equals(args[0], "restart")) {
             String reason = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
             long restartIn = 60L * 1000L;
@@ -232,65 +240,24 @@ public class AdminCommand implements BasicCommand {
         if (Objects.equals(args[0], "mob") && args.length == 2) {
             String input = args[1].toLowerCase();
             Location baseLocation = player.getLocation();
+            boolean found = false;
 
-            if (Objects.equals(input, "all")) {
-                UUID uuid;
-                int offset = 0;
-
-                for (MobType mobType : List.of(
-                        MobType.RAT,
-                        MobType.AXOLOTL,
-                        MobType.ARMADILLO,
-                        MobType.BEE,
-                        MobType.CAT,
-                        MobType.DONKEY,
-                        MobType.FOX,
-                        MobType.FROG,
-                        MobType.GOAT,
-                        MobType.HOGLIN_BASE_5,
-                        MobType.HUSK,
-                        MobType.LLAMA,
-                        MobType.PANDA,
-                        MobType.PIG,
-                        MobType.POLAR_BEAR,
-                        MobType.RABBIT,
-                        MobType.RAVAGER,
-                        MobType.SNIFFER,
-                        MobType.SPIDER,
-                        MobType.STRIDER,
-                        MobType.TURTLE,
-                        MobType.WITCH
-                )) {
-                    uuid = UUID.randomUUID();
-                    Location spawnLocation = baseLocation.clone().add(offset % 5, 0, offset / 5);
-                    RuneQuestPlugin.getMobRegistry().spawnMob(uuid, spawnLocation, mobType.getId());
-                    offset++;
-                }
-
-                player.sendMessage("Spawned all custom mobs.");
-            } else {
-                boolean found = false;
-
-                for (MobType mobType : MobType.values()) {
-                    if (mobType.getId().equalsIgnoreCase(input)) {
-                        UUID uuid = UUID.randomUUID();
-                        RuneQuestPlugin.getMobRegistry().spawnMob(uuid, baseLocation, mobType.getId());
-                        player.sendMessage("Spawned mob: " + mobType.getId());
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (!found) {
-                    player.sendMessage("Unknown mob name: " + input);
+            for (MobType mobType : MobType.values()) {
+                if (mobType.toString().equalsIgnoreCase(input)) {
+                    UUID uuid = UUID.randomUUID();
+                    RuneQuestPlugin.getMobRegistry().spawnMob(uuid, baseLocation, mobType.getId());
+                    player.sendMessage("Spawned mob: " + mobType.getId());
+                    found = true;
+                    break;
                 }
             }
+
+            if (!found) {
+                player.sendMessage("Unknown mob name: " + input);
+            }
+
         }
 
-
-        if (Objects.equals(args[0], "chicken")) {
-            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.CHICKEN_BASE_2.getId());
-        }
 
         if (Objects.equals(args[0], "rat")) {
             RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.RAT.getId());
@@ -363,6 +330,36 @@ public class AdminCommand implements BasicCommand {
         return "rune.admin";
     }
 
+
+    @Override
+    public Collection<String> suggest(CommandSourceStack commandSourceStack, String[] args) {
+        List<String> suggestions = new ArrayList<>();
+
+        if (args.length == 1) {
+            suggestions.addAll(List.of(
+                    "mob", "skills", "base", "spawn", "pouch",
+                    "zone", "map", "combat-debug", "pdc", "rat",
+                    "sheep", "fusion_master", "node", "opener",
+                    "shop", "illegal", "items", "recipes", "restart"
+            ));
+        } else if (args.length == 2) {
+            if ("mob".equalsIgnoreCase(args[0])) {
+                for (MobType mobType : MobType.values()) {
+                    suggestions.add(mobType.toString().toLowerCase());
+                }
+            } else if ("items".equalsIgnoreCase(args[0]) || "recipes".equalsIgnoreCase(args[0])) {
+                suggestions.addAll(List.of("0", "1", "2", "3", "4", "5")); // page numbers
+            } else if ("base".equalsIgnoreCase(args[0]) || "pouch".equalsIgnoreCase(args[0])) {
+                suggestions.addAll(List.of("1", "10", "25", "50", "100")); // common values
+            } else if ("restart".equalsIgnoreCase(args[0])) {
+                suggestions.add("60"); // default seconds
+            }
+        }
+
+        return suggestions.stream()
+                .filter(s -> s.toLowerCase().startsWith(args[args.length - 1].toLowerCase()))
+                .collect(Collectors.toList());
+    }
 }
 
 
