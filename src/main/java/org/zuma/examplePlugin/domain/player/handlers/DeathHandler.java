@@ -43,7 +43,7 @@ public class DeathHandler {
 
         for (Entity entity : player.getNearbyEntities(50, 50, 50)) {
             if (entity instanceof Mob mob) {
-                if (mob.getTarget() != null && mob.getTarget().equals(player)) {
+                if (mob.getTarget() != null && mob.getTarget().getUniqueId().equals(player.getUniqueId())) {
                     mob.setTarget(null);
                 }
             }

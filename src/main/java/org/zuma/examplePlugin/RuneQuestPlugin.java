@@ -55,6 +55,7 @@ import org.zuma.examplePlugin.domain.modifier.GearModifierHandler;
 import org.zuma.examplePlugin.domain.modifier.GearModifierListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
+import org.zuma.examplePlugin.domain.player.handlers.HPRegenerationHandler;
 import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotListener;
 import org.zuma.examplePlugin.domain.player.persistence.RunePlayerRepository;
@@ -104,6 +105,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private static TerritoryHandler territoryHandler;
     private static DialogHandler dialogHandler;
     private static HitHandler hitHandler;
+    private static HPRegenerationHandler hpRegenerationHandler;
 
     private MobHandler mobHandler;
     private HikariPool pool;
@@ -224,6 +226,9 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         dialogHandler = new DialogHandler();
         DialogListener dialogListener = new DialogListener(dialogHandler);
         getServer().getPluginManager().registerEvents(dialogListener, pluginInstance);
+
+        hpRegenerationHandler = new HPRegenerationHandler(runePlayerManager);
+        hpRegenerationHandler.startLoop();
 
         getServer().getPluginManager().registerEvents(new ScheduledRestartHandler(), pluginInstance);
 
@@ -367,6 +372,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
         if (runePlayerManager != null) {
             runePlayerManager.handleOnDisable();
+        }
+
+        if (hpRegenerationHandler != null) {
+            hpRegenerationHandler.cleanUp();
         }
 
         if (pool != null) {

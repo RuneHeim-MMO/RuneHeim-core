@@ -92,7 +92,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         return maxHealth;
     }
 
-    public void takeHit(Hit hit) {
+    public void registerHit(Hit hit) {
         if (!(getEntity() instanceof LivingEntity living)) {
             return;
         }

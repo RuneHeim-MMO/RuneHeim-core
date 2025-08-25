@@ -2,7 +2,6 @@ package org.zuma.examplePlugin.domain.combat;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -65,7 +64,7 @@ public class HitHandler {
             return null;
         }
 
-        defender.takeHit(hit);
+        defender.registerHit(hit);
         handleHitSound(defender, type, hit);
         HudService.showDamageBubble(defender, hit, type);
 
@@ -85,7 +84,7 @@ public class HitHandler {
             return null;
         }
 
-        defender.takeHit(hit);
+        defender.registerHit(hit);
         handleHitSound(defender, type, hit);
         HudService.showDamageBubble(defender, hit, type);
 
@@ -105,7 +104,7 @@ public class HitHandler {
             return null;
         }
 
-        defender.takeHit(hit);
+        defender.registerHit(hit);
         handleHitSound(defender, type, hit);
         HudService.showDamageBubble(defender, hit, type);
 

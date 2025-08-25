@@ -155,7 +155,7 @@ public class RunePlayer implements CombatEntity {
     }
 
     public int getMaxHealth() {
-        return skills.get(SkillType.HITPOINTS).getBaseLevel();
+        return skills.get(SkillType.HITPOINTS).getLevelWithBonuses();
     }
 
     public int getCombatLvl() {
@@ -166,9 +166,9 @@ public class RunePlayer implements CombatEntity {
         combatData.setCombatLvl(combatLvl);
     }
 
-    public void takeHit(Hit hit) {
+    public void registerHit(Hit hit) {
         this.pendingXPHandler.calculatePendingXP(hit);
-        this.combatData.takeHit(hit);
+        this.combatData.registerHit(hit);
     }
 
     // Busy state management
@@ -277,5 +277,9 @@ public class RunePlayer implements CombatEntity {
 
     public Location getGetSafeLocation() {
         return getSafeLocation;
+    }
+
+    public boolean isInCombat() {
+        return this.combatData.isInCombat();
     }
 }
