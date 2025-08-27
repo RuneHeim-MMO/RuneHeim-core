@@ -1,5 +1,7 @@
 package org.zuma.examplePlugin.domain.mob;
 
+import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.mob.types.*;
 import org.zuma.examplePlugin.domain.skill.SkillLevelRecord;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -33,7 +35,7 @@ public class MobTypesLoader {
         Moles.registerMobs(registry);
         Cows.registerMobs(registry);
 
-        System.out.println("Loaded " + registry.getAvailable().size() + " mob types.");
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Loaded " + registry.getAvailable().size() + " mob types.");
 
 
     }

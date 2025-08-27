@@ -45,8 +45,6 @@ public class HPRegenerationHandler {
             lastHeals.putIfAbsent(player.getUUID(), 0L);
         }
 
-        System.out.println(lastHeals);
-
         Iterator<Map.Entry<UUID, Long>> iterator = lastHeals.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<UUID, Long> entry = iterator.next();

@@ -1,12 +1,17 @@
 package org.zuma.examplePlugin;
 
+import com.ticxo.modelengine.api.ModelEngineAPI;
+import com.ticxo.modelengine.api.events.ModelRegistrationEvent;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.database.HikariPool;
+import org.zuma.examplePlugin.core.handlers.core.ModelEngineWaiter;
+import org.zuma.examplePlugin.domain.entity.EntitySessionManager;
 import org.zuma.examplePlugin.core.handlers.core.WebHook;
 import org.zuma.examplePlugin.core.handlers.core.ScheduledRestartHandler;
 import org.zuma.examplePlugin.core.handlers.game.*;
@@ -82,7 +87,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @SuppressWarnings("UnstableApiUsage")
-public final class RuneQuestPlugin extends JavaPlugin implements Listener {
+public final class RuneQuestPlugin extends JavaPlugin {
     private static final Plugin blueMap = Bukkit.getPluginManager().getPlugin("BlueMap");
 
     public static final Logger logger = new Logger();
@@ -96,6 +101,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private static InteractableBlockRepository blockRepository;
     private static MapMarkerHandler markerHandler;
     private static BlockManager blockManager;
+    private static BlockLoader blockLoader;
     private static StateManager itemStateManager;
     private static FairyHandler fairyHandler;
     private static ShopRegistry shopRegistry;
@@ -109,7 +115,6 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     private MobHandler mobHandler;
     private HikariPool pool;
-
 
     private void initializePlugin() {
         pluginInstance = this;
@@ -173,17 +178,16 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         blockRepository = new InteractableBlockRepository(pool);
         BlockLoader blockLoader = new BlockLoader(blockManager, blockRepository, new BlockFactory(), new ResourceNodeTypeRepository());
         blockLoader.fetchAllResourceNodeTypes();
-        blockLoader.loadInteractableBlocks();
 
         MobTypeRegistry mobTypeRegistry = new MobTypeRegistry();
         MobTypesLoader.registerMobs(mobTypeRegistry);
 
-        MobSessionManager mobSessionManager = new MobSessionManager();
+        EntitySessionManager entitySessionManager = new EntitySessionManager();
         mobRegistry = new MobRegistry(mobTypeRegistry);
         mobHandler = new MobHandler(mobRegistry);
         MobListener mobListener = new MobListener(runePlayerManager, mobHandler, mobRegistry);
         getServer().getPluginManager().registerEvents(mobListener, pluginInstance);
-        getServer().getPluginManager().registerEvents(mobSessionManager, pluginInstance);
+        getServer().getPluginManager().registerEvents(entitySessionManager, pluginInstance);
 
         recipeRegistry = new RecipeRegistry();
         RecipeLoader recipeLoader = new RecipeLoader(itemRegistry, recipeRegistry, new RecipeRepository(), new RecipeFactory());
@@ -232,12 +236,16 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
         getServer().getPluginManager().registerEvents(new ScheduledRestartHandler(), pluginInstance);
 
-        initializeMap();
+        ModelEngineWaiter waiter = new ModelEngineWaiter(() -> {
+            blockLoader.loadInteractableBlocks();
+            initializeMap();
+        });
+
+        getServer().getPluginManager().registerEvents(waiter, pluginInstance);
 
         // TODO: despawn all dropped item on restart
 
     }
-
 
     private void initializeMySQL() {
         pool = new HikariPool();
@@ -318,7 +326,6 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
             initializeHookServer();
             initializePlugin();
             registerCommands();
-            initializeMap();
 
             if (mobHandler != null) {
                 mobHandler.cleanup();

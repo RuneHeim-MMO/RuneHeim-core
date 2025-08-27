@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class CampfireBlock extends InventoryOpenerBlock implements DespawnableBlock {
+public class CampfireBlock extends InventoryOpenerRegularBlock implements DespawnableBlock {
     private final UUID owner;
     private final String initialName, burningName;
     private final int burnSeconds;

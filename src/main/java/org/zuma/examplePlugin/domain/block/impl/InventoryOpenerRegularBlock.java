@@ -20,17 +20,16 @@ import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class InventoryOpenerBlock extends AbstractInteractableBlock implements SkillRestrictable {
+public class InventoryOpenerRegularBlock extends AbstractInteractableBlock implements SkillRestrictable, org.zuma.examplePlugin.core.interfaces.InventoryOpenerBlock {
     private int inventoryId;
     private final List<UUID> createdInventoryInstances;
     private List<SkillRequirement> requirements;
     private String label, icon;
 
-    public InventoryOpenerBlock(AbstractInteractableBlockMeta meta) {
+    public InventoryOpenerRegularBlock(AbstractInteractableBlockMeta meta) {
         super(meta, null, null);
         createdInventoryInstances = new ArrayList<>();
     }
-
 
     private void initializeHologram() {
         String icon = this.icon == null ? "" : "§f" + this.icon + " ";

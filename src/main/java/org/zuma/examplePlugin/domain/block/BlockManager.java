@@ -8,7 +8,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.interfaces.DespawnableBlock;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
-import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerBlock;
+import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerRegularBlock;
 import org.zuma.examplePlugin.domain.gui.IDHolder;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -101,16 +101,18 @@ public class BlockManager {
     }
 
     public void registerBlock(AbstractInteractableBlock block) {
-        Location blockLocation = block.getLocation().toBlockLocation();
-        blockLocation.setYaw(0f);
-        blockLocation.setPitch(0f);
+        block.getInteractableBlocks().forEach(location -> {
+            Location blockLocation = location.toBlockLocation();
+            blockLocation.setYaw(0f);
+            blockLocation.setPitch(0f);
 
-        if (blocks.containsKey(blockLocation)) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot initialize " + block.getType() + " at " + block.getLocation() + ". Block already exists at this location.");
-            return;
-        }
+            if (blocks.containsKey(blockLocation)) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot initialize " + block.getType() + " at " + block.getLocation() + ". Block already exists at this location.");
+                return;
+            }
 
-        blocks.put(blockLocation, block);
+            blocks.put(blockLocation, block);
+        });
     }
 
     public void unregisterBlock(AbstractInteractableBlock block) {
@@ -138,11 +140,11 @@ public class BlockManager {
 
     public void removeStoredInventoryUUIDForBlock(IDHolder idHolder) {
         blocks.values().forEach(block -> {
-            if (!(block instanceof InventoryOpenerBlock)) {
+            if (!(block instanceof InventoryOpenerRegularBlock)) {
                 return;
             }
 
-            ((InventoryOpenerBlock) block).removeInventoryUUID(idHolder.instanceUUID());
+            ((InventoryOpenerRegularBlock) block).removeInventoryUUID(idHolder.instanceUUID());
         });
 
     }
