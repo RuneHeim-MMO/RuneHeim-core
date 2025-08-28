@@ -1,10 +1,6 @@
 package org.zuma.examplePlugin;
 
-import com.ticxo.modelengine.api.ModelEngineAPI;
-import com.ticxo.modelengine.api.events.ModelRegistrationEvent;
-import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.Bukkit;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
@@ -19,12 +15,6 @@ import org.zuma.examplePlugin.core.module.core.MapModule;
 import org.zuma.examplePlugin.core.module.game.*;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
-import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
-import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
-import org.zuma.examplePlugin.domain.combat.HitHandler;
-import org.zuma.examplePlugin.domain.command.ConsoleActionCommand;
-import org.zuma.examplePlugin.domain.command.PouchCommand;
-import org.zuma.examplePlugin.domain.command.SkillsCommand;
 import org.zuma.examplePlugin.domain.dialog.DialogHandler;
 import org.zuma.examplePlugin.domain.droptable.DropTableHandler;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
@@ -37,11 +27,9 @@ import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
 import org.zuma.examplePlugin.domain.shop.ShopRegistry;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneHandler;
 import org.zuma.examplePlugin.domain.territory.TerritoryHandler;
-import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
 
 import java.util.List;
 
-@SuppressWarnings("UnstableApiUsage")
 public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     private final ModuleContext moduleContext;
     private final ModuleLoader moduleLoader;
@@ -75,27 +63,9 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new RecipeModule(),
                         new ShopModule(),
                         new SpawnZoneModule(),
-                        new TerritoryModule()
+                        new TerritoryModule(),
+                        new CommandModule()
                 ), moduleContext);
-    }
-
-
-    private void registerCommands() {
-        this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> event.registrar().register("admin", new AdminCommand(
-                        moduleContext.get(HitHandler.class),
-                        moduleContext.get(InteractableBlockRepository.class),
-                        moduleContext.get(ItemRegistry.class), moduleContext.get(RecipeRegistry.class), moduleContext.get(BlockManager.class), new ResourceNodeTypeRepository()))
-        );
-        this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> event.registrar().register("skills", new SkillsCommand()));
-        this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> event.registrar().register("pouch", new PouchCommand()));
-
-        this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> event.registrar().register("actions", new ConsoleActionCommand()));
-
-        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Registered RuneHeim commands.");
     }
 
 
@@ -108,7 +78,6 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         try {
             ConfigManager.initializeConfig();
             moduleLoader.startAll(this);
-            registerCommands();
 
             ModelEngineWaiter waiter = new ModelEngineWaiter(() -> {
                 moduleContext.get(BlockLoader.class).loadInteractableBlocks();
@@ -135,7 +104,11 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     }
 
     public static void reloadMarkers() {
-        pluginInstance.moduleContext.get(MapModule.class).reloadMarkers(pluginInstance.moduleContext);
+        MapModule mapModule = pluginInstance.moduleContext.get(MapModule.class);
+
+        if (mapModule == null) return;
+
+        mapModule.reloadMarkers(pluginInstance.moduleContext);
     }
 
     public static Logger getRuneLogger() {
