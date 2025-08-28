@@ -24,11 +24,11 @@ public class ModelEngineWaiter implements Listener {
             ranCallback = true;
 
             Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "ModelEngine should be loaded by now, running callback.");
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[ModelEngineWaiter] ModelEngine should be loaded by now, running callback.");
                 this.callback.run();
             }, 2);
         } else {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Waiting for ModelEngine to load all of the models. Current/Threshold: " + loadedModels + "/" + THRESHOLD);
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[ModelEngineWaiter] Waiting for ModelEngine to load all of the models. Current/Threshold: " + loadedModels + "/" + THRESHOLD);
         }
     }
 }

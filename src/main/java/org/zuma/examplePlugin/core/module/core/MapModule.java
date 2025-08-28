@@ -70,7 +70,6 @@ public class MapModule implements PluginModule {
         }
 
         initializeMap(context);
-        reloadMarkers(context);
         context.bind(MapModule.class, this);
     }
 

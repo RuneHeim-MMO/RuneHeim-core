@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
+import org.zuma.examplePlugin.core.handlers.core.ModelEngineWaiter;
 import org.zuma.examplePlugin.core.logger.Logger;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.module.ModuleContext;
@@ -16,6 +17,7 @@ import org.zuma.examplePlugin.core.module.core.DatabaseModule;
 import org.zuma.examplePlugin.core.module.core.HTTPHookModule;
 import org.zuma.examplePlugin.core.module.core.MapModule;
 import org.zuma.examplePlugin.core.module.game.*;
+import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
@@ -107,6 +109,13 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
             ConfigManager.initializeConfig();
             moduleLoader.startAll(this);
             registerCommands();
+
+            ModelEngineWaiter waiter = new ModelEngineWaiter(() -> {
+                moduleContext.get(BlockLoader.class).loadInteractableBlocks();
+                RuneQuestPlugin.reloadMarkers();
+            });
+
+            this.getServer().getPluginManager().registerEvents(waiter, this);
 
         } catch (Exception e) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to initialize RuneHeim-core! Shutting down.", e);

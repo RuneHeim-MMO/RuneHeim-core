@@ -33,14 +33,7 @@ public class BlockModule implements PluginModule {
         BlockLoader blockLoader = new BlockLoader(blockManager, blockRepository, new BlockFactory(), new ResourceNodeTypeRepository());
         blockLoader.fetchAllResourceNodeTypes();
 
-        ModelEngineWaiter waiter = new ModelEngineWaiter(() -> {
-            blockLoader.loadInteractableBlocks();
-            RuneQuestPlugin.reloadMarkers();
-        });
-
-        plugin.getServer().getPluginManager().registerEvents(waiter, plugin);
         plugin.getServer().getPluginManager().registerEvents(blockListener, plugin);
-
 
         context.bind(BlockManager.class, blockManager);
         context.bind(BlockLoader.class, blockLoader);
