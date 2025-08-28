@@ -4,7 +4,7 @@ package org.zuma.examplePlugin.core.module.core;
 import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.database.HikariPool;
-import org.zuma.examplePlugin.core.interfaces.PluginModule;
+import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 
 import java.util.List;
@@ -17,11 +17,6 @@ public class DatabaseModule implements PluginModule {
         pool.initialize(ConfigManager.getDotenv());
 
         context.bind(HikariPool.class, pool);
-    }
-
-    @Override
-    public List<Class<?>> provides() {
-        return List.of(HikariPool.class);
     }
 
     @Override

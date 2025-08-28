@@ -2,7 +2,6 @@ package org.zuma.examplePlugin.core.module;
 
 import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.interfaces.PluginModule;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 
 import java.util.*;
@@ -44,7 +43,7 @@ public class ModuleLoader {
                 PluginModule candidate = it.next();
                 if (canStart(candidate, started)) {
                     try {
-                        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Starting " + candidate.name() + "...");
+                        RuneQuestPlugin.getRuneLogger().log(LogLevel.MODULE, "Starting " + candidate.name() + "...");
                         candidate.start(plugin, context);
                         started.add(candidate);
                         startOrder.add(candidate);
@@ -76,7 +75,7 @@ public class ModuleLoader {
 
         for (PluginModule module : reversed) {
             try {
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Stopping " + module.name() + "...");
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.MODULE, "Stopping " + module.name() + "...");
                 module.stop(plugin, context);
             } catch (Exception e) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL,
@@ -202,4 +201,5 @@ public class ModuleLoader {
 
         return sb.toString();
     }
+
 }

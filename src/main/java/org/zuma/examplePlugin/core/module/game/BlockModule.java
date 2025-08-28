@@ -2,8 +2,10 @@ package org.zuma.examplePlugin.core.module.game;
 
 
 import org.bukkit.plugin.Plugin;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.database.HikariPool;
-import org.zuma.examplePlugin.core.interfaces.PluginModule;
+import org.zuma.examplePlugin.core.handlers.core.ModelEngineWaiter;
+import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.domain.block.BlockFactory;
 import org.zuma.examplePlugin.domain.block.BlockListener;
@@ -23,11 +25,6 @@ public class BlockModule implements PluginModule {
     }
 
     @Override
-    public List<Class<?>> provides() {
-        return List.of(BlockManager.class, InteractableBlockRepository.class);
-    }
-
-    @Override
     public void start(Plugin plugin, ModuleContext context) {
         BlockManager blockManager = new BlockManager();
         BlockListener blockListener = new BlockListener(blockManager, context.get(ItemRegistry.class));
@@ -35,12 +32,20 @@ public class BlockModule implements PluginModule {
         InteractableBlockRepository blockRepository = new InteractableBlockRepository(context.get(HikariPool.class));
         BlockLoader blockLoader = new BlockLoader(blockManager, blockRepository, new BlockFactory(), new ResourceNodeTypeRepository());
         blockLoader.fetchAllResourceNodeTypes();
-        blockLoader.loadInteractableBlocks();
 
+        ModelEngineWaiter waiter = new ModelEngineWaiter(() -> {
+            blockLoader.loadInteractableBlocks();
+            RuneQuestPlugin.reloadMarkers();
+        });
+
+        plugin.getServer().getPluginManager().registerEvents(waiter, plugin);
         plugin.getServer().getPluginManager().registerEvents(blockListener, plugin);
 
+
         context.bind(BlockManager.class, blockManager);
+        context.bind(BlockLoader.class, blockLoader);
         context.bind(InteractableBlockRepository.class, blockRepository);
+
     }
 
 

@@ -85,7 +85,6 @@ public class BlockLoader {
     }
 
     public void loadInteractableBlocks() {
-        System.out.println(this.interactableBlockRepository.getAll());
         this.interactableBlockRepository.getAll().forEach(entity -> registerBlock(manager, entity.meta(), entity.json()));
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Spawned " + this.manager.getAllBlocks().size() + " interactable blocks.");
     }

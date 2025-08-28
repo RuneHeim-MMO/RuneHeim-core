@@ -2,8 +2,7 @@ package org.zuma.examplePlugin.core.module.game;
 
 
 import org.bukkit.plugin.Plugin;
-import org.zuma.examplePlugin.core.database.HikariPool;
-import org.zuma.examplePlugin.core.interfaces.PluginModule;
+import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.domain.fairy.FairyHandler;
 import org.zuma.examplePlugin.domain.fairy.FairyListener;
@@ -16,11 +15,6 @@ public class FairyModule implements PluginModule {
     @Override
     public List<Class<?>> dependencies() {
         return List.of(AdditionalGearSlotHandler.class);
-    }
-
-    @Override
-    public List<Class<?>> provides() {
-        return List.of(FairyHandler.class);
     }
 
     @Override

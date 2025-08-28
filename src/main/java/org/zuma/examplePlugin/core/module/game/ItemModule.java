@@ -1,8 +1,7 @@
 package org.zuma.examplePlugin.core.module.game;
 
 import org.bukkit.plugin.Plugin;
-import org.zuma.examplePlugin.core.database.HikariPool;
-import org.zuma.examplePlugin.core.interfaces.PluginModule;
+import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.domain.item.ItemFactory;
 import org.zuma.examplePlugin.domain.item.ItemHandler;
@@ -23,12 +22,6 @@ public class ItemModule implements PluginModule {
     public List<Class<?>> dependencies() {
         return List.of(RunePlayerManager.class);
     }
-
-    @Override
-    public List<Class<?>> provides() {
-        return List.of(ItemRegistry.class, StateManager.class);
-    }
-
 
     @Override
     public void start(Plugin plugin, ModuleContext context) {

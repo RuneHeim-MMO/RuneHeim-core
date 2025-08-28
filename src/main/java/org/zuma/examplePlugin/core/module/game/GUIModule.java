@@ -3,7 +3,7 @@ package org.zuma.examplePlugin.core.module.game;
 
 import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.core.database.HikariPool;
-import org.zuma.examplePlugin.core.interfaces.PluginModule;
+import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.domain.bank.BankContentRepository;
 import org.zuma.examplePlugin.domain.bank.BankQueryLockController;
@@ -20,11 +20,6 @@ public class GUIModule implements PluginModule {
     @Override
     public List<Class<?>> dependencies() {
         return List.of(HikariPool.class, RunePlayerManager.class, BlockLoader.class);
-    }
-
-    @Override
-    public List<Class<?>> provides() {
-        return List.of(GUIHandler.class);
     }
 
     @Override

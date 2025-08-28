@@ -2,8 +2,7 @@ package org.zuma.examplePlugin.core.module.game;
 
 
 import org.bukkit.plugin.Plugin;
-import org.zuma.examplePlugin.core.database.HikariPool;
-import org.zuma.examplePlugin.core.interfaces.PluginModule;
+import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneHandler;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneListener;
@@ -12,12 +11,6 @@ import org.zuma.examplePlugin.domain.spawnzone.persistence.SpawnZoneRepository;
 import java.util.List;
 
 public class SpawnZoneModule implements PluginModule {
-
-    @Override
-    public List<Class<?>> provides() {
-        return List.of(SpawnZoneHandler.class);
-    }
-
 
     @Override
     public void start(Plugin plugin, ModuleContext context) {

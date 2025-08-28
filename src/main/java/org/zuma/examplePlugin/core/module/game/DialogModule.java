@@ -1,8 +1,7 @@
 package org.zuma.examplePlugin.core.module.game;
 
 import org.bukkit.plugin.Plugin;
-import org.zuma.examplePlugin.core.database.HikariPool;
-import org.zuma.examplePlugin.core.interfaces.PluginModule;
+import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.domain.dialog.DialogHandler;
 import org.zuma.examplePlugin.domain.dialog.DialogListener;
@@ -10,11 +9,6 @@ import org.zuma.examplePlugin.domain.dialog.DialogListener;
 import java.util.List;
 
 public class DialogModule implements PluginModule {
-
-    @Override
-    public List<Class<?>> provides() {
-        return List.of(DialogHandler.class);
-    }
 
     @Override
     public void start(Plugin plugin, ModuleContext context) {

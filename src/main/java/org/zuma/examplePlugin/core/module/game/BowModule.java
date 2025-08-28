@@ -2,12 +2,10 @@ package org.zuma.examplePlugin.core.module.game;
 
 
 import org.bukkit.plugin.Plugin;
-import org.zuma.examplePlugin.core.interfaces.PluginModule;
+import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.domain.combat.ranged.BowSpeedHandler;
 import org.zuma.examplePlugin.domain.combat.ranged.BowVelocityHandler;
-
-import java.util.List;
 
 public class BowModule implements PluginModule {
 

@@ -2,21 +2,14 @@ package org.zuma.examplePlugin.core.module.game;
 
 
 import org.bukkit.plugin.Plugin;
-import org.zuma.examplePlugin.core.database.HikariPool;
-import org.zuma.examplePlugin.core.interfaces.PluginModule;
+import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.module.ModuleContext;
-import org.zuma.examplePlugin.domain.territory.Territory;
 import org.zuma.examplePlugin.domain.territory.TerritoryHandler;
 import org.zuma.examplePlugin.domain.territory.TerritoryRepository;
 
 import java.util.List;
 
 public class TerritoryModule implements PluginModule {
-
-    @Override
-    public List<Class<?>> provides() {
-        return List.of(TerritoryHandler.class);
-    }
 
     @Override
     public void start(Plugin plugin, ModuleContext context) {

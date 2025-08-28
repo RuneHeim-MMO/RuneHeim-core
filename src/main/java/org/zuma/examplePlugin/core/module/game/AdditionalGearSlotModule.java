@@ -2,8 +2,7 @@ package org.zuma.examplePlugin.core.module.game;
 
 
 import org.bukkit.plugin.Plugin;
-import org.zuma.examplePlugin.core.database.HikariPool;
-import org.zuma.examplePlugin.core.interfaces.PluginModule;
+import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotListener;
@@ -20,12 +19,6 @@ public class AdditionalGearSlotModule implements PluginModule {
         plugin.getServer().getPluginManager().registerEvents(additionalGearSlotListener, plugin);
         context.bind(AdditionalGearSlotHandler.class, additionalGearSlotHandler);
     }
-
-    @Override
-    public List<Class<?>> provides() {
-        return List.of(AdditionalGearSlotHandler.class);
-    }
-
 
     @Override
     public void stop(Plugin plugin, ModuleContext context) {

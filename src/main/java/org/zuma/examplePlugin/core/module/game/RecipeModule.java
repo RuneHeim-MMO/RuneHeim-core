@@ -2,8 +2,7 @@ package org.zuma.examplePlugin.core.module.game;
 
 
 import org.bukkit.plugin.Plugin;
-import org.zuma.examplePlugin.core.database.HikariPool;
-import org.zuma.examplePlugin.core.interfaces.PluginModule;
+import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.recipe.RecipeFactory;
@@ -21,12 +20,6 @@ public class RecipeModule implements PluginModule {
     public List<Class<?>> dependencies() {
         return List.of(ItemRegistry.class);
     }
-
-    @Override
-    public List<Class<?>> provides() {
-        return List.of(RecipeRegistry.class, RecipeHandler.class);
-    }
-
 
     @Override
     public void start(Plugin plugin, ModuleContext context) {

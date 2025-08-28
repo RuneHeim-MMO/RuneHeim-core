@@ -5,10 +5,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
-import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.handlers.core.WebHook;
 import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
-import org.zuma.examplePlugin.core.interfaces.PluginModule;
+import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.domain.block.BlockManager;
@@ -32,12 +31,6 @@ public class MapModule implements PluginModule {
     public List<Class<?>> dependencies() {
         return List.of(BlockManager.class, TerritoryHandler.class, SpawnZoneHandler.class);
     }
-
-    @Override
-    public List<Class<?>> provides() {
-        return List.of(MapMarkerHandler.class, MapModule.class);
-    }
-
 
     private void initializeMap(ModuleContext moduleContext) {
         if (blueMap == null || !blueMap.isEnabled()) {
