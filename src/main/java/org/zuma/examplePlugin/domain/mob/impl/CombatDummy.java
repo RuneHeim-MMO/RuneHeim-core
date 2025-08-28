@@ -5,6 +5,7 @@ import com.ticxo.modelengine.api.model.ModeledEntity;
 import io.papermc.paper.event.entity.EntityKnockbackEvent;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
@@ -16,7 +17,7 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import java.util.List;
 
 public class CombatDummy extends GenericCombatant {
-    public CombatDummy() {
+    public CombatDummy(int yawDegrees) {
         super("Combat Dummy", null, List.of(
                 new SkillLevelRecord(SkillType.ATTACK, 1),
                 new SkillLevelRecord(SkillType.HITPOINTS, 1),
@@ -26,6 +27,7 @@ public class CombatDummy extends GenericCombatant {
 
         setMaxWalkDistance(0);
         setBaseEntity(EntityType.PIG); // Pig hides health bar
+        setYaw(yawDegrees);
         setSilent(true);
 
         // Turn AI on for a bit so the gravity works.
@@ -33,7 +35,12 @@ public class CombatDummy extends GenericCombatant {
             setAI(true);
             Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
                 if (entity instanceof LivingEntity livingEntity) livingEntity.setAI(false);
-            }, 10);
+
+                Location fixedYaw = entity.getLocation().clone();
+                fixedYaw.setYaw(getYaw());
+
+                entity.teleport(fixedYaw);
+            }, 5);
             return null;
         });
 

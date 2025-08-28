@@ -21,7 +21,7 @@ public class Common {
 
     public static void registerMobs(MobTypeRegistry registry) {
 
-        registry.register(MobType.COMBAT_DUMMY.getId(), CombatDummy::new);
+        registry.register(MobType.COMBAT_DUMMY_FACE_SOUTH.getId(), () -> new CombatDummy(0));
 
         registry.register(MobType.FUSION_MASTER.getId(), () -> new FusionMaster(Icon.SCROLL_RED.get() + " Fusion Master", MobBehaviors.FUSION_MASTER.getBehavior(), 0));
 

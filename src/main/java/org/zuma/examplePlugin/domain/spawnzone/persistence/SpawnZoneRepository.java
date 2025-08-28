@@ -59,10 +59,6 @@ public class SpawnZoneRepository {
                 // Drakkar city guards end
 
                 // Drakkar and surroundings
-                new SpawnZoneRecord(new AbstractSpawnZoneMeta(109, SpawnZoneType.POINT, 30, 20,
-                        new Location(Bukkit.getWorld("world"), 193, 73, -70)), toVersionedJson(new PointSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.COMBAT_DUMMY, 1, 100)
-                ), false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(7, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 199, 68, -192)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
@@ -756,6 +752,17 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(108, SpawnZoneType.POINT, 20, 1,
                         new Location(Bukkit.getWorld("world"), -423.5, 65, 227)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.CITY_GUARD_STATIC, 1, 100)
+                ), false), 1)),
+
+                // Drakkar gyn
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(109, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 198.5, 72, -49.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.COMBAT_DUMMY_FACE_SOUTH, 1, 100)
+                ), false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(110, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 200.5, 72, -49.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.COMBAT_DUMMY_FACE_SOUTH, 1, 100)
                 ), false), 1))
 
 

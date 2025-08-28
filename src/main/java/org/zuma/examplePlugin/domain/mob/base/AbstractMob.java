@@ -51,7 +51,7 @@ public abstract class AbstractMob {
     private EntityType baseMob;
     private boolean silent;
     private boolean isBaby, isInvulnerable;
-    private int maxWalkDistance;
+    private int maxWalkDistance, yaw;
     private HashMap<Attribute, Double> customAttributes;
     private List<Integer> dropTableIds;
     private Function<Entity, Void> onSpawnRunnable;
@@ -81,6 +81,15 @@ public abstract class AbstractMob {
         dropTableIds = new ArrayList<>();
         healthBarSafeName = this instanceof CombatantMob ? "" : getDisplayName();
         onSpawnRunnable = null;
+        yaw = 0;
+    }
+
+    public void setYaw(int yaw) {
+        this.yaw = yaw;
+    }
+
+    public int getYaw() {
+        return this.yaw;
     }
 
     public void setSpawnRunnable(Function<Entity, Void> runnable) {
@@ -92,10 +101,15 @@ public abstract class AbstractMob {
             throw new IllegalStateException("Cannot spawn second mob in the same instance!");
         }
 
-        Entity entity = location.getWorld().spawnEntity(location, baseMob);
-        this.entity = entity;
         this.uuid = uuid;
-        this.spawnLocation = entity.getLocation().clone();
+        this.spawnLocation = location.clone();
+
+        if (yaw != 0) {
+            this.spawnLocation.setYaw(yaw);
+        }
+
+        Entity entity = location.getWorld().spawnEntity(spawnLocation, baseMob);
+        this.entity = entity;
 
         this.setEntityPersistenceKey(entity);
 
