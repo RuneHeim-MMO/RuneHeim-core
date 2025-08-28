@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.core;
+package org.zuma.examplePlugin.core.modules;
 
 import java.util.HashMap;
 import java.util.Map;

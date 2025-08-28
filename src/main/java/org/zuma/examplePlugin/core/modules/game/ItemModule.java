@@ -1,8 +1,12 @@
-package org.zuma.examplePlugin.domain.item;
+package org.zuma.examplePlugin.core.modules.game;
 
 import org.bukkit.plugin.Plugin;
-import org.zuma.examplePlugin.core.ModuleContext;
 import org.zuma.examplePlugin.core.interfaces.PluginModule;
+import org.zuma.examplePlugin.core.modules.ModuleContext;
+import org.zuma.examplePlugin.domain.item.ItemFactory;
+import org.zuma.examplePlugin.domain.item.ItemHandler;
+import org.zuma.examplePlugin.domain.item.ItemListener;
+import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.persistence.ItemLoader;
 import org.zuma.examplePlugin.domain.item.persistence.ItemRepository;
 import org.zuma.examplePlugin.domain.item.state.StateFactory;
@@ -47,6 +51,6 @@ public class ItemModule implements PluginModule {
 
     @Override
     public String name() {
-        return "ItemsModule";
+        return this.getClass().getSimpleName();
     }
 }
