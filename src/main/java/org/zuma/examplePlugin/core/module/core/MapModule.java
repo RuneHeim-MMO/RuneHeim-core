@@ -1,15 +1,16 @@
-package org.zuma.examplePlugin.core.modules.core;
+package org.zuma.examplePlugin.core.module.core;
 
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
+import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.handlers.core.WebHook;
 import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
 import org.zuma.examplePlugin.core.interfaces.PluginModule;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.core.modules.ModuleContext;
+import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.map.MapMarkerHandler;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneHandler;
@@ -24,23 +25,30 @@ import java.util.List;
 public class MapModule implements PluginModule {
     private static final Plugin blueMap = Bukkit.getPluginManager().getPlugin("BlueMap");
 
-    public MapModule() {}
+    public MapModule() {
+    }
 
     @Override
     public List<Class<?>> dependencies() {
         return List.of(BlockManager.class, TerritoryHandler.class, SpawnZoneHandler.class);
     }
 
+    @Override
+    public List<Class<?>> provides() {
+        return List.of(MapMarkerHandler.class, MapModule.class);
+    }
+
+
     private void initializeMap(ModuleContext moduleContext) {
         if (blueMap == null || !blueMap.isEnabled()) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN,"Blue map plugin not found, cannot attach markers.");
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Blue map plugin not found, cannot attach markers.");
             return;
         }
 
-       MapMarkerHandler markerHandler = new MapMarkerHandler();
+        MapMarkerHandler markerHandler = new MapMarkerHandler();
         markerHandler.initializeMarkerSets();
 
-        moduleContext.bind(MapMarkerHandler.class,markerHandler);
+        moduleContext.bind(MapMarkerHandler.class, markerHandler);
     }
 
     public void reloadMarkers(ModuleContext moduleContext) {
@@ -58,7 +66,6 @@ public class MapModule implements PluginModule {
         markerHandler.renderTerritories(territories);
         markerHandler.renderSpawnZones(zones);
 
-        moduleContext.bind(MapModule.class,this);
     }
 
 
@@ -71,6 +78,7 @@ public class MapModule implements PluginModule {
 
         initializeMap(context);
         reloadMarkers(context);
+        context.bind(MapModule.class, this);
     }
 
 

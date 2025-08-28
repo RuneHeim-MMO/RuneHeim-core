@@ -6,23 +6,16 @@ import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
-import org.zuma.examplePlugin.core.database.HikariPool;
-import org.zuma.examplePlugin.core.handlers.core.ModelEngineWaiter;
-import org.zuma.examplePlugin.domain.entity.EntitySessionManager;
-import org.zuma.examplePlugin.core.handlers.core.WebHook;
-import org.zuma.examplePlugin.core.handlers.core.ScheduledRestartHandler;
-import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
 import org.zuma.examplePlugin.core.logger.Logger;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.core.modules.ModuleContext;
-import org.zuma.examplePlugin.core.modules.ModuleLoader;
-import org.zuma.examplePlugin.core.modules.game.*;
-import org.zuma.examplePlugin.core.redis.CatchAllListener;
-import org.zuma.examplePlugin.core.redis.GlobalEventHandler;
-import org.zuma.examplePlugin.core.redis.RedisConnection;
+import org.zuma.examplePlugin.core.module.ModuleContext;
+import org.zuma.examplePlugin.core.module.ModuleLoader;
+import org.zuma.examplePlugin.core.module.core.DatabaseModule;
+import org.zuma.examplePlugin.core.module.core.HTTPHookModule;
+import org.zuma.examplePlugin.core.module.core.MapModule;
+import org.zuma.examplePlugin.core.module.game.*;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
@@ -32,25 +25,18 @@ import org.zuma.examplePlugin.domain.command.PouchCommand;
 import org.zuma.examplePlugin.domain.command.SkillsCommand;
 import org.zuma.examplePlugin.domain.dialog.DialogHandler;
 import org.zuma.examplePlugin.domain.droptable.DropTableHandler;
-import org.zuma.examplePlugin.domain.fairy.FairyHandler;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
 import org.zuma.examplePlugin.domain.item.*;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
-import org.zuma.examplePlugin.domain.map.MapMarkerHandler;
 import org.zuma.examplePlugin.domain.mob.*;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.recipe.RecipeHandler;
 import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
 import org.zuma.examplePlugin.domain.shop.ShopRegistry;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneHandler;
-import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
-import org.zuma.examplePlugin.domain.territory.Territory;
 import org.zuma.examplePlugin.domain.territory.TerritoryHandler;
-import org.zuma.examplePlugin.events.core.NetworkRestartEvent;
 import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -65,15 +51,30 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         moduleContext = new ModuleContext();
         moduleLoader = new ModuleLoader(
                 List.of(
-                        new ItemModule(),
-                        new BlockModule(),
-                        new GameRulesModule(),
-                        new BowModule(),
+                        new DatabaseModule(),
+                        new HTTPHookModule(),
                         new InteractionSpeedModule(),
-                        new DropTableModule(),
+                        new MapModule(),
+
                         new AdditionalGearSlotModule(),
-                        new PlayerManagerModule()
-                ),moduleContext);
+                        new BlockModule(),
+                        new BowModule(),
+                        new CombatModule(),
+                        new DialogModule(),
+                        new DropTableModule(),
+                        new FairyModule(),
+                        new GameRulesModule(),
+                        new GUIModule(),
+                        new InteractionSpeedModule(),
+                        new ItemModule(),
+                        new MobModule(),
+                        new PlayerManagerModule(),
+                        new PlayerModifierModule(),
+                        new RecipeModule(),
+                        new ShopModule(),
+                        new SpawnZoneModule(),
+                        new TerritoryModule()
+                ), moduleContext);
     }
 
 
@@ -124,6 +125,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         getRuneLogger().log(LogLevel.INFO, "Plugin disabled.");
     }
 
+    public static void reloadMarkers() {
+        pluginInstance.moduleContext.get(MapModule.class).reloadMarkers(pluginInstance.moduleContext);
+    }
+
     public static Logger getRuneLogger() {
         return logger;
     }
@@ -137,7 +142,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     }
 
     public static ItemRegistry getItemRegistry() {
-        return  pluginInstance.moduleContext.get(ItemRegistry.class);
+        return pluginInstance.moduleContext.get(ItemRegistry.class);
     }
 
     public static MobRegistry getMobRegistry() {

@@ -1,9 +1,10 @@
-package org.zuma.examplePlugin.core.modules.game;
+package org.zuma.examplePlugin.core.module.game;
 
 
 import org.bukkit.plugin.Plugin;
+import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.interfaces.PluginModule;
-import org.zuma.examplePlugin.core.modules.ModuleContext;
+import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.domain.droptable.DropTableHandler;
 import org.zuma.examplePlugin.domain.droptable.persistence.DropTableRepository;
 
@@ -11,11 +12,9 @@ import java.util.List;
 
 public class DropTableModule implements PluginModule {
 
-    public DropTableModule() {}
-
     @Override
-    public List<Class<?>> dependencies() {
-        return List.of();
+    public List<Class<?>> provides() {
+        return List.of(DropTableHandler.class);
     }
 
     @Override
@@ -23,7 +22,7 @@ public class DropTableModule implements PluginModule {
         DropTableHandler dropTableHandler = new DropTableHandler(new DropTableRepository());
         dropTableHandler.initialize();
 
-        context.bind(DropTableHandler.class,dropTableHandler);
+        context.bind(DropTableHandler.class, dropTableHandler);
     }
 
     @Override

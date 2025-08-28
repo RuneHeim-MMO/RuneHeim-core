@@ -1,9 +1,11 @@
-package org.zuma.examplePlugin.core.modules.game;
+package org.zuma.examplePlugin.core.module.game;
 
 
 import org.bukkit.plugin.Plugin;
+import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.interfaces.PluginModule;
-import org.zuma.examplePlugin.core.modules.ModuleContext;
+import org.zuma.examplePlugin.core.module.ModuleContext;
+import org.zuma.examplePlugin.domain.territory.Territory;
 import org.zuma.examplePlugin.domain.territory.TerritoryHandler;
 import org.zuma.examplePlugin.domain.territory.TerritoryRepository;
 
@@ -11,11 +13,9 @@ import java.util.List;
 
 public class TerritoryModule implements PluginModule {
 
-    public TerritoryModule() {}
-
     @Override
-    public List<Class<?>> dependencies() {
-        return List.of();
+    public List<Class<?>> provides() {
+        return List.of(TerritoryHandler.class);
     }
 
     @Override
@@ -23,11 +23,11 @@ public class TerritoryModule implements PluginModule {
         TerritoryHandler territoryHandler = new TerritoryHandler(new TerritoryRepository());
         territoryHandler.initialize();
 
-        context.bind(TerritoryHandler.class,territoryHandler);
+        context.bind(TerritoryHandler.class, territoryHandler);
     }
 
     @Override
-    public void stop(Plugin plugin, ModuleContext context){
+    public void stop(Plugin plugin, ModuleContext context) {
     }
 
     @Override

@@ -1,9 +1,9 @@
-package org.zuma.examplePlugin.core.modules.game;
+package org.zuma.examplePlugin.core.module.game;
 
 
 import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.core.interfaces.PluginModule;
-import org.zuma.examplePlugin.core.modules.ModuleContext;
+import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.modifier.GearModifierHandler;
 import org.zuma.examplePlugin.domain.modifier.GearModifierListener;
@@ -12,13 +12,11 @@ import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 
 import java.util.List;
 
-public class PlayerModifierHandler implements PluginModule {
-
-    public PlayerModifierHandler() {}
+public class PlayerModifierModule implements PluginModule {
 
     @Override
     public List<Class<?>> dependencies() {
-        return List.of(RunePlayerManager.class,AdditionalGearSlotHandler.class, ItemRegistry.class);
+        return List.of(RunePlayerManager.class, AdditionalGearSlotHandler.class, ItemRegistry.class);
     }
 
     @Override

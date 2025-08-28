@@ -1,9 +1,10 @@
-package org.zuma.examplePlugin.core.modules.game;
+package org.zuma.examplePlugin.core.module.game;
 
 
 import org.bukkit.plugin.Plugin;
+import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.interfaces.PluginModule;
-import org.zuma.examplePlugin.core.modules.ModuleContext;
+import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.recipe.RecipeFactory;
 import org.zuma.examplePlugin.domain.recipe.RecipeHandler;
@@ -16,12 +17,16 @@ import java.util.List;
 
 public class RecipeModule implements PluginModule {
 
-    public RecipeModule() {}
-
     @Override
     public List<Class<?>> dependencies() {
         return List.of(ItemRegistry.class);
     }
+
+    @Override
+    public List<Class<?>> provides() {
+        return List.of(RecipeRegistry.class, RecipeHandler.class);
+    }
+
 
     @Override
     public void start(Plugin plugin, ModuleContext context) {
@@ -33,12 +38,12 @@ public class RecipeModule implements PluginModule {
         plugin.getServer().getPluginManager().registerEvents(recipeListener, plugin);
         recipeLoader.loadAllRecipes();
 
-        context.bind(RecipeRegistry.class,recipeRegistry);
-        context.bind(RecipeHandler.class,recipeHandler);
+        context.bind(RecipeRegistry.class, recipeRegistry);
+        context.bind(RecipeHandler.class, recipeHandler);
     }
 
     @Override
-    public void stop(Plugin plugin, ModuleContext context){
+    public void stop(Plugin plugin, ModuleContext context) {
     }
 
     @Override

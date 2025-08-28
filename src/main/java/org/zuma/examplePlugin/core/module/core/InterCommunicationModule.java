@@ -1,36 +1,21 @@
-package org.zuma.examplePlugin.core.modules.core;
+package org.zuma.examplePlugin.core.module.core;
 
 
 import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
-import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.handlers.core.ScheduledRestartHandler;
 import org.zuma.examplePlugin.core.interfaces.PluginModule;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.core.modules.ModuleContext;
+import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.core.redis.CatchAllListener;
 import org.zuma.examplePlugin.core.redis.GlobalEventHandler;
 import org.zuma.examplePlugin.core.redis.RedisConnection;
-import org.zuma.examplePlugin.domain.block.BlockFactory;
-import org.zuma.examplePlugin.domain.block.BlockListener;
-import org.zuma.examplePlugin.domain.block.BlockLoader;
-import org.zuma.examplePlugin.domain.block.BlockManager;
-import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
-import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
-import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.events.core.NetworkRestartEvent;
 
 import java.util.List;
 
 public class InterCommunicationModule implements PluginModule {
-
-    public InterCommunicationModule() {}
-
-    @Override
-    public List<Class<?>> dependencies() {
-        return List.of();
-    }
 
     @Override
     public void start(Plugin plugin, ModuleContext context) {

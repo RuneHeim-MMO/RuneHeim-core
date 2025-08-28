@@ -1,10 +1,10 @@
-package org.zuma.examplePlugin.core.modules.game;
+package org.zuma.examplePlugin.core.module.game;
 
 
 import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.interfaces.PluginModule;
-import org.zuma.examplePlugin.core.modules.ModuleContext;
+import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.domain.block.BlockFactory;
 import org.zuma.examplePlugin.domain.block.BlockListener;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
@@ -17,11 +17,14 @@ import java.util.List;
 
 public class BlockModule implements PluginModule {
 
-    public BlockModule() {}
-
     @Override
     public List<Class<?>> dependencies() {
-        return List.of(HikariPool.class,ItemRegistry.class);
+        return List.of(HikariPool.class, ItemRegistry.class);
+    }
+
+    @Override
+    public List<Class<?>> provides() {
+        return List.of(BlockManager.class, InteractableBlockRepository.class);
     }
 
     @Override
@@ -40,9 +43,10 @@ public class BlockModule implements PluginModule {
         context.bind(InteractableBlockRepository.class, blockRepository);
     }
 
+
     @Override
     public void stop(Plugin plugin, ModuleContext context) {
-      context.get(BlockManager.class).onDisable();
+        context.get(BlockManager.class).onDisable();
     }
 
     @Override

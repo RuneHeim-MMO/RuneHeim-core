@@ -1,20 +1,13 @@
-package org.zuma.examplePlugin.core.modules.game;
+package org.zuma.examplePlugin.core.module.game;
 
 import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.core.handlers.game.*;
 import org.zuma.examplePlugin.core.interfaces.PluginModule;
-import org.zuma.examplePlugin.core.modules.ModuleContext;
+import org.zuma.examplePlugin.core.module.ModuleContext;
 
 import java.util.List;
 
 public class GameRulesModule implements PluginModule {
-
-    public GameRulesModule() {}
-
-    @Override
-    public List<Class<?>> dependencies() {
-        return List.of();
-    }
 
     @Override
     public void start(Plugin plugin, ModuleContext context) {
