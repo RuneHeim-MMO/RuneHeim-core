@@ -93,7 +93,6 @@ public final class RuneQuestPlugin extends JavaPlugin {
     public static final Logger logger = new Logger();
     private static RuneQuestPlugin pluginInstance;
     private static RunePlayerManager runePlayerManager;
-    private static ItemRegistry itemRegistry;
     private static MobRegistry mobRegistry;
     private static GUIHandler guiHandler;
     private static RecipeRegistry recipeRegistry;
@@ -101,7 +100,6 @@ public final class RuneQuestPlugin extends JavaPlugin {
     private static InteractableBlockRepository blockRepository;
     private static MapMarkerHandler markerHandler;
     private static BlockManager blockManager;
-    private static BlockLoader blockLoader;
     private static StateManager itemStateManager;
     private static FairyHandler fairyHandler;
     private static ShopRegistry shopRegistry;
@@ -152,16 +150,6 @@ public final class RuneQuestPlugin extends JavaPlugin {
         dropTableHandler = new DropTableHandler(new DropTableRepository());
         dropTableHandler.initialize();
 
-        itemRegistry = new ItemRegistry();
-        ItemRepository itemRepository = new ItemRepository();
-
-        ItemLoader itemLoader = new ItemLoader(itemRegistry, new ItemFactory(), itemRepository);
-        itemLoader.loadItemsFromDatabase();
-
-        ItemHandler itemHandler = new ItemHandler(itemRegistry);
-        itemStateManager = new StateManager(new StateFactory(), itemHandler, new StateRepository());
-        ItemListener itemListener = new ItemListener(itemHandler, runePlayerManager, itemStateManager);
-        getServer().getPluginManager().registerEvents(itemListener, pluginInstance);
 
         AdditionalGearSlotHandler additionalGearSlotHandler = new AdditionalGearSlotHandler();
         AdditionalGearSlotListener additionalGearSlotListener = new AdditionalGearSlotListener(additionalGearSlotHandler);
