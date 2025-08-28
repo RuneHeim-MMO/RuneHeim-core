@@ -8,16 +8,16 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class RunePlayerHealthChangedEvent extends Event implements Cancellable {
     public enum Cause {
-        COMBAT, HEALING, INITIALIZATION
+        COMBAT, REGENERATION, HEALING, INITIALIZATION, RESPAWN
     }
 
     private static final HandlerList HANDLERS = new HandlerList();
     private boolean cancelled;
     private final RunePlayer player;
-    private final int newHealth;
+    private final double newHealth;
     private final Cause cause;
 
-    public RunePlayerHealthChangedEvent(RunePlayer player, int newHealth, Cause cause) {
+    public RunePlayerHealthChangedEvent(RunePlayer player, double newHealth, Cause cause) {
         this.player = player;
         this.newHealth = newHealth;
         this.cause = cause;
@@ -36,7 +36,7 @@ public class RunePlayerHealthChangedEvent extends Event implements Cancellable {
     static HandlerList getHandlerList() {
         return HANDLERS;
     }
-    
+
     public Cause getCause() {
         return cause;
     }
@@ -51,7 +51,7 @@ public class RunePlayerHealthChangedEvent extends Event implements Cancellable {
         this.cancelled = cancelled;
     }
 
-    public int getNewHealth() {
+    public double getNewHealth() {
         return newHealth;
     }
 }

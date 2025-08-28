@@ -85,6 +85,8 @@ public class MobIdleBehaviorHandler {
 
         if (now < nextAllowed) {
             return; // cooldown active for this mob
+        } else {
+            nextIdleSoundTimes.remove(id);
         }
 
         if (random.nextDouble() < 0.15) {

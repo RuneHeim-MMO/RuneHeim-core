@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.core.logger.constants;
 import java.util.logging.Level;
 
 public enum LogLevel {
+    MODULE("Module", Level.INFO),
     INFO("Info", Level.INFO),
     WARN("Warning", Level.WARNING),
     CRITICAL("Critical", Level.SEVERE);

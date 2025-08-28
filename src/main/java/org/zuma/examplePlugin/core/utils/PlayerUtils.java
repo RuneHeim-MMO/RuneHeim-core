@@ -19,12 +19,35 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
+import org.zuma.examplePlugin.domain.territory.Territory;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class PlayerUtils {
+
+    @Nullable
+    public static Territory getClosestDiscoveredTerritory(RunePlayer player) {
+        Territory closestTerritory = null;
+        double closestTerritoryDistance = 1_000_000D;
+
+        for (Territory territory : RuneQuestPlugin.getTerritoryHandler().getTerritoryList()) {
+            double delta = MathUtils.getLocationsDistanceXZ(player.asBukkitPlayer().getLocation(), territory.getCenterPoint());
+
+            if (territory.getSpawnPoint() == null) {
+                continue;
+            }
+
+            if (delta < closestTerritoryDistance) {
+                closestTerritory = territory;
+                closestTerritoryDistance = delta;
+            }
+        }
+
+        return closestTerritory;
+    }
 
     public static boolean hasCustomInventoryOpen(RunePlayer player) {
         InventoryType openType = player.asBukkitPlayer().getOpenInventory().getType();

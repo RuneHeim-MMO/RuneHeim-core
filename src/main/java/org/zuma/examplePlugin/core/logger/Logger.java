@@ -17,12 +17,16 @@ public class Logger {
     }
 
     public void log(LogLevel level, String message, Throwable throwable) {
-        String incidentPrefix = (level != LogLevel.INFO) ? "[Incident #" + System.currentTimeMillis() + "] " : "";
+        String incidentPrefix = (level != LogLevel.INFO && level != LogLevel.MODULE) ? "[Incident #" + System.currentTimeMillis() + "] " : "";
 
         String formattedMessage = incidentPrefix + PREFIX + " [" + level.getString() + "]: " + message;
 
         if (level == LogLevel.INFO) {
             formattedMessage = "\u001B[96m" + formattedMessage + "\u001B[0m";
+        }
+
+        if (level == LogLevel.MODULE) {
+            formattedMessage = "\u001B[92m" + formattedMessage + "\u001B[0m";
         }
 
         if (throwable != null) {

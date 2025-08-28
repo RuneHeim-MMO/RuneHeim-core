@@ -13,6 +13,7 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.world.ChunkLoadEvent;
 import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
@@ -21,6 +22,7 @@ import org.zuma.examplePlugin.domain.map.MarkerType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 
 public abstract class AbstractInteractableBlock implements POIMarkerable {
@@ -131,5 +133,9 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
 
     public void onPlayerBlockBreakEvent(RunePlayer player, BlockBreakEvent event) {
 
+    }
+
+    public List<Location> getInteractableBlocks() {
+        return List.of(this.location);
     }
 }

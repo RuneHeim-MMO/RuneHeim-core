@@ -7,13 +7,17 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.events.player.RunePlayerHealthChangedEvent;
 
 public class PlayerCombatData {
+    private final static long OUT_OF_COMBAT_INTERVAL_SECONDS = 30;
+
     private final RunePlayer player;
     private int combatLvl, health;
+    private Long damagedAt;
 
     public PlayerCombatData(RunePlayer player, int health, int combatLvl) {
         this.player = player;
         this.combatLvl = combatLvl;
         this.health = health;
+        this.damagedAt = System.currentTimeMillis();
     }
 
     public int getCombatLvl() {
@@ -29,7 +33,7 @@ public class PlayerCombatData {
     }
 
     public void setHealth(int health, RunePlayerHealthChangedEvent.Cause cause) {
-        if(cause != RunePlayerHealthChangedEvent.Cause.INITIALIZATION){
+        if (cause != RunePlayerHealthChangedEvent.Cause.INITIALIZATION) {
             RunePlayerHealthChangedEvent event = new RunePlayerHealthChangedEvent(player, health, cause);
             Bukkit.getServer().getPluginManager().callEvent(event);
 
@@ -38,16 +42,26 @@ public class PlayerCombatData {
             }
 
         }
+
         this.health = health;
     }
 
-    public void takeHit(Hit hit) {
-        this.health -= Math.min(this.health, hit.damage());
+    public boolean isInCombat() {
+        return System.currentTimeMillis() < this.damagedAt + (OUT_OF_COMBAT_INTERVAL_SECONDS * 1000);
+    }
 
+    public void registerHit(Hit hit) {
+        if (this.health > player.getMaxHealth()) {
+            this.health = player.getMaxHealth();
+        }
+
+        this.health -= Math.min(this.health, hit.damage());
+        this.damagedAt = System.currentTimeMillis();
 
         if (this.health <= 0) {
             player.onDeath(hit);
-            setHealth(player.getSkills().get(SkillType.HITPOINTS).getLevelWithBonuses(), RunePlayerHealthChangedEvent.Cause.COMBAT);
+            this.damagedAt = 0L;
+            setHealth(player.getSkills().get(SkillType.HITPOINTS).getBaseLevel(), RunePlayerHealthChangedEvent.Cause.COMBAT);
         }
 
         HudService.updateVanillaGUI(player);

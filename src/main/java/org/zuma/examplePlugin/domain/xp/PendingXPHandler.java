@@ -37,7 +37,7 @@ public class PendingXPHandler {
                 pendingXP.put(type, 0.0);
             }
 
-            pendingXP.compute(type, (k, currentXP) -> currentXP + amount);
+            pendingXP.compute(type, (k, currentXP) -> (currentXP == null ? 0 : currentXP) + amount);
         }
 
         public void updateLastInteraction(long timestamp) {

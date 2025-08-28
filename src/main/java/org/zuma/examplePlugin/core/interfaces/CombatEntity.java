@@ -14,7 +14,7 @@ public interface CombatEntity {
 
     EnumMap<SkillType, Skill> getSkills();
 
-    void takeHit(Hit hit);
+    void registerHit(Hit hit);
 
     int getHealth();
 
