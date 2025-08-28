@@ -44,7 +44,7 @@ public class CityGuardMob extends GenericCombatant {
         this.engagedWalkingSpeed = engagedWalkingSpeed;
         setPlayerDisguise("Notch");
         setMaxWalkDistance(walkingDistance);
-        setBaseEntity(EntityType.IRON_GOLEM);
+        setBaseEntity(EntityType.WOLF);
         setSilent(false);
         disengage();
     }

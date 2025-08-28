@@ -13,6 +13,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.entity.EntitySessionManager;
 
@@ -79,20 +80,26 @@ public abstract class ModelledInteractableBlock extends AbstractInteractableBloc
                 armorStandLoc.setPitch(rot[1]);
             }
 
-            Entity e = loc.getWorld().spawnEntity(armorStandLoc, EntityType.ARMOR_STAND);
+            try {
+                Entity e = loc.getWorld().spawnEntity(armorStandLoc, EntityType.ARMOR_STAND);
 
-            ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(e);
-            ActiveModel activeModel = ModelEngineAPI.createActiveModel(model);
-            modeledEntity.addModel(activeModel, true);
+                ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(e);
+                ActiveModel activeModel = ModelEngineAPI.createActiveModel(model);
+                modeledEntity.addModel(activeModel, true);
 
-            ArmorStand as = (ArmorStand) e;
+                ArmorStand as = (ArmorStand) e;
 
-            as.setInvisible(true);
-            as.setMarker(true);
-            as.setGravity(false);
-            as.setInvulnerable(true);
-
-            chunk.setForceLoaded(false);
+                as.setInvisible(true);
+                as.setMarker(true);
+                as.setGravity(false);
+                as.setInvulnerable(true);
+            } catch (Exception ex) {
+                this.onDisable();
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed setting entity model at interactable block ID " + this.getId() + "!");
+                throw ex;
+            } finally {
+                chunk.setForceLoaded(false);
+            }
         }, 2L);
     }
 

@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.domain.mob;
 
+import io.papermc.paper.event.entity.EntityKnockbackEvent;
 import me.libraryaddict.disguise.DisguiseAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
@@ -81,6 +82,16 @@ public class MobListener implements Listener {
         if (mob == null) return;
 
         mobHandler.onEntityAttackEntity(event, mob, event.getDamager());
+    }
+
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void onKnockback(EntityKnockbackEvent event) {
+        Entity entity = event.getEntity();
+
+        AbstractMob mob = mobRegistry.getMob(entity);
+        if (mob == null) return;
+
+        mobHandler.onEntityKnockback(event, mob);
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)

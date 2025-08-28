@@ -57,7 +57,6 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         String displayName = levelColorCode + "[" + combatLvl + " Lvl] §7" + meta.displayName();
         this.setDisplayName(Component.text(displayName));
 
-
         if (meta.skin() != null && meta.disguiseType() == null) {
             setPlayerDisguise(meta.skin());
         }

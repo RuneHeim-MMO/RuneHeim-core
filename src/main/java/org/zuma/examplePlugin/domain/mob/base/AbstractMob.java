@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.mob.base;
 import com.ticxo.modelengine.api.ModelEngineAPI;
 import com.ticxo.modelengine.api.model.ActiveModel;
 import com.ticxo.modelengine.api.model.ModeledEntity;
+import io.papermc.paper.event.entity.EntityKnockbackEvent;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
@@ -41,10 +42,11 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Function;
 
 public abstract class AbstractMob {
     private UUID uuid;
-    private final boolean ai;
+    private boolean ai;
     private Component displayName;
     private EntityType baseMob;
     private boolean silent;
@@ -52,6 +54,7 @@ public abstract class AbstractMob {
     private int maxWalkDistance;
     private HashMap<Attribute, Double> customAttributes;
     private List<Integer> dropTableIds;
+    private Function<Entity, Void> onSpawnRunnable;
     private String healthBarSafeName = "";
 
     private @Nullable Entity entity;
@@ -77,8 +80,12 @@ public abstract class AbstractMob {
         customAttributes = new HashMap<>();
         dropTableIds = new ArrayList<>();
         healthBarSafeName = this instanceof CombatantMob ? "" : getDisplayName();
+        onSpawnRunnable = null;
     }
 
+    public void setSpawnRunnable(Function<Entity, Void> runnable) {
+        this.onSpawnRunnable = runnable;
+    }
 
     public Entity spawn(UUID uuid, Location location) throws IllegalStateException {
         if (this.entity != null) {
@@ -96,11 +103,19 @@ public abstract class AbstractMob {
             this.setLivingEntityMeta(livingEntity);
         }
 
+        if (onSpawnRunnable != null) {
+            onSpawnRunnable.apply(entity);
+        }
+
         return entity;
     }
 
     public HashMap<Attribute, Double> getCustomAttributes() {
         return this.customAttributes;
+    }
+
+    public void setAI(boolean ai) {
+        this.ai = ai;
     }
 
     public void setBaseEntity(EntityType type) {
@@ -199,13 +214,15 @@ public abstract class AbstractMob {
         equipment.setItemInMainHand(null);
         equipment.setItemInOffHand(null);
 
-        // Set all drop chances to zero
-        equipment.setHelmetDropChance(0f);
-        equipment.setChestplateDropChance(0f);
-        equipment.setLeggingsDropChance(0f);
-        equipment.setBootsDropChance(0f);
-        equipment.setItemInMainHandDropChance(0f);
-        equipment.setItemInOffHandDropChance(0f);
+        if (!(entity instanceof ArmorStand armorStand)) {
+            // Set all drop chances to zero
+            equipment.setHelmetDropChance(0f);
+            equipment.setChestplateDropChance(0f);
+            equipment.setLeggingsDropChance(0f);
+            equipment.setBootsDropChance(0f);
+            equipment.setItemInMainHandDropChance(0f);
+            equipment.setItemInOffHandDropChance(0f);
+        }
 
         // Special case for ArmorStands
         if (entity instanceof ArmorStand armorStand) {
@@ -433,6 +450,10 @@ public abstract class AbstractMob {
     }
 
     public void onEntityDeath(EntityDeathEvent event) {
+
+    }
+
+    public void onEntityKnockback(EntityKnockbackEvent event) {
 
     }
 }

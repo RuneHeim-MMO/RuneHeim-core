@@ -59,10 +59,10 @@ public class SpawnZoneRepository {
                 // Drakkar city guards end
 
                 // Drakkar and surroundings
-                new SpawnZoneRecord(new AbstractSpawnZoneMeta(6, SpawnZoneType.AREA, 30, 20,
-                        new Location(Bukkit.getWorld("world"), 191, 73, -72)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.RAT, 10, 100)
-                ), 200, false), 1)),
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(109, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 193, 73, -70)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.COMBAT_DUMMY, 1, 100)
+                ), false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(7, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 199, 68, -192)), toVersionedJson(new AreaSpawnZoneMeta(List.of(

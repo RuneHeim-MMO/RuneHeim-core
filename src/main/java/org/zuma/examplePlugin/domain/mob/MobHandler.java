@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.domain.mob;
 
+import io.papermc.paper.event.entity.EntityKnockbackEvent;
 import me.libraryaddict.disguise.DisguiseAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -69,6 +70,10 @@ public class MobHandler {
 
     public void onEntityAttackEntity(EntityDamageByEntityEvent event, AbstractMob mob, Entity attacker) {
         mob.onEntityAttackEntity(event, attacker);
+    }
+
+    public void onEntityKnockback(EntityKnockbackEvent event, AbstractMob mob) {
+        mob.onEntityKnockback(event);
     }
 
     public void onEntityAttackPlayer(EntityDamageByEntityEvent event, AbstractMob mob, RunePlayer player) {
