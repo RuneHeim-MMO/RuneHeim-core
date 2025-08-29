@@ -27,8 +27,8 @@ public class InventoryOpenerModelledBlock extends ModelledInteractableBlock impl
     private List<SkillRequirement> requirements;
     private String label, icon;
 
-    public InventoryOpenerModelledBlock(AbstractInteractableBlockMeta meta, String model, int height) {
-        super(meta, height, model);
+    public InventoryOpenerModelledBlock(AbstractInteractableBlockMeta meta, String model, int height, int width, double scale) {
+        super(meta, height, width, scale, model);
         createdInventoryInstances = new ArrayList<>();
     }
 

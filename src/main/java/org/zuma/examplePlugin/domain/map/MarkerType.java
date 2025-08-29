@@ -40,6 +40,7 @@ public enum MarkerType {
 
     // TODO
     FUSION_MASTER("fusion-masters", "Fusion Masters", ""),
+    CONTRACT_BOARD("contract-boards", "Contract Boards", ""),
     AREAS("areas", "Areas", ""),
     SPAWN_ZONE("spawn_zone", "Mob Spawn Zones", "");
 

@@ -18,6 +18,7 @@ import org.zuma.examplePlugin.domain.gui.constants.GUIOverlay;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.gui.impl.individual.*;
 import org.zuma.examplePlugin.domain.gui.impl.individual.admin.BlockInvCreatorInventory;
+import org.zuma.examplePlugin.domain.gui.impl.individual.admin.ModelledBlockInvCreatorInventory;
 import org.zuma.examplePlugin.domain.gui.impl.individual.admin.NodeCreatorInventory;
 import org.zuma.examplePlugin.domain.gui.impl.individual.recipe.*;
 import org.zuma.examplePlugin.domain.mob.base.AbstractInventoryOpener;
@@ -66,6 +67,7 @@ public class GUIHandler {
         this.registry.register(InventoryId.FUSION_MASTER.asInt(), () -> new FusionMasterInventory(GUIOverlay.FUSION_MASTER_OVERLAY.asGlyph() + "§f" + Icon.SCROLL_RED.get() + "§f Fusion Master", InventoryId.FUSION_MASTER.asInt()));
         this.registry.register(InventoryId.ADMIN_NODE_CREATE.asInt(), () -> new NodeCreatorInventory("[A] Create Resource Node", InventoryId.ADMIN_NODE_CREATE.asInt(), blockLoader));
         this.registry.register(InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), () -> new BlockInvCreatorInventory("[A] Create Inventory Opener", InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), blockLoader, this));
+        this.registry.register(InventoryId.ADMIN_MODELLED_INTERACTABLE_BLOCK_CREATE.asInt(), () -> new ModelledBlockInvCreatorInventory("[A] Create Inventory Opener", InventoryId.ADMIN_MODELLED_INTERACTABLE_BLOCK_CREATE.asInt(), blockLoader, this));
         this.registry.register(InventoryId.GENERAL_STORE.asInt(), () -> new ShopInventory(GUIOverlay.SHOP_OVERLAY.asGlyph() + "§f" + Icon.CHEST.get() + "§f General Store", InventoryId.GENERAL_STORE.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.GENERAL_STORE.asInt())));
         this.registry.register(InventoryId.SPINNING_WHEEL.asInt(), () -> new SpinningWheelInventory(GUIOverlay.SPINNING_WHEEL_OVERLAY.asGlyph() + "§f" + Icon.MATERIAL.get() + "§f Spinning Wheel", InventoryId.SPINNING_WHEEL.asInt()));
         this.registry.register(InventoryId.DRAKKAR_BLACKSMITH.asInt(), () -> new ShopInventory(GUIOverlay.SHOP_OVERLAY.asGlyph() + "§f" + Icon.TOOL.get() + "§f Blacksmith", InventoryId.DRAKKAR_BLACKSMITH.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_BLACKSMITH.asInt())));
@@ -74,6 +76,7 @@ public class GUIHandler {
         this.registry.register(InventoryId.JEWELER.asInt(), () -> new ShopInventory(GUIOverlay.JEWELER_SHOP_OVERLAY.asGlyph() + "§f" + Icon.GREEN_GEM.get() + "§f Jewellery Shop", InventoryId.JEWELER.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.JEWLER.asInt())));
         this.registry.register(InventoryId.XP_LAMP.asInt(), () -> new XPLampInventory(GUIOverlay.XP_INVENTORY_OVERLAY.asGlyph() + "§f" + Icon.EXPERIENCE.get() + "§f XP Lamp", InventoryId.XP_LAMP.asInt()));
         this.registry.register(InventoryId.TERRITORY_INVENTORY.asInt(), () -> new TerritoriesInventory(GUIOverlay.LOCATION_DISCOVERY_OVERLAY.asGlyph() + "§f" + Icon.MAP.get() + "§f Discovered Locations", InventoryId.TERRITORY_INVENTORY.asInt()));
+        this.registry.register(InventoryId.CONTRACT_BOARD.asInt(), () -> new ContractBoard(GUIOverlay.CONTRACTS_BOARD_OVERLAY.asGlyph() + "§f" + Icon.CONTRACT_SKULL.get() + "§f Contract Board", InventoryId.CONTRACT_BOARD.asInt()));
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
     }

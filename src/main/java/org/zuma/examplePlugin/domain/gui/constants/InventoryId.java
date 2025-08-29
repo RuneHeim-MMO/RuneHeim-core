@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.gui.constants;
 public enum InventoryId {
     ADMIN_NODE_CREATE(-100),
     ADMIN_INTERACTABLE_BLOCK_CREATE(-99),
+    ADMIN_MODELLED_INTERACTABLE_BLOCK_CREATE(-98),
     BASIC_FURNACE(0),
     STOVE(1),
     FIRE(2),
@@ -16,7 +17,8 @@ public enum InventoryId {
     INVESTMENT_BANKER(10),
     JEWELER(11),
     XP_LAMP(12),
-    TERRITORY_INVENTORY(13);
+    TERRITORY_INVENTORY(13),
+    CONTRACT_BOARD(14);
 
     private final int id;
 

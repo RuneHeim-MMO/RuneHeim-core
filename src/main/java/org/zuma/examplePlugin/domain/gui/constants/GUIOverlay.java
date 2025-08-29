@@ -13,7 +13,8 @@ public enum GUIOverlay {
     INVESTMENT_BANKER_OVERLAY("┠"),
     JEWELER_SHOP_OVERLAY("⽂"),
     XP_INVENTORY_OVERLAY("┒"),
-    LOCATION_DISCOVERY_OVERLAY("╣");
+    LOCATION_DISCOVERY_OVERLAY("╣"),
+    CONTRACTS_BOARD_OVERLAY("ⁿ");
 
     private final String glyph;
 

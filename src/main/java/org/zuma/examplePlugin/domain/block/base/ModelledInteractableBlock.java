@@ -24,22 +24,48 @@ import java.util.logging.Level;
 public abstract class ModelledInteractableBlock extends AbstractInteractableBlock {
     private Entity armorStand = null;
     private final String model;
-    private final int height;
+    private final int height, width;
+    private final double scale;
     private final List<Location> interactableBlockLocations;
-    private final boolean isArmorStandQueued;
 
-    public ModelledInteractableBlock(AbstractInteractableBlockMeta meta, int height, String model) {
+    public ModelledInteractableBlock(AbstractInteractableBlockMeta meta, int height, int width, double scale, String model) {
         super(meta, null, null);
         this.model = model;
         this.height = height;
-        this.isArmorStandQueued = true;
+        this.width = width;
+        this.scale = scale;
         this.interactableBlockLocations = new ArrayList<>();
 
-        for (int i = 0; i < height; i++) {
-            Location nextLocation = super.getLocation().clone();
-            nextLocation.add(0, i, 0);
+        this.getHologramLocation().add(0, (double) height / 2, 0);
+    }
 
-            interactableBlockLocations.add(nextLocation);
+    private void calculateHitboxSize() {
+        Location base = super.getLocation();
+        BlockFace face = getFace();
+
+        int halfWidth = this.width / 2;
+
+        for (int w = -halfWidth; w <= halfWidth; w++) {
+            for (int h = 0; h < this.height; h++) {
+                Location nextLocation = base.clone();
+
+                switch (face) {
+                    case NORTH:
+                        nextLocation.add(w, h, 0);
+                        break;
+                    case SOUTH:
+                        nextLocation.add(-w, h, 0);
+                        break;
+                    case EAST:
+                        nextLocation.add(0, h, w);
+                        break;
+                    case WEST:
+                        nextLocation.add(0, h, -w);
+                        break;
+                }
+
+                interactableBlockLocations.add(nextLocation);
+            }
         }
     }
 
@@ -69,6 +95,7 @@ public abstract class ModelledInteractableBlock extends AbstractInteractableBloc
         chunk.load(true);
         chunk.setForceLoaded(true);
 
+        calculateHitboxSize();
         interactableBlockLocations.forEach(location -> location.getBlock().setType(Material.BARRIER));
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
@@ -82,12 +109,13 @@ public abstract class ModelledInteractableBlock extends AbstractInteractableBloc
 
             try {
                 Entity e = loc.getWorld().spawnEntity(armorStandLoc, EntityType.ARMOR_STAND);
+                ArmorStand as = (ArmorStand) e;
+                this.armorStand = as;
 
                 ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(e);
                 ActiveModel activeModel = ModelEngineAPI.createActiveModel(model);
+                activeModel.setScale(this.scale);
                 modeledEntity.addModel(activeModel, true);
-
-                ArmorStand as = (ArmorStand) e;
 
                 as.setInvisible(true);
                 as.setMarker(true);
@@ -121,5 +149,9 @@ public abstract class ModelledInteractableBlock extends AbstractInteractableBloc
 
     public int getHeight() {
         return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }

@@ -60,6 +60,7 @@ public enum Icon {
     BLUE_GEM("∉"),
     ACCESSORY_RING("⤪"),
     CLOVER("Ⅹ"),
+    CONTRACT_SKULL("⥵"),
 
     SCROLL_RED("ⵣ"),
     SCROLL_GRAY("⁝"),

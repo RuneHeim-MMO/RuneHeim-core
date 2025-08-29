@@ -281,6 +281,10 @@ public class AdminCommand implements BasicCommand {
             RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), runePlayer, null);
         }
 
+        if (Objects.equals(args[0], "model_opener")) {
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_MODELLED_INTERACTABLE_BLOCK_CREATE.asInt(), runePlayer, null);
+        }
+
         if (Objects.equals(args[0], "shop")) {
             RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.GENERAL_STORE.getId());
         }
