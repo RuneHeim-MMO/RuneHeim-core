@@ -66,7 +66,7 @@ public class StateManager {
         AbstractState stateFromDb = this.initializeState(uuid);
         if (stateFromDb != null) {
             itemStates.put(uuid, stateFromDb);
-            Bukkit.getServer().getPluginManager().callEvent(new StateLoadedEvent(uuid, stateFromDb));
+            Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> Bukkit.getServer().getPluginManager().callEvent(new StateLoadedEvent(uuid, stateFromDb)));
         }
     }
 
