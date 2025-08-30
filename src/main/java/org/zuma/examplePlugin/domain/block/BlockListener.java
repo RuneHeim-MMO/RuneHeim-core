@@ -112,4 +112,15 @@ public class BlockListener implements Listener {
 
         manager.removeStoredInventoryUUIDForBlock(idHolder);
     }
+
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void onChunkLoad(ChunkLoadEvent event) {
+
+        this.manager.getAllModelledBlocks().forEach(block -> {
+            if (block.getLocation().getChunk().equals(event.getChunk())) {
+                block.respawnArmorStand();
+            }
+        });
+
+    }
 }

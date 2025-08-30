@@ -2,23 +2,19 @@ package org.zuma.examplePlugin.domain.gui.impl.individual;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.domain.bank.BankContentRepository;
 import org.zuma.examplePlugin.domain.bank.BankQueryLockController;
 import org.zuma.examplePlugin.domain.gui.ItemStackSlotPair;
 import org.zuma.examplePlugin.domain.gui.base.PaginatedBankGUI;
-import org.zuma.examplePlugin.domain.gui.base.PaginatedIndividualGUI;
 import org.zuma.examplePlugin.domain.gui.serializer.ItemContainerContentSerializer;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class BankInventory extends PaginatedBankGUI {
     private final BankQueryLockController bankQueryLockController;
@@ -61,7 +57,7 @@ public class BankInventory extends PaginatedBankGUI {
 
             if (bankContent[0] != null) {
                 try {
-                    loadedPairs = ItemContainerContentSerializer.deserializeItemContainerContent(bankContent[0]);
+                    loadedPairs = ItemContainerContentSerializer.deserializeItemContainerContentSync(bankContent[0]);
                 } catch (IllegalStateException e) {
                     Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                         HudService.sendFailMessage(player, Component.text("Please wait! Save/load is in progress."));
@@ -107,7 +103,7 @@ public class BankInventory extends PaginatedBankGUI {
         }
 
         try {
-            String serialized = ItemContainerContentSerializer.serializeItemContainerContent(this);
+            String serialized = ItemContainerContentSerializer.serializeItemContainerContentSync(this, true);
             this.bankQueryLockController.save(this.playerUUID, serialized);
         } catch (Exception e) {
             Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {

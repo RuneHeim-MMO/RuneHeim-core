@@ -11,34 +11,60 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.event.world.ChunkLoadEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.entity.EntitySessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
+import java.util.UUID;
 
 public abstract class ModelledInteractableBlock extends AbstractInteractableBlock {
-    private Entity armorStand = null;
+    private UUID armorStandUUID = null;
     private final String model;
-    private final int height;
+    private final int height, width;
+    private final double scale;
     private final List<Location> interactableBlockLocations;
-    private final boolean isArmorStandQueued;
 
-    public ModelledInteractableBlock(AbstractInteractableBlockMeta meta, int height, String model) {
+    public ModelledInteractableBlock(AbstractInteractableBlockMeta meta, int height, int width, double scale, String model) {
         super(meta, null, null);
         this.model = model;
         this.height = height;
-        this.isArmorStandQueued = true;
+        this.width = width;
+        this.scale = scale;
         this.interactableBlockLocations = new ArrayList<>();
 
-        for (int i = 0; i < height; i++) {
-            Location nextLocation = super.getLocation().clone();
-            nextLocation.add(0, i, 0);
+        this.getHologramLocation().add(0, (double) height / 2, 0);
+    }
 
-            interactableBlockLocations.add(nextLocation);
+    private void calculateHitboxSize() {
+        Location base = super.getLocation();
+        BlockFace face = getFace();
+
+        int halfWidth = this.width / 2;
+
+        for (int w = -halfWidth; w <= halfWidth; w++) {
+            for (int h = 0; h < this.height; h++) {
+                Location nextLocation = base.clone();
+
+                switch (face) {
+                    case NORTH:
+                        nextLocation.add(w, h, 0);
+                        break;
+                    case SOUTH:
+                        nextLocation.add(-w, h, 0);
+                        break;
+                    case EAST:
+                        nextLocation.add(0, h, w);
+                        break;
+                    case WEST:
+                        nextLocation.add(0, h, -w);
+                        break;
+                }
+
+                interactableBlockLocations.add(nextLocation);
+            }
         }
     }
 
@@ -59,39 +85,57 @@ public abstract class ModelledInteractableBlock extends AbstractInteractableBloc
         return new float[]{yaw, pitch};
     }
 
+    public void respawnArmorStand() {
+        if (this.armorStandUUID != null) {
+            Entity previousEntity = Bukkit.getEntity(this.armorStandUUID);
 
-    @Override
-    public void spawn(Material material) {
-        Location loc = super.getLocation().clone().add(0.5, 0, 0.5);
-        Chunk chunk = loc.getChunk();
+            if (previousEntity != null) previousEntity.remove();
+        }
 
-        chunk.load(true);
-        chunk.setForceLoaded(true);
+        Location armorStandLoc = super.getLocation().clone().add(0.5, 0, 0.5);
 
-        interactableBlockLocations.forEach(location -> location.getBlock().setType(Material.BARRIER));
+        if (super.getFace() != null) {
+            float[] rot = getRotationForFace(super.getFace());
+            armorStandLoc.setYaw(rot[0]);
+            armorStandLoc.setPitch(rot[1]);
+        }
 
-        Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-            Location armorStandLoc = loc.clone();
-
-            if (super.getFace() != null) {
-                float[] rot = getRotationForFace(super.getFace());
-                armorStandLoc.setYaw(rot[0]);
-                armorStandLoc.setPitch(rot[1]);
-            }
-
-            Entity e = loc.getWorld().spawnEntity(armorStandLoc, EntityType.ARMOR_STAND);
+        try {
+            Entity e = armorStandLoc.getWorld().spawnEntity(armorStandLoc, EntityType.ARMOR_STAND);
+            ArmorStand as = (ArmorStand) e;
+            this.armorStandUUID = as.getUniqueId();
 
             ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(e);
             ActiveModel activeModel = ModelEngineAPI.createActiveModel(model);
+            activeModel.setScale(this.scale);
             modeledEntity.addModel(activeModel, true);
-
-            ArmorStand as = (ArmorStand) e;
 
             as.setInvisible(true);
             as.setMarker(true);
             as.setGravity(false);
             as.setInvulnerable(true);
 
+            EntitySessionManager.tagEntity(e);
+        } catch (Exception ex) {
+            this.onDisable();
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed setting entity model at interactable block ID " + this.getId() + "!");
+            throw ex;
+        }
+    }
+
+
+    @Override
+    public void spawn(Material material) {
+        Chunk chunk = super.getLocation().getChunk();
+
+        chunk.load(true);
+        chunk.setForceLoaded(true);
+
+        calculateHitboxSize();
+        interactableBlockLocations.forEach(location -> location.getBlock().setType(Material.BARRIER));
+
+        Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+            respawnArmorStand();
             chunk.setForceLoaded(false);
         }, 2L);
     }
@@ -101,8 +145,9 @@ public abstract class ModelledInteractableBlock extends AbstractInteractableBloc
     public void onDisable() {
         interactableBlockLocations.forEach(location -> location.getBlock().setType(Material.AIR));
 
-        if (armorStand != null) {
-            armorStand.remove();
+        if (armorStandUUID != null) {
+            Entity armorStand = Bukkit.getEntity(armorStandUUID);
+            if (armorStand != null) armorStand.remove();
         }
         super.onDisable();
     }
@@ -114,5 +159,9 @@ public abstract class ModelledInteractableBlock extends AbstractInteractableBloc
 
     public int getHeight() {
         return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }

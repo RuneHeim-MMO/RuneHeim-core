@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.mob.constants;
 
 public enum MobType {
+    COMBAT_DUMMY_FACE_SOUTH(),
     MOLE_BASE_30(),
     MOLE_BASE_50(),
     MOLE_BASE_70(),

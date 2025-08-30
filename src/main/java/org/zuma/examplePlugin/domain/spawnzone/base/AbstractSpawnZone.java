@@ -12,6 +12,7 @@ import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneHandler;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneMobRecord;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneType;
 import org.zuma.examplePlugin.domain.spawnzone.meta.AbstractSpawnZoneMeta;
+import org.zuma.examplePlugin.events.spawnzone.SpawnZoneWaveEvent;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -99,8 +100,8 @@ public abstract class AbstractSpawnZone {
     public void spawnWave() {
         lastWaveAttemptOccurred = System.currentTimeMillis();
         lastWaveSpawnedAmount = spawnedAndLoadedEntities.size();
-        // clearAliveEntities();
 
+        Bukkit.getServer().getPluginManager().callEvent(new SpawnZoneWaveEvent(this));
 
         mobRecords.forEach(record -> {
             if (RANDOM.nextInt(101) >= record.spawnChancePercentage()) {
@@ -161,7 +162,6 @@ public abstract class AbstractSpawnZone {
         double deadPercentage = getDeadEntitiesPercentage();
 
         if (!spawnedAndLoadedEntities.isEmpty() && deadPercentage < deadThresholdForWave) {
-            // System.out.println("dead " + deadPercentage + " need min threshold " + deadThresholdForWave + " last spawned amnt: " + lastWaveSpawnedAmount + " max mobs " + maximumMobs + " total uuids " + spawnedAndLoadedEntities.size());
             return;
         }
 

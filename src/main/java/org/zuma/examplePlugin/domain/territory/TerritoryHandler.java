@@ -13,6 +13,7 @@ import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.events.territory.TerritoryEnterEvent;
 
 import javax.annotation.Nullable;
 import java.time.Duration;
@@ -102,7 +103,11 @@ public class TerritoryHandler {
             return;
         }
 
-        if (runePlayer.getDiscoveredTerritoryIds().contains(territory.getId())) {
+        boolean isFirstDiscovery = !runePlayer.getDiscoveredTerritoryIds().contains(territory.getId());
+        TerritoryEnterEvent event = new TerritoryEnterEvent(runePlayer, territory, isFirstDiscovery);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
+        if (!isFirstDiscovery) {
             SoundType.TERRITORY_ENTER.play(player, false);
         } else {
             runePlayer.getDiscoveredTerritoryIds().add(territory.getId());

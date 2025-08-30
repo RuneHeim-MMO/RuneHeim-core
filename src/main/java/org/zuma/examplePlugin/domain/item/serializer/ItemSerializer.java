@@ -15,6 +15,7 @@ import org.zuma.examplePlugin.core.adapters.OptionalTypeAdapter;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
+import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -28,10 +29,8 @@ public class ItemSerializer {
     }
 
 
-    public static String serializeItemStackWithPDC(ItemStack item, JavaPlugin plugin) throws IllegalArgumentException {
+    public static String serializeItemStackWithPDCSync(ItemStack item, JavaPlugin plugin, boolean clearStateCache) throws IllegalArgumentException {
         AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(item);
-
-        /* TODO: SAFE BANK SAVE & RETRIEVAL */
         if (type == null) {
             throw new IllegalArgumentException("Cannot serialize an item " + TextUtils.extractPlainText(item.displayName()) + "! It is not in registry.");
         }
@@ -49,6 +48,7 @@ public class ItemSerializer {
         serialized.put("amount", item.getAmount());
 
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
+        UUID pdcStateUUIDValue = RuneQuestPlugin.getItemStateManager().getItemStackStateUuid(item);
         Map<String, Object> customData = new HashMap<>();
 
         for (PersistenceDataKey dataKey : PersistenceDataKey.values()) {
@@ -59,10 +59,19 @@ public class ItemSerializer {
             }
         }
         serialized.put("pdc", customData);
+
+        if (pdcStateUUIDValue != null) {
+            AbstractState state = RuneQuestPlugin.getItemStateManager().getItemState(item);
+
+            if (state != null) {
+                RuneQuestPlugin.getItemStateManager().saveUpdatedState(state, clearStateCache, false);
+            }
+        }
+
         return gson.toJson(serialized);
     }
 
-    public static ItemStack deserializeItemStackWithPDC(String json, JavaPlugin plugin) throws IllegalArgumentException {
+    public static ItemStack deserializeItemStackWithPDCSync(String json, JavaPlugin plugin) throws IllegalArgumentException {
         Map<String, Object> map = gson.fromJson(json, new TypeToken<Map<String, Object>>() {
         }.getType());
         String storedName = (String) map.get("name");
@@ -76,6 +85,12 @@ public class ItemSerializer {
         List<PDCValue> pdcValues = new ArrayList<>();
         @Nullable AbstractItemType matchedType = null;
         NamespacedKey itemIdKey = PersistenceDataKey.ITEM_ID.key(plugin);
+        NamespacedKey stateUUIDKey = PersistenceDataKey.STATE_UUID.key(plugin);
+        Object stateUUIDRawValue = customData.get(stateUUIDKey.toString());
+
+        if (stateUUIDRawValue != null) {
+            RuneQuestPlugin.getItemStateManager().preloadItemStateAsync(UUID.fromString((String) stateUUIDRawValue));
+        }
 
         for (Map.Entry<String, Object> entry : customData.entrySet()) {
             String rawKey = entry.getKey();

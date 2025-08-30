@@ -26,6 +26,7 @@ import java.util.List;
 
 
 public abstract class AbstractInteractableBlock implements POIMarkerable {
+    private final int id;
     private final BlockType type;
     private Location location, hologramLocation;
     private Hologram hologram;
@@ -38,6 +39,7 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
     private String markerLabel;
 
     public AbstractInteractableBlock(AbstractInteractableBlockMeta meta, @Nullable MarkerType markerType, @Nullable String markerLabel) {
+        this.id = meta.id();
         this.type = meta.type();
         this.location = meta.location();
         this.hologramLocation = meta.hologramLocation();
@@ -65,6 +67,10 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
         this.hologramLocation = location;
         if (this.hologram != null)
             this.hologram.setLocation(location);
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     public Hologram getHologram() {

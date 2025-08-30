@@ -89,7 +89,7 @@ public class FairyHandler {
             }
 
             SoundType.FAIRY_UPGRADE.play(player, true);
-            RuneQuestPlugin.getItemStateManager().saveUpdatedState(state);
+            RuneQuestPlugin.getItemStateManager().saveUpdatedState(state, false, true);
             player.asBukkitPlayer().sendMessage(
                     Component.text("Your fairy devoured ", Color.SUCCESS.asColor())
                             .append(cursorFruitItemStack.displayName())

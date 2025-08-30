@@ -1,8 +1,10 @@
 package org.zuma.examplePlugin.domain.droptable;
 
+import org.bukkit.Bukkit;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
+import org.zuma.examplePlugin.events.droptable.DropTableRollEvent;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -31,7 +33,10 @@ public class DropTable {
             int amount = rand.nextInt(drop.max - drop.min + 1) + drop.min;
 
             if (drop.type == DropTableEntry.Type.ITEM) {
-                return new ItemRecord(drop.id, amount);
+                ItemRecord result = new ItemRecord(drop.id, amount);
+
+                Bukkit.getServer().getPluginManager().callEvent(new DropTableRollEvent(this, result));
+                return result;
             }
 
             if (drop.type == DropTableEntry.Type.NESTED_DROP_TABLE) {
@@ -45,6 +50,7 @@ public class DropTable {
 
                 for (int i = 0; i < amount; i++) {
                     ItemRecord currentRoll = matchingTable.roll();
+                    Bukkit.getServer().getPluginManager().callEvent(new DropTableRollEvent(this, currentRoll));
                     if (currentRoll != null) return currentRoll;
                 }
                 return null;

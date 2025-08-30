@@ -5,6 +5,7 @@ import com.google.common.collect.Multimap;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -31,6 +32,7 @@ import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFood;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
+import org.zuma.examplePlugin.events.state.StateCreatedDefaultEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -182,11 +184,16 @@ public class MetaGenerator {
         ItemMeta meta = item.getItemMeta();
         meta.getPersistentDataContainer().set(PersistenceDataKey.ITEM_ID.key(RuneQuestPlugin.getInstance()), PersistentDataType.INTEGER, itemType.id);
 
-        if (itemType.stateType != null) {
+        if (itemType.stateType != null && itemType instanceof Stateful stateful) {
             NamespacedKey stateUuid = PersistenceDataKey.STATE_UUID.key(RuneQuestPlugin.getInstance());
 
             if (!meta.getPersistentDataContainer().has(stateUuid)) {
-                meta.getPersistentDataContainer().set(stateUuid, PersistentDataType.STRING, UUID.randomUUID().toString());
+                UUID uuid = UUID.randomUUID();
+                meta.getPersistentDataContainer().set(stateUuid, PersistentDataType.STRING, uuid.toString());
+
+                AbstractState newState = stateful.cloneDefaultStateTemplate();
+                RuneQuestPlugin.getItemStateManager().insertDefaultItemState(uuid, newState);
+                Bukkit.getServer().getPluginManager().callEvent(new StateCreatedDefaultEvent(uuid, newState));
             }
         }
 

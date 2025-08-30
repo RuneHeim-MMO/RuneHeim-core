@@ -738,7 +738,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL_WITH_GEM_SOCKETS, ItemId.RUNITE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.RARE, "Runite Pickaxe", List.of("Runite pickaxe, enchanted for maximum yield."), null, null, true),
                         toVersionedJson(
                                 new SocketedToolMeta(new EquipableTypeMeta(null,
-                                        List.of(new Modifier(ModifierType.MINING_BOOST, 1.8), new Modifier(ModifierType.GATHERING_LUCK, 50)),
+                                        List.of(new Modifier(ModifierType.MINING_BOOST, 1.8)),
                                         List.of(new SkillRequirement(SkillType.MINING, 41))
                                 ), null, 1)
                                 , 1)

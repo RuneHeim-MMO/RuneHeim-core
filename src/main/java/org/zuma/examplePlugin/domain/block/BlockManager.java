@@ -8,6 +8,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.interfaces.DespawnableBlock;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
+import org.zuma.examplePlugin.domain.block.base.ModelledInteractableBlock;
 import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerRegularBlock;
 import org.zuma.examplePlugin.domain.gui.IDHolder;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 
 public class BlockManager {
     private final HashMap<Location, AbstractInteractableBlock> blocks = new HashMap<>();
+    private final HashMap<Location, ModelledInteractableBlock> modelledBlocks = new HashMap<>();
     private final HashMap<DespawnableBlock, Long> despawnableQueue = new HashMap<>();
 
     public BlockManager() {
@@ -100,7 +102,15 @@ public class BlockManager {
         return blocks.values();
     }
 
+    public Collection<ModelledInteractableBlock> getAllModelledBlocks() {
+        return modelledBlocks.values();
+    }
+
     public void registerBlock(AbstractInteractableBlock block) {
+        if (block instanceof ModelledInteractableBlock modelledInteractableBlock) {
+            modelledBlocks.put(block.getLocation(), modelledInteractableBlock);
+        }
+
         block.getInteractableBlocks().forEach(location -> {
             Location blockLocation = location.toBlockLocation();
             blockLocation.setYaw(0f);
