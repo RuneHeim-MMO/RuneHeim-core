@@ -44,6 +44,7 @@ public class ContractBoard extends IndividualGUI {
     @Override
     public boolean attemptOpenInventory(RunePlayer player, Runnable onFail) {
         player.asBukkitPlayer().openInventory(getBaseInventory());
+        SoundType.UI_SPOOKY_INVENTORY_OPEN.play(player, false);
         return true;
     }
 
@@ -55,7 +56,9 @@ public class ContractBoard extends IndividualGUI {
 
     @Override
     public void onInventoryClose(@Nullable InventoryCloseEvent event, @Nullable RunePlayer player) {
-
+        if (player != null) {
+            SoundType.UI_SPOOKY_INVENTORY_OPEN.play(player, false);
+        }
     }
 
 
