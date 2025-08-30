@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.core.redis;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
+import io.lettuce.core.api.async.RedisAsyncCommands;
 import io.lettuce.core.api.sync.RedisCommands;
 import io.lettuce.core.pubsub.RedisPubSubListener;
 import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
@@ -79,8 +80,8 @@ public class RedisConnection {
 
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
             try {
-                RedisCommands<String, String> syncCommands = pubConnection.sync();
-                syncCommands.publish("global-events", data);
+                RedisAsyncCommands<String, String> asyncCommands = pubConnection.async();
+                asyncCommands.publish("global-events", data);
             } catch (Exception e) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed publishing event. Payload: " + data, e);
             }
