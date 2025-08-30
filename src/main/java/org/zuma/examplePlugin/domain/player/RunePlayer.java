@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.core.constants.Color;
@@ -281,5 +282,29 @@ public class RunePlayer implements CombatEntity {
 
     public boolean isInCombat() {
         return this.combatData.isInCombat();
+    }
+
+    public void onHitLand(Hit hit) {
+        if (hit.damage() > 0 && !hit.isSpecialAttack()) {
+            combatData.recoverSpecialEnergy();
+        }
+    }
+
+    public boolean isSpecialAttacking() {
+        return asBukkitPlayer().isSneaking() && this.combatData.canPerformSpecialAttack();
+    }
+
+    public void onSpecialAttack(Hit hit) {
+        this.combatData.performSpecialAttack();
+
+        Entity defender = hit.defender().getEntity();
+
+        if (defender != null) {
+            defender.setVelocity(defender.getVelocity().add(new Vector(0, 0.4, 0)));
+        }
+    }
+
+    public int getSpecialEnergyPercent() {
+        return (int) (this.combatData.getSpecialEnergy() * 100);
     }
 }

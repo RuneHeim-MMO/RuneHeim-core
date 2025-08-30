@@ -12,10 +12,11 @@ public class Hit {
     private final HitType hitType;
     private final int maxDamage;
     private final double chance;
+    private final boolean isSpecialAttack;
 
     // Canonical constructor
     public Hit(CombatEntity attacker, CombatEntity defender, AttackType type, int damage,
-               HitType hitType, int maxDamage, double chance) {
+               HitType hitType, int maxDamage, double chance, boolean isSpecialAttack) {
         this.attacker = attacker;
         this.defender = defender;
         this.type = type;
@@ -23,6 +24,7 @@ public class Hit {
         this.hitType = hitType;
         this.maxDamage = maxDamage;
         this.chance = chance;
+        this.isSpecialAttack = isSpecialAttack;
     }
 
     // Getters (same names as record fields)
@@ -56,5 +58,9 @@ public class Hit {
 
     public void overrideDamage(int damage) {
         this.damage = damage;
+    }
+
+    public boolean isSpecialAttack() {
+        return isSpecialAttack;
     }
 }

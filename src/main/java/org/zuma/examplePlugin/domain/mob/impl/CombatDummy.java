@@ -81,7 +81,7 @@ public class CombatDummy extends GenericCombatant {
                 Location attackerLocation = attacker.getEntity().getLocation();
 
                 if (MathUtils.getLocationsDistanceXZ(dummyLocation, attackerLocation) < 1) {
-                    Hit combatDummyHit = new Hit(this, attacker, AttackType.MELEE, 1, HitType.REGULAR, 1, 100);
+                    Hit combatDummyHit = new Hit(this, attacker, AttackType.MELEE, 1, HitType.REGULAR, 1, 100, false);
 
                     attacker.registerHit(combatDummyHit);
                     HudService.showDamageBubble(attacker, combatDummyHit, AttackType.MELEE);

@@ -67,14 +67,9 @@ public class ActionBarManager {
 
         Component fairyIcon = Component.text(" " + Icon.FAIRY.get() + " ", fairyIconColor);
 
-
-        if (bar >= 10) {
-            bar = 0;
-        }
-
         Component specialAttackBar = new LoadingBarBuilder()
-                .totalSteps(10)
-                .currentStep(bar)
+                .totalSteps(100)
+                .currentStep(player.getSpecialEnergyPercent())
                 .barLength(8)
                 .segment(Icon.PROGRESS_TALL_SEGMENT.get())
                 .start(Icon.PROGRESS_GEM_TALL_START.get())

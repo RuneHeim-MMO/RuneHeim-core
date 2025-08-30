@@ -52,10 +52,25 @@ public class HitHandler {
         }
     }
 
+    private void handleSpecialHitSound(CombatEntity entity, AttackType type) {
+        SoundType sound = null;
+
+        switch (type) {
+            case MELEE -> sound = SoundType.HIT_MELEE_SPECIAL;
+            case RANGED -> sound = SoundType.HIT_RANGED_SPECIAL;
+            case MAGIC -> sound = SoundType.HIT_MAGIC_SPECIAL;
+        }
+
+        if (sound != null) {
+            sound.play(entity.getEntity().getLocation());
+        }
+    }
+
     @Nullable
     public Hit handleMeleeHit(CombatEntity attacker, CombatEntity defender) {
         AttackType type = AttackType.MELEE;
-        Hit hit = HitCalculator.getNewHit(attacker, defender, type);
+        boolean isSpecialAttack = attacker.isSpecialAttacking();
+        Hit hit = HitCalculator.getNewHit(attacker, defender, type, isSpecialAttack);
 
         RuneEntityDamageEntityEvent event = new RuneEntityDamageEntityEvent(attacker, defender, hit, type);
         Bukkit.getServer().getPluginManager().callEvent(event);
@@ -64,6 +79,12 @@ public class HitHandler {
             return null;
         }
 
+        if (isSpecialAttack) {
+            attacker.onSpecialAttack(hit);
+            handleSpecialHitSound(attacker, type);
+        }
+
+        attacker.onHitLand(hit);
         defender.registerHit(hit);
         handleHitSound(defender, type, hit);
         HudService.showDamageBubble(defender, hit, type);
@@ -75,7 +96,8 @@ public class HitHandler {
     @Nullable
     public Hit handleRangedHit(CombatEntity attacker, CombatEntity defender) {
         AttackType type = AttackType.RANGED;
-        Hit hit = HitCalculator.getNewHit(attacker, defender, type);
+        boolean isSpecialAttack = attacker.isSpecialAttacking();
+        Hit hit = HitCalculator.getNewHit(attacker, defender, type, isSpecialAttack);
 
         RuneEntityDamageEntityEvent newEvent = new RuneEntityDamageEntityEvent(attacker, defender, hit, type);
         Bukkit.getServer().getPluginManager().callEvent(newEvent);
@@ -84,6 +106,12 @@ public class HitHandler {
             return null;
         }
 
+        if (isSpecialAttack) {
+            attacker.onSpecialAttack(hit);
+            handleSpecialHitSound(attacker, type);
+        }
+
+        attacker.onHitLand(hit);
         defender.registerHit(hit);
         handleHitSound(defender, type, hit);
         HudService.showDamageBubble(defender, hit, type);
@@ -95,13 +123,19 @@ public class HitHandler {
     @Nullable
     public Hit handleMagicHit(CombatEntity attacker, CombatEntity defender) {
         AttackType type = AttackType.MAGIC;
-        Hit hit = HitCalculator.getNewHit(attacker, defender, type);
+        boolean isSpecialAttack = attacker.isSpecialAttacking();
+        Hit hit = HitCalculator.getNewHit(attacker, defender, type, isSpecialAttack);
 
         RuneEntityDamageEntityEvent newEvent = new RuneEntityDamageEntityEvent(attacker, defender, hit, type);
         Bukkit.getServer().getPluginManager().callEvent(newEvent);
 
         if (newEvent.isCancelled()) {
             return null;
+        }
+
+        if (isSpecialAttack) {
+            attacker.onSpecialAttack(hit);
+            handleSpecialHitSound(attacker, type);
         }
 
         defender.registerHit(hit);

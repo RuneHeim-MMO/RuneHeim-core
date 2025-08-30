@@ -57,22 +57,26 @@ public class HitCalculator {
         return hitType;
     }
 
-    public static Hit getNewHit(CombatEntity attacker, CombatEntity defender, AttackType type) {
-        Map.Entry<Boolean, Double> hitRollResult = isHitSuccess(attacker, defender, type);
+    public static Hit getNewHit(CombatEntity attacker, CombatEntity defender, AttackType type, boolean isSpecialAttack) {
+        Map.Entry<Boolean, Double> hitRollResult = isHitSuccess(attacker, defender, type, isSpecialAttack);
         boolean hitSuccess = hitRollResult.getKey();
         double hitChance = hitRollResult.getValue();
-        int maxHit = getMaxHit(attacker, type);
+        double maxHit = getMaxHit(attacker, type);
+
+        if (isSpecialAttack) {
+            maxHit *= 1.15;
+        }
 
         if (hitSuccess) {
             int baseDamage = (int) (Math.random() * (maxHit + 1));
             int damage = Math.min(defender.getHealth(), baseDamage);
 
-            return new Hit(attacker, defender, type, damage, getHitType(defender, damage), maxHit, hitChance);
+            return new Hit(attacker, defender, type, damage, getHitType(defender, damage), (int) maxHit, hitChance, isSpecialAttack);
         }
 
 
         int damage = Math.min(defender.getHealth(), 0);
-        return new Hit(attacker, defender, type, damage, getHitType(defender, damage), maxHit, hitChance);
+        return new Hit(attacker, defender, type, damage, getHitType(defender, damage), (int) maxHit, hitChance, isSpecialAttack);
 
     }
 
@@ -107,7 +111,7 @@ public class HitCalculator {
     }
 
     // Returns Entry<isHitSuccess, chance>
-    public static Map.Entry<Boolean, Double> isHitSuccess(CombatEntity attacker, CombatEntity defender, AttackType type) {
+    public static Map.Entry<Boolean, Double> isHitSuccess(CombatEntity attacker, CombatEntity defender, AttackType type, boolean isSpecialAttack) {
         if (type == AttackType.MELEE) {
             int attackerAttack = getEntitySkillLevel(attacker, SkillType.ATTACK);
             int defenderDefence = getEntitySkillLevel(defender, SkillType.DEFENCE);
@@ -118,7 +122,7 @@ public class HitCalculator {
             double attackRoll = attackerAttack * (atkBonus + BASE_BONUS);
             double defenceRoll = defenderDefence * (defBonus + BASE_BONUS);
 
-            return rollHitChance(attackRoll, defenceRoll);
+            return rollHitChance(attackRoll, defenceRoll, isSpecialAttack);
         }
 
         if (type == AttackType.RANGED) {
@@ -134,7 +138,7 @@ public class HitCalculator {
             double attackRoll = attackerRanged * (attackerRangeAcc + BASE_BONUS);
             double defenceRoll = defenderDefence * (defBonus + BASE_BONUS);
 
-            return rollHitChance(attackRoll, defenceRoll);
+            return rollHitChance(attackRoll, defenceRoll, isSpecialAttack);
         }
 
         if (type == AttackType.MAGIC) {
@@ -145,7 +149,7 @@ public class HitCalculator {
         return Map.entry(false, 0.0);
     }
 
-    private static Map.Entry<Boolean, Double> rollHitChance(double attackRoll, double defenceRoll) {
+    private static Map.Entry<Boolean, Double> rollHitChance(double attackRoll, double defenceRoll, boolean isSpecialAttack) {
         double chanceToHit;
 
         if (attackRoll > defenceRoll) {
@@ -153,7 +157,11 @@ public class HitCalculator {
         } else {
             chanceToHit = attackRoll / (2 * (defenceRoll + 1));
         }
-        
+
+        if (isSpecialAttack) {
+            chanceToHit *= 1.15;
+        }
+
         return Map.entry(Math.random() < chanceToHit, chanceToHit);
     }
 
