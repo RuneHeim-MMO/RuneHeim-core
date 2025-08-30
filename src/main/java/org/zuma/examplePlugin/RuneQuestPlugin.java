@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.core.module.ModuleLoader;
 import org.zuma.examplePlugin.core.module.core.DatabaseModule;
 import org.zuma.examplePlugin.core.module.core.HTTPHookModule;
+import org.zuma.examplePlugin.core.module.core.InterCommunicationModule;
 import org.zuma.examplePlugin.core.module.core.MapModule;
 import org.zuma.examplePlugin.core.module.game.*;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
@@ -43,7 +44,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                 List.of(
                         new DatabaseModule(),
                         new HTTPHookModule(),
-                        new InteractionSpeedModule(),
+                        new InterCommunicationModule(),
                         new MapModule(),
 
                         new AdditionalGearSlotModule(),
