@@ -13,6 +13,10 @@ import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
+import org.zuma.examplePlugin.events.state.StateCreatedDefaultEvent;
+import org.zuma.examplePlugin.events.state.StateDeleteEvent;
+import org.zuma.examplePlugin.events.state.StateLoadedEvent;
+import org.zuma.examplePlugin.events.state.StateSavedEvent;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -62,6 +66,7 @@ public class StateManager {
         AbstractState stateFromDb = this.initializeState(uuid);
         if (stateFromDb != null) {
             itemStates.put(uuid, stateFromDb);
+            Bukkit.getServer().getPluginManager().callEvent(new StateLoadedEvent(uuid, stateFromDb));
         }
     }
 
@@ -93,11 +98,13 @@ public class StateManager {
             // Try to load state
             AbstractState stateFromDb = this.initializeState(uuid);
             if (stateFromDb != null) {
+                Bukkit.getServer().getPluginManager().callEvent(new StateLoadedEvent(uuid, stateFromDb));
                 return stateFromDb;
             }
 
             // Create new if it doesn't exist.
             AbstractState newState = stateful.cloneDefaultStateTemplate();
+            Bukkit.getServer().getPluginManager().callEvent(new StateCreatedDefaultEvent(uuid, newState));
 
             if (newState == null) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Tried to create new state for " + item.displayName() + ", but received null.");
@@ -140,17 +147,17 @@ public class StateManager {
         return newState;
     }
 
-    public void destroyStateIfExists(ItemStack item) {
-        UUID uuid = getItemStackStateUuid(item);
-
-        if (uuid == null) {
-            return;
-        }
-
+    public void destroyStateIfExists(@Nullable UUID uuid) {
+        if (uuid == null) return;
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
             this.repository.deleteState(uuid);
             removeItemStateFromCache(uuid);
         });
+    }
+
+    public void destroyStateIfExists(ItemStack item) {
+        UUID uuid = getItemStackStateUuid(item);
+        destroyStateIfExists(uuid);
     }
 
     public void saveUpdatedState(AbstractState state, boolean clearCache, boolean runAsync) {
@@ -164,6 +171,8 @@ public class StateManager {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Cannot save state " + state.getStateType() + "! State is not in the registry.");
             return;
         }
+
+        Bukkit.getServer().getPluginManager().callEvent(new StateSavedEvent(matchingKey, state));
 
         if (runAsync) {
             Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {

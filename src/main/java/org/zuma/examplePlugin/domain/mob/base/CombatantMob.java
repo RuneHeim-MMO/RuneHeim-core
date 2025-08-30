@@ -18,6 +18,7 @@ import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
+import org.zuma.examplePlugin.domain.combat.constants.AttackType;
 import org.zuma.examplePlugin.domain.xp.PendingXPHandler;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
 import org.zuma.examplePlugin.domain.mob.meta.CombatantMobMeta;
@@ -26,6 +27,7 @@ import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
+import org.zuma.examplePlugin.events.combat.RuneEntityDeathEvent;
 
 import java.util.*;
 
@@ -113,6 +115,9 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         // Set killer metadata on last hit
         if (scaledHealth == 0 && hit.attacker().getEntity() instanceof Player playerAttacker) {
             living.setMetadata("killer", new FixedMetadataValue(RuneQuestPlugin.getInstance(), playerAttacker.getUniqueId().toString()));
+
+            RuneEntityDeathEvent event = new RuneEntityDeathEvent(hit.attacker(), hit.defender(), hit, hit.type());
+            Bukkit.getServer().getPluginManager().callEvent(event);
         }
 
         // Apply the scaled health to the entity

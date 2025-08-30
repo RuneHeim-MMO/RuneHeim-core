@@ -248,7 +248,7 @@ public class RunePlayer implements CombatEntity {
     }
 
     public void onDeath(Hit lastHit) {
-        DeathHandler.handlePlayerDeath(this);
+        DeathHandler.handlePlayerDeath(this, lastHit);
 
         this.pendingXPHandler.distributePendingXP();
     }

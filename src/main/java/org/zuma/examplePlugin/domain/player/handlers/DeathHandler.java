@@ -19,12 +19,14 @@ import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
+import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.domain.territory.Territory;
+import org.zuma.examplePlugin.events.combat.RuneEntityDeathEvent;
 import org.zuma.examplePlugin.events.player.RunePlayerHealthChangedEvent;
 
 import java.time.Duration;
@@ -34,7 +36,11 @@ public class DeathHandler {
     private final static Random rand = new Random();
     private final static int cooldownDuration = 10;
 
-    public static void handlePlayerDeath(RunePlayer runePlayer) {
+    public static void handlePlayerDeath(RunePlayer runePlayer, Hit lastHit) {
+
+        RuneEntityDeathEvent event = new RuneEntityDeathEvent(lastHit.attacker(), lastHit.defender(), lastHit, lastHit.type());
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
         Player player = runePlayer.asBukkitPlayer();
         Territory closestTerritory = PlayerUtils.getClosestDiscoveredTerritory(runePlayer);
         Location playerLocation = player.getLocation();

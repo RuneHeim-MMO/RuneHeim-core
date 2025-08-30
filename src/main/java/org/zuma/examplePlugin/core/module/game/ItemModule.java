@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.persistence.ItemLoader;
 import org.zuma.examplePlugin.domain.item.persistence.ItemRepository;
 import org.zuma.examplePlugin.domain.item.state.StateFactory;
+import org.zuma.examplePlugin.domain.item.state.StateListener;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.item.state.StateRepository;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
@@ -36,9 +37,11 @@ public class ItemModule implements PluginModule {
         ItemHandler itemHandler = new ItemHandler(itemRegistry);
         StateRepository stateRepository = new StateRepository(context.get(HikariPool.class));
         StateManager itemStateManager = new StateManager(new StateFactory(), itemHandler, stateRepository);
+        StateListener stateListener = new StateListener(itemStateManager);
         ItemListener itemListener = new ItemListener(itemHandler, context.get(RunePlayerManager.class), itemStateManager);
 
         plugin.getServer().getPluginManager().registerEvents(itemListener, plugin);
+        plugin.getServer().getPluginManager().registerEvents(stateListener, plugin);
 
         context.bind(ItemRegistry.class, itemRegistry);
         context.bind(StateManager.class, itemStateManager);

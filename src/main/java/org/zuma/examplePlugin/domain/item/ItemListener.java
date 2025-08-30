@@ -69,12 +69,6 @@ public class ItemListener implements Listener {
         EntitySessionManager.tagEntity(event.getEntity());
     }
 
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void onItemStackDespawn(ItemDespawnEvent event) {
-        ItemStack stack = event.getEntity().getItemStack();
-        RuneQuestPlugin.getItemStateManager().destroyStateIfExists(stack);
-    }
-
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = false)
     // Some fucking shithead is cancelling this SOMEWHERE for no reason...
     public void onPlayerInteract(PlayerInteractEvent event) {
