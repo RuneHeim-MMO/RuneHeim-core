@@ -161,7 +161,6 @@ public abstract class AbstractSpawnZone {
         double deadPercentage = getDeadEntitiesPercentage();
 
         if (!spawnedAndLoadedEntities.isEmpty() && deadPercentage < deadThresholdForWave) {
-            // System.out.println("dead " + deadPercentage + " need min threshold " + deadThresholdForWave + " last spawned amnt: " + lastWaveSpawnedAmount + " max mobs " + maximumMobs + " total uuids " + spawnedAndLoadedEntities.size());
             return;
         }
 

@@ -30,7 +30,7 @@ public class RunePlayerSerializer {
             .registerTypeAdapter(Location.class, new LocationAdapter())
             .create();
 
-    public static SerializedPlayerContainer serializePlayer(RunePlayer runePlayer, Player player) {
+    public static SerializedPlayerContainer serializePlayerSync(RunePlayer runePlayer, Player player, boolean clearStateCache) {
         PlayerDataDeserializedJsonContainer container = new PlayerDataDeserializedJsonContainer(
                 runePlayer.getSkills().values().stream().map(s -> new Skill(s.getType(), s.getXp())).toList(),
                 runePlayer.getPouchCoins(), runePlayer.getDiscoveredTerritoryIds(), runePlayer.getHealth()
@@ -40,11 +40,11 @@ public class RunePlayerSerializer {
 
         String serializedPlayerData = gson.toJson(versionedPlayerData);
         String serializedLocation = gson.toJson(runePlayer.getGetSafeLocation() != null ? runePlayer.getGetSafeLocation() : player.getLocation());
-        String inventoryData = ItemContainerContentSerializer.serializeItemSlotPairs(getPlayerInventoryContent(player));
+        String inventoryData = ItemContainerContentSerializer.serializeItemSlotPairsSync(getPlayerInventoryContent(player), clearStateCache);
         return new SerializedPlayerContainer(runePlayer.getUUID(), player.getName(), serializedLocation, serializedPlayerData, inventoryData);
     }
 
-    public static AbstractMap.SimpleEntry<RunePlayer, DeserializedPlayerEntity> deserializePlayer(SerializedPlayerContainer container) {
+    public static AbstractMap.SimpleEntry<RunePlayer, DeserializedPlayerEntity> deserializePlayerSync(SerializedPlayerContainer container) {
         VersionedJson playerData = gson.fromJson(container.playerData(), VersionedJson.class);
         String inventoryData = container.inventoryData();
 
@@ -59,7 +59,7 @@ public class RunePlayerSerializer {
                 player.setHealth(playerDataDeserializedJsonContainer.health(), RunePlayerHealthChangedEvent.Cause.INITIALIZATION);
                 player.setSkills(mappedSkills);
 
-                List<ItemStackSlotPair> inventory = ItemContainerContentSerializer.deserializeItemContainerContent(inventoryData);
+                List<ItemStackSlotPair> inventory = ItemContainerContentSerializer.deserializeItemContainerContentSync(inventoryData);
                 Location location = gson.fromJson(container.location(), Location.class);
 
                 return new AbstractMap.SimpleEntry<>(player, new DeserializedPlayerEntity(inventory, location));

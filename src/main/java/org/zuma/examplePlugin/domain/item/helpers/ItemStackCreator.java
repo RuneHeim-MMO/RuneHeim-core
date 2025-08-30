@@ -3,8 +3,10 @@ package org.zuma.examplePlugin.domain.item.helpers;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.zuma.examplePlugin.core.interfaces.Stateful;
 import org.zuma.examplePlugin.domain.head.HeadGenerator;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 
 public class ItemStackCreator {
     private final AbstractItemType itemType;

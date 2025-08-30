@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.item.state;
 
 import com.google.gson.Gson;
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -17,6 +18,7 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 public class StateManager {
     private final HashMap<UUID, AbstractState> itemStates = new HashMap<>(); // TODO: PERSISTENCE! delete states on item despawn & handle lifecycle properly
@@ -32,7 +34,7 @@ public class StateManager {
     }
 
     @Nullable
-    private UUID getItemStackStateUuid(ItemStack item) {
+    public UUID getItemStackStateUuid(ItemStack item) {
         ItemMeta meta = item.getItemMeta();
 
         if (meta == null) {
@@ -48,8 +50,32 @@ public class StateManager {
         return UUID.fromString(uuidStr);
     }
 
+    public void preloadItemStateAsync(UUID uuid) {
+        if (uuid == null) {
+            return;
+        }
+
+        AbstractState cached = itemStates.get(uuid);
+        if (cached != null) {
+            return;
+        }
+
+        AbstractState stateFromDb = this.initializeState(uuid);
+        if (stateFromDb != null) {
+            itemStates.put(uuid, stateFromDb);
+        }
+    }
+
+    public void removeItemStateFromCache(UUID uuid) {
+        this.itemStates.remove(uuid);
+    }
+
+    public void insertDefaultItemState(UUID uuid, AbstractState state) {
+        this.itemStates.put(uuid, state);
+    }
+
     @Nullable
-    public AbstractState getItemState(ItemStack item) throws IllegalStateException {
+    public AbstractState getItemState(ItemStack item) {
         UUID uuid = getItemStackStateUuid(item);
         AbstractItemType abstractItemType = itemHandler.getRegistry().getType(item);
 
@@ -61,7 +87,6 @@ public class StateManager {
             return null;
         }
 
-
         AbstractState result = itemStates.get(uuid);
 
         if (result == null) {
@@ -72,7 +97,6 @@ public class StateManager {
                 return stateFromDb;
             }
 
-
             // Create new if it doesn't exist.
             AbstractState newState = stateful.cloneDefaultStateTemplate();
 
@@ -80,7 +104,6 @@ public class StateManager {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Tried to create new state for " + item.displayName() + ", but received null.");
             } else {
                 itemStates.put(uuid, newState);
-                repository.create(uuid, newState.getStateType(), serializeState(uuid));
             }
             return newState;
         }
@@ -118,7 +141,7 @@ public class StateManager {
         return newState;
     }
 
-    public void saveUpdatedState(AbstractState state) {
+    public void saveUpdatedState(AbstractState state, boolean clearCache) {
         UUID matchingKey = this.itemStates.entrySet().stream()
                 .filter(entry -> entry.getValue().equals(state))
                 .map(Map.Entry::getKey)
@@ -130,7 +153,17 @@ public class StateManager {
             return;
         }
 
-        this.repository.update(matchingKey, serializeState(matchingKey));
+        Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
+            try {
+                this.repository.upsert(matchingKey, state.getStateType(), serializeState(matchingKey));
+
+                if (clearCache) {
+                    RuneQuestPlugin.getItemStateManager().removeItemStateFromCache(matchingKey);
+                }
+            } catch (Exception e) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to update item state: ", e);
+            }
+        });
 
     }
 }

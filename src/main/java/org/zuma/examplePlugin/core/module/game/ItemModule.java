@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.core.module.game;
 
 import org.bukkit.plugin.Plugin;
+import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.domain.item.ItemFactory;
@@ -20,7 +21,7 @@ public class ItemModule implements PluginModule {
 
     @Override
     public List<Class<?>> dependencies() {
-        return List.of(RunePlayerManager.class);
+        return List.of(HikariPool.class, RunePlayerManager.class);
     }
 
     @Override
@@ -33,7 +34,8 @@ public class ItemModule implements PluginModule {
         itemLoader.loadItemsFromDatabase();
 
         ItemHandler itemHandler = new ItemHandler(itemRegistry);
-        StateManager itemStateManager = new StateManager(new StateFactory(), itemHandler, new StateRepository());
+        StateRepository stateRepository = new StateRepository(context.get(HikariPool.class));
+        StateManager itemStateManager = new StateManager(new StateFactory(), itemHandler, stateRepository);
         ItemListener itemListener = new ItemListener(itemHandler, context.get(RunePlayerManager.class), itemStateManager);
 
         plugin.getServer().getPluginManager().registerEvents(itemListener, plugin);

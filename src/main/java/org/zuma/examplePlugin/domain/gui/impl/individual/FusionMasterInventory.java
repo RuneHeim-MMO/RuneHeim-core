@@ -372,7 +372,7 @@ public class FusionMasterInventory extends IndividualGUI {
 
         if (insertedGems > 0) {
             inventory.setItem(SCROLL_SLOT, null);
-            RuneQuestPlugin.getItemStateManager().saveUpdatedState(state);
+            RuneQuestPlugin.getItemStateManager().saveUpdatedState(state, false);
             equipment.getMetaGenerator().updatePresentationLayer(socketableSlotItem);
             scheduleInventoryUpdate(player);
             SoundType.FUSION_SUCCESS_1.play(player, true);

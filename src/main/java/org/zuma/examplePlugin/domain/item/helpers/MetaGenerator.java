@@ -182,11 +182,13 @@ public class MetaGenerator {
         ItemMeta meta = item.getItemMeta();
         meta.getPersistentDataContainer().set(PersistenceDataKey.ITEM_ID.key(RuneQuestPlugin.getInstance()), PersistentDataType.INTEGER, itemType.id);
 
-        if (itemType.stateType != null) {
+        if (itemType.stateType != null && itemType instanceof Stateful stateful) {
             NamespacedKey stateUuid = PersistenceDataKey.STATE_UUID.key(RuneQuestPlugin.getInstance());
 
             if (!meta.getPersistentDataContainer().has(stateUuid)) {
-                meta.getPersistentDataContainer().set(stateUuid, PersistentDataType.STRING, UUID.randomUUID().toString());
+                UUID uuid = UUID.randomUUID();
+                meta.getPersistentDataContainer().set(stateUuid, PersistentDataType.STRING, uuid.toString());
+                RuneQuestPlugin.getItemStateManager().insertDefaultItemState(uuid, stateful.cloneDefaultStateTemplate());
             }
         }
 
