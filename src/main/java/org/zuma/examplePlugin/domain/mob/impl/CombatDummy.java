@@ -10,7 +10,12 @@ import org.bukkit.entity.*;
 import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.core.interfaces.CombatEntity;
+import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
+import org.zuma.examplePlugin.domain.combat.constants.AttackType;
+import org.zuma.examplePlugin.domain.combat.constants.HitType;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.skill.SkillLevelRecord;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
@@ -67,6 +72,24 @@ public class CombatDummy extends GenericCombatant {
             me.getModels().values().forEach(am -> {
                 am.getAnimationHandler().playAnimation("hit", 0f, 0.3f, 1, true);
             });
+
+            Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+                CombatEntity attacker = hit.attacker();
+
+                if (attacker.getEntity() == null) return;
+                Location dummyLocation = thisEntity.getLocation();
+                Location attackerLocation = attacker.getEntity().getLocation();
+
+                if (MathUtils.getLocationsDistanceXZ(dummyLocation, attackerLocation) < 1) {
+                    Hit combatDummyHit = new Hit(this, attacker, AttackType.MELEE, 1, HitType.REGULAR, 1, 100);
+
+                    attacker.registerHit(combatDummyHit);
+                    HudService.showDamageBubble(attacker, combatDummyHit, AttackType.MELEE);
+                    SoundType.HIT_MELEE_REGULAR.play(attackerLocation);
+                    attacker.getEntity().setVelocity(attacker.getEntity().getVelocity().add(new Vector(0, 0.2, 0)));
+                }
+
+            }, 6);
         }
 
     }
