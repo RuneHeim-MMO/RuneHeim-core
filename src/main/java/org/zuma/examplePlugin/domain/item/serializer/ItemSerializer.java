@@ -64,7 +64,7 @@ public class ItemSerializer {
             AbstractState state = RuneQuestPlugin.getItemStateManager().getItemState(item);
 
             if (state != null) {
-                RuneQuestPlugin.getItemStateManager().saveUpdatedState(state, clearStateCache);
+                RuneQuestPlugin.getItemStateManager().saveUpdatedState(state, clearStateCache, false);
             }
         }
 

@@ -78,6 +78,7 @@ public class Potion extends AbstractItemType implements Stateful {
             if (state.isConsumed()) {
                 PlayerUtils.subtractOneFromMainHand(player);
                 player.giveItemOrDrop(new ItemRecord(ItemId.EMPTY_VIAL, 1));
+                itemStateManager.destroyStateIfExists(itemStack);
             }
         }
     }

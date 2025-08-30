@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.entity;
 
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
@@ -32,6 +33,11 @@ public class EntitySessionManager implements Listener {
             String storedSessionId = pdc.get(EntitySessionManager.SESSION_KEY, PersistentDataType.STRING);
 
             if (storedSessionId != null && !storedSessionId.equals(EntitySessionManager.SESSION_UUID.toString())) {
+
+                if (entity instanceof Item item) {
+                    RuneQuestPlugin.getItemStateManager().destroyStateIfExists(item.getItemStack());
+                }
+
                 entity.remove();
             }
         }

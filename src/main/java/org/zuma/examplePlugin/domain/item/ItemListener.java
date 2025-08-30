@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.item;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
@@ -9,15 +10,19 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.ItemDespawnEvent;
+import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
+import org.zuma.examplePlugin.domain.entity.EntitySessionManager;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.constants.EquipableType;
@@ -59,13 +64,24 @@ public class ItemListener implements Listener {
         event.setCancelled(true);
     }
 
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void onItemSpawn(ItemSpawnEvent event) {
+        EntitySessionManager.tagEntity(event.getEntity());
+    }
+
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void onItemStackDespawn(ItemDespawnEvent event) {
+        ItemStack stack = event.getEntity().getItemStack();
+        RuneQuestPlugin.getItemStateManager().destroyStateIfExists(stack);
+    }
+
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = false)
     // Some fucking shithead is cancelling this SOMEWHERE for no reason...
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getAction().equals(Action.LEFT_CLICK_AIR) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             return;
         }
-        
+
         if (event.getHand() != EquipmentSlot.HAND) {
             return;
         }
@@ -127,6 +143,7 @@ public class ItemListener implements Listener {
         });
 
     }
+
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerDamageEntity(EntityDamageByEntityEvent event) {

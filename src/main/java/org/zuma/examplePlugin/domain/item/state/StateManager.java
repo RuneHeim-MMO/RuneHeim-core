@@ -15,13 +15,12 @@ import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.function.Consumer;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class StateManager {
-    private final HashMap<UUID, AbstractState> itemStates = new HashMap<>(); // TODO: PERSISTENCE! delete states on item despawn & handle lifecycle properly
+    private final ConcurrentHashMap<UUID, AbstractState> itemStates = new ConcurrentHashMap<>(); // TODO: PERSISTENCE! delete states on item despawn & handle lifecycle properly
     private final StateFactory factory;
     private final ItemHandler itemHandler;
     private final StateRepository repository;
@@ -141,7 +140,20 @@ public class StateManager {
         return newState;
     }
 
-    public void saveUpdatedState(AbstractState state, boolean clearCache) {
+    public void destroyStateIfExists(ItemStack item) {
+        UUID uuid = getItemStackStateUuid(item);
+
+        if (uuid == null) {
+            return;
+        }
+
+        Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
+            this.repository.deleteState(uuid);
+            removeItemStateFromCache(uuid);
+        });
+    }
+
+    public void saveUpdatedState(AbstractState state, boolean clearCache, boolean runAsync) {
         UUID matchingKey = this.itemStates.entrySet().stream()
                 .filter(entry -> entry.getValue().equals(state))
                 .map(Map.Entry::getKey)
@@ -153,17 +165,32 @@ public class StateManager {
             return;
         }
 
-        Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
-            try {
-                this.repository.upsert(matchingKey, state.getStateType(), serializeState(matchingKey));
+        if (runAsync) {
+            Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
+                try {
+                    this.repository.upsert(matchingKey, state.getStateType(), serializeState(matchingKey));
 
-                if (clearCache) {
-                    RuneQuestPlugin.getItemStateManager().removeItemStateFromCache(matchingKey);
+                    if (clearCache) {
+                        RuneQuestPlugin.getItemStateManager().removeItemStateFromCache(matchingKey);
+                    }
+                } catch (Exception e) {
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to update item state: ", e);
                 }
-            } catch (Exception e) {
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to update item state: ", e);
+            });
+
+            return;
+        }
+
+        try {
+            this.repository.upsert(matchingKey, state.getStateType(), serializeState(matchingKey));
+
+            if (clearCache) {
+                RuneQuestPlugin.getItemStateManager().removeItemStateFromCache(matchingKey);
             }
-        });
+        } catch (Exception e) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to update item state: ", e);
+        }
+
 
     }
 }
