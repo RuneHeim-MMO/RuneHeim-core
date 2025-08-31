@@ -57,6 +57,7 @@ public class RunePlayer implements CombatEntity {
     private final List<InteractiveActionStrategy> pendingActions;
     private List<String> discoveredTerritoryIds;
     private Location getSafeLocation; // is set when player is is spectator mode.
+    private boolean isDead;
 
     public RunePlayer(UUID uuid, EnumMap<SkillType, Skill> skills) {
         this.uuid = uuid;
@@ -74,6 +75,7 @@ public class RunePlayer implements CombatEntity {
         this.pouchCoins = 0;
         this.pendingActions = new ArrayList<>();
         this.discoveredTerritoryIds = new ArrayList<>();
+        this.isDead = false;
 
         HudService.updateVanillaGUI(this);
     }
@@ -306,5 +308,13 @@ public class RunePlayer implements CombatEntity {
 
     public int getSpecialEnergyPercent() {
         return (int) (this.combatData.getSpecialEnergy() * 100);
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
     }
 }
