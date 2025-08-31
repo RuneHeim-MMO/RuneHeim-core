@@ -1,4 +1,4 @@
-name: Build Minecraft Plugin
+name: Build & Deploy
 
 on:
   push:
@@ -8,8 +8,6 @@ on:
 jobs:
   compile:
     runs-on: ubuntu-latest
-    outputs:
-      jar-path: ${{ steps.upload-artifact.outputs.path }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -21,7 +19,6 @@ jobs:
           java-version: 21
 
       - name: Cache Gradle packages
-        id: gradle-cache
         uses: actions/cache@v3
         with:
           path: |
@@ -35,7 +32,6 @@ jobs:
         run: ./gradlew clean build
 
       - name: Upload JAR artifact
-        id: upload-artifact
         uses: actions/upload-artifact@v4
         with:
           name: RuneHeim-core
@@ -45,25 +41,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: compile
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Restore Gradle cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            gradle-${{ runner.os }}-
-
-      - name: Download JAR artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: RuneHeim-core
-          path: build/libs/
-
-      - name: Send HTTP POST to Minecraft Hook
+      - name: Trigger Minecraft Hook
         run: |
           curl --max-time 30 -X POST "http://65.21.193.214:81/restart?key=${{ secrets.WEB_HOOK_SECRET }}&seconds=300&reason=Core%20Update&sender=Github_actions"
