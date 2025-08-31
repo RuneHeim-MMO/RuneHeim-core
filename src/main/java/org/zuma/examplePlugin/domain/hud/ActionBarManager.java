@@ -65,37 +65,25 @@ public class ActionBarManager {
 
         }
 
-        Component fairyIcon = Component.text(" " + Icon.FAIRY.get() + " ", fairyIconColor);
+        Component fairyIcon = Component.text(Icon.FAIRY_BADGE.get(), fairyIconColor);
 
         Component specialAttackBar = new LoadingBarBuilder()
                 .totalSteps(100)
                 .currentStep(player.getSpecialEnergyPercent())
-                .barLength(8)
+                .barLength(10)
                 .segment(Icon.PROGRESS_TALL_SEGMENT.get())
-                .start(Icon.PROGRESS_GEM_TALL_START.get())
+                .start(Icon.PROGRESS_TALL_START.get())
                 .stop(Icon.PROGRESS_TALL_END.get())
                 .emptyColor(Color.SPECIAL_BAR_EMPTY.asColor())
                 .fillColor(Color.SPECIAL_BAR_FILL.asColor())
                 .build();
 
-        Component manaBar = new LoadingBarBuilder()
-                .totalSteps(10)
-                .currentStep(bar)
-                .barLength(8)
-                .segment(Icon.PROGRESS_TALL_SEGMENT.get())
-                .start(Icon.PROGRESS_TALL_START.get())
-                .stop(Icon.PROGRESS_SKULL_TALL_END.get())
-                .emptyColor(Color.MANA_BAR_EMPTY.asColor())
-                .fillColor(Color.MANA_BAR_FILL.asColor())
-                .inverted(true)
-                .build();
-
         return Component.text(Icon.HEART_BIG.get(), NamedTextColor.WHITE)
-                .append(Component.text(" " + player.getHealth() + "/" + player.getSkill(SkillType.HITPOINTS).getLevelWithBonuses() + " ".repeat(2), Color.ERROR.asColor()))
-                .append(specialAttackBar)
+                .append(Component.text(" " + player.getHealth() + "/" + player.getSkill(SkillType.HITPOINTS).getLevelWithBonuses() + " ".repeat(4), Color.ERROR.asColor()))
                 .append(playerHasFairy ? fairyIcon : Component.empty())
-                .append(manaBar)
-                .append(Component.text(" ".repeat(2)))
+                .append(Component.text((player.canPerformSpecialAttack() ? Icon.SPECIAL_ATTACK_AVAILBLE_BADGE : Icon.SPECIAL_ATTACK_UNAVAILABLE_BADGE).get(), NamedTextColor.WHITE))
+                .append(specialAttackBar)
+                .append(Component.text(" ".repeat(4)))
                 .append(CurrencyUtils.getCoinsCurrencyComponent(coins))
                 .append(Component.text("", CurrencyUtils.getCurrencyColor(coins).asColor()));
 

@@ -296,6 +296,10 @@ public class RunePlayer implements CombatEntity {
         return asBukkitPlayer().isSneaking() && this.combatData.canPerformSpecialAttack();
     }
 
+    public boolean canPerformSpecialAttack() {
+        return this.combatData.canPerformSpecialAttack();
+    }
+
     public void onSpecialAttack(Hit hit) {
         this.combatData.performSpecialAttack();
 
@@ -308,6 +312,10 @@ public class RunePlayer implements CombatEntity {
 
     public int getSpecialEnergyPercent() {
         return (int) (this.combatData.getSpecialEnergy() * 100);
+    }
+
+    public void resetSpecialEnergy() {
+        this.combatData.resetSpecialEnergy();
     }
 
     public boolean isDead() {

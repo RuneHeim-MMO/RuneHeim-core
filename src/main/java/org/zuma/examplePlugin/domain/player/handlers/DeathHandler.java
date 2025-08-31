@@ -75,6 +75,7 @@ public class DeathHandler {
         }
 
         runePlayer.setSpectatorMode(spawnPoint);
+        runePlayer.resetSpecialEnergy();
         runePlayer.setDead(true);
 
         SoundType.DEATH_SCREEN.play(player, false);

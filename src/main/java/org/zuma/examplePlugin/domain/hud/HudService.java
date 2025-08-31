@@ -80,7 +80,7 @@ public class HudService {
 
         String color = hit.getDamage() == 0 ? Color.ZERO_HIT.asSpigotHex() : isCriticalHit ? Color.CRITICAL_HIT.asSpigotHex() : Color.DAMAGE_HIT.asSpigotHex();
         String symbol = hit.getAttackType() == AttackType.MELEE ? Icon.SWORD.get() : hit.getAttackType() == AttackType.RANGED ? Icon.ARROW.get() : Icon.LEGENDARY.get(); // Todo: Replace magic icon!
-        String msg = "§f" + symbol + (isHitByPlayer ? "§l" : "") + " " + color + (isHitByPlayer ? "§l" : "") + (isCriticalHit ? "CRIT! " : "") + (isZeroHit ? "" : "-") + hit.getDamage() + (hit.isSpecialAttack() ? " §f" + Icon.CLOVER.get() : "");
+        String msg = "§f" + symbol + (isHitByPlayer ? "§l" : "") + " " + color + (isHitByPlayer ? "§l" : "") + (isCriticalHit ? "CRIT! " : "") + (isZeroHit ? "" : "-") + hit.getDamage() + (hit.isSpecialAttack() ? " §f" + Icon.SPECIAL_ATTACK.get() : "");
 
         spawnVerticalHologramBubble(entity.getEntity().getLocation(), msg);
 

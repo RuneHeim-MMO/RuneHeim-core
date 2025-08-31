@@ -73,12 +73,16 @@ public class PlayerCombatData {
         this.specialEnergy = Math.max(0, this.specialEnergy - 0.25F);
     }
 
-    public boolean canPerformSpecialAttack(){
+    public boolean canPerformSpecialAttack() {
         return this.specialEnergy > 0.25F;
     }
 
     public void recoverSpecialEnergy() {
         this.specialEnergy = Math.min(1, this.specialEnergy + 0.1F);
+    }
+
+    public void resetSpecialEnergy() {
+        this.specialEnergy = 1F;
     }
 
     public float getSpecialEnergy() {

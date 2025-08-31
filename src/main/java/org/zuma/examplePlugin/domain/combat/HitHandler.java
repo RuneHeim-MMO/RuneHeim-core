@@ -125,10 +125,11 @@ public class HitHandler {
         if (isSpecialAttack) {
             attacker.onSpecialAttack(hit);
             handleSpecialHitSound(attacker, hit);
-            EffectHandler.playAt(defender.getEntity().getLocation(), new SpecialAttackSmokeEffect());
+            EffectHandler.playAt(defender.getEntity().getLocation(), new SpecialAttackSmokeEffect(hit.getAttackType()));
         }
 
         defender.registerHit(hit);
+        attacker.onHitLand(hit);
         handleHitSound(defender, hit);
         HudService.showDamageBubble(defender, hit);
 

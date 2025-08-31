@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.effect.effects;
 
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.zuma.examplePlugin.domain.combat.constants.AttackType;
 import org.zuma.examplePlugin.domain.effect.AnimatedEffect;
 
 public class SpecialAttackSmokeEffect implements AnimatedEffect {
@@ -12,6 +13,11 @@ public class SpecialAttackSmokeEffect implements AnimatedEffect {
     private final double maxHeight = 0.25;
     private final double rotationSpeed = Math.PI * 2 / durationTicks; // one rotation over duration
     private final double phaseOffset = Math.random() * Math.PI * 2;  // vary between instances
+    private final AttackType attackType;
+
+    public SpecialAttackSmokeEffect(AttackType type) {
+        this.attackType = type;
+    }
 
     @Override
     public void playAt(Location location, double time) {
@@ -32,7 +38,7 @@ public class SpecialAttackSmokeEffect implements AnimatedEffect {
             double z = location.getZ() + Math.sin(angle) * radius;
             double y = location.getY() + yOffset;
 
-            location.getWorld().spawnParticle(Particle.CLOUD, x, y, z, 1, 0.0, 0.0, 0.0, 0.0);
+            location.getWorld().spawnParticle(attackType == AttackType.MAGIC ? Particle.SOUL : Particle.CLOUD, x, y, z, 1, 0.0, 0.0, 0.0, 0.0);
         }
 
         // small central puff at the very start
