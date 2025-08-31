@@ -7,7 +7,6 @@ import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
-import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.LivingEntity;
@@ -28,6 +27,10 @@ import org.zuma.examplePlugin.domain.combat.constants.HitType;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.mob.base.AbstractInventoryOpener;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
+import org.zuma.examplePlugin.domain.mob.impl.FusionMaster;
+import org.zuma.examplePlugin.domain.particle.EffectHandler;
+import org.zuma.examplePlugin.domain.particle.effects.FusionThunderEffect;
+import org.zuma.examplePlugin.domain.particle.effects.LevelUpEffect;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -48,86 +51,11 @@ public class HudService {
             if (!(entity instanceof LivingEntity)) continue;
             AbstractMob mob = RuneQuestPlugin.getMobRegistry().getMob(entity);
 
-            if (!(mob instanceof AbstractInventoryOpener) || ((AbstractInventoryOpener) mob).getInventoryId() != InventoryId.FUSION_MASTER.asInt()) {
+            if (!(mob instanceof FusionMaster)) {
                 continue;
             }
 
-            new BukkitRunnable() {
-                int thundersLeft = gemsInserted;
-
-                @Override
-                public void run() {
-                    try {
-
-                        if (entity.isDead() || thundersLeft == 0) {
-                            this.cancel();
-                            return;
-                        }
-
-                        entity.getWorld().strikeLightningEffect(entity.getLocation());
-                        SoundType.FUSION_SUCCESS_2.play(entity.getLocation());
-                        SoundType.FUSION_MASTER_ROAR.play(entity.getLocation());
-                        thundersLeft -= 1;
-
-
-                    } catch (Exception e) {
-                        // Do nothing
-                    }
-                }
-            }.runTaskTimer(RuneQuestPlugin.getInstance(), 20L, 10L);
-
-            new BukkitRunnable() {
-                int tick = 0;
-                final int holdTicks = 60;
-                final float startPitch = entity.getLocation().getPitch();
-                final float targetPitch = -80f;
-
-                @Override
-                public void run() {
-                    try {
-                        Player p = player.asBukkitPlayer();
-
-                        if (entity.isDead() || p == null || !p.isOnline()) {
-                            this.cancel();
-                            return;
-                        }
-
-                        // Spawn random Ender particles around the entity every tick
-                        Location particleLoc = entity.getLocation().add(
-                                (Math.random() - 0.5) * 3.5, // x offset [-0.75, 0.75]
-                                Math.random() * 3.5,         // y offset [0, 1.5]
-                                (Math.random() - 0.5) * 3.5  // z offset [-0.75, 0.75]
-                        );
-                        entity.getWorld().spawnParticle(Particle.CRIMSON_SPORE, particleLoc, 1, 0, 0, 0, 0);
-                        entity.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, particleLoc, 1, 0, 0, 0, 0);
-
-                        if (tick <= 20) { // about 1 second to look up smoothly
-                            float pitch = startPitch + ((targetPitch - startPitch) * tick / 20f);
-                            Location loc = entity.getLocation();
-                            loc.setPitch(pitch);
-                            entity.teleport(loc);
-                        } else if (tick <= 20 + holdTicks) {
-                            // hold pitch at -90 (look up)
-                            Location loc = entity.getLocation();
-                            loc.setPitch(targetPitch);
-                            entity.teleport(loc);
-                        } else if (tick <= 40 + holdTicks) {
-                            // smoothly go back down to startPitch
-                            float pitch = targetPitch + ((startPitch - targetPitch) * (tick - 20 - holdTicks) / 20f);
-                            Location loc = entity.getLocation();
-                            loc.setPitch(pitch);
-                            entity.teleport(loc);
-                        } else {
-                            cancel();
-                        }
-                        tick++;
-                    } catch (Exception e) {
-                        // Do nothing
-                    }
-                }
-            }.runTaskTimer(RuneQuestPlugin.getInstance(), 0L, 1L);
-
-
+            EffectHandler.playAt(entity.getLocation(), new FusionThunderEffect(entity, player.asBukkitPlayer(), gemsInserted));
         }
 
 
@@ -184,92 +112,6 @@ public class HudService {
                 TextUtils.getGenericDuration()
         ));
         SoundType.FAIL_ACTION.play(player.asBukkitPlayer(), false);
-    }
-
-    public static void showPlayerLevelUpTitle(RunePlayer player, Skill skill) {
-        boolean isMaxedSkill = XpUtils.isMaxLevel(skill.getBaseLevel());
-        int count = isMaxedSkill ? 50 : 5;
-        int delayBetween = 5;
-        SkillType type = skill.getType();
-
-        SoundType.PLAYER_LEVEL_UP.play(player, true);
-
-
-        if (!isMaxedSkill) {
-            player.asBukkitPlayer().showTitle(Title.title(
-                    Component.text("Congratulations!", Color.SERVER_BRAND.asColor()),
-                    Component.text("Your ", Color.SUCCESS.asColor())
-                            .append(Component.text(type.getSymbol(), NamedTextColor.WHITE))
-                            .append(Component.text(" " + type.getLabel() + " level is now " + skill.getBaseLevel() + "!", Color.SUCCESS.asColor())),
-                    Title.Times.times(
-                            Duration.ofSeconds(1),
-                            Duration.ofSeconds(8, 5),
-                            Duration.ofSeconds(3)
-                    )
-            ));
-        }
-
-        if (isMaxedSkill) {
-            Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-                SoundType.PLAYER_MAX_SKILL.play(player, true);
-            }, 40);
-
-            Component congrats = Component.text("C").color(NamedTextColor.RED)
-                    .append(Component.text("O").color(NamedTextColor.GOLD))
-                    .append(Component.text("N").color(NamedTextColor.YELLOW))
-                    .append(Component.text("G").color(NamedTextColor.GREEN))
-                    .append(Component.text("R").color(NamedTextColor.AQUA))
-                    .append(Component.text("A").color(NamedTextColor.DARK_AQUA))
-                    .append(Component.text("T").color(NamedTextColor.BLUE))
-                    .append(Component.text("U").color(NamedTextColor.LIGHT_PURPLE))
-                    .append(Component.text("L").color(NamedTextColor.DARK_PURPLE))
-                    .append(Component.text("A").color(NamedTextColor.DARK_RED))
-                    .append(Component.text("T").color(NamedTextColor.DARK_GREEN))
-                    .append(Component.text("I").color(NamedTextColor.DARK_GRAY))
-                    .append(Component.text("O").color(NamedTextColor.WHITE))
-                    .append(Component.text("N").color(NamedTextColor.GRAY))
-                    .append(Component.text("S").color(NamedTextColor.GREEN))
-                    .append(Component.text("!").color(NamedTextColor.GOLD));
-
-            player.asBukkitPlayer().showTitle(Title.title(
-                    congrats,
-                    Component.text("No way! You have MAXED your ", Color.SUCCESS.asColor())
-                            .append(Component.text(type.getSymbol(), NamedTextColor.WHITE))
-                            .append(Component.text(" " + type.getLabel() + " level!", Color.SUCCESS.asColor())),
-                    Title.Times.times(
-                            Duration.ofSeconds(1),
-                            Duration.ofSeconds(10),
-                            Duration.ofSeconds(3)
-                    )
-            ));
-        }
-
-        for (int i = 0; i < count; i++) {
-            int delay = i * delayBetween;
-            Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-                Location loc = player.asBukkitPlayer().getLocation().add(0, 1, 0);
-                Firework firework = loc.getWorld().spawn(loc, Firework.class);
-
-                FireworkMeta meta = firework.getFireworkMeta();
-                meta.setPower(isMaxedSkill ? 2 : 0);
-
-                if (isMaxedSkill) {
-                    meta.addEffect(FireworkUtils.getRandomEffect());
-                } else {
-                    meta.addEffect(FireworkEffect.builder()
-                            .withColor(org.bukkit.Color.AQUA)
-                            .withFade(org.bukkit.Color.WHITE)
-                            .with(FireworkEffect.Type.BURST)
-                            .flicker(true)
-                            .trail(true)
-                            .build());
-                }
-
-                firework.setFireworkMeta(meta);
-            }, delay);
-        }
-
-
     }
 
     private static void updateVanillaHealth(RunePlayer player) {

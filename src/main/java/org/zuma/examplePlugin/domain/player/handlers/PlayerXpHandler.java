@@ -6,6 +6,8 @@ import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
+import org.zuma.examplePlugin.domain.particle.EffectHandler;
+import org.zuma.examplePlugin.domain.particle.effects.LevelUpEffect;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -70,7 +72,7 @@ public class PlayerXpHandler {
         if (leveledUp) {
             int availableRecipesAfterLevelUp = RuneQuestPlugin.getRecipeHandler().getAvailableRecipesNumber(player);
 
-            HudService.showPlayerLevelUpTitle(player, skill);
+            EffectHandler.playAt(() -> player.asBukkitPlayer().getLocation(), new LevelUpEffect(player.asBukkitPlayer(), skill));
             player.setCombatLvl(XpUtils.getCombatLevelFromSkills(player.getSkills()));
             player.getActionBar().showLevelUp(skill, availableRecipesAfterLevelUp - availableRecipesBeforeLevelUp);
         }
