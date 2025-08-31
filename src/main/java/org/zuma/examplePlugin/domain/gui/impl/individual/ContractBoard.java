@@ -54,12 +54,4 @@ public class ContractBoard extends IndividualGUI {
         event.setCancelled(true);
     }
 
-    @Override
-    public void onInventoryClose(@Nullable InventoryCloseEvent event, @Nullable RunePlayer player) {
-        if (player != null) {
-            SoundType.UI_SPOOKY_INVENTORY_OPEN.play(player, false);
-        }
-    }
-
-
 }

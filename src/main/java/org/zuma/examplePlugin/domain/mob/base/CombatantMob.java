@@ -18,7 +18,6 @@ import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
-import org.zuma.examplePlugin.domain.combat.constants.AttackType;
 import org.zuma.examplePlugin.domain.xp.PendingXPHandler;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
 import org.zuma.examplePlugin.domain.mob.meta.CombatantMobMeta;
@@ -105,7 +104,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         if (maxHealth <= 0) maxHealth = 1.0;
 
         // Apply the hit to the custom health system
-        this.health = Math.max(0, this.health - hit.damage());
+        this.health = Math.max(0, this.health - hit.getDamage());
 
         // Scale custom health to the entity's real health bar
         double scaledHealth = maxHealth * ((double) this.health / this.maxHealth);
@@ -113,10 +112,10 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         scaledHealth = Math.max(0, Math.min(maxHealth, scaledHealth));
 
         // Set killer metadata on last hit
-        if (scaledHealth == 0 && hit.attacker().getEntity() instanceof Player playerAttacker) {
+        if (scaledHealth == 0 && hit.getAttacker().getEntity() instanceof Player playerAttacker) {
             living.setMetadata("killer", new FixedMetadataValue(RuneQuestPlugin.getInstance(), playerAttacker.getUniqueId().toString()));
 
-            RuneEntityDeathEvent event = new RuneEntityDeathEvent(hit.attacker(), hit.defender(), hit, hit.type());
+            RuneEntityDeathEvent event = new RuneEntityDeathEvent(hit.getAttacker(), hit.getDefender(), hit, hit.getAttackType());
             Bukkit.getServer().getPluginManager().callEvent(event);
         }
 

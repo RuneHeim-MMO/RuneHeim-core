@@ -36,7 +36,7 @@ public enum Color {
     SKILL_BAR_EMPTY("#448555"),
     SKILL_BAR_FILL("#55e67b"),
 
-    SPECIAL_BAR_EMPTY("#448555"),
+    SPECIAL_BAR_EMPTY("#1F1F1F"),
     SPECIAL_BAR_FILL("#55e67b"),
 
     MANA_BAR_EMPTY("#2f3887"),

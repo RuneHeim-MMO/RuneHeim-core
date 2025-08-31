@@ -13,6 +13,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.InventoryHolder;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
@@ -32,7 +33,7 @@ public class BlockListener implements Listener {
 
     }
 
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.useInteractedBlock() == Event.Result.DENY ||
                 event.useItemInHand() == Event.Result.DENY) {
@@ -40,16 +41,24 @@ public class BlockListener implements Listener {
             return;
         }
 
+     /*   if (event.getAction().equals(Action.LEFT_CLICK_AIR) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
+            return;
+        }*/
+
+        // guard for main hand only
+        if (event.getHand() == null || event.getHand() != EquipmentSlot.HAND) {
+            return;
+        }
 
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_AIR) {
             return;
         }
 
+
         Player player = event.getPlayer();
         Block dumbBlock = event.getClickedBlock() != null ? event.getClickedBlock() : player.getLocation().getBlock();
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
         AbstractInteractableBlock block = manager.getAbstractInteractableBlock(dumbBlock);
-
 
         if (runePlayer == null || block == null) {
             return;

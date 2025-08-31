@@ -99,7 +99,7 @@ public class TerritoryHandler {
     private void handlePlayerEnterTerritory(Player player, Territory territory) {
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
 
-        if (runePlayer == null) {
+        if (runePlayer == null || runePlayer.isDead()) {
             return;
         }
 

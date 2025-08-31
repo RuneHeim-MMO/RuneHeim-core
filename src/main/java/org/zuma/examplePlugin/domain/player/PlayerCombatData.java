@@ -12,12 +12,14 @@ public class PlayerCombatData {
     private final RunePlayer player;
     private int combatLvl, health;
     private Long damagedAt;
+    private float specialEnergy;
 
     public PlayerCombatData(RunePlayer player, int health, int combatLvl) {
         this.player = player;
         this.combatLvl = combatLvl;
         this.health = health;
         this.damagedAt = System.currentTimeMillis();
+        this.specialEnergy = 1.0F;
     }
 
     public int getCombatLvl() {
@@ -55,7 +57,7 @@ public class PlayerCombatData {
             this.health = player.getMaxHealth();
         }
 
-        this.health -= Math.min(this.health, hit.damage());
+        this.health -= Math.min(this.health, hit.getDamage());
         this.damagedAt = System.currentTimeMillis();
 
         if (this.health <= 0) {
@@ -65,5 +67,25 @@ public class PlayerCombatData {
         }
 
         HudService.updateVanillaGUI(player);
+    }
+
+    public void performSpecialAttack() {
+        this.specialEnergy = Math.max(0, this.specialEnergy - 0.25F);
+    }
+
+    public boolean canPerformSpecialAttack() {
+        return this.specialEnergy > 0.25F;
+    }
+
+    public void recoverSpecialEnergy() {
+        this.specialEnergy = Math.min(1, this.specialEnergy + 0.1F);
+    }
+
+    public void resetSpecialEnergy() {
+        this.specialEnergy = 1F;
+    }
+
+    public float getSpecialEnergy() {
+        return this.specialEnergy;
     }
 }

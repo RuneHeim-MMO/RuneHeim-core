@@ -22,4 +22,14 @@ public interface CombatEntity {
 
     Entity getEntity();
 
+    default void onHitLand(Hit hit) {
+    }
+
+    default boolean isSpecialAttacking() {
+        return false;
+    }
+
+    default void onSpecialAttack(Hit hit) {
+    }
+
 }

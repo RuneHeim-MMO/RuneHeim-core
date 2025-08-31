@@ -72,6 +72,7 @@ public enum Icon {
     SCROLL_BROWN("⑬"),
 
     CHEST("Ⳃ"),
+    SPECIAL_ATTACK("Ⱍ"),
 
     FAIRY("ⰱ"),
     STAMINA("ⶼ"),
@@ -83,7 +84,6 @@ public enum Icon {
     GREEN_GEM("⮩"),
 
     PROGRESS_TALL_START("┉"),
-    PROGRESS_GEM_TALL_START("⢽"),
     PROGRESS_SKULL_TALL_END("ⶡ"),
     PROGRESS_TALL_END("▨"),
     PROGRESS_TALL_SEGMENT("↕"),
@@ -92,6 +92,9 @@ public enum Icon {
     PROGRESS_SHORT_END("≖"),
     PROGRESS_SHORT_SEGMENT("⌨"),
 
+    SPECIAL_ATTACK_AVAILBLE_BADGE("↪"),
+    SPECIAL_ATTACK_UNAVAILABLE_BADGE("※"),
+    FAIRY_BADGE("⣮"),
     LOGO("◾"),
     LOGO_FULL("⍗");
 

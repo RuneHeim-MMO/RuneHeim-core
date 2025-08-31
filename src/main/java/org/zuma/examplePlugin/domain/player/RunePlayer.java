@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.core.constants.Color;
@@ -56,6 +57,7 @@ public class RunePlayer implements CombatEntity {
     private final List<InteractiveActionStrategy> pendingActions;
     private List<String> discoveredTerritoryIds;
     private Location getSafeLocation; // is set when player is is spectator mode.
+    private boolean isDead;
 
     public RunePlayer(UUID uuid, EnumMap<SkillType, Skill> skills) {
         this.uuid = uuid;
@@ -73,6 +75,7 @@ public class RunePlayer implements CombatEntity {
         this.pouchCoins = 0;
         this.pendingActions = new ArrayList<>();
         this.discoveredTerritoryIds = new ArrayList<>();
+        this.isDead = false;
 
         HudService.updateVanillaGUI(this);
     }
@@ -281,5 +284,45 @@ public class RunePlayer implements CombatEntity {
 
     public boolean isInCombat() {
         return this.combatData.isInCombat();
+    }
+
+    public void onHitLand(Hit hit) {
+        if (hit.getDamage() > 0 && !hit.isSpecialAttack()) {
+            combatData.recoverSpecialEnergy();
+        }
+    }
+
+    public boolean isSpecialAttacking() {
+        return asBukkitPlayer().isSneaking() && this.combatData.canPerformSpecialAttack();
+    }
+
+    public boolean canPerformSpecialAttack() {
+        return this.combatData.canPerformSpecialAttack();
+    }
+
+    public void onSpecialAttack(Hit hit) {
+        this.combatData.performSpecialAttack();
+
+        Entity defender = hit.getDefender().getEntity();
+
+        if (defender != null) {
+            defender.setVelocity(defender.getVelocity().add(new Vector(0, 0.4, 0)));
+        }
+    }
+
+    public int getSpecialEnergyPercent() {
+        return (int) (this.combatData.getSpecialEnergy() * 100);
+    }
+
+    public void resetSpecialEnergy() {
+        this.combatData.resetSpecialEnergy();
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
     }
 }

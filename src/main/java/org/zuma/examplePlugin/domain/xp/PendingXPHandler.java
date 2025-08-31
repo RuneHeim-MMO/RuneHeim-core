@@ -88,11 +88,11 @@ public class PendingXPHandler {
     }
 
     public void calculatePendingXP(Hit hit) {
-        if (hit.hitType() == HitType.MISS) {
+        if (hit.getHitType() == HitType.MISS) {
             return;
         }
 
-        Entity attacker = hit.attacker().getEntity();
+        Entity attacker = hit.getAttacker().getEntity();
 
         if (!(attacker instanceof Player livingAttacker)) {
             return;
@@ -113,12 +113,12 @@ public class PendingXPHandler {
         }
 
         PendingXpContainer container = pendingPlayerXP.get(uuid);
-        int damage = hit.damage();
+        int damage = hit.getDamage();
 
         container.updateLastInteraction(now);
         container.addXP(SkillType.HITPOINTS, damage * HP_SKILL_XP_PER_DMG_POINT);
 
-        switch (hit.type()) {
+        switch (hit.getAttackType()) {
             case RANGED -> container.addXP(SkillType.RANGED, damage * COMBAT_SKILL_XP_PER_DMG_POINT);
             case MELEE -> {
                 container.addXP(SkillType.ATTACK, damage * COMBAT_SKILL_XP_PER_DMG_POINT);

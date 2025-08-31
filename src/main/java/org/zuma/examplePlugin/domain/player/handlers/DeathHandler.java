@@ -4,7 +4,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Mob;
@@ -18,7 +17,6 @@ import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
-import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -38,7 +36,7 @@ public class DeathHandler {
 
     public static void handlePlayerDeath(RunePlayer runePlayer, Hit lastHit) {
 
-        RuneEntityDeathEvent event = new RuneEntityDeathEvent(lastHit.attacker(), lastHit.defender(), lastHit, lastHit.type());
+        RuneEntityDeathEvent event = new RuneEntityDeathEvent(lastHit.getAttacker(), lastHit.getDefender(), lastHit, lastHit.getAttackType());
         Bukkit.getServer().getPluginManager().callEvent(event);
 
         Player player = runePlayer.asBukkitPlayer();
@@ -55,14 +53,14 @@ public class DeathHandler {
             }
         }
 
-        int droppedCoinsAmount = pouchCoins == 0 ? 0 : Math.toIntExact(pouchCoins * 10 / 100); // 10 %
-        droppedCoinsAmount = rand.nextInt(droppedCoinsAmount) + 1;
+        long maxDrop = Math.toIntExact(pouchCoins * 10 / 100);
+        long droppedCoinsAmount = (maxDrop > 0) ? rand.nextInt((int) maxDrop) + 1 : 0;
 
-        if (pouchCoins >= droppedCoinsAmount) {
+        if (droppedCoinsAmount > 0 && pouchCoins >= droppedCoinsAmount) {
             AbstractItemType coinType = RuneQuestPlugin.getItemRegistry().getType(ItemId.COINS.asInt());
 
             if (coinType != null) {
-                ItemStack newCoinStack = coinType.createItemStackOfType(droppedCoinsAmount);
+                ItemStack newCoinStack = coinType.createItemStackOfType((int) droppedCoinsAmount);
                 runePlayer.setPouchCoins(pouchCoins - droppedCoinsAmount, false);
                 playerLocation.getWorld().dropItemNaturally(playerLocation, newCoinStack);
                 HudService.sendInfoMessage(runePlayer, Component.text("You have dropped ").append(CurrencyUtils.getCoinsCurrencyComponent(droppedCoinsAmount)).append(Component.text(" coins.")));
@@ -77,6 +75,8 @@ public class DeathHandler {
         }
 
         runePlayer.setSpectatorMode(spawnPoint);
+        runePlayer.resetSpecialEnergy();
+        runePlayer.setDead(true);
 
         SoundType.DEATH_SCREEN.play(player, false);
         SoundType.DEATH_SCREEN_1.play(player, false);
@@ -111,6 +111,7 @@ public class DeathHandler {
                     Title.Times.times(Duration.ZERO, Duration.ofMillis(100), Duration.ofMillis(0))
             ));
 
+            runePlayer.setDead(false);
             runePlayer.setSurvivalMode();
             player.teleport(finalSpawnPoint);
             runePlayer.setHealth(runePlayer.getSkill(SkillType.HITPOINTS).getLevelWithBonuses(), RunePlayerHealthChangedEvent.Cause.RESPAWN);
