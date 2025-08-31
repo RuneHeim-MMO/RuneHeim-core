@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.particle.effects;
+package org.zuma.examplePlugin.domain.effect.effects;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -14,7 +14,7 @@ import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.FireworkUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
-import org.zuma.examplePlugin.domain.particle.AnimatedEffect;
+import org.zuma.examplePlugin.domain.effect.AnimatedEffect;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 

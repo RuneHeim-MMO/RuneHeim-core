@@ -70,13 +70,13 @@ public class ItemListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = false)
-    // Some fucking shithead is cancelling this SOMEWHERE for no reason...
+     // Some fucking shithead is cancelling this SOMEWHERE for no reason...
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.getAction().equals(Action.LEFT_CLICK_AIR) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
+      /*  if (event.getAction().equals(Action.LEFT_CLICK_AIR) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             return;
-        }
+        }*/
 
-        if (event.getHand() != EquipmentSlot.HAND) {
+        if (event.getHand() == null || event.getHand() != EquipmentSlot.HAND) {
             return;
         }
 

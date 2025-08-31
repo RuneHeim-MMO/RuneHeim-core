@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.particle.effects;
+package org.zuma.examplePlugin.domain.effect.effects;
 
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -6,7 +6,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.core.constants.SoundType;
-import org.zuma.examplePlugin.domain.particle.AnimatedEffect;
+import org.zuma.examplePlugin.domain.effect.AnimatedEffect;
 
 public class FusionThunderEffect implements AnimatedEffect {
 

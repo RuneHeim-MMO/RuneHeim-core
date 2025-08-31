@@ -25,8 +25,6 @@ import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.SkillModifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
-import org.zuma.examplePlugin.domain.particle.EffectHandler;
-import org.zuma.examplePlugin.domain.particle.effects.LevelUpEffect;
 import org.zuma.examplePlugin.domain.party.Party;
 import org.zuma.examplePlugin.domain.player.actions.ActionParams;
 import org.zuma.examplePlugin.domain.player.handlers.DeathHandler;

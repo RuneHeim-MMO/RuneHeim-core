@@ -75,18 +75,6 @@ public class HitListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = false)
-    public void onProjectileHitMob(EntityDamageByEntityEvent event) {
-        if (!(event.getEntity() instanceof Mob mobEntity)) return;
-
-        if (event.getDamager() instanceof Arrow arrow && arrow.getShooter() instanceof Player shooter) {
-            AttributeInstance followRange = mobEntity.getAttribute(Attribute.GENERIC_FOLLOW_RANGE);
-            if (followRange != null) followRange.setBaseValue(100);
-            mobEntity.setTarget(shooter);
-        }
-    }
-
-
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onEntityAttackEntityProjectile(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player player && player.isOp() && player.getGameMode() == GameMode.CREATIVE)) {
@@ -127,6 +115,12 @@ public class HitListener implements Listener {
             }
 
             if (hit != null && hit.damage() == 0) {
+                if (defenderEntity instanceof Mob mob) {
+                    mob.setTarget(livingShooter);
+
+                    AttributeInstance followRange = mob.getAttribute(Attribute.GENERIC_FOLLOW_RANGE);
+                    if (followRange != null) followRange.setBaseValue(100);
+                }
                 event.setCancelled(true);
             }
 
