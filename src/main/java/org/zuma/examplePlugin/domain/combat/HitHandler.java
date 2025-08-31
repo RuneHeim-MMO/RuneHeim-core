@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.domain.combat.constants.AttackType;
+import org.zuma.examplePlugin.domain.effect.EffectHandler;
+import org.zuma.examplePlugin.domain.effect.effects.SpecialAttackSmokeEffect;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.combat.RuneEntityDamageEntityEvent;
@@ -20,26 +22,26 @@ import java.util.UUID;
 public class HitHandler {
     private static final List<UUID> playersInDebugMode = new ArrayList<>();
 
-    private void handleHitSound(CombatEntity entity, AttackType type, Hit hit) {
+    private void handleHitSound(CombatEntity entity, Hit hit) {
         SoundType sound = null;
 
-        switch (hit.hitType()) {
+        switch (hit.getHitType()) {
             case CRIT -> {
-                switch (type) {
+                switch (hit.getAttackType()) {
                     case MELEE -> sound = SoundType.HIT_MELEE_CRITICAL;
                     case MAGIC -> sound = SoundType.HIT_MAGIC_CRITICAL;
                     case RANGED -> sound = SoundType.HIT_RANGED_CRITICAL;
                 }
             }
             case REGULAR -> {
-                switch (type) {
+                switch (hit.getAttackType()) {
                     case MELEE -> sound = SoundType.HIT_MELEE_REGULAR;
                     case MAGIC -> sound = SoundType.HIT_MAGIC_REGULAR;
                     case RANGED -> sound = SoundType.HIT_RANGED_REGULAR;
                 }
             }
             case MISS -> {
-                switch (type) {
+                switch (hit.getAttackType()) {
                     case MELEE -> sound = SoundType.HIT_MELEE_MISS;
                     case MAGIC -> sound = SoundType.HIT_MAGIC_MISS;
                     case RANGED -> sound = SoundType.HIT_RANGED_MISS;
@@ -52,10 +54,10 @@ public class HitHandler {
         }
     }
 
-    private void handleSpecialHitSound(CombatEntity entity, AttackType type) {
+    private void handleSpecialHitSound(CombatEntity entity, Hit hit) {
         SoundType sound = null;
 
-        switch (type) {
+        switch (hit.getAttackType()) {
             case MELEE -> sound = SoundType.HIT_MELEE_SPECIAL;
             case RANGED -> sound = SoundType.HIT_RANGED_SPECIAL;
             case MAGIC -> sound = SoundType.HIT_MAGIC_SPECIAL;
@@ -79,17 +81,7 @@ public class HitHandler {
             return null;
         }
 
-        if (isSpecialAttack) {
-            attacker.onSpecialAttack(hit);
-            handleSpecialHitSound(attacker, type);
-        }
-
-        attacker.onHitLand(hit);
-        defender.registerHit(hit);
-        handleHitSound(defender, type, hit);
-        HudService.showDamageBubble(defender, hit, type);
-
-        showHitDebugInfo(attacker, defender, hit);
+        applyHit(attacker, defender, hit);
         return hit;
     }
 
@@ -106,17 +98,7 @@ public class HitHandler {
             return null;
         }
 
-        if (isSpecialAttack) {
-            attacker.onSpecialAttack(hit);
-            handleSpecialHitSound(attacker, type);
-        }
-
-        attacker.onHitLand(hit);
-        defender.registerHit(hit);
-        handleHitSound(defender, type, hit);
-        HudService.showDamageBubble(defender, hit, type);
-
-        showHitDebugInfo(attacker, defender, hit);
+        applyHit(attacker, defender, hit);
         return hit;
     }
 
@@ -133,17 +115,24 @@ public class HitHandler {
             return null;
         }
 
+        applyHit(attacker, defender, hit);
+        return hit;
+    }
+
+    private void applyHit(CombatEntity attacker, CombatEntity defender, Hit hit) {
+        boolean isSpecialAttack = attacker.isSpecialAttacking();
+
         if (isSpecialAttack) {
             attacker.onSpecialAttack(hit);
-            handleSpecialHitSound(attacker, type);
+            handleSpecialHitSound(attacker, hit);
+            EffectHandler.playAt(defender.getEntity().getLocation(), new SpecialAttackSmokeEffect());
         }
 
         defender.registerHit(hit);
-        handleHitSound(defender, type, hit);
-        HudService.showDamageBubble(defender, hit, type);
+        handleHitSound(defender, hit);
+        HudService.showDamageBubble(defender, hit);
 
         showHitDebugInfo(attacker, defender, hit);
-        return hit;
     }
 
     private void showHitDebugInfo(CombatEntity attacker, CombatEntity defender, Hit hit) {
@@ -174,16 +163,16 @@ public class HitHandler {
         if (isAttackerInDebug && attackerEntity instanceof Player attackerPlayer) {
             Component message = Component.text("⚔ ", NamedTextColor.GOLD)
                     .append(Component.text("Hit: ", NamedTextColor.YELLOW))
-                    .append(Component.text(hit.damage(), NamedTextColor.RED))
+                    .append(Component.text(hit.getDamage(), NamedTextColor.RED))
                     .append(Component.text(" | ", NamedTextColor.GRAY))
                     .append(Component.text("Max Hit: ", NamedTextColor.YELLOW))
-                    .append(Component.text(hit.maxDamage(), NamedTextColor.RED))
+                    .append(Component.text(hit.getMaxDamage(), NamedTextColor.RED))
                     .append(Component.text(" | ", NamedTextColor.GRAY))
                     .append(Component.text("Hit Chance: ", NamedTextColor.YELLOW))
-                    .append(Component.text(String.format("%.3f", hit.chance()) + " %", NamedTextColor.GREEN))
+                    .append(Component.text(String.format("%.3f", hit.getSuccessHitChance()) + " %", NamedTextColor.GREEN))
                     .append(Component.text(" | ", NamedTextColor.GRAY))
                     .append(Component.text("Type: ", NamedTextColor.YELLOW))
-                    .append(Component.text(hit.type().toString(), NamedTextColor.AQUA));
+                    .append(Component.text(hit.getAttackType().toString(), NamedTextColor.AQUA));
 
             attackerPlayer.sendMessage(message);
         }
@@ -191,16 +180,16 @@ public class HitHandler {
         if (isDefenderInDebug && defenderEntity instanceof Player defenderPlayer) {
             Component message = Component.text("🛡 ", NamedTextColor.DARK_RED)
                     .append(Component.text("Hit: ", NamedTextColor.YELLOW))
-                    .append(Component.text(hit.damage(), NamedTextColor.RED))
+                    .append(Component.text(hit.getDamage(), NamedTextColor.RED))
                     .append(Component.text(" | ", NamedTextColor.GRAY))
                     .append(Component.text("Max Hit: ", NamedTextColor.YELLOW))
-                    .append(Component.text(hit.maxDamage(), NamedTextColor.RED))
+                    .append(Component.text(hit.getMaxDamage(), NamedTextColor.RED))
                     .append(Component.text(" | ", NamedTextColor.GRAY))
                     .append(Component.text("Hit Chance: ", NamedTextColor.YELLOW))
-                    .append(Component.text(String.format("%.2f", hit.chance()) + " %", NamedTextColor.GREEN))
+                    .append(Component.text(String.format("%.2f", hit.getSuccessHitChance()) + " %", NamedTextColor.GREEN))
                     .append(Component.text(" | ", NamedTextColor.GRAY))
                     .append(Component.text("Type: ", NamedTextColor.YELLOW))
-                    .append(Component.text(hit.type().toString(), NamedTextColor.AQUA));
+                    .append(Component.text(hit.getAttackType().toString(), NamedTextColor.AQUA));
 
             defenderPlayer.sendMessage(message);
         }

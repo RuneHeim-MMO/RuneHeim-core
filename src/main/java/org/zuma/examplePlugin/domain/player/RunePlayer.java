@@ -285,7 +285,7 @@ public class RunePlayer implements CombatEntity {
     }
 
     public void onHitLand(Hit hit) {
-        if (hit.damage() > 0 && !hit.isSpecialAttack()) {
+        if (hit.getDamage() > 0 && !hit.isSpecialAttack()) {
             combatData.recoverSpecialEnergy();
         }
     }
@@ -297,7 +297,7 @@ public class RunePlayer implements CombatEntity {
     public void onSpecialAttack(Hit hit) {
         this.combatData.performSpecialAttack();
 
-        Entity defender = hit.defender().getEntity();
+        Entity defender = hit.getDefender().getEntity();
 
         if (defender != null) {
             defender.setVelocity(defender.getVelocity().add(new Vector(0, 0.4, 0)));

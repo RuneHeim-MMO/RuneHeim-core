@@ -73,14 +73,14 @@ public class HudService {
         spawnVerticalHologramBubble(player, Color.SUCCESS.asSpigotHex() + "+ " + xpStr + " " + (isPartySource ? "[Party]" : ""));
     }
 
-    public static void showDamageBubble(CombatEntity entity, Hit hit, AttackType type) {
-        boolean isZeroHit = hit.hitType() == HitType.MISS;
+    public static void showDamageBubble(CombatEntity entity, Hit hit) {
+        boolean isZeroHit = hit.getHitType() == HitType.MISS;
         boolean isHitByPlayer = !(entity.getEntity() instanceof Player);
-        boolean isCriticalHit = hit.hitType() == HitType.CRIT;
+        boolean isCriticalHit = hit.getHitType() == HitType.CRIT;
 
-        String color = hit.damage() == 0 ? Color.ZERO_HIT.asSpigotHex() : isCriticalHit ? Color.CRITICAL_HIT.asSpigotHex() : Color.DAMAGE_HIT.asSpigotHex();
-        String symbol = type == AttackType.MELEE ? Icon.SWORD.get() : type == AttackType.RANGED ? Icon.ARROW.get() : Icon.LEGENDARY.get(); // Todo: Replace magic icon!
-        String msg = "§f" + symbol + (isHitByPlayer ? "§l" : "") + " " + color + (isHitByPlayer ? "§l" : "") + (isCriticalHit ? "CRIT! " : "") + (isZeroHit ? "" : "-") + hit.damage() + (hit.isSpecialAttack() ? " §f" + Icon.CLOVER.get() : "");
+        String color = hit.getDamage() == 0 ? Color.ZERO_HIT.asSpigotHex() : isCriticalHit ? Color.CRITICAL_HIT.asSpigotHex() : Color.DAMAGE_HIT.asSpigotHex();
+        String symbol = hit.getAttackType() == AttackType.MELEE ? Icon.SWORD.get() : hit.getAttackType() == AttackType.RANGED ? Icon.ARROW.get() : Icon.LEGENDARY.get(); // Todo: Replace magic icon!
+        String msg = "§f" + symbol + (isHitByPlayer ? "§l" : "") + " " + color + (isHitByPlayer ? "§l" : "") + (isCriticalHit ? "CRIT! " : "") + (isZeroHit ? "" : "-") + hit.getDamage() + (hit.isSpecialAttack() ? " §f" + Icon.CLOVER.get() : "");
 
         spawnVerticalHologramBubble(entity.getEntity().getLocation(), msg);
 

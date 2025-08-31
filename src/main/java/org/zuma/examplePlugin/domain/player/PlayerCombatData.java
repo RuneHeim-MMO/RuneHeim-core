@@ -57,7 +57,7 @@ public class PlayerCombatData {
             this.health = player.getMaxHealth();
         }
 
-        this.health -= Math.min(this.health, hit.damage());
+        this.health -= Math.min(this.health, hit.getDamage());
         this.damagedAt = System.currentTimeMillis();
 
         if (this.health <= 0) {

@@ -64,7 +64,7 @@ public class HitListener implements Listener {
             hit = hitHandler.handleMeleeHit(attacker, defender);
         }
 
-        if (hit != null && hit.damage() == 0) {
+        if (hit != null && hit.getDamage() == 0) {
             event.setCancelled(true);
             // Even if hit is 0, set mobs target to attacker.
             if (defender.getEntity() instanceof Mob mob && attacker.getEntity() instanceof LivingEntity livingAttacker) {
@@ -114,7 +114,7 @@ public class HitListener implements Listener {
                 }
             }
 
-            if (hit != null && hit.damage() == 0) {
+            if (hit != null && hit.getDamage() == 0) {
                 if (defenderEntity instanceof Mob mob) {
                     mob.setTarget(livingShooter);
 

@@ -3,7 +3,6 @@ package org.zuma.examplePlugin.domain.mob.impl;
 import com.ticxo.modelengine.api.ModelEngineAPI;
 import com.ticxo.modelengine.api.model.ModeledEntity;
 import io.papermc.paper.event.entity.EntityKnockbackEvent;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
@@ -58,7 +57,7 @@ public class CombatDummy extends GenericCombatant {
 
     @Override
     public void registerHit(Hit hit) {
-        hit.overrideDamage(hit.maxDamage());
+        hit.overrideDamage(hit.getMaxDamage());
 
         Entity thisEntity = getEntity();
         if (thisEntity == null) {
@@ -74,7 +73,7 @@ public class CombatDummy extends GenericCombatant {
             });
 
             Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-                CombatEntity attacker = hit.attacker();
+                CombatEntity attacker = hit.getAttacker();
 
                 if (attacker.getEntity() == null) return;
                 Location dummyLocation = thisEntity.getLocation();
@@ -84,7 +83,7 @@ public class CombatDummy extends GenericCombatant {
                     Hit combatDummyHit = new Hit(this, attacker, AttackType.MELEE, 1, HitType.REGULAR, 1, 100, false);
 
                     attacker.registerHit(combatDummyHit);
-                    HudService.showDamageBubble(attacker, combatDummyHit, AttackType.MELEE);
+                    HudService.showDamageBubble(attacker, combatDummyHit);
                     SoundType.HIT_MELEE_REGULAR.play(attackerLocation);
                     attacker.getEntity().setVelocity(attacker.getEntity().getVelocity().add(new Vector(0, 0.2, 0)));
                 }

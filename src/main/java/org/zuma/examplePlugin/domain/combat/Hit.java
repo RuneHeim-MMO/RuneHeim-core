@@ -7,7 +7,7 @@ import org.zuma.examplePlugin.domain.combat.constants.HitType;
 public class Hit {
     private final CombatEntity attacker;
     private final CombatEntity defender;
-    private final AttackType type;
+    private final AttackType attackType;
     private int damage;
     private final HitType hitType;
     private final int maxDamage;
@@ -15,11 +15,11 @@ public class Hit {
     private final boolean isSpecialAttack;
 
     // Canonical constructor
-    public Hit(CombatEntity attacker, CombatEntity defender, AttackType type, int damage,
+    public Hit(CombatEntity attacker, CombatEntity defender, AttackType attackType, int damage,
                HitType hitType, int maxDamage, double chance, boolean isSpecialAttack) {
         this.attacker = attacker;
         this.defender = defender;
-        this.type = type;
+        this.attackType = attackType;
         this.damage = damage;
         this.hitType = hitType;
         this.maxDamage = maxDamage;
@@ -28,31 +28,31 @@ public class Hit {
     }
 
     // Getters (same names as record fields)
-    public CombatEntity attacker() {
+    public CombatEntity getAttacker() {
         return attacker;
     }
 
-    public CombatEntity defender() {
+    public CombatEntity getDefender() {
         return defender;
     }
 
-    public AttackType type() {
-        return type;
+    public AttackType getAttackType() {
+        return attackType;
     }
 
-    public int damage() {
+    public int getDamage() {
         return damage;
     }
 
-    public HitType hitType() {
+    public HitType getHitType() {
         return hitType;
     }
 
-    public int maxDamage() {
+    public int getMaxDamage() {
         return maxDamage;
     }
 
-    public double chance() {
+    public double getSuccessHitChance() {
         return chance;
     }
 

@@ -4,7 +4,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Mob;
@@ -18,7 +17,6 @@ import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
-import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -38,7 +36,7 @@ public class DeathHandler {
 
     public static void handlePlayerDeath(RunePlayer runePlayer, Hit lastHit) {
 
-        RuneEntityDeathEvent event = new RuneEntityDeathEvent(lastHit.attacker(), lastHit.defender(), lastHit, lastHit.type());
+        RuneEntityDeathEvent event = new RuneEntityDeathEvent(lastHit.getAttacker(), lastHit.getDefender(), lastHit, lastHit.getAttackType());
         Bukkit.getServer().getPluginManager().callEvent(event);
 
         Player player = runePlayer.asBukkitPlayer();
