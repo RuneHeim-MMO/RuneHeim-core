@@ -14,12 +14,12 @@ public class PlayerCombatData {
     private Long damagedAt;
     private float specialEnergy;
 
-    public PlayerCombatData(RunePlayer player, int health, int combatLvl) {
+    public PlayerCombatData(RunePlayer player, int health, int combatLvl, float specialEnergy) {
         this.player = player;
         this.combatLvl = combatLvl;
         this.health = health;
         this.damagedAt = System.currentTimeMillis();
-        this.specialEnergy = 1.0F;
+        this.specialEnergy = specialEnergy;
     }
 
     public int getCombatLvl() {
@@ -81,8 +81,8 @@ public class PlayerCombatData {
         this.specialEnergy = Math.min(1, this.specialEnergy + 0.1F);
     }
 
-    public void resetSpecialEnergy() {
-        this.specialEnergy = 1F;
+    public void setSpecialEnergy(int percent) {
+        this.specialEnergy = (float) percent / 100;
     }
 
     public float getSpecialEnergy() {
