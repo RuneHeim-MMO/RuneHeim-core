@@ -98,7 +98,7 @@ public class AdditionalGearSlotHandler {
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> fillReservedSlots(player), 2L);
         ReservedSlot slotDef = slotsDef.get(slot);
-
+        
         if (!slots.contains(event.getSlot()) || slotDef == null) {
             return;
         }
@@ -108,7 +108,7 @@ public class AdditionalGearSlotHandler {
             return;
         }
 
-        if (!GUIControl.isGuiItem(clickedItemStack) && clickedItemStack != null) {
+        if (!GUIControl.isGuiItem(clickedItemStack) && clickedItemStack != null && !hasItemInCursor) {
             slotDef.getUnequipSound().play(player, false);
             return;
         }
@@ -121,10 +121,12 @@ public class AdditionalGearSlotHandler {
             return;
         }
 
+
         if (!ReservedSlot.isItemInCorrectSlot(slot, cursorItemType)) {
             event.setCancelled(true);
             return;
         }
+
 
         if (GUIControl.isGuiItem(clickedItemStack)) {
             ItemStack clonedCursor = cursor.clone();
