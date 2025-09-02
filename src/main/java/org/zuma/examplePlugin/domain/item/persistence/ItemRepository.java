@@ -526,7 +526,8 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.DIAMOND.asInt(), Material.COAL, ItemRarity.RARE, "Diamond", List.of("A polished diamond gem.", "Used for crafting jewelry."), null, null, true), null),
 
 
-                new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.BONES.asInt(), Material.COAL, ItemRarity.COMMON, "Bones", List.of("Remains of a fallen creature."), null, null, true), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.REMAINS, ItemId.BONES.asInt(), Material.COAL, ItemRarity.COMMON, "Bones", List.of("Remains of a fallen creature."), null, null, true),
+                        toVersionedJson(new RemainsItemMeta(10), 1)),
 
 
                 new ItemEntity(new AbstractItemMeta(ItemType.EMPTY_CONTAINER, ItemId.EMPTY_POT.asInt(), Material.COAL, ItemRarity.COMMON, "Empty Pot", List.of("A regular pot, made of clay."), null, null, true),
