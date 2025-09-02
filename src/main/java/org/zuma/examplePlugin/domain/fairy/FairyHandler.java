@@ -226,6 +226,8 @@ public class FairyHandler {
             if (state.getStamina() <= 0) {
                 player.getActionBar().setFairyStatus(FairyStatus.EXHAUSTED);
 
+                fairyMaybeConsumeFoodTick(state, player, fairy, itemType);
+
                 if (fedFairies.containsKey(playerUUID)) {
                     player.asBukkitPlayer().sendMessage(Component.text("Your fairy's stamina has run out. Feed it to keep its bonuses active.", Color.WARNING.asColor()));
                     SoundType.FAIRY_OUT_OF_STAMINA.play(player, true);
@@ -293,37 +295,43 @@ public class FairyHandler {
                 runePlayer.getActionBar().setFairyStatus(FairyStatus.READY_FOR_UPGRADE);
             }
 
-            // Feeding
-            ItemStack food = player.getInventory().getItem(ReservedSlot.FAIRY_FOOD_SLOT.getSlot());
-            AbstractItemType abstractFood = RuneQuestPlugin.getItemRegistry().getType(food);
+            fairyMaybeConsumeFoodTick(state, runePlayer, fairy, runeItem);
 
-            if (food == null || !(abstractFood instanceof FairyFood fairyFood)) {
+
+        });
+    }
+
+    private void fairyMaybeConsumeFoodTick(FairyState state, RunePlayer runePlayer, Fairy fairy, AbstractItemType fairyItem) {
+        Player player = runePlayer.asBukkitPlayer();
+        ItemStack item = player.getInventory().getItem(ReservedSlot.FAIRY_SLOT.getSlot());
+        ItemStack food = player.getInventory().getItem(ReservedSlot.FAIRY_FOOD_SLOT.getSlot());
+        AbstractItemType abstractFood = RuneQuestPlugin.getItemRegistry().getType(food);
+
+        if (item == null || food == null || !(abstractFood instanceof FairyFood fairyFood)) {
+            return;
+        }
+
+        if (100 - state.getStamina() >= fairyFood.getEnergyRestoreAmount()) {
+            FairyAutoFedEvent event = new FairyAutoFedEvent(runePlayer, fairyFood, fairy, state);
+            Bukkit.getServer().getPluginManager().callEvent(event);
+
+            if (event.isCancelled()) {
                 return;
             }
 
-            if (100 - state.getStamina() >= fairyFood.getEnergyRestoreAmount()) {
-                FairyAutoFedEvent event = new FairyAutoFedEvent(runePlayer, fairyFood, fairy, state);
-                Bukkit.getServer().getPluginManager().callEvent(event);
-
-                if (event.isCancelled()) {
-                    return;
-                }
-
-                if (food.getAmount() > 1) {
-                    food.setAmount(food.getAmount() - 1);
-                } else {
-                    player.getInventory().setItem(ReservedSlot.FAIRY_FOOD_SLOT.getSlot(), null);
-                }
-
-                slotHandler.fillReservedSlots(runePlayer);
-                state.feedFairy(fairyFood.getEnergyRestoreAmount());
-                runeItem.getMetaGenerator().updatePresentationLayer(item);
-
-                player.sendMessage(Component.text("Your fairy has eaten 1x ", Color.INFO.asColor()).append(food.displayName()).append(Component.text(".", Color.INFO.asColor())));
-                SoundType.FAIRY_FEED_SOUND.play(player, true);
+            if (food.getAmount() > 1) {
+                food.setAmount(food.getAmount() - 1);
+            } else {
+                player.getInventory().setItem(ReservedSlot.FAIRY_FOOD_SLOT.getSlot(), null);
             }
 
-        });
+            slotHandler.fillReservedSlots(runePlayer);
+            state.feedFairy(fairyFood.getEnergyRestoreAmount());
+            fairyItem.getMetaGenerator().updatePresentationLayer(item);
+
+            player.sendMessage(Component.text("Your fairy has consumed 1x ", Color.INFO.asColor()).append(food.displayName()).append(Component.text(".", Color.INFO.asColor())));
+            SoundType.FAIRY_FEED_SOUND.play(player, true);
+        }
     }
 
     private void updateT() {
