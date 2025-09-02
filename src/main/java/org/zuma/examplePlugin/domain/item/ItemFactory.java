@@ -53,8 +53,27 @@ public class ItemFactory {
             case CURRENCY -> createCurrencyItem(meta);
             case CHANCE_ITEM -> createChanceItem(meta, json);
             case XP_LAMP -> createXPLampItem(meta, json);
+            case REMAINS -> createRemainsItem(meta, json);
             default -> throw new IllegalArgumentException("Unknown item type: " + meta.type());
         };
+    }
+
+    private Remains createRemainsItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create " + meta.type() + " " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                RemainsItemMeta deserialized = new Gson().fromJson(json.meta(), RemainsItemMeta.class);
+                Remains item = new Remains(meta);
+                item.setBuryXPReward(deserialized.buryXp());
+
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
     }
 
     private AccessoryRing createAccessoryRing(AbstractItemMeta meta, @Nullable VersionedJson json) {

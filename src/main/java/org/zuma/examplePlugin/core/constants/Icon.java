@@ -61,6 +61,7 @@ public enum Icon {
     ACCESSORY_RING("⤪"),
     CLOVER("Ⅹ"),
     CONTRACT_SKULL("⥵"),
+    PRAYER("⏲"),
 
     SCROLL_RED("ⵣ"),
     SCROLL_GRAY("⁝"),

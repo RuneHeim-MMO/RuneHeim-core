@@ -33,19 +33,13 @@ public class ProgressBarAction implements InteractiveActionStrategy {
 
     public InteractiveActionStrategy startAction(RunePlayer player, ActionParams params) {
         UUID uuid = player.getUUID();
-
         // Calculate total ticks for duration (1 tick = 50 ms)
         long totalTicks = params.getDurationMs() / 50L;
-
         // Initial step count
         int baseSteps = 10;
-
         final long maxStepDuration = 20L; // 20 ticks = 1 second max
-
-        long stepDuration;  // Declare here
-
+        long stepDuration;
         int steps;
-
         // Calculate initial step duration (ticks per step)
         long calculatedStepDuration = totalTicks / baseSteps;
 
@@ -78,6 +72,10 @@ public class ProgressBarAction implements InteractiveActionStrategy {
                     if (params.getOnFailure() != null) {
                         params.getOnFailure().run();
                     }
+
+                    if (params.getOnFinally() != null) {
+                        params.getOnFinally().run();
+                    }
                     return;
                 }
 
@@ -93,6 +91,10 @@ public class ProgressBarAction implements InteractiveActionStrategy {
                     ));
 
                     params.getOnSuccess().run();
+
+                    if (params.getOnFinally() != null) {
+                        params.getOnFinally().run();
+                    }
                     return;
                 }
 
@@ -109,7 +111,9 @@ public class ProgressBarAction implements InteractiveActionStrategy {
                         .fillColor(Color.BUSY_BAR_FILL.asColor())
                         .build();
 
-                if (params.getStepSound() != null) params.getStepSound().play(onlinePlayer, true);
+                if (params.getStepSound() != null && currentSteps.get() % params.getStepSoundEveryNth() == 0) {
+                    params.getStepSound().play(onlinePlayer, true);
+                }
 
                 onlinePlayer.swingMainHand();
                 onlinePlayer.showTitle(Title.title(progressBar,
