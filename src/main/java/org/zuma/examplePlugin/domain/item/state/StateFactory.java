@@ -7,9 +7,11 @@ import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.FairyStateMeta;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.GearGemSocketsStateMeta;
+import org.zuma.examplePlugin.domain.item.state.meta.v1.MountStateMeta;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.MultiConsumableStateMeta;
 import org.zuma.examplePlugin.domain.item.state.states.FairyState;
 import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
+import org.zuma.examplePlugin.domain.item.state.states.MountState;
 import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
 
 import javax.annotation.Nullable;
@@ -23,9 +25,26 @@ public class StateFactory {
             case MULTI_CONSUMABLE -> createMultiConsumableState(abstractStateMeta, abstractStateMeta.json());
             case GEAR_GEM_SOCKETS -> createGearGemSocketsState(abstractStateMeta, abstractStateMeta.json());
             case FAIRY_STATE -> createFairyState(abstractStateMeta, abstractStateMeta.json());
+            case MOUNT_STATE -> createMountState(abstractStateMeta, abstractStateMeta.json());
             default -> null;
         };
     }
+
+    private MountState createMountState(AbstractStateMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create " + meta.type() + " state required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                MountStateMeta deserialized = gson.fromJson(json.meta(), MountStateMeta.class);
+                return new MountState(deserialized);
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
+    }
+
 
     private FairyState createFairyState(AbstractStateMeta meta, @Nullable VersionedJson json) {
         if (json == null) {

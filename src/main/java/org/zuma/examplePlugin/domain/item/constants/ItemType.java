@@ -27,7 +27,8 @@ public enum ItemType {
     XP_LAMP(23),
     ACCESSORY_AMULET(24),
     ACCESSORY_RING(25),
-    REMAINS(26);
+    REMAINS(26),
+    MOUNT(27);
 
     private final int key;
 

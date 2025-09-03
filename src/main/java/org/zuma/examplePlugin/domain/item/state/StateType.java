@@ -4,4 +4,5 @@ public enum StateType {
     MULTI_CONSUMABLE,
     GEAR_GEM_SOCKETS,
     FAIRY_STATE,
+    MOUNT_STATE,
 }

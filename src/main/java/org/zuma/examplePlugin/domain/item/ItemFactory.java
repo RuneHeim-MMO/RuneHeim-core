@@ -15,9 +15,11 @@ import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.v1.*;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.FairyStateMeta;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.GearGemSocketsStateMeta;
+import org.zuma.examplePlugin.domain.item.state.meta.v1.MountStateMeta;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.MultiConsumableStateMeta;
 import org.zuma.examplePlugin.domain.item.state.states.FairyState;
 import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
+import org.zuma.examplePlugin.domain.item.state.states.MountState;
 import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
 
 import javax.annotation.Nullable;
@@ -54,9 +56,30 @@ public class ItemFactory {
             case CHANCE_ITEM -> createChanceItem(meta, json);
             case XP_LAMP -> createXPLampItem(meta, json);
             case REMAINS -> createRemainsItem(meta, json);
+            case MOUNT -> createMountItem(meta, json);
             default -> throw new IllegalArgumentException("Unknown item type: " + meta.type());
         };
     }
+
+    private Mount createMountItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create " + meta.type() + " " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                MountMeta deserialized = new Gson().fromJson(json.meta(), MountMeta.class);
+                Mount item = new Mount(meta, deserialized.model());
+
+                item.setDefaultStateTemplate(new MountState(new MountStateMeta(deserialized.defaultLevel())));
+                item.addRequirements(deserialized.requirements());
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
+    }
+
 
     private Remains createRemainsItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {
