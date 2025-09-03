@@ -172,7 +172,9 @@ public class StateManager {
             return;
         }
 
-        Bukkit.getServer().getPluginManager().callEvent(new StateSavedEvent(matchingKey, state));
+        Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+            Bukkit.getServer().getPluginManager().callEvent(new StateSavedEvent(matchingKey, state));
+        });
 
         if (runAsync) {
             Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {

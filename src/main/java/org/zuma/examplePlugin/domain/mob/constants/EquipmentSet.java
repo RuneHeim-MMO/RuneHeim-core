@@ -51,6 +51,13 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.COINS, 1), 30)
     ))),
 
+    AUCTIONEER(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.COINS, 10000), 1),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.COINS, 1000), 5),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.COINS, 100), 20),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.COINS, 1), 30)
+    ))),
+
     GOBLIN(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.IRON_BODY), 5),
             new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.BRONZE_BOOTS), 30),

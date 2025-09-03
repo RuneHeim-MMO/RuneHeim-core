@@ -35,6 +35,7 @@ public enum MobType {
     BANK_TELLER_3(),
     INVESTMENT_BANKER(),
 
+    AUCTIONEER(),
     JEWLER(),
     DRAKKAR_BLACKSMITH(),
     GENERAL_STORE(),
