@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ActionBarManager {
+    private static final Component SPACE_DIVIDER = Component.text(" ".repeat(4));
     private static final int FRAME_DURATION = 2;
     private final RunePlayer player;
     private final List<Component> elements;
@@ -78,14 +79,24 @@ public class ActionBarManager {
                 .fillColor(Color.SPECIAL_BAR_FILL.asColor())
                 .build();
 
-        return Component.text(Icon.HEART_BIG.get(), NamedTextColor.WHITE)
-                .append(Component.text(" " + player.getHealth() + "/" + player.getSkill(SkillType.HITPOINTS).getLevelWithBonuses() + " ".repeat(4), Color.ERROR.asColor()))
+        return Component.text(
+                        Icon.HEART_BIG.get(), NamedTextColor.WHITE)
+                .append(Component.text(" " + player.getHealth() + "/" + player.getSkill(SkillType.HITPOINTS).getLevelWithBonuses(), Color.ERROR.asColor()))
+
+                .append(SPACE_DIVIDER)
+                .append(Component.text(Icon.PRAYER.get(), NamedTextColor.WHITE))
+                .append(Component.text(" " + player.getPrayerEnergy() + "/" + player.getSkill(SkillType.PRAYER).getLevelWithBonuses(), Color.PRAYER_ENERGY.asColor()))
+
+                .append(SPACE_DIVIDER)
                 .append(playerHasFairy ? fairyIcon : Component.empty())
                 .append(Component.text((player.canPerformSpecialAttack() ? Icon.SPECIAL_ATTACK_AVAILBLE_BADGE : Icon.SPECIAL_ATTACK_UNAVAILABLE_BADGE).get(), NamedTextColor.WHITE))
                 .append(specialAttackBar)
-                .append(Component.text(" ".repeat(4)))
+
+                .append(SPACE_DIVIDER)
                 .append(CurrencyUtils.getCoinsCurrencyComponent(coins))
-                .append(Component.text("", CurrencyUtils.getCurrencyColor(coins).asColor()));
+                .append(Component.text("", CurrencyUtils.getCurrencyColor(coins).asColor()))
+
+                ;
 
     }
 
