@@ -83,7 +83,7 @@ public class ActionParams {
         private Runnable onFailure;
         @Nullable
         private Runnable onFinally;
-        private int stepSoundEveryNth = 0;
+        private int stepSoundEveryNth = 1;
 
         public Builder stepSoundEveryNth(int stepSoundEveryNth) {
             this.stepSoundEveryNth = stepSoundEveryNth;

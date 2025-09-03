@@ -22,11 +22,9 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
-import org.zuma.examplePlugin.domain.block.base.ModelledInteractableBlock;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.HologramSide;
-import org.zuma.examplePlugin.domain.block.meta.v1.InventoryOpenerMeta;
 import org.zuma.examplePlugin.domain.block.meta.v1.InventoryOpenerModelledMeta;
 import org.zuma.examplePlugin.domain.block.persistence.BlockEntity;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
@@ -160,7 +158,7 @@ public class ModelledBlockInvCreatorInventory extends IndividualGUI {
         }
 
 
-        loader.insertNewNode(new BlockEntity(
+        loader.insertNewBlock(new BlockEntity(
                 new AbstractInteractableBlockMeta(0, BlockType.InventoryOpenerModelled, oppositeFace, result.getHitBlock().getLocation(), hologramLocation),
                 new VersionedJson(new Gson().toJson(META_MAP.get(menuValue)), 1)));
 
