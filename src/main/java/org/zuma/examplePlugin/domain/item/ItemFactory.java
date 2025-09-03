@@ -69,9 +69,9 @@ public class ItemFactory {
         switch (json.version()) {
             case 1 -> {
                 MountMeta deserialized = new Gson().fromJson(json.meta(), MountMeta.class);
-                Mount item = new Mount(meta, deserialized.model());
+                Mount item = new Mount(meta, deserialized.model(), deserialized.disguise(), deserialized.color(), deserialized.style());
 
-                item.setDefaultStateTemplate(new MountState(new MountStateMeta(deserialized.defaultLevel())));
+                item.setDefaultStateTemplate(new MountState(new MountStateMeta(1, 0)));
                 item.addRequirements(deserialized.requirements());
                 return item;
             }
