@@ -21,6 +21,9 @@ public enum SoundType {
     UI_CLICK("UI_STONECUTTER_SELECT_RECIPE", false, 1.0f, 1.2f),
     UI_SPOOKY_INVENTORY_OPEN("BLOCK_NOTE_BLOCK_IMITATE_WITHER_SKELETON", false, 1.0f, 1.0f),
 
+    ALTAR_PRAYING_LAYER_1("BLOCK_AMETHYST_BLOCK_CHIME", false, 1f, 1f),
+    ALTAR_PRAYING_LAYER_2("BLOCK_AMETHYST_BLOCK_RESONATE", false, 1f, 1f),
+
     BONES_BURY_DIG("BLOCK_BONE_BLOCK_BREAK", false, 1f, 1f),
     BONES_BURY_FINISH("ENTITY_ENDER_EYE_DEATH", false, 1f, 0.9f),
 
@@ -444,12 +447,11 @@ public enum SoundType {
         play(location, null, 0F);
     }
 
-
     public void play(Location location, float pitchModifier) {
         play(location, null, pitchModifier);
     }
 
-    private void play(Location location, @Nullable Player targetPlayer, float pitchModifier) {
+    public void play(Location location, @Nullable Player targetPlayer, float pitchModifier) {
         SoundCategory category = SoundCategory.MASTER;
 
         if (isCustom) {

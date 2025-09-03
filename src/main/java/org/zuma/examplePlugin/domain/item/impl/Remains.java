@@ -42,7 +42,7 @@ public class Remains extends AbstractItemType {
                 .onSuccess(() -> handleBury(player))
                 .build();
 
-        player.startAction(new ProgressBarAction(), params);
+        player.startAction(new ProgressBarAction(true, false), params);
     }
 
     private void handleBury(RunePlayer player) {

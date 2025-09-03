@@ -24,11 +24,13 @@ public class ProgressBarAction implements InteractiveActionStrategy {
 
     @Nullable
     private BukkitTask task;
-    private boolean isCancelled;
+    private boolean isCancelled, swingHand, progressBarVisible;
 
-    public ProgressBarAction() {
+    public ProgressBarAction(boolean swingHand, boolean progressBarVisible) {
         this.task = null;
         this.isCancelled = false;
+        this.swingHand = swingHand;
+        this.progressBarVisible = progressBarVisible;
     }
 
     public InteractiveActionStrategy startAction(RunePlayer player, ActionParams params) {
@@ -100,7 +102,7 @@ public class ProgressBarAction implements InteractiveActionStrategy {
 
                 int secondsLeft = (int) Math.ceil(((params.getDurationMs() / (double) steps) * (steps - currentSteps.get())) / 1000.0);
 
-                Component progressBar = new LoadingBarBuilder()
+                Component progressBar = progressBarVisible ? new LoadingBarBuilder()
                         .totalSteps(steps)
                         .currentStep(currentSteps.get())
                         .barLength(16)
@@ -109,13 +111,14 @@ public class ProgressBarAction implements InteractiveActionStrategy {
                         .stop(Icon.PROGRESS_SHORT_END.get())
                         .emptyColor(Color.BUSY_BAR_EMPTY.asColor())
                         .fillColor(Color.BUSY_BAR_FILL.asColor())
-                        .build();
+                        .build() : Component.empty();
 
                 if (params.getStepSound() != null && currentSteps.get() % params.getStepSoundEveryNth() == 0) {
                     params.getStepSound().play(onlinePlayer, true);
                 }
 
-                onlinePlayer.swingMainHand();
+                if (swingHand) onlinePlayer.swingMainHand();
+
                 onlinePlayer.showTitle(Title.title(progressBar,
                         Component.text("[" + secondsLeft + "s] ").color(Color.SUCCESS.asColor())
                                 .append(Component.text(params.getActionLabel()).color(Color.SUBTITLE.asColor())),
