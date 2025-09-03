@@ -1,5 +1,7 @@
 package org.zuma.examplePlugin.domain.item.impl;
 
+import me.libraryaddict.disguise.disguisetypes.DisguiseType;
+import org.bukkit.entity.Horse;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Icon;
@@ -16,14 +18,26 @@ import javax.annotation.Nullable;
 
 
 public class Mount extends EquipableItemType implements Stateful {
-    private final String model;
     private MountState defaultStateTemplate;
 
-    public Mount(AbstractItemMeta meta, String model) {
+    @Nullable
+    private final String model;
+    @Nullable
+    private final DisguiseType disguise;
+    @Nullable
+    private final Horse.Color color;
+    @Nullable
+    private final Horse.Style style;
+
+    public Mount(AbstractItemMeta meta, @Nullable String model, @Nullable DisguiseType disguise, @Nullable Horse.Color color, @Nullable Horse.Style style) {
         super(meta);
+        this.disguise = disguise;
+        this.color = color;
+        this.style = style;
+        this.model = model;
+
         super.setTypeLore("Mount", Icon.FAIRY.get());
         this.setStateType(StateType.MOUNT_STATE);
-        this.model = model;
     }
 
     @Override
@@ -50,7 +64,23 @@ public class Mount extends EquipableItemType implements Stateful {
         return null;
     }
 
+    @Nullable
     public String getModel() {
         return model;
+    }
+
+    @Nullable
+    public DisguiseType getDisguise() {
+        return disguise;
+    }
+
+    @Nullable
+    public Horse.Color getColor() {
+        return color;
+    }
+
+    @Nullable
+    public Horse.Style getStyle() {
+        return style;
     }
 }
