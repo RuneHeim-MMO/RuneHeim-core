@@ -149,6 +149,12 @@ public class ItemRepository {
                                 , 1)
                 ),
 
+                // Mounts
+                new ItemEntity(new AbstractItemMeta(ItemType.MOUNT, ItemId.HORSE_MOUNT.asInt(), Material.SADDLE, ItemRarity.LEGENDARY, "Horse Mount", List.of(""), null, null, true),
+                        toVersionedJson(new MountMeta(null, null, 1, List.of(new SkillRequirement(SkillType.ATTACK, 5))
+                        ), 1)),
+
+
                 // Accessories
                 // Rings
 
