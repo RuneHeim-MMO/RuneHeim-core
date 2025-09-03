@@ -14,9 +14,7 @@ import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
 import org.zuma.examplePlugin.events.state.StateCreatedDefaultEvent;
-import org.zuma.examplePlugin.events.state.StateDeleteEvent;
 import org.zuma.examplePlugin.events.state.StateLoadedEvent;
-import org.zuma.examplePlugin.events.state.StateSavedEvent;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -171,10 +169,6 @@ public class StateManager {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Cannot save state " + state.getStateType() + "! State is not in the registry.");
             return;
         }
-
-        Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-            Bukkit.getServer().getPluginManager().callEvent(new StateSavedEvent(matchingKey, state));
-        });
 
         if (runAsync) {
             Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {

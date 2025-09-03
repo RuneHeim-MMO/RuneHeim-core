@@ -100,16 +100,15 @@ public class BankInventory extends PaginatedBankGUI {
             String serialized = ItemContainerContentSerializer.serializeItemContainerContentSync(this, true);
             this.bankQueryLockController.save(this.playerUUID, serialized);
         } catch (Exception e) {
-            Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(this.playerUUID);
+            RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(this.playerUUID);
 
-                long incidentId = System.currentTimeMillis();
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[BankSerializationError #" + incidentId + "] Failed to serialize bank of " + this.playerUUID + "! ", e);
+            long incidentId = System.currentTimeMillis();
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[BankSerializationError #" + incidentId + "] Failed to serialize bank of " + this.playerUUID + "! ", e);
 
-                if (player != null) {
-                    HudService.sendFailMessage(player, Component.text("Bank content serialization failed. Please submit a bug report. Incident #" + incidentId));
-                }
-            });
+            if (player != null) {
+                HudService.sendFailMessage(player, Component.text("Bank content serialization failed. Please submit a bug report. Incident #" + incidentId));
+            }
+
         }
 
     }
