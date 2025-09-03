@@ -58,12 +58,6 @@ public class BankInventory extends PaginatedBankGUI {
             if (bankContent[0] != null) {
                 try {
                     loadedPairs = ItemContainerContentSerializer.deserializeItemContainerContentSync(bankContent[0]);
-                } catch (IllegalStateException e) {
-                    Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                        HudService.sendFailMessage(player, Component.text("Please wait! Save/load is in progress."));
-                        onFail.run();
-                    });
-                    return;
                 } catch (Exception e) {
                     Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                         long incidentId = System.currentTimeMillis();
