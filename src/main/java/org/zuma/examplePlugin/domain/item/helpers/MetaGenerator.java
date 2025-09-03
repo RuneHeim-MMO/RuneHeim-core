@@ -33,7 +33,6 @@ import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
 import org.zuma.examplePlugin.events.state.StateCreatedDefaultEvent;
-import org.zuma.examplePlugin.events.state.StateSavedEvent;
 
 import java.util.ArrayList;
 import java.util.List;
