@@ -34,7 +34,8 @@ public class RunePlayerSerializer {
         PlayerDataDeserializedJsonContainer container = new PlayerDataDeserializedJsonContainer(
                 runePlayer.getSkills().values().stream().map(s -> new Skill(s.getType(), s.getXp())).toList(),
                 runePlayer.getPouchCoins(), runePlayer.getDiscoveredTerritoryIds(), runePlayer.getHealth(),
-                (float) runePlayer.getSpecialEnergyPercent() / 100
+                (float) runePlayer.getSpecialEnergyPercent() / 100,
+                runePlayer.getPrayerEnergy()
         );
 
         VersionedJson versionedPlayerData = new VersionedJson(gson.toJson(container), 1);
@@ -60,6 +61,7 @@ public class RunePlayerSerializer {
                 player.setHealth(playerDataDeserializedJsonContainer.health(), RunePlayerHealthChangedEvent.Cause.INITIALIZATION);
                 player.setSkills(mappedSkills);
                 player.setSpecialEnergyPercent((int) (playerDataDeserializedJsonContainer.specialEnergy() * 100));
+                player.setPrayerEnergy(playerDataDeserializedJsonContainer.prayerEnergy());
 
                 List<ItemStackSlotPair> inventory = ItemContainerContentSerializer.deserializeItemContainerContentSync(inventoryData);
                 Location location = gson.fromJson(container.location(), Location.class);

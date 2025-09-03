@@ -98,7 +98,7 @@ public class AdditionalGearSlotHandler {
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> fillReservedSlots(player), 2L);
         ReservedSlot slotDef = slotsDef.get(slot);
-        
+
         if (!slots.contains(event.getSlot()) || slotDef == null) {
             return;
         }
