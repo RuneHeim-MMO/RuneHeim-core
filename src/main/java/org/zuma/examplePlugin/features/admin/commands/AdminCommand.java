@@ -152,6 +152,11 @@ public class AdminCommand implements BasicCommand {
             runePlayer.setPouchCoins(Long.parseLong(args[1]), false);
         }
 
+
+        if (Objects.equals(args[0], "mount")) {
+            RuneQuestPlugin.getMountHandler().spawnMount(runePlayer);
+        }
+
         if (Objects.equals(args[0], "zone")) {
             AbstractSpawnZone zone = RuneQuestPlugin.getSpawnZoneHandler().getClosest(player.getLocation());
             if (zone == null) {

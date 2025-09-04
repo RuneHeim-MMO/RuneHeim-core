@@ -28,9 +28,7 @@ import org.zuma.examplePlugin.events.fairy.FairyAutoFedEvent;
 import org.zuma.examplePlugin.events.fairy.FairyUpgradeEvent;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class FairyHandler {
     private static final int SPRITE_DRAW_INTERVAL = 4;
@@ -272,10 +270,13 @@ public class FairyHandler {
     }
 
     private void fairyTaskTick() {
+        List<UUID> invalidPlayers = new ArrayList<>();
+
         wornFairies.forEach((uuid, fairy) -> {
             Player player = Bukkit.getPlayer(uuid);
 
             if (player == null || !player.isOnline()) {
+                invalidPlayers.add(uuid);
                 return;
             }
 
@@ -285,6 +286,7 @@ public class FairyHandler {
             FairyState state = fairy.getState(item);
 
             if (runePlayer == null || item == null || runeItem == null || state == null) {
+                invalidPlayers.add(uuid);
                 return;
             }
 
@@ -299,6 +301,8 @@ public class FairyHandler {
 
 
         });
+
+        invalidPlayers.forEach(this::clearPlayerFairyInstances);
     }
 
     private void fairyMaybeConsumeFoodTick(FairyState state, RunePlayer runePlayer, Fairy fairy, AbstractItemType fairyItem) {
