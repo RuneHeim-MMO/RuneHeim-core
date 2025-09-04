@@ -27,7 +27,7 @@ public class AdditionalGearSlotHandler {
 
     private ItemStack getSlotPlaceholder(int slot) {
         String slotLabel = slotsDef.get(slot).getPlaceHolderLabel();
-        if (slotLabel == null) slotLabel = "AccessoryRing Slot";
+        if (slotLabel == null) slotLabel = "Accessory";
         return GUIControl.TRANSPARENT.asItemstack(Component.text(slotLabel, NamedTextColor.GRAY), true);
     }
 
