@@ -106,7 +106,7 @@ public class Altar extends AbstractInteractableBlock implements POIMarkerable {
         int maxPrayerLevel = player.getSkill(SkillType.PRAYER).getLevelWithBonuses();
 
         if (player.getPrayerEnergy() == maxPrayerLevel) {
-            HudService.sendFailMessage(player, Component.text("Your player is already full!"));
+            HudService.sendFailMessage(player, Component.text("Your prayer is already full!"));
             return;
         }
 
