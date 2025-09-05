@@ -1,5 +1,7 @@
 package org.zuma.examplePlugin.domain.mount;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,6 +15,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.HorseInventory;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.fairy.FairyHandler;

@@ -9,7 +9,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.utils.MathUtils;
-import org.zuma.examplePlugin.domain.fairy.FairyStatus;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.impl.Mount;
@@ -132,11 +131,16 @@ public class MountHandler {
             return;
         }
 
-        UUID newMountUUID = mount.spawn(player, state.getLevel(mount));
+        UUID newMountUUID = mount.spawn(player, state);
 
         if (newMountUUID == null) {
             return;
         }
+
+        state.setOnLevelUp((newLevel) -> {
+            mount.onLevelChange(player, newLevel, newMountUUID, true);
+            return null;
+        });
 
         playerMount.setActiveEntityUUID(newMountUUID);
 
@@ -206,6 +210,7 @@ public class MountHandler {
 
             if (!(itemType instanceof Mount mount)) {
                 clearMountInstances(playerUUID);
+                player.getActionBar().setMountStatus(MountStatus.NONE);
                 return;
             }
 
@@ -214,21 +219,18 @@ public class MountHandler {
 
             if (state == null || stateUUID == null) {
                 clearMountInstances(playerUUID);
+                player.getActionBar().setMountStatus(MountStatus.NONE);
                 return;
             }
 
             PlayerMount playerMount = mounts.get(playerUUID);
 
             if (playerMount != null && (!playerMount.getStateUUID().equals(stateUUID) || getActiveMountDistance(player) > DESPAWN_DISTANCE_BLOCKS)) {
+                player.getActionBar().setMountStatus(MountStatus.NONE);
                 clearMountInstances(playerUUID);
             }
 
             if (!mounts.containsKey(playerUUID)) {
-                state.setOnLevelUp((newLevel) -> {
-                    mount.onLevelUp(player, newLevel);
-                    return null;
-                });
-
                 mounts.put(playerUUID, new PlayerMount(playerUUID, null, itemType.id, stateUUID));
             }
         });

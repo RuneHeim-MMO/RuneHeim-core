@@ -93,18 +93,36 @@ public class MetaGenerator {
 
         lore.addAll(itemType.descriptionLore.stream().map(str -> Component.text(str).color(Color.ITEM_LORE_DESCRIPTION.asColor())).toList());
 
-        switch (itemType) {
-            case Weapon weapon -> lore.addAll(new WeaponLore(weapon).getLore());
-            case Food food -> lore.addAll(new FoodLore(food).getLore());
-            case Mount mount -> lore.addAll(new MountLore(mount, item).getLore());
-            case Fairy fairy -> lore.addAll(new FairyLore(fairy, item).getLore());
-            case SocketedEquipableItemType socketed -> lore.addAll(new SocketedEquipableLore(item).getLore());
-            case EquipableItemType equipable -> lore.addAll(new EquipableLore(equipable).getLore());
-            case EmptyContainer emptyContainer -> lore.addAll(new EmptyContainerLore(emptyContainer).getLore());
-            case FairyFood fairyFood -> lore.addAll(new FairyFoodLore(fairyFood).getLore());
-            default -> {
-                // No custom lore
-            }
+        if (itemType instanceof Weapon weapon) {
+            lore.addAll(new WeaponLore(weapon).getLore());
+        }
+
+        if (itemType instanceof Food food) {
+            lore.addAll(new FoodLore(food).getLore());
+        }
+
+        if (itemType instanceof EquipableItemType equipable) {
+            lore.addAll(new EquipableLore(equipable).getLore());
+        }
+
+        if (itemType instanceof SocketedEquipableItemType) {
+            lore.addAll(new SocketedEquipableLore(item).getLore());
+        }
+
+        if (itemType instanceof EmptyContainer emptyContainer) {
+            lore.addAll(new EmptyContainerLore(emptyContainer).getLore());
+        }
+
+        if (itemType instanceof FairyFood fairyFood) {
+            lore.addAll(new FairyFoodLore(fairyFood).getLore());
+        }
+
+        if (itemType instanceof Fairy fairy) {
+            lore.addAll(new FairyLore(fairy, item).getLore());
+        }
+
+        if (itemType instanceof Mount mount) {
+            lore.addAll(new MountLore(mount, item).getLore());
         }
 
         lore.add(Component.empty());

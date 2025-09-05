@@ -88,7 +88,7 @@ public class FairyHandler {
 
             SoundType.FAIRY_UPGRADE.play(player, true);
             RuneQuestPlugin.getItemStateManager().saveUpdatedState(state, false, true);
-            player.asBukkitPlayer().sendMessage(
+            HudService.sendInfoMessage(player,
                     Component.text("Your fairy devoured ", Color.SUCCESS.asColor())
                             .append(cursorFruitItemStack.displayName())
                             .append(Component.text(" and gained new powers!", Color.SUCCESS.asColor()))
@@ -227,7 +227,7 @@ public class FairyHandler {
                 fairyMaybeConsumeFoodTick(state, player, fairy, itemType);
 
                 if (fedFairies.containsKey(playerUUID)) {
-                    player.asBukkitPlayer().sendMessage(Component.text("Your fairy's stamina has run out. Feed it to keep its bonuses active.", Color.WARNING.asColor()));
+                    HudService.sendInfoMessage(player, Component.text("Your fairy's stamina has run out. Feed it to keep its bonuses active.", Color.WARNING.asColor()));
                     SoundType.FAIRY_OUT_OF_STAMINA.play(player, true);
                     fedFairies.remove(playerUUID);
                     removeFairyModel(playerUUID);
@@ -334,7 +334,7 @@ public class FairyHandler {
             state.feedFairy(fairyFood.getEnergyRestoreAmount());
             fairyItem.getMetaGenerator().updatePresentationLayer(item);
 
-            player.sendMessage(Component.text("Your fairy has consumed 1x ", Color.INFO.asColor()).append(food.displayName()).append(Component.text(".", Color.INFO.asColor())));
+            HudService.sendInfoMessage(runePlayer, Component.text("Your fairy has consumed 1x ", Color.INFO.asColor()).append(food.displayName()).append(Component.text(".", Color.INFO.asColor())));
             SoundType.FAIRY_FEED_SOUND.play(player, true);
         }
     }
