@@ -22,7 +22,7 @@ public class Remains extends AbstractItemType {
 
     public Remains(AbstractItemMeta meta) {
         super(meta);
-        super.setTypeLore("Remains", Icon.PRAYER.get());
+        super.setTypeLore("Remains", Icon.REMAINS.get());
     }
 
     public void setBuryXPReward(double amount) {

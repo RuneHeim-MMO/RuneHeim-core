@@ -287,7 +287,8 @@ public enum ItemId {
     ADAMANTITE_RING(3203),
     RUNITE_RING(3204),
 
-    HORSE_MOUNT(3300);
+    HORSE_MOUNT(3300),
+    CHIEFTAIN_MOUNT(3301);
 
 
     private final int id;

@@ -85,6 +85,7 @@ public enum Icon {
     AGE("⢐"),
     DISTANCE_TRAVELED("⠼"),
     MOUNT("⺲"),
+    REMAINS("⊪"),
 
     GREEN_GEM("⮩"),
 
