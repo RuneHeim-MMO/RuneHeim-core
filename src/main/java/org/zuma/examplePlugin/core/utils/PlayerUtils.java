@@ -28,21 +28,41 @@ import java.util.Map;
 
 public class PlayerUtils {
 
+    public static void teleportToClosestCity(Player player) {
+        RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
+        Location spawnPoint = player.getWorld().getSpawnLocation();
+
+        if (runePlayer == null) {
+            player.teleport(spawnPoint);
+            return;
+        }
+
+        Territory closestTerritory = PlayerUtils.getClosestDiscoveredTerritory(runePlayer);
+
+        if (closestTerritory != null && closestTerritory.getSpawnPoint() != null) {
+            spawnPoint = closestTerritory.getSpawnPoint();
+        }
+
+        player.teleport(spawnPoint);
+    }
+
     @Nullable
     public static Territory getClosestDiscoveredTerritory(RunePlayer player) {
         Territory closestTerritory = null;
-        double closestTerritoryDistance = 1_000_000D;
+        double closestDistance = Double.MAX_VALUE;
 
         for (Territory territory : RuneQuestPlugin.getTerritoryHandler().getTerritoryList()) {
-            double delta = MathUtils.getLocationsDistanceXZ(player.asBukkitPlayer().getLocation(), territory.getCenterPoint());
+            // skip undiscovered territories
+            if (!player.getDiscoveredTerritoryIds().contains(territory.getId())) continue;
 
-            if (territory.getSpawnPoint() == null) {
-                continue;
-            }
+            // skip territories with no spawn point
+            if (territory.getSpawnPoint() == null) continue;
 
-            if (delta < closestTerritoryDistance) {
+            double distance = MathUtils.getLocationsDistanceXZ(player.asBukkitPlayer().getLocation(), territory.getCenterPoint());
+
+            if (distance < closestDistance) {
                 closestTerritory = territory;
-                closestTerritoryDistance = delta;
+                closestDistance = distance;
             }
         }
 

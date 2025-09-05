@@ -13,7 +13,10 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.interfaces.CombatEntity;
+import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
+import org.zuma.examplePlugin.domain.territory.Territory;
 import org.zuma.examplePlugin.events.player.RunePlayerLoadedEvent;
 
 public class RunePlayerListener implements Listener {
@@ -29,6 +32,18 @@ public class RunePlayerListener implements Listener {
 
         playerHandler.loadPlayerData(player);
 
+    }
+
+    // Cancel real deaths, handle by teleporting to city
+    @EventHandler
+    public void onPlayerFinalDamage(EntityDamageEvent event) {
+        if (!(event.getEntity() instanceof Player player)) return;
+
+        double finalHealth = player.getHealth() - event.getFinalDamage();
+        if (finalHealth <= 0) {
+            event.setCancelled(true);
+            PlayerUtils.teleportToClosestCity(player);
+        }
     }
 
     @EventHandler
