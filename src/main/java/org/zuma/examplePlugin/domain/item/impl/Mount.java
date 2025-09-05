@@ -53,7 +53,7 @@ public class Mount extends EquipableItemType implements Stateful {
         this.style = style;
         this.model = model;
 
-        super.setTypeLore("Mount", Icon.FAIRY.get());
+        super.setTypeLore("Mount", Icon.MOUNT.get());
         this.setStateType(StateType.MOUNT_STATE);
     }
 

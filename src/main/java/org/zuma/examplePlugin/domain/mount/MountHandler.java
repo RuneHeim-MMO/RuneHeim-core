@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.utils.MathUtils;
+import org.zuma.examplePlugin.domain.fairy.FairyStatus;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.impl.Mount;
@@ -81,7 +82,8 @@ public class MountHandler {
                 return;
             }
 
-            if (MathUtils.getLocationsDistanceXZ(data.getLastPosition(), horse.getLocation()) < 3) {
+            double distanceSinceLastTick = MathUtils.getLocationsDistanceXZ(data.getLastPosition(), horse.getLocation());
+            if (distanceSinceLastTick < 3) {
                 return;
             }
 
@@ -90,7 +92,7 @@ public class MountHandler {
             ItemStack itemStack = slotHandler.getSlotItem(player, ReservedSlot.MOUNT_SLOT);
             AbstractItemType item = RuneQuestPlugin.getItemRegistry().getType(itemStack);
 
-            if (!(item instanceof Mount mount)) {
+            if (!(item instanceof Mount mount) || itemStack == null) {
                 return;
             }
 
@@ -101,8 +103,8 @@ public class MountHandler {
             }
 
             data.setLastPosition(horse.getLocation());
-            state.tick();
-
+            state.tick(mount, distanceSinceLastTick);
+            item.getMetaGenerator().updatePresentationLayer(itemStack);
         });
     }
 
@@ -158,7 +160,6 @@ public class MountHandler {
             mount.remove();
             playerMount.setActiveEntityUUID(null);
             playerMount.setLastPosition(null);
-
         }
 
     }
@@ -236,13 +237,27 @@ public class MountHandler {
 
         playerUUIDs.forEach(uuid -> {
             Player player = Bukkit.getPlayer(uuid);
-
             if (player == null || !player.isOnline()) {
                 clearMountInstances(uuid);
                 return;
             }
 
             RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
+
+            if (runePlayer != null) {
+                PlayerMount mount = this.mounts.get(runePlayer.getUUID());
+                MountStatus status;
+
+                if (mount == null) {
+                    status = MountStatus.NONE;
+                } else if (mount.getActiveEntityUUID() == null || Bukkit.getEntity(mount.getActiveEntityUUID()) == null) {
+                    status = MountStatus.WEARING;
+                } else {
+                    status = MountStatus.ACTIVE;
+                }
+
+                runePlayer.getActionBar().setMountStatus(status);
+            }
 
             if (runePlayer == null || runePlayer.isDead()) {
                 clearMountInstances(uuid);

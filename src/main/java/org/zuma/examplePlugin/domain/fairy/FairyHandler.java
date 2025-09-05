@@ -247,7 +247,8 @@ public class FairyHandler {
 
 
                 // Check if active entities model matches player worn fairy model
-                if (!ModelEngineAPI.getModeledEntity(fairyModels.get(playerUUID)).getModels().containsKey(fairy.getModel())) {
+                var modeledEntity = ModelEngineAPI.getModeledEntity(fairyModels.get(playerUUID));
+                if (modeledEntity == null || !modeledEntity.getModels().containsKey(fairy.getModel())) {
                     clearPlayerFairyInstances(playerUUID);
 
                     Entity newFairyEntity = spawnFairyModel(player.asBukkitPlayer(), fairy);

@@ -22,6 +22,23 @@ import java.util.List;
 public class FairyLore implements LoreCreator {
     private final List<Component> lore = new ArrayList<>();
 
+    public static String toRoman(int number) {
+        return switch (number) {
+            case 0 -> "N";
+            case 1 -> "I";
+            case 2 -> "II";
+            case 3 -> "III";
+            case 4 -> "IV";
+            case 5 -> "V";
+            case 6 -> "VI";
+            case 7 -> "VII";
+            case 8 -> "VIII";
+            case 9 -> "IX";
+            case 10 -> "X";
+            default -> throw new IllegalArgumentException("Number out of range (0–10): " + number);
+        };
+    }
+
     public FairyLore(Fairy fairy, ItemStack item) {
         AbstractState state = RuneQuestPlugin.getItemStateManager().getItemState(item);
 
@@ -51,7 +68,7 @@ public class FairyLore implements LoreCreator {
             }
 
             lore.add(Icon.SPROUT.asComponent()
-                    .append(Component.text("I Generation", NamedTextColor.GREEN)));
+                    .append(Component.text(toRoman(fairyState.getGeneration()) + " Generation", NamedTextColor.GREEN)));
 
 
             lore.add(Component.empty());
@@ -79,7 +96,6 @@ public class FairyLore implements LoreCreator {
                 lore.add((Component.text(fairyState.canConsumeFruit() ? "✓ Ready for upgrade" : "❌ Not ready for upgrade", consumeFruitColor.asColor())));
             }
 
-            lore.add(Component.empty());
         }
     }
 
