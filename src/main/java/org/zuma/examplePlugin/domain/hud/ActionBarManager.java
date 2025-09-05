@@ -10,6 +10,7 @@ import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.domain.fairy.FairyStatus;
+import org.zuma.examplePlugin.domain.mount.MountStatus;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -26,6 +27,7 @@ public class ActionBarManager {
     private BukkitTask activeTask;
     private boolean tick;
     private FairyStatus fairyStatus;
+    private MountStatus mountStatus;
 
     int bar = 6;
 
@@ -35,9 +37,17 @@ public class ActionBarManager {
         this.activeTask = null;
         this.tick = false;
         this.fairyStatus = FairyStatus.NONE;
+        this.mountStatus = MountStatus.NONE;
         startDefaultLoop();
     }
 
+    public void setMountStatus(MountStatus status) {
+        this.mountStatus = status;
+    }
+
+    public MountStatus getMountStatus() {
+        return this.mountStatus;
+    }
 
     public void setFairyStatus(FairyStatus status) {
         this.fairyStatus = status;
@@ -56,13 +66,21 @@ public class ActionBarManager {
     }
 
     private Component getDefaultElement() {
-        NamedTextColor fairyIconColor = NamedTextColor.WHITE;
         boolean playerHasFairy = !fairyStatus.equals(FairyStatus.NONE);
+        boolean playerHasMount = !mountStatus.equals(MountStatus.NONE);
+        NamedTextColor fairyIconColor = NamedTextColor.WHITE;
+        Component mountIcon = Component.empty();
+
         long coins = player.getPouchCoins();
 
         switch (fairyStatus) {
             case EXHAUSTED -> fairyIconColor = NamedTextColor.DARK_GRAY;
             case READY_FOR_UPGRADE -> fairyIconColor = tick ? NamedTextColor.GREEN : NamedTextColor.WHITE;
+        }
+
+        switch (mountStatus) {
+            case ACTIVE -> mountIcon = Component.text(Icon.MOUNT_BADGE_ACTIVE.get(), NamedTextColor.WHITE);
+            case WEARING -> mountIcon = Component.text(Icon.MOUNT_BADGE_WEARING.get(), NamedTextColor.WHITE);
 
         }
 
@@ -88,6 +106,7 @@ public class ActionBarManager {
                 .append(Component.text(" " + player.getPrayerEnergy() + "/" + player.getSkill(SkillType.PRAYER).getLevelWithBonuses(), Color.PRAYER_ENERGY.asColor()))
 
                 .append(SPACE_DIVIDER)
+                .append(playerHasMount ? mountIcon : Component.empty())
                 .append(playerHasFairy ? fairyIcon : Component.empty())
                 .append(Component.text((player.canPerformSpecialAttack() ? Icon.SPECIAL_ATTACK_AVAILBLE_BADGE : Icon.SPECIAL_ATTACK_UNAVAILABLE_BADGE).get(), NamedTextColor.WHITE))
                 .append(specialAttackBar)
