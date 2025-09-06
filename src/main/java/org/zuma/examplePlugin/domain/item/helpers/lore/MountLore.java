@@ -30,7 +30,9 @@ public class MountLore implements LoreCreator {
 
         if (state instanceof MountState mountState) {
             int ageInDays = (int) TimeUnit.MILLISECONDS.toDays(System.currentTimeMillis() - state.getCreatedAt());
+
             lore.add(Component.empty());
+
             lore.add(Icon.LEVEL.asComponent().append(Component.text("Level: ", Color.ITEM_LORE_DESCRIPTION.asColor())
                     .append(Component.text(mountState.getLevel(mount) + " ", Color.ACCENT.asColor()))));
 
@@ -48,6 +50,10 @@ public class MountLore implements LoreCreator {
             }
 
             lore.add(Component.empty());
+
+            if (mountState.getName() != null) {
+                lore.add(Icon.NAME_TAG.asComponent().append(Component.text(mountState.getName(), Color.ITEM_LORE_DESCRIPTION.asColor())));
+            }
 
             lore.add(Icon.DISTANCE_TRAVELED.asComponent().append(Component.text("Distance: ", Color.ITEM_LORE_DESCRIPTION.asColor())
                     .append(Component.text(formattedDistanceCovered + " blocks", Color.ACCENT.asColor()))));

@@ -1,9 +1,11 @@
 package org.zuma.examplePlugin.domain.item.state.states;
 
 import com.google.gson.Gson;
+import net.kyori.adventure.text.Component;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.impl.Mount;
 import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFruit;
@@ -76,6 +78,7 @@ public class MountState extends AbstractState {
         this.level = meta.level();
         this.experience = meta.xp();
         this.distance = meta.distance();
+        this.name = meta.name();
     }
 
     // If entity was ridden within last tick (tick happens every 1 sec)
@@ -129,12 +132,12 @@ public class MountState extends AbstractState {
 
     @Override
     public AbstractStateMeta serialize(Gson gson) {
-        return new AbstractStateMeta(this.getStateType(), new VersionedJson(gson.toJson(new MountStateMeta(level, experience, distance)), 1));
+        return new AbstractStateMeta(this.getStateType(), new VersionedJson(gson.toJson(new MountStateMeta(this.name, level, experience, distance)), 1));
     }
 
     @Override
     public AbstractState clone() {
-        return new MountState(new MountStateMeta(level, experience, distance));
+        return new MountState(new MountStateMeta(this.name, level, experience, distance));
     }
 
     public void setOnLevelUp(Function<Integer, Void> onLevelUp) {
@@ -143,5 +146,21 @@ public class MountState extends AbstractState {
 
     public double getDistanceCovered() {
         return this.distance;
+    }
+
+    public @org.jetbrains.annotations.Nullable String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) throws IllegalStateException {
+        if (name.length() < 3 || name.length() > 16) {
+            throw new IllegalStateException("Name must be between 3-16 characters long.");
+        }
+
+        if (!name.matches("[a-zA-Z0-9]+")) {
+            throw new IllegalStateException("Name cannot contain symbols. (a-z, A-Z, 0-9 permitted).");
+        }
+
+        this.name = name;
     }
 }

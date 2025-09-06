@@ -15,6 +15,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Horse;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
@@ -45,15 +46,12 @@ public class Mount extends EquipableItemType implements Stateful {
     @Nullable
     private final String model;
     @Nullable
-    private final DisguiseType disguise;
-    @Nullable
     private final Horse.Color color;
     @Nullable
     private final Horse.Style style;
 
-    public Mount(AbstractItemMeta meta, @Nullable String model, @Nullable DisguiseType disguise, @Nullable Horse.Color color, @Nullable Horse.Style style) {
+    public Mount(AbstractItemMeta meta, @Nullable String model, @Nullable Horse.Color color, @Nullable Horse.Style style) {
         super(meta);
-        this.disguise = disguise;
         this.color = color;
         this.style = style;
         this.model = model;
@@ -94,11 +92,6 @@ public class Mount extends EquipableItemType implements Stateful {
     @Nullable
     public String getModel() {
         return model;
-    }
-
-    @Nullable
-    public DisguiseType getDisguise() {
-        return disguise;
     }
 
     @Nullable
@@ -160,6 +153,10 @@ public class Mount extends EquipableItemType implements Stateful {
             return null;
         }
 
+        if (state.getName() == null) {
+            state.setName(player.asBukkitPlayer().getName() + "'s Mount");
+        }
+
         Horse horse = player.asBukkitPlayer().getLocation().getWorld().spawn(player.asBukkitPlayer().getLocation(), Horse.class);
         UUID uuid = horse.getUniqueId();
         EntitySessionManager.tagEntity(horse);
@@ -168,32 +165,21 @@ public class Mount extends EquipableItemType implements Stateful {
         horse.setOwner(player.asBukkitPlayer());
         horse.getInventory().setSaddle(new ItemStack(Material.SADDLE));
         horse.addPassenger(player.asBukkitPlayer());
+        horse.customName(Component.empty());
 
-        if (this.style != null) horse.setStyle(this.style);
-        if (this.color != null) horse.setColor(this.color);
-        if (this.disguise != null) setDisguise(horse, this.disguise);
+        horse.setStyle(this.style != null ? this.style : Horse.Style.BLACK_DOTS);
+        horse.setColor(this.color != null ? this.color : Horse.Color.BLACK);
+
         if (this.model != null) setModel(horse, this.model);
 
         onLevelChange(player, state.getLevel(this), uuid, false);
         return uuid;
     }
 
-    public void setDisguise(Entity entity, DisguiseType type) {
-        MobDisguise disguise = new MobDisguise(type);
-        disguise.setReplaceSounds(true);
-
-        LivingWatcher watcher = disguise.getWatcher();
-        // watcher.setCustomName(healthBarSafeName);
-        watcher.setCustomNameVisible(true);
-
-        DisguiseAPI.disguiseToAll(entity, disguise);
-    }
-
-    private void setModel(Entity entity, String model) {
+    private void setModel(LivingEntity entity, String model) {
         try {
             ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(entity);
             ActiveModel activeModel = ModelEngineAPI.createActiveModel(model);
-
             modeledEntity.addModel(activeModel, true);
             entity.setInvisible(true);
             entity.setSilent(true);
