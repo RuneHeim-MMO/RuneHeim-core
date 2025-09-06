@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.item.persistence;
 
 import com.google.gson.Gson;
+import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.zuma.examplePlugin.core.constants.SoundType;
@@ -151,11 +152,11 @@ public class ItemRepository {
 
                 // Mounts
                 new ItemEntity(new AbstractItemMeta(ItemType.MOUNT, ItemId.HORSE_MOUNT.asInt(), Material.SADDLE, ItemRarity.LEGENDARY, "Horse Mount", List.of("Horse"), null, null, true),
-                        toVersionedJson(new MountMeta(null, null, null, null, 1, 10, List.of(new SkillRequirement(SkillType.ATTACK, 5))
+                        toVersionedJson(new MountMeta(null, null, null, 1, 10, List.of(new SkillRequirement(SkillType.ATTACK, 5))
                         ), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MOUNT, ItemId.CHIEFTAIN_MOUNT.asInt(), Material.SADDLE, ItemRarity.LEGENDARY, "Slave Mount", List.of("Your own personal slave"), null, null, true),
-                        toVersionedJson(new MountMeta("chieftain", null, null, null, 1, 10, List.of(new SkillRequirement(SkillType.ATTACK, 5))
+                        toVersionedJson(new MountMeta("chieftain", null, null, 1, 10, List.of(new SkillRequirement(SkillType.ATTACK, 5))
                         ), 1)),
 
 

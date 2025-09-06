@@ -12,11 +12,13 @@ import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.impl.Mount;
+import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.states.MountState;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 import org.zuma.examplePlugin.domain.player.inventory.ReservedSlot;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 public class MountHandler {
@@ -56,6 +58,63 @@ public class MountHandler {
     public void onDisable() {
         stopLoop();
         mounts.forEach((uuid, data) -> removePlayersActiveMount(uuid));
+    }
+
+    public void setMountName(RunePlayer player, String name) {
+        ItemStack itemStack = slotHandler.getSlotItem(player, ReservedSlot.MOUNT_SLOT);
+        if (itemStack == null) return;
+
+        AbstractItemType item = RuneQuestPlugin.getItemRegistry().getType(itemStack);
+        if (!(item instanceof Mount mountItem)) {
+            HudService.sendFailMessage(player, Component.text("You do not have any active mounts."));
+            return;
+        }
+
+        AbstractState state = RuneQuestPlugin.getItemStateManager().getItemState(itemStack);
+        if (!(state instanceof MountState mountState)) return;
+
+        try {
+            mountState.setName(name);
+            RuneQuestPlugin.getItemStateManager().saveUpdatedState(mountState, false, true);
+            removePlayersActiveMount(player.getUUID());
+            item.getMetaGenerator().updatePresentationLayer(itemStack);
+
+            HudService.sendInfoMessage(player, Component.text("You have set your mounts name to '" + name + "'"));
+        } catch (Exception e) {
+            HudService.sendFailMessage(player, Component.text(e.getMessage()));
+        }
+    }
+
+    public ActiveMountData getMountData(@Nullable UUID mountUUID) {
+        if (mountUUID == null) return null;
+
+        for (Map.Entry<UUID, PlayerMount> entry : mounts.entrySet()) {
+            UUID uuid = entry.getKey();
+            PlayerMount data = entry.getValue();
+
+            if (data.getActiveEntityUUID() != mountUUID) {
+                continue;
+            }
+
+            Player player = Bukkit.getPlayer(uuid);
+            if (player == null) return null;
+
+            RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
+            if (runePlayer == null) return null;
+
+            ItemStack itemStack = slotHandler.getSlotItem(runePlayer, ReservedSlot.MOUNT_SLOT);
+            if (itemStack == null) return null;
+
+            AbstractItemType item = RuneQuestPlugin.getItemRegistry().getType(itemStack);
+            if (!(item instanceof Mount mountItem)) return null;
+
+            AbstractState state = RuneQuestPlugin.getItemStateManager().getItemState(itemStack);
+            if (!(state instanceof MountState mountState)) return null;
+
+            return new ActiveMountData(mountState, mountState.getLevel(mountItem));
+        }
+
+        return null;
     }
 
     private void levelingTick() {

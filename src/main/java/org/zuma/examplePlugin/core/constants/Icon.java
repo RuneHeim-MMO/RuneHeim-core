@@ -86,6 +86,7 @@ public enum Icon {
     DISTANCE_TRAVELED("⠼"),
     MOUNT("⺲"),
     REMAINS("⊪"),
+    NAME_TAG("ↈ"),
 
     GREEN_GEM("⮩"),
 

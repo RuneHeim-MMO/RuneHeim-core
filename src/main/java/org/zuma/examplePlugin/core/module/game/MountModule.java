@@ -1,9 +1,11 @@
 package org.zuma.examplePlugin.core.module.game;
 
 
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.core.module.PluginModule;
+import org.zuma.examplePlugin.domain.command.MountCommand;
 import org.zuma.examplePlugin.domain.fairy.FairyHandler;
 import org.zuma.examplePlugin.domain.fairy.FairyListener;
 import org.zuma.examplePlugin.domain.mount.MountHandler;
@@ -20,12 +22,16 @@ public class MountModule implements PluginModule {
     }
 
     @Override
+    @SuppressWarnings("UnstableApiUsage")
     public void start(Plugin plugin, ModuleContext context) {
         MountHandler mountHandler = new MountHandler(context.get(AdditionalGearSlotHandler.class));
         MountListener mountListener = new MountListener(mountHandler);
 
         plugin.getServer().getPluginManager().registerEvents(mountListener, plugin);
         mountHandler.startLoop();
+
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("mount", new MountCommand()));
 
         context.bind(MountHandler.class, mountHandler);
     }

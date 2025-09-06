@@ -7,7 +7,7 @@ import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 
 import java.util.List;
 
-public record MountMeta(@Nullable String model, @Nullable DisguiseType disguise, @Nullable Horse.Style style,
+public record MountMeta(@Nullable String model, @Nullable Horse.Style style,
                         @Nullable Horse.Color color, double baseSpeed, int maxLevel,
                         List<SkillRequirement> requirements) {
 }
