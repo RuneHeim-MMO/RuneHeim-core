@@ -33,7 +33,7 @@ import java.util.*;
 public class FairyHandler {
     private static final int SPRITE_DRAW_INTERVAL = 4;
     private static final int SLOT_CHECKER_INTERVAL = 20;
-    private static final int FAIRY_TICK_INTERVAL = 20 * 10; //20 * 10;
+    private static final int FAIRY_TICK_INTERVAL = 20 * 10;
     private static final Random RANDOM = new Random();
 
     private final AdditionalGearSlotHandler slotHandler;
@@ -86,6 +86,7 @@ public class FairyHandler {
                 event.getView().setCursor(null);
             }
 
+
             SoundType.FAIRY_UPGRADE.play(player, true);
             RuneQuestPlugin.getItemStateManager().saveUpdatedState(state, false, true);
             HudService.sendInfoMessage(player,
@@ -93,6 +94,16 @@ public class FairyHandler {
                             .append(cursorFruitItemStack.displayName())
                             .append(Component.text(" and gained new powers!", Color.SUCCESS.asColor()))
             );
+
+            Entity fairyEntity = fairyModels.get(player.getUUID());
+            ModeledEntity me = fairyEntity != null ? ModelEngineAPI.getModeledEntity(fairyEntity) : null;
+
+            if (me != null) {
+                me.getModels().values().forEach(am -> {
+                    am.getAnimationHandler().playAnimation("pet", 0f, 0.3f, 1, true);
+                });
+            }
+
 
         } catch (Exception e) {
             HudService.sendFailMessage(player, Component.text(e.getMessage()));
@@ -283,10 +294,16 @@ public class FairyHandler {
 
             RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
             ItemStack item = player.getInventory().getItem(ReservedSlot.FAIRY_SLOT.getSlot());
+
+            if (item == null) {
+                invalidPlayers.add(uuid);
+                return;
+            }
+
             AbstractItemType runeItem = RuneQuestPlugin.getItemRegistry().getType(item);
             FairyState state = fairy.getState(item);
 
-            if (runePlayer == null || item == null || runeItem == null || state == null) {
+            if (runePlayer == null || runeItem == null || state == null) {
                 invalidPlayers.add(uuid);
                 return;
             }
