@@ -130,9 +130,7 @@ public class Mount extends EquipableItemType implements Stateful {
         Entity entity = Bukkit.getEntity(entityUUID);
 
         if (isLevelUp) {
-            HudService.sendInfoMessage(player, Component.text("Your ", Color.INFO.asColor())
-                    .append(Component.text(this.displayName, Color.INFO.asColor()))
-                    .append(Component.text(" has leveled up!", Color.INFO.asColor())));
+            HudService.sendInfoMessage(player, Component.text("Your mount has leveled up!", Color.INFO.asColor()));
         }
 
         if (!(entity instanceof Horse horse)) {
@@ -154,7 +152,7 @@ public class Mount extends EquipableItemType implements Stateful {
         }
 
         if (state.getName() == null) {
-            state.setName(player.asBukkitPlayer().getName() + "'s Mount");
+            state.setName(player.asBukkitPlayer().getName() + "'s Mount", false);
         }
 
         Horse horse = player.asBukkitPlayer().getLocation().getWorld().spawn(player.asBukkitPlayer().getLocation(), Horse.class);

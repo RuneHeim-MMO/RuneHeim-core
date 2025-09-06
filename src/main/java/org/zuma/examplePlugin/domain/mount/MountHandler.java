@@ -74,7 +74,7 @@ public class MountHandler {
         if (!(state instanceof MountState mountState)) return;
 
         try {
-            mountState.setName(name);
+            mountState.setName(name, true);
             RuneQuestPlugin.getItemStateManager().saveUpdatedState(mountState, false, true);
             removePlayersActiveMount(player.getUUID());
             item.getMetaGenerator().updatePresentationLayer(itemStack);
