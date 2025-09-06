@@ -152,13 +152,15 @@ public class MountState extends AbstractState {
         return this.name;
     }
 
-    public void setName(String name) throws IllegalStateException {
-        if (name.length() < 3 || name.length() > 16) {
-            throw new IllegalStateException("Name must be between 3-16 characters long.");
-        }
+    public void setName(String name, boolean validate) throws IllegalStateException {
+        if (validate) {
+            if (name.length() < 3 || name.length() > 16) {
+                throw new IllegalStateException("Name must be between 3-16 characters long.");
+            }
 
-        if (!name.matches("[a-zA-Z0-9]+")) {
-            throw new IllegalStateException("Name cannot contain symbols. (a-z, A-Z, 0-9 permitted).");
+            if (!name.matches("[a-zA-Z0-9]+")) {
+                throw new IllegalStateException("Name cannot contain symbols. (a-z, A-Z, 0-9 permitted).");
+            }
         }
 
         this.name = name;
