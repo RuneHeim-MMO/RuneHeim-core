@@ -769,6 +769,12 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(111, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 205.5, 73, -59.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.AUCTIONEER, 1, 100)
+                ), false), 1)),
+
+                // Brown farm house trader
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(112, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 253, 68, -277)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BROWN_FARMHOUSE_TRADER, 1, 100)
                 ), false), 1))
 
 
