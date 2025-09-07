@@ -436,11 +436,11 @@ public enum SoundType {
     }
 
     public void play(Player player, boolean global) {
-        play(player.getLocation(), global ? player : null, 0F);
+        play(player.getLocation(), global ? null : player, 0F);
     }
 
     public void play(RunePlayer player, boolean global) {
-        play(player.asBukkitPlayer().getLocation(), global ? player.asBukkitPlayer() : null, 0F);
+        play(player.asBukkitPlayer().getLocation(), global ? null : player.asBukkitPlayer(), 0F);
     }
 
     public void play(Location location) {
