@@ -101,6 +101,7 @@ public class FairyState extends AbstractState {
             return;
         }
 
+        // In lore should be smth if is max level, then should remove hte xp bar
         if (getLevel() >= maxLevel) {
             experience = 0;
             canConsumeFruit = false;

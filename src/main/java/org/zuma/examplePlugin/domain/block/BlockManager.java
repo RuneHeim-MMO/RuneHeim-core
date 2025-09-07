@@ -1,7 +1,6 @@
 package org.zuma.examplePlugin.domain.block;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -15,10 +14,10 @@ import org.zuma.examplePlugin.domain.gui.IDHolder;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
 
 public class BlockManager {
-    private final Map<Chunk, List<AbstractInteractableBlock>> blocksByChunk = new HashMap<>();
     private final HashMap<Location, AbstractInteractableBlock> blocks = new HashMap<>();
     private final HashMap<Location, ModelledInteractableBlock> modelledBlocks = new HashMap<>();
     private final HashMap<DespawnableBlock, Long> despawnableQueue = new HashMap<>();
@@ -94,9 +93,6 @@ public class BlockManager {
         }
     }
 
-    public Map<Chunk, List<AbstractInteractableBlock>> getBlocksByChunk() {
-        return this.blocksByChunk;
-    }
 
     public AbstractInteractableBlock getAbstractInteractableBlock(Block block) {
         return blocks.get(block.getLocation().toBlockLocation());
@@ -126,7 +122,6 @@ public class BlockManager {
             }
 
             blocks.put(blockLocation, block);
-            blocksByChunk.computeIfAbsent(blockLocation.getChunk(), k -> new ArrayList<>()).add(block);
         });
     }
 
@@ -142,12 +137,6 @@ public class BlockManager {
 
         blocks.get(blockLocation).onDisable();
         blocks.remove(blockLocation, block);
-
-        List<AbstractInteractableBlock> list = blocksByChunk.get(block.getLocation().getChunk());
-        if (list != null) {
-            list.remove(block);
-            if (list.isEmpty()) blocksByChunk.remove(block.getLocation().getChunk());
-        }
     }
 
     public void onDisable() {

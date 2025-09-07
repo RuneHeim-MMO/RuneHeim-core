@@ -17,14 +17,19 @@ import java.util.List;
 public class GenericCombatant extends CombatantMob {
 
     private static EntityType getMobWithCorrectBehavior(boolean attacksOnSight, boolean attackWithGroup) {
-        if (attacksOnSight) {
-            return EntityType.ZOMBIE;
+        if (attacksOnSight && attackWithGroup) {
+            // Mobs that attack on sight and attack with friends (usually melee Illagers & zombies)
+            return EntityType.VINDICATOR; // Could also be RAVAGER, ZOMBIFIED_PIGLIN, or ZOMBIE
+        }
+        if (attacksOnSight && !attackWithGroup) {
+            // Mobs that attack on sight but act alone (could be melee or ranged)
+            return EntityType.ZOMBIE; // Common solo attacker (ranged)
         }
 
-        if (attackWithGroup) {
+        if (!attacksOnSight && attackWithGroup) {
             return EntityType.ZOMBIFIED_PIGLIN;
         }
-        
+        // No matching mob
         return EntityType.POLAR_BEAR;
     }
 

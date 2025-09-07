@@ -140,7 +140,7 @@ public class ResourceNode extends AbstractInteractableBlock {
                 .onFailure(null)
                 .build();
 
-        player.startAction(new ProgressBarAction(true, true), params);
+        player.startAction(new ProgressBarAction(), params);
     }
 
     private void onGather(RunePlayer player) {
@@ -302,7 +302,10 @@ public class ResourceNode extends AbstractInteractableBlock {
             super.getLocation().getBlock().setType(Material.AIR);
         }
 
-        super.onDisable();
+        if (super.getHologram() != null) {
+            DHAPI.removeHologram(super.getHologram().getId());
+        }
+
     }
 
 }

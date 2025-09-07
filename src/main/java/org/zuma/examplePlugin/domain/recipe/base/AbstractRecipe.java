@@ -300,7 +300,7 @@ public abstract class AbstractRecipe implements SkillRestrictable {
                 .onFailure(() -> this.handleRecipeCraftingAborted(player))
                 .build();
 
-        player.startAction(new ProgressBarAction(true, true), params);
+        player.startAction(new ProgressBarAction(), params);
 
         return true;
     }

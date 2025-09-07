@@ -155,7 +155,7 @@ public class NodeCreatorInventory extends IndividualGUI {
         SchematicsRecord schematics = SCHEMATIC_MAP.get(type.getId());
 
 
-        loader.insertNewBlock(new BlockEntity(
+        loader.insertNewNode(new BlockEntity(
                 new AbstractInteractableBlockMeta(0, BlockType.ResourceNode, oppositeFace, result.getHitBlock().getLocation(), side),
                 new VersionedJson(new Gson().toJson(new ResourceNodeMeta(type.getId(), schematics != null ? schematics.intact() : null, schematics != null ? schematics.depleted() : null)), 1)));
 

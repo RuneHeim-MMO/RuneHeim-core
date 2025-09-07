@@ -24,24 +24,28 @@ public class ProgressBarAction implements InteractiveActionStrategy {
 
     @Nullable
     private BukkitTask task;
-    private boolean isCancelled, swingHand, progressBarVisible;
+    private boolean isCancelled;
 
-    public ProgressBarAction(boolean swingHand, boolean progressBarVisible) {
+    public ProgressBarAction() {
         this.task = null;
         this.isCancelled = false;
-        this.swingHand = swingHand;
-        this.progressBarVisible = progressBarVisible;
     }
 
     public InteractiveActionStrategy startAction(RunePlayer player, ActionParams params) {
         UUID uuid = player.getUUID();
+
         // Calculate total ticks for duration (1 tick = 50 ms)
         long totalTicks = params.getDurationMs() / 50L;
+
         // Initial step count
         int baseSteps = 10;
+
         final long maxStepDuration = 20L; // 20 ticks = 1 second max
-        long stepDuration;
+
+        long stepDuration;  // Declare here
+
         int steps;
+
         // Calculate initial step duration (ticks per step)
         long calculatedStepDuration = totalTicks / baseSteps;
 
@@ -74,10 +78,6 @@ public class ProgressBarAction implements InteractiveActionStrategy {
                     if (params.getOnFailure() != null) {
                         params.getOnFailure().run();
                     }
-
-                    if (params.getOnFinally() != null) {
-                        params.getOnFinally().run();
-                    }
                     return;
                 }
 
@@ -93,16 +93,12 @@ public class ProgressBarAction implements InteractiveActionStrategy {
                     ));
 
                     params.getOnSuccess().run();
-
-                    if (params.getOnFinally() != null) {
-                        params.getOnFinally().run();
-                    }
                     return;
                 }
 
                 int secondsLeft = (int) Math.ceil(((params.getDurationMs() / (double) steps) * (steps - currentSteps.get())) / 1000.0);
 
-                Component progressBar = progressBarVisible ? new LoadingBarBuilder()
+                Component progressBar = new LoadingBarBuilder()
                         .totalSteps(steps)
                         .currentStep(currentSteps.get())
                         .barLength(16)
@@ -111,14 +107,11 @@ public class ProgressBarAction implements InteractiveActionStrategy {
                         .stop(Icon.PROGRESS_SHORT_END.get())
                         .emptyColor(Color.BUSY_BAR_EMPTY.asColor())
                         .fillColor(Color.BUSY_BAR_FILL.asColor())
-                        .build() : Component.empty();
+                        .build();
 
-                if (params.getStepSound() != null && currentSteps.get() % params.getStepSoundEveryNth() == 0) {
-                    params.getStepSound().play(onlinePlayer, true);
-                }
+                if (params.getStepSound() != null) params.getStepSound().play(onlinePlayer, true);
 
-                if (swingHand) onlinePlayer.swingMainHand();
-
+                onlinePlayer.swingMainHand();
                 onlinePlayer.showTitle(Title.title(progressBar,
                         Component.text("[" + secondsLeft + "s] ").color(Color.SUCCESS.asColor())
                                 .append(Component.text(params.getActionLabel()).color(Color.SUBTITLE.asColor())),

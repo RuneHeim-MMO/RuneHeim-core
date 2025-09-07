@@ -10,7 +10,6 @@ import javax.security.auth.login.AccountNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Map;
 import java.util.UUID;
 
 public class StateRepository {
@@ -22,8 +21,8 @@ public class StateRepository {
         this.gson = new Gson();
     }
 
-    public Map.Entry<Long, AbstractStateMeta> getByUUID(UUID uuid) {
-        String sql = "SELECT created_at, json FROM item_states WHERE uuid = ?";
+    public AbstractStateMeta getByUUID(UUID uuid) {
+        String sql = "SELECT json FROM item_states WHERE uuid = ?";
 
         try (Connection conn = pool.getDataSource().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -36,13 +35,12 @@ public class StateRepository {
                 }
 
                 String json = rs.getString("json");
-                long createdAt = rs.getDate("created_at").getTime();
 
-                return Map.entry(createdAt, gson.fromJson(json, AbstractStateMeta.class));
+                return gson.fromJson(json, AbstractStateMeta.class);
             }
 
         } catch (Exception e) {
-            throw new RuntimeException("Failed to get items state.", e);
+            throw new RuntimeException("Failed to items state.", e);
         }
     }
 
