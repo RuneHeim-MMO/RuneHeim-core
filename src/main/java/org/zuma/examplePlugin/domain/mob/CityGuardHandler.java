@@ -3,10 +3,7 @@ package org.zuma.examplePlugin.domain.mob;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Mob;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -49,7 +46,14 @@ public class CityGuardHandler implements Listener {
     @EventHandler
     public void onMobAttackNearCityGuard(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Mob damagerMob)) return;
-        if (!(event.getEntity() instanceof Player)) return;
+
+        if (event.getEntity() instanceof Player) {
+            // entity is a player
+        } else if (event.getEntity() instanceof Horse h && !h.getPassengers().isEmpty()) {
+            // entity is a horse with passengers
+        } else {
+            return; // skip everything else
+        }
 
         AbstractMob attacker = RuneQuestPlugin.getMobRegistry().getMob(damagerMob);
 
