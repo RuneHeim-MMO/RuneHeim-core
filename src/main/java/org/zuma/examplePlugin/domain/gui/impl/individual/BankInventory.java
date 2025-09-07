@@ -58,12 +58,6 @@ public class BankInventory extends PaginatedBankGUI {
             if (bankContent[0] != null) {
                 try {
                     loadedPairs = ItemContainerContentSerializer.deserializeItemContainerContentSync(bankContent[0]);
-                } catch (IllegalStateException e) {
-                    Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                        HudService.sendFailMessage(player, Component.text("Please wait! Save/load is in progress."));
-                        onFail.run();
-                    });
-                    return;
                 } catch (Exception e) {
                     Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                         long incidentId = System.currentTimeMillis();
@@ -106,16 +100,15 @@ public class BankInventory extends PaginatedBankGUI {
             String serialized = ItemContainerContentSerializer.serializeItemContainerContentSync(this, true);
             this.bankQueryLockController.save(this.playerUUID, serialized);
         } catch (Exception e) {
-            Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(this.playerUUID);
+            RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(this.playerUUID);
 
-                long incidentId = System.currentTimeMillis();
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[BankSerializationError #" + incidentId + "] Failed to serialize bank of " + this.playerUUID + "! ", e);
+            long incidentId = System.currentTimeMillis();
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[BankSerializationError #" + incidentId + "] Failed to serialize bank of " + this.playerUUID + "! ", e);
 
-                if (player != null) {
-                    HudService.sendFailMessage(player, Component.text("Bank content serialization failed. Please submit a bug report. Incident #" + incidentId));
-                }
-            });
+            if (player != null) {
+                HudService.sendFailMessage(player, Component.text("Bank content serialization failed. Please submit a bug report. Incident #" + incidentId));
+            }
+
         }
 
     }

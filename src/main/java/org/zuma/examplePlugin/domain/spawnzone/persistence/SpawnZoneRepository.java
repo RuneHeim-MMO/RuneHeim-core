@@ -733,10 +733,10 @@ public class SpawnZoneRepository {
                         // todo
                 ), 100, false), 1)),
 
-            new SpawnZoneRecord(new AbstractSpawnZoneMeta(105, SpawnZoneType.AREA, 15, 15,
-                    new Location(Bukkit.getWorld("world"), -415, 80, 180)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                    new SpawnZoneMobRecord(MobType.ARMADILLO_NON_AGGRO_BASE_15, 20, 100)
-            ), 80, false), 1)),
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(105, SpawnZoneType.AREA, 15, 15,
+                        new Location(Bukkit.getWorld("world"), -415, 80, 180)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.ARMADILLO_NON_AGGRO_BASE_15, 20, 100)
+                ), 80, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(106, SpawnZoneType.AREA, 15, 15,
                         new Location(Bukkit.getWorld("world"), -328, 80, 290)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
@@ -754,7 +754,7 @@ public class SpawnZoneRepository {
                         new SpawnZoneMobRecord(MobType.CITY_GUARD_STATIC, 1, 100)
                 ), false), 1)),
 
-                // Drakkar gyn
+                // Drakkar gym
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(109, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 198.5, 72, -49.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.COMBAT_DUMMY_FACE_SOUTH, 1, 100)
@@ -763,6 +763,18 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(110, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 200.5, 72, -49.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.COMBAT_DUMMY_FACE_SOUTH, 1, 100)
+                ), false), 1)),
+
+                // Drakkar auctioneer
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(111, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 205.5, 73, -59.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.AUCTIONEER, 1, 100)
+                ), false), 1)),
+
+                // Brown farm house trader
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(112, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 253, 68, -277)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BROWN_FARMHOUSE_TRADER, 1, 100)
                 ), false), 1))
 
 

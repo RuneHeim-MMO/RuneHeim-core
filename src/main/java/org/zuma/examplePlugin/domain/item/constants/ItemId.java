@@ -285,7 +285,29 @@ public enum ItemId {
     IRON_RING(3201),
     MITHRIL_RING(3202),
     ADAMANTITE_RING(3203),
-    RUNITE_RING(3204);
+    RUNITE_RING(3204),
+
+
+
+    // Mounts
+    OBELIX_MOUNT(3300),
+    // Low-end horses
+    BROWN_FARM_HORSE_MOUNT(3301),
+    GRAY_MULE_MOUNT(3302),
+    CHESTNUT_DONKEY_MOUNT(3303),
+
+    // Mid-tier horses
+    CREAMY_STEED_MOUNT(3304),
+    SNOW_WHITE_HORSE_MOUNT(3305),
+    BLACK_STALLION_MOUNT(3306),
+
+    // High-end horses
+    DARK_BROWN_WARHORSE_MOUNT(3307),
+    UNDEAD_NIGHTMARE_MOUNT(3308),
+    SKELETAL_CHARGER_MOUNT(3309),
+
+    // Llama
+    BROWN_LLAMA_MOUNT(3310);
 
 
     private final int id;

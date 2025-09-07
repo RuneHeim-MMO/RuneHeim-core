@@ -6,6 +6,7 @@ import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerModelledBlock;
 import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerRegularBlock;
+import org.zuma.examplePlugin.domain.block.impl.Altar;
 import org.zuma.examplePlugin.domain.block.impl.ResourceNode;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.v1.InventoryOpenerModelledMeta;
@@ -20,10 +21,16 @@ public class BlockFactory {
             case ResourceNode -> createResourceNode(manager, meta, json, loader);
             case InventoryOpener -> createInventoryOpener(meta, json);
             case InventoryOpenerModelled -> createInventoryOpenerEntity(meta, json);
+            case Altar -> createAltar(meta, json);
             default -> throw new IllegalArgumentException("Unknown interactable block type: " + meta.type());
         };
     }
 
+    private Altar createAltar(AbstractInteractableBlockMeta meta, @Nullable VersionedJson json) {
+        Altar block = new Altar(meta);
+        block.spawn(block.getType().getMaterial());
+        return block;
+    }
 
     private ResourceNode createResourceNode(BlockManager manager, AbstractInteractableBlockMeta meta, @Nullable VersionedJson json, BlockLoader loader) {
         if (json == null) {

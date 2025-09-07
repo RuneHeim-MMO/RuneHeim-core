@@ -26,6 +26,7 @@ import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.item.helpers.lore.*;
 import org.zuma.examplePlugin.domain.item.impl.EmptyContainer;
+import org.zuma.examplePlugin.domain.item.impl.Mount;
 import org.zuma.examplePlugin.domain.item.impl.consumable.Food;
 import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
 import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFood;
@@ -104,7 +105,6 @@ public class MetaGenerator {
             lore.addAll(new EquipableLore(equipable).getLore());
         }
 
-
         if (itemType instanceof SocketedEquipableItemType) {
             lore.addAll(new SocketedEquipableLore(item).getLore());
         }
@@ -119,6 +119,10 @@ public class MetaGenerator {
 
         if (itemType instanceof Fairy fairy) {
             lore.addAll(new FairyLore(fairy, item).getLore());
+        }
+
+        if (itemType instanceof Mount mount) {
+            lore.addAll(new MountLore(mount, item).getLore());
         }
 
         lore.add(Component.empty());
@@ -193,7 +197,10 @@ public class MetaGenerator {
 
                 AbstractState newState = stateful.cloneDefaultStateTemplate();
                 RuneQuestPlugin.getItemStateManager().insertDefaultItemState(uuid, newState);
-                Bukkit.getServer().getPluginManager().callEvent(new StateCreatedDefaultEvent(uuid, newState));
+
+                Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+                    Bukkit.getServer().getPluginManager().callEvent(new StateCreatedDefaultEvent(uuid, newState));
+                });
             }
         }
 

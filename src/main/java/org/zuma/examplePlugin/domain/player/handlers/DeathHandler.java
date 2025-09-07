@@ -75,7 +75,9 @@ public class DeathHandler {
         }
 
         runePlayer.setSpectatorMode(spawnPoint);
-        runePlayer.resetSpecialEnergy();
+        runePlayer.setSpecialEnergyPercent(100);
+        runePlayer.setHealth(runePlayer.getSkill(SkillType.HITPOINTS).getLevelWithBonuses(), RunePlayerHealthChangedEvent.Cause.RESPAWN);
+        runePlayer.setPrayerEnergy(runePlayer.getSkill(SkillType.PRAYER).getBaseLevel());
         runePlayer.setDead(true);
 
         SoundType.DEATH_SCREEN.play(player, false);
@@ -114,7 +116,6 @@ public class DeathHandler {
             runePlayer.setDead(false);
             runePlayer.setSurvivalMode();
             player.teleport(finalSpawnPoint);
-            runePlayer.setHealth(runePlayer.getSkill(SkillType.HITPOINTS).getLevelWithBonuses(), RunePlayerHealthChangedEvent.Cause.RESPAWN);
 
         }, cooldownDuration * 20L);
 

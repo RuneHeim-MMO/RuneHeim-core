@@ -62,7 +62,7 @@ public class RunePlayer implements CombatEntity {
     public RunePlayer(UUID uuid, EnumMap<SkillType, Skill> skills) {
         this.uuid = uuid;
         this.skills = skills;
-        this.combatData = new PlayerCombatData(this, skills.get(SkillType.HITPOINTS).getBaseLevel(), Math.min(3, XpUtils.getCombatLevelFromSkills(skills)));
+        this.combatData = new PlayerCombatData(this, skills.get(SkillType.HITPOINTS).getBaseLevel(), Math.min(3, XpUtils.getCombatLevelFromSkills(skills)), 0, 0);
 
         this.modifiers = new EnumMap<>(ModifierType.class);
         this.skillModifiers = new EnumMap<>(SkillType.class);
@@ -314,8 +314,8 @@ public class RunePlayer implements CombatEntity {
         return (int) (this.combatData.getSpecialEnergy() * 100);
     }
 
-    public void resetSpecialEnergy() {
-        this.combatData.resetSpecialEnergy();
+    public void setSpecialEnergyPercent(int percent) {
+        this.combatData.setSpecialEnergy(percent);
     }
 
     public boolean isDead() {
@@ -325,4 +325,14 @@ public class RunePlayer implements CombatEntity {
     public void setDead(boolean dead) {
         isDead = dead;
     }
+
+    public void setPrayerEnergy(int amount) {
+        this.combatData.setPrayerEnergy(amount);
+    }
+
+    public int getPrayerEnergy() {
+        return this.combatData.getPrayerEnergy();
+    }
+
+
 }
