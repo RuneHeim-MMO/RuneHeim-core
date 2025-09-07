@@ -13,9 +13,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Horse;
-import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
@@ -46,12 +44,15 @@ public class Mount extends EquipableItemType implements Stateful {
     @Nullable
     private final String model;
     @Nullable
+    private final EntityType baseEntity;
+    @Nullable
     private final Horse.Color color;
     @Nullable
     private final Horse.Style style;
 
-    public Mount(AbstractItemMeta meta, @Nullable String model, @Nullable Horse.Color color, @Nullable Horse.Style style) {
+    public Mount(AbstractItemMeta meta, @Nullable String model, @Nullable EntityType baseEntity, @Nullable Horse.Color color, @Nullable Horse.Style style) {
         super(meta);
+        this.baseEntity = baseEntity;
         this.color = color;
         this.style = style;
         this.model = model;
@@ -121,12 +122,15 @@ public class Mount extends EquipableItemType implements Stateful {
             for (int z = -1; z <= 1; z++) {
                 for (int y = 0; y < HORSE_HEIGHT; y++) {
                     Material blockType = loc.getWorld().getBlockAt(loc.clone().add(x, y, z)).getType();
-                    if (!blockType.isAir()) return false;
+
+                    // Ignore non-solid blocks (like grass, flowers, water, etc.)
+                    if (blockType.isSolid()) return false;
                 }
             }
         }
         return true;
     }
+
 
     // During initialization or on level up
     public void onLevelChange(RunePlayer player, int newLevel, UUID entityUUID, boolean isLevelUp) {
@@ -136,7 +140,7 @@ public class Mount extends EquipableItemType implements Stateful {
             HudService.sendInfoMessage(player, Component.text("Your mount has leveled up!", Color.INFO.asColor()));
         }
 
-        if (!(entity instanceof Horse horse)) {
+        if (!(entity instanceof AbstractHorse horse)) {
             return;
         }
 
@@ -156,23 +160,32 @@ public class Mount extends EquipableItemType implements Stateful {
         }
 
         if (state.getName() == null) {
-            state.setName(player.asBukkitPlayer().getName() + "'s Mount", false);
+            state.setName(player.asBukkitPlayer().getName() + "'s " + this.displayName, false);
         }
 
-        Horse horse = player.asBukkitPlayer().getLocation().getWorld().spawn(player.asBukkitPlayer().getLocation(), Horse.class);
-        UUID uuid = horse.getUniqueId();
-        EntitySessionManager.tagEntity(horse);
+        Location loc = player.asBukkitPlayer().getLocation();
+        Entity horseEntity = loc.getWorld().spawnEntity(loc, baseEntity == null ? EntityType.HORSE : baseEntity);
 
-        horse.setTamed(true);
-        horse.setOwner(player.asBukkitPlayer());
-        horse.getInventory().setSaddle(new ItemStack(Material.SADDLE));
-        horse.addPassenger(player.asBukkitPlayer());
-        horse.customName(Component.empty());
+        if (!(horseEntity instanceof AbstractHorse abstractHorse)) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot spawn mount " + this.displayName + "! Base model is not AbstractHorse.");
+            return null;
+        }
 
-        horse.setStyle(this.style != null ? this.style : Horse.Style.BLACK_DOTS);
-        horse.setColor(this.color != null ? this.color : Horse.Color.BLACK);
+        UUID uuid = abstractHorse.getUniqueId();
+        EntitySessionManager.tagEntity(abstractHorse);
 
-        if (this.model != null) setModel(horse, this.model);
+        abstractHorse.setTamed(true);
+        abstractHorse.setOwner(player.asBukkitPlayer());
+        abstractHorse.getInventory().setSaddle(new ItemStack(Material.SADDLE));
+        abstractHorse.addPassenger(player.asBukkitPlayer());
+        abstractHorse.customName(Component.empty());
+
+        if (horseEntity instanceof Horse horse) {
+            horse.setStyle(this.style != null ? this.style : Horse.Style.BLACK_DOTS);
+            horse.setColor(this.color != null ? this.color : Horse.Color.BLACK);
+        }
+
+        if (this.model != null) setModel(abstractHorse, this.model);
 
         onLevelChange(player, state.getLevel(this), uuid, false);
         return uuid;

@@ -65,7 +65,7 @@ console.log(totalhrs + "total hrs")
 public class MountState extends AbstractState {
     private static final int BASE_XP = 500;
     private static final double XP_POWER_AMOUNT = 1.15;
-    private static final double EXPERIENCE_GAIN_PER_TICK = 300.1;
+    private static final double EXPERIENCE_GAIN_PER_TICK = 0.1;
 
     @Nullable
     private String name;

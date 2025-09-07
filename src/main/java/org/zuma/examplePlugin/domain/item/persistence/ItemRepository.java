@@ -1,9 +1,10 @@
 package org.zuma.examplePlugin.domain.item.persistence;
 
 import com.google.gson.Gson;
-import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Horse;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.droptable.DropTableId;
@@ -151,12 +152,114 @@ public class ItemRepository {
                 ),
 
                 // Mounts
-                new ItemEntity(new AbstractItemMeta(ItemType.MOUNT, ItemId.HORSE_MOUNT.asInt(), Material.SADDLE, ItemRarity.LEGENDARY, "Horse Mount", List.of("Horse"), null, null, true),
-                        toVersionedJson(new MountMeta(null, null, null, 10, 0.15, 0.5, 0.03, 0.075, List.of(new SkillRequirement(SkillType.ATTACK, 5))
-                        ), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.MOUNT, ItemId.CHIEFTAIN_MOUNT.asInt(), Material.SADDLE, ItemRarity.LEGENDARY, "Slave Mount", List.of("Your own personal slave"), null, null, true),
-                        toVersionedJson(new MountMeta("chieftain", null, null, 20, 0.15, 0.5, 0.03, 0.075, List.of(new SkillRequirement(SkillType.ATTACK, 5))
+                // Low-end horses
+                new ItemEntity(new AbstractItemMeta(
+                        ItemType.MOUNT,
+                        ItemId.BROWN_FARM_HORSE_MOUNT.asInt(),
+                        Material.SADDLE,
+                        ItemRarity.COMMON,
+                        "Brown Farm Horse",
+                        List.of("A humble brown horse, perfect for beginners."),
+                        null, null, true),
+                        toVersionedJson(new MountMeta(null, EntityType.HORSE, Horse.Style.NONE, Horse.Color.BROWN, 5, 0.15, 0.4, 0.02, 0.05, List.of()), 1)),
+
+                new ItemEntity(new AbstractItemMeta(
+                        ItemType.MOUNT,
+                        ItemId.GRAY_MULE_MOUNT.asInt(),
+                        Material.SADDLE,
+                        ItemRarity.UNCOMMON,
+                        "Gray Mule",
+                        List.of("A sturdy gray mule, reliable and patient."),
+                        null, null, true),
+                        toVersionedJson(new MountMeta(null, EntityType.MULE, Horse.Style.WHITE_DOTS, Horse.Color.GRAY, 6, 0.15, 0.45, 0.025, 0.06, List.of()), 1)),
+
+                new ItemEntity(new AbstractItemMeta(
+                        ItemType.MOUNT,
+                        ItemId.CHESTNUT_DONKEY_MOUNT.asInt(),
+                        Material.SADDLE,
+                        ItemRarity.UNCOMMON,
+                        "Chestnut Donkey",
+                        List.of("A chestnut donkey, gentle and dependable."),
+                        null, null, true),
+                        toVersionedJson(new MountMeta(null, EntityType.DONKEY, Horse.Style.NONE, Horse.Color.CHESTNUT, 6, 0.15, 0.45, 0.025, 0.06, List.of()), 1)),
+
+                // Mid-tier horses
+                new ItemEntity(new AbstractItemMeta(
+                        ItemType.MOUNT,
+                        ItemId.CREAMY_STEED_MOUNT.asInt(),
+                        Material.SADDLE,
+                        ItemRarity.RARE,
+                        "Creamy Steed",
+                        List.of("A light cream horse with soft markings, elegant and swift."),
+                        null, null, true),
+                        toVersionedJson(new MountMeta(null, EntityType.HORSE, Horse.Style.WHITEFIELD, Horse.Color.CREAMY, 8, 0.15, 0.5, 0.03, 0.07, List.of()), 1)),
+
+                new ItemEntity(new AbstractItemMeta(
+                        ItemType.MOUNT,
+                        ItemId.SNOW_WHITE_HORSE_MOUNT.asInt(),
+                        Material.SADDLE,
+                        ItemRarity.RARE,
+                        "Snow White Horse",
+                        List.of("A pure white horse, fast and noble."),
+                        null, null, true),
+                        toVersionedJson(new MountMeta(null, EntityType.HORSE, Horse.Style.WHITE, Horse.Color.WHITE, 8, 0.15, 0.52, 0.03, 0.075, List.of()), 1)),
+
+                new ItemEntity(new AbstractItemMeta(
+                        ItemType.MOUNT,
+                        ItemId.BLACK_STALLION_MOUNT.asInt(),
+                        Material.SADDLE,
+                        ItemRarity.EPIC,
+                        "Black Stallion",
+                        List.of("A sleek black horse, powerful and swift."),
+                        null, null, true),
+                        toVersionedJson(new MountMeta(null, EntityType.HORSE, Horse.Style.BLACK_DOTS, Horse.Color.BLACK, 9, 0.16, 0.55, 0.035, 0.08, List.of()), 1)),
+
+                // High-end horses
+                new ItemEntity(new AbstractItemMeta(
+                        ItemType.MOUNT,
+                        ItemId.DARK_BROWN_WARHORSE_MOUNT.asInt(),
+                        Material.SADDLE,
+                        ItemRarity.EPIC,
+                        "Dark Brown Warhorse",
+                        List.of("A dark brown horse, strong and fearsome in battle."),
+                        null, null, true),
+                        toVersionedJson(new MountMeta(null, EntityType.HORSE, Horse.Style.NONE, Horse.Color.DARK_BROWN, 10, 0.17, 0.57, 0.035, 0.08, List.of()), 1)),
+
+                new ItemEntity(new AbstractItemMeta(
+                        ItemType.MOUNT,
+                        ItemId.UNDEAD_NIGHTMARE_MOUNT.asInt(),
+                        Material.SADDLE,
+                        ItemRarity.LEGENDARY,
+                        "Undead Nightmare",
+                        List.of("An undead horse, untiring and fearsome."),
+                        null, null, true),
+                        toVersionedJson(new MountMeta(null, EntityType.ZOMBIE_HORSE, Horse.Style.NONE, Horse.Color.BLACK, 12, 0.2, 0.6, 0.04, 0.09, List.of()), 1)),
+
+                new ItemEntity(new AbstractItemMeta(
+                        ItemType.MOUNT,
+                        ItemId.SKELETAL_CHARGER_MOUNT.asInt(),
+                        Material.SADDLE,
+                        ItemRarity.LEGENDARY,
+                        "Skeletal Charger",
+                        List.of("A skeletal horse, swift and terrifying."),
+                        null, null, true),
+                        toVersionedJson(new MountMeta(null, EntityType.SKELETON_HORSE, Horse.Style.NONE, Horse.Color.WHITE, 12, 0.2, 0.62, 0.04, 0.09, List.of()), 1)),
+
+                // Llama (no style/color)
+                new ItemEntity(new AbstractItemMeta(
+                        ItemType.MOUNT,
+                        ItemId.BROWN_LLAMA_MOUNT.asInt(),
+                        Material.SADDLE,
+                        ItemRarity.RARE,
+                        "Brown Llama",
+                        List.of("A sturdy brown llama, reliable for travel."),
+                        null, null, true),
+                        toVersionedJson(new MountMeta(null, EntityType.LLAMA, null, null, 7, 0.14, 0.48, 0.03, 0.065, List.of()), 1)),
+
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MOUNT, ItemId.OBELIX_MOUNT.asInt(), Material.SADDLE, ItemRarity.LEGENDARY, "Obelix", List.of("Your own personal obelix"), null, null, true),
+                        toVersionedJson(new MountMeta("chieftain", null, null, null, 10, 0.15, 0.5, 0.03, 0.075, List.of(new SkillRequirement(SkillType.ATTACK, 5))
                         ), 1)),
 
 

@@ -59,7 +59,7 @@ public class HitListener implements Listener {
 
         Entity defenderEntity = event.getEntity();
 
-        if (defenderEntity instanceof Horse horse && !horse.getPassengers().isEmpty()) {
+        if (defenderEntity instanceof AbstractHorse horse && !horse.getPassengers().isEmpty()) {
             defenderEntity = horse.getPassengers().getFirst();
         }
 
@@ -101,7 +101,7 @@ public class HitListener implements Listener {
 
         Entity defenderEntity = event.getEntity();
 
-        if (defenderEntity instanceof Horse horse && !horse.getPassengers().isEmpty()) {
+        if (defenderEntity instanceof AbstractHorse horse && !horse.getPassengers().isEmpty()) {
             defenderEntity = horse.getPassengers().getFirst();
         }
 

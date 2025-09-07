@@ -49,7 +49,7 @@ public class CityGuardHandler implements Listener {
 
         if (event.getEntity() instanceof Player) {
             // entity is a player
-        } else if (event.getEntity() instanceof Horse h && !h.getPassengers().isEmpty()) {
+        } else if (event.getEntity() instanceof AbstractHorse h && !h.getPassengers().isEmpty()) {
             // entity is a horse with passengers
         } else {
             return; // skip everything else
