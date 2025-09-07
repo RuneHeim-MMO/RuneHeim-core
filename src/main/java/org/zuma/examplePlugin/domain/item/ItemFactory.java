@@ -73,7 +73,7 @@ public class ItemFactory {
 
                 item.setDefaultStateTemplate(new MountState(new MountStateMeta(null, 1, 0, 0)));
                 item.addRequirements(deserialized.requirements());
-                item.initializeStats(deserialized.maxLevel(), deserialized.baseSpeed());
+                item.initializeStats(deserialized.maxLevel(), deserialized.baseSpeed(), deserialized.baseJump(), deserialized.speedLevelBonus(), deserialized.jumpLevelBonus());
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());

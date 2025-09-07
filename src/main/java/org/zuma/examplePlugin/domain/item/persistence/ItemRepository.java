@@ -152,11 +152,11 @@ public class ItemRepository {
 
                 // Mounts
                 new ItemEntity(new AbstractItemMeta(ItemType.MOUNT, ItemId.HORSE_MOUNT.asInt(), Material.SADDLE, ItemRarity.LEGENDARY, "Horse Mount", List.of("Horse"), null, null, true),
-                        toVersionedJson(new MountMeta(null, null, null, 1, 10, List.of(new SkillRequirement(SkillType.ATTACK, 5))
+                        toVersionedJson(new MountMeta(null, null, null, 10, 0.15, 0.5, 0.03, 0.075, List.of(new SkillRequirement(SkillType.ATTACK, 5))
                         ), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MOUNT, ItemId.CHIEFTAIN_MOUNT.asInt(), Material.SADDLE, ItemRarity.LEGENDARY, "Slave Mount", List.of("Your own personal slave"), null, null, true),
-                        toVersionedJson(new MountMeta("chieftain", null, null, 1, 10, List.of(new SkillRequirement(SkillType.ATTACK, 5))
+                        toVersionedJson(new MountMeta("chieftain", null, null, 20, 0.15, 0.5, 0.03, 0.075, List.of(new SkillRequirement(SkillType.ATTACK, 5))
                         ), 1)),
 
 
