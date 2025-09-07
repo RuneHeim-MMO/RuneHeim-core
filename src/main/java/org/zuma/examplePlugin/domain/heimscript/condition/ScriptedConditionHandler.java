@@ -71,15 +71,6 @@ public class ScriptedConditionHandler {
                 case REMOVE_INVENTORY_ITEM_SUCCESSFUL -> {
                     result = PlayerUtils.removeItems(player, List.of(new ItemRecord(Integer.parseInt(args.get("item_id")), Integer.parseInt(args.get("amount")))));
                 }
-                case REMOVE_POUCH_COINS_SUCCESSFUL -> {
-                    int amount = Integer.parseInt(args.get("amount"));
-
-                    if (player.getPouchCoins() >= amount) {
-                        player.setPouchCoins(player.getPouchCoins() - amount, false);
-                        result = true;
-                    }
-
-                }
                 default ->
                         RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Unknown condition " + action + " in " + input + "!");
             }

@@ -5,7 +5,6 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -14,10 +13,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.core.interfaces.CombatEntity;
-import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
-import org.zuma.examplePlugin.domain.territory.Territory;
 import org.zuma.examplePlugin.events.player.RunePlayerLoadedEvent;
 
 public class RunePlayerListener implements Listener {
@@ -33,27 +29,6 @@ public class RunePlayerListener implements Listener {
 
         playerHandler.loadPlayerData(player);
 
-    }
-
-    @EventHandler
-    public void onFallDamage(EntityDamageEvent event) {
-        if (!(event.getEntity() instanceof Player)) return;
-
-        if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
-            event.setCancelled(true);
-        }
-    }
-
-    // Cancel real deaths, handle by teleporting to city
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    public void onPlayerFinalDamage(EntityDamageEvent event) {
-        if (!(event.getEntity() instanceof Player player)) return;
-
-        double finalHealth = player.getHealth() - event.getFinalDamage();
-        if (finalHealth <= 0) {
-            event.setCancelled(true);
-            PlayerUtils.teleportToClosestCity(player);
-        }
     }
 
     @EventHandler

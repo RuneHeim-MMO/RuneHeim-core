@@ -90,13 +90,6 @@ public class BlockInvCreatorInventory extends IndividualGUI {
             inventory.setItem(i, item);
         }
 
-
-        ItemStack item = new ItemStack(Material.LECTERN);
-        ItemMeta itemMeta = item.getItemMeta();
-        itemMeta.displayName(Component.text("Praying Table", NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
-        super.assignMenuValue(item, 1337);
-        inventory.setItem(inventory.getSize() - 2, item);
-
         ItemStack undo = new ItemStack(Material.BARRIER);
         ItemMeta meta = undo.getItemMeta();
         meta.displayName(Component.text("Undo", Color.ERROR.asColor()));
@@ -168,16 +161,8 @@ public class BlockInvCreatorInventory extends IndividualGUI {
             case RIGHT -> hologramLocation.add(1, 0, 0);
         }
 
-        // Praying table
-        if (menuValue == 1337) {
-            loader.insertNewBlock(new BlockEntity(
-                    new AbstractInteractableBlockMeta(0, BlockType.Altar, oppositeFace, result.getHitBlock().getLocation(), hologramLocation),
-                    null));
 
-            return;
-        }
-
-        loader.insertNewBlock(new BlockEntity(
+        loader.insertNewNode(new BlockEntity(
                 new AbstractInteractableBlockMeta(0, BlockType.InventoryOpener, oppositeFace, result.getHitBlock().getLocation(), hologramLocation),
                 new VersionedJson(new Gson().toJson(META_MAP.get(menuValue)), 1)));
 

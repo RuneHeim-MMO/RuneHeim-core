@@ -5,8 +5,7 @@ import org.bukkit.Material;
 public enum BlockType {
     ResourceNode(0, Material.IRON_ORE),
     InventoryOpener(1, Material.BARRIER),
-    InventoryOpenerModelled(2, Material.BARRIER),
-    Altar(3, Material.LECTERN);
+    InventoryOpenerModelled(2, Material.BARRIER);
 
     private final int id;
     private final Material material;
@@ -24,4 +23,4 @@ public enum BlockType {
         return id;
     }
 
-    }
+}

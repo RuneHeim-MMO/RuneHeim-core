@@ -25,7 +25,6 @@ public enum Color {
     DEPLETED_RESOURCE("#636363"),
     ACCENT("#ebc934"),
     FAIRY_STAMINA("#42d7f5"),
-    PRAYER_ENERGY("#03cffc"),
 
     CURRENCY_LOW("#FFFF00"),
     CURRENCY_MID("#F5F6F7"),

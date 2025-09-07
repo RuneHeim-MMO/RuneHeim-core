@@ -14,11 +14,8 @@ import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
@@ -73,7 +70,7 @@ public class ItemListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = false)
-    // Some fucking shithead is cancelling this SOMEWHERE for no reason...
+     // Some fucking shithead is cancelling this SOMEWHERE for no reason...
     public void onPlayerInteract(PlayerInteractEvent event) {
       /*  if (event.getAction().equals(Action.LEFT_CLICK_AIR) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             return;
@@ -222,14 +219,6 @@ public class ItemListener implements Listener {
             }
 
             if (player == null) {
-                return;
-            }
-
-            InventoryView view = event.getView();
-            Inventory top = view.getTopInventory();
-
-            if (top.getType() != InventoryType.CRAFTING && top.getType() != InventoryType.PLAYER) {
-                // Player has another inventory open
                 return;
             }
 

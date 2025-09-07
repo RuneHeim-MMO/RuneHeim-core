@@ -61,8 +61,6 @@ public enum Icon {
     ACCESSORY_RING("⤪"),
     CLOVER("Ⅹ"),
     CONTRACT_SKULL("⥵"),
-    PRAYER("⏲"),
-    TRADE("⽝"),
 
     SCROLL_RED("ⵣ"),
     SCROLL_GRAY("⁝"),
@@ -82,11 +80,6 @@ public enum Icon {
     LEVEL("┚"),
     SPROUT("✦"),
     MAP("⏜"),
-    AGE("⢐"),
-    DISTANCE_TRAVELED("⠼"),
-    MOUNT("⺲"),
-    REMAINS("⊪"),
-    NAME_TAG("ↈ"),
 
     GREEN_GEM("⮩"),
 
@@ -102,8 +95,6 @@ public enum Icon {
     SPECIAL_ATTACK_AVAILBLE_BADGE("↪"),
     SPECIAL_ATTACK_UNAVAILABLE_BADGE("※"),
     FAIRY_BADGE("⣮"),
-    MOUNT_BADGE_WEARING("⢧"),
-    MOUNT_BADGE_ACTIVE("ↀ"),
     LOGO("◾"),
     LOGO_FULL("⍗");
 

@@ -6,7 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -14,14 +15,10 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.domain.item.ownership.ItemOwnershipHandler;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
-import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.behavior.MobIdleBehaviorHandler;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
@@ -32,14 +29,11 @@ import java.util.UUID;
 
 public class MobHandler {
     private final MobRegistry registry;
-    private static final long TARGET_SWITCH_SWEEP_TICK_INTERVAL = 30L;
-    private static final double SEARCH_RADIUS = 12.0;
 
     public MobHandler(MobRegistry registry) {
         this.registry = registry;
         MobIdleBehaviorHandler idleManager = new MobIdleBehaviorHandler(registry);
         idleManager.start();
-        startTargetSyncForMountedPlayersLoop();
     }
 
     // Clears all mobs with MOB_UUID data keys.
@@ -64,20 +58,6 @@ public class MobHandler {
         }
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "All mobs cleared.");
-    }
-
-    public void startTargetSyncForMountedPlayersLoop() {
-        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Starting target sync for mounted players loop. Running every " + TARGET_SWITCH_SWEEP_TICK_INTERVAL + " ticks.");
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                try {
-                    maintainTargetsForMountedPlayers();
-                } catch (Throwable t) {
-                    RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Target sweep error:", t);
-                }
-            }
-        }.runTaskTimer(RuneQuestPlugin.getInstance(), 0L, TARGET_SWITCH_SWEEP_TICK_INTERVAL);
     }
 
     public void onPlayerInteractWithEntity(PlayerInteractAtEntityEvent event, AbstractMob mob, RunePlayer player) {
@@ -154,44 +134,4 @@ public class MobHandler {
             }
         }, 20L);
     }
-
-    // Keep target on player, regardless if hes on a mount or dismounts it.
-    private void maintainTargetsForMountedPlayers() {
-        // iterate only combatant mobs
-        for (AbstractMob e : registry.getAll()) {
-            if (!(e.getEntity() instanceof Mob mob) || !(e instanceof CombatantMob)) continue;
-            if (!mob.isValid() || mob.isDead()) continue;
-
-            LivingEntity target = mob.getTarget();
-            if (target == null) continue;
-
-            // CASE A: mob targeting a player who is mounted -> switch to the mount
-            if (target instanceof Player player) {
-                if (player.isInsideVehicle()) {
-                    Entity vehicle = player.getVehicle();
-                    if (vehicle instanceof LivingEntity vehicleLiving) {
-                        // only change if different (avoid thrashing)
-                        if (mob.getTarget() != vehicleLiving) {
-                            mob.setTarget(vehicleLiving);
-                        }
-                    }
-                }
-                continue;
-            }
-
-            // CASE B: mob targeting an AbstractHorse (horse-like) but the horse is empty -> switch to a player
-            if (target instanceof AbstractHorse horse) {
-                if (horse.getPassengers().isEmpty()) {
-                    Player nearest = MathUtils.findNearestSurvivalPlayer(horse, SEARCH_RADIUS);
-                    if (nearest != null) {
-                        if (mob.getTarget() != nearest) {
-                            mob.setTarget(nearest);
-                        }
-                    }
-                }
-            }
-
-        }
-    }
-
 }

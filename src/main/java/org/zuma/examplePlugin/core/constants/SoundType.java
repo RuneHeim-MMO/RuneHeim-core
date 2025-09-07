@@ -21,12 +21,6 @@ public enum SoundType {
     UI_CLICK("UI_STONECUTTER_SELECT_RECIPE", false, 1.0f, 1.2f),
     UI_SPOOKY_INVENTORY_OPEN("BLOCK_NOTE_BLOCK_IMITATE_WITHER_SKELETON", false, 1.0f, 1.0f),
 
-    ALTAR_PRAYING_LAYER_1("BLOCK_AMETHYST_BLOCK_CHIME", false, 1f, 1f),
-    ALTAR_PRAYING_LAYER_2("BLOCK_AMETHYST_BLOCK_RESONATE", false, 1f, 1f),
-
-    BONES_BURY_DIG("BLOCK_BONE_BLOCK_BREAK", false, 1f, 1f),
-    BONES_BURY_FINISH("ENTITY_ENDER_EYE_DEATH", false, 1f, 0.9f),
-
     COMBAT_DUMMY_HURT("ENTITY_GENERIC_HURT", false, 1f, 1f),
     COMBAT_DUMMY_IMPACT("ENTITY_FIREWORK_ROCKET_BLAST", false, 1f, 0.5f),
 
@@ -436,22 +430,23 @@ public enum SoundType {
     }
 
     public void play(Player player, boolean global) {
-        play(player.getLocation(), global ? null : player, 0F);
+        play(player.getLocation(), global ? player : null, 0F);
     }
 
     public void play(RunePlayer player, boolean global) {
-        play(player.asBukkitPlayer().getLocation(), global ? null : player.asBukkitPlayer(), 0F);
+        play(player.asBukkitPlayer().getLocation(), global ? player.asBukkitPlayer() : null, 0F);
     }
 
     public void play(Location location) {
         play(location, null, 0F);
     }
 
+
     public void play(Location location, float pitchModifier) {
         play(location, null, pitchModifier);
     }
 
-    public void play(Location location, @Nullable Player targetPlayer, float pitchModifier) {
+    private void play(Location location, @Nullable Player targetPlayer, float pitchModifier) {
         SoundCategory category = SoundCategory.MASTER;
 
         if (isCustom) {

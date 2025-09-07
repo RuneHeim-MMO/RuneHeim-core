@@ -60,7 +60,7 @@ public enum ReservedSlot {
             return false;
         }
         return switch (type) {
-            case MOUNT -> itemType.type == ItemType.MOUNT;
+            case MOUNT -> false;
             case AMULET -> itemType.type == ItemType.ACCESSORY_AMULET;
             case RING -> itemType.type == ItemType.ACCESSORY_RING;
             case FAIRY -> itemType.type == ItemType.FAIRY;

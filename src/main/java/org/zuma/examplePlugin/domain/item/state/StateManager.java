@@ -14,7 +14,9 @@ import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
 import org.zuma.examplePlugin.events.state.StateCreatedDefaultEvent;
+import org.zuma.examplePlugin.events.state.StateDeleteEvent;
 import org.zuma.examplePlugin.events.state.StateLoadedEvent;
+import org.zuma.examplePlugin.events.state.StateSavedEvent;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -102,9 +104,7 @@ public class StateManager {
 
             // Create new if it doesn't exist.
             AbstractState newState = stateful.cloneDefaultStateTemplate();
-            Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                Bukkit.getServer().getPluginManager().callEvent(new StateCreatedDefaultEvent(uuid, newState));
-            });
+            Bukkit.getServer().getPluginManager().callEvent(new StateCreatedDefaultEvent(uuid, newState));
 
             if (newState == null) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Tried to create new state for " + item.displayName() + ", but received null.");
@@ -130,26 +130,21 @@ public class StateManager {
 
     @Nullable
     public AbstractState initializeState(UUID uuid) {
-        try {
-            Map.Entry<Long, AbstractStateMeta> result = this.repository.getByUUID(uuid);
+        AbstractStateMeta result = this.repository.getByUUID(uuid);
 
-            if (result == null) {
-                return null;
-            }
-
-            AbstractState newState = this.factory.createState(result);
-
-            if (newState == null) {
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Cannot initialize state " + uuid + ". Invalid state type! Received: " + result.getValue().type().toString());
-                return null;
-            }
-
-            itemStates.put(uuid, newState);
-            return newState;
-        } catch (Exception e) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "State " + uuid + " retrieval/initialization failed", e);
+        if (result == null) {
             return null;
         }
+
+        AbstractState newState = this.factory.createState(result);
+
+        if (newState == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Cannot initialize state " + uuid + ". Invalid state type! Received: " + result.type().toString());
+            return null;
+        }
+
+        itemStates.put(uuid, newState);
+        return newState;
     }
 
     public void destroyStateIfExists(@Nullable UUID uuid) {
@@ -176,6 +171,8 @@ public class StateManager {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Cannot save state " + state.getStateType() + "! State is not in the registry.");
             return;
         }
+
+        Bukkit.getServer().getPluginManager().callEvent(new StateSavedEvent(matchingKey, state));
 
         if (runAsync) {
             Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {

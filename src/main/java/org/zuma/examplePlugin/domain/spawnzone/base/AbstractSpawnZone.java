@@ -86,10 +86,10 @@ public abstract class AbstractSpawnZone {
             iterator.remove();
 
             if (entity == null) {
-                continue;
+                return;
             }
 
-            if (entity.isValid() || !entity.isDead()) {
+            if (!entity.isValid() || !entity.isDead()) {
                 entity.remove();
             }
 
@@ -104,7 +104,7 @@ public abstract class AbstractSpawnZone {
         Bukkit.getServer().getPluginManager().callEvent(new SpawnZoneWaveEvent(this));
 
         mobRecords.forEach(record -> {
-            if (RANDOM.nextInt(100) >= record.spawnChancePercentage()) {
+            if (RANDOM.nextInt(101) >= record.spawnChancePercentage()) {
                 return;
             }
 
@@ -120,7 +120,6 @@ public abstract class AbstractSpawnZone {
 
                 while (attempts < maxRetries) {
                     Location candidate = getNextMobLocation();
-                    attempts++;
 
                     if (candidate == null) {
                         RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Spawn location candidate was null for mob in Drop Zone ID: " + id + " type: " + this.type);
@@ -131,6 +130,7 @@ public abstract class AbstractSpawnZone {
                         mobLocation = candidate;
                         break; // valid location found, exit loop
                     }
+                    attempts++;
                 }
 
 

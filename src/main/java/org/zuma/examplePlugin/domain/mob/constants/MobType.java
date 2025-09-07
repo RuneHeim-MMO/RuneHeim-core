@@ -9,8 +9,6 @@ public enum MobType {
     EAGLE_BROWN_BASE_59(),
     EAGLE_BROWNHEAD_BASE_55(),
 
-    BROWN_FARMHOUSE_TRADER(),
-
     COW_BASE_5(),
     CALF_BASE_3(),
 
@@ -37,7 +35,6 @@ public enum MobType {
     BANK_TELLER_3(),
     INVESTMENT_BANKER(),
 
-    AUCTIONEER(),
     JEWLER(),
     DRAKKAR_BLACKSMITH(),
     GENERAL_STORE(),

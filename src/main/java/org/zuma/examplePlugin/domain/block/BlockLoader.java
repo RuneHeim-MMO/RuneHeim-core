@@ -34,7 +34,7 @@ public class BlockLoader {
         this.resourceNodeTypeRepository = resourceNodeTypeRepository;
     }
 
-    public void insertNewBlock(BlockEntity entity) {
+    public void insertNewNode(BlockEntity entity) {
         InteractableBlockCreateStartEvent event = new InteractableBlockCreateStartEvent(entity);
         Bukkit.getServer().getPluginManager().callEvent(event);
 

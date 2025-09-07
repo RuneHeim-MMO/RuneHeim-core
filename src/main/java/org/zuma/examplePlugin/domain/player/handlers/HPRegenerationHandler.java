@@ -13,8 +13,8 @@ import org.zuma.examplePlugin.events.player.RunePlayerHealthChangedEvent;
 import java.util.*;
 
 public class HPRegenerationHandler {
-    private final static int LOOP_TICK_DELAY_SECONDS = 3;
-    private final static int HEAL_DELAY_SECONDS = 5;
+    private final static int LOOP_TICK_DELAY_SECONDS = 1;
+    private final static int HEAL_DELAY_SECONDS = 1;
 
     private final HashMap<UUID, Long> lastHeals;
     private final RunePlayerManager manager;
