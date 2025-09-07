@@ -102,7 +102,9 @@ public class StateManager {
 
             // Create new if it doesn't exist.
             AbstractState newState = stateful.cloneDefaultStateTemplate();
-            Bukkit.getServer().getPluginManager().callEvent(new StateCreatedDefaultEvent(uuid, newState));
+            Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+                Bukkit.getServer().getPluginManager().callEvent(new StateCreatedDefaultEvent(uuid, newState));
+            });
 
             if (newState == null) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Tried to create new state for " + item.displayName() + ", but received null.");
@@ -128,21 +130,26 @@ public class StateManager {
 
     @Nullable
     public AbstractState initializeState(UUID uuid) {
-        AbstractStateMeta result = this.repository.getByUUID(uuid);
+        try {
+            Map.Entry<Long, AbstractStateMeta> result = this.repository.getByUUID(uuid);
 
-        if (result == null) {
+            if (result == null) {
+                return null;
+            }
+
+            AbstractState newState = this.factory.createState(result);
+
+            if (newState == null) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Cannot initialize state " + uuid + ". Invalid state type! Received: " + result.getValue().type().toString());
+                return null;
+            }
+
+            itemStates.put(uuid, newState);
+            return newState;
+        } catch (Exception e) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "State " + uuid + " retrieval/initialization failed", e);
             return null;
         }
-
-        AbstractState newState = this.factory.createState(result);
-
-        if (newState == null) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Cannot initialize state " + uuid + ". Invalid state type! Received: " + result.type().toString());
-            return null;
-        }
-
-        itemStates.put(uuid, newState);
-        return newState;
     }
 
     public void destroyStateIfExists(@Nullable UUID uuid) {

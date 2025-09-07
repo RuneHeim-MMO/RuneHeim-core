@@ -10,12 +10,11 @@ import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockReposito
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
 import org.zuma.examplePlugin.domain.combat.HitHandler;
 import org.zuma.examplePlugin.domain.command.ConsoleActionCommand;
+import org.zuma.examplePlugin.domain.command.MountCommand;
 import org.zuma.examplePlugin.domain.command.PouchCommand;
 import org.zuma.examplePlugin.domain.command.SkillsCommand;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
-import org.zuma.examplePlugin.domain.territory.TerritoryHandler;
-import org.zuma.examplePlugin.domain.territory.TerritoryRepository;
 import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
 
 import java.util.List;

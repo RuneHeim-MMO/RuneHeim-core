@@ -25,7 +25,8 @@ public enum ScriptedCondition implements ScriptedStatement {
     COINS_LESS_THAN("coins_lt", "amount"),
 
     INVENTORY_CONTAINS("inventory_contains", "item_id", "amount"),
-    REMOVE_INVENTORY_ITEM_SUCCESSFUL("remove_inventory_item_successful", "item_id", "amount");
+    REMOVE_INVENTORY_ITEM_SUCCESSFUL("remove_inventory_item_successful", "item_id", "amount"),
+    REMOVE_POUCH_COINS_SUCCESSFUL("remove_pouch_coins_successful",  "amount");
 
     public final String trigger;
     public final List<String> argsTemplates;
@@ -46,6 +47,12 @@ public enum ScriptedCondition implements ScriptedStatement {
 
     public List<String> getArgsTemplates() {
         return this.argsTemplates;
+    }
+
+    public static ScriptedStatementInstance removePouchCoinsSuccessful(int amount) {
+        return new ScriptedStatementInstance(ScriptedCondition.REMOVE_POUCH_COINS_SUCCESSFUL, Map.of(
+                "amount", String.valueOf(amount)
+        ));
     }
 
     public static ScriptedStatementInstance removeInventoryItemSuccessful(ItemId id, int amount) {

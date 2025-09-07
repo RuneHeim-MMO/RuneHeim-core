@@ -28,14 +28,12 @@ import org.zuma.examplePlugin.events.fairy.FairyAutoFedEvent;
 import org.zuma.examplePlugin.events.fairy.FairyUpgradeEvent;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class FairyHandler {
     private static final int SPRITE_DRAW_INTERVAL = 4;
     private static final int SLOT_CHECKER_INTERVAL = 20;
-    private static final int FAIRY_TICK_INTERVAL = 20 * 10; //20 * 10;
+    private static final int FAIRY_TICK_INTERVAL = 20 * 10;
     private static final Random RANDOM = new Random();
 
     private final AdditionalGearSlotHandler slotHandler;
@@ -88,13 +86,24 @@ public class FairyHandler {
                 event.getView().setCursor(null);
             }
 
+
             SoundType.FAIRY_UPGRADE.play(player, true);
             RuneQuestPlugin.getItemStateManager().saveUpdatedState(state, false, true);
-            player.asBukkitPlayer().sendMessage(
+            HudService.sendInfoMessage(player,
                     Component.text("Your fairy devoured ", Color.SUCCESS.asColor())
                             .append(cursorFruitItemStack.displayName())
                             .append(Component.text(" and gained new powers!", Color.SUCCESS.asColor()))
             );
+
+            Entity fairyEntity = fairyModels.get(player.getUUID());
+            ModeledEntity me = fairyEntity != null ? ModelEngineAPI.getModeledEntity(fairyEntity) : null;
+
+            if (me != null) {
+                me.getModels().values().forEach(am -> {
+                    am.getAnimationHandler().playAnimation("pet", 0f, 0.3f, 1, true);
+                });
+            }
+
 
         } catch (Exception e) {
             HudService.sendFailMessage(player, Component.text(e.getMessage()));
@@ -229,7 +238,7 @@ public class FairyHandler {
                 fairyMaybeConsumeFoodTick(state, player, fairy, itemType);
 
                 if (fedFairies.containsKey(playerUUID)) {
-                    player.asBukkitPlayer().sendMessage(Component.text("Your fairy's stamina has run out. Feed it to keep its bonuses active.", Color.WARNING.asColor()));
+                    HudService.sendInfoMessage(player, Component.text("Your fairy's stamina has run out. Feed it to keep its bonuses active.", Color.WARNING.asColor()));
                     SoundType.FAIRY_OUT_OF_STAMINA.play(player, true);
                     fedFairies.remove(playerUUID);
                     removeFairyModel(playerUUID);
@@ -249,7 +258,8 @@ public class FairyHandler {
 
 
                 // Check if active entities model matches player worn fairy model
-                if (!ModelEngineAPI.getModeledEntity(fairyModels.get(playerUUID)).getModels().containsKey(fairy.getModel())) {
+                var modeledEntity = ModelEngineAPI.getModeledEntity(fairyModels.get(playerUUID));
+                if (modeledEntity == null || !modeledEntity.getModels().containsKey(fairy.getModel())) {
                     clearPlayerFairyInstances(playerUUID);
 
                     Entity newFairyEntity = spawnFairyModel(player.asBukkitPlayer(), fairy);
@@ -272,19 +282,29 @@ public class FairyHandler {
     }
 
     private void fairyTaskTick() {
+        List<UUID> invalidPlayers = new ArrayList<>();
+
         wornFairies.forEach((uuid, fairy) -> {
             Player player = Bukkit.getPlayer(uuid);
 
             if (player == null || !player.isOnline()) {
+                invalidPlayers.add(uuid);
                 return;
             }
 
             RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
             ItemStack item = player.getInventory().getItem(ReservedSlot.FAIRY_SLOT.getSlot());
+
+            if (item == null) {
+                invalidPlayers.add(uuid);
+                return;
+            }
+
             AbstractItemType runeItem = RuneQuestPlugin.getItemRegistry().getType(item);
             FairyState state = fairy.getState(item);
 
-            if (runePlayer == null || item == null || runeItem == null || state == null) {
+            if (runePlayer == null || runeItem == null || state == null) {
+                invalidPlayers.add(uuid);
                 return;
             }
 
@@ -299,6 +319,8 @@ public class FairyHandler {
 
 
         });
+
+        invalidPlayers.forEach(this::clearPlayerFairyInstances);
     }
 
     private void fairyMaybeConsumeFoodTick(FairyState state, RunePlayer runePlayer, Fairy fairy, AbstractItemType fairyItem) {
@@ -329,7 +351,7 @@ public class FairyHandler {
             state.feedFairy(fairyFood.getEnergyRestoreAmount());
             fairyItem.getMetaGenerator().updatePresentationLayer(item);
 
-            player.sendMessage(Component.text("Your fairy has consumed 1x ", Color.INFO.asColor()).append(food.displayName()).append(Component.text(".", Color.INFO.asColor())));
+            HudService.sendInfoMessage(runePlayer, Component.text("Your fairy has consumed 1x ", Color.INFO.asColor()).append(food.displayName()).append(Component.text(".", Color.INFO.asColor())));
             SoundType.FAIRY_FEED_SOUND.play(player, true);
         }
     }
