@@ -41,7 +41,7 @@ public class Mount extends EquipableItemType implements Stateful {
 
     private MountState defaultStateTemplate;
     private int maxLevel;
-    private double baseSpeed;
+    private double baseSpeed, baseJump, speedLevelBonus, jumpLevelBonus;
 
     @Nullable
     private final String model;
@@ -60,9 +60,12 @@ public class Mount extends EquipableItemType implements Stateful {
         this.setStateType(StateType.MOUNT_STATE);
     }
 
-    public void initializeStats(int maxLevel, double baseSpeed) {
+    public void initializeStats(int maxLevel, double baseSpeed, double baseJump, double speedLevelBonus, double jumpLevelBonus) {
         this.maxLevel = maxLevel;
         this.baseSpeed = baseSpeed;
+        this.baseJump = baseJump;
+        this.speedLevelBonus = speedLevelBonus;
+        this.jumpLevelBonus = jumpLevelBonus;
     }
 
     @Override
@@ -139,9 +142,10 @@ public class Mount extends EquipableItemType implements Stateful {
 
         AttributeInstance speedAttr = horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
         if (speedAttr != null) {
-            speedAttr.setBaseValue(0.1125);
+            speedAttr.setBaseValue(this.baseSpeed + ((Math.max(0, newLevel - 1)) * this.speedLevelBonus));
         }
-        horse.setJumpStrength(0.5);
+
+        horse.setJumpStrength(this.baseJump + ((Math.max(0, newLevel - 1)) * this.jumpLevelBonus));
     }
 
     @Nullable
