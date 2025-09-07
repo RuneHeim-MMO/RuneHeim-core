@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.mount;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
@@ -128,7 +129,7 @@ public class MountHandler {
             RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(bukkitPlayer);
             Entity activeEntity = Bukkit.getEntity(data.getActiveEntityUUID());
 
-            if (player == null || activeEntity == null || !activeEntity.isValid() || !(activeEntity instanceof Horse horse)) {
+            if (player == null || activeEntity == null || !activeEntity.isValid() || !(activeEntity instanceof AbstractHorse horse)) {
                 return;
             }
 

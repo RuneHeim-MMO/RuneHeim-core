@@ -33,7 +33,7 @@ public class MountListener implements Listener {
 
     @EventHandler
     public void onHorseRightClick(PlayerInteractEntityEvent event) {
-        if (!(event.getRightClicked() instanceof Horse horse)) return;
+        if (!(event.getRightClicked() instanceof AbstractHorse horse)) return;
         Player player = event.getPlayer();
 
         event.setCancelled(true);
@@ -50,14 +50,14 @@ public class MountListener implements Listener {
 
     @EventHandler
     public void onHorseDamage(EntityDamageEvent event) {
-        if (event.getEntity() instanceof Horse horse && horse.getOwner() != null) {
+        if (event.getEntity() instanceof AbstractHorse horse && horse.getOwner() != null) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler
     public void onHorseDamageByEntity(EntityDamageByEntityEvent event) {
-        if (event.getEntity() instanceof Horse horse && horse.getOwner() != null) {
+        if (event.getEntity() instanceof AbstractHorse horse && horse.getOwner() != null) {
             event.setCancelled(true);
         }
     }

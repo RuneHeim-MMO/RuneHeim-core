@@ -34,7 +34,7 @@ public class MountLore implements LoreCreator {
             lore.add(Component.empty());
 
             lore.add(Icon.LEVEL.asComponent().append(Component.text("Level: ", Color.ITEM_LORE_DESCRIPTION.asColor())
-                    .append(Component.text(mountState.getLevel(mount) + " ", Color.ACCENT.asColor()))));
+                    .append(Component.text(mountState.getLevel(mount) + " (" + mount.getMaxLevel() + " max level)", Color.ACCENT.asColor()))));
 
             String formattedCurrentXP = NumberFormat.getNumberInstance().format(mountState.getExperience());
             String formattedNextLevelXP = NumberFormat.getNumberInstance().format(mountState.getXPForLevel(mount, mountState.getLevel(mount) + 1));
