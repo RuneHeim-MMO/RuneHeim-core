@@ -142,6 +142,7 @@ public class HitListener implements Listener {
                 return;
             }
 
+            projectile.remove();
             event.setCancelled(true);
             AttributeInstance followRange = mob.getAttribute(Attribute.GENERIC_FOLLOW_RANGE);
             if (followRange != null) followRange.setBaseValue(100);
