@@ -19,6 +19,7 @@ import java.util.List;
 
 public class Remains extends AbstractItemType {
     private double buryXPReward;
+    private int buryingDurationMs;
 
     public Remains(AbstractItemMeta meta) {
         super(meta);
@@ -29,12 +30,16 @@ public class Remains extends AbstractItemType {
         this.buryXPReward = amount;
     }
 
+    public void setBuryingDurationMs(int buryingDurationMs) {
+        this.buryingDurationMs = buryingDurationMs;
+    }
+
     @Override
     public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player, StateManager itemStateManager) {
         if (player.isBusy()) return;
 
         ActionParams params = new ActionParams.Builder()
-                .durationMs(1000)
+                .durationMs(buryingDurationMs)
                 .actionLabel("Burying " + this.displayName)
                 .successActionLabel("")
                 .stepSound(SoundType.BONES_BURY_DIG)

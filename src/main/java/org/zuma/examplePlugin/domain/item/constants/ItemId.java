@@ -244,6 +244,9 @@ public enum ItemId {
     RUNITE_ARROW(2505),
 
     BONES(2600),
+    BIG_BONES(2601),
+    LARGE_BONES(2602),
+    HUGE_BONES(2603),
 
     PLATINUM_TOKEN(2700),
 
@@ -286,7 +289,6 @@ public enum ItemId {
     MITHRIL_RING(3202),
     ADAMANTITE_RING(3203),
     RUNITE_RING(3204),
-
 
 
     // Mounts
