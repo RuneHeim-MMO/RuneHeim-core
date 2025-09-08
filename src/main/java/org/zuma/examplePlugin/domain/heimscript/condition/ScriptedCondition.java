@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.heimscript.condition;
 import org.zuma.examplePlugin.domain.heimscript.ScriptedStatement;
 import org.zuma.examplePlugin.domain.heimscript.ScriptedStatementInstance;
 import org.zuma.examplePlugin.domain.heimscript.StatementType;
+import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
@@ -24,9 +25,10 @@ public enum ScriptedCondition implements ScriptedStatement {
     COINS_GREATER_THAN_EQUALS("coins_gte", "amount"),
     COINS_LESS_THAN("coins_lt", "amount"),
 
-    INVENTORY_CONTAINS("inventory_contains", "item_id", "amount"),
+    INVENTORY_CONTAINS("inventory_contains_one_of", "item_id", "amount"),
+    INVENTORY_CONTAINS_ANY_OF("inventory_contains_any_of", "item_ids", "amounts"),
     REMOVE_INVENTORY_ITEM_SUCCESSFUL("remove_inventory_item_successful", "item_id", "amount"),
-    REMOVE_POUCH_COINS_SUCCESSFUL("remove_pouch_coins_successful",  "amount");
+    REMOVE_POUCH_COINS_SUCCESSFUL("remove_pouch_coins_successful", "amount");
 
     public final String trigger;
     public final List<String> argsTemplates;
@@ -55,17 +57,32 @@ public enum ScriptedCondition implements ScriptedStatement {
         ));
     }
 
-    public static ScriptedStatementInstance removeInventoryItemSuccessful(ItemId id, int amount) {
+    public static ScriptedStatementInstance removeInventoryItemSuccessful(ItemRecord record) {
         return new ScriptedStatementInstance(ScriptedCondition.REMOVE_INVENTORY_ITEM_SUCCESSFUL, Map.of(
-                "item_id", String.valueOf(id.asInt()),
-                "amount", String.valueOf(amount)
+                "item_id", String.valueOf(record.getItemId()),
+                "amount", String.valueOf(record.getAmount())
         ));
     }
 
-    public static ScriptedStatementInstance inventoryContains(ItemId id, int amount) {
+    public static ScriptedStatementInstance inventoryContainsAnyOf(List<ItemRecord> records) {
+        List<String> ids = new ArrayList<>();
+        List<String> amounts = new ArrayList<>();
+
+        records.forEach(r -> {
+            ids.add(String.valueOf(r.getItemId()));
+            amounts.add(String.valueOf(r.getAmount()));
+        });
+
+        return new ScriptedStatementInstance(ScriptedCondition.INVENTORY_CONTAINS_ANY_OF, Map.of(
+                "item_ids", String.join(",", ids),
+                "amounts", String.join(",", amounts)
+        ));
+    }
+
+    public static ScriptedStatementInstance inventoryContains(ItemRecord record) {
         return new ScriptedStatementInstance(ScriptedCondition.INVENTORY_CONTAINS, Map.of(
-                "item_id", String.valueOf(id.asInt()),
-                "amount", String.valueOf(amount)
+                "item_id", String.valueOf(record.getItemId()),
+                "amount", String.valueOf(record.getAmount())
         ));
     }
 

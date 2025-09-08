@@ -205,6 +205,7 @@ public class MountHandler {
 
         playerMount.setActiveEntityUUID(newMountUUID);
         SoundType.MOUNT_SPAWN.play(player, true);
+        SoundType.MOUNT_SADDLE.play(player, true);
 
     }
 

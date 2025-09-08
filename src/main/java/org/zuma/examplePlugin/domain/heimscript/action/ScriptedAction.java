@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.heimscript.action;
 import org.zuma.examplePlugin.domain.droptable.DropTableId;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.heimscript.condition.ScriptedCondition;
+import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.heimscript.ScriptedStatement;
@@ -49,10 +50,10 @@ public enum ScriptedAction implements ScriptedStatement {
     }
 
 
-    public static ScriptedStatementInstance takeInventoryItem(ItemId id, int amount) {
+    public static ScriptedStatementInstance takeInventoryItem(ItemRecord record) {
         return new ScriptedStatementInstance(ScriptedAction.TAKE_INVENTORY_ITEM, Map.of(
-                "item_id", String.valueOf(id.asInt()),
-                "amount", String.valueOf(amount)
+                "id", String.valueOf(record.getItemId()),
+                "amount", String.valueOf(record.getAmount())
         ));
     }
 
@@ -62,10 +63,10 @@ public enum ScriptedAction implements ScriptedStatement {
         ));
     }
 
-    public static ScriptedStatementInstance giveItem(ItemId id, int amount) {
+    public static ScriptedStatementInstance giveItem(ItemRecord record) {
         return new ScriptedStatementInstance(ScriptedAction.GIVE_ITEM, Map.of(
-                "id", String.valueOf(id.asInt()),
-                "amount", String.valueOf(amount)
+                "id", String.valueOf(record.getItemId()),
+                "amount", String.valueOf(record.getAmount())
         ));
     }
 

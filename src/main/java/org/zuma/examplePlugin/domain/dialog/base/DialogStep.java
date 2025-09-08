@@ -134,8 +134,8 @@ public abstract class DialogStep {
                     isTypewriter = dialogText.typewriter();
                 }
 
-                if (!isTypewriter) {
-                    // Show instantly
+                if (!isTypewriter || player.asBukkitPlayer().isSneaking()) {
+                    // Show instantly (skip typing if sneaking or no typewriter){
                     DHAPI.setHologramLine(hologram, lineIndex, currentLine);
                     lineIndex++;
                     charIndex = 0;
