@@ -27,7 +27,7 @@ public class AdditionalGearSlotHandler {
 
     private ItemStack getSlotPlaceholder(int slot) {
         String slotLabel = slotsDef.get(slot).getPlaceHolderLabel();
-        if (slotLabel == null) slotLabel = "AccessoryRing Slot";
+        if (slotLabel == null) slotLabel = "Accessory";
         return GUIControl.TRANSPARENT.asItemstack(Component.text(slotLabel, NamedTextColor.GRAY), true);
     }
 
@@ -108,7 +108,7 @@ public class AdditionalGearSlotHandler {
             return;
         }
 
-        if (!GUIControl.isGuiItem(clickedItemStack) && clickedItemStack != null) {
+        if (!GUIControl.isGuiItem(clickedItemStack) && clickedItemStack != null && !hasItemInCursor) {
             slotDef.getUnequipSound().play(player, false);
             return;
         }
@@ -121,10 +121,12 @@ public class AdditionalGearSlotHandler {
             return;
         }
 
+
         if (!ReservedSlot.isItemInCorrectSlot(slot, cursorItemType)) {
             event.setCancelled(true);
             return;
         }
+
 
         if (GUIControl.isGuiItem(clickedItemStack)) {
             ItemStack clonedCursor = cursor.clone();

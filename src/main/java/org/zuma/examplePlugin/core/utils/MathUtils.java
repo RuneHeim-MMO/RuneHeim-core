@@ -3,6 +3,8 @@ package org.zuma.examplePlugin.core.utils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -50,5 +52,28 @@ public class MathUtils {
         double offsetZ = r * Math.sin(theta);
 
         return center.clone().add(offsetX, 0, offsetZ);
+    }
+
+    public static Player findNearestSurvivalPlayer(LivingEntity center, double radius) {
+        Player best = null;
+        double bestSq = radius * radius;
+        for (Player p : center.getWorld().getPlayers()) {
+            if (!p.isValid() || p.isDead()) continue;
+            switch (p.getGameMode()) {
+                case CREATIVE:
+                case SPECTATOR:
+                    continue;
+                default:
+            }
+            double dx = p.getLocation().getX() - center.getLocation().getX();
+            double dy = p.getLocation().getY() - center.getLocation().getY();
+            double dz = p.getLocation().getZ() - center.getLocation().getZ();
+            double distSq = dx * dx + dy * dy + dz * dz;
+            if (distSq <= bestSq) {
+                bestSq = distSq;
+                best = p;
+            }
+        }
+        return best;
     }
 }

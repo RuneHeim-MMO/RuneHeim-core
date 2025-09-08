@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.block;
 
 import io.papermc.paper.event.block.BlockBreakProgressUpdateEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -18,10 +19,15 @@ import org.bukkit.inventory.InventoryHolder;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
+import org.zuma.examplePlugin.domain.block.base.ModelledInteractableBlock;
 import org.zuma.examplePlugin.domain.gui.IDHolder;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BlockListener implements Listener {
     private final BlockManager manager;
@@ -124,12 +130,15 @@ public class BlockListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onChunkLoad(ChunkLoadEvent event) {
+        List<AbstractInteractableBlock> blocks = this.manager.getBlocksByChunk().get(event.getChunk());
 
-        this.manager.getAllModelledBlocks().forEach(block -> {
-            if (block.getLocation().getChunk().equals(event.getChunk())) {
-                block.respawnArmorStand();
-            }
-        });
+        if (blocks != null) {
+            blocks.forEach(block -> {
+                if (block instanceof ModelledInteractableBlock modelledInteractableBlock) {
+                    modelledInteractableBlock.respawnArmorStand();
+                }
+            });
+        }
 
     }
 }

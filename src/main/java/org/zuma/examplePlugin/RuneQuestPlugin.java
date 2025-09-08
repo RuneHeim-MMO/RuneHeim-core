@@ -22,6 +22,7 @@ import org.zuma.examplePlugin.domain.gui.GUIHandler;
 import org.zuma.examplePlugin.domain.item.*;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.mob.*;
+import org.zuma.examplePlugin.domain.mount.MountHandler;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.recipe.RecipeHandler;
 import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
@@ -65,7 +66,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new ShopModule(),
                         new SpawnZoneModule(),
                         new TerritoryModule(),
-                        new CommandModule()
+                        new CommandModule(),
+                        new MountModule()
                 ), moduleContext);
     }
 
@@ -154,6 +156,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static ShopRegistry getShopRegistry() {
         return pluginInstance.moduleContext.get(ShopRegistry.class);
+    }
+
+    public static MountHandler getMountHandler() {
+        return pluginInstance.moduleContext.get(MountHandler.class);
     }
 
     public static DropTableHandler getDropTableHandler() {

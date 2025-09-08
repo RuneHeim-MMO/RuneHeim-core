@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.domain.combat;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
@@ -9,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.projectiles.ProjectileSource;
@@ -34,6 +36,7 @@ public class HitListener implements Listener {
         this.hitHandler = hitHandler;
     }
 
+
     @Nullable
     private CombatEntity getCombatEntity(Entity entity) {
         if (entity instanceof Player player) {
@@ -48,40 +51,61 @@ public class HitListener implements Listener {
         return null;
     }
 
-    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityAttackEntityMelee(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player player && player.isOp() && player.getGameMode() == GameMode.CREATIVE)) {
             event.setDamage(0);
         }
 
-        if (!(event.getEntity() instanceof LivingEntity defenderEntity)) return;
+        Entity defenderEntity = event.getEntity();
+
+        if (defenderEntity instanceof AbstractHorse horse && !horse.getPassengers().isEmpty()) {
+            defenderEntity = horse.getPassengers().getFirst();
+        }
+
+        if (!(defenderEntity instanceof LivingEntity livingDefenderEntity)) return;
 
         CombatEntity attacker = getCombatEntity(event.getDamager());
-        CombatEntity defender = getCombatEntity(defenderEntity);
+        CombatEntity defender = getCombatEntity(livingDefenderEntity);
         @Nullable Hit hit = null;
 
-        if (attacker != null && defender != null) {
-            hit = hitHandler.handleMeleeHit(attacker, defender);
+        if (attacker == null || defender == null) {
+            return;
         }
 
-        if (hit != null && hit.getDamage() == 0) {
-            event.setCancelled(true);
-            // Even if hit is 0, set mobs target to attacker.
-            if (defender.getEntity() instanceof Mob mob && attacker.getEntity() instanceof LivingEntity livingAttacker) {
-                if (livingAttacker instanceof Player) {
-                    mob.setTarget(livingAttacker);
-                }
+        hit = hitHandler.handleMeleeHit(attacker, defender);
+
+        event.setCancelled(true);
+        // Set mobs target to attacker.
+        if (defender.getEntity() instanceof Mob mob && attacker.getEntity() instanceof LivingEntity livingAttacker) {
+            if (!(livingAttacker instanceof Player)) {
+                return;
             }
+
+            // If player is in a vehicle, target vehicle
+            if (livingAttacker.isInsideVehicle() && livingAttacker.getVehicle() instanceof LivingEntity livingVehicle) {
+                mob.setTarget(livingVehicle);
+                return;
+            }
+
+            mob.setTarget(livingAttacker);
         }
+
     }
 
-    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityAttackEntityProjectile(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player player && player.isOp() && player.getGameMode() == GameMode.CREATIVE)) {
             event.setDamage(0);
         }
 
-        if (!(event.getEntity() instanceof LivingEntity defenderEntity)) {
+        Entity defenderEntity = event.getEntity();
+
+        if (defenderEntity instanceof AbstractHorse horse && !horse.getPassengers().isEmpty()) {
+            defenderEntity = horse.getPassengers().getFirst();
+        }
+
+        if (!(defenderEntity instanceof LivingEntity livingDefenderEntity)) {
             return;
         }
 
@@ -96,7 +120,7 @@ public class HitListener implements Listener {
         }
 
         CombatEntity attacker = getCombatEntity(livingShooter);
-        CombatEntity defender = getCombatEntity(defenderEntity);
+        CombatEntity defender = getCombatEntity(livingDefenderEntity);
 
         if (attacker != null && defender != null) {
             String typeString = projectile.getPersistentDataContainer().get(projectileType, PersistentDataType.STRING);
@@ -114,17 +138,26 @@ public class HitListener implements Listener {
                 }
             }
 
-            if (hit != null && hit.getDamage() == 0) {
-                if (defenderEntity instanceof Mob mob) {
-                    mob.setTarget(livingShooter);
-
-                    AttributeInstance followRange = mob.getAttribute(Attribute.GENERIC_FOLLOW_RANGE);
-                    if (followRange != null) followRange.setBaseValue(100);
-                }
-                event.setCancelled(true);
+            if (!(livingDefenderEntity instanceof Mob mob)) {
+                return;
             }
 
+            projectile.remove();
+            event.setCancelled(true);
+            AttributeInstance followRange = mob.getAttribute(Attribute.GENERIC_FOLLOW_RANGE);
+            if (followRange != null) followRange.setBaseValue(100);
+
+            // If player is in a vehicle, target vehicle
+            if (livingShooter.isInsideVehicle() && livingShooter.getVehicle() instanceof LivingEntity livingVehicle) {
+                mob.setTarget(livingVehicle);
+                return;
+            }
+
+            mob.setTarget(livingShooter);
+
+
         }
+
 
     }
 
