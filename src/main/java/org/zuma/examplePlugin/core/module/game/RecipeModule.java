@@ -25,11 +25,12 @@ public class RecipeModule implements PluginModule {
     public void start(Plugin plugin, ModuleContext context) {
         RecipeRegistry recipeRegistry = new RecipeRegistry();
         RecipeLoader recipeLoader = new RecipeLoader(context.get(ItemRegistry.class), recipeRegistry, new RecipeRepository(), new RecipeFactory());
+        recipeLoader.loadAllRecipes();
+        
         RecipeHandler recipeHandler = new RecipeHandler(recipeRegistry);
         RecipeListener recipeListener = new RecipeListener(recipeHandler);
 
         plugin.getServer().getPluginManager().registerEvents(recipeListener, plugin);
-        recipeLoader.loadAllRecipes();
 
         context.bind(RecipeRegistry.class, recipeRegistry);
         context.bind(RecipeHandler.class, recipeHandler);
