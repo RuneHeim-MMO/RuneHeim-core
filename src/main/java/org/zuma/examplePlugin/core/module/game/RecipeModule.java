@@ -28,6 +28,7 @@ public class RecipeModule implements PluginModule {
         recipeLoader.loadAllRecipes();
         
         RecipeHandler recipeHandler = new RecipeHandler(recipeRegistry);
+          recipeLoader.loadAllRecipes();
         RecipeListener recipeListener = new RecipeListener(recipeHandler);
 
         plugin.getServer().getPluginManager().registerEvents(recipeListener, plugin);
