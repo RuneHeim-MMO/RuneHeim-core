@@ -11,20 +11,14 @@ import org.zuma.examplePlugin.domain.heimscript.ScriptParser;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class ScriptedConditionHandler {
-
-    /*    IS_USERNAME("is_username", "username"),
-    SKILL_GREATER_THAN("skill_gt", "skill", "level"),
-    SKILL_LESS_THAN("skill_lt", "skill", "level"),
-    COMBAT_GREATER_THAN("combat_gt", "level"),
-    COMBAT_LESS_THAN("combat_lt", "level"),
-    COINS_GREATER_THAN("coins_gt", "amount"),
-    COINS_LESS_THAN("coins_lt", "amount");*/
-
-    public static boolean executeCondition(String input, RunePlayer player, @Nullable Runnable callback, Dialog parentDialog) {
+    public static boolean executeCondition(String input, RunePlayer player, @Nullable Runnable callback, @Nullable Dialog parentDialog) {
         try {
             ScriptedCondition action = ScriptParser.matchInputToStatement(input, ScriptedCondition.class);
             HashMap<String, String> args = ScriptParser.parseArgs(input, action);
@@ -67,6 +61,20 @@ public class ScriptedConditionHandler {
                 }
                 case INVENTORY_CONTAINS -> {
                     result = PlayerUtils.hasItems(player, List.of(new ItemRecord(Integer.parseInt(args.get("item_id")), Integer.parseInt(args.get("amount")))));
+                }
+                case INVENTORY_CONTAINS_ANY_OF -> {
+                    String[] itemIds = args.get("item_ids").split(",");
+                    String[] amounts = args.get("amounts").split(",");
+                    List<ItemRecord> records = new ArrayList<>();
+
+                    for (int index = 0; index < itemIds.length; index++) {
+                        records.add(new ItemRecord(Integer.parseInt(itemIds[index]), Integer.parseInt(amounts[index])));
+                    }
+
+                    for (ItemRecord record : records) {
+                        if (result) continue;
+                        result = PlayerUtils.hasItems(player, List.of(record));
+                    }
                 }
                 case REMOVE_INVENTORY_ITEM_SUCCESSFUL -> {
                     result = PlayerUtils.removeItems(player, List.of(new ItemRecord(Integer.parseInt(args.get("item_id")), Integer.parseInt(args.get("amount")))));

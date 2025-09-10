@@ -18,6 +18,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.domain.fairy.FairyHandler;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
@@ -40,6 +41,7 @@ public class MountListener implements Listener {
 
         if (horse.isTamed() && horse.getOwner() == player) {
             horse.addPassenger(player);
+            SoundType.MOUNT_SADDLE.play(player, true);
         }
     }
 

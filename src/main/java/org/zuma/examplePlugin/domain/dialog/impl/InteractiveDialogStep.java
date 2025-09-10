@@ -15,8 +15,10 @@ import java.util.stream.Stream;
 
 public class InteractiveDialogStep extends DialogStep {
     private final List<InteractiveDialogOption> interactiveContent;
+    private boolean loop;
 
-    public InteractiveDialogStep(List<DialogText> textContent, List<InteractiveDialogOption> interactiveOptions) {
+
+    public InteractiveDialogStep(List<DialogText> textContent, List<InteractiveDialogOption> interactiveOptions, boolean loop) {
         super(Stream.concat(
                 textContent.stream(),
                 IntStream.range(0, interactiveOptions.size())
@@ -24,6 +26,7 @@ public class InteractiveDialogStep extends DialogStep {
         ).collect(Collectors.toList()));
 
         this.interactiveContent = interactiveOptions;
+        this.loop = loop;
 
     }
 
@@ -60,6 +63,15 @@ public class InteractiveDialogStep extends DialogStep {
                 step.setParent(super.parent);
             });
             super.parent.getScenario().addAll(super.parent.getNextStepIndex(), clickedOption.subContent());
+
+            if (loop) {
+                if (clickedOption.subContent().isEmpty()) {
+                    super.parent.advanceDialogStep();
+                    return;
+                }
+
+                super.parent.getScenario().add(super.parent.getNextStepIndex() + clickedOption.subContent().size(), this);
+            }
         }
 
         super.parent.advanceDialogStep();

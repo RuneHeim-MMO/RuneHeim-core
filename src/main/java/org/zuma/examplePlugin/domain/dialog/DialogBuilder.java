@@ -118,6 +118,7 @@ public class DialogBuilder {
         private final List<DialogText> texts = new ArrayList<>();
         private final List<InteractiveDialogOption> options = new ArrayList<>();
         private final String parentId;
+        private boolean loop;
 
         public InteractiveStepBuilder(String parentId) {
             this.parentId = parentId;
@@ -157,9 +158,15 @@ public class DialogBuilder {
             return this;
         }
 
-        public InteractiveDialogStep build() {
-            return new InteractiveDialogStep(texts, options);
+        public InteractiveStepBuilder loop() {
+            this.loop = true;
+            return this;
         }
+
+        public InteractiveDialogStep build() {
+            return new InteractiveDialogStep(texts, options, loop);
+        }
+
     }
 
     // Inner builder for condition steps

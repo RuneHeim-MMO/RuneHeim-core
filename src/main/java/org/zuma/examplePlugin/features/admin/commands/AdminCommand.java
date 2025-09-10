@@ -7,11 +7,13 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Transformation;
 import org.jetbrains.annotations.NotNull;
 import org.joml.AxisAngle4f;
@@ -271,6 +273,53 @@ public class AdminCommand implements BasicCommand {
         if (Objects.equals(args[0], "fusion_master")) {
             RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.FUSION_MASTER.getId());
         }
+
+
+        if (Objects.equals(args[0], "mobs")) {
+
+        }
+        
+        if (Objects.equals(args[0], "rain")) {
+            int totalArrows = 1500;      // Total arrows in the rain
+            int arrowsPerTick = 10;     // Number of arrows to spawn per tick
+            long delayBetweenTicks = 2L; // 2 ticks (~0.1s) between spawns
+            double spread = 50.0;        // Maximum horizontal spread in blocks
+
+            new BukkitRunnable() {
+                int spawned = 0;
+
+                @Override
+                public void run() {
+                    if (spawned >= totalArrows) {
+                        cancel(); // stop after all arrows are spawned
+                        return;
+                    }
+
+                    Location baseLoc = player.getLocation().add(0, 15, 0); // 15 blocks above player
+                    World world = player.getWorld();
+
+                    // Spawn multiple arrows per tick
+                    for (int i = 0; i < arrowsPerTick && spawned < totalArrows; i++) {
+                        // Horizontal spread using the spread variable
+                        double spreadX = (Math.random() - 0.5) * 2 * spread; // -spread to +spread
+                        double spreadZ = (Math.random() - 0.5) * 2 * spread;
+
+                        Location arrowLoc = baseLoc.clone().add(spreadX, 0, spreadZ);
+
+                        // Slightly varied velocity
+                        double velocityX = (Math.random() - 0.5) * 0.5;
+                        double velocityY = -1.0;
+                        double velocityZ = (Math.random() - 0.5) * 0.5;
+
+                        org.bukkit.util.Vector velocity = new org.bukkit.util.Vector(velocityX, velocityY, velocityZ);
+
+                        world.spawnArrow(arrowLoc, velocity, 1.0f, 0.0f); // speed 1, no inbuilt spread
+                        spawned++;
+                    }
+                }
+            }.runTaskTimer(RuneQuestPlugin.getInstance(), 0L, delayBetweenTicks);
+        }
+
 
 
         if (Objects.equals(args[0], "node")) {

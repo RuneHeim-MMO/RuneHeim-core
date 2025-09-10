@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -203,6 +204,8 @@ public class MountHandler {
         });
 
         playerMount.setActiveEntityUUID(newMountUUID);
+        SoundType.MOUNT_SPAWN.play(player, true);
+        SoundType.MOUNT_SADDLE.play(player, true);
 
     }
 

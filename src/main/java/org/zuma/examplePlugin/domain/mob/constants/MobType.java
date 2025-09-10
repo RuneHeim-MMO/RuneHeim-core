@@ -10,6 +10,7 @@ public enum MobType {
     EAGLE_BROWNHEAD_BASE_55(),
 
     BROWN_FARMHOUSE_TRADER(),
+    ABRAHAM_FAIRY_TEACHER(),
 
     COW_BASE_5(),
     CALF_BASE_3(),

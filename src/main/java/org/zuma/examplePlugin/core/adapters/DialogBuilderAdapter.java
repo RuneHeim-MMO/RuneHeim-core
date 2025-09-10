@@ -33,6 +33,13 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
             out.beginObject();
             out.name("type").value(step.getClass().getSimpleName());
 
+            if (step instanceof InteractiveDialogStep interactiveStep) {
+                Boolean loop = getLoop(interactiveStep);
+                if (loop != null && loop != false) {
+                    out.name("loop").value(loop);
+                }
+            }
+
             // content
             out.name("content");
             out.beginArray();
@@ -164,6 +171,7 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
     private void readStep(JsonReader in, DialogBuilder builder, String parentId) throws IOException {
         in.beginObject();
         String type = null;
+        boolean loop = false;
         List<DialogText> content = new ArrayList<>();
         List<OptionData> options = new ArrayList<>();
         List<String> actions = new ArrayList<>();
@@ -177,6 +185,7 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
             String name = in.nextName();
             switch (name) {
                 case "type" -> type = in.nextString();
+                case "loop" -> loop = in.nextBoolean();
                 case "content" -> {
                     in.beginArray();
                     while (in.hasNext()) {
@@ -261,12 +270,16 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
                 actions.forEach(passive::action);
             });
         } else if ("InteractiveDialogStep".equals(type)) {
+            Boolean finalLoop = loop;
             builder.interactiveStep(interactive -> {
                 for (DialogText dt : content) {
                     List<String> lines = content.stream()
                             .map(DialogText::line)
                             .toList();
 
+                    if (finalLoop) {
+                        interactive.loop();
+                    }
                     interactive.text(lines, dt.typewriter());
                 }
                 for (OptionData opt : options) {
@@ -350,6 +363,16 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
             var f = step.getClass().getDeclaredField("interactiveContent");
             f.setAccessible(true);
             return (List<InteractiveDialogOption>) f.get(step);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private Boolean getLoop(Object step) {
+        try {
+            var f = step.getClass().getDeclaredField("loop");
+            f.setAccessible(true);
+            return (Boolean) f.get(step);
         } catch (Exception e) {
             return null;
         }

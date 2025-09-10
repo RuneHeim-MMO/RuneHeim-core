@@ -640,8 +640,33 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.DIAMOND.asInt(), Material.COAL, ItemRarity.RARE, "Diamond", List.of("A polished diamond gem.", "Used for crafting jewelry."), null, null, true), null),
 
 
-                new ItemEntity(new AbstractItemMeta(ItemType.REMAINS, ItemId.BONES.asInt(), Material.COAL, ItemRarity.COMMON, "Bones", List.of("Remains of a fallen creature."), null, null, true),
-                        toVersionedJson(new RemainsItemMeta(10), 1)),
+                new ItemEntity(new AbstractItemMeta(
+                        ItemType.REMAINS, ItemId.BONES.asInt(), Material.COAL, ItemRarity.COMMON,
+                        "Bones",
+                        List.of("Weathered fragments of a fallen creature."),
+                        null, null, true),
+                        toVersionedJson(new RemainsItemMeta(10, 1000), 1)),
+
+                new ItemEntity(new AbstractItemMeta(
+                        ItemType.REMAINS, ItemId.BIG_BONES.asInt(), Material.COAL, ItemRarity.COMMON,
+                        "Big Bones",
+                        List.of("Sturdy bones from a larger beast, still faintly echoing its strength."),
+                        null, null, true),
+                        toVersionedJson(new RemainsItemMeta(25, 2000), 1)),
+
+                new ItemEntity(new AbstractItemMeta(
+                        ItemType.REMAINS, ItemId.LARGE_BONES.asInt(), Material.COAL, ItemRarity.COMMON,
+                        "Large Bones",
+                        List.of("Massive skeletal remains, once supporting a formidable creature."),
+                        null, null, true),
+                        toVersionedJson(new RemainsItemMeta(70, 3000), 1)),
+
+                new ItemEntity(new AbstractItemMeta(
+                        ItemType.REMAINS, ItemId.HUGE_BONES.asInt(), Material.COAL, ItemRarity.COMMON,
+                        "Huge Bones",
+                        List.of("Colossal bones that whisper of a beast towering above mortals."),
+                        null, null, true),
+                        toVersionedJson(new RemainsItemMeta(120, 4000), 1)),
 
 
                 new ItemEntity(new AbstractItemMeta(ItemType.EMPTY_CONTAINER, ItemId.EMPTY_POT.asInt(), Material.COAL, ItemRarity.COMMON, "Empty Pot", List.of("A regular pot, made of clay."), null, null, true),
