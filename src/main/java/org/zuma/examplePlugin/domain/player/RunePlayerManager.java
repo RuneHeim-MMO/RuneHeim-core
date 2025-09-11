@@ -13,6 +13,9 @@ import org.zuma.examplePlugin.domain.player.persistence.RunePlayerRepository;
 import org.zuma.examplePlugin.domain.player.persistence.RunePlayerSerializer;
 import org.zuma.examplePlugin.domain.player.persistence.SerializedPlayerContainer;
 import org.zuma.examplePlugin.domain.player.states.RunePlayerLoadingStateHandler;
+import org.zuma.examplePlugin.domain.quest.persistence.PlayerQuestState;
+import org.zuma.examplePlugin.domain.quest.QuestHandler;
+import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.events.player.RunePlayerLoadedEvent;
@@ -33,6 +36,7 @@ public class RunePlayerManager {
     private final Set<UUID> uuidsAccessingDB = ConcurrentHashMap.newKeySet();
     private final RunePlayerLoadingStateHandler loadingStateHandler;
     private final RunePlayerRepository repository;
+    private final QuestHandler questHandler;
 
     public static final EnumMap<SkillType, Skill> defaultSkills = Arrays.stream(SkillType.values())
             .collect(Collectors.toMap(
@@ -42,9 +46,10 @@ public class RunePlayerManager {
                     () -> new EnumMap<>(SkillType.class)
             ));
 
-    public RunePlayerManager(RunePlayerRepository repository) {
+    public RunePlayerManager(RunePlayerRepository repository, QuestHandler questHandler) {
         this.loadingStateHandler = new RunePlayerLoadingStateHandler(RuneQuestPlugin.getInstance());
         this.repository = repository;
+        this.questHandler = questHandler;
     }
 
     // -------------------- Getters --------------------
@@ -106,6 +111,11 @@ public class RunePlayerManager {
                         cleanup(uuid);
                         return;
                     }
+
+                    HashMap<String, PlayerQuestState> questState = questHandler.getPlayerQuestDataSync(uuid);
+                    HashMap<String, AbstractQuestStep> questSteps = questHandler.initQuestStepInstances(uuid, questState);
+
+                    data.getKey().setQuestSteps(questSteps);
                     setPlayerOnlineAndFinalize(player, data);
                 });
 
@@ -245,6 +255,7 @@ public class RunePlayerManager {
         runAsync(() -> {
             try {
                 repository.upsertPlayer(serializedContainer);
+                questHandler.savePlayerQuestData(runePlayer, false);
                 if (unmount) repository.setPlayerOnline(player.getUniqueId(), false);
 
                 runSync(() -> {
@@ -268,7 +279,6 @@ public class RunePlayerManager {
             UUID uuid = player.getUUID();
 
             if (loadingStateHandler.isPlayerLoading(player.asBukkitPlayer())) return;
-
             if (uuidsAccessingDB.contains(uuid)) {
                 if (!waitForPlayerFree(uuid, 5000)) {
                     return;
@@ -277,6 +287,7 @@ public class RunePlayerManager {
 
             uuidsAccessingDB.add(uuid);
             repository.upsertPlayer(RunePlayerSerializer.serializePlayerSync(player, player.asBukkitPlayer(), unmount));
+            questHandler.savePlayerQuestData(player, false);
             wipeInventory(player.asBukkitPlayer());
 
             if (unmount) repository.setPlayerOnline(player.getUUID(), false);

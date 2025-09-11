@@ -1,15 +1,17 @@
 package org.zuma.examplePlugin.domain.quest.base;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.quest.PlayerQuestState;
+import org.zuma.examplePlugin.domain.quest.persistence.PlayerQuestState;
 import org.zuma.examplePlugin.domain.quest.Quest;
 import org.zuma.examplePlugin.domain.quest.StepType;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.UUID;
 
 public abstract class AbstractQuestStep implements Listener {
@@ -29,6 +31,8 @@ public abstract class AbstractQuestStep implements Listener {
     }
 
     protected void handleStepCompletion() {
+        HandlerList.unregisterAll(this);
+
         if (owner == null) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot advance " + parentQuest.getId() + " quest. Owner is not present.");
             return;
@@ -48,10 +52,24 @@ public abstract class AbstractQuestStep implements Listener {
             return;
         }
 
-        // Do runeplayer stuff
+        List<AbstractQuestStep> steps = parentQuest.getSteps();
+        int nextIndex = this.id + 1;
+
+        AbstractQuestStep nextQuestStep = (nextIndex < steps.size())
+                ? steps.get(nextIndex)
+                : null;
+
+        if (nextQuestStep == null) {
+            parentQuest.handleCompletion(runePlayer);
+            return;
+        }
+
+        System.out.println("Advanced quest step! id " + getId());
+        runePlayer.getQuestSteps().put(parentQuest.getId(), nextQuestStep.cloneForPlayer(runePlayer.getUUID()));
+
     }
 
-    public abstract AbstractQuestStep cloneForPlayer();
+    public abstract AbstractQuestStep cloneForPlayer(UUID ownerUUID);
 
     public abstract AbstractQuestStep assignValuesFromState(PlayerQuestState state);
 

@@ -2,12 +2,13 @@ package org.zuma.examplePlugin.domain.quest.impl;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.quest.PlayerQuestState;
+import org.zuma.examplePlugin.domain.quest.persistence.PlayerQuestState;
 import org.zuma.examplePlugin.domain.quest.Quest;
 import org.zuma.examplePlugin.domain.quest.StepType;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
@@ -50,13 +51,27 @@ public class CollectionStep extends AbstractQuestStep {
         acquiredItems.put(type.id, acquiredItems.get(type.id) + itemStack.getAmount());
 
         // Check counts
+        boolean requirementsFulfilled = acquiredItems.entrySet().stream().allMatch((entry) -> {
+            int id = entry.getKey();
+            int amount = entry.getValue();
 
-        this.handleStepCompletion();
+            return requiredItems.stream()
+                    .filter(req -> req.getItemId() == id)
+                    .findFirst()
+                    .map(req -> amount >= req.getAmount())
+                    .orElse(false);
+        });
+
+        if (requirementsFulfilled) {
+            this.handleStepCompletion();
+        }
     }
 
     @Override
-    public AbstractQuestStep cloneForPlayer() {
-        return new CollectionStep(super.getPlugin(), super.getParentQuest(), super.getOwner(), requiredItems);
+    public AbstractQuestStep cloneForPlayer(UUID ownerUUID) {
+        AbstractQuestStep step = new CollectionStep(super.getPlugin(), super.getParentQuest(), ownerUUID, requiredItems);
+        step.setId(this.getId());
+        return step;
     }
 
     @Override
@@ -65,7 +80,9 @@ public class CollectionStep extends AbstractQuestStep {
         this.acquiredItems = new HashMap<>();
 
         for (Map.Entry<?, ?> entry : rawMap.entrySet()) {
-            this.acquiredItems.put((Integer) entry.getKey(), (Integer) entry.getValue());
+            int key = Integer.parseInt(entry.getKey().toString());
+            int value = ((Number) entry.getValue()).intValue();
+            this.acquiredItems.put(key, value);
         }
 
         return this;

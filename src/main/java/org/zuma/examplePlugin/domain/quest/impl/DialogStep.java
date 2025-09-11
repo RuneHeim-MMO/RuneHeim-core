@@ -1,7 +1,7 @@
 package org.zuma.examplePlugin.domain.quest.impl;
 
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.domain.quest.PlayerQuestState;
+import org.zuma.examplePlugin.domain.quest.persistence.PlayerQuestState;
 import org.zuma.examplePlugin.domain.quest.Quest;
 import org.zuma.examplePlugin.domain.quest.StepType;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
@@ -44,8 +44,11 @@ public class DialogStep extends AbstractQuestStep {
     }
 
     @Override
-    public AbstractQuestStep cloneForPlayer() {
-        return new DialogStep(super.getPlugin(), super.getParentQuest(), super.getOwner(), stableId);
+    public AbstractQuestStep cloneForPlayer(UUID ownerUUID) {
+        AbstractQuestStep step = new DialogStep(super.getPlugin(), super.getParentQuest(), ownerUUID, stableId);
+
+        step.setId(this.getId());
+        return step;
     }
 
     @Override

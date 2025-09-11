@@ -30,6 +30,7 @@ import org.zuma.examplePlugin.domain.player.actions.ActionParams;
 import org.zuma.examplePlugin.domain.player.handlers.DeathHandler;
 import org.zuma.examplePlugin.domain.player.handlers.PlayerItemDistributor;
 import org.zuma.examplePlugin.domain.player.handlers.PlayerXpHandler;
+import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.domain.xp.PendingXPHandler;
@@ -56,14 +57,17 @@ public class RunePlayer implements CombatEntity {
     private long pouchCoins;
     private final List<InteractiveActionStrategy> pendingActions;
     private List<String> discoveredTerritoryIds;
+    private List<String> completedQuestIds;
     private Location getSafeLocation; // is set when player is is spectator mode.
     private boolean isDead;
+    private HashMap<String, AbstractQuestStep> questSteps; // Quest id : step
 
     public RunePlayer(UUID uuid, EnumMap<SkillType, Skill> skills) {
         this.uuid = uuid;
         this.skills = skills;
         this.combatData = new PlayerCombatData(this, skills.get(SkillType.HITPOINTS).getBaseLevel(), Math.min(3, XpUtils.getCombatLevelFromSkills(skills)), 0, 0);
 
+        this.questSteps = new HashMap<>();
         this.modifiers = new EnumMap<>(ModifierType.class);
         this.skillModifiers = new EnumMap<>(SkillType.class);
         this.actionBarManager = new ActionBarManager(this);
@@ -75,6 +79,7 @@ public class RunePlayer implements CombatEntity {
         this.pouchCoins = 0;
         this.pendingActions = new ArrayList<>();
         this.discoveredTerritoryIds = new ArrayList<>();
+        this.completedQuestIds = new ArrayList<>();
         this.isDead = false;
 
         HudService.updateVanillaGUI(this);
@@ -332,6 +337,22 @@ public class RunePlayer implements CombatEntity {
 
     public int getPrayerEnergy() {
         return this.combatData.getPrayerEnergy();
+    }
+
+    public HashMap<String, AbstractQuestStep> getQuestSteps() {
+        return questSteps;
+    }
+
+    public void setQuestSteps(HashMap<String, AbstractQuestStep> questSteps) {
+        this.questSteps = questSteps;
+    }
+
+    public List<String> getCompletedQuestIds() {
+        return completedQuestIds;
+    }
+
+    public void setCompletedQuestIds(List<String> completedQuestIds) {
+        this.completedQuestIds = completedQuestIds;
     }
 
 

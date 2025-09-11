@@ -278,7 +278,7 @@ public class AdminCommand implements BasicCommand {
         if (Objects.equals(args[0], "mobs")) {
 
         }
-        
+
         if (Objects.equals(args[0], "rain")) {
             int totalArrows = 1500;      // Total arrows in the rain
             int arrowsPerTick = 10;     // Number of arrows to spawn per tick
@@ -321,7 +321,6 @@ public class AdminCommand implements BasicCommand {
         }
 
 
-
         if (Objects.equals(args[0], "node")) {
             RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_NODE_CREATE.asInt(), runePlayer, null);
         }
@@ -337,6 +336,11 @@ public class AdminCommand implements BasicCommand {
         if (Objects.equals(args[0], "shop")) {
             RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.GENERAL_STORE.getId());
         }
+
+        if (Objects.equals(args[0], "quest")) {
+            RuneQuestPlugin.getQuestHandler().getRegistry().getQuestByName("sheep-shearer").startForPlayer(runePlayer);
+        }
+
 
         if (args.length == 1 && Objects.equals(args[0], "illegal")) {
             IllegalItemWatchdog.tagIllegalItem(player.getInventory().getItemInMainHand());
