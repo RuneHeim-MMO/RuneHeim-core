@@ -6,6 +6,7 @@ import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.quest.constants.QuestDifficulty;
 import org.zuma.examplePlugin.domain.quest.impl.CollectionStep;
+import org.zuma.examplePlugin.domain.quest.impl.DialogStep;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
@@ -14,21 +15,20 @@ import java.util.HashMap;
 import java.util.List;
 
 public class QuestRegistry {
-    private final HashMap<String, Quest> quests;
+    private final HashMap<String, Quest> quests; // id:quest
 
     public QuestRegistry() {
         this.quests = new HashMap<>();
 
-        Quest newQuest = new Quest("sheep-shearer", "Sheep Shearer", QuestDifficulty.HARD).setRequirements(List.of(new SkillRequirement(SkillType.PRAYER, 5))).setRequiredCompletedQuests(List.of("invalid-quest"));
+        Quest newQuest = new Quest("sheep-shearer", "Sheep Shearer", QuestDifficulty.HARD).setRequirements(List.of(new SkillRequirement(SkillType.PRAYER, 5)));
         registerQuest(newQuest.addSteps(List.of(
-                new CollectionStep(RuneQuestPlugin.getInstance(), newQuest, null, List.of(new ItemRecord(ItemId.IRON_ORE, 5))),
-                new CollectionStep(RuneQuestPlugin.getInstance(), newQuest, null, List.of(new ItemRecord(ItemId.COPPER_ORE, 5))),
-                new CollectionStep(RuneQuestPlugin.getInstance(), newQuest, null, List.of(new ItemRecord(ItemId.LOG, 5)))
+                new CollectionStep(RuneQuestPlugin.getInstance(), newQuest, null, List.of(new ItemRecord(ItemId.WOOL, 5))),
+                new DialogStep(RuneQuestPlugin.getInstance(),newQuest, null, "sheep-shearer.finish")
         )));
     }
 
     @Nullable
-    public Quest getQuestByName(String name) {
+    public Quest getQuestById(String name) {
         return quests.get(name);
     }
 

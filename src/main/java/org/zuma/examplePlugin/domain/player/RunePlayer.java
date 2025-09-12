@@ -60,14 +60,14 @@ public class RunePlayer implements CombatEntity {
     private List<String> completedQuestIds;
     private Location getSafeLocation; // is set when player is is spectator mode.
     private boolean isDead;
-    private HashMap<String, AbstractQuestStep> questSteps; // Quest id : step
+    private HashMap<String, AbstractQuestStep> activeQuestSteps; // Quest id : step
 
     public RunePlayer(UUID uuid, EnumMap<SkillType, Skill> skills) {
         this.uuid = uuid;
         this.skills = skills;
         this.combatData = new PlayerCombatData(this, skills.get(SkillType.HITPOINTS).getBaseLevel(), Math.min(3, XpUtils.getCombatLevelFromSkills(skills)), 0, 0);
 
-        this.questSteps = new HashMap<>();
+        this.activeQuestSteps = new HashMap<>();
         this.modifiers = new EnumMap<>(ModifierType.class);
         this.skillModifiers = new EnumMap<>(SkillType.class);
         this.actionBarManager = new ActionBarManager(this);
@@ -339,12 +339,12 @@ public class RunePlayer implements CombatEntity {
         return this.combatData.getPrayerEnergy();
     }
 
-    public HashMap<String, AbstractQuestStep> getQuestSteps() {
-        return questSteps;
+    public HashMap<String, AbstractQuestStep> getActiveQuestSteps() {
+        return activeQuestSteps;
     }
 
-    public void setQuestSteps(HashMap<String, AbstractQuestStep> questSteps) {
-        this.questSteps = questSteps;
+    public void setActiveQuestSteps(HashMap<String, AbstractQuestStep> activeQuestSteps) {
+        this.activeQuestSteps = activeQuestSteps;
     }
 
     public List<String> getCompletedQuestIds() {

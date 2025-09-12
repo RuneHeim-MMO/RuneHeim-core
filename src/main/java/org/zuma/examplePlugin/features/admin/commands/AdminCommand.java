@@ -30,8 +30,6 @@ import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockReposito
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
 import org.zuma.examplePlugin.domain.combat.HitHandler;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
-import org.zuma.examplePlugin.domain.heimscript.ScriptParser;
-import org.zuma.examplePlugin.domain.heimscript.action.ScriptedAction;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
@@ -341,7 +339,7 @@ public class AdminCommand implements BasicCommand {
         }
 
         if (Objects.equals(args[0], "quest")) {
-            Quest q = RuneQuestPlugin.getQuestHandler().getRegistry().getQuestByName("sheep-shearer");
+            Quest q = RuneQuestPlugin.getQuestHandler().getRegistry().getQuestById("sheep-shearer");
             System.out.println(new Gson().toJson(q));
         }
 

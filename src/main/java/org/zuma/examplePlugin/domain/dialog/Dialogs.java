@@ -6,11 +6,27 @@ import org.zuma.examplePlugin.domain.heimscript.action.ScriptedAction;
 import org.zuma.examplePlugin.domain.heimscript.condition.ScriptedCondition;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
+import org.zuma.examplePlugin.domain.quest.constants.QuestId;
 
 import java.util.List;
 import java.util.function.Supplier;
 
 public class Dialogs {
+
+    public static final Supplier<DialogBuilder> sheepShearerDialog = () -> DialogBuilder.create("sheep-shearer-dialog")
+            .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()))
+            .conditionStep(c -> c.condition(ScriptedCondition.questDialogStepActive("sheep-shearer.finish"))
+                    .truthyFollowUp(g -> g.conditionStep(h -> h.condition(ScriptedCondition.removeInventoryItemSuccessful(new ItemRecord(ItemId.WOOL, 5)))
+                            .truthyFollowUp(z -> z.passiveStep(l -> l.text("Hey, thanks!").action(ScriptedAction.dialogQuestStepFinish("sheep-shearer.finish"))))
+                            .falsyFollowUp(x -> x.passiveStep(v -> v.text("What? Where did u lose it already?")))))
+                    .falsyFollowUp(v -> v.passiveStep(b -> b.text("Ok, let's see..."))
+                            .conditionStep(s -> s.condition(ScriptedCondition.questFinished(QuestId.SHEEP_SHEARER))
+                                    .truthyFollowUp(g -> g.passiveStep(t -> t.text(List.of("Bro, u already finished it."))))
+                                    .falsyFollowUp(g -> g.conditionStep(t -> t.condition(ScriptedCondition.questStarted(QuestId.SHEEP_SHEARER))
+                                            .truthyFollowUp(q -> q.passiveStep(w -> w.text("Bro, get back to me when u get the wool")))
+                                            .falsyFollowUp(e -> e.conditionStep(y -> y.condition(ScriptedCondition.questStartSuccessful(QuestId.SHEEP_SHEARER))
+                                                    .truthyFollowUp(q -> q.passiveStep(w -> w.text("Godspeed!")))
+                                                    .falsyFollowUp(u -> u.passiveStep(i -> i.text("Nah, ur too low level for this."))))))))));
 
     public static final Supplier<DialogBuilder> bankerDialog = () -> DialogBuilder.create("banker-dialog")
             .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()))

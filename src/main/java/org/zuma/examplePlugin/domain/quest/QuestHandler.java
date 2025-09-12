@@ -28,7 +28,7 @@ public class QuestHandler {
     private HashMap<String, PlayerQuestState> convertPlayerStepsToState(RunePlayer player) {
         HashMap<String, PlayerQuestState> map = new HashMap<>();
 
-        player.getQuestSteps().forEach((key, step) -> {
+        player.getActiveQuestSteps().forEach((key, step) -> {
             PlayerQuestState state = step.assignValuesToState(new PlayerQuestState(step.getParentQuest().getId(), step.getId(), step.getType()));
             map.put(key, state);
         });
@@ -91,7 +91,7 @@ public class QuestHandler {
         HashMap<String, AbstractQuestStep> result = new HashMap<>();
 
         state.forEach((key, value) -> {
-            Quest matchingQuest = this.registry.getQuestByName(key);
+            Quest matchingQuest = this.registry.getQuestById(key);
 
             if (matchingQuest == null) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to initialize quest steps for player. Quest with id " + key + " does not exist.");

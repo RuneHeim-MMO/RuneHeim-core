@@ -5,6 +5,7 @@ import org.zuma.examplePlugin.domain.heimscript.ScriptedStatementInstance;
 import org.zuma.examplePlugin.domain.heimscript.StatementType;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
+import org.zuma.examplePlugin.domain.quest.constants.QuestId;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.util.ArrayList;
@@ -28,7 +29,12 @@ public enum ScriptedCondition implements ScriptedStatement {
     INVENTORY_CONTAINS("inventory_contains_one_of", "item_id", "amount"),
     INVENTORY_CONTAINS_ANY_OF("inventory_contains_any_of", "item_ids", "amounts"),
     REMOVE_INVENTORY_ITEM_SUCCESSFUL("remove_inventory_item_successful", "item_id", "amount"),
-    REMOVE_POUCH_COINS_SUCCESSFUL("remove_pouch_coins_successful", "amount");
+    REMOVE_POUCH_COINS_SUCCESSFUL("remove_pouch_coins_successful", "amount"),
+
+    QUEST_START_IF_REQUIREMENTS_MET("start_quest_if_requirements_met", "id"),
+    QUEST_STARTED("quest_started", "id"),
+    QUEST_FINISHED("quest_finished", "id"),
+    QUEST_DIALOG_STEP_ACTIVE("quest_dialog_step_active", "stable_id");
 
     public final String trigger;
     public final List<String> argsTemplates;
@@ -49,6 +55,30 @@ public enum ScriptedCondition implements ScriptedStatement {
 
     public List<String> getArgsTemplates() {
         return this.argsTemplates;
+    }
+
+    public static ScriptedStatementInstance questStartSuccessful(QuestId id) {
+        return new ScriptedStatementInstance(ScriptedCondition.QUEST_START_IF_REQUIREMENTS_MET, Map.of(
+                "id", id.getId()
+        ));
+    }
+
+    public static ScriptedStatementInstance questFinished(QuestId id) {
+        return new ScriptedStatementInstance(ScriptedCondition.QUEST_FINISHED, Map.of(
+                "id", id.getId()
+        ));
+    }
+
+    public static ScriptedStatementInstance questStarted(QuestId id) {
+        return new ScriptedStatementInstance(ScriptedCondition.QUEST_STARTED, Map.of(
+                "id", id.getId()
+        ));
+    }
+
+    public static ScriptedStatementInstance questDialogStepActive(String stable_id) {
+        return new ScriptedStatementInstance(ScriptedCondition.QUEST_DIALOG_STEP_ACTIVE, Map.of(
+                "stable_id", stable_id
+        ));
     }
 
     public static ScriptedStatementInstance removePouchCoinsSuccessful(int amount) {

@@ -80,7 +80,7 @@ public class Quest implements SkillRestrictable {
             return QuestStartFailReason.ALREADY_COMPLETED;
         }
 
-        if (player.getQuestSteps().containsKey(id)) {
+        if (player.getActiveQuestSteps().containsKey(id)) {
             return QuestStartFailReason.ALREADY_STARTED;
         }
 
@@ -91,7 +91,7 @@ public class Quest implements SkillRestrictable {
         QuestStartFailReason failReason = getQuestStartFailReason(player);
 
         if (failReason != null) {
-            throw new IllegalStateException(failReason.toString());
+            throw new IllegalStateException("Cannot start quest " + this.id + " for player " + player.getUUID() + ". Reason: " + failReason);
         }
 
         if (steps.getFirst() == null) {
@@ -99,12 +99,12 @@ public class Quest implements SkillRestrictable {
         }
 
         EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new QuestStartEffect(player, this));
-        player.getQuestSteps().put(id, steps.getFirst().cloneForPlayer(player.getUUID()));
+        player.getActiveQuestSteps().put(id, steps.getFirst().cloneForPlayer(player.getUUID()));
     }
 
     public void handleCompletion(RunePlayer player) {
         player.getCompletedQuestIds().add(id);
-        player.getQuestSteps().remove(id);
+        player.getActiveQuestSteps().remove(id);
         EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new QuestCompletedEffect(player, this));
     }
 

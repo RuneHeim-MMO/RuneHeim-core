@@ -115,7 +115,7 @@ public class RunePlayerManager {
                     HashMap<String, PlayerQuestState> questState = questHandler.getPlayerQuestDataSync(uuid);
                     HashMap<String, AbstractQuestStep> questSteps = questHandler.initQuestStepInstances(uuid, questState);
 
-                    data.getKey().setQuestSteps(questSteps);
+                    data.getKey().setActiveQuestSteps(questSteps);
                     setPlayerOnlineAndFinalize(player, data);
                 });
 

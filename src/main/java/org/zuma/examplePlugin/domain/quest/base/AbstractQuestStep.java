@@ -68,8 +68,7 @@ public abstract class AbstractQuestStep implements Listener {
             return;
         }
 
-        System.out.println("Advanced quest step! id " + getId());
-        runePlayer.getQuestSteps().put(parentQuest.getId(), nextQuestStep.cloneForPlayer(runePlayer.getUUID()));
+        runePlayer.getActiveQuestSteps().put(parentQuest.getId(), nextQuestStep.cloneForPlayer(runePlayer.getUUID()));
 
     }
 
