@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.features.admin.commands;
 
 
+import com.google.gson.Gson;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
@@ -35,6 +36,8 @@ import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.quest.Quest;
+import org.zuma.examplePlugin.domain.quest.QuestSerializer;
 import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -338,7 +341,13 @@ public class AdminCommand implements BasicCommand {
         }
 
         if (Objects.equals(args[0], "quest")) {
-            RuneQuestPlugin.getQuestHandler().getRegistry().getQuestByName("sheep-shearer").startForPlayer(runePlayer);
+            Quest q = RuneQuestPlugin.getQuestHandler().getRegistry().getQuestByName("sheep-shearer");
+            System.out.println(new Gson().toJson(q));
+        }
+
+        if (Objects.equals(args[0], "des")) {
+            Quest q = QuestSerializer.deserializeQuest("{\"id\":\"sheep-shearer\",\"name\":\"Sheep Shearer\",\"steps\":[{\"requiredItems\":[{\"itemId\":101,\"amount\":5}],\"id\":0,\"type\":\"COLLECTION\"},{\"requiredItems\":[{\"itemId\":100,\"amount\":5}],\"id\":1,\"type\":\"COLLECTION\"},{\"requiredItems\":[{\"itemId\":1600,\"amount\":5}],\"id\":2,\"type\":\"COLLECTION\"}]}");
+            q.startForPlayer(runePlayer);
         }
 
 

@@ -1,6 +1,6 @@
-package org.zuma.examplePlugin.domain.quest.persistence;
+package org.zuma.examplePlugin.domain.quest;
 
-import org.zuma.examplePlugin.domain.quest.StepType;
+import org.zuma.examplePlugin.domain.quest.constants.StepType;
 
 import java.util.HashMap;
 import java.util.Map;

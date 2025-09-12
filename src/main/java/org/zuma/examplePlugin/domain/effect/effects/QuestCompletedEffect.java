@@ -31,7 +31,7 @@ public class QuestCompletedEffect implements AnimatedEffect {
 
         player.asBukkitPlayer().showTitle(Title.title(
                 Component.text(quest.getName(), Color.ACCENT.asColor()),
-                Component.text("Has been completed!", Color.SUCCESS.asColor()),
+                Component.text("Quest has been completed!", Color.SUCCESS.asColor()),
                 Title.Times.times(Duration.ofSeconds(1), Duration.ofSeconds(4, 5), Duration.ofSeconds(3)
                 )
         ));

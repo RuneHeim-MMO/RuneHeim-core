@@ -28,7 +28,7 @@ public class QuestStartEffect implements AnimatedEffect {
         if (time == 0.0) {
             player.asBukkitPlayer().showTitle(Title.title(
                     Component.text(quest.getName(), Color.ACCENT.asColor()),
-                    Component.text("Has been started!", Color.SUCCESS.asColor()),
+                    Component.text("Quest has been started!", Color.SUCCESS.asColor()),
                     Title.Times.times(Duration.ofSeconds(1), Duration.ofSeconds(4, 5), Duration.ofSeconds(3)
                     )
             ));

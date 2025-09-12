@@ -13,7 +13,7 @@ import org.zuma.examplePlugin.domain.player.persistence.RunePlayerRepository;
 import org.zuma.examplePlugin.domain.player.persistence.RunePlayerSerializer;
 import org.zuma.examplePlugin.domain.player.persistence.SerializedPlayerContainer;
 import org.zuma.examplePlugin.domain.player.states.RunePlayerLoadingStateHandler;
-import org.zuma.examplePlugin.domain.quest.persistence.PlayerQuestState;
+import org.zuma.examplePlugin.domain.quest.PlayerQuestState;
 import org.zuma.examplePlugin.domain.quest.QuestHandler;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
 import org.zuma.examplePlugin.domain.skill.Skill;

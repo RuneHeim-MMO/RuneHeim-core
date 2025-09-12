@@ -6,17 +6,17 @@ import org.bukkit.event.Listener;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.quest.persistence.PlayerQuestState;
+import org.zuma.examplePlugin.domain.quest.PlayerQuestState;
 import org.zuma.examplePlugin.domain.quest.Quest;
-import org.zuma.examplePlugin.domain.quest.StepType;
+import org.zuma.examplePlugin.domain.quest.constants.StepType;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
 public abstract class AbstractQuestStep implements Listener {
-    private RuneQuestPlugin plugin;
-    private final Quest parentQuest;
+    private transient RuneQuestPlugin plugin;
+    private transient Quest parentQuest;
     private int id;
     private final StepType type;
 
@@ -91,8 +91,17 @@ public abstract class AbstractQuestStep implements Listener {
         return plugin;
     }
 
+    public void setPlugin(RuneQuestPlugin plugin) {
+        System.out.println("plugin set");
+        this.plugin = plugin;
+    }
+
     public Quest getParentQuest() {
         return parentQuest;
+    }
+
+    public void setParentQuest(Quest parentQuest) {
+        this.parentQuest = parentQuest;
     }
 
     @Nullable

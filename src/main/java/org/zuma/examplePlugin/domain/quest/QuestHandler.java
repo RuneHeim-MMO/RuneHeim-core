@@ -7,10 +7,8 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
-import org.zuma.examplePlugin.domain.quest.persistence.PlayerQuestState;
 import org.zuma.examplePlugin.domain.quest.persistence.QuestProgressRepository;
 
-import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.UUID;

@@ -1,9 +1,9 @@
 package org.zuma.examplePlugin.domain.quest.impl;
 
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.domain.quest.persistence.PlayerQuestState;
+import org.zuma.examplePlugin.domain.quest.PlayerQuestState;
 import org.zuma.examplePlugin.domain.quest.Quest;
-import org.zuma.examplePlugin.domain.quest.StepType;
+import org.zuma.examplePlugin.domain.quest.constants.StepType;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
 
 import javax.annotation.Nullable;
@@ -16,11 +16,12 @@ public class DialogStep extends AbstractQuestStep {
      * to keep setting completion of this step even if order of steps changes. Also makes it easier to track.
      */
     private String stableId;
-    private boolean completed;
+    private transient boolean completed;
 
     public DialogStep(RuneQuestPlugin plugin, Quest parentQuest, @Nullable UUID owner, String stableId) {
         super(plugin, parentQuest, StepType.DIALOG, owner);
         this.stableId = stableId;
+        this.completed = false;
 
         if (getOwner() != null) {
             plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -45,15 +46,18 @@ public class DialogStep extends AbstractQuestStep {
 
     @Override
     public AbstractQuestStep cloneForPlayer(UUID ownerUUID) {
-        AbstractQuestStep step = new DialogStep(super.getPlugin(), super.getParentQuest(), ownerUUID, stableId);
+        DialogStep step = new DialogStep(super.getPlugin(), super.getParentQuest(), ownerUUID, stableId);
 
+        step.setCompleted(false);
         step.setId(this.getId());
+
         return step;
     }
 
     @Override
     public AbstractQuestStep assignValuesFromState(PlayerQuestState state) {
         this.stableId = state.getStepProgressData().get("stableId").toString();
+        // Not assigning completed here, because its 'in progress' state is non-existent. as soon as completed is set to true, the next quest step replaces it.
         return this;
     }
 

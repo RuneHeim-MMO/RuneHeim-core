@@ -38,7 +38,7 @@ public class RunePlayerSerializer {
                 runePlayer.getHealth(),
                 (float) runePlayer.getSpecialEnergyPercent() / 100,
                 runePlayer.getPrayerEnergy(),
-                runePlayer.getCompletedQuestIds()
+                runePlayer.getCompletedQuestIds() == null ? new ArrayList<>() : runePlayer.getCompletedQuestIds()
         );
 
         VersionedJson versionedPlayerData = new VersionedJson(gson.toJson(container), 1);
