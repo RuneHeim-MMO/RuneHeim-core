@@ -14,19 +14,80 @@ import java.util.function.Supplier;
 public class Dialogs {
 
     public static final Supplier<DialogBuilder> sheepShearerDialog = () -> DialogBuilder.create("sheep-shearer-dialog")
-            .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()))
-            .conditionStep(c -> c.condition(ScriptedCondition.questDialogStepActive("sheep-shearer.finish"))
-                    .truthyFollowUp(g -> g.conditionStep(h -> h.condition(ScriptedCondition.removeInventoryItemSuccessful(new ItemRecord(ItemId.WOOL, 5)))
-                            .truthyFollowUp(z -> z.passiveStep(l -> l.text("Hey, thanks!").action(ScriptedAction.dialogQuestStepFinish("sheep-shearer.finish"))))
-                            .falsyFollowUp(x -> x.passiveStep(v -> v.text("What? Where did u lose it already?")))))
-                    .falsyFollowUp(v -> v.passiveStep(b -> b.text("Ok, let's see..."))
-                            .conditionStep(s -> s.condition(ScriptedCondition.questFinished(QuestId.SHEEP_SHEARER))
-                                    .truthyFollowUp(g -> g.passiveStep(t -> t.text(List.of("Bro, u already finished it."))))
-                                    .falsyFollowUp(g -> g.conditionStep(t -> t.condition(ScriptedCondition.questStarted(QuestId.SHEEP_SHEARER))
-                                            .truthyFollowUp(q -> q.passiveStep(w -> w.text("Bro, get back to me when u get the wool")))
-                                            .falsyFollowUp(e -> e.conditionStep(y -> y.condition(ScriptedCondition.questStartSuccessful(QuestId.SHEEP_SHEARER))
-                                                    .truthyFollowUp(q -> q.passiveStep(w -> w.text("Godspeed!")))
-                                                    .falsyFollowUp(u -> u.passiveStep(i -> i.text("Nah, ur too low level for this."))))))))));
+            // Check if quest is finished
+            .conditionStep(s -> s
+                    .condition(ScriptedCondition.questFinished(QuestId.SHEEP_SHEARER))
+
+                    // If quest finished
+                    .truthyFollowUp(e -> e
+                            .passiveStep(r -> r.text("Thanks for helping me out!"))
+                    )
+
+                    // If quest NOT finished -> check if quest is started
+                    .falsyFollowUp(r -> r
+                            .conditionStep(q -> q
+                                    .condition(ScriptedCondition.questStarted(QuestId.SHEEP_SHEARER))
+
+                                    // If quest started
+                                    .truthyFollowUp(w -> w
+                                            .conditionStep(c -> c
+                                                    .condition(ScriptedCondition.questDialogStepActive("sheep-shearer.wool-collected"))
+
+                                                    // If we're at the "collected" dialog step -> check inventory removal
+                                                    .truthyFollowUp(y -> y
+                                                            .conditionStep(u -> u
+                                                                    .condition(ScriptedCondition.inventoryContains(new ItemRecord(ItemId.BALL_OF_WOOL, 20)))
+
+                                                                    // Inventory contains 20 balls of wool
+                                                                    .truthyFollowUp(z -> z
+                                                                            .passiveStep(l -> l
+                                                                                    .text("Awesome, just what I needed!")
+                                                                            ).conditionStep(ss -> ss.condition(ScriptedCondition.removeInventoryItemSuccessful(new ItemRecord(ItemId.BALL_OF_WOOL, 20)))
+                                                                                    .truthyFollowUp(tt -> tt.passiveStep(ty -> ty.text(List.of("Thanks, {PLAYER_NAME}!", "You did a really great job!")).action(ScriptedAction.dialogQuestStepFinish("sheep-shearer.finish")))))
+
+                                                                    )
+
+                                                                    // Inventory doesn't contain 20 balls of wool
+                                                                    .falsyFollowUp(z2 -> z2
+                                                                            .passiveStep(v -> v.text(List.of("Good, you collected the wool", "Now bring it to me.")))
+                                                                    )
+                                                            )
+                                                    )
+
+                                                    // We're not at the "finish" dialog step
+                                                    .falsyFollowUp(y2 -> y2
+                                                            .passiveStep(i -> i.text(List.of("You gonna work, or just slacking around?")))
+                                                    )
+                                            )
+                                    )
+
+                                    // If quest NOT started at all -> greeting + interactive options
+                                    .falsyFollowUp(w2 -> w2
+                                            .passiveStep(vv -> vv.text(List.of(
+                                                    "Oi! What are you doing sneaking around my land?",
+                                                    "You're not the one letting my sheep out?"
+                                            )))
+                                            .interactiveStep(i -> i.text("You looking for work or just snooping?")
+                                                    .option("Maybe… what if I was?", o -> o.followupSteps(p -> p.passiveStep(n -> n.text("Don’t be clever with me."))))
+                                                    .option("Sorry, won’t be long", o -> o.followupSteps(p -> p.passiveStep(n -> n.text("Fine - don’t let my sheep out!"))))
+                                                    .option("I'm looking for work", o -> o.followupSteps(p -> p
+                                                            // Quest start branch
+                                                            .passiveStep(sp -> sp.text(List.of(
+                                                                    "Good - I need twenty balls of wool from my sheep.",
+                                                                    "Shear them, then spin the wool at the spinning wheel",
+                                                                    "I'm pretty sure you can find spinning wheel at Drakkar."
+                                                            )))
+                                                            .conditionStep(ba -> ba
+                                                                    .condition(ScriptedCondition.questStartSuccessful(QuestId.SHEEP_SHEARER))
+                                                                    .truthyFollowUp(yy -> yy.passiveStep(ap -> ap.text(List.of("Here, take these.", "And remember. 20 balls of wool!")).action(ScriptedAction.giveItem(new ItemRecord(ItemId.SHEARS, 1)))))
+                                                            )
+                                                    ))
+                                            )
+                                    )
+                            )
+                    )
+            );
+
 
     public static final Supplier<DialogBuilder> bankerDialog = () -> DialogBuilder.create("banker-dialog")
             .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()))
@@ -82,7 +143,7 @@ public class Dialogs {
                                             )))
                                     )
                                     .falsyFollowUp(y -> y.passiveStep(u -> u.text(
-                                            "Looks like business isn’t your strong suit!"
+                                            List.of("Looks like business isn’t your strong suit!", "Come back when you have at least §6500gp.")
                                     )))
                             )))
                     .option("§cNo", n -> n.followupSteps(d -> d.passiveStep(p -> p.text(

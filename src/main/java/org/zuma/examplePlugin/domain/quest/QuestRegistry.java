@@ -20,10 +20,10 @@ public class QuestRegistry {
     public QuestRegistry() {
         this.quests = new HashMap<>();
 
-        Quest newQuest = new Quest("sheep-shearer", "Sheep Shearer", QuestDifficulty.HARD).setRequirements(List.of(new SkillRequirement(SkillType.PRAYER, 5)));
-        registerQuest(newQuest.addSteps(List.of(
-                new CollectionStep(RuneQuestPlugin.getInstance(), newQuest, null, List.of(new ItemRecord(ItemId.WOOL, 5))),
-                new DialogStep(RuneQuestPlugin.getInstance(),newQuest, null, "sheep-shearer.finish")
+        Quest sheepShearer = new Quest("sheep-shearer", "Sheep Shearer", QuestDifficulty.HARD);
+        registerQuest(sheepShearer.addSteps(List.of(
+                new CollectionStep(RuneQuestPlugin.getInstance(), sheepShearer, null, List.of(new ItemRecord(ItemId.BALL_OF_WOOL, 20))),
+                new DialogStep(RuneQuestPlugin.getInstance(),sheepShearer, null, "sheep-shearer.wool-collected")
         )));
     }
 

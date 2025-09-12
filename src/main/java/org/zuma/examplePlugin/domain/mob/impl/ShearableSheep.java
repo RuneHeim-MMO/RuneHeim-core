@@ -72,6 +72,7 @@ public class ShearableSheep extends GenericCombatant {
 
         setWoolState(entity, false);
         player.giveItemOrDrop(new ItemRecord(ItemId.WOOL, 1));
+        player.asBukkitPlayer().swingMainHand();
         hasWool = false;
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {

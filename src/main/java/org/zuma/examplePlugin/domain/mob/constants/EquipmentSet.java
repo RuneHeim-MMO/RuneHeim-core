@@ -58,6 +58,10 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.COINS, 1), 30)
     ))),
 
+    SHEPHERD(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.SHEARS, 1), 100)
+    ))),
+
     HORSE_DEALER(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.SUGAR), 25),
             new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.APPLE), 25),
