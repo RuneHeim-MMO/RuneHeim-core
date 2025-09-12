@@ -22,10 +22,6 @@ public class DialogStep extends AbstractQuestStep {
         super(plugin, parentQuest, StepType.DIALOG, owner);
         this.stableId = stableId;
         this.completed = false;
-
-        if (getOwner() != null) {
-            plugin.getServer().getPluginManager().registerEvents(this, plugin);
-        }
     }
 
     public boolean isCompleted() {

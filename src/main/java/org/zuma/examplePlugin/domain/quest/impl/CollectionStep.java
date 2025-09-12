@@ -28,10 +28,6 @@ public class CollectionStep extends AbstractQuestStep {
         super(plugin, parentQuest, StepType.COLLECTION, owner);
         this.requiredItems = requiredItems;
         this.acquiredItems = new HashMap<>();
-
-        if (getOwner() != null) {
-            plugin.getServer().getPluginManager().registerEvents(this, plugin);
-        }
     }
 
     public List<ItemRecord> getRequiredItems() {

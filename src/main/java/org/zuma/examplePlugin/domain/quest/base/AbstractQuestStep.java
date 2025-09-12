@@ -28,6 +28,10 @@ public abstract class AbstractQuestStep implements Listener {
         this.parentQuest = parentQuest;
         this.type = type;
         this.owner = owner;
+
+        if (getOwner() != null) {
+            plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        }
     }
 
     protected void handleStepCompletion() {

@@ -346,7 +346,7 @@ public class AdminCommand implements BasicCommand {
         }
 
         if (Objects.equals(args[0], "des")) {
-            Quest q = QuestSerializer.deserializeQuest("{\"id\":\"sheep-shearer\",\"name\":\"Sheep Shearer\",\"steps\":[{\"requiredItems\":[{\"itemId\":101,\"amount\":5}],\"id\":0,\"type\":\"COLLECTION\"},{\"requiredItems\":[{\"itemId\":100,\"amount\":5}],\"id\":1,\"type\":\"COLLECTION\"},{\"requiredItems\":[{\"itemId\":1600,\"amount\":5}],\"id\":2,\"type\":\"COLLECTION\"}]}");
+            Quest q = QuestSerializer.deserializeQuest("{\"id\":\"sheep-shearer\",\"name\":\"Sheep Shearer\",\"steps\":[{\"requiredItems\":[{\"itemId\":101,\"amount\":5}],\"id\":0,\"type\":\"COLLECTION\"},{\"requiredItems\":[{\"itemId\":100,\"amount\":5}],\"id\":1,\"type\":\"COLLECTION\"},{\"requiredItems\":[{\"itemId\":1600,\"amount\":5}],\"id\":2,\"type\":\"COLLECTION\"}],\"difficulty\":\"HARD\",\"requirements\":[{\"type\":\"PRAYER\",\"minimumLevel\":5}],\"requiredCompletedQuests\":[\"invalid-quest\"]}");
             q.startForPlayer(runePlayer);
         }
 
