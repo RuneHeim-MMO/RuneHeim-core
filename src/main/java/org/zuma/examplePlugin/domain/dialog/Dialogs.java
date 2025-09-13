@@ -20,7 +20,7 @@ public class Dialogs {
 
                     // If quest finished
                     .truthyFollowUp(e -> e
-                            .passiveStep(r -> r.text("Thanks for helping me out!"))
+                            .passiveStep(r -> r.text(List.of("It’s a peaceful day, isn’t it?", "Thanks to you, at least the flock isn’t plotting an escape.")))
                     )
 
                     // If quest NOT finished -> check if quest is started
@@ -43,7 +43,8 @@ public class Dialogs {
                                                                             .passiveStep(l -> l
                                                                                     .text("Awesome, just what I needed!")
                                                                             ).conditionStep(ss -> ss.condition(ScriptedCondition.removeInventoryItemSuccessful(new ItemRecord(ItemId.BALL_OF_WOOL, 20)))
-                                                                                    .truthyFollowUp(tt -> tt.passiveStep(ty -> ty.text(List.of("Thanks, {PLAYER_NAME}!", "You did a really great job!")).action(ScriptedAction.dialogQuestStepFinish("sheep-shearer.finish")))))
+                                                                                    .truthyFollowUp(tt -> tt.passiveStep(ty -> ty.text("").action(ScriptedAction.dialogQuestStepFinish("sheep-shearer.finish")))
+                                                                                            .passiveStep(yx -> yx.text(List.of("Thanks, {PLAYER_NAME}!", "You did a really great job!")))))
 
                                                                     )
 
@@ -79,7 +80,9 @@ public class Dialogs {
                                                             )))
                                                             .conditionStep(ba -> ba
                                                                     .condition(ScriptedCondition.questStartSuccessful(QuestId.SHEEP_SHEARER))
-                                                                    .truthyFollowUp(yy -> yy.passiveStep(ap -> ap.text(List.of("Here, take these.", "And remember. 20 balls of wool!")).action(ScriptedAction.giveItem(new ItemRecord(ItemId.SHEARS, 1)))))
+                                                                    .truthyFollowUp(yy -> yy.passiveStep(ap -> ap.text("")
+                                                                                    .action(ScriptedAction.giveItem(new ItemRecord(ItemId.SHEARS, 1))))
+                                                                            .passiveStep(ys -> ys.text(List.of("Here, take these.", "And remember. 20 balls of wool!"))))
                                                             )
                                                     ))
                                             )

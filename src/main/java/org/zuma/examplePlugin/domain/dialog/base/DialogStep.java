@@ -88,6 +88,12 @@ public abstract class DialogStep {
     }
 
     private void processLines(RunePlayer player, Hologram hologram) {
+        if (this.content.isEmpty() || this.content.getFirst() != null && this.content.getFirst().line().isEmpty()) {
+            onDialogFinishRendering(player);
+            finishedRendering = true;
+            return;
+        }
+
         new BukkitRunnable() {
             int lineIndex = 0;
             int charIndex = 0;
