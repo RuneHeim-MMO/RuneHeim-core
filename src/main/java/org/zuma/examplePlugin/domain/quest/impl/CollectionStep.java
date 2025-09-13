@@ -7,14 +7,20 @@ import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.PlayerQuestState;
 import org.zuma.examplePlugin.domain.quest.Quest;
 import org.zuma.examplePlugin.domain.quest.constants.StepType;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
+import org.zuma.examplePlugin.events.item.PlayerItemToBeGiven;
 
 import javax.annotation.Nullable;
 import java.util.*;
 
+/*
+    WARNING: Do not use this step to reliably track player item collections! Players can drop and pick up same item multiple times.
+
+ */
 public class CollectionStep extends AbstractQuestStep {
     private final List<ItemRecord> requiredItems;
 
@@ -46,6 +52,25 @@ public class CollectionStep extends AbstractQuestStep {
             return;
         }
 
+        addItemsToAcquired(itemStack, type);
+    }
+
+    @EventHandler
+    public void onPlayerRetrieveItem(PlayerItemToBeGiven event) {
+        if (!event.getPlayer().getUUID().equals(getOwner())) return;
+
+        ItemStack itemStack = event.getItemStack();
+        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(itemStack);
+
+        if (type == null || !acquiredItems.containsKey(type.id)) {
+            return;
+        }
+
+        addItemsToAcquired(itemStack, type);
+
+    }
+
+    private void addItemsToAcquired(ItemStack itemStack, AbstractItemType type) {
         acquiredItems.put(type.id, acquiredItems.get(type.id) + itemStack.getAmount());
 
         // Check counts
