@@ -27,13 +27,16 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ShearableSheep extends GenericCombatant {
+    private static final List<Integer> DROP_TABLES_WHEN_HAS_WOOL = List.of(DropTableId.BONES.asInt(), DropTableId.WOOL.asInt());
+    private static final List<Integer> DROP_TABLES_WITHOUT_WOOL = List.of(DropTableId.BONES.asInt());
+
     private static final int WOOL_RESPAWN_DELAY_SECONDS = 60;
     private boolean hasWool = true;
 
     public ShearableSheep(String displayName, List<SkillLevelRecord> skills, List<Modifier> modifiers,
-                          @Nullable MobBehavior behavior, double walkSpeed,  int health) {
+                          @Nullable MobBehavior behavior, double walkSpeed, int health) {
         super(displayName, null, skills, modifiers, null, walkSpeed, false, false, health, null, null,
-                DisguiseType.SHEEP, List.of(DropTableId.BONES.asInt(),DropTableId.WOOL.asInt()));
+                DisguiseType.SHEEP, DROP_TABLES_WHEN_HAS_WOOL);
 
         HashMap<Attribute, Double> attributes = new HashMap<>();
         attributes.put(Attribute.GENERIC_MOVEMENT_SPEED, walkSpeed);
@@ -58,6 +61,11 @@ public class ShearableSheep extends GenericCombatant {
         watcher.setSheared(!hasWool);
         disguise.setWatcher(watcher);
 
+        if (!hasWool) {
+            setDropTableIds(DROP_TABLES_WITHOUT_WOOL);
+        } else {
+            setDropTableIds(DROP_TABLES_WHEN_HAS_WOOL);
+        }
 
     }
 
