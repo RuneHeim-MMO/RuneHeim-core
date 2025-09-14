@@ -8,6 +8,7 @@ import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.domain.player.RunePlayerListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.player.persistence.RunePlayerRepository;
+import org.zuma.examplePlugin.domain.quest.QuestHandler;
 
 import java.util.List;
 
@@ -15,13 +16,13 @@ public class PlayerManagerModule implements PluginModule {
 
     @Override
     public List<Class<?>> dependencies() {
-        return List.of(HikariPool.class);
+        return List.of(HikariPool.class, QuestModule.class);
     }
 
     @Override
     public void start(Plugin plugin, ModuleContext context) {
         RunePlayerRepository runePlayerRepository = new RunePlayerRepository(context.get(HikariPool.class));
-        RunePlayerManager runePlayerManager = new RunePlayerManager(runePlayerRepository);
+        RunePlayerManager runePlayerManager = new RunePlayerManager(runePlayerRepository, context.get(QuestHandler.class));
         RunePlayerListener runePlayerListener = new RunePlayerListener(runePlayerManager);
 
         plugin.getServer().getPluginManager().registerEvents(runePlayerListener, plugin);

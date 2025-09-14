@@ -11,6 +11,7 @@ public enum MobType {
 
     BROWN_FARMHOUSE_TRADER(),
     ABRAHAM_FAIRY_TEACHER(),
+    SHEPHERD(), // Sheep shearer quest
 
     COW_BASE_5(),
     CALF_BASE_3(),

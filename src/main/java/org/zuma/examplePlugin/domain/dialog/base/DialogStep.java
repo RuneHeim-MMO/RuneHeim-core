@@ -22,12 +22,14 @@ import java.util.UUID;
 
 public abstract class DialogStep {
     protected Dialog parent;
+    private final String uniqueIdentifier;
     private final List<DialogText> content;
     private final UUID hologramUUID = UUID.randomUUID();
     private boolean finishedRendering = false;
 
-    public DialogStep(List<DialogText> content) {
+    public DialogStep(List<DialogText> content, String uniqueIdentifier) {
         this.content = content;
+        this.uniqueIdentifier = uniqueIdentifier;
     }
 
     private String replaceTemplates(String input, RunePlayer viewer) {
@@ -88,6 +90,12 @@ public abstract class DialogStep {
     }
 
     private void processLines(RunePlayer player, Hologram hologram) {
+        if (this.content.isEmpty() || this.content.getFirst() != null && this.content.getFirst().line().isEmpty()) {
+            onDialogFinishRendering(player);
+            finishedRendering = true;
+            return;
+        }
+
         new BukkitRunnable() {
             int lineIndex = 0;
             int charIndex = 0;
@@ -158,7 +166,6 @@ public abstract class DialogStep {
         }.runTaskTimer(RuneQuestPlugin.getInstance(), 0L, 2L);
     }
 
-
     public void cleanUp() {
         DHAPI.removeHologram(hologramUUID.toString());
     }
@@ -171,5 +178,9 @@ public abstract class DialogStep {
 
     public void onHotbarSlotChange(PlayerItemHeldEvent event, RunePlayer player, int newSlot) {
 
+    }
+
+    public String getUniqueIdentifier() {
+        return uniqueIdentifier;
     }
 }

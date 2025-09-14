@@ -8,14 +8,17 @@ import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.heimscript.ScriptParser;
+import org.zuma.examplePlugin.domain.quest.Quest;
+import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
+import org.zuma.examplePlugin.domain.quest.constants.QuestStartFailReason;
+import org.zuma.examplePlugin.domain.quest.impl.DialogStep;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Objects;
 
 public class ScriptedConditionHandler {
     public static boolean executeCondition(String input, RunePlayer player, @Nullable Runnable callback, @Nullable Dialog parentDialog) {
@@ -85,6 +88,39 @@ public class ScriptedConditionHandler {
                     if (player.getPouchCoins() >= amount) {
                         player.setPouchCoins(player.getPouchCoins() - amount, false);
                         result = true;
+                    }
+
+                }
+                case QUEST_STARTED -> {
+                    result = player.getActiveQuestSteps().containsKey(args.get("id"));
+                }
+                case QUEST_FINISHED -> {
+                    result = player.getCompletedQuestIds().contains(args.get("id"));
+                }
+                case QUEST_DIALOG_STEP_ACTIVE -> {
+                    String stable_id = args.get("stable_id");
+
+                    for (AbstractQuestStep qs : player.getActiveQuestSteps().values()) {
+                        if (qs instanceof DialogStep dialogStep && Objects.equals(dialogStep.getStableId(), stable_id)) {
+                            result = true;
+                            break;
+                        }
+                    }
+
+                }
+                case QUEST_START_IF_REQUIREMENTS_MET -> {
+                    String questId = args.get("id");
+                    Quest q = RuneQuestPlugin.getQuestHandler().getRegistry().getQuestById(questId);
+
+                    if (q != null) {
+                        QuestStartFailReason failReason = q.getQuestStartFailReason(player);
+
+                        if (failReason == null) {
+                            q.startForPlayer(player);
+                            result = true;
+                        } else {
+                            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Couldn't start quest " + questId + " because: " + failReason);
+                        }
                     }
 
                 }

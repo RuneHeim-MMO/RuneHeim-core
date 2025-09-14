@@ -26,6 +26,12 @@ public class EffectHandler {
     }
 
     public static void playAt(Supplier<Location> getLocation, AnimatedEffect effect, double speedMultiplier, @Nullable Runnable onFinish) {
+        if (effect.getDurationTicks() == 0) {
+            effect.playAt(getLocation.get(), 0);
+            return;
+        }
+
+
         new BukkitRunnable() {
             double time = 0;
 

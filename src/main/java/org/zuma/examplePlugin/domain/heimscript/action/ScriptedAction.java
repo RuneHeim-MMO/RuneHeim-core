@@ -26,7 +26,8 @@ public enum ScriptedAction implements ScriptedStatement {
     TAKE_POUCH_COINS("take_pouch_coins", "amount"),
     DIALOG_HOLDER_SOUND("dialog_holder_sound", "sound"),
     DIALOG_HOLDER_FORWARD_INTERACTION("dialog_holder_forward_interaction"),
-    TAKE_INVENTORY_ITEM("take_inventory_item", "item_id", "amount");
+    TAKE_INVENTORY_ITEM("take_inventory_item", "item_id", "amount"),
+    DIALOG_QUEST_STEP_FINISH("dialog_quest_step_finish", "stable_id");
 
     private final String trigger;
     private final List<String> argsTemplates;
@@ -49,6 +50,11 @@ public enum ScriptedAction implements ScriptedStatement {
         return this.argsTemplates;
     }
 
+    public static ScriptedStatementInstance dialogQuestStepFinish(String stable_id) {
+        return new ScriptedStatementInstance(ScriptedAction.DIALOG_QUEST_STEP_FINISH, Map.of(
+                "stable_id", stable_id
+        ));
+    }
 
     public static ScriptedStatementInstance takeInventoryItem(ItemRecord record) {
         return new ScriptedStatementInstance(ScriptedAction.TAKE_INVENTORY_ITEM, Map.of(

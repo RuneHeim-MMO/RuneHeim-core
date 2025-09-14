@@ -781,7 +781,18 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(113, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 180.5, 72, -109.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.ABRAHAM_FAIRY_TEACHER, 1, 100)
-                ), false), 1))
+                ), false), 1)),
+
+                // Sheep shearer quest npc
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(114, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 45.5, 68, -162.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SHEPHERD, 1, 100)
+                ), false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(115, SpawnZoneType.AREA, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 66, 68, -165)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SHEEP, 20, 100)
+                ), 20, false), 1))
 
 
         );

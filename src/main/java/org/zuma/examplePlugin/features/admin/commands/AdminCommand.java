@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.features.admin.commands;
 
 
+import com.google.gson.Gson;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
@@ -29,12 +30,12 @@ import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockReposito
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
 import org.zuma.examplePlugin.domain.combat.HitHandler;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
-import org.zuma.examplePlugin.domain.heimscript.ScriptParser;
-import org.zuma.examplePlugin.domain.heimscript.action.ScriptedAction;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.quest.Quest;
+import org.zuma.examplePlugin.domain.quest.QuestSerializer;
 import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -278,7 +279,7 @@ public class AdminCommand implements BasicCommand {
         if (Objects.equals(args[0], "mobs")) {
 
         }
-        
+
         if (Objects.equals(args[0], "rain")) {
             int totalArrows = 1500;      // Total arrows in the rain
             int arrowsPerTick = 10;     // Number of arrows to spawn per tick
@@ -321,7 +322,6 @@ public class AdminCommand implements BasicCommand {
         }
 
 
-
         if (Objects.equals(args[0], "node")) {
             RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_NODE_CREATE.asInt(), runePlayer, null);
         }
@@ -337,6 +337,17 @@ public class AdminCommand implements BasicCommand {
         if (Objects.equals(args[0], "shop")) {
             RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.GENERAL_STORE.getId());
         }
+
+        if (Objects.equals(args[0], "quest")) {
+            Quest q = RuneQuestPlugin.getQuestHandler().getRegistry().getQuestById("sheep-shearer");
+            System.out.println(new Gson().toJson(q));
+        }
+
+        if (Objects.equals(args[0], "des")) {
+            Quest q = QuestSerializer.deserializeQuest("{\"id\":\"sheep-shearer\",\"name\":\"Sheep Shearer\",\"steps\":[{\"requiredItems\":[{\"itemId\":101,\"amount\":5}],\"id\":0,\"type\":\"COLLECTION\"},{\"requiredItems\":[{\"itemId\":100,\"amount\":5}],\"id\":1,\"type\":\"COLLECTION\"},{\"requiredItems\":[{\"itemId\":1600,\"amount\":5}],\"id\":2,\"type\":\"COLLECTION\"}],\"difficulty\":\"HARD\",\"requirements\":[{\"type\":\"PRAYER\",\"minimumLevel\":5}],\"requiredCompletedQuests\":[\"invalid-quest\"]}");
+            q.startForPlayer(runePlayer);
+        }
+
 
         if (args.length == 1 && Objects.equals(args[0], "illegal")) {
             IllegalItemWatchdog.tagIllegalItem(player.getInventory().getItemInMainHand());
