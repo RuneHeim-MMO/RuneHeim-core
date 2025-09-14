@@ -2,12 +2,16 @@ package org.zuma.examplePlugin.domain.recipe.impl;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.block.impl.CampfireBlock;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipe.base.AbstractRecipe;
@@ -73,10 +77,20 @@ public class CampfireRecipe extends AbstractRecipe {
     }
 
     @Override
-    public void handleRecipeCraftingStart(RunePlayer player) {
-        CampfireBlock campfire = new CampfireBlock(player.getUUID(), PlayerUtils.trunacePlayerFeetLocation(player), initialName, burningName, soulCampfireSkin, burnTime, despawnDrop);
+    public boolean handleRecipeCraftingStart(RunePlayer player) {
+        Location campfireLocation = PlayerUtils.trunacePlayerFeetLocation(player);
+        Block blockBelow = campfireLocation.getBlock().getRelative(BlockFace.DOWN);
+
+        if (!blockBelow.getType().isSolid() || campfireLocation.getBlock().getType() != Material.AIR || RuneQuestPlugin.getBlockManager().getBlockAt(campfireLocation.getBlock()) != null) {
+            // Invalid location (block below not solid/block to be replaced is not air)
+            HudService.showFailTitle(player, "You cannot place campfire here.");
+            return false;
+        }
+
+        CampfireBlock campfire = new CampfireBlock(player.getUUID(), campfireLocation, initialName, burningName, soulCampfireSkin, burnTime, despawnDrop);
         inProgressBlocks.put(player.getUUID(), campfire);
         RuneQuestPlugin.getBlockManager().registerBlock(campfire);
+        return true;
     }
 
     @Override

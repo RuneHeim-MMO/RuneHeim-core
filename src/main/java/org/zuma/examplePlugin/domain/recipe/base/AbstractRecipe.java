@@ -288,7 +288,11 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         }
 
         type.getStartSound().play(player, true);
-        this.handleRecipeCraftingStart(player);
+        boolean isCraftStartSuccess = this.handleRecipeCraftingStart(player);
+
+        if (!isCraftStartSuccess) {
+            return false;
+        }
 
         ActionParams params = new ActionParams.Builder()
                 .durationMs(this.craftTimeMs * times)
@@ -441,8 +445,8 @@ public abstract class AbstractRecipe implements SkillRestrictable {
 
     }
 
-    public void handleRecipeCraftingStart(RunePlayer player) {
-
+    public boolean handleRecipeCraftingStart(RunePlayer player) {
+        return true;
     }
 
     public void handleRecipeCraftingAborted(RunePlayer player) {
