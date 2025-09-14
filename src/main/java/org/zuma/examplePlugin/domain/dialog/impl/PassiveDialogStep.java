@@ -17,8 +17,8 @@ public class PassiveDialogStep extends DialogStep {
     private final List<String> actions;
     private Runnable runnable = null;
 
-    public PassiveDialogStep(List<DialogText> content, List<String> actions, @Nullable Runnable runnable) {
-        super(content);
+    public PassiveDialogStep(List<DialogText> content, List<String> actions, @Nullable Runnable runnable, String uniqueIdentifier) {
+        super(content, uniqueIdentifier);
         this.contentLength = content.stream()
                 .mapToInt(item -> item.line().length())
                 .sum();

@@ -18,12 +18,12 @@ public class InteractiveDialogStep extends DialogStep {
     private boolean loop;
 
 
-    public InteractiveDialogStep(List<DialogText> textContent, List<InteractiveDialogOption> interactiveOptions, boolean loop) {
+    public InteractiveDialogStep(List<DialogText> textContent, List<InteractiveDialogOption> interactiveOptions, boolean loop, String uniqueIdentifier) {
         super(Stream.concat(
                 textContent.stream(),
                 IntStream.range(0, interactiveOptions.size())
                         .mapToObj(i -> new DialogText((i + 1) + ") " + interactiveOptions.get(i).content(), false))
-        ).collect(Collectors.toList()));
+        ).collect(Collectors.toList()), uniqueIdentifier);
 
         this.interactiveContent = interactiveOptions;
         this.loop = loop;
@@ -75,6 +75,10 @@ public class InteractiveDialogStep extends DialogStep {
         }
 
         super.parent.advanceDialogStep();
+    }
+
+    public List<InteractiveDialogOption> getInteractiveContent() {
+        return interactiveContent;
     }
 
 }

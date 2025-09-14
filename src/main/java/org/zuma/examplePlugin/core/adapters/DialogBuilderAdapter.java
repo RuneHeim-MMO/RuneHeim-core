@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.domain.dialog.base.DialogStep;
 import org.zuma.examplePlugin.domain.dialog.impl.ConditionStep;
 import org.zuma.examplePlugin.domain.dialog.impl.InteractiveDialogStep;
 import org.zuma.examplePlugin.domain.dialog.impl.PassiveDialogStep;
+import org.zuma.examplePlugin.domain.dialog.impl.TeleportBranchStep;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,6 +33,12 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
         for (var step : getSteps(builder)) {
             out.beginObject();
             out.name("type").value(step.getClass().getSimpleName());
+            out.name("uniqueIdentifier").value(getUniqueIdentifier(step));
+
+            if (step instanceof TeleportBranchStep) {
+                out.name("teleportToUniqueIdentifier").value(getTeleportToUniqueIdentifier(step));
+
+            }
 
             if (step instanceof InteractiveDialogStep interactiveStep) {
                 Boolean loop = getLoop(interactiveStep);
@@ -171,6 +178,8 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
     private void readStep(JsonReader in, DialogBuilder builder, String parentId) throws IOException {
         in.beginObject();
         String type = null;
+        String uniqueIdentifier = null;
+        String teleportToUniqueIdentifier = null;
         boolean loop = false;
         List<DialogText> content = new ArrayList<>();
         List<OptionData> options = new ArrayList<>();
@@ -186,6 +195,8 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
             switch (name) {
                 case "type" -> type = in.nextString();
                 case "loop" -> loop = in.nextBoolean();
+                case "uniqueIdentifier" -> uniqueIdentifier = in.nextString();
+                case "teleportToUniqueIdentifier" -> teleportToUniqueIdentifier = in.nextString();
                 case "content" -> {
                     in.beginArray();
                     while (in.hasNext()) {
@@ -259,8 +270,14 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
         }
         in.endObject();
 
-        if ("PassiveDialogStep".equals(type)) {
-            builder.passiveStep(passive -> {
+        switch (type) {
+            case "TeleportBranchStep" -> {
+                String finalTeleportToUniqueIdentifier = teleportToUniqueIdentifier;
+                builder.teleportStep(passive -> {
+                    passive.teleportTo(finalTeleportToUniqueIdentifier);
+                }, uniqueIdentifier);
+            }
+            case "PassiveDialogStep" -> builder.passiveStep(passive -> {
                 List<String> lines = content.stream()
                         .map(DialogText::line)
                         .toList();
@@ -268,46 +285,47 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
 
                 passive.text(lines, true);
                 actions.forEach(passive::action);
-            });
-        } else if ("InteractiveDialogStep".equals(type)) {
-            Boolean finalLoop = loop;
-            builder.interactiveStep(interactive -> {
-                for (DialogText dt : content) {
-                    List<String> lines = content.stream()
-                            .map(DialogText::line)
-                            .toList();
+            }, uniqueIdentifier);
+            case "InteractiveDialogStep" -> {
+                Boolean finalLoop = loop;
+                builder.interactiveStep(interactive -> {
+                    for (DialogText dt : content) {
+                        List<String> lines = content.stream()
+                                .map(DialogText::line)
+                                .toList();
 
-                    if (finalLoop) {
-                        interactive.loop();
+                        if (finalLoop) {
+                            interactive.loop();
+                        }
+                        interactive.text(lines, dt.typewriter());
                     }
-                    interactive.text(lines, dt.typewriter());
-                }
-                for (OptionData opt : options) {
-                    interactive.option(opt.label, option -> {
-                        if (opt.action != null) {
-                            option.action(opt.action);
-                        }
-                        if (opt.followup != null) {
-                            option.followupSteps(fb -> fb.steps.addAll(opt.followup.steps));
-                        }
-                    });
-                }
-            });
-        } else if ("ConditionStep".equals(type)) {
-            DialogBuilder finalTruthyFollowupBuilder = truthyFollowupBuilder;
-            DialogBuilder finalFalsyFollowupBuilder = falsyFollowupBuilder;
-            builder.conditionStep(cond -> {
-                conditions.forEach(cond::condition);
+                    for (OptionData opt : options) {
+                        interactive.option(opt.label, option -> {
+                            if (opt.action != null) {
+                                option.action(opt.action);
+                            }
+                            if (opt.followup != null) {
+                                option.followupSteps(fb -> fb.steps.addAll(opt.followup.steps));
+                            }
+                        });
+                    }
+                }, uniqueIdentifier);
+            }
+            case "ConditionStep" -> {
+                DialogBuilder finalTruthyFollowupBuilder = truthyFollowupBuilder;
+                DialogBuilder finalFalsyFollowupBuilder = falsyFollowupBuilder;
+                builder.conditionStep(cond -> {
+                    conditions.forEach(cond::condition);
 
-                if (finalTruthyFollowupBuilder != null) {
-                    cond.truthyFollowUp(fb -> fb.steps.addAll(finalTruthyFollowupBuilder.steps));
-                }
-                if (finalFalsyFollowupBuilder != null) {
-                    cond.falsyFollowUp(fb -> fb.steps.addAll(finalFalsyFollowupBuilder.steps));
-                }
-            });
-        } else {
-            throw new IOException("Unknown step type: " + type);
+                    if (finalTruthyFollowupBuilder != null) {
+                        cond.truthyFollowUp(fb -> fb.steps.addAll(finalTruthyFollowupBuilder.steps));
+                    }
+                    if (finalFalsyFollowupBuilder != null) {
+                        cond.falsyFollowUp(fb -> fb.steps.addAll(finalFalsyFollowupBuilder.steps));
+                    }
+                }, uniqueIdentifier);
+            }
+            case null, default -> throw new IOException("Unknown step type: " + type);
         }
 
     }
@@ -363,6 +381,33 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
             var f = step.getClass().getDeclaredField("interactiveContent");
             f.setAccessible(true);
             return (List<InteractiveDialogOption>) f.get(step);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private String getUniqueIdentifier(Object step) {
+        Class<?> clazz = step.getClass();
+        while (clazz != null) {
+            try {
+                var f = clazz.getDeclaredField("uniqueIdentifier");
+                f.setAccessible(true);
+                return String.valueOf(f.get(step));
+            } catch (NoSuchFieldException e) {
+                clazz = clazz.getSuperclass();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    private String getTeleportToUniqueIdentifier(Object step) {
+        try {
+            var f = step.getClass().getDeclaredField("teleportToUniqueIdentifier");
+            f.setAccessible(true);
+            return (String) f.get(step);
         } catch (Exception e) {
             return null;
         }

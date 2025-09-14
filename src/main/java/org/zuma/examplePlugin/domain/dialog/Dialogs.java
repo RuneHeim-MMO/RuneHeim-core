@@ -57,7 +57,7 @@ public class Dialogs {
 
                                                     // We're not at the "finish" dialog step
                                                     .falsyFollowUp(y2 -> y2
-                                                            .passiveStep(i -> i.text(List.of("You gonna work, or just slacking around?")))
+                                                            .passiveStep(i -> i.text(List.of("You gonna work, or just slacking around?", "I need 20 balls of wool.")))
                                                     )
                                             )
                                     )
