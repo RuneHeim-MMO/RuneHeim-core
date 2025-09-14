@@ -19,7 +19,7 @@ public class TeleportBranchStep extends DialogStep {
         this.teleportToUniqueIdentifier = teleportToUniqueIdentifier;
     }
 
-    private void collectFollowUps(
+    private boolean collectFollowUps(
             List<DialogStep> steps,
             String teleportToUniqueIdentifier,
             List<DialogStep> followUpSteps
@@ -27,45 +27,54 @@ public class TeleportBranchStep extends DialogStep {
         for (int i = 0; i < steps.size(); i++) {
             DialogStep step = steps.get(i);
 
-            // If found the target, add everything from here onward
+            // If found the target, add everything from here onward (only from this list)
             if (Objects.equals(step.getUniqueIdentifier(), teleportToUniqueIdentifier)) {
                 followUpSteps.addAll(steps.subList(i, steps.size()));
-                return;
+                return true; // signal: found — stop all further traversal
             }
 
-            // Recurse into truthy/falsy branches
+            // Recurse into truthy/falsy branches — if any recursion finds it, propagate true up
             if (step instanceof ConditionStep conditionStep) {
                 if (conditionStep.getTruthyFollowUp() != null) {
-                    collectFollowUps(conditionStep.getTruthyFollowUp(),
-                            teleportToUniqueIdentifier, followUpSteps);
+                    if (collectFollowUps(conditionStep.getTruthyFollowUp(),
+                            teleportToUniqueIdentifier, followUpSteps)) {
+                        return true;
+                    }
                 }
                 if (conditionStep.getFalsyFollowUp() != null) {
-                    collectFollowUps(conditionStep.getFalsyFollowUp(),
-                            teleportToUniqueIdentifier, followUpSteps);
+                    if (collectFollowUps(conditionStep.getFalsyFollowUp(),
+                            teleportToUniqueIdentifier, followUpSteps)) {
+                        return true;
+                    }
                 }
             }
 
             // Recurse into interactive options
             if (step instanceof InteractiveDialogStep interactiveStep) {
-                interactiveStep.getInteractiveContent().forEach(option -> {
+                for (var option : interactiveStep.getInteractiveContent()) {
                     if (option.subContent() != null) {
-                        collectFollowUps(option.subContent(),
-                                teleportToUniqueIdentifier, followUpSteps);
+                        if (collectFollowUps(option.subContent(),
+                                teleportToUniqueIdentifier, followUpSteps)) {
+                            return true;
+                        }
                     }
-                });
+                }
             }
         }
+
+        return false; // not found in this branch
     }
+
 
     @Override
     public void onDialogFinishRendering(RunePlayer player) {
         List<DialogStep> followUpSteps = new ArrayList<>();
-        collectFollowUps(super.parent.getScenario(), teleportToUniqueIdentifier, followUpSteps);
 
-        if (!followUpSteps.isEmpty()) {
-            followUpSteps.forEach(step -> {
-                step.setParent(super.parent);
-            });
+        // collectFollowUps now returns true if it found & added the tail (and stopped traversal)
+        boolean found = collectFollowUps(super.parent.getScenario(), teleportToUniqueIdentifier, followUpSteps);
+
+        if (found && !followUpSteps.isEmpty()) {
+            followUpSteps.forEach(step -> step.setParent(super.parent));
 
             int insertIndex = super.parent.getNextStepIndex();
 
@@ -77,10 +86,12 @@ public class TeleportBranchStep extends DialogStep {
             // Add new follow-ups
             super.parent.getScenario().addAll(followUpSteps);
         } else {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "TeleportBranchStep cannot teleport to " + this.teleportToUniqueIdentifier + " branch. It is not found in " + super.parent.getId() + " dialog. Falling through.");
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL,
+                    "TeleportBranchStep cannot teleport to " + this.teleportToUniqueIdentifier +
+                            " branch. It is not found in " + super.parent.getId() + " dialog. Falling through.");
         }
+
         this.parent.advanceDialogStep();
     }
-
 
 }
