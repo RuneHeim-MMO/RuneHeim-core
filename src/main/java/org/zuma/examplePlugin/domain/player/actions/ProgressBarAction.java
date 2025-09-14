@@ -17,10 +17,12 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
 import java.time.Duration;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ProgressBarAction implements InteractiveActionStrategy {
+    private final Random random = new Random();
 
     @Nullable
     private BukkitTask task;
@@ -114,7 +116,8 @@ public class ProgressBarAction implements InteractiveActionStrategy {
                         .build() : Component.empty();
 
                 if (params.getStepSound() != null && currentSteps.get() % params.getStepSoundEveryNth() == 0) {
-                    params.getStepSound().play(onlinePlayer, true);
+                    float randomPitch = -0.3f + random.nextFloat() * 0.6f;
+                    params.getStepSound().play(onlinePlayer.getLocation(), null, randomPitch);
                 }
 
                 if (swingHand) onlinePlayer.swingMainHand();

@@ -14,6 +14,7 @@ import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.heimscript.ScriptParser;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
+import org.zuma.examplePlugin.events.dialog.DialogQuestStepToBeCompleted;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -73,6 +74,9 @@ public class ScriptedActionHandler {
                 }
                 case TAKE_INVENTORY_ITEM -> {
                     PlayerUtils.removeItems(player, List.of(new ItemRecord(Integer.parseInt(args.get("item_id")), Integer.parseInt(args.get("amount")))));
+                }
+                case DIALOG_QUEST_STEP_FINISH -> {
+                    Bukkit.getServer().getPluginManager().callEvent(new DialogQuestStepToBeCompleted(player.getUUID(), args.get("stable_id")));
                 }
                 default ->
                         RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "[SCRIPT] Unknown action " + action + " in " + input + "!");

@@ -16,7 +16,7 @@ public class BankContentRepository {
 
     @Nullable
     public String getByUUID(UUID playerUUID) {
-        String sql = "SELECT json FROM bank_contents WHERE player_uuid = ?";
+        String sql = "SELECT json FROM bank_contents WHERE uuid = ?";
 
         try (Connection conn = pool.getDataSource().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -38,7 +38,7 @@ public class BankContentRepository {
 
     public void save(UUID playerUUID, String content) {
         String sql = """
-                INSERT INTO bank_contents (player_uuid, json)
+                INSERT INTO bank_contents (uuid, json)
                 VALUES (?, ?)
                 ON DUPLICATE KEY UPDATE
                 json = VALUES(json),

@@ -14,8 +14,8 @@ public class ConditionStep extends DialogStep {
     private final List<DialogStep> falsyFollowUp;
 
     public ConditionStep(List<String> conditions, @Nullable List<DialogStep> truthyFollowUp,
-                         @Nullable List<DialogStep> falsyFollowUp) {
-        super(List.of());
+                         @Nullable List<DialogStep> falsyFollowUp, String uniqueIdentifier) {
+        super(List.of(), uniqueIdentifier);
         this.conditions = conditions;
         this.truthyFollowUp = truthyFollowUp;
         this.falsyFollowUp = falsyFollowUp;
@@ -49,6 +49,14 @@ public class ConditionStep extends DialogStep {
 
         super.parent.getScenario().addAll(super.parent.getNextStepIndex(), followUpSteps);
         this.parent.advanceDialogStep();
+    }
+
+    public List<DialogStep> getTruthyFollowUp() {
+        return truthyFollowUp;
+    }
+
+    public List<DialogStep> getFalsyFollowUp() {
+        return falsyFollowUp;
     }
 
 

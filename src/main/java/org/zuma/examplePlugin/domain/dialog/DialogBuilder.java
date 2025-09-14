@@ -7,8 +7,10 @@ import org.zuma.examplePlugin.domain.dialog.base.DialogStep;
 import org.zuma.examplePlugin.domain.dialog.impl.InteractiveDialogStep;
 import org.zuma.examplePlugin.domain.dialog.impl.PassiveDialogStep;
 import org.zuma.examplePlugin.domain.dialog.impl.ConditionStep;
+import org.zuma.examplePlugin.domain.dialog.impl.TeleportBranchStep;
 import org.zuma.examplePlugin.domain.heimscript.ScriptedStatementInstance;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -39,25 +41,59 @@ public class DialogBuilder {
         return new DialogBuilder(id);
     }
 
+    public DialogBuilder teleportStep(Consumer<TeleportBranchStepBuilder> stepConsumer) {
+        TeleportBranchStepBuilder builder = new TeleportBranchStepBuilder();
+        stepConsumer.accept(builder);
+        steps.add(builder.build(UUID.randomUUID().toString()));
+        return this;
+    }
+
+    public DialogBuilder teleportStep(Consumer<TeleportBranchStepBuilder> stepConsumer, @Nullable String uniqueIdentifier) {
+        TeleportBranchStepBuilder builder = new TeleportBranchStepBuilder();
+        stepConsumer.accept(builder);
+        steps.add(builder.build(uniqueIdentifier));
+        return this;
+    }
+
     public DialogBuilder passiveStep(Consumer<PassiveStepBuilder> stepConsumer) {
         PassiveStepBuilder builder = new PassiveStepBuilder();
         stepConsumer.accept(builder);
-        steps.add(builder.build());
+        steps.add(builder.build(UUID.randomUUID().toString()));
+        return this;
+    }
+
+    public DialogBuilder passiveStep(Consumer<PassiveStepBuilder> stepConsumer, @Nullable String uniqueIdentifier) {
+        PassiveStepBuilder builder = new PassiveStepBuilder();
+        stepConsumer.accept(builder);
+        steps.add(builder.build(uniqueIdentifier));
         return this;
     }
 
     public DialogBuilder interactiveStep(Consumer<InteractiveStepBuilder> stepConsumer) {
         InteractiveStepBuilder builder = new InteractiveStepBuilder(id);
         stepConsumer.accept(builder);
-        steps.add(builder.build());
+        steps.add(builder.build(UUID.randomUUID().toString()));
         return this;
     }
 
-    // New: condition step
+    public DialogBuilder interactiveStep(Consumer<InteractiveStepBuilder> stepConsumer, @Nullable String uniqueIdentifier) {
+        InteractiveStepBuilder builder = new InteractiveStepBuilder(id);
+        stepConsumer.accept(builder);
+        steps.add(builder.build(uniqueIdentifier));
+        return this;
+    }
+
     public DialogBuilder conditionStep(Consumer<ConditionStepBuilder> stepConsumer) {
         ConditionStepBuilder builder = new ConditionStepBuilder(id);
         stepConsumer.accept(builder);
-        steps.add(builder.build());
+        steps.add(builder.build(UUID.randomUUID().toString()));
+        return this;
+    }
+
+    public DialogBuilder conditionStep(Consumer<ConditionStepBuilder> stepConsumer, @Nullable String uniqueIdentifier) {
+        ConditionStepBuilder builder = new ConditionStepBuilder(id);
+        stepConsumer.accept(builder);
+        steps.add(builder.build(uniqueIdentifier));
         return this;
     }
 
@@ -108,8 +144,8 @@ public class DialogBuilder {
             return this;
         }
 
-        public PassiveDialogStep build() {
-            return new PassiveDialogStep(texts, actions, runnable);
+        public PassiveDialogStep build(@Nullable String uniqueIdentifier) {
+            return new PassiveDialogStep(texts, actions, runnable, uniqueIdentifier == null ? UUID.randomUUID().toString() : uniqueIdentifier);
         }
     }
 
@@ -163,8 +199,8 @@ public class DialogBuilder {
             return this;
         }
 
-        public InteractiveDialogStep build() {
-            return new InteractiveDialogStep(texts, options, loop);
+        public InteractiveDialogStep build(String uniqueIdentifier) {
+            return new InteractiveDialogStep(texts, options, loop, uniqueIdentifier);
         }
 
     }
@@ -204,10 +240,26 @@ public class DialogBuilder {
             return this;
         }
 
-        public ConditionStep build() {
-            return new ConditionStep(rawConditions, truthyFollowUp, falsyFollowUp);
+        public ConditionStep build(@Nullable String uniqueIdentifier) {
+            return new ConditionStep(rawConditions, truthyFollowUp, falsyFollowUp, uniqueIdentifier == null ? UUID.randomUUID().toString() : uniqueIdentifier);
         }
     }
+
+    public static class TeleportBranchStepBuilder {
+        private String teleportToUniqueIdentifier = null;
+
+        public TeleportBranchStepBuilder teleportTo(String teleportToUniqueIdentifier) {
+            this.teleportToUniqueIdentifier = teleportToUniqueIdentifier;
+            return this;
+        }
+
+        public TeleportBranchStep build(@Nullable String uniqueIdentifier) {
+            if (this.teleportToUniqueIdentifier == null)
+                throw new IllegalArgumentException("'teleportToUniqueIdentifier' is required in TeleportBranchStep.");
+            return new TeleportBranchStep(teleportToUniqueIdentifier, uniqueIdentifier == null ? UUID.randomUUID().toString() : uniqueIdentifier);
+        }
+    }
+
 
     // Inner builder for options
     public static class OptionBuilder {

@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.player.handlers;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -18,6 +19,7 @@ import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.impl.CoinsItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.events.item.PlayerItemToBeGiven;
 
 import java.util.HashMap;
 
@@ -61,6 +63,8 @@ public class PlayerItemDistributor {
             ((CoinsItem) type).creditPlayer(item, runePlayer);
             return;
         }
+
+        Bukkit.getServer().getPluginManager().callEvent(new PlayerItemToBeGiven(runePlayer, item));
 
         HashMap<Integer, ItemStack> leftovers = player.getInventory().addItem(item);
 

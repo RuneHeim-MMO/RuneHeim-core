@@ -24,6 +24,7 @@ import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.mob.*;
 import org.zuma.examplePlugin.domain.mount.MountHandler;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
+import org.zuma.examplePlugin.domain.quest.QuestHandler;
 import org.zuma.examplePlugin.domain.recipe.RecipeHandler;
 import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
 import org.zuma.examplePlugin.domain.shop.ShopRegistry;
@@ -48,6 +49,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new InterCommunicationModule(),
                         new MapModule(),
 
+                        new QuestModule(),
                         new AdditionalGearSlotModule(),
                         new BlockModule(),
                         new BowModule(),
@@ -176,6 +178,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static DialogHandler getDialogHandler() {
         return pluginInstance.moduleContext.get(DialogHandler.class);
+    }
+
+    public static QuestHandler getQuestHandler() {
+        return pluginInstance.moduleContext.get(QuestHandler.class);
     }
 
 }

@@ -17,7 +17,7 @@ public class InteractiveMobs {
 
 
     public static void registerMobs(MobTypeRegistry registry) {
-        registry.register(MobType.ABRAHAM_FAIRY_TEACHER.getId(), () -> new DialogMob(Icon.TRADE.get() + " Abraham", null,
+        registry.register(MobType.ABRAHAM_FAIRY_TEACHER.getId(), () -> new DialogMob("Abraham", null,
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "abraham_fairy_teacher", null, 0, Dialogs.fairyTeacher));
 
 
