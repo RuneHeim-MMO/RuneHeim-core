@@ -62,6 +62,20 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.SHEARS, 1), 100)
     ))),
 
+    RUNITE_FULL_CROSSBOW(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNITE_CROSSBOW, 1), 100),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNITE_BODY, 1), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNITE_PLATELEGS, 1), 100)
+    ))),
+
+    BRONZE_PICKAXE(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.BRONZE_PICKAXE, 1), 100)
+    ))),
+
+    BRONZE_AXE(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.BRONZE_AXE, 1), 100)
+    ))),
+
     HORSE_DEALER(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.SUGAR), 25),
             new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.APPLE), 25),

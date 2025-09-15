@@ -124,6 +124,9 @@ public class ScriptedConditionHandler {
                     }
 
                 }
+                case NEVER_TRUE -> {
+                    result = false;
+                }
                 default ->
                         RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Unknown condition " + action + " in " + input + "!");
             }

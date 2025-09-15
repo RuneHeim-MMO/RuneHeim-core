@@ -281,6 +281,17 @@ public class DialogBuilder {
             return this;
         }
 
+        public OptionBuilder actions(List<String> actions, Consumer<DialogBuilder> dialogBuilderConsumer) {
+            this.actions.addAll(actions);
+            this.followupSteps(dialogBuilderConsumer);
+            return this;
+        }
+
+        public OptionBuilder actions(List<String> actions) {
+            this.actions.addAll(actions);
+            return this;
+        }
+
         public OptionBuilder action(String action, Consumer<DialogBuilder> dialogBuilderConsumer) {
             this.actions.add(action);
             this.followupSteps(dialogBuilderConsumer);
