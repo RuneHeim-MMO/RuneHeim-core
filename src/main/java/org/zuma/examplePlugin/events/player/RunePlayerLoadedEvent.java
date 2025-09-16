@@ -9,9 +9,11 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 public class RunePlayerLoadedEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
     private final RunePlayer player;
+    private final boolean isFirstTimeJoin;
 
-    public RunePlayerLoadedEvent(RunePlayer player) {
+    public RunePlayerLoadedEvent(RunePlayer player, boolean isFirstTimeJoin) {
         this.player = player;
+        this.isFirstTimeJoin = isFirstTimeJoin;
     }
 
     public RunePlayer getPlayer() {
@@ -30,5 +32,9 @@ public class RunePlayerLoadedEvent extends Event {
     public
     static HandlerList getHandlerList() {
         return HANDLERS;
+    }
+
+    public boolean isFirstTimeJoin() {
+        return isFirstTimeJoin;
     }
 }

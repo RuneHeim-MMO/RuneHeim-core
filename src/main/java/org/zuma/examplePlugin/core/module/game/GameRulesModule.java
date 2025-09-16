@@ -16,6 +16,7 @@ public class GameRulesModule implements PluginModule {
         plugin.getServer().getPluginManager().registerEvents(new VanillaDamageDisabler(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new DurabilityDisabler(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new HungerLocker(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new FirstJoinTutorialTeleporter(), plugin);
     }
 
     @Override
