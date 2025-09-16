@@ -32,7 +32,7 @@ public class BankContentRepository {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException("Failed to retrieve json for UUID: " + playerUUID, e);
+            throw new RuntimeException("Failed to retrieve json for UUID: " + playerUUID + " " + e);
         }
     }
 
