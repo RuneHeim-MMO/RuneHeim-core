@@ -11,12 +11,13 @@ import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.FireworkUtils;
 import org.zuma.examplePlugin.domain.effect.AnimatedEffect;
+import org.zuma.examplePlugin.domain.effect.StaticEffect;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.Quest;
 
 import java.time.Duration;
 
-public class QuestCompletedEffect implements AnimatedEffect {
+public class QuestCompletedEffect implements StaticEffect {
     private final RunePlayer player;
     private final Quest quest;
 
@@ -26,7 +27,7 @@ public class QuestCompletedEffect implements AnimatedEffect {
     }
 
     @Override
-    public void playAt(Location location, double time) {
+    public void playAt(Location location) {
         SoundType.PLAYER_QUEST_COMPLETE.play(player, true);
 
         player.asBukkitPlayer().showTitle(Title.title(
@@ -35,11 +36,6 @@ public class QuestCompletedEffect implements AnimatedEffect {
                 Title.Times.times(Duration.ofSeconds(1), Duration.ofSeconds(4, 5), Duration.ofSeconds(3)
                 )
         ));
-    }
-
-    @Override
-    public int getDurationTicks() {
-        return 0;
     }
 
 }
