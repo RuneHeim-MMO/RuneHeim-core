@@ -29,6 +29,8 @@ import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
 import org.zuma.examplePlugin.domain.combat.HitHandler;
+import org.zuma.examplePlugin.domain.effect.EffectHandler;
+import org.zuma.examplePlugin.domain.effect.effects.FirstJoinEffect;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
@@ -133,21 +135,8 @@ public class AdminCommand implements BasicCommand {
 
         }
 
-        if (args[0].equalsIgnoreCase("spawn")) {
-            Location displayLocation = MathUtils.roundLocation(player.getLocation());
-            ItemDisplay display = player.getWorld().spawn(displayLocation, ItemDisplay.class);
-            display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
-            display.setItemStack(RuneQuestPlugin.getItemRegistry().getType(ItemId.BRONZE_SWORD).createItemStackOfType());
-            display.setPersistent(false);
-
-            display.setTransformation(
-                    new Transformation(
-                            new Vector3f(), // no translation
-                            new AxisAngle4f(), // no left rotation
-                            new Vector3f(5, 5, 5), // scale up by a factor of 2 on all axes
-                            new AxisAngle4f() // no right rotation
-                    )
-            );
+        if (args[0].equalsIgnoreCase("firstjoin")) {
+            EffectHandler.playAt(runePlayer.asBukkitPlayer().getLocation(), new FirstJoinEffect(runePlayer));
         }
 
 

@@ -37,8 +37,12 @@ public class EffectHandler {
 
             @Override
             public void run() {
-                effect.playAt(getLocation.get(), time);
-
+                try {
+                    effect.playAt(getLocation.get(), time);
+                } catch (Exception e) {
+                    // Swallow any errors to prevent infinite loops
+                }
+                
                 time += speedMultiplier;
 
                 if (time >= effect.getDurationTicks()) {
