@@ -78,6 +78,9 @@ public class ScriptedActionHandler {
                 case DIALOG_QUEST_STEP_FINISH -> {
                     Bukkit.getServer().getPluginManager().callEvent(new DialogQuestStepToBeCompleted(player.getUUID(), args.get("stable_id")));
                 }
+                case CLEAR_INVENTORY -> {
+                    player.asBukkitPlayer().getInventory().clear();
+                }
                 default ->
                         RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "[SCRIPT] Unknown action " + action + " in " + input + "!");
             }

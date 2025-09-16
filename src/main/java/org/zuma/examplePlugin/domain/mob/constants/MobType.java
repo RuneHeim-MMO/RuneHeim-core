@@ -1,6 +1,12 @@
 package org.zuma.examplePlugin.domain.mob.constants;
 
 public enum MobType {
+    // Tutorial island
+    PEASANT_MINER(),
+    TUTOR_BLACKSMITH(),
+    TUTOR_LUMBERJACK(),
+    TUTOR_SURVIVAL(),
+
     COMBAT_DUMMY_FACE_SOUTH(),
     MOLE_BASE_30(),
     MOLE_BASE_50(),

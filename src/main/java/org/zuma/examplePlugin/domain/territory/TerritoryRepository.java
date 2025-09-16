@@ -38,7 +38,10 @@ public class TerritoryRepository {
                 new Territory("ethereal-nexus", new Location(Bukkit.getWorld("world"), 925, 0, -845), null, 110, "§5The Ethereal Nexus", "A swirling vortex of pure magical energy.", 70, 80),
                 new Territory("aetheris", new Location(Bukkit.getWorld("world"), -135, 0, 780), new Location(Bukkit.getWorld("world"), -180, 77, 794), 150, "§dAetheris", "An ethereal forest where celestial magic courses through the trees.", 70, 90),
 
-                new Territory("infernak", new Location(Bukkit.getWorld("world"), 1000, 0, -630), new Location(Bukkit.getWorld("world"), 933, 75, -645), 160, "§cInfernak", "A volcanic land forged in fire and brimstone.", 80, 90)
+                new Territory("infernak", new Location(Bukkit.getWorld("world"), 1000, 0, -630), new Location(Bukkit.getWorld("world"), 933, 75, -645), 160, "§cInfernak", "A volcanic land forged in fire and brimstone.", 80, 90),
+
+                new Territory("ethereal-nexus", new Location(Bukkit.getWorld("world"), 2518, 0, 2467), new Location(Bukkit.getWorld("world"), 2500, 112, 2457.5, -90, 0), 200, "§bTutorial Island", "The first step of every hero", 1, 1)
+
 
         );
     }

@@ -15,6 +15,7 @@ import org.zuma.examplePlugin.domain.gui.IDHolder;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 public class BlockManager {
@@ -108,6 +109,15 @@ public class BlockManager {
 
     public Collection<ModelledInteractableBlock> getAllModelledBlocks() {
         return modelledBlocks.values();
+    }
+
+    @Nullable
+    public AbstractInteractableBlock getBlockAt(Block block) {
+        Location loc = block.getLocation();
+
+        if (blocks.containsKey(loc)) return blocks.get(loc);
+        if (modelledBlocks.containsKey(loc)) return modelledBlocks.get(loc);
+        return null;
     }
 
     public void registerBlock(AbstractInteractableBlock block) {

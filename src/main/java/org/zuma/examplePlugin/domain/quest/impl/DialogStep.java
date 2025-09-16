@@ -12,6 +12,7 @@ import org.zuma.examplePlugin.events.dialog.DialogQuestStepToBeCompleted;
 
 import javax.annotation.Nullable;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 public class DialogStep extends AbstractQuestStep {
@@ -32,7 +33,7 @@ public class DialogStep extends AbstractQuestStep {
 
     @EventHandler
     public void onDialogStepCompleteTriggered(DialogQuestStepToBeCompleted event) {
-        if (!event.getPlayerUUID().equals(getOwner())) return;
+        if (!event.getPlayerUUID().equals(getOwner()) || !Objects.equals(event.getStableDialogStepId(), this.stableId)) return;
         this.handleStepCompletion();
     }
 

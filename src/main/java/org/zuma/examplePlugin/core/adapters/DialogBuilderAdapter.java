@@ -225,27 +225,26 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
                     while (in.hasNext()) {
                         in.beginObject();
                         String label = null;
-                        String action = null;
+                        List<String> optActions = new ArrayList<>();
                         DialogBuilder followupBuilder = null;
                         while (in.hasNext()) {
                             String optName = in.nextName();
                             switch (optName) {
                                 case "label" -> label = in.nextString();
                                 case "actions" -> {
-                                    // actions is an array in write(); read first element (legacy behavior preserved)
                                     in.beginArray();
-                                    if (in.hasNext()) {
-                                        action = in.nextString();
+                                    while (in.hasNext()) {
+                                        optActions.add(in.nextString());
                                     }
-                                    while (in.hasNext()) in.skipValue();
                                     in.endArray();
+                                    // then store `actions` instead of `action`
                                 }
                                 case "followup" -> followupBuilder = read(in);
                                 default -> in.skipValue();
                             }
                         }
                         in.endObject();
-                        options.add(new OptionData(label, action, followupBuilder));
+                        options.add(new OptionData(label, optActions, followupBuilder));
                     }
                     in.endArray();
                 }
@@ -301,8 +300,8 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
                     }
                     for (OptionData opt : options) {
                         interactive.option(opt.label, option -> {
-                            if (opt.action != null) {
-                                option.action(opt.action);
+                            if (opt.actions != null) {
+                                option.actions(opt.actions);
                             }
                             if (opt.followup != null) {
                                 option.followupSteps(fb -> fb.steps.addAll(opt.followup.steps));
@@ -333,12 +332,12 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
     // Helper to hold option data during parse
     private static class OptionData {
         String label;
-        String action;
+        List<String> actions;
         DialogBuilder followup;
 
-        OptionData(String label, String action, DialogBuilder followup) {
+        OptionData(String label, List<String> actions, DialogBuilder followup) {
             this.label = label;
-            this.action = action;
+            this.actions = actions;
             this.followup = followup;
         }
     }

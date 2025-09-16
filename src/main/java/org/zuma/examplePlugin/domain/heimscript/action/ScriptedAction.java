@@ -27,7 +27,8 @@ public enum ScriptedAction implements ScriptedStatement {
     DIALOG_HOLDER_SOUND("dialog_holder_sound", "sound"),
     DIALOG_HOLDER_FORWARD_INTERACTION("dialog_holder_forward_interaction"),
     TAKE_INVENTORY_ITEM("take_inventory_item", "item_id", "amount"),
-    DIALOG_QUEST_STEP_FINISH("dialog_quest_step_finish", "stable_id");
+    DIALOG_QUEST_STEP_FINISH("dialog_quest_step_finish", "stable_id"),
+    CLEAR_INVENTORY("clear_inventory");
 
     private final String trigger;
     private final List<String> argsTemplates;

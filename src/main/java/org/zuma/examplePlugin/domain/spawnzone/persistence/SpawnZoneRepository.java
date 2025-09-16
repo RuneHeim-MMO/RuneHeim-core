@@ -792,7 +792,43 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(115, SpawnZoneType.AREA, 30, 20,
                         new Location(Bukkit.getWorld("world"), 66, 68, -165)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.SHEEP, 20, 100)
-                ), 20, false), 1))
+                ), 20, false), 1)),
+
+
+                // Tutorial island
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(117, SpawnZoneType.POINT, 10, 20,
+                        new Location(Bukkit.getWorld("world"), 2432.5, 155, 2479.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.PEASANT_MINER, 1, 100)
+                ), false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(116, SpawnZoneType.POINT, 10, 20,
+                        new Location(Bukkit.getWorld("world"), 2440, 145, 2527)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.TUTOR_BLACKSMITH, 1, 100)
+                ), false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(118, SpawnZoneType.POINT, 10, 20,
+                        new Location(Bukkit.getWorld("world"), 2517.5, 128, 2412.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.TUTOR_LUMBERJACK, 1, 100)
+                ), false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(119, SpawnZoneType.POINT, 10, 20,
+                        new Location(Bukkit.getWorld("world"), 2520.5, 110, 2451.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.COMBAT_DUMMY_FACE_SOUTH, 1, 100)
+                ), false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(120, SpawnZoneType.AREA, 10, 50,
+                        new Location(Bukkit.getWorld("world"), 2574, 111, 2423)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.GOBLIN_1_BASE_1, 3, 100),
+                        new SpawnZoneMobRecord(MobType.GOBLIN_2_BASE_1, 3, 100),
+                        new SpawnZoneMobRecord(MobType.GOBLIN_3_BASE_1, 3, 100),
+                        new SpawnZoneMobRecord(MobType.GOBLIN_4_BASE_1, 3, 100),
+                        new SpawnZoneMobRecord(MobType.GOBLIN_5_BASE_1, 3, 100)
+                ), 30, false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(121, SpawnZoneType.POINT, 10, 20,
+                        new Location(Bukkit.getWorld("world"), 2522, 110, 2454)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.TUTOR_SURVIVAL, 1, 100)
+                ), false), 1))
 
 
         );
