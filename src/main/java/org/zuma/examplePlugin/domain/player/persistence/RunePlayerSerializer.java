@@ -70,7 +70,7 @@ public class RunePlayerSerializer {
                 List<ItemStackSlotPair> inventory = ItemContainerContentSerializer.deserializeItemContainerContentSync(inventoryData);
                 Location location = gson.fromJson(container.location(), Location.class);
 
-                return new AbstractMap.SimpleEntry<>(player, new DeserializedPlayerEntity(inventory, location));
+                return new AbstractMap.SimpleEntry<>(player, new DeserializedPlayerEntity(inventory, location, false));
             }
 
             default ->

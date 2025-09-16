@@ -5,5 +5,5 @@ import org.zuma.examplePlugin.domain.gui.ItemStackSlotPair;
 
 import java.util.List;
 
-public record DeserializedPlayerEntity(List<ItemStackSlotPair> inventory, Location location) {
+public record DeserializedPlayerEntity(List<ItemStackSlotPair> inventory, Location location, boolean isFirstJoin) {
 }
