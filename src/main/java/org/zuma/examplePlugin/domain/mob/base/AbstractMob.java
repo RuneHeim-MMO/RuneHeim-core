@@ -108,6 +108,18 @@ public abstract class AbstractMob {
             this.spawnLocation.setYaw(yaw);
         }
 
+        if (this.disguise != null) {
+            Disguise cloned = disguise.clone();
+
+            if (disguise instanceof MobDisguise) {
+                LivingWatcher watcher = (LivingWatcher) cloned.getWatcher();
+                watcher.setCustomName(healthBarSafeName);
+                watcher.setCustomNameVisible(true);
+            }
+
+            DisguiseAPI.disguiseNextEntity(disguise);
+        }
+
         Entity entity = location.getWorld().spawnEntity(spawnLocation, baseMob);
         this.entity = entity;
 
@@ -260,19 +272,6 @@ public abstract class AbstractMob {
             modeledEntity.addModel(activeModel, true);
             entity.setInvisible(true);
         }
-
-        if (this.disguise != null) {
-            Disguise cloned = disguise.clone();
-
-            if (disguise instanceof MobDisguise) {
-                LivingWatcher watcher = (LivingWatcher) cloned.getWatcher();
-                watcher.setCustomName(healthBarSafeName);
-                watcher.setCustomNameVisible(true);
-            }
-
-            DisguiseAPI.disguiseToAll(entity, cloned);
-        }
-
 
         customAttributes.forEach((attr, val) -> {
             AttributeInstance entityAttr = entity.getAttribute(attr);
