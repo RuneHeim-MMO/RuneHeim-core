@@ -42,7 +42,7 @@ public class EffectHandler {
                 } catch (Exception e) {
                     // Swallow any errors to prevent infinite loops
                 }
-                
+
                 time += speedMultiplier;
 
                 if (time >= effect.getDurationTicks()) {
