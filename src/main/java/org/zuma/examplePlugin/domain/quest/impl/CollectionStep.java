@@ -30,8 +30,8 @@ public class CollectionStep extends AbstractQuestStep {
 
     private transient HashMap<Integer, Integer> acquiredItems; // id:amount
 
-    public CollectionStep(RuneQuestPlugin plugin, Quest parentQuest, @Nullable UUID owner, List<ItemRecord> requiredItems) {
-        super(plugin, parentQuest, StepType.COLLECTION, owner);
+    public CollectionStep(RuneQuestPlugin plugin, Quest parentQuest, String description, List<ItemRecord> requiredItems, @Nullable UUID owner) {
+        super(plugin, parentQuest, StepType.COLLECTION, description, owner);
         this.requiredItems = requiredItems;
         this.acquiredItems = new HashMap<>();
     }
@@ -92,7 +92,7 @@ public class CollectionStep extends AbstractQuestStep {
 
     @Override
     public AbstractQuestStep cloneForPlayer(UUID ownerUUID) {
-        CollectionStep step = new CollectionStep(super.getPlugin(), super.getParentQuest(), ownerUUID, requiredItems);
+        CollectionStep step = new CollectionStep(super.getPlugin(), super.getParentQuest(), super.getDescription(), requiredItems, ownerUUID);
 
         HashMap<Integer, Integer> acquiredItems = new HashMap<>();
         requiredItems.forEach(required -> acquiredItems.put(required.getItemId(), 0));

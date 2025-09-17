@@ -22,8 +22,8 @@ public class DialogStep extends AbstractQuestStep {
      */
     private String stableId;
 
-    public DialogStep(RuneQuestPlugin plugin, Quest parentQuest, @Nullable UUID owner, String stableId) {
-        super(plugin, parentQuest, StepType.DIALOG, owner);
+    public DialogStep(RuneQuestPlugin plugin, Quest parentQuest, String description, String stableId, @Nullable UUID owner) {
+        super(plugin, parentQuest, StepType.DIALOG, description, owner);
         this.stableId = stableId;
     }
 
@@ -33,14 +33,15 @@ public class DialogStep extends AbstractQuestStep {
 
     @EventHandler
     public void onDialogStepCompleteTriggered(DialogQuestStepToBeCompleted event) {
-        if (!event.getPlayerUUID().equals(getOwner()) || !Objects.equals(event.getStableDialogStepId(), this.stableId)) return;
+        if (!event.getPlayerUUID().equals(getOwner()) || !Objects.equals(event.getStableDialogStepId(), this.stableId))
+            return;
         this.handleStepCompletion();
     }
 
 
     @Override
     public AbstractQuestStep cloneForPlayer(UUID ownerUUID) {
-        DialogStep step = new DialogStep(super.getPlugin(), super.getParentQuest(), ownerUUID, stableId);
+        DialogStep step = new DialogStep(super.getPlugin(), super.getParentQuest(), super.getDescription(), stableId, ownerUUID);
         step.setId(this.getId());
 
         return step;

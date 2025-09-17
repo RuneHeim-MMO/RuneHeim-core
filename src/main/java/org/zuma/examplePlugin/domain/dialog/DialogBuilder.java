@@ -211,6 +211,7 @@ public class DialogBuilder {
         private List<String> rawConditions = new ArrayList<>();
         private List<DialogStep> truthyFollowUp = null;
         private List<DialogStep> falsyFollowUp = null;
+        private ConditionStep.LogicalOperator logicalOperator = ConditionStep.LogicalOperator.AND;
 
         public ConditionStepBuilder(String parentId) {
             this.parentId = parentId;
@@ -240,8 +241,13 @@ public class DialogBuilder {
             return this;
         }
 
+        public ConditionStepBuilder logicalOperator(ConditionStep.LogicalOperator operator) {
+            this.logicalOperator = operator;
+            return this;
+        }
+
         public ConditionStep build(@Nullable String uniqueIdentifier) {
-            return new ConditionStep(rawConditions, truthyFollowUp, falsyFollowUp, uniqueIdentifier == null ? UUID.randomUUID().toString() : uniqueIdentifier);
+            return new ConditionStep(rawConditions, truthyFollowUp, falsyFollowUp, uniqueIdentifier == null ? UUID.randomUUID().toString() : uniqueIdentifier, logicalOperator);
         }
     }
 

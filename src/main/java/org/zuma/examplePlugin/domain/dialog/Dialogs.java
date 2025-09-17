@@ -1280,80 +1280,107 @@ public class Dialogs {
             "  \"id\": \"tutorial-island.peasant-miner\",\n" +
             "  \"steps\": [\n" +
             "    {\n" +
-            "      \"uniqueIdentifier\": \"eb2663b2-773c-4c63-b9dd-5a59a0ce499d\",\n" +
-            "      \"type\": \"PassiveDialogStep\",\n" +
-            "      \"content\": [\n" +
-            "        {\n" +
-            "          \"line\": \"W.. What?\",\n" +
-            "          \"typewriter\": true\n" +
-            "        },\n" +
-            "        {\n" +
-            "          \"line\": \"Who the hell are you?\",\n" +
-            "          \"typewriter\": true\n" +
-            "        }\n" +
-            "      ],\n" +
-            "      \"id\": \"tutorial-island.peasant-miner\",\n" +
-            "      \"actions\": []\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"uniqueIdentifier\": \"7e22eef1-e04c-4a82-8eb5-889fe9d30885\",\n" +
-            "      \"type\": \"PassiveDialogStep\",\n" +
-            "      \"content\": [\n" +
-            "        {\n" +
-            "          \"line\": \"Oh, whatever. Go tell the §6tutor §fthat you're new around here.\",\n" +
-            "          \"typewriter\": true\n" +
-            "        }\n" +
-            "      ],\n" +
-            "      \"id\": \"tutorial-island.peasant-miner\",\n" +
-            "      \"actions\": []\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"uniqueIdentifier\": \"77e2bac5-8ed5-40c3-b183-111472a7f9fa\",\n" +
+            "      \"uniqueIdentifier\": \"69cada31-b3ea-4ce4-b13f-eb5e1db1c7a5\",\n" +
             "      \"type\": \"ConditionStep\",\n" +
             "      \"conditions\": [\n" +
-            "        \"inventory_contains_one_of_{item_id_1100}_{amount_1}\"\n" +
+            "        \"quest_started_{id_tutorial}\"\n" +
             "      ],\n" +
             "      \"id\": \"tutorial-island.peasant-miner\",\n" +
+            "      \"truthyFollowup\": {\n" +
+            "        \"id\": \"tutorial-island.peasant-miner\",\n" +
+            "        \"steps\": []\n" +
+            "      },\n" +
             "      \"falsyFollowup\": {\n" +
             "        \"id\": \"tutorial-island.peasant-miner\",\n" +
             "        \"steps\": [\n" +
             "          {\n" +
-            "            \"uniqueIdentifier\": \"934468c2-d529-4ee8-97e6-c32249909831\",\n" +
-            "            \"type\": \"PassiveDialogStep\",\n" +
-            "            \"content\": [\n" +
-            "              {\n" +
-            "                \"line\": \"Wait\",\n" +
-            "                \"typewriter\": true\n" +
-            "              },\n" +
-            "              {\n" +
-            "                \"line\": \"Here, this will be useful to you\",\n" +
-            "                \"typewriter\": true\n" +
-            "              }\n" +
+            "            \"uniqueIdentifier\": \"bee53034-8f68-4487-8060-920c358de9ef\",\n" +
+            "            \"type\": \"ConditionStep\",\n" +
+            "            \"conditions\": [\n" +
+            "              \"quest_finished_{id_tutorial}\"\n" +
             "            ],\n" +
             "            \"id\": \"tutorial-island.peasant-miner\",\n" +
-            "            \"actions\": [\n" +
-            "              \"give_item_{id_1100}_{amount_1}\"\n" +
-            "            ]\n" +
+            "            \"falsyFollowup\": {\n" +
+            "              \"id\": \"tutorial-island.peasant-miner\",\n" +
+            "              \"steps\": [\n" +
+            "                {\n" +
+            "                  \"type\": \"PassiveDialogStep\",\n" +
+            "                  \"uniqueIdentifier\": \"eb2663b2-773c-4c63-b9dd-5a59a0ce499d\",\n" +
+            "                  \"content\": [\n" +
+            "                    {\n" +
+            "                      \"line\": \"W.. What?\",\n" +
+            "                      \"typewriter\": true\n" +
+            "                    },\n" +
+            "                    {\n" +
+            "                      \"line\": \"Who the hell are you?\",\n" +
+            "                      \"typewriter\": true\n" +
+            "                    }\n" +
+            "                  ],\n" +
+            "                  \"actions\": []\n" +
+            "                },\n" +
+            "                {\n" +
+            "                  \"type\": \"PassiveDialogStep\",\n" +
+            "                  \"uniqueIdentifier\": \"7e22eef1-e04c-4a82-8eb5-889fe9d30885\",\n" +
+            "                  \"content\": [\n" +
+            "                    {\n" +
+            "                      \"line\": \"Oh, whatever. Go tell the §6tutor §fthat you're new around here.\",\n" +
+            "                      \"typewriter\": true\n" +
+            "                    }\n" +
+            "                  ],\n" +
+            "                  \"actions\": []\n" +
+            "                },\n" +
+            "                {\n" +
+            "                  \"type\": \"ConditionStep\",\n" +
+            "                  \"uniqueIdentifier\": \"77e2bac5-8ed5-40c3-b183-111472a7f9fa\",\n" +
+            "                  \"content\": [],\n" +
+            "                  \"conditions\": [\n" +
+            "                    \"inventory_contains_one_of_{item_id_1100}_{amount_1}\"\n" +
+            "                  ],\n" +
+            "                  \"falsyFollowup\": {\n" +
+            "                    \"id\": \"tutorial-island.peasant-miner\",\n" +
+            "                    \"steps\": [\n" +
+            "                      {\n" +
+            "                        \"type\": \"PassiveDialogStep\",\n" +
+            "                        \"uniqueIdentifier\": \"934468c2-d529-4ee8-97e6-c32249909831\",\n" +
+            "                        \"content\": [\n" +
+            "                          {\n" +
+            "                            \"line\": \"Wait\",\n" +
+            "                            \"typewriter\": true\n" +
+            "                          },\n" +
+            "                          {\n" +
+            "                            \"line\": \"Here, this will be useful to you\",\n" +
+            "                            \"typewriter\": true\n" +
+            "                          }\n" +
+            "                        ],\n" +
+            "                        \"actions\": [\n" +
+            "                          \"give_item_{id_1100}_{amount_1}\"\n" +
+            "                        ]\n" +
+            "                      }\n" +
+            "                    ]\n" +
+            "                  }\n" +
+            "                },\n" +
+            "                {\n" +
+            "                  \"type\": \"ConditionStep\",\n" +
+            "                  \"uniqueIdentifier\": \"ff5f0cf0-4d65-4d8c-82c0-7443cf9c5155\",\n" +
+            "                  \"content\": [],\n" +
+            "                  \"conditions\": [\n" +
+            "                    \"start_quest_if_requirements_met_{id_tutorial}\"\n" +
+            "                  ]\n" +
+            "                },\n" +
+            "                {\n" +
+            "                  \"type\": \"PassiveDialogStep\",\n" +
+            "                  \"uniqueIdentifier\": \"b12e1c64-2d84-457a-a249-2e2fabcb9aab\",\n" +
+            "                  \"content\": [],\n" +
+            "                  \"actions\": [\n" +
+            "                    \"teleport_player_{world_world}_{x_2435}_{y_155}_{z_2485}\"\n" +
+            "                  ]\n" +
+            "                }\n" +
+            "              ]\n" +
+            "            },\n" +
+            "            \"content\": []\n" +
             "          }\n" +
             "        ]\n" +
             "      }\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"uniqueIdentifier\": \"ff5f0cf0-4d65-4d8c-82c0-7443cf9c5155\",\n" +
-            "      \"type\": \"ConditionStep\",\n" +
-            "      \"conditions\": [\n" +
-            "        \"start_quest_if_requirements_met_{id_tutorial}\"\n" +
-            "      ],\n" +
-            "      \"id\": \"tutorial-island.peasant-miner\"\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"uniqueIdentifier\": \"b12e1c64-2d84-457a-a249-2e2fabcb9aab\",\n" +
-            "      \"type\": \"PassiveDialogStep\",\n" +
-            "      \"content\": [],\n" +
-            "      \"id\": \"tutorial-island.peasant-miner\",\n" +
-            "      \"actions\": [\n" +
-            "        \"teleport_player_{world_world}_{x_2435}_{y_155}_{z_2485}\"\n" +
-            "      ]\n" +
             "    }\n" +
             "  ]\n" +
             "}");

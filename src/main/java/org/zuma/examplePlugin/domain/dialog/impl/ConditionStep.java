@@ -9,16 +9,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConditionStep extends DialogStep {
+    public enum LogicalOperator {
+        AND, OR
+    }
+
     private final List<String> conditions;
     private final List<DialogStep> truthyFollowUp;
     private final List<DialogStep> falsyFollowUp;
+    private final LogicalOperator logicalOperator;
+
 
     public ConditionStep(List<String> conditions, @Nullable List<DialogStep> truthyFollowUp,
-                         @Nullable List<DialogStep> falsyFollowUp, String uniqueIdentifier) {
+                         @Nullable List<DialogStep> falsyFollowUp, String uniqueIdentifier, LogicalOperator logicalOperator) {
         super(List.of(), uniqueIdentifier);
         this.conditions = conditions;
         this.truthyFollowUp = truthyFollowUp;
         this.falsyFollowUp = falsyFollowUp;
+        this.logicalOperator = logicalOperator;
     }
 
     @Override
@@ -26,13 +33,29 @@ public class ConditionStep extends DialogStep {
         boolean isResultTruthy = true;
         List<DialogStep> followUpSteps = new ArrayList<>();
 
-        for (String rawCondition : this.conditions) {
-            boolean isConditionTruthy = ScriptedConditionHandler.executeCondition(rawCondition, player, null, this.parent);
+        if (logicalOperator == LogicalOperator.AND) {
+            for (String rawCondition : this.conditions) {
+                boolean isConditionTruthy = ScriptedConditionHandler.executeCondition(rawCondition, player, null, this.parent);
 
-            if (!isConditionTruthy) {
-                isResultTruthy = false;
+                if (!isConditionTruthy) {
+                    isResultTruthy = false;
+                }
+
             }
+        }
 
+        if (logicalOperator == LogicalOperator.OR) {
+            isResultTruthy = false;
+
+            for (String rawCondition : this.conditions) {
+                boolean isConditionTruthy = ScriptedConditionHandler.executeCondition(rawCondition, player, null, this.parent);
+
+                if (isConditionTruthy) {
+                    isResultTruthy = true;
+                    break;
+                }
+
+            }
         }
 
         if (isResultTruthy) {
