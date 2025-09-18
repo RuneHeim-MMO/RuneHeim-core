@@ -6,12 +6,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public class DialogQuestStepToBeCompleted extends Event {
+public class QuestStepToBeCompleted extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
     private final String stableDialogStepId;
     private final UUID playerUUID;
 
-    public DialogQuestStepToBeCompleted(UUID playerUUID, String stableDialogStepId) {
+    public QuestStepToBeCompleted(UUID playerUUID, String stableDialogStepId) {
         this.stableDialogStepId = stableDialogStepId;
         this.playerUUID = playerUUID;
     }

@@ -7,7 +7,6 @@ import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.PlayerQuestState;
 import org.zuma.examplePlugin.domain.quest.Quest;
 import org.zuma.examplePlugin.domain.quest.constants.StepType;
@@ -19,7 +18,6 @@ import java.util.*;
 
 /*
     WARNING: Do not use this step to reliably track player item collections! Players can drop and pick up same item multiple times.
-
  */
 public class CollectionStep extends AbstractQuestStep {
     private final List<ItemRecord> requiredItems;
@@ -30,8 +28,8 @@ public class CollectionStep extends AbstractQuestStep {
 
     private transient HashMap<Integer, Integer> acquiredItems; // id:amount
 
-    public CollectionStep(RuneQuestPlugin plugin, Quest parentQuest, String description, List<ItemRecord> requiredItems, @Nullable UUID owner) {
-        super(plugin, parentQuest, StepType.COLLECTION, description, owner);
+    public CollectionStep(RuneQuestPlugin plugin, Quest parentQuest, String description, String stableId, List<ItemRecord> requiredItems, @Nullable UUID owner) {
+        super(plugin, parentQuest, StepType.COLLECTION, description, stableId, owner);
         this.requiredItems = requiredItems;
         this.acquiredItems = new HashMap<>();
     }
@@ -92,7 +90,7 @@ public class CollectionStep extends AbstractQuestStep {
 
     @Override
     public AbstractQuestStep cloneForPlayer(UUID ownerUUID) {
-        CollectionStep step = new CollectionStep(super.getPlugin(), super.getParentQuest(), super.getDescription(), requiredItems, ownerUUID);
+        CollectionStep step = new CollectionStep(super.getPlugin(), super.getParentQuest(), super.getDescription(), super.getStableId(), requiredItems, ownerUUID);
 
         HashMap<Integer, Integer> acquiredItems = new HashMap<>();
         requiredItems.forEach(required -> acquiredItems.put(required.getItemId(), 0));

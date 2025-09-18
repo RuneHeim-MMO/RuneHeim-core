@@ -34,7 +34,7 @@ public enum ScriptedCondition implements ScriptedStatement {
     QUEST_START_IF_REQUIREMENTS_MET("start_quest_if_requirements_met", "id"),
     QUEST_STARTED("quest_started", "id"),
     QUEST_FINISHED("quest_finished", "id"),
-    QUEST_DIALOG_STEP_ACTIVE("quest_dialog_step_active", "stable_id"),
+    QUEST_STEP_ACTIVE("quest_step_active", "stable_id"),
     NEVER_TRUE("never_true");
 
     public final String trigger;
@@ -76,8 +76,8 @@ public enum ScriptedCondition implements ScriptedStatement {
         ));
     }
 
-    public static ScriptedStatementInstance questDialogStepActive(String stable_id) {
-        return new ScriptedStatementInstance(ScriptedCondition.QUEST_DIALOG_STEP_ACTIVE, Map.of(
+    public static ScriptedStatementInstance questQuestStepActive(String stable_id) {
+        return new ScriptedStatementInstance(ScriptedCondition.QUEST_STEP_ACTIVE, Map.of(
                 "stable_id", stable_id
         ));
     }

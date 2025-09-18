@@ -29,7 +29,7 @@ public class QuestHandler {
         HashMap<String, PlayerQuestState> map = new HashMap<>();
 
         player.getActiveQuestSteps().forEach((key, step) -> {
-            PlayerQuestState state = step.assignValuesToState(new PlayerQuestState(step.getParentQuest().getId(), step.getId(), step.getType()));
+            PlayerQuestState state = step.saveValuesToState(new PlayerQuestState(step.getParentQuest().getId(), step.getId(), step.getType()));
             map.put(key, state);
         });
 
@@ -43,7 +43,7 @@ public class QuestHandler {
             throw new IllegalStateException("Cannot find matching step in " + playerQuestState.getQuestId() + " quest, step id: " + playerQuestState.getStepId());
         }
 
-        return matchingStep.cloneForPlayer(ownerUUID).assignValuesFromState(playerQuestState);
+        return matchingStep.cloneForPlayer(ownerUUID).initializeValuesFromState(playerQuestState);
     }
 
     public void savePlayerQuestData(RunePlayer player, boolean async) {

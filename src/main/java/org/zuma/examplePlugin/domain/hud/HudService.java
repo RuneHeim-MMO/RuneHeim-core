@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.hud;
 
 import eu.decentsoftware.holograms.api.DHAPI;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -24,6 +25,8 @@ import org.zuma.examplePlugin.domain.mob.impl.FusionMaster;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.FusionThunderEffect;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.quest.Quest;
+import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.util.List;
@@ -32,6 +35,19 @@ import java.util.UUID;
 
 public class HudService {
     private static final Random random = new Random();
+
+    public static void sendQuestStartMessage(RunePlayer player, Quest quest) {
+        HudService.sendInfoMessage(player, Component.text(quest.getName() + " has been started!"));
+    }
+
+    public static void sendQuestStepTaskMessage(RunePlayer player, AbstractQuestStep step) {
+        HudService.sendInfoMessage(player, Component.text(step.getParentQuest().getName() + " >> ").append(Component.text(step.getDescription(), NamedTextColor.WHITE)));
+        SoundType.PLAYER_QUEST_PROGRESS.play(player, false);
+    }
+
+    public static void sendQuestCompletedMessage(RunePlayer player, Quest quest) {
+        HudService.sendInfoMessage(player, Component.text(quest.getName() + " has been completed!"));
+    }
 
     public static void showFusionSuccessEffect(RunePlayer player, int gemsInserted) {
         double radius = 5.0;

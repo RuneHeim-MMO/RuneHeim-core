@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.domain.player;
 
+import com.google.gson.Gson;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
@@ -142,6 +143,7 @@ public class RunePlayer implements CombatEntity {
         this.skills.putAll(skills);
         combatData.setCombatLvl(Math.max(3, XpUtils.getCombatLevelFromSkills(this.skills)));
         HudService.updateVanillaGUI(this);
+        System.out.println(new Gson().toJson(activeQuestSteps));
     }
 
     // Party

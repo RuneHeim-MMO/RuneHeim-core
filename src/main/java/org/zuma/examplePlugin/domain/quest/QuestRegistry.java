@@ -7,7 +7,6 @@ import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.quest.constants.QuestDifficulty;
 import org.zuma.examplePlugin.domain.quest.impl.CollectionStep;
 import org.zuma.examplePlugin.domain.quest.impl.DialogStep;
-import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import javax.annotation.Nullable;
@@ -22,23 +21,41 @@ public class QuestRegistry {
 
         Quest sheepShearer = new Quest("sheep-shearer", "Sheep Shearer", QuestDifficulty.EASY);
         registerQuest(sheepShearer.addSteps(List.of(
-                new CollectionStep(RuneQuestPlugin.getInstance(), sheepShearer, "Collect 20 wool and spin them into balls of wool.", List.of(new ItemRecord(ItemId.BALL_OF_WOOL, 20)), null),
-                new DialogStep(RuneQuestPlugin.getInstance(), sheepShearer, "Bring 20 balls of wool to Shepherd.", "sheep-shearer.wool-collected", null)
+                new CollectionStep(RuneQuestPlugin.getInstance(), sheepShearer, "Collect §620 wool§f and spin them into balls of wool.", "sheep-shearer.wool-collect", List.of(new ItemRecord(ItemId.BALL_OF_WOOL, 20)), null),
+                new DialogStep(RuneQuestPlugin.getInstance(), sheepShearer, "Bring §620 balls of wool§f to §6Shepherd.", "sheep-shearer.wool-collected", null)
         )));
 
 
-        Quest tutorialQuest = new Quest("tutorial", "Tutorial", QuestDifficulty.EASY);
+        Quest tutorialQuest = new Quest("tutorial", "Tutorial", QuestDifficulty.EASY)
+                .setRewards(new QuestReward(List.of(
+                        new ItemRecord(ItemId.BRONZE_SWORD, 1),
+                        new ItemRecord(ItemId.BRONZE_PICKAXE, 1),
+                        new ItemRecord(ItemId.SHORT_BOW, 1),
+                        new ItemRecord(ItemId.BRONZE_ARROW, 128),
+                        new ItemRecord(ItemId.COIF, 1),
+                        new ItemRecord(ItemId.FISHING_NET, 1),
+                        new ItemRecord(ItemId.COOKED_HERRING, 20),
+                        new ItemRecord(ItemId.GENIE_XP_LAMP, 1)
+                ), null, 500));
+
         registerQuest(tutorialQuest.addSteps(List.of(
-                new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Talk to the Blacksmith.", "tutorial.blacksmith-talk-to", null),
-                new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Collect and smelt ores, then bring 1 Bronze Dagger to Blacksmith.", "tutorial.blacksmith-craft-items", null),
+                new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Talk to the §6Blacksmith.", "tutorial.blacksmith-talk-to", null),
+                new CollectionStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Collect §61 Copper Ore§f and §61 Tin Ore.", "tutorial.blacksmith-collect-ores", List.of(new ItemRecord(ItemId.COPPER_ORE, 1), new ItemRecord(ItemId.TIN_ORE, 1)), null),
+                new CollectionStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Smelt ores into §61 Bronze Bar.", "tutorial.blacksmith-smelt-bar", List.of(new ItemRecord(ItemId.BRONZE_BAR, 1)), null),
+                new CollectionStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Use your hammer on an anvil and craft §61 Bronze Dagger.", "tutorial.blacksmith-smith-dagger", List.of(new ItemRecord(ItemId.BRONZE_DAGGER, 1)), null),
+                new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Bring §61 Bronze Dagger§f to the §6Blacksmith.", "tutorial.blacksmith-bring-dagger", null),
 
-                new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Talk to the Lumberjack.", "tutorial.lumberjack-talk-to", null),
-                new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Cut trees and bring 3 Logs to Lumberjack.", "tutorial.lumberjack-cut-trees", null),
+                new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Talk to the §6Lumberjack.", "tutorial.lumberjack-talk-to", null),
+                new CollectionStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Cut trees and collect §63 Logs.", "tutorial.lumberjack-collect-logs", List.of(new ItemRecord(ItemId.LOG, 3)), null),
+                new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Bring §63 Logs§f to the §6Lumberjack.", "tutorial.lumberjack-bring-logs", null),
 
-                new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Talk to the Survival Guide.", "tutorial.survival-talk-to", null),
-                new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Kill 3 goblins and bring 3 bones back to the Survival Guide.", "tutorial.survival-kill-mobs", null),
-                new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Use fishing net to catch fish and bring 3 Raw Herrings to the Survival Guide.", "tutorial.survival-catch-fish", null),
-                new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Successfully cook 1 Raw Herring and bring 1 Cooked Herring to the Survival Guide.", "tutorial.survival-cook-fish", null)
+                new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Talk to the §6Survival Guide.", "tutorial.survival-talk-to", null),
+                new CollectionStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Kill §63 Goblins§f and collect §63 Bones.", "tutorial.survival-collect-bones", List.of(new ItemRecord(ItemId.BONES, 3)), null),
+                new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Bring §63 bones§f back to the §6Survival Guide.", "tutorial.survival-bring-bones", null),
+
+                new CollectionStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Use fishing net to catch §63 Raw Herrings.", "tutorial.survival-collect-herrings", List.of(new ItemRecord(ItemId.RAW_HERRING, 3)), null),
+                new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Bring §63 Raw Herrings§f to the §6Survival Guide.", "tutorial.survival-bring-herrings", null),
+                new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Bring §61 Cooked Herring§f to the §6Survival Guide.", "tutorial.survival-cook-fish", null)
         )));
     }
 

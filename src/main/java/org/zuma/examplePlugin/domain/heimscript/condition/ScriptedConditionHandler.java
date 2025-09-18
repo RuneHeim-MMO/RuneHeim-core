@@ -11,7 +11,6 @@ import org.zuma.examplePlugin.domain.heimscript.ScriptParser;
 import org.zuma.examplePlugin.domain.quest.Quest;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
 import org.zuma.examplePlugin.domain.quest.constants.QuestStartFailReason;
-import org.zuma.examplePlugin.domain.quest.impl.DialogStep;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import javax.annotation.Nullable;
@@ -97,11 +96,11 @@ public class ScriptedConditionHandler {
                 case QUEST_FINISHED -> {
                     result = player.getCompletedQuestIds().contains(args.get("id"));
                 }
-                case QUEST_DIALOG_STEP_ACTIVE -> {
+                case QUEST_STEP_ACTIVE -> {
                     String stable_id = args.get("stable_id");
 
                     for (AbstractQuestStep qs : player.getActiveQuestSteps().values()) {
-                        if (qs instanceof DialogStep dialogStep && Objects.equals(dialogStep.getStableId(), stable_id)) {
+                        if (qs instanceof AbstractQuestStep questStep && Objects.equals(questStep.getStableId(), stable_id)) {
                             result = true;
                             break;
                         }

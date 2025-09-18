@@ -2,9 +2,7 @@ package org.zuma.examplePlugin.domain.heimscript.action;
 
 import org.zuma.examplePlugin.domain.droptable.DropTableId;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
-import org.zuma.examplePlugin.domain.heimscript.condition.ScriptedCondition;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
-import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.heimscript.ScriptedStatement;
 import org.zuma.examplePlugin.domain.heimscript.ScriptedStatementInstance;
@@ -27,7 +25,7 @@ public enum ScriptedAction implements ScriptedStatement {
     DIALOG_HOLDER_SOUND("dialog_holder_sound", "sound"),
     DIALOG_HOLDER_FORWARD_INTERACTION("dialog_holder_forward_interaction"),
     TAKE_INVENTORY_ITEM("take_inventory_item", "item_id", "amount"),
-    DIALOG_QUEST_STEP_FINISH("dialog_quest_step_finish", "stable_id"),
+    QUEST_STEP_FINISH("quest_step_finish", "stable_id"),
     CLEAR_INVENTORY("clear_inventory");
 
     private final String trigger;
@@ -52,7 +50,7 @@ public enum ScriptedAction implements ScriptedStatement {
     }
 
     public static ScriptedStatementInstance dialogQuestStepFinish(String stable_id) {
-        return new ScriptedStatementInstance(ScriptedAction.DIALOG_QUEST_STEP_FINISH, Map.of(
+        return new ScriptedStatementInstance(ScriptedAction.QUEST_STEP_FINISH, Map.of(
                 "stable_id", stable_id
         ));
     }

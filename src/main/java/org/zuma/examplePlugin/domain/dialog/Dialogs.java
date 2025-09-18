@@ -13,1268 +13,9 @@ import java.util.function.Supplier;
 
 public class Dialogs {
 
-    public static final Supplier<DialogBuilder> tutorial_survivalGuide = () -> DialogBuilder.deserialize("{\n" +
-            "  \"id\": \"tutorial.survival-dialog\",\n" +
-            "  \"steps\": [\n" +
-            "    {\n" +
-            "      \"uniqueIdentifier\": \"981acdf1-cbc3-481e-acae-444af668a0cc\",\n" +
-            "      \"type\": \"ConditionStep\",\n" +
-            "      \"conditions\": [\n" +
-            "        \"quest_dialog_step_active_{stable_id_tutorial.survival-cook-fish}\"\n" +
-            "      ],\n" +
-            "      \"id\": \"tutorial.survival-dialog\",\n" +
-            "      \"truthyFollowup\": {\n" +
-            "        \"id\": \"tutorial.survival-dialog\",\n" +
-            "        \"steps\": [\n" +
-            "          {\n" +
-            "            \"uniqueIdentifier\": \"on.fish.cooked\",\n" +
-            "            \"type\": \"ConditionStep\",\n" +
-            "            \"conditions\": [\n" +
-            "              \"inventory_contains_one_of_{item_id_1200}_{amount_1}\"\n" +
-            "            ],\n" +
-            "            \"id\": \"tutorial.survival-dialog\",\n" +
-            "            \"falsyFollowup\": {\n" +
-            "              \"id\": \"tutorial.survival-dialog\",\n" +
-            "              \"steps\": [\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"15df7413-2410-4111-be26-e9b94e7d6cca\",\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"Cook and bring me §61 raw herring.\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"You can either start a campfire, or use my stove.\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"actions\": []\n" +
-            "                },\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"check.if.player.has.no.net\",\n" +
-            "                  \"type\": \"ConditionStep\",\n" +
-            "                  \"conditions\": [\n" +
-            "                    \"inventory_contains_one_of_{item_id_1500}_{amount_1}\"\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"falsyFollowup\": {\n" +
-            "                    \"id\": \"tutorial.survival-dialog\",\n" +
-            "                    \"steps\": [\n" +
-            "                      {\n" +
-            "                        \"uniqueIdentifier\": \"check.if.player.has.no.net.or.raw.fish\",\n" +
-            "                        \"type\": \"ConditionStep\",\n" +
-            "                        \"conditions\": [\n" +
-            "                          \"inventory_contains_one_of_{item_id_1300}_{amount_1}\"\n" +
-            "                        ],\n" +
-            "                        \"id\": \"tutorial.survival-dialog\",\n" +
-            "                        \"falsyFollowup\": {\n" +
-            "                          \"id\": \"tutorial.survival-dialog\",\n" +
-            "                          \"steps\": [\n" +
-            "                            {\n" +
-            "                              \"uniqueIdentifier\": \"2af32d7d-ba39-42b7-b863-e6c27348ff9a\",\n" +
-            "                              \"type\": \"PassiveDialogStep\",\n" +
-            "                              \"content\": [\n" +
-            "                                {\n" +
-            "                                  \"line\": \"Oh, how did you manage to lose everything?\",\n" +
-            "                                  \"typewriter\": true\n" +
-            "                                }\n" +
-            "                              ],\n" +
-            "                              \"id\": \"tutorial.survival-dialog\",\n" +
-            "                              \"actions\": [\n" +
-            "                                \"give_item_{id_1500}_{amount_1}\"\n" +
-            "                              ]\n" +
-            "                            }\n" +
-            "                          ]\n" +
-            "                        },\n" +
-            "                        \"content\": []\n" +
-            "                      }\n" +
-            "                    ]\n" +
-            "                  },\n" +
-            "                  \"content\": []\n" +
-            "                }\n" +
-            "              ]\n" +
-            "            },\n" +
-            "            \"truthyFollowup\": {\n" +
-            "              \"id\": \"tutorial.survival-dialog\",\n" +
-            "              \"steps\": [\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"361db2ae-b461-49db-b5b8-e2199f05c964\",\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"Awesome! {PLAYER_NAME}\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"You are making progress!\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"actions\": []\n" +
-            "                },\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"db6053e9-2297-479d-a46d-766a79c9c529\",\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"This is just the small part of the possibilities.\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"There are many skills and activities!\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"But you will have to figure those on your own.\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"actions\": []\n" +
-            "                },\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"76362c2d-66aa-48e9-8f81-56e207e1faf5\",\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"Now it’s time to say goodbye.\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"It was pleasure meeting you, {PLAYER_NAME}!\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"actions\": [\n" +
-            "                    \"dialog_quest_step_finish_{stable_id_tutorial.survival-cook-fish}\",\n" +
-            "                    \"teleport_player_{world_world}_{x_192}_{y_73}_{z_-70}\",\n" +
-            "                    \"clear_inventory\",\n" +
-            "                    \"give_item_{id_700}_{amount_1}\",\n" +
-            "                    \"give_item_{id_1100}_{amount_1}\",\n" +
-            "                    \"give_item_{id_2400}_{amount_1}\",\n" +
-            "                    \"give_item_{id_2500}_{amount_128}\",\n" +
-            "                    \"give_item_{id_306}_{amount_1}\",\n" +
-            "                    \"give_item_{id_1500}_{amount_1}\",\n" +
-            "                    \"give_item_{id_1200}_{amount_20}\",\n" +
-            "                    \"give_item_{id_3000}_{amount_2}\"\n" +
-            "                  ]\n" +
-            "                }\n" +
-            "              ]\n" +
-            "            },\n" +
-            "            \"content\": []\n" +
-            "          }\n" +
-            "        ]\n" +
-            "      },\n" +
-            "      \"content\": []\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"uniqueIdentifier\": \"6bdd39c0-f7e1-4ce5-afd3-2eb7935423ac\",\n" +
-            "      \"type\": \"ConditionStep\",\n" +
-            "      \"conditions\": [\n" +
-            "        \"quest_dialog_step_active_{stable_id_tutorial.survival-catch-fish}\"\n" +
-            "      ],\n" +
-            "      \"id\": \"tutorial.survival-dialog\",\n" +
-            "      \"truthyFollowup\": {\n" +
-            "        \"id\": \"tutorial.survival-dialog\",\n" +
-            "        \"steps\": [\n" +
-            "          {\n" +
-            "            \"uniqueIdentifier\": \"on.fish.catch\",\n" +
-            "            \"type\": \"ConditionStep\",\n" +
-            "            \"conditions\": [\n" +
-            "              \"inventory_contains_one_of_{item_id_1300}_{amount_3}\"\n" +
-            "            ],\n" +
-            "            \"id\": \"tutorial.survival-dialog\",\n" +
-            "            \"truthyFollowup\": {\n" +
-            "              \"id\": \"tutorial.survival-dialog\",\n" +
-            "              \"steps\": [\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"48c3c07f-6608-46e5-8a29-62ff63f6c504\",\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"You’re raising my hopes. {PLAYER_NAME}\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"But theres not much you can do with a raw fish!\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"actions\": []\n" +
-            "                },\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"5a12b45f-ca02-4556-bcbb-f543552bcb7d\",\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"So now let's cook it!\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"In order to do that, you need a fire source.\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"actions\": []\n" +
-            "                },\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"afdef1ed-f7d2-4303-8ed2-b00f324c334b\",\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"Usually in the cities, you can simply use someones stove\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"But if you are in the wilderness, you will need to make a §6campfire\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"actions\": []\n" +
-            "                },\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"254bcd49-233d-4944-96ac-87f1c607c97c\",\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"To start a campfire, you need some §6logs§f & §6flint and steel.\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"Then, you need to click a log with a flint in your inventory.\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"Here, you can take mine. Or you can just use my stove.\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"actions\": []\n" +
-            "                },\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"4476b0f4-9ed8-42d4-8221-847deb49d33a\",\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"Then, cook and bring me §61 cooked herring.\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"actions\": [\n" +
-            "                    \"give_item_{id_1600}_{amount_3}\",\n" +
-            "                    \"give_item_{id_2}_{amount_1}\",\n" +
-            "                    \"dialog_quest_step_finish_{stable_id_tutorial.survival-catch-fish}\"\n" +
-            "                  ]\n" +
-            "                }\n" +
-            "              ]\n" +
-            "            },\n" +
-            "            \"falsyFollowup\": {\n" +
-            "              \"id\": \"tutorial.survival-dialog\",\n" +
-            "              \"steps\": [\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"cf1cc665-7063-4c84-bbda-b6fd9a67fd7a\",\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"Bring me §63 raw herrings,§f {PLAYER_NAME}.\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"Use the fishing spots behind this house.\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"actions\": []\n" +
-            "                }\n" +
-            "              ]\n" +
-            "            },\n" +
-            "            \"content\": []\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"uniqueIdentifier\": \"fishing.net.check\",\n" +
-            "            \"type\": \"ConditionStep\",\n" +
-            "            \"conditions\": [\n" +
-            "              \"inventory_contains_one_of_{item_id_1500}_{amount_1}\"\n" +
-            "            ],\n" +
-            "            \"id\": \"tutorial.survival-dialog\",\n" +
-            "            \"falsyFollowup\": {\n" +
-            "              \"id\": \"tutorial.survival-dialog\",\n" +
-            "              \"steps\": [\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"11ebca4c-5d2e-4f07-9b30-a65d5c7b2bd4\",\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"Oh, how did you manage to lose the fishing net?\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"actions\": [\n" +
-            "                    \"give_item_{id_1500}_{amount_1}\"\n" +
-            "                  ]\n" +
-            "                },\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"b2d71e0e-5a50-4259-a393-e3fd39d833db\",\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"Don't lose it this time!\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"actions\": []\n" +
-            "                }\n" +
-            "              ]\n" +
-            "            },\n" +
-            "            \"content\": []\n" +
-            "          }\n" +
-            "        ]\n" +
-            "      },\n" +
-            "      \"content\": []\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"uniqueIdentifier\": \"93d0c859-2399-4b3f-8f16-11e4d73bb594\",\n" +
-            "      \"type\": \"ConditionStep\",\n" +
-            "      \"conditions\": [\n" +
-            "        \"quest_dialog_step_active_{stable_id_tutorial.survival-kill-mobs}\"\n" +
-            "      ],\n" +
-            "      \"id\": \"tutorial.survival-dialog\",\n" +
-            "      \"truthyFollowup\": {\n" +
-            "        \"id\": \"tutorial.survival-dialog\",\n" +
-            "        \"steps\": [\n" +
-            "          {\n" +
-            "            \"uniqueIdentifier\": \"149e392c-f3ae-4a77-9b83-e08ee9b7443b\",\n" +
-            "            \"type\": \"ConditionStep\",\n" +
-            "            \"conditions\": [\n" +
-            "              \"inventory_contains_one_of_{item_id_2600}_{amount_3}\"\n" +
-            "            ],\n" +
-            "            \"id\": \"tutorial.survival-dialog\",\n" +
-            "            \"truthyFollowup\": {\n" +
-            "              \"id\": \"tutorial.survival-dialog\",\n" +
-            "              \"steps\": [\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"70302339-ef97-4617-bf87-58107f73235a\",\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"Oh lord, you are looking tired, haha\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"But good job!\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"actions\": []\n" +
-            "                },\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"9f4c3eca-8025-4fec-b9b6-0f600e20175f\",\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"Okay, now let's teach you how to catch some fish\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"Some food will always be handy when you need\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"To restore some of your §chitspoints.\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"actions\": []\n" +
-            "                },\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"580466bb-df8a-4dc7-a55a-e978ab6a1ed2\",\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"Here, take this fishing net, and bring me §63 raw herrings.\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"You can find the fishing spots behind my house.\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"actions\": [\n" +
-            "                    \"give_item_{id_1500}_{amount_1}\",\n" +
-            "                    \"dialog_quest_step_finish_{stable_id_tutorial.survival-kill-mobs}\"\n" +
-            "                  ]\n" +
-            "                }\n" +
-            "              ]\n" +
-            "            },\n" +
-            "            \"falsyFollowup\": {\n" +
-            "              \"id\": \"tutorial.survival-dialog\",\n" +
-            "              \"steps\": [\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"454fdc4e-7807-4abc-981e-4f359e47c509\",\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"Kill §63 goblins§f and bring me §63 bones.\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"You can find goblins down the river.\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"actions\": []\n" +
-            "                }\n" +
-            "              ]\n" +
-            "            },\n" +
-            "            \"content\": []\n" +
-            "          }\n" +
-            "        ]\n" +
-            "      },\n" +
-            "      \"content\": []\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"uniqueIdentifier\": \"3c194caa-0a52-4998-9c85-69920db183b1\",\n" +
-            "      \"type\": \"ConditionStep\",\n" +
-            "      \"conditions\": [\n" +
-            "        \"quest_dialog_step_active_{stable_id_tutorial.survival-talk-to}\"\n" +
-            "      ],\n" +
-            "      \"id\": \"tutorial.survival-dialog\",\n" +
-            "      \"truthyFollowup\": {\n" +
-            "        \"id\": \"tutorial.survival-dialog\",\n" +
-            "        \"steps\": [\n" +
-            "          {\n" +
-            "            \"uniqueIdentifier\": \"f01067d4-d21f-411c-9c37-4bb96f57147b\",\n" +
-            "            \"type\": \"PassiveDialogStep\",\n" +
-            "            \"content\": [\n" +
-            "              {\n" +
-            "                \"line\": \"Hello there, stranger!\",\n" +
-            "                \"typewriter\": true\n" +
-            "              }\n" +
-            "            ],\n" +
-            "            \"id\": \"tutorial.survival-dialog\",\n" +
-            "            \"actions\": []\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"uniqueIdentifier\": \"fa45a399-33ae-48d4-97ee-f5f29f2ceb36\",\n" +
-            "            \"type\": \"PassiveDialogStep\",\n" +
-            "            \"content\": [\n" +
-            "              {\n" +
-            "                \"line\": \"Hmm... Yeah\",\n" +
-            "                \"typewriter\": true\n" +
-            "              }\n" +
-            "            ],\n" +
-            "            \"id\": \"tutorial.survival-dialog\",\n" +
-            "            \"actions\": []\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"uniqueIdentifier\": \"47f0a999-67a0-4131-ba19-17dc3a3b5885\",\n" +
-            "            \"type\": \"InteractiveDialogStep\",\n" +
-            "            \"options\": [\n" +
-            "              {\n" +
-            "                \"label\": \"What?\",\n" +
-            "                \"actions\": [],\n" +
-            "                \"followup\": {\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"steps\": []\n" +
-            "                }\n" +
-            "              },\n" +
-            "              {\n" +
-            "                \"label\": \"Hm?\",\n" +
-            "                \"actions\": [],\n" +
-            "                \"followup\": {\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"steps\": []\n" +
-            "                }\n" +
-            "              }\n" +
-            "            ],\n" +
-            "            \"content\": [\n" +
-            "              {\n" +
-            "                \"line\": \"*rolls his eyes*\",\n" +
-            "                \"typewriter\": true\n" +
-            "              }\n" +
-            "            ],\n" +
-            "            \"id\": \"tutorial.survival-dialog\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"uniqueIdentifier\": \"a73a6f44-9625-4a95-91d0-96b3b5b56e63\",\n" +
-            "            \"type\": \"PassiveDialogStep\",\n" +
-            "            \"content\": [\n" +
-            "              {\n" +
-            "                \"line\": \"Ahem, right, sorry\",\n" +
-            "                \"typewriter\": true\n" +
-            "              },\n" +
-            "              {\n" +
-            "                \"line\": \"So, you are {PLAYER_NAME}?\",\n" +
-            "                \"typewriter\": true\n" +
-            "              },\n" +
-            "              {\n" +
-            "                \"line\": \"Ok, there are some important things to go over.\",\n" +
-            "                \"typewriter\": true\n" +
-            "              }\n" +
-            "            ],\n" +
-            "            \"id\": \"tutorial.survival-dialog\",\n" +
-            "            \"actions\": []\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"uniqueIdentifier\": \"5b9d9ab7-51bc-42d1-95f3-a841b9f121e7\",\n" +
-            "            \"type\": \"PassiveDialogStep\",\n" +
-            "            \"content\": [\n" +
-            "              {\n" +
-            "                \"line\": \"First of all, you must know how to protect yourself\",\n" +
-            "                \"typewriter\": true\n" +
-            "              },\n" +
-            "              {\n" +
-            "                \"line\": \"There are many creatures out of there, some friendly\",\n" +
-            "                \"typewriter\": true\n" +
-            "              },\n" +
-            "              {\n" +
-            "                \"line\": \"And others will take any chance to fight you\",\n" +
-            "                \"typewriter\": true\n" +
-            "              }\n" +
-            "            ],\n" +
-            "            \"id\": \"tutorial.survival-dialog\",\n" +
-            "            \"actions\": []\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"uniqueIdentifier\": \"9bbe478b-edea-4700-aee8-e1affc783698\",\n" +
-            "            \"type\": \"InteractiveDialogStep\",\n" +
-            "            \"options\": [\n" +
-            "              {\n" +
-            "                \"label\": \"A sword\",\n" +
-            "                \"actions\": [\n" +
-            "                  \"give_item_{id_700}_{amount_1}\"\n" +
-            "                ],\n" +
-            "                \"followup\": {\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"steps\": [\n" +
-            "                    {\n" +
-            "                      \"uniqueIdentifier\": \"cbe63edf-43a0-418c-846d-60aa4754bdcd\",\n" +
-            "                      \"type\": \"PassiveDialogStep\",\n" +
-            "                      \"content\": [\n" +
-            "                        {\n" +
-            "                          \"line\": \"Solid choice!\",\n" +
-            "                          \"typewriter\": true\n" +
-            "                        }\n" +
-            "                      ],\n" +
-            "                      \"id\": \"tutorial.survival-dialog\",\n" +
-            "                      \"actions\": []\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"uniqueIdentifier\": \"d1b745fa-36f6-4116-8279-8225c331534f\",\n" +
-            "                      \"type\": \"TeleportBranchStep\",\n" +
-            "                      \"content\": [],\n" +
-            "                      \"teleportToUniqueIdentifier\": \"initial.countination\",\n" +
-            "                      \"id\": \"tutorial.survival-dialog\",\n" +
-            "                      \"actions\": []\n" +
-            "                    }\n" +
-            "                  ]\n" +
-            "                }\n" +
-            "              },\n" +
-            "              {\n" +
-            "                \"label\": \"A bow\",\n" +
-            "                \"actions\": [\n" +
-            "                  \"give_item_{id_2400}_{amount_1}\",\n" +
-            "                  \"give_item_{id_2500}_{amount_64}\"\n" +
-            "                ],\n" +
-            "                \"followup\": {\n" +
-            "                  \"id\": \"tutorial.survival-dialog\",\n" +
-            "                  \"steps\": [\n" +
-            "                    {\n" +
-            "                      \"uniqueIdentifier\": \"c351b0eb-ee50-462a-86c4-2006dd1bdda5\",\n" +
-            "                      \"type\": \"PassiveDialogStep\",\n" +
-            "                      \"content\": [\n" +
-            "                        {\n" +
-            "                          \"line\": \"Perfect! Take this bow and arrows.\",\n" +
-            "                          \"typewriter\": true\n" +
-            "                        },\n" +
-            "                        {\n" +
-            "                          \"line\": \"Now open your inventory, and put arrows in the arrows slot.\",\n" +
-            "                          \"typewriter\": true\n" +
-            "                        }\n" +
-            "                      ],\n" +
-            "                      \"id\": \"tutorial.survival-dialog\",\n" +
-            "                      \"actions\": []\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"uniqueIdentifier\": \"2815dcf9-57ba-462b-9e7f-380c93840c5f\",\n" +
-            "                      \"type\": \"TeleportBranchStep\",\n" +
-            "                      \"content\": [],\n" +
-            "                      \"teleportToUniqueIdentifier\": \"initial.countination\",\n" +
-            "                      \"id\": \"tutorial.survival-dialog\",\n" +
-            "                      \"actions\": []\n" +
-            "                    }\n" +
-            "                  ]\n" +
-            "                }\n" +
-            "              }\n" +
-            "            ],\n" +
-            "            \"content\": [\n" +
-            "              {\n" +
-            "                \"line\": \"What’s your favorite weapon?\",\n" +
-            "                \"typewriter\": true\n" +
-            "              }\n" +
-            "            ],\n" +
-            "            \"id\": \"tutorial.survival-dialog\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"uniqueIdentifier\": \"initial.countination\",\n" +
-            "            \"type\": \"PassiveDialogStep\",\n" +
-            "            \"content\": [\n" +
-            "              {\n" +
-            "                \"line\": \"Now, there are goblins down the river\",\n" +
-            "                \"typewriter\": true\n" +
-            "              },\n" +
-            "              {\n" +
-            "                \"line\": \"They are driving me crazy\",\n" +
-            "                \"typewriter\": true\n" +
-            "              }\n" +
-            "            ],\n" +
-            "            \"id\": \"tutorial.survival-dialog\",\n" +
-            "            \"actions\": []\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"uniqueIdentifier\": \"3825f278-2f14-4fc2-81bf-c17fd519ecf2\",\n" +
-            "            \"type\": \"PassiveDialogStep\",\n" +
-            "            \"content\": [\n" +
-            "              {\n" +
-            "                \"line\": \"I want you to kill §63 goblins§f and bring me §63 bones§f as proof.\",\n" +
-            "                \"typewriter\": true\n" +
-            "              },\n" +
-            "              {\n" +
-            "                \"line\": \"Oh and yeah, you can also do special attacks!\",\n" +
-            "                \"typewriter\": true\n" +
-            "              }\n" +
-            "            ],\n" +
-            "            \"id\": \"tutorial.survival-dialog\",\n" +
-            "            \"actions\": []\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"uniqueIdentifier\": \"f2acca0d-490d-4e65-98bd-823a7a626a90\",\n" +
-            "            \"type\": \"PassiveDialogStep\",\n" +
-            "            \"content\": [\n" +
-            "              {\n" +
-            "                \"line\": \"Hold §6[SNEAK]§f while attacking to do a special attack\",\n" +
-            "                \"typewriter\": true\n" +
-            "              },\n" +
-            "              {\n" +
-            "                \"line\": \"Your special attack regenerates slowly during the fights.\",\n" +
-            "                \"typewriter\": true\n" +
-            "              }\n" +
-            "            ],\n" +
-            "            \"id\": \"tutorial.survival-dialog\",\n" +
-            "            \"actions\": []\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"uniqueIdentifier\": \"a4c42b01-604d-4b7e-83b6-509c0b55870e\",\n" +
-            "            \"type\": \"PassiveDialogStep\",\n" +
-            "            \"content\": [\n" +
-            "              {\n" +
-            "                \"line\": \"Godspeed! Bring me §63 bones.\",\n" +
-            "                \"typewriter\": true\n" +
-            "              },\n" +
-            "              {\n" +
-            "                \"line\": \"Just a tip: do not attack multiple goblins at same time!\",\n" +
-            "                \"typewriter\": true\n" +
-            "              },\n" +
-            "              {\n" +
-            "                \"line\": \"Don't ask why, just trust the process.\",\n" +
-            "                \"typewriter\": true\n" +
-            "              }\n" +
-            "            ],\n" +
-            "            \"id\": \"tutorial.survival-dialog\",\n" +
-            "            \"actions\": [\n" +
-            "              \"dialog_quest_step_finish_{stable_id_tutorial.survival-talk-to}\"\n" +
-            "            ]\n" +
-            "          }\n" +
-            "        ]\n" +
-            "      },\n" +
-            "      \"content\": []\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}");
-
-    public static final Supplier<DialogBuilder> tutorial_lumberjack = () -> DialogBuilder.deserialize("{\n" +
-            "  \"id\": \"tutorial.survival-guide\",\n" +
-            "  \"steps\": [\n" +
-            "    {\n" +
-            "      \"uniqueIdentifier\": \"73099b3f-38a0-4bae-9eed-6494661c0a18\",\n" +
-            "      \"type\": \"ConditionStep\",\n" +
-            "      \"conditions\": [\n" +
-            "        \"quest_dialog_step_active_{stable_id_tutorial.lumberjack-cut-trees}\"\n" +
-            "      ],\n" +
-            "      \"id\": \"tutorial.survival-guide\",\n" +
-            "      \"truthyFollowup\": {\n" +
-            "        \"id\": \"tutorial.survival-guide\",\n" +
-            "        \"steps\": [\n" +
-            "          {\n" +
-            "            \"uniqueIdentifier\": \"check.for.logs\",\n" +
-            "            \"type\": \"ConditionStep\",\n" +
-            "            \"conditions\": [\n" +
-            "              \"inventory_contains_one_of_{item_id_1600}_{amount_3}\"\n" +
-            "            ],\n" +
-            "            \"id\": \"tutorial.survival-guide\",\n" +
-            "            \"truthyFollowup\": {\n" +
-            "              \"id\": \"tutorial.survival-guide\",\n" +
-            "              \"steps\": [\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"chop.success\",\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"Good job, {PLAYER_NAME}!\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"There are many kinds of trees in the wilderness\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"Some extremly rare, some not so much\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-guide\"\n" +
-            "                },\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"a5f75927-29ef-4571-a5e9-fcc898ac4f43\",\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"Nevertheless, it's an essential material\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"For crafting bows, making campires and everything in between.\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-guide\"\n" +
-            "                },\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"1e46b592-c072-4f49-9bc7-e65fac9f0ae3\",\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"Now, go meet the §6survival guide.\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"He will teach you how to not starve to death.\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-guide\",\n" +
-            "                  \"actions\": [\n" +
-            "                    \"teleport_player_{world_world}_{x_2493}_{y_128}_{z_2411}\",\n" +
-            "                    \"dialog_quest_step_finish_{stable_id_tutorial.lumberjack-cut-trees}\"\n" +
-            "                  ]\n" +
-            "                }\n" +
-            "              ]\n" +
-            "            },\n" +
-            "            \"falsyFollowup\": {\n" +
-            "              \"id\": \"tutorial.survival-guide\",\n" +
-            "              \"steps\": [\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"check.axe\",\n" +
-            "                  \"type\": \"ConditionStep\",\n" +
-            "                  \"conditions\": [\n" +
-            "                    \"inventory_contains_one_of_{item_id_1000}_{amount_1}\"\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-guide\",\n" +
-            "                  \"falsyFollowup\": {\n" +
-            "                    \"id\": \"tutorial.survival-guide\",\n" +
-            "                    \"steps\": [\n" +
-            "                      {\n" +
-            "                        \"uniqueIdentifier\": \"f5be871e-b243-479a-98ab-8d73af3d17ce\",\n" +
-            "                        \"type\": \"PassiveDialogStep\",\n" +
-            "                        \"content\": [\n" +
-            "                          {\n" +
-            "                            \"line\": \"What? Already lost the axe?\",\n" +
-            "                            \"typewriter\": true\n" +
-            "                          }\n" +
-            "                        ],\n" +
-            "                        \"id\": \"tutorial.survival-guide\",\n" +
-            "                        \"actions\": [\n" +
-            "                          \"give_item_{id_1000}_{amount_1}\"\n" +
-            "                        ]\n" +
-            "                      }\n" +
-            "                    ]\n" +
-            "                  }\n" +
-            "                },\n" +
-            "                {\n" +
-            "                  \"uniqueIdentifier\": \"adc689cb-59a3-467b-9066-e3862f4767cc\",\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"§63 logs,§f cowboy. Aim for the weak spot!\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"id\": \"tutorial.survival-guide\"\n" +
-            "                }\n" +
-            "              ]\n" +
-            "            }\n" +
-            "          }\n" +
-            "        ]\n" +
-            "      }\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"uniqueIdentifier\": \"10a33908-0289-4543-bb8f-3935e74c932e\",\n" +
-            "      \"type\": \"ConditionStep\",\n" +
-            "      \"conditions\": [\n" +
-            "        \"quest_dialog_step_active_{stable_id_tutorial.lumberjack-talk-to}\"\n" +
-            "      ],\n" +
-            "      \"id\": \"tutorial.survival-guide\",\n" +
-            "      \"truthyFollowup\": {\n" +
-            "        \"id\": \"tutorial.survival-guide\",\n" +
-            "        \"steps\": [\n" +
-            "          {\n" +
-            "            \"uniqueIdentifier\": \"8a9f1eef-acca-47b8-b106-90308eacc502\",\n" +
-            "            \"type\": \"PassiveDialogStep\",\n" +
-            "            \"content\": [\n" +
-            "              {\n" +
-            "                \"line\": \"Hey there!\",\n" +
-            "                \"typewriter\": true\n" +
-            "              },\n" +
-            "              {\n" +
-            "                \"line\": \"See that tree over there?\",\n" +
-            "                \"typewriter\": true\n" +
-            "              },\n" +
-            "              {\n" +
-            "                \"line\": \"That’s your first step to surviving out here.\",\n" +
-            "                \"typewriter\": true\n" +
-            "              }\n" +
-            "            ],\n" +
-            "            \"id\": \"tutorial.survival-guide\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"uniqueIdentifier\": \"fdf0d9cb-3018-42ca-b766-2a94de6aa232\",\n" +
-            "            \"type\": \"PassiveDialogStep\",\n" +
-            "            \"content\": [\n" +
-            "              {\n" +
-            "                \"line\": \"By themselves, logs won’t do you much good.\",\n" +
-            "                \"typewriter\": true\n" +
-            "              },\n" +
-            "              {\n" +
-            "                \"line\": \"But you can use them as a material, or start a fire\",\n" +
-            "                \"typewriter\": true\n" +
-            "              }\n" +
-            "            ],\n" +
-            "            \"id\": \"tutorial.survival-guide\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"uniqueIdentifier\": \"cab4125d-79b6-43e7-8586-9af8bd40177d\",\n" +
-            "            \"type\": \"PassiveDialogStep\",\n" +
-            "            \"content\": [\n" +
-            "              {\n" +
-            "                \"line\": \"Ok, enough of talking.\",\n" +
-            "                \"typewriter\": true\n" +
-            "              },\n" +
-            "              {\n" +
-            "                \"line\": \"My job is to teach you how to cut trees, that's it\",\n" +
-            "                \"typewriter\": true\n" +
-            "              }\n" +
-            "            ],\n" +
-            "            \"id\": \"tutorial.survival-guide\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"uniqueIdentifier\": \"83ae92bb-945b-40b2-a6f2-77eb8f05800d\",\n" +
-            "            \"type\": \"PassiveDialogStep\",\n" +
-            "            \"content\": [\n" +
-            "              {\n" +
-            "                \"line\": \"Here, take this axe, and bring me §63 logs.\",\n" +
-            "                \"typewriter\": true\n" +
-            "              }\n" +
-            "            ],\n" +
-            "            \"id\": \"tutorial.survival-guide\",\n" +
-            "            \"actions\": [\n" +
-            "              \"give_item_{id_1000}_{amount_1}\",\n" +
-            "              \"dialog_quest_step_finish_{stable_id_tutorial.lumberjack-talk-to}\"\n" +
-            "            ]\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"uniqueIdentifier\": \"b0eb609f-81af-42c2-847d-c5f1bdafd715\",\n" +
-            "            \"type\": \"PassiveDialogStep\",\n" +
-            "            \"content\": [\n" +
-            "              {\n" +
-            "                \"line\": \"Remember, you can’t just cut the tree anywhere.\",\n" +
-            "                \"typewriter\": true\n" +
-            "              },\n" +
-            "              {\n" +
-            "                \"line\": \"Chop at the §6weak point.\",\n" +
-            "                \"typewriter\": true\n" +
-            "              },\n" +
-            "              {\n" +
-            "                \"line\": \"The marker shows you where.\",\n" +
-            "                \"typewriter\": true\n" +
-            "              }\n" +
-            "            ],\n" +
-            "            \"id\": \"tutorial.survival-guide\"\n" +
-            "          }\n" +
-            "        ]\n" +
-            "      },\n" +
-            "      \"falsyFollowup\": {\n" +
-            "        \"id\": \"tutorial.survival-guide\",\n" +
-            "        \"steps\": []\n" +
-            "      }\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}");
-
-
-    public static final Supplier<DialogBuilder> tutorial_blacksmithDialog = () -> DialogBuilder.deserialize("{\n" +
-            "  \"id\": \"tutorial-island.tutor-blacksmith\",\n" +
-            "  \"steps\": [\n" +
-            "    {\n" +
-            "      \"type\": \"ConditionStep\",\n" +
-            "      \"uniqueIdentifier\": \"9a7bf524-282b-4573-8a35-da46b8f80992\",\n" +
-            "      \"content\": [],\n" +
-            "      \"conditions\": [\n" +
-            "        \"quest_dialog_step_active_{stable_id_tutorial.blacksmith-craft-items}\"\n" +
-            "      ],\n" +
-            "      \"truthyFollowup\": {\n" +
-            "        \"id\": \"tutorial-island.tutor-blacksmith\",\n" +
-            "        \"steps\": [\n" +
-            "          {\n" +
-            "            \"type\": \"ConditionStep\",\n" +
-            "            \"uniqueIdentifier\": \"pickaxe.check\",\n" +
-            "            \"content\": [],\n" +
-            "            \"conditions\": [\n" +
-            "              \"inventory_contains_one_of_{item_id_1100}_{amount_1}\"\n" +
-            "            ],\n" +
-            "            \"falsyFollowup\": {\n" +
-            "              \"id\": \"tutorial-island.tutor-blacksmith\",\n" +
-            "              \"steps\": [\n" +
-            "                {\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"uniqueIdentifier\": \"b1f98f40-5cf3-422b-9a4c-718c73da7dd1\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"If you gonna lose your tools like this, we are getting nowhere!\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"actions\": [\n" +
-            "                    \"give_item_{id_1100}_{amount_1}\"\n" +
-            "                  ]\n" +
-            "                }\n" +
-            "              ]\n" +
-            "            }\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"type\": \"ConditionStep\",\n" +
-            "            \"uniqueIdentifier\": \"hammer.check\",\n" +
-            "            \"content\": [],\n" +
-            "            \"conditions\": [\n" +
-            "              \"inventory_contains_one_of_{item_id_1}_{amount_1}\"\n" +
-            "            ],\n" +
-            "            \"falsyFollowup\": {\n" +
-            "              \"id\": \"tutorial-island.tutor-blacksmith\",\n" +
-            "              \"steps\": [\n" +
-            "                {\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"uniqueIdentifier\": \"0f467344-1d65-41b2-bde1-7619fbab37f3\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"Where is your hammer, rookie?\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"actions\": [\n" +
-            "                    \"give_item_{id_1}_{amount_1}\"\n" +
-            "                  ]\n" +
-            "                }\n" +
-            "              ]\n" +
-            "            }\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"type\": \"ConditionStep\",\n" +
-            "            \"uniqueIdentifier\": \"dagger.check\",\n" +
-            "            \"content\": [],\n" +
-            "            \"conditions\": [\n" +
-            "              \"inventory_contains_one_of_{item_id_800}_{amount_1}\"\n" +
-            "            ],\n" +
-            "            \"truthyFollowup\": {\n" +
-            "              \"id\": \"tutorial-island.tutor-blacksmith\",\n" +
-            "              \"steps\": [\n" +
-            "                {\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"uniqueIdentifier\": \"3a47a384-1561-41fc-9422-3e6204135f92\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"Good job, {PLAYER_NAME}!\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"Remember, this is just the basics\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"actions\": []\n" +
-            "                },\n" +
-            "                {\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"uniqueIdentifier\": \"e2c09661-f0d8-4b5c-964f-fdb01ac692e0\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"Keep mastering your skills\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"Explore the world to find new materials\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"And then §4Rune§eHeim §fwill finally get the hero it deserves\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"actions\": [\n" +
-            "                    \"teleport_player_{world_world}_{x_2510}_{y_103}_{z_2410}\",\n" +
-            "                    \"dialog_quest_step_finish_{stable_id_tutorial.blacksmith-craft-items}\"\n" +
-            "                  ]\n" +
-            "                }\n" +
-            "              ]\n" +
-            "            },\n" +
-            "            \"falsyFollowup\": {\n" +
-            "              \"id\": \"tutorial-island.tutor-blacksmith\",\n" +
-            "              \"steps\": [\n" +
-            "                {\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"uniqueIdentifier\": \"2ab8589b-a251-490f-a230-3bcb639dc530\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"Huh, struggling already?\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"Remember, you need §e1 copper ore§f and §e1 tin ore\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"Then smelt it into a §ebronze bar\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"actions\": []\n" +
-            "                },\n" +
-            "                {\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"uniqueIdentifier\": \"8b8270e4-f8bd-47f2-83e9-ac60d94a0b28\",\n" +
-            "                  \"content\": [\n" +
-            "                    {\n" +
-            "                      \"line\": \"After that, use your §ehammer§f on an §eanvil\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"line\": \"And bring me §e1 Bronze Dagger\",\n" +
-            "                      \"typewriter\": true\n" +
-            "                    }\n" +
-            "                  ],\n" +
-            "                  \"actions\": []\n" +
-            "                }\n" +
-            "              ]\n" +
-            "            }\n" +
-            "          }\n" +
-            "        ]\n" +
-            "      }\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"type\": \"ConditionStep\",\n" +
-            "      \"uniqueIdentifier\": \"4d89e089-3275-4763-8d13-bb65c7901195\",\n" +
-            "      \"content\": [],\n" +
-            "      \"conditions\": [\n" +
-            "        \"quest_dialog_step_active_{stable_id_tutorial.blacksmith-talk-to}\"\n" +
-            "      ],\n" +
-            "      \"truthyFollowup\": {\n" +
-            "        \"id\": \"tutorial-island.tutor-blacksmith\",\n" +
-            "        \"steps\": [\n" +
-            "          {\n" +
-            "            \"type\": \"ConditionStep\",\n" +
-            "            \"uniqueIdentifier\": \"77c8b519-b651-4a91-89ff-9243d42fa108\",\n" +
-            "            \"content\": [],\n" +
-            "            \"conditions\": [\n" +
-            "              \"inventory_contains_one_of_{item_id_1100}_{amount_1}\"\n" +
-            "            ],\n" +
-            "            \"falsyFollowup\": {\n" +
-            "              \"id\": \"tutorial-island.tutor-blacksmith\",\n" +
-            "              \"steps\": [\n" +
-            "                {\n" +
-            "                  \"type\": \"PassiveDialogStep\",\n" +
-            "                  \"uniqueIdentifier\": \"d9567dde-5bb3-42ee-b839-2b5284ab4696\",\n" +
-            "                  \"content\": [],\n" +
-            "                  \"actions\": [\n" +
-            "                    \"give_item_{id_1100}_{amount_1}\"\n" +
-            "                  ]\n" +
-            "                }\n" +
-            "              ]\n" +
-            "            }\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"type\": \"InteractiveDialogStep\",\n" +
-            "            \"uniqueIdentifier\": \"916d78e3-2d3d-407a-8224-81cc1cea83c3\",\n" +
-            "            \"content\": [\n" +
-            "              {\n" +
-            "                \"line\": \"Hello, {PLAYER_NAME}! You are new around here?\",\n" +
-            "                \"typewriter\": true\n" +
-            "              }\n" +
-            "            ],\n" +
-            "            \"options\": [\n" +
-            "              {\n" +
-            "                \"label\": \"Yes!\",\n" +
-            "                \"actions\": [],\n" +
-            "                \"followup\": {\n" +
-            "                  \"id\": \"tutorial-island.tutor-blacksmith\",\n" +
-            "                  \"steps\": [\n" +
-            "                    {\n" +
-            "                      \"type\": \"PassiveDialogStep\",\n" +
-            "                      \"uniqueIdentifier\": \"e788b6a4-3541-412f-bcef-9b51118566b4\",\n" +
-            "                      \"content\": [\n" +
-            "                        {\n" +
-            "                          \"line\": \"Great! Welcome to the §4Rune§6Heim, §f{PLAYER_NAME}!\",\n" +
-            "                          \"typewriter\": true\n" +
-            "                        },\n" +
-            "                        {\n" +
-            "                          \"line\": \"Many great adventures await!\",\n" +
-            "                          \"typewriter\": true\n" +
-            "                        }\n" +
-            "                      ],\n" +
-            "                      \"actions\": []\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"type\": \"PassiveDialogStep\",\n" +
-            "                      \"uniqueIdentifier\": \"eac6ca56-46f1-43e5-92e3-103513bb7113\",\n" +
-            "                      \"content\": [\n" +
-            "                        {\n" +
-            "                          \"line\": \"Unfortunately for you, you won't even get past the city gates!\",\n" +
-            "                          \"typewriter\": true\n" +
-            "                        },\n" +
-            "                        {\n" +
-            "                          \"line\": \"But you are lucky I am here, I'll help you out.\",\n" +
-            "                          \"typewriter\": true\n" +
-            "                        }\n" +
-            "                      ],\n" +
-            "                      \"actions\": []\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"type\": \"PassiveDialogStep\",\n" +
-            "                      \"uniqueIdentifier\": \"guide.start\",\n" +
-            "                      \"content\": [\n" +
-            "                        {\n" +
-            "                          \"line\": \"The wilderness is full of different creatures\",\n" +
-            "                          \"typewriter\": true\n" +
-            "                        },\n" +
-            "                        {\n" +
-            "                          \"line\": \"And without any §6gear§f You’ll end up as a goblin’s dinner.\",\n" +
-            "                          \"typewriter\": true\n" +
-            "                        }\n" +
-            "                      ],\n" +
-            "                      \"actions\": []\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"type\": \"PassiveDialogStep\",\n" +
-            "                      \"uniqueIdentifier\": \"fa2bf496-b73b-46b9-a473-78a5f89ca907\",\n" +
-            "                      \"content\": [\n" +
-            "                        {\n" +
-            "                          \"line\": \"First of all you need to mine exactly §e1 copper ore and §e1 tin ore.\",\n" +
-            "                          \"typewriter\": true\n" +
-            "                        },\n" +
-            "                        {\n" +
-            "                          \"line\": \"Then, smelt them into a §ebronze bar.\",\n" +
-            "                          \"typewriter\": true\n" +
-            "                        }\n" +
-            "                      ],\n" +
-            "                      \"actions\": []\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"type\": \"PassiveDialogStep\",\n" +
-            "                      \"uniqueIdentifier\": \"a9074ef0-00f9-4f7a-a0fd-88453cee1966\",\n" +
-            "                      \"content\": [\n" +
-            "                        {\n" +
-            "                          \"line\": \"After that, use your hammer on an §eAnvil\",\n" +
-            "                          \"typewriter\": true\n" +
-            "                        },\n" +
-            "                        {\n" +
-            "                          \"line\": \"And select §eBronze Dagger\",\n" +
-            "                          \"typewriter\": true\n" +
-            "                        },\n" +
-            "                        {\n" +
-            "                          \"line\": \"Oh, I almost forgot! Take this hammer, too.\",\n" +
-            "                          \"typewriter\": true\n" +
-            "                        }\n" +
-            "                      ],\n" +
-            "                      \"actions\": [\n" +
-            "                        \"give_item_{id_1}_{amount_1}\",\n" +
-            "                        \"dialog_quest_step_finish_{stable_id_tutorial.blacksmith-talk-to}\"\n" +
-            "                      ]\n" +
-            "                    }\n" +
-            "                  ]\n" +
-            "                }\n" +
-            "              },\n" +
-            "              {\n" +
-            "                \"label\": \"Uh, no\",\n" +
-            "                \"actions\": [],\n" +
-            "                \"followup\": {\n" +
-            "                  \"id\": \"tutorial-island.tutor-blacksmith\",\n" +
-            "                  \"steps\": [\n" +
-            "                    {\n" +
-            "                      \"type\": \"PassiveDialogStep\",\n" +
-            "                      \"uniqueIdentifier\": \"7e340949-3558-4bf4-b7cd-f00488caf3bc\",\n" +
-            "                      \"content\": [\n" +
-            "                        {\n" +
-            "                          \"line\": \"Trying to be funny, eh?\",\n" +
-            "                          \"typewriter\": true\n" +
-            "                        },\n" +
-            "                        {\n" +
-            "                          \"line\": \"I remember everyone whom I taught how to survive.\",\n" +
-            "                          \"typewriter\": true\n" +
-            "                        }\n" +
-            "                      ],\n" +
-            "                      \"actions\": []\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"type\": \"PassiveDialogStep\",\n" +
-            "                      \"uniqueIdentifier\": \"95adfd2e-3a52-4a89-951c-afea8df217b5\",\n" +
-            "                      \"content\": [\n" +
-            "                        {\n" +
-            "                          \"line\": \"You won't get even past the city gates!\",\n" +
-            "                          \"typewriter\": true\n" +
-            "                        }\n" +
-            "                      ],\n" +
-            "                      \"actions\": []\n" +
-            "                    },\n" +
-            "                    {\n" +
-            "                      \"type\": \"TeleportBranchStep\",\n" +
-            "                      \"uniqueIdentifier\": \"be490770-c9e7-4ecd-ad34-bad6a93d63e7\",\n" +
-            "                      \"teleportToUniqueIdentifier\": \"guide.start\",\n" +
-            "                      \"content\": [],\n" +
-            "                      \"actions\": []\n" +
-            "                    }\n" +
-            "                  ]\n" +
-            "                }\n" +
-            "              }\n" +
-            "            ]\n" +
-            "          }\n" +
-            "        ]\n" +
-            "      }\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}");
+    public static final Supplier<DialogBuilder> tutorial_survivalGuide = () -> DialogBuilder.deserialize("{\"id\":\"tutorial.survival-dialog\",\"steps\":[{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"cb700178-f54d-4a1b-89c6-d149d75e5f5f\",\"content\":[],\"conditions\":[\"quest_step_active_{stable_id_tutorial.survival-collect-bones}\"],\"logicalOperator\":\"AND\",\"truthyFollowup\":{\"id\":\"tutorial.survival-dialog\",\"steps\":[{\"type\":\"TeleportBranchStep\",\"uniqueIdentifier\":\"48e8e0a8-854e-4dbd-9a66-90819667a866\",\"teleportToUniqueIdentifier\":\"struggling.killing\",\"content\":[],\"actions\":[],\"uuid\":\"8719a8d2-9a4c-4c03-bf99-14a3045e23e1\"}],\"uuid\":\"a8b38ec8-6bcc-4cf3-98c9-2990c4e7547b\"},\"uuid\":\"9aa725b3-be99-4da5-8b76-a5e3939384a4\"},{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"981acdf1-cbc3-481e-acae-444af668a0cc\",\"content\":[],\"conditions\":[\"quest_step_active_{stable_id_tutorial.survival-cook-fish}\"],\"logicalOperator\":\"AND\",\"truthyFollowup\":{\"id\":\"tutorial.survival-dialog\",\"steps\":[{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"on.fish.cooked\",\"content\":[],\"conditions\":[\"inventory_contains_one_of_{item_id_1200}_{amount_1}\"],\"logicalOperator\":\"AND\",\"truthyFollowup\":{\"id\":\"tutorial.survival-dialog\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"361db2ae-b461-49db-b5b8-e2199f05c964\",\"content\":[{\"line\":\"Awesome! {PLAYER_NAME}\",\"typewriter\":true},{\"line\":\"You are making progress!\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"11bd419e-a634-4d5d-b668-1a9b170ce16a\"},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"db6053e9-2297-479d-a46d-766a79c9c529\",\"content\":[{\"line\":\"This is just the small part of the possibilities.\",\"typewriter\":true},{\"line\":\"There are many skills and activities!\",\"typewriter\":true},{\"line\":\"But you will have to figure those on your own.\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"ad4eb4f9-6372-4ebd-8460-39b2cce0fa18\"},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"76362c2d-66aa-48e9-8f81-56e207e1faf5\",\"content\":[{\"line\":\"Now it’s time to say goodbye.\",\"typewriter\":true},{\"line\":\"It was pleasure meeting you, {PLAYER_NAME}!\",\"typewriter\":true}],\"actions\":[\"quest_step_finish_{stable_id_tutorial.survival-cook-fish}\",\"teleport_player_{world_world}_{x_192}_{y_73}_{z_-70}\",\"clear_inventory\"],\"uuid\":\"3f2c8e0c-916d-4e09-a4e6-c5aba56dd4ec\"}],\"uuid\":\"6c59187b-3b3e-4b71-8c46-72a0eb080703\"},\"falsyFollowup\":{\"id\":\"tutorial.survival-dialog\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"struggling.cooking\",\"content\":[{\"line\":\"Cook and bring me §61 raw herring.\",\"typewriter\":true},{\"line\":\"You can either start a campfire, or use my stove.\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"cc7ddb7a-6b41-47f7-bbe5-880fe7646e89\"},{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"check.if.player.has.no.net\",\"content\":[],\"conditions\":[\"inventory_contains_one_of_{item_id_1500}_{amount_1}\"],\"logicalOperator\":\"AND\",\"falsyFollowup\":{\"id\":\"tutorial.survival-dialog\",\"steps\":[{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"check.if.player.has.no.net.or.raw.fish\",\"content\":[],\"conditions\":[\"inventory_contains_one_of_{item_id_1300}_{amount_1}\"],\"logicalOperator\":\"AND\",\"falsyFollowup\":{\"id\":\"tutorial.survival-dialog\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"2af32d7d-ba39-42b7-b863-e6c27348ff9a\",\"content\":[{\"line\":\"Oh, how did you manage to lose everything?\",\"typewriter\":true}],\"actions\":[\"give_item_{id_1500}_{amount_1}\"],\"uuid\":\"2a8f4628-421d-45ea-9d67-164d0f8f07e3\"}],\"uuid\":\"d149eea9-e6b4-4637-bc2a-6183f82ae65d\"},\"uuid\":\"cd92cd3f-d5ca-4b12-90e8-bf513ffd38c3\"}],\"uuid\":\"f720609a-6a41-46a2-aac5-b393a1cf599d\"},\"uuid\":\"0cf1ad21-ef3a-49c5-aecc-b9cfc5722da0\"}],\"uuid\":\"80640365-9481-4fdb-a367-ea9a0d2cc0c1\"},\"uuid\":\"c3476824-abcd-429e-a3f7-b45cd650b09a\"}],\"uuid\":\"b66c5ade-fd3d-4b09-848c-637db97754c3\"},\"uuid\":\"c677cc44-f61c-438b-af1f-aa49a816947a\"},{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"797c964e-683e-4602-9597-d008de454161\",\"content\":[],\"conditions\":[\"quest_step_active_{stable_id_tutorial.survival-collect-herrings}\"],\"logicalOperator\":\"AND\",\"truthyFollowup\":{\"id\":\"tutorial.survival-dialog\",\"steps\":[{\"type\":\"TeleportBranchStep\",\"uniqueIdentifier\":\"6fded001-7a8c-419f-96b6-74e5c9c71cad\",\"teleportToUniqueIdentifier\":\"struggling.fishing\",\"content\":[],\"actions\":[],\"uuid\":\"9d110a06-be17-40db-b846-b95d1b0f4ef2\"}],\"uuid\":\"cb78289a-97a5-4603-abad-894d0b805d8f\"},\"uuid\":\"bd64c536-4962-47c9-90ef-177d7b8e7f40\"},{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"77e2039a-67a6-4713-906e-b7069af83669\",\"content\":[],\"conditions\":[\"quest_step_active_{stable_id_tutorial.survival-cook-herring}\"],\"logicalOperator\":\"AND\",\"truthyFollowup\":{\"id\":\"tutorial.survival-dialog\",\"steps\":[{\"type\":\"TeleportBranchStep\",\"uniqueIdentifier\":\"100b594b-7633-439d-a887-7a118242e194\",\"teleportToUniqueIdentifier\":\"struggling.cooking\",\"content\":[],\"actions\":[],\"uuid\":\"cbe7971d-3ab3-4ee9-9599-520a91ef0cd7\"}],\"uuid\":\"8c90bf2d-83a3-4b61-a757-c636c444e165\"},\"uuid\":\"397b9b13-f2e0-4ac2-a38a-8180a5f2ceec\"},{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"6bdd39c0-f7e1-4ce5-afd3-2eb7935423ac\",\"content\":[],\"conditions\":[\"quest_step_active_{stable_id_tutorial.survival-bring-herrings}\"],\"logicalOperator\":\"AND\",\"truthyFollowup\":{\"id\":\"tutorial.survival-dialog\",\"steps\":[{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"on.fish.catch\",\"content\":[],\"conditions\":[\"inventory_contains_one_of_{item_id_1300}_{amount_3}\"],\"logicalOperator\":\"AND\",\"truthyFollowup\":{\"id\":\"tutorial.survival-dialog\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"48c3c07f-6608-46e5-8a29-62ff63f6c504\",\"content\":[{\"line\":\"You’re raising my hopes. {PLAYER_NAME}\",\"typewriter\":true},{\"line\":\"But theres not much you can do with a raw fish!\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"bcfa65b3-c4bc-44de-b9fa-3e9aa5ed5dff\"},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"5a12b45f-ca02-4556-bcbb-f543552bcb7d\",\"content\":[{\"line\":\"So now let's cook it!\",\"typewriter\":true},{\"line\":\"In order to do that, you need a fire source.\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"c6933b56-3c80-467a-aeeb-b0d255ca8b58\"},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"afdef1ed-f7d2-4303-8ed2-b00f324c334b\",\"content\":[{\"line\":\"Usually in the cities, you can simply use someones stove\",\"typewriter\":true},{\"line\":\"But if you are in the wilderness, you will need to make a §6campfire\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"a91c2ea5-6807-4ecf-9f8f-9d91f6004028\"},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"254bcd49-233d-4944-96ac-87f1c607c97c\",\"content\":[{\"line\":\"To start a campfire, you need some §6logs§f & §6flint and steel.\",\"typewriter\":true},{\"line\":\"Then, you need to click a log with a flint in your inventory.\",\"typewriter\":true},{\"line\":\"Here, you can take mine. Or you can just use my stove.\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"dcfe0153-b414-443e-9cd2-300149d75620\"},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"4476b0f4-9ed8-42d4-8221-847deb49d33a\",\"content\":[{\"line\":\"Then, cook and bring me §61 cooked herring.\",\"typewriter\":true}],\"actions\":[\"give_item_{id_1600}_{amount_3}\",\"give_item_{id_2}_{amount_1}\",\"quest_step_finish_{stable_id_tutorial.survival-bring-herrings}\"],\"uuid\":\"1e34f393-dbad-4842-b898-8736dbec4502\"}],\"uuid\":\"2c6ab6fd-8606-4645-b642-e03644caca45\"},\"falsyFollowup\":{\"id\":\"tutorial.survival-dialog\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"struggling.fishing\",\"content\":[{\"line\":\"Bring me §63 raw herrings,§f {PLAYER_NAME}.\",\"typewriter\":true},{\"line\":\"Use the fishing spots behind this house.\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"c72b37f5-5de4-4dc7-a0dc-14f753623f0f\"},{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"fishing.net.check\",\"content\":[],\"conditions\":[\"inventory_contains_one_of_{item_id_1500}_{amount_1}\"],\"logicalOperator\":\"AND\",\"falsyFollowup\":{\"id\":\"tutorial.survival-dialog\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"11ebca4c-5d2e-4f07-9b30-a65d5c7b2bd4\",\"content\":[{\"line\":\"Oh, how did you manage to lose the fishing net?\",\"typewriter\":true}],\"actions\":[\"give_item_{id_1500}_{amount_1}\"],\"uuid\":\"6a606944-ff45-42c9-9838-ac1cb452581f\"},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"b2d71e0e-5a50-4259-a393-e3fd39d833db\",\"content\":[{\"line\":\"Don't lose it this time!\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"e4f555d5-8b89-417b-b401-aeb55714effd\"}],\"uuid\":\"42954db9-ed35-430b-8b07-8e84f14ae38f\"},\"uuid\":\"ffd078d2-3ed8-44e3-9339-eb83cc7c1420\"}],\"uuid\":\"ffb24498-d953-478f-9f77-e1b90602c07b\"},\"uuid\":\"6a829c9d-8d93-46d5-ab2f-8c24ec1b304b\"}],\"uuid\":\"0912f9ce-fdfd-4c92-9ec8-bad69b25649f\"},\"uuid\":\"76092be4-646f-4c33-82db-ec3f83776e94\"},{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"93d0c859-2399-4b3f-8f16-11e4d73bb594\",\"content\":[],\"conditions\":[\"quest_step_active_{stable_id_tutorial.survival-bring-bones}\"],\"logicalOperator\":\"AND\",\"truthyFollowup\":{\"id\":\"tutorial.survival-dialog\",\"steps\":[{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"149e392c-f3ae-4a77-9b83-e08ee9b7443b\",\"content\":[],\"conditions\":[\"inventory_contains_one_of_{item_id_2600}_{amount_3}\"],\"logicalOperator\":\"AND\",\"truthyFollowup\":{\"id\":\"tutorial.survival-dialog\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"70302339-ef97-4617-bf87-58107f73235a\",\"content\":[{\"line\":\"Oh lord, you are looking tired, haha\",\"typewriter\":true},{\"line\":\"But good job!\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"e03f5101-b354-4b51-acc9-449a46778f04\"},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"9f4c3eca-8025-4fec-b9b6-0f600e20175f\",\"content\":[{\"line\":\"Okay, now let's teach you how to catch some fish\",\"typewriter\":true},{\"line\":\"Some food will always be handy when you need\",\"typewriter\":true},{\"line\":\"To restore some of your §chitspoints.\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"0c08418d-e021-4880-b86c-1a68ad6c3196\"},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"580466bb-df8a-4dc7-a55a-e978ab6a1ed2\",\"content\":[{\"line\":\"Here, take this fishing net, and bring me §63 raw herrings.\",\"typewriter\":true},{\"line\":\"You can find the fishing spots behind my house.\",\"typewriter\":true}],\"actions\":[\"give_item_{id_1500}_{amount_1}\",\"quest_step_finish_{stable_id_tutorial.survival-bring-bones}\"],\"uuid\":\"dac1715b-b0ad-482d-92d3-786a8329e907\"}],\"uuid\":\"735e985c-4d21-45d3-848e-1b25dae2ec5b\"},\"falsyFollowup\":{\"id\":\"tutorial.survival-dialog\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"struggling.killing\",\"content\":[{\"line\":\"Kill §63 goblins§f and bring me §63 bones.\",\"typewriter\":true},{\"line\":\"You can find goblins down the river.\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"ebef654f-589a-4619-b4eb-af43c7812ee1\"}],\"uuid\":\"12d4940e-36a8-4c68-91db-f2ed4c88863d\"},\"uuid\":\"6923f5ea-2338-44aa-8d57-014cf7fb457f\"}],\"uuid\":\"eb479e81-1fef-4e36-971b-8b26010869d1\"},\"uuid\":\"53be8609-25ee-414c-9911-196e543c7778\"},{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"3c194caa-0a52-4998-9c85-69920db183b1\",\"content\":[],\"conditions\":[\"quest_step_active_{stable_id_tutorial.survival-talk-to}\"],\"logicalOperator\":\"AND\",\"truthyFollowup\":{\"id\":\"tutorial.survival-dialog\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"f01067d4-d21f-411c-9c37-4bb96f57147b\",\"content\":[{\"line\":\"Hello there, stranger!\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"87b4d2b8-c47f-4def-a452-d313324e2cb9\"},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"fa45a399-33ae-48d4-97ee-f5f29f2ceb36\",\"content\":[{\"line\":\"Hmm... Yeah\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"57160e22-12f9-4e94-a7c1-e0c82e0671e1\"},{\"type\":\"InteractiveDialogStep\",\"uniqueIdentifier\":\"47f0a999-67a0-4131-ba19-17dc3a3b5885\",\"content\":[{\"line\":\"*rolls his eyes*\",\"typewriter\":true}],\"options\":[{\"label\":\"What?\",\"actions\":[],\"followup\":{\"id\":\"followup-empty\",\"steps\":[],\"uuid\":\"33357299-eb35-4464-b6b2-4a81bafcdcbc\"}},{\"label\":\"Hm?\",\"actions\":[],\"followup\":{\"id\":\"followup-empty\",\"steps\":[],\"uuid\":\"943a1bba-8111-4278-9aec-8ea885abca43\"}}],\"uuid\":\"56b9a823-7d80-4927-9fa4-e45217cbd9f1\"},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"a73a6f44-9625-4a95-91d0-96b3b5b56e63\",\"content\":[{\"line\":\"Ahem, right, sorry\",\"typewriter\":true},{\"line\":\"So, you are {PLAYER_NAME}?\",\"typewriter\":true},{\"line\":\"Ok, there are some important things to go over.\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"71ff78d7-c06d-4eab-943d-f9a4e719b154\"},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"5b9d9ab7-51bc-42d1-95f3-a841b9f121e7\",\"content\":[{\"line\":\"First of all, you must know how to protect yourself\",\"typewriter\":true},{\"line\":\"There are many creatures out of there, some friendly\",\"typewriter\":true},{\"line\":\"And others will take any chance to fight you\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"fe35b989-c94d-44ad-bdfa-e2fd57f86df8\"},{\"type\":\"InteractiveDialogStep\",\"uniqueIdentifier\":\"9bbe478b-edea-4700-aee8-e1affc783698\",\"content\":[{\"line\":\"What’s your favorite weapon?\",\"typewriter\":true}],\"options\":[{\"label\":\"A sword\",\"actions\":[\"give_item_{id_700}_{amount_1}\"],\"followup\":{\"id\":\"tutorial.survival-dialog\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"cbe63edf-43a0-418c-846d-60aa4754bdcd\",\"content\":[{\"line\":\"Solid choice!\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"3ed897b9-fb5e-48e6-87b4-21d7cdf35089\"},{\"type\":\"TeleportBranchStep\",\"uniqueIdentifier\":\"d1b745fa-36f6-4116-8279-8225c331534f\",\"teleportToUniqueIdentifier\":\"initial.countination\",\"content\":[],\"actions\":[],\"uuid\":\"4eb13b5c-dac7-4663-b79c-210f980546a8\"}],\"uuid\":\"9a68e400-0e86-4830-ac1d-f614415115ae\"}},{\"label\":\"A bow\",\"actions\":[\"give_item_{id_2400}_{amount_1}\",\"give_item_{id_2500}_{amount_64}\"],\"followup\":{\"id\":\"tutorial.survival-dialog\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"c351b0eb-ee50-462a-86c4-2006dd1bdda5\",\"content\":[{\"line\":\"Perfect! Take this bow and arrows.\",\"typewriter\":true},{\"line\":\"Now open your inventory, and put arrows in the arrows slot.\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"1429c16b-f059-4dcf-a5c7-5056da7561eb\"},{\"type\":\"TeleportBranchStep\",\"uniqueIdentifier\":\"2815dcf9-57ba-462b-9e7f-380c93840c5f\",\"teleportToUniqueIdentifier\":\"initial.countination\",\"content\":[],\"actions\":[],\"uuid\":\"5e012616-51c3-4ebb-81f2-11359cbb5271\"}],\"uuid\":\"be016919-eadd-4eac-ab8a-6cfb87c344cf\"}}],\"uuid\":\"3b5de258-83e6-45f7-94cd-d1eaf41f72fb\"},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"initial.countination\",\"content\":[{\"line\":\"Now, there are goblins down the river\",\"typewriter\":true},{\"line\":\"They are driving me crazy\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"8caeed0e-a1d2-49fd-bc7b-63e2f97f05ee\"},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"3825f278-2f14-4fc2-81bf-c17fd519ecf2\",\"content\":[{\"line\":\"I want you to kill §63 goblins§f and bring me §63 bones§f as proof.\",\"typewriter\":true},{\"line\":\"Oh and yeah, you can also do special attacks!\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"53669abc-3b5f-479c-890a-ddb7b22ab1eb\"},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"f2acca0d-490d-4e65-98bd-823a7a626a90\",\"content\":[{\"line\":\"Hold §6[SNEAK]§f while attacking to do a special attack\",\"typewriter\":true},{\"line\":\"Your special attack regenerates slowly during the fights.\",\"typewriter\":true}],\"actions\":[],\"uuid\":\"18817f1d-eacc-42c1-948d-73c63d790c5b\"},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"a4c42b01-604d-4b7e-83b6-509c0b55870e\",\"content\":[{\"line\":\"Godspeed! Bring me §63 bones.\",\"typewriter\":true},{\"line\":\"Just a tip: do not attack multiple goblins at same time!\",\"typewriter\":true},{\"line\":\"Don't ask why, just trust the process.\",\"typewriter\":true}],\"actions\":[\"quest_step_finish_{stable_id_tutorial.survival-talk-to}\"],\"uuid\":\"0bb58923-1589-4faf-ab5d-112ccefa33f1\"}],\"uuid\":\"72f7fbf5-4667-44c4-aa7a-21a32a1247d2\"},\"uuid\":\"41fc799a-eb8c-4421-a827-36466b261e67\"}],\"uuid\":\"5a288702-d5a4-4ecd-bd0e-6dc4c913cf9f\"}");
+    public static final Supplier<DialogBuilder> tutorial_lumberjack = () -> DialogBuilder.deserialize("{\"id\":\"tutorial.survival-guide\",\"steps\":[{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"be20eee3-fe8d-445e-9fd9-cf8b93157f6d\",\"content\":[],\"conditions\":[\"quest_step_active_{stable_id_tutorial.lumberjack-collect-logs}\"],\"logicalOperator\":\"AND\",\"truthyFollowup\":{\"id\":\"tutorial.survival-guide\",\"steps\":[{\"type\":\"TeleportBranchStep\",\"uniqueIdentifier\":\"a351365d-b87f-4c9b-aea2-c7d7ec2ff09c\",\"teleportToUniqueIdentifier\":\"struggling.block\",\"content\":[]}]}},{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"73099b3f-38a0-4bae-9eed-6494661c0a18\",\"content\":[],\"conditions\":[\"quest_step_active_{stable_id_tutorial.lumberjack-bring-logs}\"],\"logicalOperator\":\"AND\",\"truthyFollowup\":{\"id\":\"tutorial.survival-guide\",\"steps\":[{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"check.for.logs\",\"content\":[],\"conditions\":[\"inventory_contains_one_of_{item_id_1600}_{amount_3}\"],\"logicalOperator\":\"AND\",\"truthyFollowup\":{\"id\":\"tutorial.survival-guide\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"chop.success\",\"content\":[{\"line\":\"Good job, {PLAYER_NAME}!\",\"typewriter\":true},{\"line\":\"There are many kinds of trees in the wilderness\",\"typewriter\":true},{\"line\":\"Some extremly rare, some not so much\",\"typewriter\":true}]},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"a5f75927-29ef-4571-a5e9-fcc898ac4f43\",\"content\":[{\"line\":\"Nevertheless, it\\u0027s an essential material\",\"typewriter\":true},{\"line\":\"For crafting bows, making campires and everything in between.\",\"typewriter\":true}]},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"1e46b592-c072-4f49-9bc7-e65fac9f0ae3\",\"content\":[{\"line\":\"Now, go meet the §6survival guide.\",\"typewriter\":true},{\"line\":\"He will teach you how to not starve to death.\",\"typewriter\":true}],\"actions\":[\"teleport_player_{world_world}_{x_2493}_{y_128}_{z_2411}\",\"quest_step_finish_{stable_id_tutorial.lumberjack-bring-logs}\"]}]},\"falsyFollowup\":{\"id\":\"tutorial.survival-guide\",\"steps\":[{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"check.axe\",\"content\":[],\"conditions\":[\"inventory_contains_one_of_{item_id_1000}_{amount_1}\"],\"logicalOperator\":\"AND\",\"falsyFollowup\":{\"id\":\"tutorial.survival-guide\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"f5be871e-b243-479a-98ab-8d73af3d17ce\",\"content\":[{\"line\":\"What? Already lost the axe?\",\"typewriter\":true}],\"actions\":[\"give_item_{id_1000}_{amount_1}\"]}]}},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"struggling.block\",\"content\":[{\"line\":\"§63 logs,§f cowboy. Aim for the weak spot!\",\"typewriter\":true}]}]}}]}},{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"10a33908-0289-4543-bb8f-3935e74c932e\",\"content\":[],\"conditions\":[\"quest_step_active_{stable_id_tutorial.lumberjack-talk-to}\"],\"logicalOperator\":\"AND\",\"truthyFollowup\":{\"id\":\"tutorial.survival-guide\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"8a9f1eef-acca-47b8-b106-90308eacc502\",\"content\":[{\"line\":\"Hey there!\",\"typewriter\":true},{\"line\":\"See that tree over there?\",\"typewriter\":true},{\"line\":\"That’s your first step to surviving out here.\",\"typewriter\":true}]},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"fdf0d9cb-3018-42ca-b766-2a94de6aa232\",\"content\":[{\"line\":\"By themselves, logs won’t do you much good.\",\"typewriter\":true},{\"line\":\"But you can use them as a material, or start a fire\",\"typewriter\":true}]},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"cab4125d-79b6-43e7-8586-9af8bd40177d\",\"content\":[{\"line\":\"Ok, enough of talking.\",\"typewriter\":true},{\"line\":\"My job is to teach you how to cut trees, that\\u0027s it\",\"typewriter\":true}]},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"83ae92bb-945b-40b2-a6f2-77eb8f05800d\",\"content\":[{\"line\":\"Here, take this axe, and bring me §63 logs.\",\"typewriter\":true}],\"actions\":[\"give_item_{id_1000}_{amount_1}\",\"quest_step_finish_{stable_id_tutorial.lumberjack-talk-to}\"]},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"b0eb609f-81af-42c2-847d-c5f1bdafd715\",\"content\":[{\"line\":\"Remember, you can’t just cut the tree anywhere.\",\"typewriter\":true},{\"line\":\"Chop at the §6weak point.\",\"typewriter\":true},{\"line\":\"The marker shows you where.\",\"typewriter\":true}]}]}}]}");
+    public static final Supplier<DialogBuilder> tutorial_blacksmithDialog = () -> DialogBuilder.deserialize("{\"id\":\"tutorial-island.tutor-blacksmith\",\"steps\":[{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"4d89e089-3275-4763-8d13-bb65c7901195\",\"content\":[],\"conditions\":[\"quest_step_active_{stable_id_tutorial.blacksmith-talk-to}\"],\"logicalOperator\":\"AND\",\"truthyFollowup\":{\"id\":\"tutorial-island.tutor-blacksmith\",\"steps\":[{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"77c8b519-b651-4a91-89ff-9243d42fa108\",\"content\":[],\"conditions\":[\"inventory_contains_one_of_{item_id_1100}_{amount_1}\"],\"logicalOperator\":\"AND\",\"falsyFollowup\":{\"id\":\"tutorial-island.tutor-blacksmith\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"d9567dde-5bb3-42ee-b839-2b5284ab4696\",\"content\":[],\"actions\":[\"give_item_{id_1100}_{amount_1}\"],\"uuid\":\"534940fd-b860-4351-afc4-9401eab71edb\"}],\"uuid\":\"7062ed40-68ab-4cd3-b37a-f65a5497425e\"},\"uuid\":\"411ab5ad-1539-4fb1-b3a1-8fa891800ea1\"},{\"type\":\"InteractiveDialogStep\",\"uniqueIdentifier\":\"916d78e3-2d3d-407a-8224-81cc1cea83c3\",\"content\":[{\"line\":\"Hello, {PLAYER_NAME}! You are new around here?\",\"typewriter\":true}],\"options\":[{\"label\":\"Yes!\",\"actions\":[],\"followup\":{\"id\":\"tutorial-island.tutor-blacksmith\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"e788b6a4-3541-412f-bcef-9b51118566b4\",\"content\":[{\"line\":\"Great! Welcome to the §4Rune§6Heim, §f{PLAYER_NAME}!\",\"typewriter\":true},{\"line\":\"Many great adventures await!\",\"typewriter\":true}],\"uuid\":\"4b014ba0-7bb2-498f-9aff-2c3f5aaefa16\",\"actions\":[]},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"eac6ca56-46f1-43e5-92e3-103513bb7113\",\"content\":[{\"line\":\"Unfortunately for you, you won't even get past the city gates!\",\"typewriter\":true},{\"line\":\"But you are lucky I am here, I'll help you out.\",\"typewriter\":true}],\"uuid\":\"5d145759-8525-41a2-93df-296852019cb5\",\"actions\":[]},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"guide.start\",\"content\":[{\"line\":\"The wilderness is full of different creatures\",\"typewriter\":true},{\"line\":\"And without any §6gear§f You’ll end up as a goblin’s dinner.\",\"typewriter\":true}],\"uuid\":\"57c38538-6f13-4b4b-a7f1-9818ecc3f91d\",\"actions\":[]},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"fa2bf496-b73b-46b9-a473-78a5f89ca907\",\"content\":[{\"line\":\"First of all you need to mine exactly §e1 copper ore and §e1 tin ore.\",\"typewriter\":true},{\"line\":\"Then, smelt them into a §ebronze bar.\",\"typewriter\":true}],\"uuid\":\"0eecf94c-9ea9-4b4e-9f68-f25fd4d8db8b\",\"actions\":[]},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"a9074ef0-00f9-4f7a-a0fd-88453cee1966\",\"content\":[{\"line\":\"After that, use your hammer on an §eAnvil\",\"typewriter\":true},{\"line\":\"And select §eBronze Dagger\",\"typewriter\":true},{\"line\":\"Oh, I almost forgot! Take this hammer, too.\",\"typewriter\":true}],\"actions\":[\"give_item_{id_1}_{amount_1}\",\"quest_step_finish_{stable_id_tutorial.blacksmith-talk-to}\"],\"uuid\":\"e2a65ce1-ac82-49ae-8ea9-11c3c85c201f\"}],\"uuid\":\"e7f1a4fb-644b-4917-a475-a10c550342f1\"}},{\"label\":\"Uh, no\",\"actions\":[],\"followup\":{\"id\":\"tutorial-island.tutor-blacksmith\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"7e340949-3558-4bf4-b7cd-f00488caf3bc\",\"content\":[{\"line\":\"Trying to be funny, eh?\",\"typewriter\":true},{\"line\":\"I remember everyone whom I taught how to survive.\",\"typewriter\":true}],\"uuid\":\"a397cd7d-182e-4bcc-b441-784b17e5386b\",\"actions\":[]},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"95adfd2e-3a52-4a89-951c-afea8df217b5\",\"content\":[{\"line\":\"You won't get even past the city gates!\",\"typewriter\":true}],\"uuid\":\"9bf48c53-b09f-480a-8ba4-df83abe8410e\",\"actions\":[]},{\"type\":\"TeleportBranchStep\",\"uniqueIdentifier\":\"be490770-c9e7-4ecd-ad34-bad6a93d63e7\",\"teleportToUniqueIdentifier\":\"guide.start\",\"content\":[],\"uuid\":\"d2e5a063-de08-4a80-82eb-08dde0d36a87\",\"actions\":[]}],\"uuid\":\"aa7b428d-3b7e-46a6-b22d-e87d2edb8c09\"}}],\"uuid\":\"e08b2d44-6c99-4bc0-863d-c0acdb008570\"}],\"uuid\":\"77582dde-d101-4b84-974c-120789c7a5c9\"},\"uuid\":\"f2dfb919-fc62-4289-b4a0-c5df32ba7e03\"},{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"9a7bf524-282b-4573-8a35-da46b8f80992\",\"content\":[],\"conditions\":[\"quest_step_active_{stable_id_tutorial.blacksmith-bring-dagger}\"],\"logicalOperator\":\"AND\",\"truthyFollowup\":{\"id\":\"tutorial-island.tutor-blacksmith\",\"steps\":[{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"pickaxe.check\",\"content\":[],\"conditions\":[\"inventory_contains_one_of_{item_id_1100}_{amount_1}\"],\"logicalOperator\":\"AND\",\"falsyFollowup\":{\"id\":\"tutorial-island.tutor-blacksmith\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"b1f98f40-5cf3-422b-9a4c-718c73da7dd1\",\"content\":[{\"line\":\"If you gonna lose your tools like this, we are getting nowhere!\",\"typewriter\":true}],\"actions\":[\"give_item_{id_1100}_{amount_1}\"],\"uuid\":\"6c8ecb02-e26e-428e-8972-820b7824b8cf\"}],\"uuid\":\"1fc1927d-6e0b-428c-a7e7-133c2935661f\"},\"uuid\":\"172482b7-563f-4958-9129-3c749349fd3a\"},{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"hammer.check\",\"content\":[],\"conditions\":[\"inventory_contains_one_of_{item_id_1}_{amount_1}\"],\"logicalOperator\":\"AND\",\"falsyFollowup\":{\"id\":\"tutorial-island.tutor-blacksmith\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"0f467344-1d65-41b2-bde1-7619fbab37f3\",\"content\":[{\"line\":\"Where is your hammer, rookie?\",\"typewriter\":true}],\"actions\":[\"give_item_{id_1}_{amount_1}\"],\"uuid\":\"b8859764-abdd-487f-ba46-8ba1606a0918\"}],\"uuid\":\"496c3480-ed2e-4d71-99e0-751851b233cb\"},\"uuid\":\"922a77e4-a158-4c7e-9144-5cf016f8f5f5\"},{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"dagger.check\",\"content\":[],\"conditions\":[\"inventory_contains_one_of_{item_id_800}_{amount_1}\"],\"logicalOperator\":\"AND\",\"truthyFollowup\":{\"id\":\"tutorial-island.tutor-blacksmith\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"3a47a384-1561-41fc-9422-3e6204135f92\",\"content\":[{\"line\":\"Good job, {PLAYER_NAME}!\",\"typewriter\":true},{\"line\":\"Remember, this is just the basics\",\"typewriter\":true}],\"uuid\":\"f1fe1e8a-5ecd-4632-8e94-087e6c83e13c\",\"actions\":[]},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"e2c09661-f0d8-4b5c-964f-fdb01ac692e0\",\"content\":[{\"line\":\"Keep mastering your skills\",\"typewriter\":true},{\"line\":\"Explore the world to find new materials\",\"typewriter\":true},{\"line\":\"And then §4Rune§eHeim §fwill finally get the hero it deserves\",\"typewriter\":true}],\"actions\":[\"teleport_player_{world_world}_{x_2510}_{y_103}_{z_2410}\",\"quest_step_finish_{stable_id_tutorial.blacksmith-bring-dagger}\"],\"uuid\":\"243bc396-7da9-49bb-88ea-9d49e24801fc\"}],\"uuid\":\"71719d26-b0b3-4ece-9c04-2e324f1864b7\"},\"falsyFollowup\":{\"id\":\"tutorial-island.tutor-blacksmith\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"struggling.block\",\"content\":[{\"line\":\"Huh, struggling already?\",\"typewriter\":true},{\"line\":\"Remember, you need §e1 copper ore§f and §e1 tin ore\",\"typewriter\":true},{\"line\":\"Then smelt it into a §ebronze bar\",\"typewriter\":true}],\"uuid\":\"50cf3e5a-d60c-442c-82d3-dec1764109d2\",\"actions\":[]},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"8b8270e4-f8bd-47f2-83e9-ac60d94a0b28\",\"content\":[{\"line\":\"After that, use your §ehammer§f on an §eanvil\",\"typewriter\":true},{\"line\":\"And bring me §e1 Bronze Dagger\",\"typewriter\":true}],\"uuid\":\"4282911f-680c-4a31-9831-c4bd4eb9c143\",\"actions\":[]}],\"uuid\":\"9e33e6cf-b1d1-4888-a6ec-dd7f0f825d22\"},\"uuid\":\"4ee18240-d8ac-4485-a896-c1273b3759c4\"}],\"uuid\":\"8ecf596f-b3aa-4888-8dbc-9fad4442df06\"},\"uuid\":\"7862b8d6-80e6-48e4-b670-b899311270ce\"},{\"type\":\"ConditionStep\",\"uniqueIdentifier\":\"21e4ad50-ef0a-48e0-892f-28a2180ae0e2\",\"content\":[],\"conditions\":[\"quest_step_active_{stable_id_tutorial.blacksmith-collect-ores}\",\"quest_step_active_{stable_id_tutorial.blacksmith-smelt-bar}\",\"quest_step_active_{stable_id_tutorial.blacksmith-smith-dagger}\"],\"logicalOperator\":\"OR\",\"truthyFollowup\":{\"id\":\"tutorial-island.tutor-blacksmith\",\"steps\":[{\"type\":\"TeleportBranchStep\",\"uniqueIdentifier\":\"d37cf98e-5cd2-468b-bfcf-09f689532b4f\",\"teleportToUniqueIdentifier\":\"struggling.block\",\"content\":[],\"uuid\":\"730456a3-10bd-4b78-a169-a1136ad69bb8\",\"actions\":[]}],\"uuid\":\"ad64bc33-1316-4119-9135-5e3ee97fe7e7\"},\"uuid\":\"a835a471-c213-4458-9168-56d17c1b7b4c\"}],\"uuid\":\"55530a64-1ac7-4435-b24d-ad8f29e8a6b8\"}");
 
     public static final Supplier<DialogBuilder> tutorial_peasant_minerDialog = () -> DialogBuilder.deserialize("{\n" +
             "  \"id\": \"tutorial-island.peasant-miner\",\n" +
@@ -1385,83 +126,322 @@ public class Dialogs {
             "  ]\n" +
             "}");
 
-    public static final Supplier<DialogBuilder> sheepShearerDialog = () -> DialogBuilder.create("sheep-shearer-dialog")
-            // Check if quest is finished
-            .conditionStep(s -> s
-                    .condition(ScriptedCondition.questFinished(QuestId.SHEEP_SHEARER))
-
-                    // If quest finished
-                    .truthyFollowUp(e -> e
-                            .passiveStep(r -> r.text(List.of("It’s a peaceful day, isn’t it?", "Thanks to you, at least the flock isn’t plotting an escape.")))
-                    )
-
-                    // If quest NOT finished -> check if quest is started
-                    .falsyFollowUp(r -> r
-                            .conditionStep(q -> q
-                                    .condition(ScriptedCondition.questStarted(QuestId.SHEEP_SHEARER))
-
-                                    // If quest started
-                                    .truthyFollowUp(w -> w
-                                            .conditionStep(c -> c
-                                                    .condition(ScriptedCondition.questDialogStepActive("sheep-shearer.wool-collected"))
-
-                                                    // If we're at the "collected" dialog step -> check inventory removal
-                                                    .truthyFollowUp(y -> y
-                                                            .conditionStep(u -> u
-                                                                    .condition(ScriptedCondition.inventoryContains(new ItemRecord(ItemId.BALL_OF_WOOL, 20)))
-
-                                                                    // Inventory contains 20 balls of wool
-                                                                    .truthyFollowUp(z -> z
-                                                                            .passiveStep(l -> l
-                                                                                    .text("Awesome, just what I needed!")
-                                                                            ).conditionStep(ss -> ss.condition(ScriptedCondition.removeInventoryItemSuccessful(new ItemRecord(ItemId.BALL_OF_WOOL, 20)))
-                                                                                    .truthyFollowUp(tt -> tt.passiveStep(ty -> ty.text("").action(ScriptedAction.dialogQuestStepFinish("sheep-shearer.finish")))
-                                                                                            .passiveStep(yx -> yx.text(List.of("Thanks, {PLAYER_NAME}!", "You did a really great job!")))))
-
-                                                                    )
-
-                                                                    // Inventory doesn't contain 20 balls of wool
-                                                                    .falsyFollowUp(z2 -> z2
-                                                                            .passiveStep(v -> v.text(List.of("Good, you collected the wool", "Now bring it to me.")))
-                                                                    )
-                                                            )
-                                                    )
-
-                                                    // We're not at the "finish" dialog step
-                                                    .falsyFollowUp(y2 -> y2
-                                                            .passiveStep(i -> i.text(List.of("You gonna work, or just slacking around?", "I need 20 balls of wool.")))
-                                                    )
-                                            )
-                                    )
-
-                                    // If quest NOT started at all -> greeting + interactive options
-                                    .falsyFollowUp(w2 -> w2
-                                            .passiveStep(vv -> vv.text(List.of(
-                                                    "Oi! What are you doing sneaking around my land?",
-                                                    "You're not the one letting my sheep out?"
-                                            )))
-                                            .interactiveStep(i -> i.text("You looking for work or just snooping?")
-                                                    .option("Maybe… what if I was?", o -> o.followupSteps(p -> p.passiveStep(n -> n.text("Don’t be clever with me."))))
-                                                    .option("Sorry, won’t be long", o -> o.followupSteps(p -> p.passiveStep(n -> n.text("Fine - don’t let my sheep out!"))))
-                                                    .option("I'm looking for work", o -> o.followupSteps(p -> p
-                                                            // Quest start branch
-                                                            .passiveStep(sp -> sp.text(List.of(
-                                                                    "Good - I need twenty balls of wool from my sheep.",
-                                                                    "Shear them, then spin the wool at the spinning wheel",
-                                                                    "I'm pretty sure you can find spinning wheel at Drakkar."
-                                                            )))
-                                                            .conditionStep(ba -> ba
-                                                                    .condition(ScriptedCondition.questStartSuccessful(QuestId.SHEEP_SHEARER))
-                                                                    .truthyFollowUp(yy -> yy.passiveStep(ap -> ap.text("")
-                                                                                    .action(ScriptedAction.giveItem(new ItemRecord(ItemId.SHEARS, 1))))
-                                                                            .passiveStep(ys -> ys.text(List.of("Here, take these.", "And remember. 20 balls of wool!"))))
-                                                            )
-                                                    ))
-                                            )
-                                    )
-                            )
-                    )
-            );
+    public static final Supplier<DialogBuilder> sheepShearerDialog = () -> DialogBuilder.deserialize("{\n" +
+            "  \"id\": \"sheep-shearer-dialog\",\n" +
+            "  \"steps\": [\n" +
+            "    {\n" +
+            "      \"type\": \"ConditionStep\",\n" +
+            "      \"uniqueIdentifier\": \"8ad3449d-c1dc-458c-a7a6-51d547bf4053\",\n" +
+            "      \"content\": [],\n" +
+            "      \"conditions\": [\n" +
+            "        \"quest_finished_{id_sheep-shearer}\"\n" +
+            "      ],\n" +
+            "      \"logicalOperator\": \"AND\",\n" +
+            "      \"truthyFollowup\": {\n" +
+            "        \"id\": \"sheep-shearer-dialog\",\n" +
+            "        \"steps\": [\n" +
+            "          {\n" +
+            "            \"type\": \"PassiveDialogStep\",\n" +
+            "            \"uniqueIdentifier\": \"ef6493ba-e9cc-41dc-b908-1acd7b0d2a93\",\n" +
+            "            \"content\": [\n" +
+            "              {\n" +
+            "                \"line\": \"It’s a peaceful day, isn’t it?\",\n" +
+            "                \"typewriter\": true\n" +
+            "              },\n" +
+            "              {\n" +
+            "                \"line\": \"Thanks to you, at least the flock isn’t plotting an escape.\",\n" +
+            "                \"typewriter\": true\n" +
+            "              }\n" +
+            "            ],\n" +
+            "            \"actions\": []\n" +
+            "          }\n" +
+            "        ]\n" +
+            "      },\n" +
+            "      \"falsyFollowup\": {\n" +
+            "        \"id\": \"sheep-shearer-dialog\",\n" +
+            "        \"steps\": [\n" +
+            "          {\n" +
+            "            \"type\": \"ConditionStep\",\n" +
+            "            \"uniqueIdentifier\": \"653b429d-6014-41b4-99f4-effeacd523f1\",\n" +
+            "            \"content\": [],\n" +
+            "            \"conditions\": [\n" +
+            "              \"quest_started_{id_sheep-shearer}\"\n" +
+            "            ],\n" +
+            "            \"logicalOperator\": \"AND\",\n" +
+            "            \"truthyFollowup\": {\n" +
+            "              \"id\": \"sheep-shearer-dialog\",\n" +
+            "              \"steps\": [\n" +
+            "                {\n" +
+            "                  \"type\": \"ConditionStep\",\n" +
+            "                  \"uniqueIdentifier\": \"e552481b-3487-462e-ba4d-296d01222b33\",\n" +
+            "                  \"content\": [],\n" +
+            "                  \"conditions\": [\n" +
+            "                    \"quest_step_active_{stable_id_sheep-shearer.wool-collected}\"\n" +
+            "                  ],\n" +
+            "                  \"logicalOperator\": \"AND\",\n" +
+            "                  \"truthyFollowup\": {\n" +
+            "                    \"id\": \"sheep-shearer-dialog\",\n" +
+            "                    \"steps\": [\n" +
+            "                      {\n" +
+            "                        \"type\": \"ConditionStep\",\n" +
+            "                        \"uniqueIdentifier\": \"ec88f2a7-7118-45bc-94fd-b6a35d72a541\",\n" +
+            "                        \"content\": [],\n" +
+            "                        \"conditions\": [\n" +
+            "                          \"inventory_contains_one_of_{item_id_2301}_{amount_20}\"\n" +
+            "                        ],\n" +
+            "                        \"logicalOperator\": \"AND\",\n" +
+            "                        \"truthyFollowup\": {\n" +
+            "                          \"id\": \"sheep-shearer-dialog\",\n" +
+            "                          \"steps\": [\n" +
+            "                            {\n" +
+            "                              \"type\": \"PassiveDialogStep\",\n" +
+            "                              \"uniqueIdentifier\": \"3b2b3de0-e9fe-42a7-b55c-3e09b7733b69\",\n" +
+            "                              \"content\": [\n" +
+            "                                {\n" +
+            "                                  \"line\": \"Awesome, just what I needed!\",\n" +
+            "                                  \"typewriter\": true\n" +
+            "                                }\n" +
+            "                              ],\n" +
+            "                              \"actions\": []\n" +
+            "                            },\n" +
+            "                            {\n" +
+            "                              \"type\": \"ConditionStep\",\n" +
+            "                              \"uniqueIdentifier\": \"0f8d3309-95eb-4a36-a304-19ba07132c94\",\n" +
+            "                              \"content\": [],\n" +
+            "                              \"conditions\": [\n" +
+            "                                \"remove_inventory_item_successful_{item_id_2301}_{amount_20}\"\n" +
+            "                              ],\n" +
+            "                              \"logicalOperator\": \"AND\",\n" +
+            "                              \"truthyFollowup\": {\n" +
+            "                                \"id\": \"sheep-shearer-dialog\",\n" +
+            "                                \"steps\": [\n" +
+            "                                  {\n" +
+            "                                    \"type\": \"PassiveDialogStep\",\n" +
+            "                                    \"uniqueIdentifier\": \"cde9630d-11f6-4a17-aa7b-38d50b609865\",\n" +
+            "                                    \"content\": [\n" +
+            "                                      {\n" +
+            "                                        \"line\": \"\",\n" +
+            "                                        \"typewriter\": true\n" +
+            "                                      }\n" +
+            "                                    ],\n" +
+            "                                    \"actions\": [\n" +
+            "                                      \"quest_step_finish_{stable_id_sheep-shearer.wool-collected}\"\n" +
+            "                                    ]\n" +
+            "                                  },\n" +
+            "                                  {\n" +
+            "                                    \"type\": \"PassiveDialogStep\",\n" +
+            "                                    \"uniqueIdentifier\": \"b9d4f9cf-336e-4526-a89b-02fe6f2b959b\",\n" +
+            "                                    \"content\": [\n" +
+            "                                      {\n" +
+            "                                        \"line\": \"Thanks, {PLAYER_NAME}!\",\n" +
+            "                                        \"typewriter\": true\n" +
+            "                                      },\n" +
+            "                                      {\n" +
+            "                                        \"line\": \"You did a really great job!\",\n" +
+            "                                        \"typewriter\": true\n" +
+            "                                      }\n" +
+            "                                    ],\n" +
+            "                                    \"actions\": []\n" +
+            "                                  }\n" +
+            "                                ]\n" +
+            "                              }\n" +
+            "                            }\n" +
+            "                          ]\n" +
+            "                        },\n" +
+            "                        \"falsyFollowup\": {\n" +
+            "                          \"id\": \"sheep-shearer-dialog\",\n" +
+            "                          \"steps\": [\n" +
+            "                            {\n" +
+            "                              \"type\": \"PassiveDialogStep\",\n" +
+            "                              \"uniqueIdentifier\": \"355dae53-b63e-4222-9a7f-e61aed6f2980\",\n" +
+            "                              \"content\": [\n" +
+            "                                {\n" +
+            "                                  \"line\": \"Good, you collected the wool\",\n" +
+            "                                  \"typewriter\": true\n" +
+            "                                },\n" +
+            "                                {\n" +
+            "                                  \"line\": \"Now bring it to me.\",\n" +
+            "                                  \"typewriter\": true\n" +
+            "                                }\n" +
+            "                              ],\n" +
+            "                              \"actions\": []\n" +
+            "                            }\n" +
+            "                          ]\n" +
+            "                        }\n" +
+            "                      }\n" +
+            "                    ]\n" +
+            "                  },\n" +
+            "                  \"falsyFollowup\": {\n" +
+            "                    \"id\": \"sheep-shearer-dialog\",\n" +
+            "                    \"steps\": [\n" +
+            "                      {\n" +
+            "                        \"type\": \"PassiveDialogStep\",\n" +
+            "                        \"uniqueIdentifier\": \"e2a59167-d881-476d-b2cf-4766f56a19dc\",\n" +
+            "                        \"content\": [\n" +
+            "                          {\n" +
+            "                            \"line\": \"You gonna work, or just slacking around?\",\n" +
+            "                            \"typewriter\": true\n" +
+            "                          },\n" +
+            "                          {\n" +
+            "                            \"line\": \"I need 20 balls of wool.\",\n" +
+            "                            \"typewriter\": true\n" +
+            "                          }\n" +
+            "                        ],\n" +
+            "                        \"actions\": []\n" +
+            "                      }\n" +
+            "                    ]\n" +
+            "                  }\n" +
+            "                }\n" +
+            "              ]\n" +
+            "            },\n" +
+            "            \"falsyFollowup\": {\n" +
+            "              \"id\": \"sheep-shearer-dialog\",\n" +
+            "              \"steps\": [\n" +
+            "                {\n" +
+            "                  \"type\": \"PassiveDialogStep\",\n" +
+            "                  \"uniqueIdentifier\": \"0a6421c4-d53c-48a0-8632-5c27db9c2c42\",\n" +
+            "                  \"content\": [\n" +
+            "                    {\n" +
+            "                      \"line\": \"Oi! What are you doing sneaking around my land?\",\n" +
+            "                      \"typewriter\": true\n" +
+            "                    },\n" +
+            "                    {\n" +
+            "                      \"line\": \"You're not the one letting my sheep out?\",\n" +
+            "                      \"typewriter\": true\n" +
+            "                    }\n" +
+            "                  ],\n" +
+            "                  \"actions\": []\n" +
+            "                },\n" +
+            "                {\n" +
+            "                  \"type\": \"InteractiveDialogStep\",\n" +
+            "                  \"uniqueIdentifier\": \"86aacd2f-de6b-43cb-add0-4465139101e0\",\n" +
+            "                  \"content\": [\n" +
+            "                    {\n" +
+            "                      \"line\": \"You looking for work or just snooping?\",\n" +
+            "                      \"typewriter\": true\n" +
+            "                    }\n" +
+            "                  ],\n" +
+            "                  \"options\": [\n" +
+            "                    {\n" +
+            "                      \"label\": \"Maybe… what if I was?\",\n" +
+            "                      \"actions\": [],\n" +
+            "                      \"followup\": {\n" +
+            "                        \"id\": \"sheep-shearer-dialog\",\n" +
+            "                        \"steps\": [\n" +
+            "                          {\n" +
+            "                            \"type\": \"PassiveDialogStep\",\n" +
+            "                            \"uniqueIdentifier\": \"81e5a4f1-9355-4e1e-945d-682ddf1502bb\",\n" +
+            "                            \"content\": [\n" +
+            "                              {\n" +
+            "                                \"line\": \"Don’t be clever with me.\",\n" +
+            "                                \"typewriter\": true\n" +
+            "                              }\n" +
+            "                            ],\n" +
+            "                            \"actions\": []\n" +
+            "                          }\n" +
+            "                        ]\n" +
+            "                      }\n" +
+            "                    },\n" +
+            "                    {\n" +
+            "                      \"label\": \"Sorry, won’t be long\",\n" +
+            "                      \"actions\": [],\n" +
+            "                      \"followup\": {\n" +
+            "                        \"id\": \"sheep-shearer-dialog\",\n" +
+            "                        \"steps\": [\n" +
+            "                          {\n" +
+            "                            \"type\": \"PassiveDialogStep\",\n" +
+            "                            \"uniqueIdentifier\": \"ba7515a8-bbfb-49da-bc07-499a3eaf2a1b\",\n" +
+            "                            \"content\": [\n" +
+            "                              {\n" +
+            "                                \"line\": \"Fine - don’t let my sheep out!\",\n" +
+            "                                \"typewriter\": true\n" +
+            "                              }\n" +
+            "                            ],\n" +
+            "                            \"actions\": []\n" +
+            "                          }\n" +
+            "                        ]\n" +
+            "                      }\n" +
+            "                    },\n" +
+            "                    {\n" +
+            "                      \"label\": \"I'm looking for work\",\n" +
+            "                      \"actions\": [],\n" +
+            "                      \"followup\": {\n" +
+            "                        \"id\": \"sheep-shearer-dialog\",\n" +
+            "                        \"steps\": [\n" +
+            "                          {\n" +
+            "                            \"type\": \"PassiveDialogStep\",\n" +
+            "                            \"uniqueIdentifier\": \"24f5ecdf-699e-416c-b0e0-316a3abf6d74\",\n" +
+            "                            \"content\": [\n" +
+            "                              {\n" +
+            "                                \"line\": \"Good - I need twenty balls of wool from my sheep.\",\n" +
+            "                                \"typewriter\": true\n" +
+            "                              },\n" +
+            "                              {\n" +
+            "                                \"line\": \"Shear them, then spin the wool at the spinning wheel\",\n" +
+            "                                \"typewriter\": true\n" +
+            "                              },\n" +
+            "                              {\n" +
+            "                                \"line\": \"I'm pretty sure you can find spinning wheel at Drakkar.\",\n" +
+            "                                \"typewriter\": true\n" +
+            "                              }\n" +
+            "                            ],\n" +
+            "                            \"actions\": []\n" +
+            "                          },\n" +
+            "                          {\n" +
+            "                            \"type\": \"ConditionStep\",\n" +
+            "                            \"uniqueIdentifier\": \"486c12c0-e773-4e03-a18b-dea50c7674f3\",\n" +
+            "                            \"content\": [],\n" +
+            "                            \"conditions\": [\n" +
+            "                              \"start_quest_if_requirements_met_{id_sheep-shearer}\"\n" +
+            "                            ],\n" +
+            "                            \"logicalOperator\": \"AND\",\n" +
+            "                            \"truthyFollowup\": {\n" +
+            "                              \"id\": \"sheep-shearer-dialog\",\n" +
+            "                              \"steps\": [\n" +
+            "                                {\n" +
+            "                                  \"type\": \"PassiveDialogStep\",\n" +
+            "                                  \"uniqueIdentifier\": \"674f428d-4fd1-48fa-811c-224f1398715f\",\n" +
+            "                                  \"content\": [\n" +
+            "                                    {\n" +
+            "                                      \"line\": \"\",\n" +
+            "                                      \"typewriter\": true\n" +
+            "                                    }\n" +
+            "                                  ],\n" +
+            "                                  \"actions\": [\n" +
+            "                                    \"give_item_{id_3}_{amount_1}\"\n" +
+            "                                  ]\n" +
+            "                                },\n" +
+            "                                {\n" +
+            "                                  \"type\": \"PassiveDialogStep\",\n" +
+            "                                  \"uniqueIdentifier\": \"bf8e62c8-ea8d-4eed-aa0b-9a7daa09bea5\",\n" +
+            "                                  \"content\": [\n" +
+            "                                    {\n" +
+            "                                      \"line\": \"Here, take these.\",\n" +
+            "                                      \"typewriter\": true\n" +
+            "                                    },\n" +
+            "                                    {\n" +
+            "                                      \"line\": \"And remember. 20 balls of wool!\",\n" +
+            "                                      \"typewriter\": true\n" +
+            "                                    }\n" +
+            "                                  ],\n" +
+            "                                  \"actions\": []\n" +
+            "                                }\n" +
+            "                              ]\n" +
+            "                            }\n" +
+            "                          }\n" +
+            "                        ]\n" +
+            "                      }\n" +
+            "                    }\n" +
+            "                  ]\n" +
+            "                }\n" +
+            "              ]\n" +
+            "            }\n" +
+            "          }\n" +
+            "        ]\n" +
+            "      }\n" +
+            "    }\n" +
+            "  ]\n" +
+            "}");
 
 
     public static final Supplier<DialogBuilder> bankerDialog = () -> DialogBuilder.create("banker-dialog")

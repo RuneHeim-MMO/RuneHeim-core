@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.dialog.impl;
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.heimscript.action.ScriptedActionHandler;
 import org.zuma.examplePlugin.domain.dialog.DialogText;
 import org.zuma.examplePlugin.domain.dialog.base.DialogStep;
@@ -34,9 +35,13 @@ public class PassiveDialogStep extends DialogStep {
             }
 
             if (actions != null) {
-                actions.forEach(ac ->
-                        ScriptedActionHandler.executeAction(ac, player, null, new ScriptedActionHandler.ActionCaller(ScriptedActionHandler.ActionCallerType.DIALOG, "{dialog_id:" + parent.getId() + "}"), this.parent)
-                );
+                try {
+                    for (String action : actions) {
+                        ScriptedActionHandler.executeAction(action, player, null, new ScriptedActionHandler.ActionCaller(ScriptedActionHandler.ActionCallerType.DIALOG, "{dialog_id:" + parent.getId() + "}"), this.parent);
+                    }
+                } catch (Exception e) {
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Couldn't execute action in PassiveDialogStep " + this.getUniqueIdentifier() + ". Aborting.");
+                }
             }
 
             if (runnable != null) {
