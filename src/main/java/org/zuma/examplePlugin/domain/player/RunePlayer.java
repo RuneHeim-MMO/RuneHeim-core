@@ -60,7 +60,7 @@ public class RunePlayer implements CombatEntity {
     private List<String> discoveredTerritoryIds;
     private List<String> completedQuestIds;
     private Location getSafeLocation; // is set when player is is spectator mode.
-    private boolean isDead;
+    private boolean isDead, isDialogOptionChoosing;
     private HashMap<String, AbstractQuestStep> activeQuestSteps; // Quest id : step
 
     public RunePlayer(UUID uuid, EnumMap<SkillType, Skill> skills) {
@@ -358,4 +358,11 @@ public class RunePlayer implements CombatEntity {
     }
 
 
+    public boolean isDialogOptionChoosing() {
+        return isDialogOptionChoosing;
+    }
+
+    public void setDialogOptionChoosing(boolean dialogOptionChoosing) {
+        isDialogOptionChoosing = dialogOptionChoosing;
+    }
 }

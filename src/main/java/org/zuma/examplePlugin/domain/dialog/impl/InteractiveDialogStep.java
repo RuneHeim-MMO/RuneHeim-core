@@ -34,6 +34,7 @@ public class InteractiveDialogStep extends DialogStep {
 
     @Override
     public void onDialogFinishRendering(RunePlayer player) {
+        player.setDialogOptionChoosing(true);
         SoundType.DIALOG_CHOICE_SOUND.play(player, false);
         parent.setSlotLocked(true);
     }
@@ -49,6 +50,8 @@ public class InteractiveDialogStep extends DialogStep {
         if (clickedOption == null) {
             return;
         }
+
+        player.setDialogOptionChoosing(false);
 
         if (clickedOption.actions() != null) {
             try {

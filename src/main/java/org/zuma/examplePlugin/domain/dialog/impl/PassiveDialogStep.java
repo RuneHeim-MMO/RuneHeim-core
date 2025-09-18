@@ -52,10 +52,4 @@ public class PassiveDialogStep extends DialogStep {
         }, Math.min(20, contentLength));
     }
 
-    @Override
-    public void onHotbarSlotChange(PlayerItemHeldEvent event, RunePlayer player, int newSlot) {
-        timerCancelled = true;
-        parent.advanceDialogStep();
-    }
-
 }

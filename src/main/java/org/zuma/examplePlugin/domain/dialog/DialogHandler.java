@@ -24,6 +24,9 @@ public class DialogHandler {
 
         matchingDialog.cleanUp();
         activeDialogs.remove(playerUUID);
+
+        RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(playerUUID);
+        if (runePlayer != null) runePlayer.setDialogOptionChoosing(false);
     }
 
     public void startDialog(RunePlayer player, Dialog dialog, @Nullable Runnable onFinishCancel) {
