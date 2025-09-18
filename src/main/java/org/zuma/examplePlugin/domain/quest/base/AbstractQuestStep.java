@@ -44,8 +44,6 @@ public abstract class AbstractQuestStep implements Listener {
         if (getOwner() != null) {
             plugin.getServer().getPluginManager().registerEvents(this, plugin);
         }
-
-        System.out.println("new step initialized " + owner + " " + stableId);
     }
 
     @EventHandler

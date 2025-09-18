@@ -45,17 +45,11 @@ public enum DialogPreset {
             "Want to take a look at my goods?",
             "Interested in my wares?",
             "See what I have for sale?",
-            "Check out my inventory?",
             "Care to browse my stock?",
-            "Got some nice stuff here?",
             "Looking for something special?",
             "Have a look around?",
             "See anything you like?",
-            "Feel free to browse?",
-            "Let me know if you want something?",
-            "Got fresh goods here?",
-            "See what I brought today?",
-            "Take your time checking out?"
+            "Let me know if you want something?"
     ));
 
     private final List<String> preset;

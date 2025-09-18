@@ -110,7 +110,7 @@ public class SpawnZoneRepository {
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(15, SpawnZoneType.POINT, 30, 1,
                         new Location(Bukkit.getWorld("world"), 153.5, 73, -50)), toVersionedJson(new PointSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.JEWLER, 1, 100)
+                        new SpawnZoneMobRecord(MobType.DRAKKAR_JEWLER, 1, 100)
                 ), false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(16, SpawnZoneType.AREA, 30, 15,
@@ -828,7 +828,26 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(121, SpawnZoneType.POINT, 10, 20,
                         new Location(Bukkit.getWorld("world"), 2522, 110, 2454)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.TUTOR_SURVIVAL, 1, 100)
+                ), false), 1)),
+
+                // Drakkar armor merchant
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(123, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 153, 73, -94.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.DRAKKAR_ARMOR_MERCHANT, 1, 100)
+                ), false), 1)),
+
+                // Drakkar basic food stall
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(124, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 208.5, 73, -79.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BASIC_FOOD_STALL, 1, 100)
+                ), false), 1)),
+
+                // Drakkar guard archer merchant
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(125, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 127.5, 72, -58)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.DRAKKAR_GUARD_ARCHER_MERCHANT, 1, 100)
                 ), false), 1))
+
 
 
         );
