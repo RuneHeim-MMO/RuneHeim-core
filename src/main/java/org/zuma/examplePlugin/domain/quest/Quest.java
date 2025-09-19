@@ -124,10 +124,11 @@ public class Quest implements SkillRestrictable {
         reward.applyRewards(player);
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-            if (player.asBukkitPlayer() == null || player.asBukkitPlayer().isOnline()) return;
+            if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) return;
 
             EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new QuestCompletedEffect(player, this));
             HudService.sendQuestCompletedMessage(player, this);
+            HudService.sendQuestRewards(player, this);
         }, 60L);
     }
 
@@ -140,4 +141,9 @@ public class Quest implements SkillRestrictable {
     public List<SkillRequirement> getRequirements() {
         return requirements;
     }
+
+    public QuestReward getReward() {
+        return reward;
+    }
+
 }

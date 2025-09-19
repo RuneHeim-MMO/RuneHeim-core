@@ -27,13 +27,14 @@ public abstract class AbstractQuestStep implements Listener {
     private transient Quest parentQuest;
     private int id;
     private final StepType type;
+    @Nullable
     private final String description;
     private String stableId;
 
     @Nullable
     private final UUID owner;
 
-    public AbstractQuestStep(RuneQuestPlugin plugin, Quest parentQuest, StepType type, String description, String stableId, @Nullable UUID owner) { // if owner is null, then this is a 'dummy' quest used for displaying to players.
+    public AbstractQuestStep(RuneQuestPlugin plugin, Quest parentQuest, StepType type, @Nullable String description, String stableId, @Nullable UUID owner) { // if owner is null, then this is a 'dummy' quest used for displaying to players.
         this.plugin = plugin;
         this.parentQuest = parentQuest;
         this.type = type;
@@ -149,6 +150,7 @@ public abstract class AbstractQuestStep implements Listener {
         return owner;
     }
 
+    @Nullable
     public String getDescription() {
         return description;
     }

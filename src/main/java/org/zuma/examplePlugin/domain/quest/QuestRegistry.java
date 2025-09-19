@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.domain.quest;
 
+import com.google.gson.Gson;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
@@ -12,6 +13,7 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class QuestRegistry {
     private final HashMap<String, Quest> quests; // id:quest
@@ -57,6 +59,20 @@ public class QuestRegistry {
                 new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Bring §63 Raw Herrings§f to the §6Survival Guide.", "tutorial.survival-bring-herrings", null),
                 new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Bring §61 Cooked Herring§f to the §6Survival Guide.", "tutorial.survival-cook-fish", null)
         )));
+
+
+        Quest blacksmithsRightHandI = new Quest("blacksmiths-right-hand-i", "Blacksmith's Right Hand", QuestDifficulty.EASY)
+                .setRewards(new QuestReward(null, Map.of(SkillType.SMITHING, 1000.0), 800));
+
+        registerQuest(blacksmithsRightHandI.addSteps(List.of(
+                new CollectionStep(RuneQuestPlugin.getInstance(), blacksmithsRightHandI, "Collect §616x Copper Ore§f and §616x Tin Ore.", "blacksmith-right-hand-i.collect-ores", List.of(new ItemRecord(ItemId.COPPER_ORE, 16), new ItemRecord(ItemId.TIN_ORE, 16)), null),
+                new CollectionStep(RuneQuestPlugin.getInstance(), blacksmithsRightHandI, "Smelt ores into §616x Bronze Bars.", "blacksmith-right-hand-i.smelt-ores", List.of(new ItemRecord(ItemId.BRONZE_BAR, 16)), null),
+                new DialogStep(RuneQuestPlugin.getInstance(), blacksmithsRightHandI, "Bring §616x Bronze Bars§f to the §6Blacksmith.", "blacksmith-right-hand-i.bring-ores", null),
+                new DialogStep(RuneQuestPlugin.getInstance(), blacksmithsRightHandI, null, "blacksmith-right-hand-i.gave-in-res", null),
+                new CollectionStep(RuneQuestPlugin.getInstance(), blacksmithsRightHandI, "Acquire §61x Uncut Sapphire.", "blacksmith-right-hand-i.acquire-sapphire", List.of(new ItemRecord(ItemId.UNCUT_SAPPHIRE, 1)), null),
+                new DialogStep(RuneQuestPlugin.getInstance(), blacksmithsRightHandI, "Bring §61x Uncut Sapphire§f to the §6Blacksmith.", "blacksmith-right-hand-i.bring-sapphire", null)
+        )));
+
     }
 
     @Nullable

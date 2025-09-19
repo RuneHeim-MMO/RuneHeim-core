@@ -9,17 +9,19 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class QuestReward {
     @Nullable
     private final List<ItemRecord> itemRewards;
 
     @Nullable
-    private final HashMap<SkillType, Double> xpRewards;
+    private final Map<SkillType, Double> xpRewards;
 
+    @Nullable
     private final Integer coins;
 
-    public QuestReward(@Nullable List<ItemRecord> itemRewards, @Nullable HashMap<SkillType, Double> xpRewards, @Nullable Integer coins) {
+    public QuestReward(@Nullable List<ItemRecord> itemRewards, @Nullable Map<SkillType, Double> xpRewards, @Nullable Integer coins) {
         this.itemRewards = itemRewards;
         this.xpRewards = xpRewards;
         this.coins = coins;
@@ -27,7 +29,7 @@ public class QuestReward {
 
 
     @Nullable
-    public HashMap<SkillType, Double> getXpRewards() {
+    public Map<SkillType, Double> getXpRewards() {
         return xpRewards;
     }
 
@@ -35,6 +37,12 @@ public class QuestReward {
     public List<ItemRecord> getItemRewards() {
         return itemRewards;
     }
+
+    @Nullable
+    public Integer getCoins() {
+        return coins;
+    }
+
 
     public void applyRewards(RunePlayer player) {
         if (itemRewards != null) {

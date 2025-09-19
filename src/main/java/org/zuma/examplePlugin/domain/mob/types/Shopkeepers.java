@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.mob.types;
 
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.domain.dialog.DialogBuilder;
+import org.zuma.examplePlugin.domain.dialog.Dialogs;
 import org.zuma.examplePlugin.domain.dialog.constants.DialogPreset;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.mob.MobTypeRegistry;
@@ -39,7 +40,7 @@ public class Shopkeepers {
 
         registry.register(MobType.DRAKKAR_BLACKSMITH.getId(), () -> new InventoryOpenerMob(Icon.TOOL.get() + " Blacksmith", EquipmentSet.BLACKSMITH,
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "blacksmith", null, InventoryId.DRAKKAR_BLACKSMITH.asInt(), 40)
-                .attachDialog(genericShopDialog));
+                .attachDialog(Dialogs.drakkarBlacksmithDialog));
 
         registry.register(MobType.DRAKKAR_JEWLER.getId(), () -> new InventoryOpenerMob(Icon.BLUE_GEM.get() + " Jeweler", EquipmentSet.JEWELER,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "jeweler", null, InventoryId.JEWELER.asInt(), 40)
