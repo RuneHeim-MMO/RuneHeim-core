@@ -847,7 +847,56 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(125, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 127.5, 72, -58)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.DRAKKAR_GUARD_ARCHER_MERCHANT, 1, 100)
-                ), false, MarkerType.ARCHERY_SHOP, "Archery Shop"), 1))
+                ), false, MarkerType.ARCHERY_SHOP, "Archery Shop"), 1)),
+
+                // Murkwatch bank
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(126, SpawnZoneType.POINT, 30, 1,
+                        new Location(Bukkit.getWorld("world"), -1035, 68, 379)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANK_TELLER_1, 1, 100)
+                ), false, MarkerType.BANK_TELLER, "Bank"), 1)),
+
+                // Aetheris bank
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(127, SpawnZoneType.POINT, 30, 1,
+                        new Location(Bukkit.getWorld("world"), -130, 81, 758.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANK_TELLER_2, 1, 100)
+                ), false, MarkerType.BANK_TELLER, "Bank"), 1)),
+
+                // Sporefell bank
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(128, SpawnZoneType.POINT, 30, 1,
+                        new Location(Bukkit.getWorld("world"), 1254, 71, -166.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANK_TELLER_4, 1, 100)
+                ), false, MarkerType.BANK_TELLER, "Bank"), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(129, SpawnZoneType.POINT, 30, 1,
+                        new Location(Bukkit.getWorld("world"), 1251, 71, -166.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANK_TELLER_5, 1, 100)
+                ), false, MarkerType.BANK_TELLER, "Bank"), 1)),
+
+                // Islenor bank
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(130, SpawnZoneType.POINT, 30, 1,
+                        new Location(Bukkit.getWorld("world"), 501, 66, -686.3)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANK_TELLER_6, 1, 100)
+                ), false, MarkerType.BANK_TELLER, "Bank"), 1)),
+
+                // Valdrin bank
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(131, SpawnZoneType.POINT, 30, 1,
+                        new Location(Bukkit.getWorld("world"), 10.5, 118, -528.3)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANK_TELLER_7, 1, 100)
+                ), false, MarkerType.BANK_TELLER, "Bank"), 1)),
+
+                // Saharijin bank
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(132, SpawnZoneType.POINT, 30, 1,
+                        new Location(Bukkit.getWorld("world"), -1234.5, 78, -847.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANK_TELLER_8, 1, 100)
+                ), false, MarkerType.BANK_TELLER, "Bank"), 1)),
+
+                // Sakurmeer bank
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(133, SpawnZoneType.POINT, 30, 1,
+                        new Location(Bukkit.getWorld("world"), 886.5 ,133, 191.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANK_TELLER_9, 1, 100)
+                ), false, MarkerType.BANK_TELLER, "Bank"), 1))
+
+
 
 
         );

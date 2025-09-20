@@ -38,5 +38,30 @@ public class BankTellers {
         registry.register(MobType.BANK_TELLER_3.getId(), () -> new InventoryOpenerMob(Icon.MONEY_BAG.get() + " Bank Teller", EquipmentSet.BANK_TELLER,
                 MobBehaviors.VILLAGER_WOMAN_3.getBehavior(), "bank_teller_3", null, InventoryId.BANK.asInt(), 0)
                 .attachDialog(Dialogs.bankerDialog));
+
+        registry.register(MobType.BANK_TELLER_4.getId(), () -> new InventoryOpenerMob(Icon.MONEY_BAG.get() + " Bank Teller", EquipmentSet.BANK_TELLER,
+                MobBehaviors.VILLAGER_MAN_1.getBehavior(), "bank_teller_4", null, InventoryId.BANK.asInt(), 0)
+                .attachDialog(Dialogs.bankerDialog));
+
+        registry.register(MobType.BANK_TELLER_5.getId(), () -> new InventoryOpenerMob(Icon.MONEY_BAG.get() + " Bank Teller", EquipmentSet.BANK_TELLER,
+                MobBehaviors.VILLAGER_MAN_2.getBehavior(), "bank_teller_5", null, InventoryId.BANK.asInt(), 0)
+                .attachDialog(Dialogs.bankerDialog));
+
+        registry.register(MobType.BANK_TELLER_6.getId(), () -> new InventoryOpenerMob(Icon.MONEY_BAG.get() + " Bank Teller", EquipmentSet.BANK_TELLER,
+                MobBehaviors.VILLAGER_MAN_3.getBehavior(), "bank_teller_6", null, InventoryId.BANK.asInt(), 0)
+                .attachDialog(Dialogs.bankerDialog));
+
+        registry.register(MobType.BANK_TELLER_7.getId(), () -> new InventoryOpenerMob(Icon.MONEY_BAG.get() + " Bank Teller", EquipmentSet.BANK_TELLER,
+                MobBehaviors.VILLAGER_MAN_4.getBehavior(), "bank_teller_7", null, InventoryId.BANK.asInt(), 0)
+                .attachDialog(Dialogs.bankerDialog));
+
+        registry.register(MobType.BANK_TELLER_8.getId(), () -> new InventoryOpenerMob(Icon.MONEY_BAG.get() + " Bank Teller", EquipmentSet.BANK_TELLER,
+                MobBehaviors.VILLAGER_MAN_5.getBehavior(), "bank_teller_8", null, InventoryId.BANK.asInt(), 0)
+                .attachDialog(Dialogs.bankerDialog));
+
+        registry.register(MobType.BANK_TELLER_9.getId(), () -> new InventoryOpenerMob(Icon.MONEY_BAG.get() + " Bank Teller", EquipmentSet.BANK_TELLER,
+                MobBehaviors.VILLAGER_MAN_3.getBehavior(), "bank_teller_9", null, InventoryId.BANK.asInt(), 0)
+                .attachDialog(Dialogs.bankerDialog));
+
     }
 }
