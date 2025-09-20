@@ -35,6 +35,7 @@ public class ItemFactory {
             case EQUIPMENT_WITH_GEM_SOCKETS -> createGearWithSockets(meta, json);
             case TOOL -> createToolItem(meta, json);
             case TOOL_WITH_GEM_SOCKETS -> createToolWithSockets(meta, json);
+            case COMPASS -> createCompassItem(meta, json);
             case MELEE_WEAPON -> createMeleeWeaponItem(meta, json);
             case MELEE_WEAPON_WITH_GEM_SOCKETS -> createMeleeWeaponWithSockets(meta, json);
             case RANGED_WEAPON -> createRangedWeaponItem(meta, json);
@@ -365,6 +366,27 @@ public class ItemFactory {
             case 1 -> {
                 EquipableTypeMeta deserialized = new Gson().fromJson(json.meta(), EquipableTypeMeta.class);
                 Gear item = new Gear(meta);
+
+                item.addModifiers(deserialized.modifiers());
+                item.addRequirements(deserialized.requirements());
+                item.addSkillModifiers(deserialized.skillModifiers());
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
+    }
+
+
+    private CompassItem createCompassItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create " + meta.type() + " " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                EquipableTypeMeta deserialized = new Gson().fromJson(json.meta(), EquipableTypeMeta.class);
+                CompassItem item = new CompassItem(meta);
 
                 item.addModifiers(deserialized.modifiers());
                 item.addRequirements(deserialized.requirements());
