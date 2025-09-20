@@ -33,7 +33,7 @@ public class InteractionSpeedHandler implements Listener {
             return;
         }
 
-        if (interactionSpeedHandler.isCooledDown(event.getPlayer())) {
+        if (interactionSpeedHandler.isCooldownInProgress(event.getPlayer())) {
             event.setCancelled(true);
             return;
         }
@@ -44,7 +44,7 @@ public class InteractionSpeedHandler implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
-        if (interactionSpeedHandler.isCooledDown(event.getPlayer())) {
+        if (interactionSpeedHandler.isCooldownInProgress(event.getPlayer())) {
             event.setCancelled(true);
             return;
         }
@@ -54,7 +54,7 @@ public class InteractionSpeedHandler implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInteractWithEntity(PlayerInteractAtEntityEvent event) {
-        if (interactionSpeedHandler.isCooledDown(event.getPlayer())) {
+        if (interactionSpeedHandler.isCooldownInProgress(event.getPlayer())) {
             event.setCancelled(true);
             return;
         }
@@ -78,7 +78,7 @@ public class InteractionSpeedHandler implements Listener {
             return;
         }
 
-        if (blockInteractionSpeedHandler.isCooledDown(event.getPlayer())) {
+        if (blockInteractionSpeedHandler.isCooldownInProgress(event.getPlayer())) {
             event.setCancelled(true);
             return;
         }
@@ -92,7 +92,7 @@ public class InteractionSpeedHandler implements Listener {
             return;
         }
 
-        if (miscSpeedHandler.isCooledDown(event.getPlayer())) {
+        if (miscSpeedHandler.isCooldownInProgress(event.getPlayer())) {
             event.setCancelled(true);
             return;
         }

@@ -10,11 +10,11 @@ import java.util.UUID;
 public class CooldownHandler {
     private final Map<UUID, Long> cooldownDelays = new HashMap<>();
 
-    public boolean isCooledDown(RunePlayer player) {
-        return this.isCooledDown(player.asBukkitPlayer());
+    public boolean isCooldownInProgress(RunePlayer player) {
+        return this.isCooldownInProgress(player.asBukkitPlayer());
     }
 
-    public boolean isCooledDown(Player player) {
+    public boolean isCooldownInProgress(Player player) {
         UUID uuid = player.getUniqueId();
         Long cooldownExpiryTime = cooldownDelays.get(uuid);
 

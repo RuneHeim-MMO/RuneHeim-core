@@ -222,7 +222,7 @@ public class GUIHandler {
             return;
         }
 
-        if (cooldownHandler.isCooledDown(player)) {
+        if (cooldownHandler.isCooldownInProgress(player)) {
             event.setCancelled(true);
             return;
         }
