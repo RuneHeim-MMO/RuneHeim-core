@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
+import org.zuma.examplePlugin.domain.map.MarkerType;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneMobRecord;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneRecord;
@@ -28,22 +29,22 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(0, SpawnZoneType.POINT, 20, 1,
                         new Location(Bukkit.getWorld("world"), 188.5, 67, -161.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.CITY_GUARD_STATIC, 1, 100)
-                ), false), 1)),
+                ), false, null, null), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(1, SpawnZoneType.POINT, 200, 1,
                         new Location(Bukkit.getWorld("world"), 196.5, 67, -161.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.CITY_GUARD_STATIC, 1, 100)
-                ), false), 1)),
+                ), false, null, null), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(2, SpawnZoneType.POINT, 20, 1,
                         new Location(Bukkit.getWorld("world"), 116.5, 67, -86.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.CITY_GUARD_STATIC, 1, 100)
-                ), false), 1)),
+                ), false, null, null), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(3, SpawnZoneType.POINT, 20, 1,
                         new Location(Bukkit.getWorld("world"), 116.5, 67, -79.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.CITY_GUARD_STATIC, 1, 100)
-                ), false), 1)),
+                ), false, null, null), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(4, SpawnZoneType.AREA, 20, 1,
                         new Location(Bukkit.getWorld("world"), 191, 73, -72)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
@@ -81,37 +82,37 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(9, SpawnZoneType.POINT, 30, 1,
                         new Location(Bukkit.getWorld("world"), 173, 73, -50)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.GENERAL_STORE, 1, 100)
-                ), false), 1)),
+                ), false, MarkerType.GENERAL_STORE, "General Store"), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(10, SpawnZoneType.POINT, 30, 1,
                         new Location(Bukkit.getWorld("world"), 209, 73, -98)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.DRAKKAR_BLACKSMITH, 1, 100)
-                ), false), 1)),
+                ), false, MarkerType.BLACKSMITH, "Blacksmith"), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(11, SpawnZoneType.POINT, 30, 1,
                         new Location(Bukkit.getWorld("world"), 257.5, 73, -58.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.BANK_TELLER_1, 1, 100)
-                ), false), 1)),
+                ), false, MarkerType.BANK_TELLER, "Bank"), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(12, SpawnZoneType.POINT, 30, 1,
                         new Location(Bukkit.getWorld("world"), 257.5, 73, -63.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.BANK_TELLER_2, 1, 100)
-                ), false), 1)),
+                ), false, MarkerType.BANK_TELLER, "Bank"), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(13, SpawnZoneType.POINT, 30, 1,
                         new Location(Bukkit.getWorld("world"), 257.5, 73, -68.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.BANK_TELLER_3, 1, 100)
-                ), false), 1)),
+                ), false, MarkerType.BANK_TELLER, "Bank"), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(14, SpawnZoneType.POINT, 30, 1,
                         new Location(Bukkit.getWorld("world"), 247, 74, -43.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.INVESTMENT_BANKER, 1, 100)
-                ), false), 1)),
+                ), false, MarkerType.BANK_TELLER, "Investment Banker"), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(15, SpawnZoneType.POINT, 30, 1,
                         new Location(Bukkit.getWorld("world"), 153.5, 73, -50)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.DRAKKAR_JEWLER, 1, 100)
-                ), false), 1)),
+                ), false, MarkerType.JEWELER, "Jeweler"), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(16, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 324, 68, -205)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
@@ -157,7 +158,7 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(20, SpawnZoneType.POINT, 30, 1,
                         new Location(Bukkit.getWorld("world"), 19, 70, -203)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.BOAR_BROWN_ALPHA_BASE10, 1, 100)
-                ), false), 1)),
+                ), false, null, null), 1)),
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(21, SpawnZoneType.AREA, 30, 15,
@@ -746,48 +747,48 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(107, SpawnZoneType.POINT, 20, 1,
                         new Location(Bukkit.getWorld("world"), -440, 65, 206.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.CITY_GUARD_STATIC, 1, 100)
-                ), false), 1)),
+                ), false, null, null), 1)),
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(108, SpawnZoneType.POINT, 20, 1,
                         new Location(Bukkit.getWorld("world"), -423.5, 65, 227)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.CITY_GUARD_STATIC, 1, 100)
-                ), false), 1)),
+                ), false, null, null), 1)),
 
                 // Drakkar gym
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(109, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 198.5, 72, -49.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.COMBAT_DUMMY_FACE_SOUTH, 1, 100)
-                ), false), 1)),
+                ), false, null, null), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(110, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 200.5, 72, -49.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.COMBAT_DUMMY_FACE_SOUTH, 1, 100)
-                ), false), 1)),
+                ), false, null, null), 1)),
 
                 // Drakkar auctioneer
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(111, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 205.5, 73, -59.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.AUCTIONEER, 1, 100)
-                ), false), 1)),
+                ), false, MarkerType.AUCTION, "Auction"), 1)),
 
                 // Brown farm house trader
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(112, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 253, 68, -277)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.BROWN_FARMHOUSE_TRADER, 1, 100)
-                ), false), 1)),
+                ), false, MarkerType.MOUNT_MERCHANT, "Mount Merchant"), 1)),
 
                 // Brown farm house trader
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(113, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 180.5, 72, -109.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.ABRAHAM_FAIRY_TEACHER, 1, 100)
-                ), false), 1)),
+                ), false, null, null), 1)),
 
                 // Sheep shearer quest npc
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(114, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 45.5, 68, -162.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.SHEPHERD, 1, 100)
-                ), false), 1)),
+                ), false, null, null), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(115, SpawnZoneType.AREA, 30, 20,
                         new Location(Bukkit.getWorld("world"), 66, 68, -165)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
@@ -799,22 +800,22 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(117, SpawnZoneType.POINT, 10, 20,
                         new Location(Bukkit.getWorld("world"), 2432.5, 155, 2479.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.PEASANT_MINER, 1, 100)
-                ), false), 1)),
+                ), false, null, null), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(116, SpawnZoneType.POINT, 10, 20,
                         new Location(Bukkit.getWorld("world"), 2440, 145, 2527)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.TUTOR_BLACKSMITH, 1, 100)
-                ), false), 1)),
+                ), false, null, null), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(118, SpawnZoneType.POINT, 10, 20,
                         new Location(Bukkit.getWorld("world"), 2517.5, 128, 2412.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.TUTOR_LUMBERJACK, 1, 100)
-                ), false), 1)),
+                ), false, null, null), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(119, SpawnZoneType.POINT, 10, 20,
                         new Location(Bukkit.getWorld("world"), 2520.5, 110, 2451.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.COMBAT_DUMMY_FACE_SOUTH, 1, 100)
-                ), false), 1)),
+                ), false, null, null), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(120, SpawnZoneType.AREA, 10, 50,
                         new Location(Bukkit.getWorld("world"), 2574, 111, 2423)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
@@ -828,26 +829,25 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(121, SpawnZoneType.POINT, 10, 20,
                         new Location(Bukkit.getWorld("world"), 2522, 110, 2454)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.TUTOR_SURVIVAL, 1, 100)
-                ), false), 1)),
+                ), false, null, null), 1)),
 
                 // Drakkar armor merchant
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(123, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 153, 73, -94.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.DRAKKAR_ARMOR_MERCHANT, 1, 100)
-                ), false), 1)),
+                ), false, MarkerType.ARMOR_MERCHANT, "Armor Merchant"), 1)),
 
                 // Drakkar basic food stall
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(124, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 208.5, 73, -79.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.BASIC_FOOD_STALL, 1, 100)
-                ), false), 1)),
+                ), false, MarkerType.FOOD_MERCHANT, "Food Merchant"), 1)),
 
                 // Drakkar guard archer merchant
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(125, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 127.5, 72, -58)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.DRAKKAR_GUARD_ARCHER_MERCHANT, 1, 100)
-                ), false), 1))
-
+                ), false, MarkerType.ARCHERY_SHOP, "Archery Shop"), 1))
 
 
         );

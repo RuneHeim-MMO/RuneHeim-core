@@ -1,9 +1,6 @@
 package org.zuma.examplePlugin.domain.map;
 
 public enum MarkerType {
-    BANKS("bank-markers", "Banks", "./assets/markers/bank.png"),
-    SHOPS("shop-markers", "Shops", "./assets/markers/shop.png"),
-
     TREE("tree-markers", "Trees", "./assets/markers/tree.png"),
     BIRCH("tree-birch-markers", "Birch trees", "./assets/markers/birch.png"),
     MAGIC("tree-magic-markers", "Magic trees", "./assets/markers/magic_tree.png"),
@@ -38,10 +35,21 @@ public enum MarkerType {
     SPINNING_WHEEL("spinning-wheel-markers", "Spinning wheels", "./assets/markers/spinning_wheel.png"),
     FLAX("flax-markers", "Flax", "./assets/markers/flax.png"),
 
-    // TODO
-    ALTAR("altars", "Altars", ""),
-    FUSION_MASTER("fusion-masters", "Fusion Masters", ""),
-    CONTRACT_BOARD("contract-boards", "Contract Boards", ""),
+    BANK_TELLER("bank-tellers", "Bank Tellers", "./assets/markers/bank.png"),
+    GENERAL_STORE("general-stores", "General Stores", "./assets/markers/general_store.png"),
+    BLACKSMITH("blacksmiths", "Blacksmiths", "./assets/markers/blacksmith.png"),
+    JEWELER("jewelers", "Jewelers", "./assets/markers/jeweler.png"),
+    AUCTION("auctioneers", "Auctions", "./assets/markers/auction.png"),
+    MOUNT_MERCHANT("mount-merchants", "Auctions", "./assets/markers/mount_merchant.png"),
+    ARMOR_MERCHANT("armor-merchants", "Armor Merchants", "./assets/markers/armor_merchant.png"),
+    FOOD_MERCHANT("food-merchants", "Food Merchants", "./assets/markers/food_merchant.png"),
+    ARCHERY_SHOP("archery-shop", "Archery Shops", "./assets/markers/archery_shop.png"),
+
+    ALTAR("altars", "Altars", "./assets/markers/altar.png"),
+    FUSION_MASTER("fusion-masters", "Fusion Masters", "./assets/markers/fusion_master.png"),
+    CONTRACT_BOARD("contract-boards", "Contract Boards", "./assets/markers/contract_board.png"),
+
+    // Dev
     AREAS("areas", "Areas", ""),
     SPAWN_ZONE("spawn_zone", "Mob Spawn Zones", "");
 
