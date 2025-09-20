@@ -80,6 +80,7 @@ public class GUIHandler {
         this.registry.register(InventoryId.DRAKKAR_ARMOR_MERCHANT.asInt(), () -> new ShopInventory(GUIOverlay.SHOP_OVERLAY.asGlyph() + "§f" + Icon.ARMOR.get() + "§f Armor Merchant", InventoryId.DRAKKAR_BLACKSMITH.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_ARMOR_MERCHANT.asInt())));
         this.registry.register(InventoryId.BASIC_FOOD_STALL.asInt(), () -> new ShopInventory(GUIOverlay.SHOP_OVERLAY.asGlyph() + "§f" + Icon.FRUIT.get() + "§f Food Stall", InventoryId.BASIC_FOOD_STALL.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.BASIC_FOOD_STALL.asInt())));
         this.registry.register(InventoryId.DRAKKAR_GUARD_ARCHER_MERCHANT.asInt(), () -> new ShopInventory(GUIOverlay.SHOP_OVERLAY.asGlyph() + "§f" + Icon.FRUIT.get() + "§f Town Archer", InventoryId.DRAKKAR_GUARD_ARCHER_MERCHANT.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_GUARD_ARCHER_MERCHANT.asInt())));
+        this.registry.register(InventoryId.QUESTS_LIST.asInt(), () -> new QuestsInventory(GUIOverlay.QUESTS_INVENTORY_OVERLAY.asGlyph() + "§f" + Icon.BOOK.get() + "§f Quests", InventoryId.QUESTS_LIST.asInt()));
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
     }

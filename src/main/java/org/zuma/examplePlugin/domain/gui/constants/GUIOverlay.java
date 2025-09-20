@@ -14,7 +14,8 @@ public enum GUIOverlay {
     JEWELER_SHOP_OVERLAY("⽂"),
     XP_INVENTORY_OVERLAY("┒"),
     LOCATION_DISCOVERY_OVERLAY("╣"),
-    CONTRACTS_BOARD_OVERLAY("ⁿ");
+    CONTRACTS_BOARD_OVERLAY("ⁿ"),
+    QUESTS_INVENTORY_OVERLAY("⼭");
 
     private final String glyph;
 

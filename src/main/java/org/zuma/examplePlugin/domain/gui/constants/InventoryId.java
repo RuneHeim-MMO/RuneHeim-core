@@ -21,7 +21,8 @@ public enum InventoryId {
     CONTRACT_BOARD(14),
     DRAKKAR_ARMOR_MERCHANT(15),
     BASIC_FOOD_STALL(16),
-    DRAKKAR_GUARD_ARCHER_MERCHANT(17);
+    DRAKKAR_GUARD_ARCHER_MERCHANT(17),
+    QUESTS_LIST(18);
 
     private final int id;
 

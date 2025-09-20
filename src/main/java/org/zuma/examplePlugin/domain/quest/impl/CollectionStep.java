@@ -38,6 +38,10 @@ public class CollectionStep extends AbstractQuestStep {
         return requiredItems;
     }
 
+    public HashMap<Integer, Integer> getAcquiredItems() {
+        return this.acquiredItems;
+    }
+
     @EventHandler
     public void onPlayerPickUpEntity(EntityPickupItemEvent event) {
         if (!(event.getEntity() instanceof Player player)) return;

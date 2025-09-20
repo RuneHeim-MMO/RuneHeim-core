@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.domain.quest.impl.DialogStep;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import javax.annotation.Nullable;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,6 +79,10 @@ public class QuestRegistry {
     @Nullable
     public Quest getQuestById(String name) {
         return quests.get(name);
+    }
+
+    public Collection<Quest> getAllQuests() {
+        return this.quests.values();
     }
 
     public void registerQuest(Quest quest) {

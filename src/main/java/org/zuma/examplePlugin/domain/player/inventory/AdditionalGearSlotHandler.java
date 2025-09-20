@@ -9,8 +9,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
+import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -34,7 +36,7 @@ public class AdditionalGearSlotHandler {
     public void fillReservedSlots(RunePlayer player) {
         PlayerInventory inventory = player.asBukkitPlayer().getInventory();
 
-        inventory.setItem(INFO_SLOT, GUIControl.TRANSPARENT.asItemstack(Component.text("Info"), true));
+        inventory.setItem(INFO_SLOT, GUIControl.TRANSPARENT.asItemstack(Component.text("Quests"), true));
         inventory.setItem(SETTINGS_SLOT, GUIControl.TRANSPARENT.asItemstack(Component.text("Settings"), true));
 
         for (int slot : slots) {
@@ -80,13 +82,14 @@ public class AdditionalGearSlotHandler {
 
         if (slot == INFO_SLOT || slot == SETTINGS_SLOT) {
             if (slot == INFO_SLOT) {
-                player.asBukkitPlayer().sendMessage("Info");
+                RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.QUESTS_LIST.asInt(), player, null);
             }
 
             if (slot == SETTINGS_SLOT) {
                 player.asBukkitPlayer().sendMessage("Settings");
             }
 
+            SoundType.UI_CLICK.play(player, false);
             event.setCancelled(true);
             return;
         }
