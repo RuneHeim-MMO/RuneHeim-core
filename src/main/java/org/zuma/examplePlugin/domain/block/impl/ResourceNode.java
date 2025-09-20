@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.block.impl;
 
 import eu.decentsoftware.holograms.api.DHAPI;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.title.Title;
 import org.bukkit.*;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -12,6 +13,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.ResourceNodeSchematicHandler;
@@ -36,6 +38,7 @@ import org.zuma.examplePlugin.events.block.ResourceNodeGatheredEvent;
 import org.zuma.examplePlugin.events.block.ResourceNodeRespawnedEvent;
 
 import javax.annotation.Nullable;
+import java.time.Duration;
 import java.util.*;
 
 public class ResourceNode extends AbstractInteractableBlock {
@@ -222,6 +225,11 @@ public class ResourceNode extends AbstractInteractableBlock {
         if (random.nextDouble() * 100 < gatheringLuckPercentage && requiresTool) {
             gatheringDrops.addAll(blockType.rollGatheringDrops());
             SoundType.LUCKY_DROP_TABLE_SECOND_ROLL.play(player, true);
+            player.asBukkitPlayer().showTitle(Title.title(
+                    Component.text("2x Loot!", Color.ACCENT.asColor()),
+                    Component.empty(),
+                    Title.Times.times(Duration.ofSeconds(0, 5), Duration.ofSeconds(2), Duration.ofMillis(500))
+            ));
         }
 
         gatheringDrops.forEach(player::giveItemOrDrop);
