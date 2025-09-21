@@ -11,7 +11,7 @@ import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 public class SocketedTool extends SocketedEquipableItemType {
     public SocketedTool(AbstractItemMeta meta) {
         super(meta);
-        super.setTypeLore("Tool", Icon.TOOL.get());
+        super.setTypeLore("Tool", Icon.HAMMER.get());
     }
 
     @Override

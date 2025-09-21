@@ -984,11 +984,28 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(150, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 1025, 80, -669)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.INFERNAK_BLACKSMITH, 1, 100)
-                ), false, MarkerType.BLACKSMITH, "Blacksmith"), 1))
+                ), false, MarkerType.BLACKSMITH, "Blacksmith"), 1)),
 
 
+                // Sakurmeer general store
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(151, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 890, 135, 240)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SAKURMEER_GENERAL_STORE, 1, 100)
+                ), false, MarkerType.GENERAL_STORE, "General Store"), 1)),
 
-                // last 150
+                // Aetheris
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(152, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -104.5, 80, 792.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.AETHERIS_GENERAL_STORE, 1, 100)
+                ), false, MarkerType.GENERAL_STORE, "General Store"), 1)),
+
+                // Islenor
+            new SpawnZoneRecord(new AbstractSpawnZoneMeta(153, SpawnZoneType.POINT, 30, 20,
+                    new Location(Bukkit.getWorld("world"), 500, 66, -752.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                    new SpawnZoneMobRecord(MobType.AETHERIS_GENERAL_STORE, 1, 100)
+            ), false, MarkerType.GENERAL_STORE, "General Store"), 1))
+
+            // last 153
 
 
         );

@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.QuestCompletedEffect;
@@ -164,8 +165,8 @@ public class Quest implements SkillRestrictable {
         }
 
         lore.add(Component.empty());
-        lore.add(Component.text("Difficulty: ", Color.ITEM_LORE_DESCRIPTION.asColor()).append(Component.text(this.difficulty.getLabel())));
-        lore.add(Component.text("Duration: ", Color.ITEM_LORE_DESCRIPTION.asColor()).append(Component.text(this.duration.getLabel())));
+        lore.add(Icon.CONTRACT_SKULL.asComponent().append(Component.text("Difficulty: ", Color.ITEM_LORE_DESCRIPTION.asColor()).append(Component.text(this.difficulty.getLabel()))));
+        lore.add(Icon.CLOCK.asComponent().append(Component.text("Duration: ", Color.ITEM_LORE_DESCRIPTION.asColor()).append(Component.text(this.duration.getLabel()))));
 
         meta.lore(lore.stream().map(c -> c.decoration(TextDecoration.ITALIC, false)).toList());
 

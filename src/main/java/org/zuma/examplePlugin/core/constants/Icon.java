@@ -27,6 +27,8 @@ public enum Icon {
     COIN_TWO("③"),
     CRAFTING("҂"),
     CROSSED_SWORDS("⃇"),
+    CLOCK("◥"),
+    HAMMER("⼯"),
     EGGS("𓅿"),
     FIRE("𓊈"),
     FISH("𓆝"),
