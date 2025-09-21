@@ -9,7 +9,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.QuestCompletedEffect;
@@ -19,6 +18,7 @@ import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
 import org.zuma.examplePlugin.domain.quest.constants.QuestDifficulty;
+import org.zuma.examplePlugin.domain.quest.constants.QuestDuration;
 import org.zuma.examplePlugin.domain.quest.constants.QuestStartFailReason;
 import org.zuma.examplePlugin.domain.quest.constants.QuestStatus;
 import org.zuma.examplePlugin.domain.quest.impl.CollectionStep;
@@ -34,6 +34,7 @@ public class Quest implements SkillRestrictable {
     private final String id, name;
     private final List<AbstractQuestStep> steps;
     private final QuestDifficulty difficulty;
+    private QuestDuration duration;
 
     private QuestReward reward;
 
@@ -46,6 +47,7 @@ public class Quest implements SkillRestrictable {
         this.name = name;
         this.steps = new ArrayList<>();
         this.difficulty = difficulty;
+        this.duration = QuestDuration.SHORT;
         this.requirements = new ArrayList<>();
         this.requiredCompletedQuests = new ArrayList<>();
         this.reward = new QuestReward(null, null, null);
@@ -72,6 +74,8 @@ public class Quest implements SkillRestrictable {
             step.setId(stepIndex);
             this.steps.add(step);
         }
+
+        this.duration = getQuestDuration();
         return this;
     }
 
@@ -102,6 +106,20 @@ public class Quest implements SkillRestrictable {
         }
 
         return QuestStatus.NOT_STARTED;
+    }
+
+    private QuestDuration getQuestDuration() {
+        int size = steps.size();
+
+        if (size <= 10) {
+            return QuestDuration.SHORT;
+        } else if (size <= 15) {
+            return QuestDuration.MEDIUM;
+        } else if (size <= 30) {
+            return QuestDuration.LONG;
+        } else {
+            return QuestDuration.VERY_LONG;
+        }
     }
 
     public ItemStack getDisplayItemStack(RunePlayer player) {
@@ -147,7 +165,7 @@ public class Quest implements SkillRestrictable {
 
         lore.add(Component.empty());
         lore.add(Component.text("Difficulty: ", Color.ITEM_LORE_DESCRIPTION.asColor()).append(Component.text(this.difficulty.getLabel())));
-        lore.add(Component.text("Steps: ", Color.ITEM_LORE_DESCRIPTION.asColor()).append(Component.text(this.steps.size(), Color.ACCENT.asColor())));
+        lore.add(Component.text("Duration: ", Color.ITEM_LORE_DESCRIPTION.asColor()).append(Component.text(this.duration.getLabel())));
 
         meta.lore(lore.stream().map(c -> c.decoration(TextDecoration.ITALIC, false)).toList());
 
