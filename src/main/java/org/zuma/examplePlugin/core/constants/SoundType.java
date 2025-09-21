@@ -429,7 +429,16 @@ public enum SoundType {
     WITCH_AMBIENT("ENTITY_WITCH_AMBIENT", false, 1.0f, 1.0f),
     WITCH_ATTACK("ENTITY_WITCH_THROW", false, 1.0f, 1.1f),
     WITCH_HURT("ENTITY_WITCH_HURT", false, 1.0f, 0.95f),
-    WITCH_DEATH("ENTITY_WITCH_DEATH", false, 1.0f, 0.9f);
+    WITCH_DEATH("ENTITY_WITCH_DEATH", false, 1.0f, 0.9f),
+
+
+    // Infernak 'humans'
+    HELLFLESH_AMBIENT("ENTITY_HUSK_AMBIENT", false, 1.0f, 0.65f),
+    HELLFLESH_ATTACK("ENTITY_STRAY_HURT", false, 1.0f, 0.85f),
+    HELLFLESH_HURT("ENTITY_ZOMBIE_HURT", false, 1.0f, 0.7f),
+    HELLFLESH_DEATH("ENTITY_WITHER_SKELETON_DEATH", false, 1.0f, 0.6f),
+    HELLFLESH_LAUGH("ENTITY_PIGLIN_ANGRY", false, 1.0f, 0.75f),
+    HELLFLESH_CELEBRATE("ENTITY_PIGLIN_CELEBRATE", false, 1.0f, 0.8f);
 
 
     private final String soundKey;

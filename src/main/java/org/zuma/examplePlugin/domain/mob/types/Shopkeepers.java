@@ -34,7 +34,7 @@ public class Shopkeepers {
     public static void registerMobs(MobTypeRegistry registry) {
 
         registry.register(MobType.DRAKKAR_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1,
-                MobBehaviors.VILLAGER_MAN_1.getBehavior(), "shopkeeper", null, InventoryId.GENERAL_STORE.asInt(), 40)
+                MobBehaviors.VILLAGER_MAN_1.getBehavior(), "shopkeeper_1", null, InventoryId.GENERAL_STORE.asInt(), 40)
                 .attachDialog(genericShopDialog));
 
         registry.register(MobType.DRAKKAR_BLACKSMITH.getId(), () -> new InventoryOpenerMob(Icon.HAMMER.get() + " Blacksmith", EquipmentSet.BLACKSMITH,
@@ -43,7 +43,7 @@ public class Shopkeepers {
 
         registry.register(MobType.MURKWATCH_BLACKSMITH.getId(), () -> new InventoryOpenerMob(Icon.HAMMER.get() + " Blacksmith", EquipmentSet.BLACKSMITH,
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "murkwatch_blacksmith", null, InventoryId.MURKWATCH_BLACKSMITH.asInt(), 40)
-                .attachDialog(genericShopDialog)); // TODO: skin, shop
+                .attachDialog(genericShopDialog)); // TODO: shop
 
         registry.register(MobType.DRAKKAR_JEWLER.getId(), () -> new InventoryOpenerMob(Icon.BLUE_GEM.get() + " Jeweler", EquipmentSet.JEWELER,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "jeweler", null, InventoryId.JEWELER.asInt(), 40)
@@ -63,72 +63,69 @@ public class Shopkeepers {
 
         registry.register(MobType.MURKWATCH_ARCHER_SHOP.getId(), () -> new InventoryOpenerMob(Icon.BOW.get() + " Archery Merchant", EquipmentSet.RUNE_FULL_CROSSBOW,
                 MobBehaviors.VILLAGER_WOMAN_2.getBehavior(), "murkwatch_archery_merchant", null, InventoryId.MURKWATCH_ARCHERY_SHOP.asInt(), 30)
-                .attachDialog(genericShopDialog));// TODO: skin, shop
+                .attachDialog(genericShopDialog));// TODO:  shop
 
         registry.register(MobType.BRINEPORT_FISHING_SHOP.getId(), () -> new InventoryOpenerMob(Icon.FISHING_HOOK.get() + " Fishing Merchant", EquipmentSet.FISHERMAN,
                 MobBehaviors.VILLAGER_MAN_2.getBehavior(), "brineport_fisherman", null, InventoryId.BRINEPORT_FISHING_SHOP.asInt(), 40)
-                .attachDialog(genericShopDialog)); // TODO: skin, shop
+                .attachDialog(genericShopDialog)); // TODO: shop
 
 
         registry.register(MobType.FENSHADE_MINING_SHOP.getId(), () -> new InventoryOpenerMob(Icon.PICKAXE.get() + " Mining Merchant", EquipmentSet.PICKAXES,
                 MobBehaviors.VILLAGER_WOMAN_5.getBehavior(), "fenshade_miner", null, InventoryId.FENSHADE_MINING_SHOP.asInt(), 40)
-                .attachDialog(genericShopDialog)); // TODO: skin, shop
+                .attachDialog(genericShopDialog)); // TODO: shop
 
         registry.register(MobType.ASHWALE_MINING_SHOP.getId(), () -> new InventoryOpenerMob(Icon.PICKAXE.get() + " Mining Merchant", EquipmentSet.PICKAXES,
-                MobBehaviors.VILLAGER_MAN_3.getBehavior(), "drakkar_miner", null, InventoryId.ASHWALE_MINING_SHOP.asInt(), 40)
-                .attachDialog(genericShopDialog)); // TODO: skin, shop
+                MobBehaviors.VILLAGER_MAN_3.getBehavior(), "ashwale_miner", null, InventoryId.ASHWALE_MINING_SHOP.asInt(), 40)
+                .attachDialog(genericShopDialog)); // TODO:  shop
 
         registry.register(MobType.ASHWALE_AXE_SHOP.getId(), () -> new InventoryOpenerMob(Icon.AXE.get() + " Axe Merchant", EquipmentSet.AXES,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "ashwale_lumberjack", null, InventoryId.ASHWALE_AXE_SHOP.asInt(), 40)
-                .attachDialog(genericShopDialog)); // TODO: skin, shop
+                .attachDialog(genericShopDialog)); // TODO:, shop
 
 
         registry.register(MobType.SPOREFELL_FISHING_SHOP.getId(), () -> new InventoryOpenerMob(Icon.FISHING_HOOK.get() + " Fishing Merchant", EquipmentSet.FISHERMAN,
                 MobBehaviors.VILLAGER_MAN_4.getBehavior(), "sporefell_fisherman", null, InventoryId.SPOREFELL_FISHING_SHOP.asInt(), 40)
-                .attachDialog(genericShopDialog)); // TODO: skin, shop
+                .attachDialog(genericShopDialog)); // TODO: shop
 
         registry.register(MobType.SAHARIJIN_FISHING_SHOP.getId(), () -> new InventoryOpenerMob(Icon.FISHING_HOOK.get() + " Fishing Merchant", EquipmentSet.FISHERMAN,
                 MobBehaviors.VILLAGER_MAN_4.getBehavior(), "saharijin_fisherman", null, InventoryId.SAHARIJIN_FISHING_SHOP.asInt(), 40)
-                .attachDialog(genericShopDialog)); // TODO: skin, shop
+                .attachDialog(genericShopDialog)); // TODO: shop
 
         registry.register(MobType.ELDARWYN_ARMOR_SHOP.getId(), () -> new InventoryOpenerMob(Icon.ARMOR.get() + " Armor Merchant", EquipmentSet.MITHRIL_HALF_SET_SWORD,
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "eldarwyn_armor_merchant", null, InventoryId.ELDARWYN_ARMOR_SHOP.asInt(), 30)
-                .attachDialog(genericShopDialog)); // TODO: skin, shop
+                .attachDialog(genericShopDialog)); // TODO: shop
 
         registry.register(MobType.VALDRIN_WEAPON_SHOP.getId(), () -> new InventoryOpenerMob(Icon.SWORD.get() + " Weapon Merchant", EquipmentSet.ADAMANT_HALF_SET_SWORD,
                 MobBehaviors.VILLAGER_MAN_2.getBehavior(), "valdrin_weapon_merchant", null, InventoryId.VALDRIN_WEAPON_SHOP.asInt(), 30)
-                .attachDialog(genericShopDialog)); // TODO: skin, shop
+                .attachDialog(genericShopDialog)); // TODO: shop
 
         registry.register(MobType.INFERNAK_BLACKSMITH.getId(), () -> new InventoryOpenerMob(Icon.HAMMER.get() + " Blacksmith", EquipmentSet.BLACKSMITH,
-                MobBehaviors.VILLAGER_MAN_2.getBehavior(), "infernak_blacksmith", null, InventoryId.INFERNAK_BLACKSMITH.asInt(), 30)
-                .attachDialog(genericShopDialog)); // TODO: skin, shop
+                MobBehaviors.HELLFLESH_1.getBehavior(), "infernak_blacksmith", null, InventoryId.INFERNAK_BLACKSMITH.asInt(), 30)
+                .attachDialog(genericShopDialog)); //  shop
 
         registry.register(MobType.MURKWATCH_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1,
-                MobBehaviors.VILLAGER_MAN_1.getBehavior(), "shopkeeper", null, InventoryId.MURKWATCH_GENERAL_STORE.asInt(), 40)
-                .attachDialog(genericShopDialog)); // todo: skin
+                MobBehaviors.VILLAGER_MAN_1.getBehavior(), "shopkeeper_2", null, InventoryId.MURKWATCH_GENERAL_STORE.asInt(), 40)
+                .attachDialog(genericShopDialog));
 
         registry.register(MobType.ELDARWYN_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1,
-                MobBehaviors.VILLAGER_MAN_3.getBehavior(), "shopkeeper", null, InventoryId.ELDARWYN_GENERAL_STORE.asInt(), 40)
-                .attachDialog(genericShopDialog)); // todo: skin
+                MobBehaviors.VILLAGER_MAN_3.getBehavior(), "shopkeeper_3", null, InventoryId.ELDARWYN_GENERAL_STORE.asInt(), 40)
+                .attachDialog(genericShopDialog));
 
         registry.register(MobType.BRINEPORT_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1,
-                MobBehaviors.VILLAGER_MAN_2.getBehavior(), "shopkeeper", null, InventoryId.BRINEPORT_GENERAL_STORE.asInt(), 40)
-                .attachDialog(genericShopDialog)); // todo: skin
-
-
+                MobBehaviors.VILLAGER_MAN_2.getBehavior(), "shopkeeper_4", null, InventoryId.BRINEPORT_GENERAL_STORE.asInt(), 40)
+                .attachDialog(genericShopDialog));
+        
         registry.register(MobType.SAKURMEER_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1,
-                MobBehaviors.VILLAGER_MAN_4.getBehavior(), "shopkeeper", null, InventoryId.SAKURMEER_GENERAL_STORE.asInt(), 40)
-                .attachDialog(genericShopDialog)); // todo: skin
+                MobBehaviors.VILLAGER_MAN_4.getBehavior(), "shopkeeper_5", null, InventoryId.SAKURMEER_GENERAL_STORE.asInt(), 40)
+                .attachDialog(genericShopDialog));
 
         registry.register(MobType.AETHERIS_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1,
-                MobBehaviors.VILLAGER_MAN_3.getBehavior(), "shopkeeper", null, InventoryId.AETHERIS_GENERAL_STORE.asInt(), 40)
-                .attachDialog(genericShopDialog)); // todo: skin
+                MobBehaviors.VILLAGER_MAN_3.getBehavior(), "shopkeeper_6", null, InventoryId.AETHERIS_GENERAL_STORE.asInt(), 40)
+                .attachDialog(genericShopDialog));
 
         registry.register(MobType.ISLENOR_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1,
-                MobBehaviors.VILLAGER_MAN_2.getBehavior(), "shopkeeper", null, InventoryId.ISLENOR_GENERAL_STORE.asInt(), 40)
-                .attachDialog(genericShopDialog)); // todo: skin
-
-
+                MobBehaviors.VILLAGER_MAN_2.getBehavior(), "shopkeeper_7", null, InventoryId.ISLENOR_GENERAL_STORE.asInt(), 40)
+                .attachDialog(genericShopDialog));
 
 
     }
