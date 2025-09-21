@@ -14,11 +14,12 @@ import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.heimscript.ScriptParser;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
-import org.zuma.examplePlugin.events.dialog.DialogQuestStepToBeCompleted;
+import org.zuma.examplePlugin.events.dialog.QuestStepToBeCompleted;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class ScriptedActionHandler {
@@ -75,8 +76,15 @@ public class ScriptedActionHandler {
                 case TAKE_INVENTORY_ITEM -> {
                     PlayerUtils.removeItems(player, List.of(new ItemRecord(Integer.parseInt(args.get("item_id")), Integer.parseInt(args.get("amount")))));
                 }
-                case DIALOG_QUEST_STEP_FINISH -> {
-                    Bukkit.getServer().getPluginManager().callEvent(new DialogQuestStepToBeCompleted(player.getUUID(), args.get("stable_id")));
+                case QUEST_STEP_FINISH -> {
+                    String stableId = args.get("stable_id");
+
+                    if (player.getActiveQuestSteps().values().stream().noneMatch(step -> Objects.equals(step.getStableId(), stableId))) {
+                        throw new IllegalStateException("Cannot finish " + player.asBukkitPlayer().getName() + " quest step " + stableId + "! No active steps with that ID found.");
+                    }
+
+                    Bukkit.getServer().getPluginManager().callEvent(new QuestStepToBeCompleted(player.getUUID(), stableId));
+
                 }
                 case CLEAR_INVENTORY -> {
                     player.asBukkitPlayer().getInventory().clear();
@@ -98,6 +106,7 @@ public class ScriptedActionHandler {
 
         } catch (Exception e) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "[SCRIPT] Could not execute the actions " + input, e);
+            throw e;
         }
     }
 

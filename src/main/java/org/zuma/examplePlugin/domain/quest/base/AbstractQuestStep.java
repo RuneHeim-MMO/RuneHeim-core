@@ -1,17 +1,25 @@
 package org.zuma.examplePlugin.domain.quest.base;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.PlayerQuestState;
 import org.zuma.examplePlugin.domain.quest.Quest;
 import org.zuma.examplePlugin.domain.quest.constants.StepType;
+import org.zuma.examplePlugin.events.dialog.QuestStepToBeCompleted;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 public abstract class AbstractQuestStep implements Listener {
@@ -19,19 +27,31 @@ public abstract class AbstractQuestStep implements Listener {
     private transient Quest parentQuest;
     private int id;
     private final StepType type;
+    @Nullable
+    private final String description;
+    private String stableId;
 
     @Nullable
     private final UUID owner;
 
-    public AbstractQuestStep(RuneQuestPlugin plugin, Quest parentQuest, StepType type, @Nullable UUID owner) { // if owner is null, then this is a 'dummy' quest used for displaying to players.
+    public AbstractQuestStep(RuneQuestPlugin plugin, Quest parentQuest, StepType type, @Nullable String description, String stableId, @Nullable UUID owner) { // if owner is null, then this is a 'dummy' quest used for displaying to players.
         this.plugin = plugin;
         this.parentQuest = parentQuest;
         this.type = type;
         this.owner = owner;
+        this.description = description;
+        this.stableId = stableId;
 
         if (getOwner() != null) {
             plugin.getServer().getPluginManager().registerEvents(this, plugin);
         }
+    }
+
+    @EventHandler
+    public void onDialogStepCompleteTriggered(QuestStepToBeCompleted event) {
+        if (!event.getPlayerUUID().equals(getOwner()) || !Objects.equals(event.getStableDialogStepId(), this.stableId))
+            return;
+        this.handleStepCompletion();
     }
 
     protected void handleStepCompletion() {
@@ -69,14 +89,28 @@ public abstract class AbstractQuestStep implements Listener {
         }
 
         runePlayer.getActiveQuestSteps().put(parentQuest.getId(), nextQuestStep.cloneForPlayer(runePlayer.getUUID()));
-
+        HudService.sendQuestStepTaskMessage(runePlayer, nextQuestStep);
     }
 
     public abstract AbstractQuestStep cloneForPlayer(UUID ownerUUID);
 
-    public abstract AbstractQuestStep assignValuesFromState(PlayerQuestState state);
 
-    public abstract PlayerQuestState assignValuesToState(PlayerQuestState state);
+    public AbstractQuestStep initializeValuesFromState(PlayerQuestState state) {
+        this.stableId = state.getStepProgressData().get("stableId").toString();
+        return assignValuesFromState(state);
+    }
+
+
+    public PlayerQuestState saveValuesToState(PlayerQuestState state) {
+        Map<String, Object> toBeMutated = state.getStepProgressData();
+        toBeMutated.put("stableId", this.stableId);
+        return assignValuesToState(state);
+    }
+
+
+    protected abstract AbstractQuestStep assignValuesFromState(PlayerQuestState state);
+
+    protected abstract PlayerQuestState assignValuesToState(PlayerQuestState state);
 
     public int getId() {
         return id;
@@ -92,6 +126,10 @@ public abstract class AbstractQuestStep implements Listener {
 
     public RuneQuestPlugin getPlugin() {
         return plugin;
+    }
+
+    public String getStableId() {
+        return stableId;
     }
 
     public void setPlugin(RuneQuestPlugin plugin) {
@@ -110,5 +148,10 @@ public abstract class AbstractQuestStep implements Listener {
     @Nullable
     public UUID getOwner() {
         return owner;
+    }
+
+    @Nullable
+    public String getDescription() {
+        return description;
     }
 }

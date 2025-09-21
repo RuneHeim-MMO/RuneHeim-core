@@ -7,9 +7,9 @@ import javax.annotation.Nullable;
 public class Territory {
     private final Location centerPoint, spawnPoint;
     private final int radius, minLevel, maxLevel;
-    private final String name, description, id;
+    private final String name, description, firstTimeDiscoveryLore, id;
 
-    public Territory(String id, Location centerPoint, @Nullable Location spawnPoint, int radius, String name, String description, int minLevel, int maxLevel) {
+    public Territory(String id, Location centerPoint, @Nullable Location spawnPoint, int radius, String name, String description, String firstTimeDiscoveryLore, int minLevel, int maxLevel) {
         this.centerPoint = centerPoint;
         this.radius = radius;
         this.minLevel = minLevel;
@@ -18,6 +18,7 @@ public class Territory {
         this.id = id;
         this.description = description;
         this.spawnPoint = spawnPoint;
+        this.firstTimeDiscoveryLore = firstTimeDiscoveryLore;
     }
 
     public Location getCenterPoint() {
@@ -51,5 +52,9 @@ public class Territory {
     @Nullable
     public Location getSpawnPoint() {
         return spawnPoint;
+    }
+
+    public String getFirstTimeDiscoveryLore() {
+        return firstTimeDiscoveryLore;
     }
 }

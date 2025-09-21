@@ -77,6 +77,10 @@ public class GUIHandler {
         this.registry.register(InventoryId.XP_LAMP.asInt(), () -> new XPLampInventory(GUIOverlay.XP_INVENTORY_OVERLAY.asGlyph() + "§f" + Icon.EXPERIENCE.get() + "§f XP Lamp", InventoryId.XP_LAMP.asInt()));
         this.registry.register(InventoryId.TERRITORY_INVENTORY.asInt(), () -> new TerritoriesInventory(GUIOverlay.LOCATION_DISCOVERY_OVERLAY.asGlyph() + "§f" + Icon.MAP.get() + "§f Discovered Locations", InventoryId.TERRITORY_INVENTORY.asInt()));
         this.registry.register(InventoryId.CONTRACT_BOARD.asInt(), () -> new ContractBoard(GUIOverlay.CONTRACTS_BOARD_OVERLAY.asGlyph() + "§f" + Icon.CONTRACT_SKULL.get() + "§f Contract Board", InventoryId.CONTRACT_BOARD.asInt()));
+        this.registry.register(InventoryId.DRAKKAR_ARMOR_MERCHANT.asInt(), () -> new ShopInventory(GUIOverlay.SHOP_OVERLAY.asGlyph() + "§f" + Icon.ARMOR.get() + "§f Armor Merchant", InventoryId.DRAKKAR_BLACKSMITH.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_ARMOR_MERCHANT.asInt())));
+        this.registry.register(InventoryId.BASIC_FOOD_STALL.asInt(), () -> new ShopInventory(GUIOverlay.SHOP_OVERLAY.asGlyph() + "§f" + Icon.FRUIT.get() + "§f Food Stall", InventoryId.BASIC_FOOD_STALL.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.BASIC_FOOD_STALL.asInt())));
+        this.registry.register(InventoryId.DRAKKAR_GUARD_ARCHER_MERCHANT.asInt(), () -> new ShopInventory(GUIOverlay.SHOP_OVERLAY.asGlyph() + "§f" + Icon.FRUIT.get() + "§f Town Archer", InventoryId.DRAKKAR_GUARD_ARCHER_MERCHANT.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_GUARD_ARCHER_MERCHANT.asInt())));
+        this.registry.register(InventoryId.QUESTS_LIST.asInt(), () -> new QuestsInventory(GUIOverlay.QUESTS_INVENTORY_OVERLAY.asGlyph() + "§f" + Icon.BOOK.get() + "§f Quests", InventoryId.QUESTS_LIST.asInt()));
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
     }
@@ -218,7 +222,7 @@ public class GUIHandler {
             return;
         }
 
-        if (cooldownHandler.isCooledDown(player)) {
+        if (cooldownHandler.isCooldownInProgress(player)) {
             event.setCancelled(true);
             return;
         }

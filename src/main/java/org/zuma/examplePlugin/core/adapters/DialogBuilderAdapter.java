@@ -107,6 +107,7 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
                 List<String> conditions = getConditions(step);
                 List<DialogStep> truthyFollowUp = getTruthyFollowUp(step);
                 List<DialogStep> falsyFollowUp = getFalsyFollowUp(step);
+                ConditionStep.LogicalOperator logicalOperator = getLogicalOperator(step);
 
                 if (conditions != null) {
                     out.name("conditions");
@@ -115,6 +116,10 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
                         out.value(cond);
                     }
                     out.endArray();
+                }
+
+                if (logicalOperator != null) {
+                    out.name("logicalOperator").value(logicalOperator.toString());
                 }
 
                 if (truthyFollowUp != null && !truthyFollowUp.isEmpty()) {
@@ -185,6 +190,7 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
         List<OptionData> options = new ArrayList<>();
         List<String> actions = new ArrayList<>();
         List<String> conditions = new ArrayList<>();
+        ConditionStep.LogicalOperator logicalOperator = ConditionStep.LogicalOperator.AND;
 
         // Condition-specific temporary holders
         DialogBuilder truthyFollowupBuilder = null;
@@ -197,6 +203,7 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
                 case "loop" -> loop = in.nextBoolean();
                 case "uniqueIdentifier" -> uniqueIdentifier = in.nextString();
                 case "teleportToUniqueIdentifier" -> teleportToUniqueIdentifier = in.nextString();
+                case "logicalOperator" -> logicalOperator = ConditionStep.LogicalOperator.valueOf(in.nextString());
                 case "content" -> {
                     in.beginArray();
                     while (in.hasNext()) {
@@ -313,6 +320,7 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
             case "ConditionStep" -> {
                 DialogBuilder finalTruthyFollowupBuilder = truthyFollowupBuilder;
                 DialogBuilder finalFalsyFollowupBuilder = falsyFollowupBuilder;
+                ConditionStep.LogicalOperator finalLogicalOperator = logicalOperator;
                 builder.conditionStep(cond -> {
                     conditions.forEach(cond::condition);
 
@@ -322,6 +330,8 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
                     if (finalFalsyFollowupBuilder != null) {
                         cond.falsyFollowUp(fb -> fb.steps.addAll(finalFalsyFollowupBuilder.steps));
                     }
+
+                    cond.logicalOperator(finalLogicalOperator);
                 }, uniqueIdentifier);
             }
             case null, default -> throw new IOException("Unknown step type: " + type);
@@ -461,6 +471,16 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
             var f = step.getClass().getDeclaredField("falsyFollowUp");
             f.setAccessible(true);
             return (List<DialogStep>) f.get(step);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private ConditionStep.LogicalOperator getLogicalOperator(Object step) {
+        try {
+            var f = step.getClass().getDeclaredField("logicalOperator");
+            f.setAccessible(true);
+            return (ConditionStep.LogicalOperator) f.get(step);
         } catch (Exception e) {
             return null;
         }

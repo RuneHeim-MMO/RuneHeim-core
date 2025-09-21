@@ -48,9 +48,8 @@ public class TerritoriesInventory extends PaginatedIndividualGUI {
         meta.displayName(Icon.MAP.asComponent().append(
                 Component.text(territory.getName())
                         .append(Component.text(" [").color(Color.ITEM_LORE_DESCRIPTION.asColor()).decoration(TextDecoration.ITALIC, false))
-                        .append(Component.text(String.format("X: %.0f, Y: %.0f, Z: %.0f",
+                        .append(Component.text(String.format("X: %.0f, Z: %.0f",
                                         territory.getCenterPoint().getX(),
-                                        territory.getCenterPoint().getY(),
                                         territory.getCenterPoint().getZ()))
                                 .color(Color.INFO.asColor())
                                 .decoration(TextDecoration.ITALIC, false))

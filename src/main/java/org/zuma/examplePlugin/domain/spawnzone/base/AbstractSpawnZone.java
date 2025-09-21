@@ -122,6 +122,12 @@ public abstract class AbstractSpawnZone {
                     Location candidate = getNextMobLocation();
                     attempts++;
 
+                    // Do not search for safe location for point spawns.
+                    if (type == SpawnZoneType.POINT) {
+                        mobLocation = candidate;
+                        break;
+                    }
+
                     if (candidate == null) {
                         RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Spawn location candidate was null for mob in Drop Zone ID: " + id + " type: " + this.type);
                         continue;

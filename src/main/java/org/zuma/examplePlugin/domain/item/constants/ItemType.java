@@ -28,7 +28,8 @@ public enum ItemType {
     ACCESSORY_AMULET(24),
     ACCESSORY_RING(25),
     REMAINS(26),
-    MOUNT(27);
+    MOUNT(27),
+    COMPASS(28);
 
     private final int key;
 

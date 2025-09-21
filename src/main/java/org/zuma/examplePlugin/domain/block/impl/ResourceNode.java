@@ -2,24 +2,27 @@ package org.zuma.examplePlugin.domain.block.impl;
 
 import eu.decentsoftware.holograms.api.DHAPI;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import net.kyori.adventure.title.Title;
+import org.bukkit.*;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.ResourceNodeSchematicHandler;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
+import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
+import org.zuma.examplePlugin.domain.effect.EffectHandler;
+import org.zuma.examplePlugin.domain.effect.effects.PerfectStrikeEffect;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -35,9 +38,12 @@ import org.zuma.examplePlugin.events.block.ResourceNodeGatheredEvent;
 import org.zuma.examplePlugin.events.block.ResourceNodeRespawnedEvent;
 
 import javax.annotation.Nullable;
+import java.time.Duration;
 import java.util.*;
 
 public class ResourceNode extends AbstractInteractableBlock {
+    public static Double PERFECT_STRIKE_CHANCE = 2.5;
+
     private final Random random = new Random();
     private ResourceNodeType blockType;
     private boolean isDepleted;
@@ -49,7 +55,7 @@ public class ResourceNode extends AbstractInteractableBlock {
 
     @Nullable
     private ResourceNodeSchematicHandler schematicHandler;
-
+    private final CooldownHandler perfectStrikeCooldownHandler; // To prevent interruption abuse;
 
     public ResourceNode(BlockManager manager, AbstractInteractableBlockMeta meta) {
         super(meta, null, null);
@@ -60,8 +66,7 @@ public class ResourceNode extends AbstractInteractableBlock {
         this.schematicHandler = null;
         this.origin = meta.location();
         this.manager = manager;
-
-
+        this.perfectStrikeCooldownHandler = new CooldownHandler();
     }
 
     private void initializeHologram() {
@@ -126,9 +131,58 @@ public class ResourceNode extends AbstractInteractableBlock {
 
     }
 
+    private boolean rollPerfectStrikeChange(RunePlayer player) {
+        if (blockType.getBaseGatheringDurationMillis() < 1000) return false;
+
+        // Cooldown player perfect strike rolls on roll, cd expires base duration * 1.5
+        if (this.perfectStrikeCooldownHandler.isCooldownInProgress(player)) return false;
+        this.perfectStrikeCooldownHandler.startCooldown(player, (long) (this.blockType.getBaseGatheringDurationMillis() * 1.5));
+
+        // Perfect strike roll
+        double randomDouble = Math.random() * 100;
+        boolean isPerfectStrike = randomDouble < PERFECT_STRIKE_CHANCE;
+
+        if (isPerfectStrike) {
+            SoundType stepSound = blockType.getStepSound();
+            EffectHandler.playAt(this.getLocation().clone().add(0.5, 0, 0.5), new PerfectStrikeEffect(player));
+
+            new BukkitRunnable() {
+                int iterations = 0;
+
+                public void run() {
+                    if (iterations >= 3) cancel();
+                    if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) cancel();
+
+                    if (stepSound != null) stepSound.play(player, true);
+                    SoundType.PERFECT_STRIKE_1.play(player, true);
+
+                    iterations++;
+                }
+            }.runTaskTimer(RuneQuestPlugin.getInstance(), 0, 2);
+
+
+            Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+                if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) return;
+
+                SoundType successSound = blockType.getGatherSuccessSound();
+                if (successSound != null) successSound.play(player, true);
+                SoundType.PERFECT_STRIKE_2.play(player, true);
+
+                onGather(player, 50);
+            }, 6L);
+
+            return true;
+        }
+
+        return false;
+    }
 
     private void startGatheringAction(RunePlayer player, double modifier) {
         if (blockType.getStartSound() != null) blockType.getStartSound().play(player, true);
+
+        if (rollPerfectStrikeChange(player)) {
+            return; // If is perfect strike, handle it in rollPerfectStrikeChange
+        }
 
         ActionParams params = new ActionParams.Builder()
                 .durationMs((int) (blockType.getBaseGatheringDurationMillis() / modifier))
@@ -136,14 +190,14 @@ public class ResourceNode extends AbstractInteractableBlock {
                 .successActionLabel("")
                 .stepSound(blockType.getStepSound())
                 .successSound(blockType.getGatherSuccessSound())
-                .onSuccess(() -> onGather(player))
+                .onSuccess(() -> onGather(player, 0))
                 .onFailure(null)
                 .build();
 
         player.startAction(new ProgressBarAction(true, true), params);
     }
 
-    private void onGather(RunePlayer player) {
+    private void onGather(RunePlayer player, double baseGatheringLuckPercentage) {
         if (isDepleted) {
             return;
         }
@@ -156,14 +210,14 @@ public class ResourceNode extends AbstractInteractableBlock {
         }
 
         depleteResource();
-        rollDropTableLoot(player);
+        rollDropTableLoot(player, baseGatheringLuckPercentage);
         blockType.getXpReward().forEach(reward -> player.distributeXp(reward.type(), reward.xp()));
 
     }
 
-    private void rollDropTableLoot(RunePlayer player) {
+    private void rollDropTableLoot(RunePlayer player, double baseGatheringLuckPercentage) {
         Modifier gatheringLuck = player.getModifiers().get(ModifierType.GATHERING_LUCK);
-        double gatheringLuckPercentage = gatheringLuck != null ? gatheringLuck.amount() : 0;
+        double gatheringLuckPercentage = baseGatheringLuckPercentage + (gatheringLuck != null ? gatheringLuck.amount() : 0);
 
         List<ItemRecord> gatheringDrops = blockType.rollGatheringDrops();
 
@@ -171,6 +225,11 @@ public class ResourceNode extends AbstractInteractableBlock {
         if (random.nextDouble() * 100 < gatheringLuckPercentage && requiresTool) {
             gatheringDrops.addAll(blockType.rollGatheringDrops());
             SoundType.LUCKY_DROP_TABLE_SECOND_ROLL.play(player, true);
+            player.asBukkitPlayer().showTitle(Title.title(
+                    Component.text("2x Loot!", Color.ACCENT.asColor()),
+                    Component.empty(),
+                    Title.Times.times(Duration.ofSeconds(0, 5), Duration.ofSeconds(2), Duration.ofMillis(500))
+            ));
         }
 
         gatheringDrops.forEach(player::giveItemOrDrop);

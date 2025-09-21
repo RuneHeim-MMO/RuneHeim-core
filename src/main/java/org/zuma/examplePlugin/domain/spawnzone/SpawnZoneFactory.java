@@ -39,7 +39,7 @@ public class SpawnZoneFactory {
         switch (json.version()) {
             case 1 -> {
                 PointSpawnZoneMeta deserialized = new Gson().fromJson(json.meta(), PointSpawnZoneMeta.class);
-                PointSpawnZone zone = new PointSpawnZone(meta, deserialized.spawnAtHighestBlock());
+                PointSpawnZone zone = new PointSpawnZone(meta, deserialized.spawnAtHighestBlock(), deserialized.marker(), deserialized.markerLabel());
                 zone.setMobRecords(deserialized.mobRecords());
 
                 return zone;

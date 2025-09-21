@@ -1,7 +1,9 @@
 package org.zuma.examplePlugin.domain.dialog.impl;
 
 import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.heimscript.action.ScriptedActionHandler;
 import org.zuma.examplePlugin.domain.dialog.DialogText;
 import org.zuma.examplePlugin.domain.dialog.InteractiveDialogOption;
@@ -32,6 +34,7 @@ public class InteractiveDialogStep extends DialogStep {
 
     @Override
     public void onDialogFinishRendering(RunePlayer player) {
+        player.setDialogOptionChoosing(true);
         SoundType.DIALOG_CHOICE_SOUND.play(player, false);
         parent.setSlotLocked(true);
     }
@@ -48,10 +51,18 @@ public class InteractiveDialogStep extends DialogStep {
             return;
         }
 
+        player.setDialogOptionChoosing(false);
+
         if (clickedOption.actions() != null) {
-            clickedOption.actions().forEach(ac -> {
-                ScriptedActionHandler.executeAction(ac, player, null, new ScriptedActionHandler.ActionCaller(ScriptedActionHandler.ActionCallerType.DIALOG, "{dialog_id:" + parent.getId() + "}"), this.parent);
-            });
+            try {
+                for (String action : clickedOption.actions()) {
+                    ScriptedActionHandler.executeAction(action, player, null, new ScriptedActionHandler.ActionCaller(ScriptedActionHandler.ActionCallerType.DIALOG, "{dialog_id:" + parent.getId() + "}"), this.parent);
+                }
+            } catch (Exception e) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Couldn't execute action in InteractiveDialogStep " + this.getUniqueIdentifier() + ". Aborting.");
+            }
+
+
         }
 
         if (clickedOption.runnable() != null) {

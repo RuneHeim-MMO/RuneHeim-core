@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.hud;
 
 import eu.decentsoftware.holograms.api.DHAPI;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -19,19 +20,64 @@ import org.zuma.examplePlugin.core.utils.*;
 import org.zuma.examplePlugin.domain.combat.constants.AttackType;
 import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.combat.constants.HitType;
+import org.zuma.examplePlugin.domain.item.ItemRecord;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.impl.FusionMaster;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.FusionThunderEffect;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.quest.Quest;
+import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
 public class HudService {
     private static final Random random = new Random();
+
+    public static void sendQuestRewards(RunePlayer player, Quest quest) {
+        Map<SkillType, Double> xpRewards = quest.getReward().getXpRewards();
+        List<ItemRecord> itemRewards = quest.getReward().getItemRewards();
+        Integer coinsReward = quest.getReward().getCoins();
+
+        if (xpRewards != null) {
+            xpRewards.forEach((type, xp) -> {
+                sendInfoMessage(player, Component.text("+ " + xp + " " + type.getLabel() + " experience."));
+            });
+        }
+
+        if (itemRewards != null) {
+            itemRewards.forEach((itemRecord) -> {
+                AbstractItemType itemType = RuneQuestPlugin.getItemRegistry().getType(itemRecord.getItemId());
+
+                if (itemType == null) return;
+
+                sendInfoMessage(player, Component.text("+ " + itemRecord.getAmount() + "x " + itemType.displayName + "."));
+            });
+        }
+
+        if (coinsReward != null) {
+            sendInfoMessage(player, Component.text("+ " + coinsReward + " coins."));
+        }
+    }
+
+    public static void sendQuestStartMessage(RunePlayer player, Quest quest) {
+        HudService.sendInfoMessage(player, Component.text(quest.getName() + " has been started!"));
+    }
+
+    public static void sendQuestStepTaskMessage(RunePlayer player, AbstractQuestStep step) {
+        if (step.getDescription() == null) return; // Silent checkpoint
+        HudService.sendInfoMessage(player, Component.text(step.getParentQuest().getName() + " >> ").append(Component.text(step.getDescription(), NamedTextColor.WHITE)));
+        SoundType.PLAYER_QUEST_PROGRESS.play(player, false);
+    }
+
+    public static void sendQuestCompletedMessage(RunePlayer player, Quest quest) {
+        HudService.sendInfoMessage(player, Component.text(quest.getName() + " has been completed!"));
+    }
 
     public static void showFusionSuccessEffect(RunePlayer player, int gemsInserted) {
         double radius = 5.0;

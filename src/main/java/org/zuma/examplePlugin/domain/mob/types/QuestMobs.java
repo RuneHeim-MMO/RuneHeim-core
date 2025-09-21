@@ -1,14 +1,11 @@
 package org.zuma.examplePlugin.domain.mob.types;
 
-import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.domain.dialog.Dialogs;
-import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.mob.MobTypeRegistry;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehaviors;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.mob.impl.DialogMob;
-import org.zuma.examplePlugin.domain.mob.impl.InventoryOpenerMob;
 
 public class QuestMobs {
 
@@ -26,7 +23,7 @@ public class QuestMobs {
         registry.register(MobType.TUTOR_LUMBERJACK.getId(), () -> new DialogMob("Lumberjack", EquipmentSet.BRONZE_AXE,
                 MobBehaviors.VILLAGER_MAN_4.getBehavior(), "lumberjack", null, 0, Dialogs.tutorial_lumberjack));
 
-        registry.register(MobType.TUTOR_SURVIVAL.getId(), () -> new DialogMob("Survival Guide", EquipmentSet.RUNITE_FULL_CROSSBOW,
+        registry.register(MobType.TUTOR_SURVIVAL.getId(), () -> new DialogMob("Survival Guide", EquipmentSet.RUNE_FULL_CROSSBOW,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "survival_guide", null, 0, Dialogs.tutorial_survivalGuide));
 
         registry.register(MobType.SHEPHERD.getId(), () -> new DialogMob("Shepherd", EquipmentSet.SHEPHERD,

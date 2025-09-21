@@ -31,6 +31,13 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.SMITHING_HAMMER), 100)
     ))),
 
+    RUNE_HALF_SET_SWORD(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNITE_BODY), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNITE_PLATELEGS), 100),
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.RUNITE_BOOTS), 100),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNITE_SWORD), 100)
+    ))),
+
     JEWELER(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.SAPPHIRE), 20),
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.EMERALD), 20),
@@ -62,8 +69,14 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.SHEARS, 1), 100)
     ))),
 
-    RUNITE_FULL_CROSSBOW(new MobEquipmentMeta(List.of(
+    RUNE_FULL_CROSSBOW(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNITE_CROSSBOW, 1), 100),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNITE_BODY, 1), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNITE_PLATELEGS, 1), 100)
+    ))),
+
+    RUNE_FULL_IRON_CROSSBOW(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.IRON_CROSSBOW, 1), 100),
             new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNITE_BODY, 1), 100),
             new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNITE_PLATELEGS, 1), 100)
     ))),

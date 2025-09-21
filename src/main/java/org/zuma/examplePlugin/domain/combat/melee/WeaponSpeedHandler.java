@@ -26,7 +26,7 @@ public class WeaponSpeedHandler implements Listener {
             return;
         }
 
-        if (weaponSpeedHandler.isCooledDown(damager)) {
+        if (weaponSpeedHandler.isCooldownInProgress(damager)) {
             event.setCancelled(true);
             return;
         }

@@ -116,6 +116,22 @@ public class TerritoryHandler {
             Component hoverText = TextUtils.getChatTerritoryHoverComponent(runePlayer, territory);
             player.sendMessage(Icon.INFO.asComponent().append(Component.text("New location discovered: ", Color.INFO.asColor())
                     .append(Icon.MAP.asComponent().append(Component.text(territory.getName() + "!", NamedTextColor.AQUA)).hoverEvent(HoverEvent.showText(hoverText)))));
+
+            Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+                if (!player.isOnline()) return;
+
+                player.showTitle(Title.title(
+                        Component.empty(),
+                        Component.text(territory.getFirstTimeDiscoveryLore(), NamedTextColor.GRAY),
+                        Title.Times.times(
+                                Duration.ofSeconds(1),
+                                Duration.ofSeconds(3, 5),
+                                Duration.ofSeconds(3)
+                        )
+                ));
+
+                SoundType.TERRITORY_ENTER.play(player, false);
+            }, 120);
         }
 
         player.showTitle(Title.title(
@@ -127,5 +143,6 @@ public class TerritoryHandler {
                         Duration.ofSeconds(3)
                 )
         ));
+
     }
 }

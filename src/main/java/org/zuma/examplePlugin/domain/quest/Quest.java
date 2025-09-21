@@ -1,13 +1,27 @@
 package org.zuma.examplePlugin.domain.quest;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.QuestCompletedEffect;
 import org.zuma.examplePlugin.domain.effect.effects.QuestStartEffect;
+import org.zuma.examplePlugin.domain.hud.HudService;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
 import org.zuma.examplePlugin.domain.quest.constants.QuestDifficulty;
 import org.zuma.examplePlugin.domain.quest.constants.QuestStartFailReason;
+import org.zuma.examplePlugin.domain.quest.constants.QuestStatus;
+import org.zuma.examplePlugin.domain.quest.impl.CollectionStep;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 
 import javax.annotation.Nullable;
@@ -15,10 +29,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+
 public class Quest implements SkillRestrictable {
     private final String id, name;
     private final List<AbstractQuestStep> steps;
     private final QuestDifficulty difficulty;
+
+    private QuestReward reward;
 
     // Starting conditions
     private List<SkillRequirement> requirements;
@@ -31,6 +48,12 @@ public class Quest implements SkillRestrictable {
         this.difficulty = difficulty;
         this.requirements = new ArrayList<>();
         this.requiredCompletedQuests = new ArrayList<>();
+        this.reward = new QuestReward(null, null, null);
+    }
+
+    public Quest setRewards(QuestReward reward) {
+        this.reward = reward;
+        return this;
     }
 
     public Quest setRequiredCompletedQuests(List<String> questIds) {
@@ -64,6 +87,75 @@ public class Quest implements SkillRestrictable {
         return name;
     }
 
+    public QuestStatus getPlayerQuestStatus(RunePlayer player) {
+
+        if (player.getActiveQuestSteps().containsKey(this.getId())) {
+            return QuestStatus.STARTED;
+        }
+
+        if (player.getCompletedQuestIds().contains(this.id)) {
+            return QuestStatus.COMPLETED;
+        }
+
+        if (!new HashSet<>(player.getCompletedQuestIds()).containsAll(this.requiredCompletedQuests) || !player.meetsRequirements(this)) {
+            return QuestStatus.NOT_MEETING_REQUIREMENTS;
+        }
+
+        return QuestStatus.NOT_STARTED;
+    }
+
+    public ItemStack getDisplayItemStack(RunePlayer player) {
+        QuestStatus status = getPlayerQuestStatus(player);
+
+        ItemStack baseItem = switch (status) {
+            case STARTED -> new ItemStack(Material.WRITABLE_BOOK);
+            case COMPLETED -> new ItemStack(Material.ENCHANTED_BOOK);
+            case NOT_STARTED -> new ItemStack(Material.BOOK);
+            case NOT_MEETING_REQUIREMENTS -> new ItemStack(Material.BARRIER);
+        };
+
+        ItemMeta meta = baseItem.getItemMeta();
+        List<Component> lore = new ArrayList<>();
+
+        meta.displayName(Component.text(this.getName(), NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false));
+
+        switch (status) {
+            case STARTED -> {
+                AbstractQuestStep step = player.getActiveQuestSteps().get(this.id);
+                if (step != null && step.getDescription() != null) {
+                    lore.add(Component.text(step.getDescription(), NamedTextColor.WHITE));
+                }
+
+                if (step instanceof CollectionStep collectionStep) {
+                    if (!collectionStep.getRequiredItems().isEmpty()) lore.add(Component.empty());
+
+                    collectionStep.getRequiredItems().forEach((req) -> {
+                        AbstractItemType itemType = RuneQuestPlugin.getItemRegistry().getType(req.getItemId());
+                        if (itemType == null) return;
+                        boolean collected = collectionStep.getAcquiredItems().get(itemType.id) >= req.getAmount();
+
+                        lore.add(Component.text(itemType.displayName + ": ", Color.ACCENT.asColor())
+                                .append(Component.text(collectionStep.getAcquiredItems().get(itemType.id) + "/" + req.getAmount(), collected ? Color.SUCCESS.asColor() : Color.ERROR_LIGHT.asColor())));
+                    });
+
+                }
+            }
+            case NOT_STARTED -> lore.add(Component.text("Not started", Color.ERROR_LIGHT.asColor()));
+            case NOT_MEETING_REQUIREMENTS -> lore.add(Component.text("Requirements not met", Color.ERROR.asColor()));
+            case COMPLETED -> lore.add(Component.text("Completed", Color.SUCCESS.asColor()));
+        }
+
+        lore.add(Component.empty());
+        lore.add(Component.text("Difficulty: ", Color.ITEM_LORE_DESCRIPTION.asColor()).append(Component.text(this.difficulty.getLabel())));
+        lore.add(Component.text("Steps: ", Color.ITEM_LORE_DESCRIPTION.asColor()).append(Component.text(this.steps.size(), Color.ACCENT.asColor())));
+
+        meta.lore(lore.stream().map(c -> c.decoration(TextDecoration.ITALIC, false)).toList());
+
+        baseItem.setItemMeta(meta);
+        return baseItem;
+
+    }
+
     @Nullable
     public QuestStartFailReason getQuestStartFailReason(RunePlayer player) {
         if (!player.meetsRequirements(this)) {
@@ -94,19 +186,30 @@ public class Quest implements SkillRestrictable {
             throw new IllegalStateException("Cannot start quest " + this.id + " for player " + player.getUUID() + ". Reason: " + failReason);
         }
 
-        if (steps.getFirst() == null) {
-            throw new IllegalStateException("Cannot start quest. First step is null.");
+        if (steps.isEmpty() || steps.getFirst() == null) {
+            throw new IllegalStateException("Quest has no valid steps.");
         }
 
         EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new QuestStartEffect(player, this));
+        HudService.sendQuestStartMessage(player, this);
+        HudService.sendQuestStepTaskMessage(player, steps.getFirst());
         player.getActiveQuestSteps().put(id, steps.getFirst().cloneForPlayer(player.getUUID()));
     }
 
     public void handleCompletion(RunePlayer player) {
         player.getCompletedQuestIds().add(id);
         player.getActiveQuestSteps().remove(id);
-        EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new QuestCompletedEffect(player, this));
+        reward.applyRewards(player);
+
+        Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+            if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) return;
+
+            EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new QuestCompletedEffect(player, this));
+            HudService.sendQuestCompletedMessage(player, this);
+            HudService.sendQuestRewards(player, this);
+        }, 60L);
     }
+
 
     public QuestDifficulty getDifficulty() {
         return difficulty;
@@ -116,4 +219,9 @@ public class Quest implements SkillRestrictable {
     public List<SkillRequirement> getRequirements() {
         return requirements;
     }
+
+    public QuestReward getReward() {
+        return reward;
+    }
+
 }

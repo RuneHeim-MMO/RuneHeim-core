@@ -27,7 +27,7 @@ public abstract class PaginatedBankGUI extends IndividualGUI implements Serializ
     private int page = 1;
     private int indexStart = 0;
     private int indexEnd = 0;
-    private int maxPages = 1000;
+    private int maxPages = 3;
     private final HashMap<Integer, ItemStackSlotPair> items;
     private final Set<Integer> ignoredSlots;
 

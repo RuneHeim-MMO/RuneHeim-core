@@ -20,6 +20,7 @@ import org.zuma.examplePlugin.domain.territory.TerritoryHandler;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MapModule implements PluginModule {
     private static final Plugin blueMap = Bukkit.getPluginManager().getPlugin("BlueMap");
@@ -50,8 +51,17 @@ public class MapModule implements PluginModule {
         }
 
         Collection<POIMarkerable> poiMarkers = new ArrayList<>(moduleContext.get(BlockManager.class).getAllBlocks());
+        Collection<AbstractSpawnZone> zones = new ArrayList<>();
+
+        for (AbstractSpawnZone zone : moduleContext.get(SpawnZoneHandler.class).getZones()) {
+            if (zone instanceof POIMarkerable) {
+                poiMarkers.add((POIMarkerable) zone);
+            } else {
+                zones.add(zone);
+            }
+        }
+
         Collection<Territory> territories = new ArrayList<>(moduleContext.get(TerritoryHandler.class).getTerritoryList());
-        Collection<AbstractSpawnZone> zones = new ArrayList<>(moduleContext.get(SpawnZoneHandler.class).getZones());
 
         MapMarkerHandler markerHandler = moduleContext.get(MapMarkerHandler.class);
         markerHandler.clearMarkers();
