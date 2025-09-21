@@ -62,7 +62,7 @@ public class SpawnZoneRepository {
                 // Drakkar and surroundings
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(7, SpawnZoneType.AREA, 30, 15,
-                        new Location(Bukkit.getWorld("world"), 199, 68, -192)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new Location(Bukkit.getWorld("world"), 199, 68, -230)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.GOBLIN_1_BASE_1, 5, 100),
                         new SpawnZoneMobRecord(MobType.GOBLIN_2_BASE_1, 5, 100),
                         new SpawnZoneMobRecord(MobType.GOBLIN_3_BASE_1, 5, 100),

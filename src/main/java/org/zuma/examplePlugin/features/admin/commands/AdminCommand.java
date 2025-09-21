@@ -31,6 +31,7 @@ import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.player.states.TravelStateHandler;
 import org.zuma.examplePlugin.domain.quest.Quest;
 import org.zuma.examplePlugin.domain.quest.QuestSerializer;
 import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
@@ -130,8 +131,8 @@ public class AdminCommand implements BasicCommand {
 
         }
 
-        if (args[0].equalsIgnoreCase("firstjoin")) {
-            EffectHandler.playAt(runePlayer.asBukkitPlayer().getLocation(), new FirstJoinEffect(runePlayer));
+        if (args[0].equalsIgnoreCase("travel")) {
+            TravelStateHandler.startTravelingSequence(runePlayer, new Location(Bukkit.getWorld("world"), 183, 66, -181), new Location(Bukkit.getWorld("world"), 173.5, 71, -175), 400);
         }
 
 
