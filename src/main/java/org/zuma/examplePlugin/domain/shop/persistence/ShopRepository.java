@@ -56,7 +56,7 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.COAL_ORE.asInt(), 4, 30, 80L, 20L, null, null)
                 ))), 1)),
 
-                new ShopConfig(ShopId.DRAKKAR_ARMOR_MERCHANT.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                new ShopConfig(ShopId.DRAKKAR_ARMOR_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
                         new ShopItemConfig(ItemId.BRONZE_DAGGER.asInt(), 8, 30, 200L, 20L, null, null),
                         new ShopItemConfig(ItemId.BRONZE_SWORD.asInt(), 8, 30, 250L, 25L, null, null),
                         new ShopItemConfig(ItemId.BRONZE_BATTLEAXE.asInt(), 8, 30, 600L, 70L, null, null),
@@ -110,7 +110,57 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.IRON_ARROW.asInt(), 512, 10, 15L, 2L, null, null),
                         new ShopItemConfig(ItemId.STEEL_ARROW.asInt(), 512, 10, 20L, 3L, null, null)
 
-                ))), 1))
+                ))), 1)),
+
+                new ShopConfig(ShopId.INFERNAK_BLACKSMITH.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                        // todo
+                ))), 1)),
+
+
+                new ShopConfig(ShopId.VALDRIN_WEAPON_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                        // todo
+                ))), 1)),
+
+                new ShopConfig(ShopId.ELDARWYN_ARMOR_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                        // todo
+                ))), 1)),
+
+                new ShopConfig(ShopId.SAHARIJIN_FISHING_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                        // todo
+                ))), 1)),
+
+                new ShopConfig(ShopId.SPOREFELL_FISHING_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                        // todo
+                ))), 1)),
+
+                new ShopConfig(ShopId.ASHWALE_MINING_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                        // todo
+                ))), 1)),
+
+                new ShopConfig(ShopId.ASHWALE_AXE_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                        // todo
+                ))), 1)),
+
+                new ShopConfig(ShopId.MURKWATCH_ARCHERY_MERCHANT.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                        // todo
+                ))), 1)),
+
+                new ShopConfig(ShopId.MURKWATCH_BLACKSMITH.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                        // todo
+                ))), 1)),
+
+                new ShopConfig(ShopId.BRINEPORT_FISHING_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                        // todo
+                ))), 1)),
+
+
+                new ShopConfig(ShopId.FENSHADE_MINING_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                        // todo
+                ))), 1)),
+
+                new ShopConfig(ShopId.BRINEPORT_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
+                new ShopConfig(ShopId.MURKWATCH_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
+                new ShopConfig(ShopId.ELDARWYN_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1))
 
 
         );

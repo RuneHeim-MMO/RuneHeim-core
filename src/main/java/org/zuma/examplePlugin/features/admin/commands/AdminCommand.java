@@ -15,14 +15,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Transformation;
 import org.jetbrains.annotations.NotNull;
-import org.joml.AxisAngle4f;
-import org.joml.Vector3f;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
-import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.block.BlockManager;
@@ -33,7 +29,6 @@ import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.FirstJoinEffect;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
-import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.Quest;
@@ -324,7 +319,7 @@ public class AdminCommand implements BasicCommand {
         }
 
         if (Objects.equals(args[0], "shop")) {
-            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.GENERAL_STORE.getId());
+            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.DRAKKAR_GENERAL_STORE.getId());
         }
 
         if (Objects.equals(args[0], "quest")) {

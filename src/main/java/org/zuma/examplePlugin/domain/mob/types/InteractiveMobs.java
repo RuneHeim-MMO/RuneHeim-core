@@ -21,7 +21,7 @@ public class InteractiveMobs {
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "abraham_fairy_teacher", null, 0, Dialogs.fairyTeacher));
 
 
-        registry.register(MobType.BROWN_FARMHOUSE_TRADER.getId(), () -> new DialogMob(Icon.TRADE.get() + " Farm Horse Trader", EquipmentSet.HORSE_DEALER,
+        registry.register(MobType.BROWN_FARMHOUSE_MOUNT_SHOP.getId(), () -> new DialogMob(Icon.TRADE.get() + " Farm Horse Trader", EquipmentSet.HORSE_DEALER,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "farm_horse_dealer", null, 0, Dialogs.farmHorseTrader));
 
         registry.register(MobType.COMBAT_DUMMY_FACE_SOUTH.getId(), () -> new CombatDummy(0));
