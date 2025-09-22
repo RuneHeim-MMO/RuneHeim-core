@@ -78,7 +78,10 @@ public enum MobType {
     AETHERIS_GENERAL_STORE,
     ISLENOR_GENERAL_STORE,
 
+    DRAKKAR_COACHMAN,
+
     SHEEP, // Can shear wool off these
+    STATIC_HORSE, // decoration
 
     // City guards (disguised iron golems to kill aggressive mobs near and inside of the cities)
     CITY_GUARD_STATIC,

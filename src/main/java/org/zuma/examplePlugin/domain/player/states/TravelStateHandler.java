@@ -8,6 +8,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.TravelStartEffect;
 import org.zuma.examplePlugin.domain.effect.effects.TravelStopEffect;
@@ -20,6 +21,11 @@ public class TravelStateHandler {
     private final static int TRANSITION_DURATION_TICKS = 20;
 
     public static void startTravelingSequence(RunePlayer player, Location waypoint, Location buffer, int durationTicks) {
+        if (durationTicks < TRANSITION_DURATION_TICKS) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot start traveling sequence. Duration is too short.");
+            return;
+        }
+
         EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new TravelStartEffect(player));
         AtomicBoolean arrived = new AtomicBoolean(false);
         AtomicBoolean cancelled = new AtomicBoolean(false);
@@ -37,7 +43,7 @@ public class TravelStateHandler {
 
                 public void run() {
                     if (arrived.get() || player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) {
-                        cancelled.set(true);
+                        if (!arrived.get()) cancelled.set(true);
                         cancel();
                         return;
                     }

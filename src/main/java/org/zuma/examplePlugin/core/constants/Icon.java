@@ -18,6 +18,7 @@ public enum Icon {
 
     BUCKET("⽻"),
     ANVIL("⮯"),
+    BOOTS("⭀"),
     ARMOR("⛨"),
     ARROW("⇶"),
     AXE("🪓"),

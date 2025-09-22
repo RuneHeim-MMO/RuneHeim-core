@@ -30,5 +30,9 @@ public class InteractiveMobs {
         registry.register(MobType.AUCTIONEER.getId(), () -> new InventoryOpenerMob(Icon.TRADE.get() + " Auctioneer", EquipmentSet.AUCTIONEER,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "auctioneer", null, InventoryId.BANK.asInt(), 0)
                 .attachDialog(Dialogs.auctioneerDialog));
+
+        registry.register(MobType.DRAKKAR_COACHMAN.getId(), () -> new DialogMob(Icon.BOOTS.get() + " Coachman", EquipmentSet.CARROT,
+                MobBehaviors.VILLAGER_MAN_3.getBehavior(), "coachman", null, 0, Dialogs.drakkarCoachmanDialog));
+
     }
 }

@@ -98,7 +98,7 @@ public class ScriptedActionHandler {
                     destination.setYaw(Float.parseFloat(args.get("dest_yaw")));
 
                     Location buffer = new Location(world, Double.parseDouble(args.get("buffer_x")), Double.parseDouble(args.get("buffer_y")), Double.parseDouble(args.get("buffer_z")));
-                    destination.setYaw(Float.parseFloat(args.get("buffer_yaw")));
+                    buffer.setYaw(Float.parseFloat(args.get("buffer_yaw")));
 
                     int durationTicks = Integer.parseInt(args.get("duration_seconds")) * 20;
                     TravelStateHandler.startTravelingSequence(player, destination, buffer, durationTicks);

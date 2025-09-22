@@ -124,6 +124,10 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.BRONZE_AXE, 1), 100)
     ))),
 
+    CARROT(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.CARROT), 100)
+    ))),
+
     HORSE_DEALER(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.SUGAR), 25),
             new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.APPLE), 25),

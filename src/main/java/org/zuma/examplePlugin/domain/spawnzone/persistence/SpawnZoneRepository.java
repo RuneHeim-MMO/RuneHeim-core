@@ -1000,12 +1000,24 @@ public class SpawnZoneRepository {
                 ), false, MarkerType.GENERAL_STORE, "General Store"), 1)),
 
                 // Islenor
-            new SpawnZoneRecord(new AbstractSpawnZoneMeta(153, SpawnZoneType.POINT, 30, 20,
-                    new Location(Bukkit.getWorld("world"), 500, 66, -752.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
-                    new SpawnZoneMobRecord(MobType.AETHERIS_GENERAL_STORE, 1, 100)
-            ), false, MarkerType.GENERAL_STORE, "General Store"), 1))
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(153, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 500, 66, -752.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.AETHERIS_GENERAL_STORE, 1, 100)
+                ), false, MarkerType.GENERAL_STORE, "General Store"), 1)),
 
-            // last 153
+
+                // Drakkar coachman
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(154, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 181, 67, -179.3)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.DRAKKAR_COACHMAN, 1, 100)
+                ), false, MarkerType.QUICK_TRAVEL, "Coachman"), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(155, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 179.5, 67, -180.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.STATIC_HORSE, 1, 100)
+                ), false, null, null), 1))
+                
+                // last 155
 
 
         );
