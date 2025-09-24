@@ -1,7 +1,7 @@
 package org.zuma.examplePlugin.domain.quest.constants;
 
 public enum QuestDuration {
-    SHORT("§aShort"), MEDIUM("§eMedium"), LONG("§cLong"), VERY_LONG("§Very Long");
+    SHORT("§aShort"), MEDIUM("§eMedium"), LONG("§cLong"), VERY_LONG("§4Very Long");
 
     private final String label;
 

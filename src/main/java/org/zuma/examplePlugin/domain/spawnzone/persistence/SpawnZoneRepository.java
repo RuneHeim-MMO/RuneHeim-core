@@ -1002,7 +1002,7 @@ public class SpawnZoneRepository {
                 // Islenor
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(153, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 500, 66, -752.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.AETHERIS_GENERAL_STORE, 1, 100)
+                        new SpawnZoneMobRecord(MobType.ISLENOR_GENERAL_STORE, 1, 100)
                 ), false, MarkerType.GENERAL_STORE, "General Store"), 1)),
 
 
