@@ -25,6 +25,7 @@ import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
 import org.zuma.examplePlugin.domain.combat.HitHandler;
+import org.zuma.examplePlugin.domain.cutscene.Cutscene;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.FirstJoinEffect;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
@@ -131,8 +132,31 @@ public class AdminCommand implements BasicCommand {
 
         }
 
-        if (args[0].equalsIgnoreCase("travel")) {
-            TravelStateHandler.startTravelingSequence(runePlayer, new Location(Bukkit.getWorld("world"), 183, 66, -181), new Location(Bukkit.getWorld("world"), 173.5, 71, -175), 400);
+        if (args[0].equalsIgnoreCase("scene")) {
+            Location initNoYaw = player.getLocation().clone();
+            initNoYaw.setYaw(0);
+            initNoYaw.setPitch(0);
+
+            Location startLoc = initNoYaw.clone().add(5, 80, 5);
+            startLoc.setPitch(0);
+            startLoc.setYaw(20);
+            Location control1 = initNoYaw.clone().add(20, 100, 10);
+            control1.setYaw(60);
+           // control1.setPitch(130);
+            Location control2 = initNoYaw.clone().add(40, 70, -15);
+            Location endLoc = initNoYaw.clone().add(60, 85, 0);
+            endLoc.setYaw(30);
+            endLoc.setPitch(95);
+
+            new Cutscene("test-scene")
+                    .addSegment(new org.zuma.examplePlugin.domain.cutscene.impl.BezierCameraPathCutscene(
+                            startLoc,
+                            control1,
+                            control2,
+                            endLoc,
+                            300
+                    ))
+                    .play(new org.zuma.examplePlugin.domain.cutscene.CutsceneCamera(runePlayer));
         }
 
 
@@ -410,5 +434,4 @@ public class AdminCommand implements BasicCommand {
                 .collect(Collectors.toList());
     }
 }
-
 
