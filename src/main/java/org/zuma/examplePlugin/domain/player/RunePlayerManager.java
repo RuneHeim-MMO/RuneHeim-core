@@ -12,7 +12,7 @@ import org.zuma.examplePlugin.domain.player.persistence.DeserializedPlayerEntity
 import org.zuma.examplePlugin.domain.player.persistence.RunePlayerRepository;
 import org.zuma.examplePlugin.domain.player.persistence.RunePlayerSerializer;
 import org.zuma.examplePlugin.domain.player.persistence.SerializedPlayerContainer;
-import org.zuma.examplePlugin.domain.player.states.RunePlayerLoadingStateHandler;
+import org.zuma.examplePlugin.domain.player.states.PlayerLoadingStateHandler;
 import org.zuma.examplePlugin.domain.quest.PlayerQuestState;
 import org.zuma.examplePlugin.domain.quest.QuestHandler;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
@@ -34,7 +34,7 @@ public class RunePlayerManager {
     private static final int AUTOSAVE_DELAY_SECONDS = 60;
     private final ConcurrentHashMap<UUID, RunePlayer> players = new ConcurrentHashMap<>();
     private final Set<UUID> uuidsAccessingDB = ConcurrentHashMap.newKeySet();
-    private final RunePlayerLoadingStateHandler loadingStateHandler;
+    private final PlayerLoadingStateHandler loadingStateHandler;
     private final RunePlayerRepository repository;
     private final QuestHandler questHandler;
 
@@ -47,7 +47,7 @@ public class RunePlayerManager {
             ));
 
     public RunePlayerManager(RunePlayerRepository repository, QuestHandler questHandler) {
-        this.loadingStateHandler = new RunePlayerLoadingStateHandler(RuneQuestPlugin.getInstance());
+        this.loadingStateHandler = new PlayerLoadingStateHandler(RuneQuestPlugin.getInstance());
         this.repository = repository;
         this.questHandler = questHandler;
     }

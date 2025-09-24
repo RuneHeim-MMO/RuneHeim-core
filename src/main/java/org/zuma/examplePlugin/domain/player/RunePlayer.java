@@ -59,14 +59,16 @@ public class RunePlayer implements CombatEntity {
     private final List<InteractiveActionStrategy> pendingActions;
     private List<String> discoveredTerritoryIds;
     private List<String> completedQuestIds;
-    private Location getSafeLocation; // is set when player is is spectator mode.
-    private boolean isDead, isDialogOptionChoosing;
+    private boolean isDead, isInCutscene, isDialogOptionChoosing;
     private HashMap<String, AbstractQuestStep> activeQuestSteps; // Quest id : step
+
+    @Nullable
+    private Location safeLocation; // is set when player is in spectator/cutscene mode.
 
     public RunePlayer(UUID uuid, EnumMap<SkillType, Skill> skills) {
         this.uuid = uuid;
         this.skills = skills;
-        this.combatData = new PlayerCombatData(this, skills.get(SkillType.HITPOINTS).getBaseLevel(), Math.min(3, XpUtils.getCombatLevelFromSkills(skills)), 0, 0);
+        this.combatData = new PlayerCombatData(this, skills.get(SkillType.HITPOINTS).getBaseLevel(), Math.min(3, XpUtils.getCombatLevelFromSkills(skills)), 1, 1);
 
         this.activeQuestSteps = new HashMap<>();
         this.modifiers = new EnumMap<>(ModifierType.class);
@@ -273,7 +275,7 @@ public class RunePlayer implements CombatEntity {
 
     public void setSpectatorMode(Location safeLocation) {
         asBukkitPlayer().setGameMode(GameMode.SPECTATOR);
-        getSafeLocation = safeLocation;
+        this.safeLocation = safeLocation;
     }
 
     public void setSurvivalMode() {
@@ -282,11 +284,22 @@ public class RunePlayer implements CombatEntity {
         }
 
         asBukkitPlayer().setGameMode(GameMode.SURVIVAL);
-        getSafeLocation = null;
+        safeLocation = null;
     }
 
-    public Location getGetSafeLocation() {
-        return getSafeLocation;
+    public void setInCutscene(Location safeLocation) {
+        this.isInCutscene = true;
+        this.safeLocation = safeLocation;
+    }
+
+    public void setOutOfCutscene() {
+        this.isInCutscene = false;
+        safeLocation = null;
+    }
+
+    @Nullable
+    public Location getSafeLocation() {
+        return safeLocation;
     }
 
     public boolean isInCombat() {

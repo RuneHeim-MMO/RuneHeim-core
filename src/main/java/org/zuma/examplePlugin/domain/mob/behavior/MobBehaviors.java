@@ -6,6 +6,17 @@ import java.util.List;
 import java.util.function.Function;
 
 public enum MobBehaviors {
+
+    HELLFLESH_1((pitchModifier) -> new MobBehavior(
+            pitchModifier,
+            List.of(SoundType.HELLFLESH_AMBIENT),
+            List.of(SoundType.HELLFLESH_CELEBRATE, SoundType.HELLFLESH_LAUGH),
+            List.of(),
+            List.of(SoundType.HELLFLESH_HURT),
+            List.of(SoundType.HELLFLESH_DEATH)
+    )),
+
+
     VILLAGER_MAN_1((pitchModifier) -> new MobBehavior(
             pitchModifier, List.of(SoundType.VILLAGER_MAN_AMBIENT_1),
             List.of(SoundType.VILLAGER_MAN_CELEBRATE_1),

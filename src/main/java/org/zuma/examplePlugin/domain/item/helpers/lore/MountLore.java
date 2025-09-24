@@ -58,7 +58,7 @@ public class MountLore implements LoreCreator {
             lore.add(Icon.DISTANCE_TRAVELED.asComponent().append(Component.text("Distance: ", Color.ITEM_LORE_DESCRIPTION.asColor())
                     .append(Component.text(formattedDistanceCovered + " blocks", Color.ACCENT.asColor()))));
 
-            lore.add(Icon.AGE.asComponent().append(Component.text("Age: ", Color.ITEM_LORE_DESCRIPTION.asColor())
+            lore.add(Icon.CLOCK.asComponent().append(Component.text("Age: ", Color.ITEM_LORE_DESCRIPTION.asColor())
                     .append(Component.text(formattedAgeDays + (ageInDays == 1 ? " day" : " days"), Color.ACCENT.asColor()))));
 
         }

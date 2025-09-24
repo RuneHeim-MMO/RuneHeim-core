@@ -21,7 +21,7 @@ public class InteractiveMobs {
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "abraham_fairy_teacher", null, 0, Dialogs.fairyTeacher));
 
 
-        registry.register(MobType.BROWN_FARMHOUSE_TRADER.getId(), () -> new DialogMob(Icon.TRADE.get() + " Farm Horse Trader", EquipmentSet.HORSE_DEALER,
+        registry.register(MobType.BROWN_FARMHOUSE_MOUNT_SHOP.getId(), () -> new DialogMob(Icon.TRADE.get() + " Farm Horse Trader", EquipmentSet.HORSE_DEALER,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "farm_horse_dealer", null, 0, Dialogs.farmHorseTrader));
 
         registry.register(MobType.COMBAT_DUMMY_FACE_SOUTH.getId(), () -> new CombatDummy(0));
@@ -30,5 +30,9 @@ public class InteractiveMobs {
         registry.register(MobType.AUCTIONEER.getId(), () -> new InventoryOpenerMob(Icon.TRADE.get() + " Auctioneer", EquipmentSet.AUCTIONEER,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "auctioneer", null, InventoryId.BANK.asInt(), 0)
                 .attachDialog(Dialogs.auctioneerDialog));
+
+        registry.register(MobType.DRAKKAR_COACHMAN.getId(), () -> new DialogMob(Icon.BOOTS.get() + " Coachman", EquipmentSet.CARROT,
+                MobBehaviors.VILLAGER_MAN_3.getBehavior(), "coachman", null, 0, Dialogs.drakkarCoachmanDialog));
+
     }
 }

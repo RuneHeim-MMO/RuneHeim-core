@@ -19,6 +19,7 @@ import org.zuma.examplePlugin.domain.territory.TerritoryHandler;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,7 +51,10 @@ public class MapModule implements PluginModule {
             return;
         }
 
-        Collection<POIMarkerable> poiMarkers = new ArrayList<>(moduleContext.get(BlockManager.class).getAllBlocks());
+        Collection<POIMarkerable> poiMarkers = new ArrayList<>(
+                new HashSet<>(moduleContext.get(BlockManager.class).getAllBlocks()) // filter out duplicates based on instance equality
+        );
+
         Collection<AbstractSpawnZone> zones = new ArrayList<>();
 
         for (AbstractSpawnZone zone : moduleContext.get(SpawnZoneHandler.class).getZones()) {

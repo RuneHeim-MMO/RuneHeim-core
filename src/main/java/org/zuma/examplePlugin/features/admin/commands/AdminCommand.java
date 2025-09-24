@@ -15,14 +15,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Transformation;
 import org.jetbrains.annotations.NotNull;
-import org.joml.AxisAngle4f;
-import org.joml.Vector3f;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
-import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.block.BlockManager;
@@ -33,9 +29,9 @@ import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.FirstJoinEffect;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
-import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.player.states.TravelStateHandler;
 import org.zuma.examplePlugin.domain.quest.Quest;
 import org.zuma.examplePlugin.domain.quest.QuestSerializer;
 import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
@@ -135,8 +131,8 @@ public class AdminCommand implements BasicCommand {
 
         }
 
-        if (args[0].equalsIgnoreCase("firstjoin")) {
-            EffectHandler.playAt(runePlayer.asBukkitPlayer().getLocation(), new FirstJoinEffect(runePlayer));
+        if (args[0].equalsIgnoreCase("travel")) {
+            TravelStateHandler.startTravelingSequence(runePlayer, new Location(Bukkit.getWorld("world"), 183, 66, -181), new Location(Bukkit.getWorld("world"), 173.5, 71, -175), 400);
         }
 
 
@@ -324,7 +320,7 @@ public class AdminCommand implements BasicCommand {
         }
 
         if (Objects.equals(args[0], "shop")) {
-            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.GENERAL_STORE.getId());
+            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.DRAKKAR_GENERAL_STORE.getId());
         }
 
         if (Objects.equals(args[0], "quest")) {

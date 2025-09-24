@@ -18,13 +18,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class RunePlayerLoadingStateHandler {
+public class PlayerLoadingStateHandler {
     private static final int EFFECT_DURATION_TICKS = 10 * 20;
     private final Map<UUID, Collection<PotionEffect>> loadingPlayers = new HashMap<>();
     private final LoadingMessage loadingMessageGenerator = new LoadingMessage();
     private final RuneQuestPlugin plugin;
 
-    public RunePlayerLoadingStateHandler(RuneQuestPlugin plugin) {
+    public PlayerLoadingStateHandler(RuneQuestPlugin plugin) {
         this.plugin = plugin;
         startEffectLoop();
     }

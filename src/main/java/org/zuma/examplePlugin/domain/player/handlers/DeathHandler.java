@@ -35,7 +35,6 @@ public class DeathHandler {
     private final static int cooldownDuration = 10;
 
     public static void handlePlayerDeath(RunePlayer runePlayer, Hit lastHit) {
-
         RuneEntityDeathEvent event = new RuneEntityDeathEvent(lastHit.getAttacker(), lastHit.getDefender(), lastHit, lastHit.getAttackType());
         Bukkit.getServer().getPluginManager().callEvent(event);
 

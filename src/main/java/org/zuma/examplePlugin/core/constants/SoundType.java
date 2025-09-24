@@ -27,6 +27,16 @@ public enum SoundType {
     PERFECT_STRIKE_1("ENTITY_FIREWORK_ROCKET_LARGE_BLAST_FAR", false, 1.0f, 1.0f),
     PERFECT_STRIKE_2("BLOCK_BELL_USE", false, 1.0f, 1.0f),
 
+    TRAVEL_CARRIAGE_STEP("BLOCK_WOOD_STEP", false, 1.0f, 1.0f),
+
+    TRAVEL_STEP_1("BLOCK_GRASS_STEP", false, 0.8f, 1.0f),
+    TRAVEL_STEP_2("BLOCK_WOOD_STEP", false, 0.8f, 1.0f),
+    TRAVEL_STEP_3("BLOCK_STONE_STEP", false, 0.8f, 1.0f),
+    TRAVEL_LOOP("ENTITY_HORSE_GALLOP", false, 0.4f, 1.0f),
+    TRAVEL_END("ENTITY_HORSE_AMBIENT", false, 0.8f, 1.0f),
+
+    TRAVEL_DOOR_CLOSE("BLOCK_IRON_DOOR_CLOSE", false, 1f, 1.0f),
+
     ALTAR_PRAYING_LAYER_1("BLOCK_AMETHYST_BLOCK_CHIME", false, 1f, 1f),
     ALTAR_PRAYING_LAYER_2("BLOCK_AMETHYST_BLOCK_RESONATE", false, 1f, 1f),
 
@@ -429,7 +439,16 @@ public enum SoundType {
     WITCH_AMBIENT("ENTITY_WITCH_AMBIENT", false, 1.0f, 1.0f),
     WITCH_ATTACK("ENTITY_WITCH_THROW", false, 1.0f, 1.1f),
     WITCH_HURT("ENTITY_WITCH_HURT", false, 1.0f, 0.95f),
-    WITCH_DEATH("ENTITY_WITCH_DEATH", false, 1.0f, 0.9f);
+    WITCH_DEATH("ENTITY_WITCH_DEATH", false, 1.0f, 0.9f),
+
+
+    // Infernak 'humans'
+    HELLFLESH_AMBIENT("ENTITY_HUSK_AMBIENT", false, 1.0f, 0.65f),
+    HELLFLESH_ATTACK("ENTITY_STRAY_HURT", false, 1.0f, 0.85f),
+    HELLFLESH_HURT("ENTITY_ZOMBIE_HURT", false, 1.0f, 0.7f),
+    HELLFLESH_DEATH("ENTITY_WITHER_SKELETON_DEATH", false, 1.0f, 0.6f),
+    HELLFLESH_LAUGH("ENTITY_PIGLIN_ANGRY", false, 1.0f, 0.75f),
+    HELLFLESH_CELEBRATE("ENTITY_PIGLIN_CELEBRATE", false, 1.0f, 0.8f);
 
 
     private final String soundKey;

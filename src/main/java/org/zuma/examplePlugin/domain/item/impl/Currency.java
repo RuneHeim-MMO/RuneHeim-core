@@ -7,6 +7,6 @@ import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 public class Currency extends AbstractItemType {
     public Currency(AbstractItemMeta meta) {
         super(meta);
-        super.setTypeLore("Currency", Icon.MATERIAL.get());
+        super.setTypeLore("Currency", Icon.COIN_PILE.get());
     }
 }

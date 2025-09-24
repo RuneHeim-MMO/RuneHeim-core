@@ -36,6 +36,7 @@ public class MobTypesLoader {
         Cows.registerMobs(registry);
         InteractiveMobs.registerMobs(registry);
         QuestMobs.registerMobs(registry);
+        Decorations.registerMobs(registry);
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Loaded " + registry.getAvailable().size() + " mob types.");
 

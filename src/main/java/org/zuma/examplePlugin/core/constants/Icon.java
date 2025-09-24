@@ -18,6 +18,7 @@ public enum Icon {
 
     BUCKET("⽻"),
     ANVIL("⮯"),
+    BOOTS("⭀"),
     ARMOR("⛨"),
     ARROW("⇶"),
     AXE("🪓"),
@@ -27,6 +28,8 @@ public enum Icon {
     COIN_TWO("③"),
     CRAFTING("҂"),
     CROSSED_SWORDS("⃇"),
+    CLOCK("◥"),
+    HAMMER("⼯"),
     EGGS("𓅿"),
     FIRE("𓊈"),
     FISH("𓆝"),
@@ -63,6 +66,7 @@ public enum Icon {
     CONTRACT_SKULL("⥵"),
     PRAYER("⏲"),
     TRADE("⽝"),
+    FISHING_HOOK("⢫"),
 
     SCROLL_RED("ⵣ"),
     SCROLL_GRAY("⁝"),

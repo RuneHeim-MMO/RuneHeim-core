@@ -126,6 +126,10 @@ public class ScriptedConditionHandler {
                 case NEVER_TRUE -> {
                     result = false;
                 }
+                case RANDOM_CHANCE -> {
+                    int n = (int) (Math.random() * 101);
+                    result = (n < Integer.parseInt(args.get("percent")));
+                }
                 default ->
                         RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Unknown condition " + action + " in " + input + "!");
             }

@@ -9,7 +9,7 @@ public class Tool extends EquipableItemType {
 
     public Tool(AbstractItemMeta meta) {
         super(meta);
-        super.setTypeLore("Tool", Icon.TOOL.get());
+        super.setTypeLore("Tool", Icon.HAMMER.get());
     }
 
     @Override

@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.heimscript.action;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
@@ -13,6 +14,7 @@ import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.heimscript.ScriptParser;
+import org.zuma.examplePlugin.domain.player.states.TravelStateHandler;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.events.dialog.QuestStepToBeCompleted;
 
@@ -88,6 +90,19 @@ public class ScriptedActionHandler {
                 }
                 case CLEAR_INVENTORY -> {
                     player.asBukkitPlayer().getInventory().clear();
+                }
+                case TRAVEL_SEQUENCE -> {
+                    World world = Bukkit.getWorld(args.get("world"));
+
+                    Location destination = new Location(world, Double.parseDouble(args.get("dest_x")), Double.parseDouble(args.get("dest_y")), Double.parseDouble(args.get("dest_z")));
+                    destination.setYaw(Float.parseFloat(args.get("dest_yaw")));
+
+                    Location buffer = new Location(world, Double.parseDouble(args.get("buffer_x")), Double.parseDouble(args.get("buffer_y")), Double.parseDouble(args.get("buffer_z")));
+                    buffer.setYaw(Float.parseFloat(args.get("buffer_yaw")));
+
+                    int durationTicks = Integer.parseInt(args.get("duration_seconds")) * 20;
+                    TravelStateHandler.startTravelingSequence(player, destination, buffer, durationTicks);
+
                 }
                 default ->
                         RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "[SCRIPT] Unknown action " + action + " in " + input + "!");

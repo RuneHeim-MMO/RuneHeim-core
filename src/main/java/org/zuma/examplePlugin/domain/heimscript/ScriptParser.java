@@ -15,64 +15,50 @@ public class ScriptParser {
         List<String> argsTemplates = statement.getArgsTemplates();
 
         boolean hasArgs = !argsTemplates.isEmpty();
-        // advance_quest_{quest_id_1}_(step_id_5}
         String cleanedInput = input.replace(trigger + (hasArgs ? "_" : ""), "");
-        // {quest_id_1}_(step_id_5}
 
-        Pattern argPattern = Pattern.compile("\\{[^{}]+}");
+        Pattern argPattern = Pattern.compile("\\{([^{}]+)\\}");
         Matcher matcher = argPattern.matcher(cleanedInput);
 
         List<String> splitArgs = new ArrayList<>();
         while (matcher.find()) {
-            splitArgs.add(matcher.group());
+            splitArgs.add(matcher.group(1)); // capture group 1 = contents without braces
         }
-        // {quest_id_1}
-        // (step_id_5}
+
+        if (splitArgs.size() != argsTemplates.size()) {
+            throw new MalformedParametersException("Invalid amount of arguments found in " + trigger + " actions. Expected "
+                    + String.join(", ", argsTemplates) + ", found " + splitArgs.size() + " args (" + String.join(", ", splitArgs) + ").");
+        }
 
         HashMap<String, String> result = new HashMap<>();
 
-        if (splitArgs.size() != argsTemplates.size()) {
-            throw new MalformedParametersException("Invalid amount of arguments found in " + trigger + " actions. Expected " + String.join(", ", argsTemplates) + ", found " + String.join(", ", splitArgs) + " args.");
-        }
-
-        for (String splitArg : splitArgs) {
-            String noBrackets = splitArg.substring(1, splitArg.length() - 1);
-            // quest_id_1
-
-            String matchingTemplate = null;
-
-            for (String template : argsTemplates) {
-                if (noBrackets.startsWith(template)) {
-                    matchingTemplate = template;
-                    break;
-                }
+        for (String inner : splitArgs) {
+            // split on the last underscore — template may contain underscores, value may contain '-' or underscores
+            int sep = inner.lastIndexOf('_');
+            if (sep <= 0) {
+                throw new MalformedParametersException("Invalid argument format in " + trigger + " actions: {" + inner + "}. Expected '<template>_<value>'.");
             }
 
-            if (matchingTemplate == null) {
-                throw new MalformedParametersException("Invalid argument found in " + trigger + " actions. " + splitArg + " does not exist in " + String.join(", ", argsTemplates) + ".");
+            String templateCandidate = inner.substring(0, sep);
+            String value = inner.substring(sep + 1);
+
+            if (!argsTemplates.contains(templateCandidate)) {
+                throw new MalformedParametersException("Invalid argument found in " + trigger + " actions. {" + inner + "} — template '"
+                        + templateCandidate + "' does not exist in " + String.join(", ", argsTemplates) + ".");
             }
 
-            String value = extractArgument(noBrackets, matchingTemplate, statement);
-            result.put(matchingTemplate, value);
+            if (value.isEmpty()) {
+                throw new MalformedParametersException("Invalid argument found in " + trigger + " actions. {" + inner + "} — value is empty.");
+            }
 
+            result.put(templateCandidate, value);
         }
 
         if (result.size() != argsTemplates.size()) {
-            throw new MalformedParametersException("Invalid argument found in " + trigger + " actions. Parsed arguments count differs from the actions template count.");
+            throw new MalformedParametersException("Parsed arguments count differs from the actions template count for " + trigger + ".");
         }
 
         return result;
-    }
-
-    private static @NotNull String extractArgument(String noBrackets, String matchingTemplate, ScriptedStatement statement) {
-        String remainder = noBrackets.replace(matchingTemplate + "_", "");
-
-        if (remainder.isEmpty()) {
-            throw new MalformedParametersException("Invalid argument found in " + statement.getTrigger() + " actions. Remainder is empty. Forgot to append integers?");
-        }
-
-        return remainder;
-
     }
 
     public static String getPreview(ScriptedStatement statement) {
@@ -99,4 +85,3 @@ public class ScriptParser {
         throw new MalformedParametersException("Invalid statement " + input + "! Searched in: " + enumType.getName());
     }
 }
-

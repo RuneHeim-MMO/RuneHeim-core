@@ -31,12 +31,47 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.SMITHING_HAMMER), 100)
     ))),
 
+    PICKAXES(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.IRON_PICKAXE), 80),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.STEEL_PICKAXE), 30),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.MITHRIL_PICKAXE), 20)
+
+    ))),
+
+    AXES(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.IRON_AXE), 80),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.STEEL_AXE), 30),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.MITHRIL_AXE), 20)
+
+    ))),
+
+    FISHERMAN(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.FISHING_ROD), 50),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RAW_SALMON), 50)
+
+    ))),
+
     RUNE_HALF_SET_SWORD(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNITE_BODY), 100),
             new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNITE_PLATELEGS), 100),
             new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.RUNITE_BOOTS), 100),
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNITE_SWORD), 100)
     ))),
+
+    MITHRIL_HALF_SET_SWORD(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.MITHRIL_BODY), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.MITHRIL_PLATELEGS), 100),
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.MITHRIL_BOOTS), 100),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.MITHRIL_SWORD), 100)
+    ))),
+
+    ADAMANT_HALF_SET_SWORD(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.ADAMANTITE_BODY), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.ADAMANTITE_PLATELEGS), 100),
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.ADAMANTITE_BOOTS), 100),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.ADAMANTITE_SWORD), 100)
+    ))),
+
 
     JEWELER(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.SAPPHIRE), 20),
@@ -87,6 +122,10 @@ public enum EquipmentSet {
 
     BRONZE_AXE(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.BRONZE_AXE, 1), 100)
+    ))),
+
+    CARROT(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.CARROT), 100)
     ))),
 
     HORSE_DEALER(new MobEquipmentMeta(List.of(

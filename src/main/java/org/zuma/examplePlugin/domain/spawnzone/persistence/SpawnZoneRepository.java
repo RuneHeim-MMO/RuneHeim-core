@@ -62,7 +62,7 @@ public class SpawnZoneRepository {
                 // Drakkar and surroundings
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(7, SpawnZoneType.AREA, 30, 15,
-                        new Location(Bukkit.getWorld("world"), 199, 68, -192)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new Location(Bukkit.getWorld("world"), 199, 68, -230)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.GOBLIN_1_BASE_1, 5, 100),
                         new SpawnZoneMobRecord(MobType.GOBLIN_2_BASE_1, 5, 100),
                         new SpawnZoneMobRecord(MobType.GOBLIN_3_BASE_1, 5, 100),
@@ -81,7 +81,7 @@ public class SpawnZoneRepository {
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(9, SpawnZoneType.POINT, 30, 1,
                         new Location(Bukkit.getWorld("world"), 173, 73, -50)), toVersionedJson(new PointSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.GENERAL_STORE, 1, 100)
+                        new SpawnZoneMobRecord(MobType.DRAKKAR_GENERAL_STORE, 1, 100)
                 ), false, MarkerType.GENERAL_STORE, "General Store"), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(10, SpawnZoneType.POINT, 30, 1,
@@ -775,8 +775,8 @@ public class SpawnZoneRepository {
                 // Brown farm house trader
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(112, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 253, 68, -277)), toVersionedJson(new PointSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.BROWN_FARMHOUSE_TRADER, 1, 100)
-                ), false, MarkerType.MOUNT_MERCHANT, "Mount Merchant"), 1)),
+                        new SpawnZoneMobRecord(MobType.BROWN_FARMHOUSE_MOUNT_SHOP, 1, 100)
+                ), false, MarkerType.MOUNT_SHOP, "Mount Shop"), 1)),
 
                 // Brown farm house trader
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(113, SpawnZoneType.POINT, 30, 20,
@@ -834,26 +834,46 @@ public class SpawnZoneRepository {
                 // Drakkar armor merchant
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(123, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 153, 73, -94.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.DRAKKAR_ARMOR_MERCHANT, 1, 100)
-                ), false, MarkerType.ARMOR_MERCHANT, "Armor Merchant"), 1)),
+                        new SpawnZoneMobRecord(MobType.DRAKKAR_ARMOR_SHOP, 1, 100)
+                ), false, MarkerType.ARMOR_SHOP, "Armor Shop"), 1)),
 
                 // Drakkar basic food stall
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(124, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 208.5, 73, -79.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.BASIC_FOOD_STALL, 1, 100)
-                ), false, MarkerType.FOOD_MERCHANT, "Food Merchant"), 1)),
+                        new SpawnZoneMobRecord(MobType.BASIC_FOOD_STALL_SHOP, 1, 100)
+                ), false, MarkerType.FOOD_SHOP, "Food Shop"), 1)),
 
                 // Drakkar guard archer merchant
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(125, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 127.5, 72, -58)), toVersionedJson(new PointSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.DRAKKAR_GUARD_ARCHER_MERCHANT, 1, 100)
+                        new SpawnZoneMobRecord(MobType.DRAKKAR_GUARD_ARCHER_SHOP, 1, 100)
                 ), false, MarkerType.ARCHERY_SHOP, "Archery Shop"), 1)),
 
-                // Murkwatch bank
+                // Murkwatch
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(126, SpawnZoneType.POINT, 30, 1,
                         new Location(Bukkit.getWorld("world"), -1035, 68, 379)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.BANK_TELLER_1, 1, 100)
                 ), false, MarkerType.BANK_TELLER, "Bank"), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(134, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -977.5, 68, 411.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.AUCTIONEER, 1, 100)
+                ), false, MarkerType.AUCTION, "Auction"), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(135, SpawnZoneType.POINT, 30, 1,
+                        new Location(Bukkit.getWorld("world"), -1008, 68.5, 417.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.MURKWATCH_GENERAL_STORE, 1, 100)
+                ), false, MarkerType.GENERAL_STORE, "General Store"), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(136, SpawnZoneType.POINT, 30, 1,
+                        new Location(Bukkit.getWorld("world"), -1041, 68, 423.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.MURKWATCH_BLACKSMITH, 1, 100)
+                ), false, MarkerType.BLACKSMITH, "Blacksmith"), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(137, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -968, 76, 436.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.MURKWATCH_ARCHER_SHOP, 1, 100)
+                ), false, MarkerType.ARCHERY_SHOP, "Archery Shop"), 1)),
 
                 // Aetheris bank
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(127, SpawnZoneType.POINT, 30, 1,
@@ -892,11 +912,112 @@ public class SpawnZoneRepository {
 
                 // Sakurmeer bank
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(133, SpawnZoneType.POINT, 30, 1,
-                        new Location(Bukkit.getWorld("world"), 886.5 ,133, 191.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new Location(Bukkit.getWorld("world"), 886.5, 133, 191.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.BANK_TELLER_9, 1, 100)
-                ), false, MarkerType.BANK_TELLER, "Bank"), 1))
+                ), false, MarkerType.BANK_TELLER, "Bank"), 1)),
+
+                // Brineport
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(139, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -424.5, 65.5, 274.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BRINEPORT_FISHING_SHOP, 1, 100)
+                ), false, MarkerType.FISHING_SHOP, "Fishing Shop"), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(140, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -487.5, 65, 198.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BRINEPORT_GENERAL_STORE, 1, 100)
+                ), false, MarkerType.GENERAL_STORE, "General Store"), 1)),
 
 
+                // Fenshade
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(141, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -779.5, 70, 554.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.FENSHADE_MINING_SHOP, 1, 100)
+                ), false, MarkerType.MINING_SHOP, "Mining Shop"), 1)),
+
+
+                // Ashwale
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(142, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -70.5, 67.5, -60)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.ASHWALE_MINING_SHOP, 1, 100)
+                ), false, MarkerType.MINING_SHOP, "Mining Shop"), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(143, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -52, 67.5, -76.6)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.ASHWALE_AXE_SHOP, 1, 100)
+                ), false, MarkerType.AXE_SHOP, "Axe Shop"), 1)),
+
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(144, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 1269.5, 73, -219.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SPOREFELL_FISHING_SHOP, 1, 100)
+                ), false, MarkerType.FISHING_SHOP, "Fishing Shop"), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(145, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -1248.5, 68, -798.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SAHARIJIN_FISHING_SHOP, 1, 100)
+                ), false, MarkerType.FISHING_SHOP, "Fishing Shop"), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(146, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -870.5, 89, -376)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.FUSION_MASTER, 1, 100)
+                ), false, MarkerType.FUSION_MASTER, "Fusion Master"), 1)),
+
+
+                // Eldarwyn general store
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(147, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -866, 79, -375)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.ELDARWYN_GENERAL_STORE, 1, 100)
+                ), false, MarkerType.GENERAL_STORE, "General Store"), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(148, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -814.5, 79.5, -331.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.ELDARWYN_ARMOR_SHOP, 1, 100)
+                ), false, MarkerType.ARMOR_SHOP, "Armor Shop"), 1)),
+
+                // Valdrin weapon mearchant
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(149, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -5, 117.5, -543.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.VALDRIN_WEAPON_SHOP, 1, 100)
+                ), false, MarkerType.WEAPON_SHOP, "Weapon Shop"), 1)),
+
+                // Infernak blacksmith
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(150, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 1025, 80, -669)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.INFERNAK_BLACKSMITH, 1, 100)
+                ), false, MarkerType.BLACKSMITH, "Blacksmith"), 1)),
+
+
+                // Sakurmeer general store
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(151, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 890, 135, 240)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SAKURMEER_GENERAL_STORE, 1, 100)
+                ), false, MarkerType.GENERAL_STORE, "General Store"), 1)),
+
+                // Aetheris
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(152, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -104.5, 80, 792.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.AETHERIS_GENERAL_STORE, 1, 100)
+                ), false, MarkerType.GENERAL_STORE, "General Store"), 1)),
+
+                // Islenor
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(153, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 500, 66, -752.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.ISLENOR_GENERAL_STORE, 1, 100)
+                ), false, MarkerType.GENERAL_STORE, "General Store"), 1)),
+
+
+                // Drakkar coachman
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(154, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 181, 67, -179.3)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.DRAKKAR_COACHMAN, 1, 100)
+                ), false, MarkerType.QUICK_TRAVEL, "Coachman"), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(155, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 179.5, 67, -180.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.STATIC_HORSE, 1, 100)
+                ), false, null, null), 1))
+                
+                // last 155
 
 
         );

@@ -44,7 +44,7 @@ public class RunePlayerSerializer {
         VersionedJson versionedPlayerData = new VersionedJson(gson.toJson(container), 1);
 
         String serializedPlayerData = gson.toJson(versionedPlayerData);
-        String serializedLocation = gson.toJson(runePlayer.getGetSafeLocation() != null ? runePlayer.getGetSafeLocation() : player.getLocation());
+        String serializedLocation = gson.toJson(runePlayer.getSafeLocation() != null ? runePlayer.getSafeLocation() : player.getLocation());
         String inventoryData = ItemContainerContentSerializer.serializeItemSlotPairsSync(getPlayerInventoryContent(player), clearStateCache);
         return new SerializedPlayerContainer(runePlayer.getUUID(), player.getName(), serializedLocation, serializedPlayerData, inventoryData);
     }
