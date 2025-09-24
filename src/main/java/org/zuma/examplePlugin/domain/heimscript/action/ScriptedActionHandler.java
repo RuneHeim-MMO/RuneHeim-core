@@ -104,6 +104,10 @@ public class ScriptedActionHandler {
                     TravelStateHandler.startTravelingSequence(player, destination, buffer, durationTicks);
 
                 }
+                case START_TOUR -> {
+                    String tourName = args.get("tour_name");
+                    RuneQuestPlugin.getTourHandler().startTour(player, tourName, callback);
+                }
                 default ->
                         RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "[SCRIPT] Unknown action " + action + " in " + input + "!");
             }

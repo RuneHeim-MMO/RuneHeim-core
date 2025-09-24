@@ -27,7 +27,8 @@ public enum ScriptedAction implements ScriptedStatement {
     TAKE_INVENTORY_ITEM("take_inventory_item", "item_id", "amount"),
     QUEST_STEP_FINISH("quest_step_finish", "stable_id"),
     CLEAR_INVENTORY("clear_inventory"),
-    TRAVEL_SEQUENCE("travel_sequence", "duration_seconds", "world", "dest_x", "dest_y", "dest_z","dest_yaw", "buffer_x", "buffer_y", "buffer_z","buffer_yaw");
+    TRAVEL_SEQUENCE("travel_sequence", "duration_seconds", "world", "dest_x", "dest_y", "dest_z", "dest_yaw", "buffer_x", "buffer_y", "buffer_z", "buffer_yaw"),
+    START_TOUR("start_tour", "tour_name");
 
     private final String trigger;
     private final List<String> argsTemplates;

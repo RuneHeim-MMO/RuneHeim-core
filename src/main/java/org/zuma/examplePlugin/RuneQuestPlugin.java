@@ -30,6 +30,7 @@ import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
 import org.zuma.examplePlugin.domain.shop.ShopRegistry;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneHandler;
 import org.zuma.examplePlugin.domain.territory.TerritoryHandler;
+import org.zuma.examplePlugin.domain.tour.TourHandler;
 
 import java.util.List;
 
@@ -69,7 +70,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new SpawnZoneModule(),
                         new TerritoryModule(),
                         new CommandModule(),
-                        new MountModule()
+                        new MountModule(),
+                        new TourModule()
                 ), moduleContext);
     }
 
@@ -184,4 +186,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         return pluginInstance.moduleContext.get(QuestHandler.class);
     }
 
+    public static TourHandler getTourHandler() {
+        return pluginInstance.moduleContext.get(TourHandler.class);
+    }
 }

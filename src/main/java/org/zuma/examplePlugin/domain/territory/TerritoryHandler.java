@@ -59,10 +59,15 @@ public class TerritoryHandler {
 
         for (UUID uuid : keys) {
             Player player = Bukkit.getPlayer(uuid);
+            RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(uuid);
 
-            if (player == null || !player.isOnline()) {
+            if (player == null || !player.isOnline() || runePlayer == null) {
                 lastPlayerTerritory.remove(uuid);
                 continue;
+            }
+
+            if (runePlayer.isInCutscene()) {
+                return; // skip handling if player is in cutscene
             }
 
             Territory insideOf = null;
