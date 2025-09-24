@@ -19,8 +19,21 @@ import org.bukkit.event.player.PlayerShearEntityEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 
 public class InteractionDisabler implements Listener {
+
+    public void disableTourViewPermission() {
+        if (RuneQuestPlugin.getInstance().getServer().getPluginManager().getPermission("servertours.commands.play") == null) {
+            RuneQuestPlugin.getInstance().getServer().getPluginManager().addPermission(new Permission(
+                    "servertours.commands.play",
+                    "Blocked to prevent players from using /tour play",
+                    PermissionDefault.FALSE
+            ));
+        }
+    }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerInteractOffhand(PlayerInteractEvent event) {
