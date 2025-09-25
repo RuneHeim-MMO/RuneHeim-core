@@ -1015,9 +1015,28 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(155, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 179.5, 67, -180.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.STATIC_HORSE, 1, 100)
-                ), false, null, null), 1))
-                
-                // last 155
+                ), false, null, null), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(156, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 1058, 72, -329)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.THORNBARK_GENERAL_STORE, 1, 100)
+                ), false, MarkerType.GENERAL_STORE, "General Store"), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(157, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 858, 121, 223)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.FUSION_MASTER, 1, 100)
+                ), false, MarkerType.FUSION_MASTER, "Fusion Master"), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(158, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 872, 141, 130)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SAKURMEER_FOOD_SHOP, 1, 100)
+                ), false, MarkerType.FOOD_SHOP, "Food Shop"), 1))
+
+
+
+
+
+                // last 158
 
 
         );

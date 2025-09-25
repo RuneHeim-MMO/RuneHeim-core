@@ -158,12 +158,19 @@ public class ShopRepository {
                         // todo
                 ))), 1)),
 
+                new ShopConfig(ShopId.SAKURMEER_FOOD_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                        new ShopItemConfig(ItemId.COOKED_MEAT.asInt(), 32, 30, 40L, null, null, null),
+                        new ShopItemConfig(ItemId.COOKED_CHICKEN.asInt(), 32, 30, 40L, null, null, null)
+                        // Todo
+                ))), 1)),
+
                 new ShopConfig(ShopId.BRINEPORT_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
                 new ShopConfig(ShopId.MURKWATCH_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
                 new ShopConfig(ShopId.ELDARWYN_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
                 new ShopConfig(ShopId.SAKURMEER_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
                 new ShopConfig(ShopId.AETHERIS_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
-                new ShopConfig(ShopId.ISLENOR_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1))
+                new ShopConfig(ShopId.ISLENOR_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
+                new ShopConfig(ShopId.THORNBARK_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1))
 
 
         );
