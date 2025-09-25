@@ -23,7 +23,8 @@ public enum GUIOverlay {
     ARMOR_SHOP_OVERLAY("◫"),
     GENERAL_STORE_OVERLAY("⍏"),
     FOOD_SHOP_OVERLAY("⾦"),
-    TOOL_SHOP_OVERLAY("⯃");
+    TOOL_SHOP_OVERLAY("⯃"),
+    WEAPON_SHOP_OVERLAY("⓲");
 
     private final String glyph;
 
