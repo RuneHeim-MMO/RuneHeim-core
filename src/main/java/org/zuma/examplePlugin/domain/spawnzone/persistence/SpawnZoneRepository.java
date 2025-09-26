@@ -1030,13 +1030,22 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(158, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 872, 141, 130)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.SAKURMEER_FOOD_SHOP, 1, 100)
-                ), false, MarkerType.FOOD_SHOP, "Food Shop"), 1))
+                ), false, MarkerType.FOOD_SHOP, "Food Shop"), 1)),
+
+                // Sakurmeer auctioner
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(159, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 956.5, 137.5, 207.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.AUCTIONEER, 1, 100)
+                ), false, MarkerType.AUCTION, "Auction"), 1)),
+
+                // Saharijin auctioneer
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(160, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -1223.5, 68, -786.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.AUCTIONEER, 1, 100)
+                ), false, MarkerType.AUCTION, "Auction"), 1))
 
 
-
-
-
-                // last 158
+                // last 160
 
 
         );
