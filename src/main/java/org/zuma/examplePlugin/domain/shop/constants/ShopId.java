@@ -26,7 +26,7 @@ public enum ShopId {
     AETHERIS_GENERAL_STORE(23),
     ISLENOR_GENERAL_STORE(24),
     THORNBARK_GENERAL_STORE(25),
-    SAKURMEER_FOOD_SHOP(27);
+    SAKURMEER_FOOD_SHOP(26);
 
 
     private final int id;
