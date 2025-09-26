@@ -67,7 +67,7 @@ public class TerritoryHandler {
             }
 
             if (runePlayer.isInCutscene()) {
-                return; // skip handling if player is in cutscene
+                continue; // skip handling if player is in cutscene
             }
 
             Territory insideOf = null;
