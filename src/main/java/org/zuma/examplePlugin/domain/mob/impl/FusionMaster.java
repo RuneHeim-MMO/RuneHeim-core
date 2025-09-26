@@ -26,7 +26,7 @@ public class FusionMaster extends AbstractInventoryOpener {
                 "fixes you with an unblinking stare"
         );
 
-        super.attachDialog(() -> DialogBuilder.deserialize("{\"uuid\":\"71ba3402-69b2-485e-9e4f-37f95ad8ed65\",\"id\":\"dusion-master\",\"steps\":[{\"uuid\":\"fdd9283a-4880-49a6-990b-294cb62c9306\",\"uniqueIdentifier\":\"567f63ef-a7b8-47bf-8543-d0b746f9be2a\",\"type\":\"PassiveDialogStep\",\"content\":[{\"line\":\"§4*" + actions.get(new Random().nextInt(actions.size())) + "*\",\"typewriter\":false}],\"id\":\"dusion-master\",\"actions\":[\"dialog_holder_forward_interaction\"]}]}"));
+        super.attachDialog(() -> DialogBuilder.deserialize("{\"uuid\":\"71ba3402-69b2-485e-9e4f-37f95ad8ed65\",\"id\":\"fusion-master\",\"steps\":[{\"uuid\":\"fdd9283a-4880-49a6-990b-294cb62c9306\",\"uniqueIdentifier\":\"567f63ef-a7b8-47bf-8543-d0b746f9be2a\",\"type\":\"PassiveDialogStep\",\"content\":[{\"line\":\"§4*" + actions.get(new Random().nextInt(actions.size())) + "*\",\"typewriter\":false}],\"id\":\"fusion-master\",\"actions\":[\"dialog_holder_forward_interaction\"]}]}"));
     }
 
     @Override
