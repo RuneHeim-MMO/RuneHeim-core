@@ -9,8 +9,11 @@ public class GameRulesModule implements PluginModule {
 
     @Override
     public void start(Plugin plugin, ModuleContext context) {
+        InteractionDisabler interactionDisabler = new InteractionDisabler();
+        plugin.getServer().getPluginManager().registerEvents(interactionDisabler, plugin);
+        interactionDisabler.disableTourViewPermission();
+        
         plugin.getServer().getPluginManager().registerEvents(new IllegalItemWatchdog(), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new InteractionDisabler(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new BlockProtector(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new DefaultMobDisabler(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new VanillaDamageDisabler(), plugin);

@@ -2,6 +2,8 @@ package org.zuma.examplePlugin.features.admin.commands;
 
 
 import com.google.gson.Gson;
+import com.melluh.servertours.api.ServerToursAPI;
+import com.melluh.servertours.api.object.Route;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
@@ -38,6 +40,7 @@ import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
+import org.zuma.examplePlugin.domain.tour.Tour;
 import org.zuma.examplePlugin.events.core.NetworkRestartEvent;
 import org.zuma.examplePlugin.features.admin.inventories.ItemRegistryInventory;
 import org.zuma.examplePlugin.features.admin.inventories.RecipesInventory;
@@ -131,8 +134,8 @@ public class AdminCommand implements BasicCommand {
 
         }
 
-        if (args[0].equalsIgnoreCase("travel")) {
-            TravelStateHandler.startTravelingSequence(runePlayer, new Location(Bukkit.getWorld("world"), 183, 66, -181), new Location(Bukkit.getWorld("world"), 173.5, 71, -175), 400);
+        if (args[0].equalsIgnoreCase("scene")) {
+            RuneQuestPlugin.getTourHandler().startTour(runePlayer, Tour.WELCOME_TOUR.getRouteName(), null);
         }
 
 

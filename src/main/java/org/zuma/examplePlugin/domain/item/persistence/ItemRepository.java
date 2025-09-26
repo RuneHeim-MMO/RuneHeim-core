@@ -169,10 +169,10 @@ public class ItemRepository {
                         ItemId.GRAY_MULE_MOUNT.asInt(),
                         Material.SADDLE,
                         ItemRarity.UNCOMMON,
-                        "Gray Mule",
+                        "Brown Mule",
                         List.of("A sturdy gray mule, reliable and patient."),
                         null, null, true),
-                        toVersionedJson(new MountMeta(null, EntityType.MULE, Horse.Style.WHITE_DOTS, Horse.Color.GRAY, 6, 0.15, 0.45, 0.025, 0.06, List.of()), 1)),
+                        toVersionedJson(new MountMeta(null, EntityType.MULE, null, null, 6, 0.15, 0.45, 0.025, 0.06, List.of()), 1)),
 
                 new ItemEntity(new AbstractItemMeta(
                         ItemType.MOUNT,

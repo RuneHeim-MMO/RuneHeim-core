@@ -71,6 +71,7 @@ public enum MobType {
     VALDRIN_WEAPON_SHOP,
     INFERNAK_BLACKSMITH,
 
+    THORNBARK_GENERAL_STORE,
     ELDARWYN_GENERAL_STORE,
     BRINEPORT_GENERAL_STORE,
     MURKWATCH_GENERAL_STORE,
@@ -79,6 +80,7 @@ public enum MobType {
     ISLENOR_GENERAL_STORE,
 
     DRAKKAR_COACHMAN,
+    SAKURMEER_FOOD_SHOP,
 
     SHEEP, // Can shear wool off these
     STATIC_HORSE, // decoration

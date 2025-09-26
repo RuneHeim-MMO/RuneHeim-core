@@ -24,7 +24,7 @@ public class FirstJoinEffect implements AnimatedEffect {
         if (time == 30 && player.asBukkitPlayer().isOnline()) {
 
             player.asBukkitPlayer().showTitle(Title.title(
-                    Component.text("Welcome to the ", NamedTextColor.WHITE).append(Component.text("Rune", NamedTextColor.RED)).append(Component.text("Heim", NamedTextColor.YELLOW)),
+                    Component.empty(),
                     Component.text("Start by talking to the NPC", Color.ACCENT.asColor()),
                     Title.Times.times(Duration.ofSeconds(0), Duration.ofSeconds(6), Duration.ofSeconds(1)
                     )
@@ -33,13 +33,6 @@ public class FirstJoinEffect implements AnimatedEffect {
             SoundType.PLAYER_QUEST_COMPLETE.play(player, false);
         }
 
-        if (time == 159 && player.asBukkitPlayer() != null && player.asBukkitPlayer().isOnline()) {
-            player.asBukkitPlayer().showTitle(Title.title(
-                    Component.empty(),
-                    Component.text("This server is running alpha version - expect bugs.", Color.SERVER_BRAND.asColor()),
-                    Title.Times.times(Duration.ofSeconds(0), Duration.ofSeconds(4), Duration.ofSeconds(1)
-                    )));
-        }
     }
 
     @Override

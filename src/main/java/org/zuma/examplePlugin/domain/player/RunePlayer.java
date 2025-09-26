@@ -59,7 +59,9 @@ public class RunePlayer implements CombatEntity {
     private final List<InteractiveActionStrategy> pendingActions;
     private List<String> discoveredTerritoryIds;
     private List<String> completedQuestIds;
-    private boolean isDead, isInCutscene, isDialogOptionChoosing;
+    private boolean isDead;
+    private boolean isInCutscene;
+    private boolean isDialogOptionChoosing;
     private HashMap<String, AbstractQuestStep> activeQuestSteps; // Quest id : step
 
     @Nullable
@@ -377,5 +379,9 @@ public class RunePlayer implements CombatEntity {
 
     public void setDialogOptionChoosing(boolean dialogOptionChoosing) {
         isDialogOptionChoosing = dialogOptionChoosing;
+    }
+
+    public boolean isInCutscene() {
+        return isInCutscene;
     }
 }

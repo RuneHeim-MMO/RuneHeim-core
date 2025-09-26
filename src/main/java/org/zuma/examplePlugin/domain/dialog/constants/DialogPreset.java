@@ -40,6 +40,14 @@ public enum DialogPreset {
             "Till then!",
             "Bye now!")),
 
+    WANT_TO_SEE_FOOD_STOCK(List.of(
+            "Care to see the menu?",
+            "Want a hot meal?",
+            "See what's cooking?",
+            "Looking for food?",
+            "Hungry?"
+    )),
+
     WANT_TO_SEE_STOCK(List.of(
             "Want to see what's in stock?",
             "Want to take a look at my goods?",

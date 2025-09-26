@@ -23,6 +23,13 @@ public class Shopkeepers {
                     .option("§aYes" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
                     .option("§cNo", n -> n.followupSteps(d -> d.passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList())))));
 
+    private static final Supplier<DialogBuilder> foodShopDialog = () -> DialogBuilder.create("food-shop-dialog")
+            .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()))
+            .interactiveStep(c -> c.randomText(DialogPreset.WANT_TO_SEE_FOOD_STOCK.getList())
+                    .option("§aYes" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
+                    .option("§cNo", n -> n.followupSteps(d -> d.passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList())))));
+
+
     private static final Supplier<DialogBuilder> jewlerDialog = () -> DialogBuilder.create("jeweler-dialog")
             .passiveStep(p -> p.randomText(Stream.concat(DialogPreset.WELCOME.getList().stream(), Stream.of("Have you seen my sapphire?"))
                     .collect(Collectors.toList()))).interactiveStep(c -> c.randomText(DialogPreset.WANT_TO_SEE_STOCK.getList())
@@ -55,7 +62,7 @@ public class Shopkeepers {
 
         registry.register(MobType.BASIC_FOOD_STALL_SHOP.getId(), () -> new InventoryOpenerMob(Icon.FRUIT.get() + " Food Stall", null,
                 MobBehaviors.VILLAGER_WOMAN_3.getBehavior(), "food_stall_merchant", null, InventoryId.BASIC_FOOD_STALL.asInt(), 0)
-                .attachDialog(genericShopDialog));
+                .attachDialog(foodShopDialog));
 
         registry.register(MobType.DRAKKAR_GUARD_ARCHER_SHOP.getId(), () -> new InventoryOpenerMob(Icon.BOW.get() + " Town Archer", EquipmentSet.RUNE_FULL_IRON_CROSSBOW,
                 MobBehaviors.VILLAGER_MAN_2.getBehavior(), "guard_archer_merchant", null, InventoryId.DRAKKAR_GUARD_ARCHERY_SHOP.asInt(), 60)
@@ -123,9 +130,19 @@ public class Shopkeepers {
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "shopkeeper_6", null, InventoryId.AETHERIS_GENERAL_STORE.asInt(), 40)
                 .attachDialog(genericShopDialog));
 
+        registry.register(MobType.THORNBARK_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1,
+                MobBehaviors.VILLAGER_MAN_3.getBehavior(), "shopkeeper_2", null, InventoryId.THORNBARK_GENERAL_STORE.asInt(), 40)
+                .attachDialog(genericShopDialog));
+
         registry.register(MobType.ISLENOR_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1,
                 MobBehaviors.VILLAGER_MAN_2.getBehavior(), "shopkeeper_7", null, InventoryId.ISLENOR_GENERAL_STORE.asInt(), 40)
                 .attachDialog(genericShopDialog));
+
+        registry.register(MobType.SAKURMEER_FOOD_SHOP.getId(), () -> new InventoryOpenerMob(Icon.FRUIT.get() + " Caterer", EquipmentSet.MUSHROOM_STEW,
+                MobBehaviors.VILLAGER_MAN_2.getBehavior(), "waiter", null, InventoryId.SAKURMEER_FOOD_SHOP.asInt(), 40)
+                .attachDialog(foodShopDialog));
+
+
 
 
     }

@@ -284,12 +284,9 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
                 }, uniqueIdentifier);
             }
             case "PassiveDialogStep" -> builder.passiveStep(passive -> {
-                List<String> lines = content.stream()
-                        .map(DialogText::line)
-                        .toList();
-
-
-                passive.text(lines, true);
+                for (DialogText dt : content) {
+                    passive.text(List.of(dt.line()), dt.typewriter());
+                }
                 actions.forEach(passive::action);
             }, uniqueIdentifier);
             case "InteractiveDialogStep" -> {
