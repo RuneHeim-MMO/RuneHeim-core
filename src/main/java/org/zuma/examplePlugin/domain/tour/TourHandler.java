@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class TourHandler {
-    public HashMap<UUID, Runnable> viewingPlayers;
+    private HashMap<UUID, Runnable> viewingPlayers;
 
     public TourHandler() {
         this.viewingPlayers = new HashMap<>();
