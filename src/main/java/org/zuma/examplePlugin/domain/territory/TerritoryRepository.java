@@ -16,7 +16,7 @@ public class TerritoryRepository {
                         "§3Drakkar",
                         "The starting point for all adventurers.",
                         "An ancient city built on the ruins of a forgotten kingdom.",
-                        1, 10),
+                        1, 10, false, true),
 
                 new Territory("drakkar-outskirts",
                         new Location(Bukkit.getWorld("world"), 200, 0, -68),
@@ -25,7 +25,7 @@ public class TerritoryRepository {
                         "§bDrakkar outskirts",
                         "The training grounds just outside the city walls.",
                         "Fields and pathways worn by generations of warriors-in-training.",
-                        3, 10),
+                        3, 10, false, true),
 
                 new Territory("oakshade",
                         new Location(Bukkit.getWorld("world"), 535, 0, 0),
@@ -34,7 +34,7 @@ public class TerritoryRepository {
                         "§aOakshade",
                         "A quiet village located near Drakkar.",
                         "Surrounded by dense forests rumored to be inhabited by spirits.",
-                        3, 10),
+                        3, 10, false, true),
 
                 new Territory("amber-cottage",
                         new Location(Bukkit.getWorld("world"), 250, 0, -270),
@@ -43,7 +43,7 @@ public class TerritoryRepository {
                         "§6Amber farm",
                         "A tranquil farm where crops grow.",
                         "Once the estate of a minor noble, now overgrown with golden fields.",
-                        3, 10),
+                        3, 10, false, true),
 
                 new Territory("ashwale",
                         new Location(Bukkit.getWorld("world"), -80, 0, -80),
@@ -52,7 +52,7 @@ public class TerritoryRepository {
                         "§8Ashwale",
                         "Small village neighboring Drakkar.",
                         "Built at the edge of a forest long rumored to conceal ancient relics.",
-                        3, 10),
+                        3, 10, false, true),
 
                 new Territory("brineport",
                         new Location(Bukkit.getWorld("world"), -445, 0, 230),
@@ -61,7 +61,7 @@ public class TerritoryRepository {
                         "§3Brineport",
                         "A coastal town overlooking the sea.",
                         "Founded by merchants who braved storms to establish trade routes.",
-                        20, 30),
+                        20, 30, false, true),
 
                 new Territory("sakurmeer",
                         new Location(Bukkit.getWorld("world"), 850, 0, 180),
@@ -70,7 +70,7 @@ public class TerritoryRepository {
                         "§dSakurmeer",
                         "A mystical land of eternal cherry blossoms.",
                         "Legends speak of a hidden shrine where the first blossom fell.",
-                        20, 40),
+                        20, 40, false, true),
 
                 new Territory("murkwatch",
                         new Location(Bukkit.getWorld("world"), -1050, 0, 425),
@@ -79,7 +79,7 @@ public class TerritoryRepository {
                         "§2Murkwatch",
                         "A city built on stilts, rising above the treacherous swamp.",
                         "Once a refuge for exiles, its streets echo with old grudges.",
-                        25, 30),
+                        25, 30, false, true),
 
                 new Territory("fenshade",
                         new Location(Bukkit.getWorld("world"), -775, 0, 570),
@@ -88,7 +88,7 @@ public class TerritoryRepository {
                         "§2Fenshade",
                         "An abandoned mine where the air hangs thick with a murky mist.",
                         "Miners vanished decades ago; some say the mist carries their whispers.",
-                        25, 30),
+                        25, 30, false, true),
 
                 new Territory("swamp-island",
                         new Location(Bukkit.getWorld("world"), -900, 0, 500),
@@ -97,7 +97,7 @@ public class TerritoryRepository {
                         "§2Swamp Island",
                         "An island in the swamp, full of hidden dangers.",
                         "The marsh conceals ruins of an old cult long forgotten by time.",
-                        25, 30),
+                        25, 30, false, false),
 
                 new Territory("swamp-island",
                         new Location(Bukkit.getWorld("world"), -1000, 0, 265),
@@ -106,7 +106,7 @@ public class TerritoryRepository {
                         "§2Swamp Island",
                         "An island in the swamp, full of hidden dangers.",
                         "Legends say strange lights move through the fog on moonless nights.",
-                        25, 30),
+                        25, 30, false, false),
 
                 new Territory("branleaft",
                         new Location(Bukkit.getWorld("world"), -620, 0, -300),
@@ -115,7 +115,7 @@ public class TerritoryRepository {
                         "§aBranleaft",
                         "A secluded village nestled deep within the whispering woods.",
                         "Trees here are said to remember the names of those who pass.",
-                        30, 45),
+                        30, 45, false, true),
 
                 new Territory("eldarwyn",
                         new Location(Bukkit.getWorld("world"), -880, 0, -340),
@@ -124,7 +124,7 @@ public class TerritoryRepository {
                         "§bEldarwyn",
                         "A grand castle overlooking the western seas.",
                         "Once the seat of a legendary family whose heirs vanished mysteriously.",
-                        30, 45),
+                        30, 45, false, true),
 
                 new Territory("valdrin",
                         new Location(Bukkit.getWorld("world"), -15, 0, -530),
@@ -133,7 +133,7 @@ public class TerritoryRepository {
                         "§fValdrin",
                         "A peaceful village nestled on a cliff.",
                         "Cliffside tombs tell of warriors who defended these lands long ago.",
-                        30, 50),
+                        30, 50, false, true),
 
                 new Territory("islenor",
                         new Location(Bukkit.getWorld("world"), 496, 0, -714),
@@ -142,7 +142,7 @@ public class TerritoryRepository {
                         "§9Islenor",
                         "A quiet port town where the waves lap gently.",
                         "Shipwrecks along the coast hint at a forgotten maritime empire.",
-                        45, 50),
+                        45, 50, false, true),
 
                 new Territory("zarali",
                         new Location(Bukkit.getWorld("world"), 480, 0, 470),
@@ -151,7 +151,7 @@ public class TerritoryRepository {
                         "§2Zarali",
                         "A hidden village nestled deep within the jungle canopy.",
                         "Ancient murals speak of a civilization swallowed by the jungle.",
-                        40, 50),
+                        40, 50, false, true),
 
                 new Territory("heartroots-chamber",
                         new Location(Bukkit.getWorld("world"), 250, 0, 500),
@@ -160,7 +160,7 @@ public class TerritoryRepository {
                         "§2The Heartroots Chamber",
                         "The hidden source of the ancient forest's life.",
                         "The roots pulse with magic that predates written history.",
-                        40, 50),
+                        40, 50, false, true),
 
                 new Territory("glaciem",
                         new Location(Bukkit.getWorld("world"), 950, 0, 500),
@@ -169,7 +169,7 @@ public class TerritoryRepository {
                         "§bGlaciem",
                         "A frozen tundra where blizzards rage endlessly.",
                         "Ice winds carry tales of explorers lost to the frost.",
-                        40, 55),
+                        40, 55, false, true),
 
                 new Territory("thornbark",
                         new Location(Bukkit.getWorld("world"), 1090, 0, -350),
@@ -178,7 +178,16 @@ public class TerritoryRepository {
                         "§3Thornbark",
                         "A dark and twisted forest of gnarled trees.",
                         "Thorns and shadows hide secrets few dare to seek.",
-                        40, 60),
+                        40, 60, false, true),
+
+                new Territory("saharijin-pvp-arena",
+                        new Location(Bukkit.getWorld("world"), -1208.5, 0, -698.5),
+                        null,
+                        21,
+                        "§cSaharijin PVP Arena",
+                        "An unforgiving desert arena where only the strongest survive.",
+                        null,
+                        50, 60, true, true),
 
                 new Territory("saharijin",
                         new Location(Bukkit.getWorld("world"), -1078, 0, -720),
@@ -187,7 +196,8 @@ public class TerritoryRepository {
                         "§eSaharijin",
                         "A vast desert where the sun shows no mercy.",
                         "Bones and relics surface after relentless sandstorms.",
-                        50, 60),
+                        50, 60, false, true),
+
 
                 new Territory("sporefell",
                         new Location(Bukkit.getWorld("world"), 1250, 0, -150),
@@ -196,7 +206,7 @@ public class TerritoryRepository {
                         "§5Sporefell",
                         "A forest of colossal, glowing mushrooms.",
                         "The spores shine with an otherworldly glow, hinting at ancient magic.",
-                        60, 70),
+                        60, 70, false, true),
 
                 new Territory("ethereal-nexus",
                         new Location(Bukkit.getWorld("world"), 925, 0, -845),
@@ -205,7 +215,7 @@ public class TerritoryRepository {
                         "§5The Ethereal Nexus",
                         "A swirling vortex of pure magical energy.",
                         "Energy crackles here, a remnant of a forgotten arcane war.",
-                        70, 80),
+                        70, 80, false, true),
 
                 new Territory("aetheris",
                         new Location(Bukkit.getWorld("world"), -135, 0, 780),
@@ -214,7 +224,7 @@ public class TerritoryRepository {
                         "§dAetheris",
                         "An ethereal forest where celestial magic courses through the trees.",
                         "Trees hum with celestial energy, older than any mortal memory.",
-                        70, 90),
+                        70, 90, false, true),
 
                 new Territory("infernak",
                         new Location(Bukkit.getWorld("world"), 1000, 0, -630),
@@ -223,7 +233,7 @@ public class TerritoryRepository {
                         "§cInfernak",
                         "A volcanic land forged in fire and brimstone.",
                         "Rivers of lava carve paths through the scorched land, ever restless.",
-                        80, 90),
+                        80, 90, false, true),
 
                 new Territory("tutorial-island",
                         new Location(Bukkit.getWorld("world"), 2518, 0, 2467),
@@ -232,7 +242,7 @@ public class TerritoryRepository {
                         "§bTutorial Island",
                         "The first step of every hero.",
                         "Once a training ground for fledgling heroes, untouched by time.",
-                        1, 1)
+                        1, 1, false, true)
 
         );
     }

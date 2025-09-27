@@ -91,13 +91,19 @@ public class MapMarkerHandler {
         AtomicInteger count = new AtomicInteger();
 
         territories.forEach(territory -> {
+            if (!territory.isRenderOnMap()) return;
+
             MarkerType markerType = MarkerType.AREAS;
             Shape circleShape = MapShapeGenerator.generateCircleShapeAsShape((int) territory.getCenterPoint().x(), (int) territory.getCenterPoint().z(), territory.getRadius(), 20);
 
             String label = territory.getName().replaceAll("§.", "");
             String avgLevelColorCode = TextUtils.getLegacyColorCodeForLevel(territory.getMinLevel() + territory.getMaxLevel() / 2);
-            Color lineColor = MinecraftColorConverter.fromMinecraftColorCode(avgLevelColorCode, 0.8F);
-            Color fillColor = MinecraftColorConverter.fromMinecraftColorCode(avgLevelColorCode, 0.2F);
+            Color lineColor = territory.isPvpZone() ? new Color(0, 0, 0, 1F) : MinecraftColorConverter.fromMinecraftColorCode(avgLevelColorCode, 1F);
+            Color fillColor = territory.isPvpZone() ? new Color(0, 0, 0, 0.25F) : MinecraftColorConverter.fromMinecraftColorCode(avgLevelColorCode, 0.2F);
+
+            String additionalDescription = territory.isPvpZone() ?
+                    "<b><span style='color:red'>PvP Zone</span></b>" :
+                    "Level range: <b>" + territory.getMinLevel() + " - " + territory.getMaxLevel() + "</b>";
 
             ExtrudeMarker marker = ExtrudeMarker.builder()
                     .position(territory.getCenterPoint().x(), territory.getCenterPoint().y(), territory.getCenterPoint().z())
@@ -105,7 +111,7 @@ public class MapMarkerHandler {
                     .lineColor(lineColor)
                     .fillColor(fillColor)
                     .listed(true)
-                    .detail("<b>" + label + "</b><br/>" + territory.getDescription() + "<br/><br/> Level range: <b>" + territory.getMinLevel() + " - " + territory.getMaxLevel() + "</b>")
+                    .detail("<b>" + label + "</b><br/>" + territory.getDescription() + "<br/><br/>" + additionalDescription)
                     .label(label)
                     .build();
 

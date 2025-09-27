@@ -93,7 +93,7 @@ public class TerritoryHandler {
             lastPlayerTerritory.put(player.getUniqueId(), insideOf);
 
             if (insideOf != null && (lastTerritory == null || !insideOf.getId().equals(lastTerritory.getId()))) {
-                handlePlayerEnterTerritory(player, insideOf);
+                handlePlayerEnterTerritory(player, insideOf, lastTerritory);
             }
 
 
@@ -101,7 +101,7 @@ public class TerritoryHandler {
 
     }
 
-    private void handlePlayerEnterTerritory(Player player, Territory territory) {
+    private void handlePlayerEnterTerritory(Player player, Territory territory, @Nullable Territory lastTerritory) {
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
 
         if (runePlayer == null || runePlayer.isDead()) {
@@ -111,6 +111,16 @@ public class TerritoryHandler {
         boolean isFirstDiscovery = !runePlayer.getDiscoveredTerritoryIds().contains(territory.getId());
         TerritoryEnterEvent event = new TerritoryEnterEvent(runePlayer, territory, isFirstDiscovery);
         Bukkit.getServer().getPluginManager().callEvent(event);
+
+        // If new territory is PVP zone
+        if (territory.isPvpZone()) {
+            SoundType.PVP_TERRITORY_ENTER.play(player, false);
+        }
+
+        // If last territory was PVP zone and new one is not, play leave sound
+        if(lastTerritory != null && lastTerritory.isPvpZone() && !territory.isPvpZone()) {
+            SoundType.PVP_TERRITORY_LEAVE.play(player, false);
+        }
 
         if (!isFirstDiscovery) {
             SoundType.TERRITORY_ENTER.play(player, false);
@@ -122,21 +132,24 @@ public class TerritoryHandler {
             player.sendMessage(Icon.INFO.asComponent().append(Component.text("New location discovered: ", Color.INFO.asColor())
                     .append(Icon.MAP.asComponent().append(Component.text(territory.getName() + "!", NamedTextColor.AQUA)).hoverEvent(HoverEvent.showText(hoverText)))));
 
-            Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-                if (!player.isOnline()) return;
+            if (territory.getFirstTimeDiscoveryLore() != null) {
+                Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+                    if (!player.isOnline()) return;
 
-                player.showTitle(Title.title(
-                        Component.empty(),
-                        Component.text(territory.getFirstTimeDiscoveryLore(), NamedTextColor.GRAY),
-                        Title.Times.times(
-                                Duration.ofSeconds(1),
-                                Duration.ofSeconds(3, 5),
-                                Duration.ofSeconds(3)
-                        )
-                ));
+                    player.showTitle(Title.title(
+                            Component.empty(),
+                            Component.text(territory.getFirstTimeDiscoveryLore(), NamedTextColor.GRAY),
+                            Title.Times.times(
+                                    Duration.ofSeconds(1),
+                                    Duration.ofSeconds(3, 5),
+                                    Duration.ofSeconds(3)
+                            )
+                    ));
 
-                SoundType.TERRITORY_ENTER.play(player, false);
-            }, 120);
+                    SoundType.TERRITORY_ENTER.play(player, false);
+                }, 120);
+
+            }
         }
 
         player.showTitle(Title.title(
