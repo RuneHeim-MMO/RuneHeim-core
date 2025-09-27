@@ -6,6 +6,7 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.quest.constants.QuestDifficulty;
+import org.zuma.examplePlugin.domain.quest.constants.QuestId;
 import org.zuma.examplePlugin.domain.quest.impl.CollectionStep;
 import org.zuma.examplePlugin.domain.quest.impl.DialogStep;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -22,14 +23,14 @@ public class QuestRegistry {
     public QuestRegistry() {
         this.quests = new HashMap<>();
 
-        Quest sheepShearer = new Quest("sheep-shearer", "Sheep Shearer", QuestDifficulty.EASY);
+        Quest sheepShearer = new Quest(QuestId.SHEEP_SHEARER.getId(), "Sheep Shearer", QuestDifficulty.EASY, false);
         registerQuest(sheepShearer.addSteps(List.of(
                 new CollectionStep(RuneQuestPlugin.getInstance(), sheepShearer, "Collect §620 wool§f and spin them into balls of wool.", "sheep-shearer.wool-collect", List.of(new ItemRecord(ItemId.BALL_OF_WOOL, 20)), null),
                 new DialogStep(RuneQuestPlugin.getInstance(), sheepShearer, "Bring §620 balls of wool§f to §6Shepherd.", "sheep-shearer.wool-collected", null)
         )));
 
 
-        Quest tutorialQuest = new Quest("tutorial", "Tutorial", QuestDifficulty.EASY)
+        Quest tutorialQuest = new Quest(QuestId.TUTORIAL.getId(), "Tutorial", QuestDifficulty.EASY, false)
                 .setRewards(new QuestReward(List.of(
                         new ItemRecord(ItemId.BRONZE_SWORD, 1),
                         new ItemRecord(ItemId.BRONZE_PICKAXE, 1),
@@ -62,7 +63,7 @@ public class QuestRegistry {
         )));
 
 
-        Quest blacksmithsRightHandI = new Quest("blacksmiths-right-hand-i", "Blacksmith's Right Hand", QuestDifficulty.EASY)
+        Quest blacksmithsRightHandI = new Quest(QuestId.BLACKSMITHS_RIGHT_HAND_I.getId(), "Blacksmith's Right Hand", QuestDifficulty.EASY, false)
                 .setRewards(new QuestReward(null, Map.of(SkillType.SMITHING, 1000.0), 800));
 
         registerQuest(blacksmithsRightHandI.addSteps(List.of(
@@ -73,6 +74,9 @@ public class QuestRegistry {
                 new CollectionStep(RuneQuestPlugin.getInstance(), blacksmithsRightHandI, "Acquire §61x Uncut Sapphire.", "blacksmith-right-hand-i.acquire-sapphire", List.of(new ItemRecord(ItemId.UNCUT_SAPPHIRE, 1)), null),
                 new DialogStep(RuneQuestPlugin.getInstance(), blacksmithsRightHandI, "Bring §61x Uncut Sapphire§f to the §6Blacksmith.", "blacksmith-right-hand-i.bring-sapphire", null)
         )));
+
+        Quest saharijinPVPArenaIntroduction = new Quest(QuestId.SAHARIJIN_ARENA_INTRO.getId(), "Saharijin Arena Intro", QuestDifficulty.EASY, true);
+        registerQuest(saharijinPVPArenaIntroduction); // No steps, just used for tracking if player has talked to the NPC.
 
     }
 

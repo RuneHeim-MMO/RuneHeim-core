@@ -15,7 +15,7 @@ public class QuestMobs {
 
         // Tutorial island
         registry.register(MobType.PEASANT_MINER.getId(), () -> new DialogMob("Peasant Miner", EquipmentSet.BRONZE_PICKAXE,
-                MobBehaviors.VILLAGER_MAN_2.getBehavior(), "peasant", null, 0, Dialogs.tutorial_peasant_minerDialog));
+                MobBehaviors.VILLAGER_MAN_2.getBehavior(), "peasant", null, 0, Dialogs.tutorial_peasantMinerDialog));
 
         registry.register(MobType.TUTOR_BLACKSMITH.getId(), () -> new DialogMob("Blacksmith", EquipmentSet.BLACKSMITH,
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "tutor_blacksmith", null, 0, Dialogs.tutorial_blacksmithDialog));

@@ -3,8 +3,6 @@ package org.zuma.examplePlugin.core.interfaces;
 import org.bukkit.Material;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
-import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.map.MarkerType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -14,7 +12,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-public interface InventoryOpenerBlock extends SkillRestrictable {
+public interface InventoryOpenerBlock extends Restrictable {
 
     void initializeBlock(
             int inventoryId,
@@ -37,5 +35,5 @@ public interface InventoryOpenerBlock extends SkillRestrictable {
 
     void removeInventoryUUID(UUID instanceUUID);
 
-    List<SkillRequirement> getRequirements();
+    List<SkillRequirement> getSkillRequirements();
 }

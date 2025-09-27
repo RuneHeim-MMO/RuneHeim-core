@@ -1,7 +1,12 @@
 package org.zuma.examplePlugin.domain.combat;
 
-import org.bukkit.Bukkit;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.LocalPlayer;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.flags.Flags;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -10,7 +15,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.projectiles.ProjectileSource;
@@ -34,6 +38,26 @@ public class HitListener implements Listener {
         this.playerManager = playerManager;
         this.mobRegistry = mobRegistry;
         this.hitHandler = hitHandler;
+    }
+
+    private boolean isPlayerInPVPDisabledRegion(Player player) {
+        LocalPlayer localAttacker = WorldGuardPlugin.inst().wrapPlayer(player);
+        Location loc = player.getLocation();
+
+        return !WorldGuard.getInstance()
+                .getPlatform()
+                .getRegionContainer()
+                .createQuery()
+                .testState(BukkitAdapter.adapt(loc), localAttacker, Flags.PVP);
+    }
+
+    // Check if PVP is disabled: only allow PVP if both are NOT in a PVP-disabled region
+    private boolean isPVPHitDisabled(CombatEntity attacker, CombatEntity defender) {
+        if (!(attacker.getEntity() instanceof Player attackerPlayer) || !(defender.getEntity() instanceof Player defenderPlayer)) {
+            return false; // Only care about player vs player
+        }
+
+        return isPlayerInPVPDisabledRegion(attackerPlayer) || isPlayerInPVPDisabledRegion(defenderPlayer);
     }
 
 
@@ -69,7 +93,7 @@ public class HitListener implements Listener {
         CombatEntity defender = getCombatEntity(livingDefenderEntity);
         @Nullable Hit hit = null;
 
-        if (attacker == null || defender == null) {
+        if (attacker == null || defender == null || isPVPHitDisabled(attacker, defender)) {
             return;
         }
 
@@ -125,6 +149,10 @@ public class HitListener implements Listener {
         if (attacker != null && defender != null) {
             String typeString = projectile.getPersistentDataContainer().get(projectileType, PersistentDataType.STRING);
             if (typeString == null) return; // Unknown projectile
+
+            if (isPVPHitDisabled(attacker, defender)) {
+                return;
+            }
 
             ProjectileType type = ProjectileType.valueOf(typeString);
             @Nullable Hit hit = null;

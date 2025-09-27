@@ -12,6 +12,7 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.map.MapMarkerHandler;
+import org.zuma.examplePlugin.domain.map.StaticMarkers;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneHandler;
 import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
 import org.zuma.examplePlugin.domain.territory.Territory;
@@ -54,6 +55,7 @@ public class MapModule implements PluginModule {
         Collection<POIMarkerable> poiMarkers = new ArrayList<>(
                 new HashSet<>(moduleContext.get(BlockManager.class).getAllBlocks()) // filter out duplicates based on instance equality
         );
+        poiMarkers.addAll(StaticMarkers.getStaticMarkers());
 
         Collection<AbstractSpawnZone> zones = new ArrayList<>();
 

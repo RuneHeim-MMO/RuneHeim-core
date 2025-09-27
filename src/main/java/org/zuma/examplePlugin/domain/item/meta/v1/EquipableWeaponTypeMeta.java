@@ -10,5 +10,6 @@ import java.util.List;
 
 public record EquipableWeaponTypeMeta(WeaponSpeed speed, @Nullable List<SkillModifier> skillModifiers,
                                       @Nullable List<Modifier> modifiers,
-                                      @Nullable List<SkillRequirement> requirements) {
+                                      @Nullable List<SkillRequirement> requirements,
+                                      @Nullable List<String> requiredQuests) {
 }

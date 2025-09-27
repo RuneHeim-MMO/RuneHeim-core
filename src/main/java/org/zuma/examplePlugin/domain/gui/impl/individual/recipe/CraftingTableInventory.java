@@ -25,7 +25,7 @@ public class CraftingTableInventory extends RecipeInventory {
         Stream<AbstractRecipe> stream = Stream.concat(inventoryRecipes.stream(), craftingTableRecipes.stream());
 
         return stream.sorted(Comparator.comparingInt(recipe ->
-                        recipe.getRequirements().stream()
+                        recipe.getSkillRequirements().stream()
                                 .mapToInt(SkillRequirement::minimumLevel)
                                 .sum()))
                 .toList();

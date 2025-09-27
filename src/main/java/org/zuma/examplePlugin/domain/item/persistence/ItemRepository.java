@@ -16,6 +16,7 @@ import org.zuma.examplePlugin.domain.item.meta.v1.*;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.SkillModifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
+import org.zuma.examplePlugin.domain.quest.constants.QuestId;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
@@ -146,8 +147,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 999999),
                                                 new Modifier(ModifierType.ATTACK_SLASH, 999999)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.ATTACK, 1))
-                                )
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 1)),
+                                        null)
                                 , 1)
                 ),
 
@@ -162,7 +163,7 @@ public class ItemRepository {
                         "Brown Farm Horse",
                         List.of("A humble brown horse, perfect for beginners."),
                         null, null, true),
-                        toVersionedJson(new MountMeta(null, EntityType.HORSE, Horse.Style.NONE, Horse.Color.BROWN, 5, 0.15, 0.4, 0.02, 0.05, List.of()), 1)),
+                        toVersionedJson(new MountMeta(null, EntityType.HORSE, Horse.Style.NONE, Horse.Color.BROWN, 5, 0.15, 0.4, 0.02, 0.05, null, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(
                         ItemType.MOUNT,
@@ -172,7 +173,7 @@ public class ItemRepository {
                         "Brown Mule",
                         List.of("A sturdy gray mule, reliable and patient."),
                         null, null, true),
-                        toVersionedJson(new MountMeta(null, EntityType.MULE, null, null, 6, 0.15, 0.45, 0.025, 0.06, List.of()), 1)),
+                        toVersionedJson(new MountMeta(null, EntityType.MULE, null, null, 6, 0.15, 0.45, 0.025, 0.06, null, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(
                         ItemType.MOUNT,
@@ -182,7 +183,7 @@ public class ItemRepository {
                         "Chestnut Donkey",
                         List.of("A chestnut donkey, gentle and dependable."),
                         null, null, true),
-                        toVersionedJson(new MountMeta(null, EntityType.DONKEY, Horse.Style.NONE, Horse.Color.CHESTNUT, 6, 0.15, 0.45, 0.025, 0.06, List.of()), 1)),
+                        toVersionedJson(new MountMeta(null, EntityType.DONKEY, Horse.Style.NONE, Horse.Color.CHESTNUT, 6, 0.15, 0.45, 0.025, 0.06, null, null), 1)),
 
                 // Mid-tier horses
                 new ItemEntity(new AbstractItemMeta(
@@ -193,7 +194,7 @@ public class ItemRepository {
                         "Creamy Steed",
                         List.of("A light cream horse with soft markings, elegant and swift."),
                         null, null, true),
-                        toVersionedJson(new MountMeta(null, EntityType.HORSE, Horse.Style.WHITEFIELD, Horse.Color.CREAMY, 8, 0.15, 0.5, 0.03, 0.07, List.of()), 1)),
+                        toVersionedJson(new MountMeta(null, EntityType.HORSE, Horse.Style.WHITEFIELD, Horse.Color.CREAMY, 8, 0.15, 0.5, 0.03, 0.07, null, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(
                         ItemType.MOUNT,
@@ -203,7 +204,7 @@ public class ItemRepository {
                         "Snow White Horse",
                         List.of("A pure white horse, fast and noble."),
                         null, null, true),
-                        toVersionedJson(new MountMeta(null, EntityType.HORSE, Horse.Style.WHITE, Horse.Color.WHITE, 8, 0.15, 0.52, 0.03, 0.075, List.of()), 1)),
+                        toVersionedJson(new MountMeta(null, EntityType.HORSE, Horse.Style.WHITE, Horse.Color.WHITE, 8, 0.15, 0.52, 0.03, 0.075, null, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(
                         ItemType.MOUNT,
@@ -213,7 +214,7 @@ public class ItemRepository {
                         "Black Stallion",
                         List.of("A sleek black horse, powerful and swift."),
                         null, null, true),
-                        toVersionedJson(new MountMeta(null, EntityType.HORSE, Horse.Style.BLACK_DOTS, Horse.Color.BLACK, 9, 0.16, 0.55, 0.035, 0.08, List.of()), 1)),
+                        toVersionedJson(new MountMeta(null, EntityType.HORSE, Horse.Style.BLACK_DOTS, Horse.Color.BLACK, 9, 0.16, 0.55, 0.035, 0.08, null, null), 1)),
 
                 // High-end horses
                 new ItemEntity(new AbstractItemMeta(
@@ -224,7 +225,7 @@ public class ItemRepository {
                         "Dark Brown Warhorse",
                         List.of("A dark brown horse, strong and fearsome in battle."),
                         null, null, true),
-                        toVersionedJson(new MountMeta(null, EntityType.HORSE, Horse.Style.NONE, Horse.Color.DARK_BROWN, 10, 0.17, 0.57, 0.035, 0.08, List.of()), 1)),
+                        toVersionedJson(new MountMeta(null, EntityType.HORSE, Horse.Style.NONE, Horse.Color.DARK_BROWN, 10, 0.17, 0.57, 0.035, 0.08, null, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(
                         ItemType.MOUNT,
@@ -234,7 +235,7 @@ public class ItemRepository {
                         "Undead Nightmare",
                         List.of("An undead horse, untiring and fearsome."),
                         null, null, true),
-                        toVersionedJson(new MountMeta(null, EntityType.ZOMBIE_HORSE, Horse.Style.NONE, Horse.Color.BLACK, 12, 0.2, 0.6, 0.04, 0.09, List.of()), 1)),
+                        toVersionedJson(new MountMeta(null, EntityType.ZOMBIE_HORSE, Horse.Style.NONE, Horse.Color.BLACK, 12, 0.2, 0.6, 0.04, 0.09, null, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(
                         ItemType.MOUNT,
@@ -244,7 +245,7 @@ public class ItemRepository {
                         "Skeletal Charger",
                         List.of("A skeletal horse, swift and terrifying."),
                         null, null, true),
-                        toVersionedJson(new MountMeta(null, EntityType.SKELETON_HORSE, Horse.Style.NONE, Horse.Color.WHITE, 12, 0.2, 0.62, 0.04, 0.09, List.of()), 1)),
+                        toVersionedJson(new MountMeta(null, EntityType.SKELETON_HORSE, Horse.Style.NONE, Horse.Color.WHITE, 12, 0.2, 0.62, 0.04, 0.09, null, null), 1)),
 
                 // Llama (no style/color)
                 new ItemEntity(new AbstractItemMeta(
@@ -255,12 +256,12 @@ public class ItemRepository {
                         "Brown Llama",
                         List.of("A sturdy brown llama, reliable for travel."),
                         null, null, true),
-                        toVersionedJson(new MountMeta(null, EntityType.LLAMA, null, null, 7, 0.14, 0.48, 0.03, 0.065, List.of()), 1)),
+                        toVersionedJson(new MountMeta(null, EntityType.LLAMA, null, null, 7, 0.14, 0.48, 0.03, 0.065, null, null), 1)),
 
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MOUNT, ItemId.OBELIX_MOUNT.asInt(), Material.SADDLE, ItemRarity.LEGENDARY, "Obelix", List.of("Your own personal obelix"), null, null, true),
-                        toVersionedJson(new MountMeta("chieftain", null, null, null, 10, 0.15, 0.5, 0.03, 0.075, List.of(new SkillRequirement(SkillType.ATTACK, 5))
-                        ), 1)),
+                        toVersionedJson(new MountMeta("chieftain", null, null, null, 10, 0.15, 0.5, 0.03, 0.075, List.of(new SkillRequirement(SkillType.ATTACK, 5)),
+                                null), 1)),
 
 
                 // Accessories
@@ -272,8 +273,8 @@ public class ItemRepository {
                                         new Modifier(ModifierType.ATTACK_STAB, 1),
                                         new Modifier(ModifierType.DEFENCE_STAB, 1)
                                 ), List.of(new SkillRequirement(SkillType.ATTACK, 1),
-                                new SkillRequirement(SkillType.DEFENCE, 1))
-                        ), 1)),
+                                new SkillRequirement(SkillType.DEFENCE, 1)),
+                                null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_RING, ItemId.IRON_RING.asInt(), Material.COAL, ItemRarity.COMMON, "Iron Ring", List.of("A sturdy ring that provides minor attack and defence bonuses."), null, null, true),
                         toVersionedJson(new EquipableTypeMeta(null,
@@ -281,8 +282,8 @@ public class ItemRepository {
                                         new Modifier(ModifierType.ATTACK_SLASH, 2),
                                         new Modifier(ModifierType.DEFENCE_SLASH, 2)
                                 ), List.of(new SkillRequirement(SkillType.ATTACK, 5),
-                                new SkillRequirement(SkillType.DEFENCE, 5))
-                        ), 1)),
+                                new SkillRequirement(SkillType.DEFENCE, 5)),
+                                null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_RING, ItemId.MITHRIL_RING.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Mithril Ring", List.of("A well-crafted ring that slightly boosts attack and defence."), null, null, true),
                         toVersionedJson(new EquipableTypeMeta(null,
@@ -290,8 +291,8 @@ public class ItemRepository {
                                         new Modifier(ModifierType.ATTACK_CRUSH, 3),
                                         new Modifier(ModifierType.DEFENCE_CRUSH, 3)
                                 ), List.of(new SkillRequirement(SkillType.ATTACK, 20),
-                                new SkillRequirement(SkillType.DEFENCE, 20))
-                        ), 1)),
+                                new SkillRequirement(SkillType.DEFENCE, 20)),
+                                null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_RING, ItemId.ADAMANTITE_RING.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Adamantite Ring", List.of("A strong ring offering moderate boosts to attack and defence."), null, null, true),
                         toVersionedJson(new EquipableTypeMeta(null,
@@ -301,8 +302,8 @@ public class ItemRepository {
                                         new Modifier(ModifierType.DEFENCE_STAB, 4),
                                         new Modifier(ModifierType.DEFENCE_SLASH, 4)
                                 ), List.of(new SkillRequirement(SkillType.ATTACK, 30),
-                                new SkillRequirement(SkillType.DEFENCE, 30))
-                        ), 1)),
+                                new SkillRequirement(SkillType.DEFENCE, 30)),
+                                null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_RING, ItemId.RUNITE_RING.asInt(), Material.COAL, ItemRarity.RARE, "Runite Ring", List.of("A rare ring that greatly improves your combat prowess."), null, null, true),
                         toVersionedJson(new EquipableTypeMeta(null,
@@ -315,8 +316,8 @@ public class ItemRepository {
                                         new Modifier(ModifierType.DEFENCE_CRUSH, 6),
                                         new Modifier(ModifierType.STRENGTH_BONUS, 3)
                                 ), List.of(new SkillRequirement(SkillType.ATTACK, 40),
-                                new SkillRequirement(SkillType.DEFENCE, 40))
-                        ), 1)),
+                                new SkillRequirement(SkillType.DEFENCE, 40)),
+                                null), 1)),
 
                 // Defence Amulets
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_GUARDING.asInt(), Material.COAL, ItemRarity.COMMON, "Amulet of Guarding", List.of("Reduces damage taken from all melee attacks."), null, null, true),
@@ -325,8 +326,8 @@ public class ItemRepository {
                                         new Modifier(ModifierType.DEFENCE_STAB, 1),
                                         new Modifier(ModifierType.DEFENCE_SLASH, 1),
                                         new Modifier(ModifierType.DEFENCE_CRUSH, 1)
-                                ), List.of(new SkillRequirement(SkillType.DEFENCE, 1))
-                        ), 1)),
+                                ), List.of(new SkillRequirement(SkillType.DEFENCE, 1)),
+                                null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_THE_PROTECTOR.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Amulet of the Protector", List.of("Better protection against all attacks."), null, null, true),
                         toVersionedJson(new EquipableTypeMeta(null,
@@ -335,8 +336,8 @@ public class ItemRepository {
                                         new Modifier(ModifierType.DEFENCE_SLASH, 3),
                                         new Modifier(ModifierType.DEFENCE_CRUSH, 3),
                                         new Modifier(ModifierType.DEFENCE_MAGIC, 1)
-                                ), List.of(new SkillRequirement(SkillType.DEFENCE, 10))
-                        ), 1)),
+                                ), List.of(new SkillRequirement(SkillType.DEFENCE, 10)),
+                                null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_FORTITUDE.asInt(), Material.COAL, ItemRarity.RARE, "Amulet of Fortitude", List.of("Significantly increases your defensive capabilities."), null, null, true),
                         toVersionedJson(new EquipableTypeMeta(null,
@@ -345,8 +346,8 @@ public class ItemRepository {
                                         new Modifier(ModifierType.DEFENCE_SLASH, 5),
                                         new Modifier(ModifierType.DEFENCE_CRUSH, 5),
                                         new Modifier(ModifierType.DEFENCE_MAGIC, 3)
-                                ), List.of(new SkillRequirement(SkillType.DEFENCE, 20))
-                        ), 1)),
+                                ), List.of(new SkillRequirement(SkillType.DEFENCE, 20)),
+                                null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_THE_WARD.asInt(), Material.COAL, ItemRarity.EPIC, "Amulet of the Ward", List.of("Greatly enhances your defensive strength."), null, null, true),
                         toVersionedJson(new EquipableTypeMeta(null,
@@ -355,8 +356,8 @@ public class ItemRepository {
                                         new Modifier(ModifierType.DEFENCE_SLASH, 8),
                                         new Modifier(ModifierType.DEFENCE_CRUSH, 8),
                                         new Modifier(ModifierType.DEFENCE_MAGIC, 5)
-                                ), List.of(new SkillRequirement(SkillType.DEFENCE, 40))
-                        ), 1)),
+                                ), List.of(new SkillRequirement(SkillType.DEFENCE, 40)),
+                                null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_INVINCIBILITY.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Amulet of Invincibility", List.of("Provides maximum protection against all forms of attack."), null, null, true),
                         toVersionedJson(new EquipableTypeMeta(null,
@@ -365,8 +366,8 @@ public class ItemRepository {
                                         new Modifier(ModifierType.DEFENCE_SLASH, 12),
                                         new Modifier(ModifierType.DEFENCE_CRUSH, 12),
                                         new Modifier(ModifierType.DEFENCE_MAGIC, 8)
-                                ), List.of(new SkillRequirement(SkillType.DEFENCE, 60))
-                        ), 1)),
+                                ), List.of(new SkillRequirement(SkillType.DEFENCE, 60)),
+                                null), 1)),
 
                 // Offensive Amulets
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_THE_NOVICE_BLADE.asInt(), Material.COAL, ItemRarity.COMMON, "Amulet of the Novice Blade", List.of("Slightly increases melee attack and strength."), null, null, true),
@@ -376,8 +377,8 @@ public class ItemRepository {
                                         new Modifier(ModifierType.ATTACK_SLASH, 1),
                                         new Modifier(ModifierType.ATTACK_CRUSH, 1),
                                         new Modifier(ModifierType.STRENGTH_BONUS, 1)
-                                ), List.of(new SkillRequirement(SkillType.ATTACK, 1))
-                        ), 1)),
+                                ), List.of(new SkillRequirement(SkillType.ATTACK, 1)),
+                                null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_MIGHT.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Amulet of Might", List.of("Boosts your attack and strength more effectively."), null, null, true),
                         toVersionedJson(new EquipableTypeMeta(null,
@@ -386,8 +387,8 @@ public class ItemRepository {
                                         new Modifier(ModifierType.ATTACK_SLASH, 3),
                                         new Modifier(ModifierType.ATTACK_CRUSH, 3),
                                         new Modifier(ModifierType.STRENGTH_BONUS, 3)
-                                ), List.of(new SkillRequirement(SkillType.ATTACK, 10))
-                        ), 1)),
+                                ), List.of(new SkillRequirement(SkillType.ATTACK, 10)),
+                                null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_THE_DUELIST.asInt(), Material.COAL, ItemRarity.RARE, "Amulet of the Duelist", List.of("Greatly enhances your melee combat effectiveness."), null, null, true),
                         toVersionedJson(new EquipableTypeMeta(null,
@@ -396,8 +397,8 @@ public class ItemRepository {
                                         new Modifier(ModifierType.ATTACK_SLASH, 5),
                                         new Modifier(ModifierType.ATTACK_CRUSH, 5),
                                         new Modifier(ModifierType.STRENGTH_BONUS, 5)
-                                ), List.of(new SkillRequirement(SkillType.ATTACK, 20))
-                        ), 1)),
+                                ), List.of(new SkillRequirement(SkillType.ATTACK, 20)),
+                                null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_THE_GLADIATOR.asInt(), Material.COAL, ItemRarity.EPIC, "Amulet of the Gladiator", List.of("Significantly boosts melee attack and strength."), null, null, true),
                         toVersionedJson(new EquipableTypeMeta(null,
@@ -406,8 +407,8 @@ public class ItemRepository {
                                         new Modifier(ModifierType.ATTACK_SLASH, 8),
                                         new Modifier(ModifierType.ATTACK_CRUSH, 8),
                                         new Modifier(ModifierType.STRENGTH_BONUS, 8)
-                                ), List.of(new SkillRequirement(SkillType.ATTACK, 40))
-                        ), 1)),
+                                ), List.of(new SkillRequirement(SkillType.ATTACK, 40)),
+                                null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_ULTIMATE_POWER.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Amulet of Ultimate Power", List.of("Maximizes your melee attack and strength."), null, null, true),
                         toVersionedJson(new EquipableTypeMeta(null,
@@ -416,8 +417,8 @@ public class ItemRepository {
                                         new Modifier(ModifierType.ATTACK_SLASH, 12),
                                         new Modifier(ModifierType.ATTACK_CRUSH, 12),
                                         new Modifier(ModifierType.STRENGTH_BONUS, 12)
-                                ), List.of(new SkillRequirement(SkillType.ATTACK, 60))
-                        ), 1)),
+                                ), List.of(new SkillRequirement(SkillType.ATTACK, 60)),
+                                null), 1)),
 
                 // Ranged Amulets
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_THE_ARCHER.asInt(), Material.COAL, ItemRarity.COMMON, "Amulet of the Archer", List.of("Slightly improves ranged accuracy and strength."), null, null, true),
@@ -425,40 +426,40 @@ public class ItemRepository {
                                 List.of(
                                         new Modifier(ModifierType.RANGED_ACCURACY, 1),
                                         new Modifier(ModifierType.RANGED_STRENGTH, 1)
-                                ), List.of(new SkillRequirement(SkillType.RANGED, 1))
-                        ), 1)),
+                                ), List.of(new SkillRequirement(SkillType.RANGED, 1)),
+                                null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_PRECISION.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Amulet of Precision", List.of("Increases your ranged combat capabilities."), null, null, true),
                         toVersionedJson(new EquipableTypeMeta(null,
                                 List.of(
                                         new Modifier(ModifierType.RANGED_ACCURACY, 3),
                                         new Modifier(ModifierType.RANGED_STRENGTH, 3)
-                                ), List.of(new SkillRequirement(SkillType.RANGED, 10))
-                        ), 1)),
+                                ), List.of(new SkillRequirement(SkillType.RANGED, 10)),
+                                null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_THE_HUNTER.asInt(), Material.COAL, ItemRarity.RARE, "Amulet of the Hunter", List.of("Significantly boosts ranged combat effectiveness."), null, null, true),
                         toVersionedJson(new EquipableTypeMeta(null,
                                 List.of(
                                         new Modifier(ModifierType.RANGED_ACCURACY, 5),
                                         new Modifier(ModifierType.RANGED_STRENGTH, 5)
-                                ), List.of(new SkillRequirement(SkillType.RANGED, 20))
-                        ), 1)),
+                                ), List.of(new SkillRequirement(SkillType.RANGED, 20)),
+                                null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_THE_SHARPSHOOTER.asInt(), Material.COAL, ItemRarity.EPIC, "Amulet of the Sharpshooter", List.of("Greatly enhances ranged attacks."), null, null, true),
                         toVersionedJson(new EquipableTypeMeta(null,
                                 List.of(
                                         new Modifier(ModifierType.RANGED_ACCURACY, 8),
                                         new Modifier(ModifierType.RANGED_STRENGTH, 8)
-                                ), List.of(new SkillRequirement(SkillType.RANGED, 40))
-                        ), 1)),
+                                ), List.of(new SkillRequirement(SkillType.RANGED, 40)),
+                                null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_THE_EAGLE_EYE.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Amulet of the Eagle Eye", List.of("Maximizes your ranged attack and strength."), null, null, true),
                         toVersionedJson(new EquipableTypeMeta(null,
                                 List.of(
                                         new Modifier(ModifierType.RANGED_ACCURACY, 12),
                                         new Modifier(ModifierType.RANGED_STRENGTH, 12)
-                                ), List.of(new SkillRequirement(SkillType.RANGED, 60))
-                        ), 1)),
+                                ), List.of(new SkillRequirement(SkillType.RANGED, 60)),
+                                null), 1)),
 
                 // XP Lamps
                 new ItemEntity(new AbstractItemMeta(ItemType.XP_LAMP, ItemId.GENIE_XP_LAMP.asInt(), Material.COAL, ItemRarity.RARE, "Genie XP Lamp",
@@ -479,48 +480,48 @@ public class ItemRepository {
                         new EquipableTypeMeta(null,
                                 List.of(
                                         new Modifier(ModifierType.RANGED_STRENGTH, 1)
-                                ), List.of(new SkillRequirement(SkillType.RANGED, 1))
-                        ),
+                                ), List.of(new SkillRequirement(SkillType.RANGED, 1)),
+                                null),
                         1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.IRON_ARROW.asInt(), Material.ARROW, ItemRarity.COMMON, "Iron Arrow", List.of("Stronger than bronze arrows.", "Commonly used by beginner archers."), null, null, true), toVersionedJson(
                         new EquipableTypeMeta(null,
                                 List.of(
                                         new Modifier(ModifierType.RANGED_STRENGTH, 2)
-                                ), List.of(new SkillRequirement(SkillType.RANGED, 10))
-                        ),
+                                ), List.of(new SkillRequirement(SkillType.RANGED, 10)),
+                                null),
                         1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.STEEL_ARROW.asInt(), Material.ARROW, ItemRarity.COMMON, "Steel Arrow", List.of("A sturdy steel-tipped arrow.", "Offers good damage and durability."), null, null, true), toVersionedJson(
                         new EquipableTypeMeta(null,
                                 List.of(
                                         new Modifier(ModifierType.RANGED_STRENGTH, 3)
-                                ), List.of(new SkillRequirement(SkillType.RANGED, 20))
-                        ),
+                                ), List.of(new SkillRequirement(SkillType.RANGED, 20)),
+                                null),
                         1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.MITHRIL_ARROW.asInt(), Material.ARROW, ItemRarity.UNCOMMON, "Mithril Arrow", List.of("Lightweight yet powerful.", "Favored by mid-level rangers."), null, null, true), toVersionedJson(
                         new EquipableTypeMeta(null,
                                 List.of(
                                         new Modifier(ModifierType.RANGED_STRENGTH, 4)
-                                ), List.of(new SkillRequirement(SkillType.RANGED, 30))
-                        ),
+                                ), List.of(new SkillRequirement(SkillType.RANGED, 30)),
+                                null),
                         1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.ADAMANT_ARROW.asInt(), Material.ARROW, ItemRarity.UNCOMMON, "Adamant Arrow", List.of("Forged from adamantite.", "High damage for experienced archers."), null, null, true), toVersionedJson(
                         new EquipableTypeMeta(null,
                                 List.of(
                                         new Modifier(ModifierType.RANGED_STRENGTH, 6)
-                                ), List.of(new SkillRequirement(SkillType.RANGED, 40))
-                        ),
+                                ), List.of(new SkillRequirement(SkillType.RANGED, 40)),
+                                null),
                         1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.RUNITE_ARROW.asInt(), Material.ARROW, ItemRarity.RARE, "Runite Arrow", List.of("Top-tier arrow made from runite.", "Delivers deadly ranged attacks."), null, null, true), toVersionedJson(
                         new EquipableTypeMeta(null,
                                 List.of(
                                         new Modifier(ModifierType.RANGED_STRENGTH, 7)
-                                ), List.of(new SkillRequirement(SkillType.RANGED, 50))
-                        ),
+                                ), List.of(new SkillRequirement(SkillType.RANGED, 50)),
+                                null),
                         1)),
 
 
@@ -528,7 +529,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.COMPASS, ItemId.COMPASS.asInt(), Material.COMPASS, ItemRarity.COMMON, "Compass", List.of("A simple tool to help you find your way."), null, null, true),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
-                                        null, null), 1)),
+                                        null, null, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.SMITHING_HAMMER.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Hammer", List.of("A sturdy hammer used for refining and forging equipment."), null, null, true),
                         toVersionedJson(
@@ -536,18 +537,18 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 4),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 2)
-                                        ), null),
+                                        ), null, null),
                                 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.FLINT_AND_STEEL.asInt(), Material.FLINT_AND_STEEL, ItemRarity.COMMON, "Flint and Steel", List.of("A nice tool to start a fire."), null, null, true),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
-                                        null, null), 1)),
+                                        null, null, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.SHEARS.asInt(), Material.SHEARS, ItemRarity.COMMON, "Shears", List.of("Used to trim wool or foliage."), null, null, true),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
-                                        null, null), 1)),
+                                        null, null, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.CHISEL.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Chisel", List.of("Used for carving or shaping materials."), null, null, true),
                         toVersionedJson(
@@ -555,13 +556,13 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 4),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 2)
-                                        ), null), 1)),
+                                        ), null, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.KNIFE.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Knife", List.of("A small, sharp blade.", "Used for cutting, carving, and crafting."), null, null, true),
                         toVersionedJson(new EquipableTypeMeta(null, List.of(
                                 new Modifier(ModifierType.ATTACK_SLASH, 6),
                                 new Modifier(ModifierType.STRENGTH_BONUS, 2)
-                        ), null), 1)),
+                        ), null, null), 1)),
 
 
                 // Materials
@@ -839,48 +840,48 @@ public class ItemRepository {
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.MINING_BOOST, 1)),
-                                        List.of(new SkillRequirement(SkillType.MINING, 1))
-                                )
+                                        List.of(new SkillRequirement(SkillType.MINING, 1)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.IRON_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.COMMON, "Iron Pickaxe", List.of("Iron pickaxe, mines ores with ease."), null, null, true),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.MINING_BOOST, 1.1)),
-                                        List.of(new SkillRequirement(SkillType.MINING, 1))
-                                )
+                                        List.of(new SkillRequirement(SkillType.MINING, 1)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.STEEL_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.COMMON, "Steel Pickaxe", List.of("Steel pickaxe, efficient and strong."), null, null, true),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.MINING_BOOST, 1.2)),
-                                        List.of(new SkillRequirement(SkillType.MINING, 6))
-                                )
+                                        List.of(new SkillRequirement(SkillType.MINING, 6)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.MITHRIL_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.UNCOMMON, "Mithril Pickaxe", List.of("Mithril pickaxe, fast and durable."), null, null, true),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.MINING_BOOST, 1.3)),
-                                        List.of(new SkillRequirement(SkillType.MINING, 21))
-                                )
+                                        List.of(new SkillRequirement(SkillType.MINING, 21)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.ADAMANTITE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.UNCOMMON, "Adamantite Pickaxe", List.of("Adamantite pickaxe, mines the hardest ores."), null, null, true),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.MINING_BOOST, 1.5)),
-                                        List.of(new SkillRequirement(SkillType.MINING, 31))
-                                )
+                                        List.of(new SkillRequirement(SkillType.MINING, 31)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL_WITH_GEM_SOCKETS, ItemId.RUNITE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.RARE, "Runite Pickaxe", List.of("Runite pickaxe, enchanted for maximum yield."), null, null, true),
                         toVersionedJson(
                                 new SocketedToolMeta(new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.MINING_BOOST, 1.8)),
-                                        List.of(new SkillRequirement(SkillType.MINING, 41))
-                                ), null, 1)
+                                        List.of(new SkillRequirement(SkillType.MINING, 41)),
+                                        null), null, 1)
                                 , 1)
                 ),
 
@@ -888,48 +889,48 @@ public class ItemRepository {
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1)),
-                                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 1))
-                                )
+                                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 1)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.IRON_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Iron axe", List.of("Iron axe, sturdy and reliable."), null, null, true),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.1)),
-                                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 1))
-                                )
+                                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 1)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.STEEL_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Steel axe", List.of("Steel axe, stronger and more durable."), null, null, true),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.2)),
-                                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 6))
-                                )
+                                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 6)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.MITHRIL_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.UNCOMMON, "Mithril axe", List.of("Mithril axe, light and efficient."), null, null, true),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.3)),
-                                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 21))
-                                )
+                                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 21)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.ADAMANTITE_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.UNCOMMON, "Adamantite axe", List.of("Adamantite axe, built to last."), null, null, true),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.5)),
-                                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 31))
-                                )
+                                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 31)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL_WITH_GEM_SOCKETS, ItemId.RUNITE_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.RARE, "Runite axe", List.of("Runite axe glowing with magical energy."), null, null, true),
                         toVersionedJson(
                                 new SocketedToolMeta(new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.8)),
-                                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 41))
-                                ), null, 1)
+                                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 41)),
+                                        null), null, 1)
                                 , 1)
                 ),
 
@@ -942,7 +943,7 @@ public class ItemRepository {
                                 ),
                                 List.of(
                                         new SkillRequirement(SkillType.FISHING, 1)
-                                ))
+                                ), null)
                         , 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.FISHING_ROD.asInt(), Material.COAL, ItemRarity.COMMON, "Fishing Rod",
@@ -953,7 +954,7 @@ public class ItemRepository {
                                 ),
                                 List.of(
                                         new SkillRequirement(SkillType.FISHING, 15)
-                                ))
+                                ), null)
                         , 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.REINFORCED_FISHING_ROD.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Reinforced Fishing Rod",
@@ -964,7 +965,7 @@ public class ItemRepository {
                                 ),
                                 List.of(
                                         new SkillRequirement(SkillType.FISHING, 75)
-                                ))
+                                ), null)
                         , 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.FISHING_TRAP.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Fishing Trap",
@@ -975,7 +976,7 @@ public class ItemRepository {
                                 ),
                                 List.of(
                                         new SkillRequirement(SkillType.FISHING, 85)
-                                ))
+                                ), null)
                         , 1)),
 
 
@@ -990,8 +991,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 3),
                                                 new Modifier(ModifierType.DEFENCE_RANGED, 6)
                                         ),
-                                        null
-                                ), 1)
+                                        null,
+                                        null), 1)
                 ),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.COWL.asInt(), Material.LEATHER_HELMET, ItemRarity.COMMON, "Cowl", List.of("A light hood offering minimal protection."), HeadTexture.BRONZE_MED_HELM.asBase64(), Color.fromRGB(74, 56, 7), true),
@@ -1004,56 +1005,56 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 5),
                                                 new Modifier(ModifierType.DEFENCE_RANGED, 8)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.RANGED, 10))
-                                ), 1)
+                                        List.of(new SkillRequirement(SkillType.RANGED, 10)),
+                                        null), 1)
                 ),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.BRONZE_MEDHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Bronze Med Helm", List.of("Simple bronze helmet offering minimal head protection."), HeadTexture.BRONZE_MED_HELM.asBase64(), Color.fromRGB(210, 170, 120), true),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 1), new Modifier(ModifierType.DEFENCE_SLASH, 1), new Modifier(ModifierType.DEFENCE_CRUSH, 1)),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
-                                )
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.IRON_MEDHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Iron Med Helm", List.of("Sturdy iron helmet to guard against blows."), HeadTexture.IRON_MED_HELM.asBase64(), null, true),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 3), new Modifier(ModifierType.DEFENCE_SLASH, 4), new Modifier(ModifierType.DEFENCE_CRUSH, 2)),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
-                                )
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STEEL_MEDHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Steel Med Helm", List.of("Well-crafted steel helmet for enhanced defense."), HeadTexture.STEEL_MED_HELM.asBase64(), null, true),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 5), new Modifier(ModifierType.DEFENCE_SLASH, 6), new Modifier(ModifierType.DEFENCE_CRUSH, 5)),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 5))
-                                )
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 5)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MITHRIL_MEDHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.UNCOMMON, "Mithril Med Helm", List.of("Lightweight mithril helmet, combining agility and defense."), HeadTexture.MITHRIL_MED_HELM.asBase64(), null, true),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 8), new Modifier(ModifierType.DEFENCE_SLASH, 9), new Modifier(ModifierType.DEFENCE_CRUSH, 7)),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 20))
-                                )
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 20)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANT_MEDHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.UNCOMMON, "Adamantite Med Helm", List.of("Heavy adamantite helmet, favored by elite warriors."), HeadTexture.ADAMANT_MED_HELM.asBase64(), null, true),
                         toVersionedJson(
                                 new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 12), new Modifier(ModifierType.DEFENCE_SLASH, 13), new Modifier(ModifierType.DEFENCE_CRUSH, 11)),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 30))
-                                )
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 30)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNE_MEDHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.RARE, "Runite Med Helm", List.of("Runite helmet radiating magical protection."), HeadTexture.RUNE_MED_HELM.asBase64(), null, true),
                         toVersionedJson(
                                 new SocketedEquipableMeta(new EquipableTypeMeta(null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 18), new Modifier(ModifierType.DEFENCE_SLASH, 19), new Modifier(ModifierType.DEFENCE_CRUSH, 17)),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 40))
-                                ), null, 1)
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 40)),
+                                        null), null, 1)
                                 , 1)
                 ),
 
@@ -1065,8 +1066,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 3),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 4)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
-                                ), 1)
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1)),
+                                        null), 1)
                 ),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.IRON_FULLHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Iron Full Helm", List.of("A sturdy iron full helm for better protection."), HeadTexture.IRON_FULL_HELM.asBase64(), null, true),
@@ -1077,8 +1078,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 6),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 7)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
-                                ), 1)
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1)),
+                                        null), 1)
                 ),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STEEL_FULLHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Steel Full Helm", List.of("A well-made steel full helm that offers decent defense."), HeadTexture.STEEL_FULL_HELM.asBase64(), null, true),
@@ -1089,8 +1090,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 8),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 9)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 5))
-                                ), 1)
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 5)),
+                                        null), 1)
                 ),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MITHRIL_FULLHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.UNCOMMON, "Mithril Full Helm", List.of("A lightweight mithril full helm with solid defense."), HeadTexture.MITHRIL_FULL_HELM.asBase64(), null, true),
@@ -1101,8 +1102,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 11),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 12)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 20))
-                                ), 1)
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 20)),
+                                        null), 1)
                 ),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANT_FULLHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.UNCOMMON, "Adamant Full Helm", List.of("A heavy adamant full helm for superior defense."), HeadTexture.ADAMANT_FULL_HELM.asBase64(), null, true),
@@ -1113,8 +1114,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 15),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 16)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 30))
-                                ), 1)
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 30)),
+                                        null), 1)
                 ),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNE_FULLHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.RARE, "Rune Full Helm", List.of("A full helmet forged from runite, offering excellent defense."), HeadTexture.RUNE_FULL_HELM.asBase64(), null, true),
@@ -1125,8 +1126,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 22),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 21)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 40))
-                                ), null, 1), 1)
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 40)),
+                                        null), null, 1), 1)
                 ),
 
 
@@ -1141,8 +1142,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 1),
                                                 new Modifier(ModifierType.DEFENCE_RANGED, 8)
                                         ),
-                                        null
-                                ), 1)
+                                        null,
+                                        null), 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.HARD_LEATHER_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Hard Leather Body", List.of("Stiffened leather torso protection."), HeadTexture.BRONZE_MED_HELM.asBase64(), Color.fromRGB(33, 15, 2), true),
                         toVersionedJson(
@@ -1154,8 +1155,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 8),
                                                 new Modifier(ModifierType.DEFENCE_RANGED, 12)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.RANGED, 10))
-                                ), 1)
+                                        List.of(new SkillRequirement(SkillType.RANGED, 10)),
+                                        null), 1)
                 ),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STUDDED_LEATHER_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Studded Body", List.of("Leather armor reinforced with studs."), HeadTexture.BRONZE_MED_HELM.asBase64(), Color.fromRGB(38, 29, 15), true),
@@ -1168,8 +1169,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 7),
                                                 new Modifier(ModifierType.DEFENCE_RANGED, 16)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.RANGED, 20))
-                                ), 1)
+                                        List.of(new SkillRequirement(SkillType.RANGED, 20)),
+                                        null), 1)
                 ),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.GREEN_DHIDE_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Green D'hide Body", List.of("Torso armor made of green dragonhide."), HeadTexture.BRONZE_MED_HELM.asBase64(), Color.fromRGB(12, 130, 12), true),
@@ -1186,8 +1187,8 @@ public class ItemRepository {
                                         List.of(
                                                 new SkillRequirement(SkillType.RANGED, 40),
                                                 new SkillRequirement(SkillType.DEFENCE, 40)
-                                        )
-                                ), 1)
+                                        ),
+                                        null), 1)
                 ),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.BRONZE_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Bronze Body", List.of("Basic bronze chestplate, shields vital organs."), null, Color.fromRGB(210, 170, 120), true),
@@ -1198,8 +1199,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 8),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 7)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
-                                )
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.IRON_BODY.asInt(), Material.CHAINMAIL_CHESTPLATE, ItemRarity.COMMON, "Iron Body", List.of("Iron chestplate providing solid body armor."), null, null, true),
@@ -1210,8 +1211,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 13),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 11)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
-                                )
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STEEL_BODY.asInt(), Material.IRON_CHESTPLATE, ItemRarity.COMMON, "Steel Body", List.of("Tough steel chestplate for frontline combat."), null, null, true),
@@ -1222,8 +1223,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 19),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 17)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 5))
-                                )
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 5)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MITHRIL_BODY.asInt(), Material.GOLDEN_CHESTPLATE, ItemRarity.UNCOMMON, "Mithril Body", List.of("Mithril chestplate offering balance of speed and defense."), null, null, true),
@@ -1234,8 +1235,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 25),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 23)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 20))
-                                )
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 20)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANTITE_BODY.asInt(), Material.DIAMOND_CHESTPLATE, ItemRarity.UNCOMMON, "Adamantite Body", List.of("Heavy adamantite chestplate for supreme protection."), null, null, true),
@@ -1246,8 +1247,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 31),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 29)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 30))
-                                )
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 30)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNITE_BODY.asInt(), Material.NETHERITE_CHESTPLATE, ItemRarity.RARE, "Runite Body", List.of("Runite chestplate enchanted for extra resilience."), null, null, true),
@@ -1258,8 +1259,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 42),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 38)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 40))
-                                ), null, 1), 1)
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 40)),
+                                        null), null, 1), 1)
                 ),
 
                 // Armor - platelegs
@@ -1273,8 +1274,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 2),
                                                 new Modifier(ModifierType.DEFENCE_RANGED, 8)
                                         ),
-                                        null
-                                ), 1)
+                                        null,
+                                        null), 1)
                 ),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.HARD_LEATHER_LEGGINGS.asInt(), Material.LEATHER_LEGGINGS, ItemRarity.COMMON, "Hard Leather Chaps", List.of("Stiffened leather leg protection."), HeadTexture.BRONZE_MED_HELM.asBase64(), Color.fromRGB(33, 15, 2), true),
@@ -1287,8 +1288,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 5),
                                                 new Modifier(ModifierType.DEFENCE_RANGED, 12)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.RANGED, 10))
-                                ), 1)
+                                        List.of(new SkillRequirement(SkillType.RANGED, 10)),
+                                        null), 1)
                 ),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STUDDED_LEATHER_LEGGINGS.asInt(), Material.LEATHER_LEGGINGS, ItemRarity.COMMON, "Studded Chaps", List.of("Leather chaps reinforced with studs."), HeadTexture.BRONZE_MED_HELM.asBase64(), Color.fromRGB(38, 29, 15), true),
@@ -1301,8 +1302,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 6),
                                                 new Modifier(ModifierType.DEFENCE_RANGED, 14)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.RANGED, 20))
-                                ), 1)
+                                        List.of(new SkillRequirement(SkillType.RANGED, 20)),
+                                        null), 1)
                 ),
                 new ItemEntity(
                         new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.GREEN_DHIDE_LEGGINGS.asInt(), Material.LEATHER_LEGGINGS, ItemRarity.COMMON, "Green D'hide Chaps", List.of("Leg armor made of green dragonhide."), HeadTexture.BRONZE_MED_HELM.asBase64(), Color.fromRGB(12, 130, 12), true),
@@ -1314,7 +1315,7 @@ public class ItemRepository {
                                         new Modifier(ModifierType.DEFENCE_MAGIC, -6),
                                         new Modifier(ModifierType.RANGED_ACCURACY, 15),
                                         new Modifier(ModifierType.DEFENCE_RANGED, 20)
-                                ), List.of(new SkillRequirement(SkillType.RANGED, 40))), 1)
+                                ), List.of(new SkillRequirement(SkillType.RANGED, 40)), null), 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.BRONZE_PLATELEGS.asInt(), Material.LEATHER_LEGGINGS, ItemRarity.COMMON, "Bronze Platelegs", List.of("Bronze platelegs, basic leg armor."), null, Color.fromRGB(210, 170, 120), true),
                         toVersionedJson(
@@ -1324,8 +1325,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 5),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 3)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
-                                )
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.IRON_PLATELEGS.asInt(), Material.CHAINMAIL_LEGGINGS, ItemRarity.COMMON, "Iron Platelegs", List.of("Iron platelegs for reliable leg protection."), null, null, true),
@@ -1336,8 +1337,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 8),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 6)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
-                                )
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STEEL_PLATELEGS.asInt(), Material.IRON_LEGGINGS, ItemRarity.COMMON, "Steel Platelegs", List.of("Steel platelegs favored by seasoned fighters."), null, null, true),
@@ -1348,8 +1349,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 13),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 11)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 5))
-                                )
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 5)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MITHRIL_PLATELEGS.asInt(), Material.GOLDEN_LEGGINGS, ItemRarity.UNCOMMON, "Mithril Platelegs", List.of("Mithril platelegs combining speed and defense."), null, null, true),
@@ -1360,8 +1361,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 17),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 15)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 20))
-                                )
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 20)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANTITE_PLATELEGS.asInt(), Material.DIAMOND_LEGGINGS, ItemRarity.UNCOMMON, "Adamantite Platelegs", List.of("Adamantite platelegs, thick and durable."), null, null, true),
@@ -1372,8 +1373,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 22),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 20)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 30))
-                                )
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 30)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNITE_PLATELEGS.asInt(), Material.NETHERITE_LEGGINGS, ItemRarity.RARE, "Runite Platelegs", List.of("Runite platelegs shimmering with magical energy."), null, null, true),
@@ -1384,8 +1385,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 30),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 26)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 40))
-                                ), null, 1)
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 40)),
+                                        null), null, 1)
                                 , 1)
                 ),
 
@@ -1398,7 +1399,7 @@ public class ItemRepository {
                                         new Modifier(ModifierType.DEFENCE_SLASH, 2),
                                         new Modifier(ModifierType.DEFENCE_CRUSH, 2),
                                         new Modifier(ModifierType.DEFENCE_RANGED, 4)
-                                ), null), 1)
+                                ), null, null), 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.BRONZE_BOOTS.asInt(), Material.LEATHER_BOOTS, ItemRarity.COMMON, "Bronze Boots", List.of("Bronze boots, offering basic foot protection."), null, Color.fromRGB(210, 170, 120), true),
                         toVersionedJson(
@@ -1408,8 +1409,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 2),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 1)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
-                                )
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.IRON_BOOTS.asInt(), Material.CHAINMAIL_BOOTS, ItemRarity.COMMON, "Iron Boots", List.of("Iron boots, sturdy and reliable."), null, null, true),
@@ -1420,8 +1421,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 3),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 2)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1))
-                                )
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STEEL_BOOTS.asInt(), Material.IRON_BOOTS, ItemRarity.COMMON, "Steel Boots", List.of("Steel boots, made for tough terrain."), null, null, true),
@@ -1432,8 +1433,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 4),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 3)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 5))
-                                )
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 5)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MITHRIL_BOOTS.asInt(), Material.GOLDEN_BOOTS, ItemRarity.UNCOMMON, "Mithril Boots", List.of("Mithril boots, light and swift."), null, null, true),
@@ -1444,8 +1445,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 6),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 5)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 20))
-                                )
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 20)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANTITE_BOOTS.asInt(), Material.DIAMOND_BOOTS, ItemRarity.UNCOMMON, "Adamantite Boots", List.of("Adamantite boots, heavy and protective."), null, null, true),
@@ -1456,8 +1457,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 8),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 7)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 30))
-                                )
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 30)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNITE_BOOTS.asInt(), Material.NETHERITE_BOOTS, ItemRarity.RARE, "Runite Boots", List.of("Runite boots imbued with arcane power."), null, null, true),
@@ -1468,8 +1469,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 11),
                                                 new Modifier(ModifierType.DEFENCE_CRUSH, 9)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.DEFENCE, 40))
-                                ), null, 1)
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 40)),
+                                        null), null, 1)
                                 , 1)
                 ),
 
@@ -1482,8 +1483,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.ATTACK_SLASH, 4),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 3)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.ATTACK, 1))
-                                )
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 1)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.IRON_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Iron Sword", List.of("Iron sword, reliable for close combat."), null, null, true),
@@ -1493,8 +1494,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.ATTACK_SLASH, 6),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 5)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.ATTACK, 1))
-                                )
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 1)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.STEEL_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Steel Sword", List.of("Steel sword, sharp and durable."), null, null, true),
@@ -1504,8 +1505,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.ATTACK_SLASH, 10),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 9)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.ATTACK, 5))
-                                )
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 5)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.MITHRIL_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Mithril Sword", List.of("Mithril sword, light and deadly."), null, null, true),
@@ -1515,8 +1516,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.ATTACK_SLASH, 16),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 14)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.ATTACK, 20))
-                                )
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 20)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.ADAMANTITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Sword", List.of("Adamantite sword, powerful and heavy."), null, null, true),
@@ -1526,8 +1527,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.ATTACK_SLASH, 21),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 19)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.ATTACK, 30))
-                                ), 1)
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 30)),
+                                        null), 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON_WITH_GEM_SOCKETS, ItemId.RUNITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Sword", List.of("Runite sword crackling with magical energy."), null, null, true),
                         toVersionedJson(
@@ -1536,8 +1537,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.ATTACK_SLASH, 30),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 29)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.ATTACK, 40))
-                                ), null, 1)
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 40)),
+                                        null), null, 1)
                                 , 1)
                 ),
 
@@ -1549,8 +1550,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.ATTACK_STAB, 3),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 2)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.ATTACK, 1))
-                                ), 1)
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 1)),
+                                        null), 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.IRON_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Iron Dagger", List.of("Iron dagger, sharp and practical."), null, null, true),
                         toVersionedJson(
@@ -1559,8 +1560,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.ATTACK_STAB, 5),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 3)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.ATTACK, 1))
-                                )
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 1)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.STEEL_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Steel Dagger", List.of("Steel dagger, deadly in skilled hands."), null, null, true),
@@ -1570,8 +1571,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.ATTACK_STAB, 8),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 6)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.ATTACK, 5))
-                                )
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 5)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.MITHRIL_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Mithril Dagger", List.of("Mithril dagger, swift and precise."), null, null, true),
@@ -1581,8 +1582,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.ATTACK_STAB, 14),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 10)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.ATTACK, 20))
-                                )
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 20)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.ADAMANTITE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Dagger", List.of("Adamantite dagger, strong and lethal."), null, null, true),
@@ -1592,8 +1593,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.ATTACK_STAB, 18),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 14)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.ATTACK, 30))
-                                )
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 30)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON_WITH_GEM_SOCKETS, ItemId.RUNITE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Dagger", List.of("Runite dagger glowing with mystical power."), null, null, true),
@@ -1603,8 +1604,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.ATTACK_STAB, 24),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 19)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.ATTACK, 40))
-                                ), null, 1), 1)
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 40)),
+                                        null), null, 1), 1)
                 ),
 
                 // Weapons - Battleaxes
@@ -1616,8 +1617,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 6),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 6)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.ATTACK, 1))
-                                )
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 1)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.IRON_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Iron Battleaxe", List.of("Iron battleaxe, powerful cleaving weapon."), null, null, true),
@@ -1628,8 +1629,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 9),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 9)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.ATTACK, 1))
-                                )
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 1)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.STEEL_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.COMMON, "Steel Battleaxe", List.of("Steel battleaxe, favored by warriors."), null, null, true),
@@ -1640,8 +1641,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 13),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 13)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.ATTACK, 5))
-                                )
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 5)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.MITHRIL_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Mithril Battleaxe", List.of("Mithril battleaxe, fast and deadly."), null, null, true),
@@ -1652,8 +1653,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 19),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 20)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.ATTACK, 20))
-                                )
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 20)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.ADAMANTITE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Battleaxe", List.of("Adamantite battleaxe, crushing blows guaranteed."), null, null, true),
@@ -1664,8 +1665,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 24),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 25)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.ATTACK, 30))
-                                )
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 30)),
+                                        null)
                                 , 1)
                 ),
                 new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON_WITH_GEM_SOCKETS, ItemId.RUNITE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Battleaxe", List.of("Runite battleaxe, imbued with arcane fury."), null, null, true),
@@ -1676,8 +1677,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 33),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 34)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.ATTACK, 40))
-                                ), null, 1),
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 40)),
+                                        null), null, 1),
                                 1)
                 ),
 
@@ -1691,8 +1692,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 5),
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 6)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.RANGED, 1))
-                                ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 1)),
+                                        null),
                                 1)
                 ),
 
@@ -1703,8 +1704,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 7),
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 9)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.RANGED, 5))
-                                ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 5)),
+                                        null),
                                 1)
                 ),
 
@@ -1715,8 +1716,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 12),
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 15)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.RANGED, 20))
-                                ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 20)),
+                                        null),
                                 1)
                 ),
 
@@ -1727,8 +1728,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 17),
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 20)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.RANGED, 30))
-                                ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 30)),
+                                        null),
                                 1)
                 ),
 
@@ -1739,8 +1740,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 22),
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 28)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.RANGED, 50))
-                                ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 50)),
+                                        null),
                                 1)
                 ),
 
@@ -1753,8 +1754,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 6),
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 8)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.RANGED, 1))
-                                ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 1)),
+                                        null),
                                 1)
                 ),
 
@@ -1765,8 +1766,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 9),
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 12)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.RANGED, 5))
-                                ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 5)),
+                                        null),
                                 1)
                 ),
 
@@ -1777,8 +1778,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 14),
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 18)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.RANGED, 20))
-                                ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 20)),
+                                        null),
                                 1)
                 ),
 
@@ -1789,8 +1790,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 19),
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 24)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.RANGED, 30))
-                                ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 30)),
+                                        null),
                                 1)
                 ),
 
@@ -1801,8 +1802,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 24),
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 32)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.RANGED, 50))
-                                ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 50)),
+                                        null),
                                 1)
                 ),
 
@@ -1815,8 +1816,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 15),
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 18)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.RANGED, 20))
-                                ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 20)),
+                                        null),
                                 1)
                 ),
 
@@ -1827,8 +1828,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 20),
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 22)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.RANGED, 30))
-                                ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 30)),
+                                        null),
                                 1)
                 ),
 
@@ -1839,8 +1840,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 28),
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 30)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.RANGED, 40))
-                                ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 40)),
+                                        null),
                                 1)
                 ),
 
@@ -1851,8 +1852,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 35),
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 38)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.RANGED, 50))
-                                ),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 50)),
+                                        null),
                                 1)
                 ),
 
@@ -1863,8 +1864,8 @@ public class ItemRepository {
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 42),
                                                 new Modifier(ModifierType.RANGED_ACCURACY, 45)
                                         ),
-                                        List.of(new SkillRequirement(SkillType.RANGED, 60))
-                                ), null, 1),
+                                        List.of(new SkillRequirement(SkillType.RANGED, 60)),
+                                        null), null, 1),
                                 1)
                 )
 

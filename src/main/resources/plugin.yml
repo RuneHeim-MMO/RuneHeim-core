@@ -11,5 +11,8 @@ depend:
   - LibsDisguises
   - ModelEngine
   - WorldEdit
+  - WorldGuard
 softdepend:
   - BlueMap
+  - ProtocolLib
+  - ServerTours

@@ -10,7 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
-import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
+import org.zuma.examplePlugin.core.interfaces.Restrictable;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.QuestCompletedEffect;
 import org.zuma.examplePlugin.domain.effect.effects.QuestStartEffect;
@@ -31,23 +31,24 @@ import java.util.HashSet;
 import java.util.List;
 
 
-public class Quest implements SkillRestrictable {
+public class Quest implements Restrictable {
     private final String id, name;
     private final List<AbstractQuestStep> steps;
     private final QuestDifficulty difficulty;
+    private final boolean silent; // If true, no start/completion effects or messages - used for internal tracking of player state.
     private QuestDuration duration;
-
     private QuestReward reward;
 
     // Starting conditions
     private List<SkillRequirement> requirements;
     private List<String> requiredCompletedQuests;
 
-    public Quest(String id, String name, QuestDifficulty difficulty) {
+    public Quest(String id, String name, QuestDifficulty difficulty, boolean silent) {
         this.id = id;
         this.name = name;
         this.steps = new ArrayList<>();
         this.difficulty = difficulty;
+        this.silent = silent;
         this.duration = QuestDuration.SHORT;
         this.requirements = new ArrayList<>();
         this.requiredCompletedQuests = new ArrayList<>();
@@ -178,14 +179,8 @@ public class Quest implements SkillRestrictable {
     @Nullable
     public QuestStartFailReason getQuestStartFailReason(RunePlayer player) {
         if (!player.meetsRequirements(this)) {
-            return QuestStartFailReason.DOES_NOT_MEET_SKILL_REQUIREMENTS;
+            return QuestStartFailReason.DOES_NOT_MEET_REQUIREMENTS;
         }
-
-        // O(1) lookup in hashset
-        if (!new HashSet<>(player.getCompletedQuestIds()).containsAll(this.requiredCompletedQuests)) {
-            return QuestStartFailReason.DOES_NOT_MEET_QUEST_REQUIREMENTS;
-        }
-
 
         if (player.getCompletedQuestIds().contains(id)) {
             return QuestStartFailReason.ALREADY_COMPLETED;
@@ -206,12 +201,16 @@ public class Quest implements SkillRestrictable {
         }
 
         if (steps.isEmpty() || steps.getFirst() == null) {
-            throw new IllegalStateException("Quest has no valid steps.");
+            handleCompletion(player);
+            return;
         }
 
-        EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new QuestStartEffect(player, this));
-        HudService.sendQuestStartMessage(player, this);
-        HudService.sendQuestStepTaskMessage(player, steps.getFirst());
+        if (!this.silent) {
+            EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new QuestStartEffect(player, this));
+            HudService.sendQuestStartMessage(player, this);
+            HudService.sendQuestStepTaskMessage(player, steps.getFirst());
+        }
+
         player.getActiveQuestSteps().put(id, steps.getFirst().cloneForPlayer(player.getUUID()));
     }
 
@@ -223,9 +222,11 @@ public class Quest implements SkillRestrictable {
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
             if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) return;
 
-            EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new QuestCompletedEffect(player, this));
-            HudService.sendQuestCompletedMessage(player, this);
-            HudService.sendQuestRewards(player, this);
+            if (!this.silent) {
+                EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new QuestCompletedEffect(player, this));
+                HudService.sendQuestCompletedMessage(player, this);
+                HudService.sendQuestRewards(player, this);
+            }
         }, 60L);
     }
 
@@ -235,12 +236,20 @@ public class Quest implements SkillRestrictable {
     }
 
     @Override
-    public List<SkillRequirement> getRequirements() {
+    public List<SkillRequirement> getSkillRequirements() {
         return requirements;
+    }
+
+    @Override
+    public List<String> getRequiredCompletedQuests() {
+        return requiredCompletedQuests;
     }
 
     public QuestReward getReward() {
         return reward;
     }
 
+    public boolean isSilent() {
+        return silent;
+    }
 }

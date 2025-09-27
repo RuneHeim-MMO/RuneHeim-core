@@ -23,6 +23,7 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -51,7 +52,7 @@ public class CampfireRecipe extends AbstractRecipe {
         super.getDisplayItemstack().setItemMeta(stackMeta);
 
 
-        mainRequirement = super.getRequirements().stream()
+        mainRequirement = super.getSkillRequirements().stream()
                 .filter(req -> req.type() == SkillType.FIREMAKING)
                 .findFirst()
                 .orElse(null);

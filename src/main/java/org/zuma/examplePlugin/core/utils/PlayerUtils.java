@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
+import org.zuma.examplePlugin.core.interfaces.Restrictable;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -23,6 +23,7 @@ import org.zuma.examplePlugin.domain.territory.Territory;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -285,9 +286,12 @@ public class PlayerUtils {
             return true;
         }
 
-        if (item instanceof SkillRestrictable) {
-            List<SkillRequirement> requirements = ((SkillRestrictable) item).getRequirements();
-            return requirements.stream().allMatch(req -> req.playerMeetsRequirement(player));
+        if (item instanceof Restrictable restrictable) {
+            List<SkillRequirement> requirements = restrictable.getSkillRequirements();
+            boolean hasRequiredSkills = requirements.stream().allMatch(req -> req.playerMeetsRequirement(player));
+            boolean hasRequiredQuests = new HashSet<>(player.getCompletedQuestIds()).containsAll(restrictable.getRequiredCompletedQuests());
+
+            return hasRequiredSkills && hasRequiredQuests;
 
         }
         return true;

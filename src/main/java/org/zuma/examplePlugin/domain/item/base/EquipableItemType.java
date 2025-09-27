@@ -1,7 +1,7 @@
 package org.zuma.examplePlugin.domain.item.base;
 
 import org.jetbrains.annotations.NotNull;
-import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
+import org.zuma.examplePlugin.core.interfaces.Restrictable;
 import org.zuma.examplePlugin.domain.item.constants.EquipableType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
@@ -13,10 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class EquipableItemType extends AbstractItemType implements SkillRestrictable {
+public abstract class EquipableItemType extends AbstractItemType implements Restrictable {
     private final List<Modifier> modifiers = new ArrayList<>();
     private final List<SkillModifier> skillModifiers = new ArrayList<>();
     private final List<SkillRequirement> requirements = new ArrayList<>();
+    private final List<String> questRequirements = new ArrayList<>();
 
     public EquipableItemType(AbstractItemMeta meta) {
         super(meta);
@@ -36,16 +37,28 @@ public abstract class EquipableItemType extends AbstractItemType implements Skil
                 .findFirst();
     }
 
-    public @NotNull List<SkillRequirement> getRequirements() {
+    public @NotNull List<SkillRequirement> getSkillRequirements() {
         return requirements;
     }
 
-    public void addRequirements(List<SkillRequirement> requirements) {
+    public List<String> getRequiredCompletedQuests() {
+        return questRequirements;
+    }
+
+    public void addSkillRequirements(List<SkillRequirement> requirements) {
         if (requirements == null) {
             return;
         }
 
         this.requirements.addAll(requirements);
+    }
+
+    public void addQuestRequirements(List<String> questIds) {
+        if (questIds == null) {
+            return;
+        }
+
+        this.questRequirements.addAll(questIds);
     }
 
     public void addModifiers(List<Modifier> modifiers) {

@@ -50,27 +50,37 @@ public class PlayerScoreboardManager {
             return;
         }
 
-        o.getScore("").setScore(15);
+        if (territory != null && territory.isPvpZone()) {
+            o.getScore("     ").setScore(15);
+            o.getScore(TextUtils.centerText(tick ? " §c§l[PVP ZONE]" : " §4§l[PVP ZONE]", PlayerScoreboardManager.CENTERING_PADDING)).setScore(14);
 
-        o.getScore("§7Party: " + partyString).setScore(14);
-        o.getScore("§7Combat Level: §3" + TextUtils.getLegacyColorCodeForLevel(player.getCombatLvl()) + player.getCombatLvl()).setScore(13);
-
-        o.getScore(" ").setScore(12);
-        o.getScore("§7Skill Progression:").setScore(11);
-        if (lastXPGainedSkillType != null) {
-            o.getScore(TextUtils.centerText("§f" + lastXPGainedSkillType.getSymbol() + " §f" + lastXPGainedSkillType.getLabel() + " §f"
-                    + TextUtils.getLegacyColorCodeForPercent(PlayerUtils.getLastSkillPercent(player)) + PlayerUtils.getLastSkillPercent(player) + "%", PlayerScoreboardManager.CENTERING_PADDING)).setScore(10);
-        } else {
-            o.getScore(TextUtils.centerText("§fNo recent skill", PlayerScoreboardManager.CENTERING_PADDING)).setScore(10);
+            if (territory.isDropItemsOnDeath()){
+                o.getScore(TextUtils.centerText(tick ? " §c§lItems Not Safe" : " §4§lItems Not Safe", PlayerScoreboardManager.CENTERING_PADDING)).setScore(13);
+            }
         }
 
-        o.getScore("  ").setScore(9);
-        o.getScore("§7Current Location:").setScore(8);
+
+        o.getScore("").setScore(12);
+
+        o.getScore("§7Party: " + partyString).setScore(11);
+        o.getScore("§7Combat Level: §3" + TextUtils.getLegacyColorCodeForLevel(player.getCombatLvl()) + player.getCombatLvl()).setScore(10);
+
+        o.getScore(" ").setScore(9);
+        o.getScore("§7Skill Progression:").setScore(8);
+        if (lastXPGainedSkillType != null) {
+            o.getScore(TextUtils.centerText("§f" + lastXPGainedSkillType.getSymbol() + " §f" + lastXPGainedSkillType.getLabel() + " §f"
+                    + TextUtils.getLegacyColorCodeForPercent(PlayerUtils.getLastSkillPercent(player)) + PlayerUtils.getLastSkillPercent(player) + "%", PlayerScoreboardManager.CENTERING_PADDING)).setScore(7);
+        } else {
+            o.getScore(TextUtils.centerText("§fNo recent skill", PlayerScoreboardManager.CENTERING_PADDING)).setScore(7);
+        }
+
+        o.getScore("  ").setScore(6);
+        o.getScore("§7Current Location:").setScore(5);
 
         if (territory != null) {
-            o.getScore("§3" + TextUtils.centerText(territory.getName(), PlayerScoreboardManager.CENTERING_PADDING)).setScore(7);
+            o.getScore("§3" + TextUtils.centerText(territory.getName(), PlayerScoreboardManager.CENTERING_PADDING)).setScore(4);
         } else {
-            o.getScore("§2" + TextUtils.centerText("Wilderness", PlayerScoreboardManager.CENTERING_PADDING)).setScore(7);
+            o.getScore("§2" + TextUtils.centerText("Wilderness", PlayerScoreboardManager.CENTERING_PADDING)).setScore(4);
         }
 
         ticks += 1;

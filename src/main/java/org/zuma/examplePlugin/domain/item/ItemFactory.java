@@ -73,7 +73,8 @@ public class ItemFactory {
                 Mount item = new Mount(meta, deserialized.model(), deserialized.baseEntityType(), deserialized.color(), deserialized.style());
 
                 item.setDefaultStateTemplate(new MountState(new MountStateMeta(null, 1, 0, 0)));
-                item.addRequirements(deserialized.requirements());
+                item.addSkillRequirements(deserialized.requirements());
+                item.addQuestRequirements(deserialized.requiredQuests());
                 item.initializeStats(deserialized.maxLevel(), deserialized.baseSpeed(), deserialized.baseJump(), deserialized.speedLevelBonus(), deserialized.jumpLevelBonus());
                 return item;
             }
@@ -113,7 +114,8 @@ public class ItemFactory {
                 AccessoryRing item = new AccessoryRing(meta);
 
                 item.addModifiers(deserialized.modifiers());
-                item.addRequirements(deserialized.requirements());
+                item.addSkillRequirements(deserialized.requirements());
+                item.addQuestRequirements(deserialized.requiredQuests());
                 item.addSkillModifiers(deserialized.skillModifiers());
                 return item;
             }
@@ -133,7 +135,8 @@ public class ItemFactory {
                 AccessoryAmulet item = new AccessoryAmulet(meta);
 
                 item.addModifiers(deserialized.modifiers());
-                item.addRequirements(deserialized.requirements());
+                item.addSkillRequirements(deserialized.requirements());
+                item.addQuestRequirements(deserialized.requiredQuests());
                 item.addSkillModifiers(deserialized.skillModifiers());
                 return item;
             }
@@ -179,7 +182,8 @@ public class ItemFactory {
                 }
 
                 item.addModifiers(deserialized.equipableTypeMeta().modifiers());
-                item.addRequirements(deserialized.equipableTypeMeta().requirements());
+                item.addSkillRequirements(deserialized.equipableTypeMeta().requirements());
+                item.addQuestRequirements(deserialized.equipableTypeMeta().requiredQuests());
                 item.addSkillModifiers(deserialized.equipableTypeMeta().skillModifiers());
                 item.setDefaultStateTemplate(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
                 return item;
@@ -205,7 +209,8 @@ public class ItemFactory {
                 }
 
                 item.addModifiers(deserialized.equipableTypeMeta().modifiers());
-                item.addRequirements(deserialized.equipableTypeMeta().requirements());
+                item.addSkillRequirements(deserialized.equipableTypeMeta().requirements());
+                item.addQuestRequirements(deserialized.equipableTypeMeta().requiredQuests());
                 item.addSkillModifiers(deserialized.equipableTypeMeta().skillModifiers());
                 item.setDefaultStateTemplate(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
                 return item;
@@ -250,7 +255,8 @@ public class ItemFactory {
                 Arrow item = new Arrow(meta);
 
                 item.addModifiers(deserialized.modifiers());
-                item.addRequirements(deserialized.requirements());
+                item.addSkillRequirements(deserialized.requirements());
+                item.addQuestRequirements(deserialized.requiredQuests());
                 item.addSkillModifiers(deserialized.skillModifiers());
                 return item;
             }
@@ -308,6 +314,7 @@ public class ItemFactory {
 
                 item.addModifiers(deserialized.modifiers());
                 item.addSkillModifiers(deserialized.skillModifiers());
+
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
@@ -368,7 +375,8 @@ public class ItemFactory {
                 Gear item = new Gear(meta);
 
                 item.addModifiers(deserialized.modifiers());
-                item.addRequirements(deserialized.requirements());
+                item.addSkillRequirements(deserialized.requirements());
+                item.addQuestRequirements(deserialized.requiredQuests());
                 item.addSkillModifiers(deserialized.skillModifiers());
                 return item;
             }
@@ -389,7 +397,8 @@ public class ItemFactory {
                 CompassItem item = new CompassItem(meta);
 
                 item.addModifiers(deserialized.modifiers());
-                item.addRequirements(deserialized.requirements());
+                item.addSkillRequirements(deserialized.requirements());
+                item.addQuestRequirements(deserialized.requiredQuests());
                 item.addSkillModifiers(deserialized.skillModifiers());
                 return item;
             }
@@ -409,7 +418,8 @@ public class ItemFactory {
                 Tool item = new Tool(meta);
 
                 item.addModifiers(deserialized.modifiers());
-                item.addRequirements(deserialized.requirements());
+                item.addSkillRequirements(deserialized.requirements());
+                item.addQuestRequirements(deserialized.requiredQuests());
                 item.addSkillModifiers(deserialized.skillModifiers());
                 return item;
             }
@@ -429,7 +439,8 @@ public class ItemFactory {
                 MeleeWeapon item = new MeleeWeapon(meta, deserialized.speed());
 
                 item.addModifiers(deserialized.modifiers());
-                item.addRequirements(deserialized.requirements());
+                item.addSkillRequirements(deserialized.requirements());
+                item.addQuestRequirements(deserialized.requiredQuests());
                 item.addSkillModifiers(deserialized.skillModifiers());
                 return item;
             }
@@ -449,7 +460,8 @@ public class ItemFactory {
                 RangedWeapon item = new RangedWeapon(meta, deserialized.speed());
 
                 item.addModifiers(deserialized.modifiers());
-                item.addRequirements(deserialized.requirements());
+                item.addSkillRequirements(deserialized.requirements());
+                item.addQuestRequirements(deserialized.requiredQuests());
                 item.addSkillModifiers(deserialized.skillModifiers());
                 return item;
             }
@@ -531,7 +543,8 @@ public class ItemFactory {
                 }
 
                 item.addModifiers(deserialized.equipableTypeMeta().modifiers());
-                item.addRequirements(deserialized.equipableTypeMeta().requirements());
+                item.addSkillRequirements(deserialized.equipableTypeMeta().requirements());
+                item.addQuestRequirements(deserialized.equipableTypeMeta().requiredQuests());
                 item.addSkillModifiers(deserialized.equipableTypeMeta().skillModifiers());
                 item.setDefaultStateTemplate(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
                 return item;
@@ -558,7 +571,8 @@ public class ItemFactory {
 
                 item.addModifiers(deserialized.equipableTypeMeta().modifiers());
                 item.addSkillModifiers(deserialized.equipableTypeMeta().skillModifiers());
-                item.addRequirements(deserialized.equipableTypeMeta().requirements());
+                item.addSkillRequirements(deserialized.equipableTypeMeta().requirements());
+                item.addQuestRequirements(deserialized.equipableTypeMeta().requiredQuests());
                 item.setDefaultStateTemplate(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
                 return item;
             }

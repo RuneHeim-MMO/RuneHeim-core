@@ -61,8 +61,8 @@ public class TextUtils {
         }
 
         int totalPadding = width - textLength;
-        int paddingLeft = totalPadding / 2;
-        int paddingRight = totalPadding - paddingLeft;
+        int paddingLeft = totalPadding / 2 + (totalPadding % 2); // Extra space to the left if odd
+        int paddingRight = totalPadding / 2;
 
         return " ".repeat(paddingLeft) + text + " ".repeat(paddingRight);
     }

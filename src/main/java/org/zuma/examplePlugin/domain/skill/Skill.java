@@ -6,11 +6,12 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 public class Skill {
     private final SkillType type;
     private double xp;
-    private int bonus;
+    private transient int bonus;
 
     public Skill(SkillType type, double xp) {
         this.type = type;
         this.xp = xp;
+        this.bonus = 0;
     }
 
     public SkillType getType() {
