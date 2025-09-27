@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
-import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
+import org.zuma.examplePlugin.core.interfaces.Restrictable;
 import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.hud.HudService;
@@ -118,7 +118,7 @@ public class AdditionalGearSlotHandler {
 
         AbstractItemType cursorItemType = RuneQuestPlugin.getItemRegistry().getType(cursor);
 
-        if (cursorItemType instanceof SkillRestrictable restrictable && !player.meetsRequirements(restrictable)) {
+        if (cursorItemType instanceof Restrictable restrictable && !player.meetsRequirements(restrictable)) {
             HudService.sendFailMessage(player, Component.text("You do not meet requirements to use " + cursorItemType.displayName + "."));
             event.setCancelled(true);
             return;

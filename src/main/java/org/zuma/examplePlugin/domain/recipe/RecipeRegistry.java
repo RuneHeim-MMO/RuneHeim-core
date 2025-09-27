@@ -22,7 +22,7 @@ public class RecipeRegistry {
 
         if (sortAsc) {
             stream = stream.sorted(Comparator.comparingInt(recipe ->
-                    recipe.getRequirements().stream()
+                    recipe.getSkillRequirements().stream()
                             .mapToInt(SkillRequirement::minimumLevel)
                             .sum()
             ));

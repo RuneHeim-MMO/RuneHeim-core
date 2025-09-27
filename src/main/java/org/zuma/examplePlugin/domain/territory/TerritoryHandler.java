@@ -99,7 +99,7 @@ public class TerritoryHandler {
             if (insideOf == null) continue;
 
             // Check if player meets requirements to be in the territory
-            if (!insideOf.playerMeetsRequirements(runePlayer)) {
+            if (!runePlayer.meetsRequirements(insideOf)) {
                 Location lastLocation = lastPlayerLocation.get(player.getUniqueId());
 
                 if (lastLocation == null) {
@@ -139,7 +139,7 @@ public class TerritoryHandler {
     private void handlePlayerEnterTerritory(Player player, Territory territory, @Nullable Territory lastTerritory) {
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
 
-        if (runePlayer == null || runePlayer.isDead() || !territory.playerMeetsRequirements(runePlayer)) {
+        if (runePlayer == null || runePlayer.isDead() || !runePlayer.meetsRequirements(territory)) {
             return;
         }
 

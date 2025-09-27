@@ -10,7 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
-import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
+import org.zuma.examplePlugin.core.interfaces.Restrictable;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.QuestCompletedEffect;
 import org.zuma.examplePlugin.domain.effect.effects.QuestStartEffect;
@@ -31,7 +31,7 @@ import java.util.HashSet;
 import java.util.List;
 
 
-public class Quest implements SkillRestrictable {
+public class Quest implements Restrictable {
     private final String id, name;
     private final List<AbstractQuestStep> steps;
     private final QuestDifficulty difficulty;
@@ -179,14 +179,8 @@ public class Quest implements SkillRestrictable {
     @Nullable
     public QuestStartFailReason getQuestStartFailReason(RunePlayer player) {
         if (!player.meetsRequirements(this)) {
-            return QuestStartFailReason.DOES_NOT_MEET_SKILL_REQUIREMENTS;
+            return QuestStartFailReason.DOES_NOT_MEET_REQUIREMENTS;
         }
-
-        // O(1) lookup in hashset
-        if (!new HashSet<>(player.getCompletedQuestIds()).containsAll(this.requiredCompletedQuests)) {
-            return QuestStartFailReason.DOES_NOT_MEET_QUEST_REQUIREMENTS;
-        }
-
 
         if (player.getCompletedQuestIds().contains(id)) {
             return QuestStartFailReason.ALREADY_COMPLETED;
@@ -242,8 +236,13 @@ public class Quest implements SkillRestrictable {
     }
 
     @Override
-    public List<SkillRequirement> getRequirements() {
+    public List<SkillRequirement> getSkillRequirements() {
         return requirements;
+    }
+
+    @Override
+    public List<String> getRequiredCompletedQuests() {
+        return requiredCompletedQuests;
     }
 
     public QuestReward getReward() {

@@ -1,7 +1,10 @@
 package org.zuma.examplePlugin.domain.quest.constants;
 
 public enum QuestId {
-    SHEEP_SHEARER("sheep-shearer");
+    TUTORIAL("tutorial"),
+    SHEEP_SHEARER("sheep-shearer"),
+    SAHARIJIN_ARENA_INTRO("saharijin-pvp-arena-intro"),
+    BLACKSMITHS_RIGHT_HAND_I("blacksmiths-right-hand-i");
 
     private final String id;
 

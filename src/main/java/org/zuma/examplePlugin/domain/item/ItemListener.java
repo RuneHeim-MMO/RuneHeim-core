@@ -2,7 +2,6 @@ package org.zuma.examplePlugin.domain.item;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
@@ -10,7 +9,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
@@ -20,10 +18,9 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
-import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
+import org.zuma.examplePlugin.core.interfaces.Restrictable;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.entity.EntitySessionManager;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -180,7 +177,7 @@ public class ItemListener implements Listener {
         }
 
         withItemAndPlayer(whoClicked, event.getCursor(), (item, player) -> {
-            if (!(item instanceof SkillRestrictable)) {
+            if (!(item instanceof Restrictable)) {
                 return;
             }
 
@@ -217,7 +214,7 @@ public class ItemListener implements Listener {
         }
 
         withItemAndPlayer(whoClicked, event.getCurrentItem(), (item, player) -> {
-            if (!(item instanceof SkillRestrictable)) {
+            if (!(item instanceof Restrictable)) {
                 return;
             }
 

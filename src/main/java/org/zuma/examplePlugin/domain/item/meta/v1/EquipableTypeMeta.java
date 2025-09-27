@@ -8,5 +8,5 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public record EquipableTypeMeta(@Nullable List<SkillModifier> skillModifiers, @Nullable List<Modifier> modifiers,
-                                @Nullable List<SkillRequirement> requirements) {
+                                @Nullable List<SkillRequirement> requirements, @Nullable List<String> requiredQuests) {
 }

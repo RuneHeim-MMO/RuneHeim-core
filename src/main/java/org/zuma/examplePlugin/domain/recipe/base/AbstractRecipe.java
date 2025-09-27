@@ -13,7 +13,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
-import org.zuma.examplePlugin.core.interfaces.SkillRestrictable;
+import org.zuma.examplePlugin.core.interfaces.Restrictable;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
@@ -40,7 +40,7 @@ import java.util.Optional;
 
 import static org.zuma.examplePlugin.core.utils.ItemUtils.multiplyItemRecords;
 
-public abstract class AbstractRecipe implements SkillRestrictable {
+public abstract class AbstractRecipe implements Restrictable {
     private final int id;
     private final RecipeType type;
     private final ItemStack displayItemstack;
@@ -71,8 +71,13 @@ public abstract class AbstractRecipe implements SkillRestrictable {
         this.cost = meta.cost();
     }
 
-    public @NotNull List<SkillRequirement> getRequirements() {
+    public @NotNull List<SkillRequirement> getSkillRequirements() {
         return requirements;
+    }
+
+    @Override
+    public List<String> getRequiredCompletedQuests() {
+        return List.of();
     }
 
     public RecipeType getType() {

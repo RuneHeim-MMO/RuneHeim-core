@@ -2,13 +2,15 @@ package org.zuma.examplePlugin.domain.territory;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.zuma.examplePlugin.core.interfaces.Restrictable;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Territory {
+public class Territory implements Restrictable {
     private final Location centerPoint, spawnPoint;
     private final int radius, minLevel, maxLevel;
     private final String name, description, firstTimeDiscoveryLore, id;
@@ -81,20 +83,6 @@ public class Territory {
         return renderOnMap;
     }
 
-    public boolean playerMeetsRequirements(RunePlayer player) {
-        if (player.asBukkitPlayer().getGameMode() == GameMode.CREATIVE && player.asBukkitPlayer().isOp()) {
-            return true;
-        }
-
-        for (String questId : requiredQuestsIds) {
-            if (!player.getCompletedQuestIds().contains(questId)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     public List<String> getRequiredQuestsIds() {
         return requiredQuestsIds;
     }
@@ -121,5 +109,15 @@ public class Territory {
     public Territory setDropItemsOnDeath(boolean dropItemsOnDeath) {
         this.dropItemsOnDeath = dropItemsOnDeath;
         return this;
+    }
+
+    @Override
+    public List<SkillRequirement> getSkillRequirements() {
+        return List.of();
+    }
+
+    @Override
+    public List<String> getRequiredCompletedQuests() {
+        return requiredQuestsIds;
     }
 }
