@@ -184,10 +184,13 @@ public class TerritoryRepository {
                         new Location(Bukkit.getWorld("world"), -1208.5, 0, -698.5),
                         null,
                         21,
-                        "§cSaharijin PVP Arena",
+                        "§cSaharijin Arena",
                         "An unforgiving desert arena where only the strongest survive.",
                         null,
-                        50, 60, true, true),
+                        50, 60, true, true)
+                        .addRequiredQuestId("saharijin-pvp-arena-intro")
+                        .setEntryDenyMessage("§4You must speak to the §6Arena Overseer§4 to enter the arena.")
+                        .setDropItemsOnDeath(true),
 
                 new Territory("saharijin",
                         new Location(Bukkit.getWorld("world"), -1078, 0, -720),

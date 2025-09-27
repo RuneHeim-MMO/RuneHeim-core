@@ -18,6 +18,8 @@ import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
+import org.zuma.examplePlugin.domain.gui.GUIHandler;
+import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
@@ -27,7 +29,11 @@ import org.zuma.examplePlugin.domain.territory.Territory;
 import org.zuma.examplePlugin.events.combat.RuneEntityDeathEvent;
 import org.zuma.examplePlugin.events.player.RunePlayerHealthChangedEvent;
 
+import javax.annotation.Nullable;
 import java.time.Duration;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class DeathHandler {
@@ -40,9 +46,9 @@ public class DeathHandler {
 
         Player player = runePlayer.asBukkitPlayer();
         Territory closestTerritory = PlayerUtils.getClosestDiscoveredTerritory(runePlayer);
+        @Nullable Territory currentTerritory = RuneQuestPlugin.getTerritoryHandler().getPlayersTerritory(runePlayer);
         Location playerLocation = player.getLocation();
         long pouchCoins = runePlayer.getPouchCoins();
-
 
         for (Entity entity : player.getNearbyEntities(50, 50, 50)) {
             if (entity instanceof Mob mob) {
@@ -54,6 +60,17 @@ public class DeathHandler {
 
         long maxDrop = Math.toIntExact(pouchCoins * 10 / 100);
         long droppedCoinsAmount = (maxDrop > 0) ? rand.nextInt((int) maxDrop) + 1 : 0;
+
+        if (currentTerritory != null && currentTerritory.isDropItemsOnDeath()) {
+            droppedCoinsAmount = runePlayer.getPouchCoins();
+
+            Arrays.stream(player.getInventory().getContents())
+                    .filter(item -> item != null && !GUIControl.isGuiItem(item))
+                    .forEach(item -> playerLocation.getWorld().dropItemNaturally(playerLocation, item));
+
+            player.getInventory().clear();
+
+        }
 
         if (droppedCoinsAmount > 0 && pouchCoins >= droppedCoinsAmount) {
             AbstractItemType coinType = RuneQuestPlugin.getItemRegistry().getType(ItemId.COINS.asInt());

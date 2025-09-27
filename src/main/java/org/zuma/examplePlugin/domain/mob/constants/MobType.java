@@ -81,6 +81,7 @@ public enum MobType {
 
     DRAKKAR_COACHMAN,
     SAKURMEER_FOOD_SHOP,
+    SAHARIJIN_ARENA_NPC,
 
     SHEEP, // Can shear wool off these
     STATIC_HORSE, // decoration

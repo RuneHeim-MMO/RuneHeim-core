@@ -1042,10 +1042,16 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(160, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), -1223.5, 68, -786.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.AUCTIONEER, 1, 100)
-                ), false, MarkerType.AUCTION, "Auction"), 1))
+                ), false, MarkerType.AUCTION, "Auction"), 1)),
+
+                // Saharijin arena overseer
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(161, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -1188.5, 69, -705.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SAHARIJIN_ARENA_NPC, 1, 100)
+                ), false, null, null), 1))
 
 
-                // last 160
+                // last 161
 
 
         );

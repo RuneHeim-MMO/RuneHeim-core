@@ -98,8 +98,8 @@ public class MapMarkerHandler {
 
             String label = territory.getName().replaceAll("§.", "");
             String avgLevelColorCode = TextUtils.getLegacyColorCodeForLevel(territory.getMinLevel() + territory.getMaxLevel() / 2);
-            Color lineColor = territory.isPvpZone() ? new Color(0, 0, 0, 1F) : MinecraftColorConverter.fromMinecraftColorCode(avgLevelColorCode, 1F);
-            Color fillColor = territory.isPvpZone() ? new Color(0, 0, 0, 0.25F) : MinecraftColorConverter.fromMinecraftColorCode(avgLevelColorCode, 0.2F);
+            Color lineColor = territory.isPvpZone() ? new Color(255, 0, 0, 1F) : MinecraftColorConverter.fromMinecraftColorCode(avgLevelColorCode, 1F);
+            Color fillColor = territory.isPvpZone() ? new Color(255, 0, 0, 0.5F) : MinecraftColorConverter.fromMinecraftColorCode(avgLevelColorCode, 0.2F);
 
             String additionalDescription = territory.isPvpZone() ?
                     "<b><span style='color:red'>PvP Zone</span></b>" :

@@ -23,7 +23,7 @@ public class QuestsInventory extends PaginatedIndividualGUI {
     @Override
     public boolean attemptOpenInventory(RunePlayer player, Runnable onFail) {
         setContent(
-                RuneQuestPlugin.getQuestHandler().getRegistry().getAllQuests().stream()
+                RuneQuestPlugin.getQuestHandler().getRegistry().getAllQuests().stream().filter(q -> !q.isSilent())
                         .sorted(Comparator.comparing(
                                 quest -> {
                                     QuestStatus status = quest.getPlayerQuestStatus(player);

@@ -89,7 +89,10 @@ public abstract class AbstractQuestStep implements Listener {
         }
 
         runePlayer.getActiveQuestSteps().put(parentQuest.getId(), nextQuestStep.cloneForPlayer(runePlayer.getUUID()));
-        HudService.sendQuestStepTaskMessage(runePlayer, nextQuestStep);
+
+        if (!this.parentQuest.isSilent()) {
+            HudService.sendQuestStepTaskMessage(runePlayer, nextQuestStep);
+        }
     }
 
     public abstract AbstractQuestStep cloneForPlayer(UUID ownerUUID);
