@@ -54,7 +54,7 @@ public class PlayerScoreboardManager {
             o.getScore("     ").setScore(15);
             o.getScore(TextUtils.centerText(tick ? " §c§l[PVP ZONE]" : " §4§l[PVP ZONE]", PlayerScoreboardManager.CENTERING_PADDING)).setScore(14);
 
-            if(territory.isDropItemsOnDeath()){
+            if (territory.isDropItemsOnDeath()){
                 o.getScore(TextUtils.centerText(tick ? " §c§lItems Not Safe" : " §4§lItems Not Safe", PlayerScoreboardManager.CENTERING_PADDING)).setScore(13);
             }
         }

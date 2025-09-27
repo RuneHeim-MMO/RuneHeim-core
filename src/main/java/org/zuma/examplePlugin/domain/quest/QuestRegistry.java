@@ -75,7 +75,7 @@ public class QuestRegistry {
                 new DialogStep(RuneQuestPlugin.getInstance(), blacksmithsRightHandI, "Bring §61x Uncut Sapphire§f to the §6Blacksmith.", "blacksmith-right-hand-i.bring-sapphire", null)
         )));
 
-        Quest saharijinPVPArenaIntroduction = new Quest(QuestId.SAHARIJIN_ARENA_INTRO.getId(), "Saharijin Arena Into", QuestDifficulty.EASY, true);
+        Quest saharijinPVPArenaIntroduction = new Quest(QuestId.SAHARIJIN_ARENA_INTRO.getId(), "Saharijin Arena Intro", QuestDifficulty.EASY, true);
         registerQuest(saharijinPVPArenaIntroduction); // No steps, just used for tracking if player has talked to the NPC.
 
     }
