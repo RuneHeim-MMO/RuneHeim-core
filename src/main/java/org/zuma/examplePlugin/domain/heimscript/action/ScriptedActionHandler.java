@@ -14,6 +14,7 @@ import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.heimscript.ScriptParser;
+import org.zuma.examplePlugin.domain.player.states.TravelMode;
 import org.zuma.examplePlugin.domain.player.states.TravelStateHandler;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.events.dialog.QuestStepToBeCompleted;
@@ -101,7 +102,9 @@ public class ScriptedActionHandler {
                     buffer.setYaw(Float.parseFloat(args.get("buffer_yaw")));
 
                     int durationTicks = Integer.parseInt(args.get("duration_seconds")) * 20;
-                    TravelStateHandler.startTravelingSequence(player, destination, buffer, durationTicks);
+                    TravelMode mode = TravelMode.valueOf(args.get("mode").toUpperCase());
+
+                    TravelStateHandler.startTravelingSequence(player, destination, buffer, durationTicks, mode);
 
                 }
                 case START_TOUR -> {

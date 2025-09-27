@@ -297,4 +297,20 @@ public class PlayerUtils {
         return true;
     }
 
+    public static void hideAllPlayersForPlayer(Player player) {
+        for (Player p : player.getWorld().getPlayers()) {
+            if (!p.equals(player)) {
+                player.hidePlayer(RuneQuestPlugin.getInstance(), p);
+            }
+        }
+    }
+
+    public static void restorePlayersVisibilityForPlayer(Player player) {
+        for (Player p : player.getWorld().getPlayers()) {
+            if (!p.equals(player)) {
+                player.showPlayer(RuneQuestPlugin.getInstance(), p);
+            }
+        }
+    }
+
 }

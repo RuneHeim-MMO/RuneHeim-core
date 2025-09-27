@@ -6,17 +6,18 @@ import org.bukkit.Location;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.domain.effect.AnimatedEffect;
-import org.zuma.examplePlugin.domain.effect.StaticEffect;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.quest.Quest;
+import org.zuma.examplePlugin.domain.player.states.TravelMode;
 
 import java.time.Duration;
 
 public class TravelStartEffect implements AnimatedEffect {
     private final RunePlayer player;
+    private final TravelMode mode;
 
-    public TravelStartEffect(RunePlayer player) {
+    public TravelStartEffect(RunePlayer player, TravelMode mode) {
         this.player = player;
+        this.mode = mode;
     }
 
     @Override
@@ -24,19 +25,26 @@ public class TravelStartEffect implements AnimatedEffect {
         if (time == 0) {
             player.asBukkitPlayer().showTitle(Title.title(
                     Component.empty(),
-                    Component.text("You step onto the carriage.", Color.ACCENT.asColor()),
+                    Component.text("You step onto the " + mode.getVehicleType() + ".", Color.ACCENT.asColor()),
                     Title.Times.times(Duration.ofSeconds(1), Duration.ofSeconds(3, 5), Duration.ofSeconds(3)
                     )
             ));
-            SoundType.TRAVEL_DOOR_CLOSE.play(player, false);
+
+            if (mode == TravelMode.CARRIAGE) {
+                SoundType.TRAVEL_CARRIAGE_DOOR_CLOSE.play(player, false);
+            }
         }
 
         if (time % 3 == 0) {
-            SoundType.TRAVEL_CARRIAGE_STEP.play(player, false);
+            mode.getStepSound().play(player, false);
         }
 
-        if (time == 19) {
-            SoundType.TRAVEL_DOOR_CLOSE.play(player, false);
+        if (time == 15 && mode == TravelMode.SHIP) {
+            SoundType.TRAVEL_SHIP_BELL.play(player, false);
+        }
+
+        if (time == 19 && mode == TravelMode.CARRIAGE) {
+            SoundType.TRAVEL_CARRIAGE_DOOR_CLOSE.play(player, false);
         }
 
     }
