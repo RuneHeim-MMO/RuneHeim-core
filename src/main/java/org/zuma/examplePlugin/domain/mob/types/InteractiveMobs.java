@@ -34,6 +34,9 @@ public class InteractiveMobs {
         registry.register(MobType.DRAKKAR_COACHMAN.getId(), () -> new DialogMob(Icon.BOOTS.get() + " Coachman", EquipmentSet.CARROT,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "coachman", null, 0, Dialogs.drakkarCoachmanDialog));
 
+        registry.register(MobType.SAHARIJIN_ARENA_NPC.getId(), () -> new DialogMob(Icon.CROSSED_SWORDS.get() + " Arena Overseer", null,
+                MobBehaviors.VILLAGER_MAN_3.getBehavior(), "saharijin_arena_overseer", null, 0, Dialogs.saharijinArenaGuide));
+
         registry.register(MobType.SAILOR_ROGUES_HAVEN.getId(), () -> new DialogMob(Icon.ANCHOR.get() + " Sailor", null,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "sailor", null, 0, Dialogs.sailorBufferDialog));
 
