@@ -38,7 +38,9 @@ public class TerritoryRepository {
                         "§aOakshade",
                         "A quiet village located near Drakkar.",
                         "Surrounded by dense forests rumored to be inhabited by spirits.",
-                        3, 10, false, true, false),
+                        3, 10, false, true, false)
+                        .setAmbientMusic(MusicType.DRAKKAR_THEME),
+
 
                 new Territory("amber-cottage",
                         new Location(Bukkit.getWorld("world"), 250, 0, -270),
@@ -57,7 +59,9 @@ public class TerritoryRepository {
                         "§8Ashwale",
                         "Small village neighboring Drakkar.",
                         "Built at the edge of a forest long rumored to conceal ancient relics.",
-                        3, 10, false, true, false),
+                        3, 10, false, true, false)
+                        .setAmbientMusic(MusicType.DRAKKAR_THEME),
+
 
                 new Territory("brineport",
                         new Location(Bukkit.getWorld("world"), -445, 0, 230),
@@ -66,7 +70,9 @@ public class TerritoryRepository {
                         "§3Brineport",
                         "A coastal town overlooking the sea.",
                         "Founded by merchants who braved storms to establish trade routes.",
-                        20, 30, false, true, false),
+                        20, 30, false, true, false)
+                        .setAmbientMusic(MusicType.BRINEPORT_THEME),
+
 
                 new Territory("sakurmeer",
                         new Location(Bukkit.getWorld("world"), 850, 0, 180),
@@ -125,7 +131,9 @@ public class TerritoryRepository {
                         "§aBranleaft",
                         "A secluded village nestled deep within the whispering woods.",
                         "Trees here are said to remember the names of those who pass.",
-                        30, 45, false, true, false),
+                        30, 45, false, true, false)
+                        .setAmbientMusic(MusicType.ELDARWYN_THEME),
+
 
                 new Territory("eldarwyn",
                         new Location(Bukkit.getWorld("world"), -880, 0, -340),
@@ -134,7 +142,8 @@ public class TerritoryRepository {
                         "§bEldarwyn",
                         "A grand castle overlooking the western seas.",
                         "Once the seat of a legendary family whose heirs vanished mysteriously.",
-                        30, 45, false, true, false),
+                        30, 45, false, true, false)
+                        .setAmbientMusic(MusicType.ELDARWYN_THEME),
 
                 new Territory("valdrin",
                         new Location(Bukkit.getWorld("world"), -15, 0, -530),
@@ -143,7 +152,8 @@ public class TerritoryRepository {
                         "§fValdrin",
                         "A peaceful village nestled on a cliff.",
                         "Cliffside tombs tell of warriors who defended these lands long ago.",
-                        30, 50, false, true, false),
+                        30, 50, false, true, false)
+                        .setAmbientMusic(MusicType.VALDRIN_THEME),
 
                 new Territory("islenor",
                         new Location(Bukkit.getWorld("world"), 496, 0, -714),
@@ -152,7 +162,8 @@ public class TerritoryRepository {
                         "§9Islenor",
                         "A quiet port town where the waves lap gently.",
                         "Shipwrecks along the coast hint at a forgotten maritime empire.",
-                        45, 50, false, true, false),
+                        45, 50, false, true, false)
+                        .setAmbientMusic(MusicType.ISLENOR_THEME),
 
                 new Territory("zarali",
                         new Location(Bukkit.getWorld("world"), 480, 0, 470),
@@ -190,7 +201,8 @@ public class TerritoryRepository {
                         "§3Thornbark",
                         "A dark and twisted forest of gnarled trees.",
                         "Thorns and shadows hide secrets few dare to seek.",
-                        40, 60, false, true, false),
+                        40, 60, false, true, false)
+                        .setAmbientMusic(MusicType.THORNBARK_THEME),
 
                 new Territory("saharijin-pvp-arena",
                         new Location(Bukkit.getWorld("world"), -1208.5, 0, -698.5),
@@ -223,7 +235,8 @@ public class TerritoryRepository {
                         "§5Sporefell",
                         "A forest of colossal, glowing mushrooms.",
                         "The spores shine with an otherworldly glow, hinting at ancient magic.",
-                        60, 70, false, true, false),
+                        60, 70, false, true, false)
+                        .setAmbientMusic(MusicType.SPOREFELL_THEME),
 
                 new Territory("ethereal-nexus",
                         new Location(Bukkit.getWorld("world"), 925, 0, -845),
@@ -261,7 +274,8 @@ public class TerritoryRepository {
                         "§bTutorial Island",
                         "The first step of every hero.",
                         "Once a training ground for fledgling heroes, untouched by time.",
-                        1, 1, false, true, false),
+                        1, 1, false, true, false)
+                        .setAmbientMusic(MusicType.TUTORIAL_ISLAND_THEME),
 
 
                 new Territory("rouges-haven",

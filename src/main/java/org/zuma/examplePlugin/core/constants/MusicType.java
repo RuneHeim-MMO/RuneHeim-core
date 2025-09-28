@@ -11,7 +11,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import javax.annotation.Nullable;
 
 public enum MusicType {
-    ROGUES_HAVEN_THEME("runequest.rogues_haven.music", 197, 0.25F),
+    ROGUES_HAVEN_THEME("runequest.rogues_haven.music", 197, 0.20F),
     SAHARIJIN_THEME("runequest.saharijin.music", 245, 0.1F),
     SAHARIJIN_ARENA_THEME("runequest.saharijin.arena.music", 73, 0.1F),
     ZARALI_THEME("runequest.zarali.music", 175, 0.1F),
@@ -20,7 +20,14 @@ public enum MusicType {
     GLACIEM_THEME("runequest.glaciem.music", 96, 0.1F),
     AETHERIS_THEME("runequest.aetheris.music", 165, 0.1F),
     INFERNAK_THEME("runequest.infernak.music", 81, 0.1F),
-    SWAMP_THEME("runequest.swamp.music", 126, 0.2F);
+    SWAMP_THEME("runequest.swamp.music", 126, 0.2F),
+    BRINEPORT_THEME("runequest.brineport.music", 71, 0.05F),
+    ELDARWYN_THEME("runequest.eldarwyn.music", 133, 0.05F),
+    ISLENOR_THEME("runequest.islenor.music", 159, 0.05F),
+    SPOREFELL_THEME("runequest.sporefell.music", 189, 0.05F),
+    THORNBARK_THEME("runequest.thornbark.music", 131, 0.05F),
+    TUTORIAL_ISLAND_THEME("runequest.tutorial_island.music", 109, 0.1F),
+    VALDRIN_THEME("runequest.valdrin.music", 157, 0.2F);
 
     private final String soundKey;
     private final float volume, pitch;
