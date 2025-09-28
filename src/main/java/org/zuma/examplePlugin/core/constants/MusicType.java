@@ -55,7 +55,9 @@ public enum MusicType {
     }
 
     public static void stopMusic(RunePlayer player) {
-        player.asBukkitPlayer().stopSound(SoundCategory.RECORDS);
+        if (player.asBukkitPlayer() != null) {
+            player.asBukkitPlayer().stopSound(SoundCategory.RECORDS);
+        }
     }
 
     public int getDurationSeconds() {

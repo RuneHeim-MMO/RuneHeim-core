@@ -1048,10 +1048,25 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(161, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), -1188.5, 69, -705.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.SAHARIJIN_ARENA_NPC, 1, 100)
+                ), false, null, null), 1)),
+
+
+                // Rogues haven
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(162, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -140, 63, -993)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SAILOR_ROGUES_HAVEN, 1, 100)
+                ), false, null, null), 1)),
+
+
+                // Sailor buffer ship
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(163, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 1415.5, 68.5, -1527)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SAILOR_BUFFER, 1, 100)
                 ), false, null, null), 1))
 
 
-                // last 161
+
+                // last 162
 
 
         );

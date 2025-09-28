@@ -456,7 +456,7 @@ public enum SoundType {
     AMBIENT_CREAK("entity.creaking.ambient", false, 1, 1),
     AMBIENT_SNIFFER_DIGGING_STOP("entity.sniffer.digging_stop", false, 1, 1),
     AMBIENT_SCREAM("ambient.soul_sand_valley.mood", false, 1, 1),
-
+    AMBIENT_SOUL_SAND_ADDITIONS("ambient.soul_sand_valley.additions", false, 1, 1),
 
     ROGUE_HAVEN_AMBIENT_1("ambient.warped_forest.mood", false, 1, 1),
     ROGUE_HAVEN_AMBIENT_2("ambient.nether_wastes.mood", false, 1, 1);

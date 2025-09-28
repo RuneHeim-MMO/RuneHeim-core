@@ -17,7 +17,14 @@ public class AmbientSoundRepository {
                 new AmbientSound(SoundType.AMBIENT_SNIFFER_DIGGING_STOP, new Location(Bukkit.getWorld("world"), -220, 77, -1085), 30, 5),
 
                 // Lighthouse
-                new AmbientSound(SoundType.AMBIENT_SCREAM, new Location(Bukkit.getWorld("world"), -172, 80, -992), 60, 20)
+                new AmbientSound(SoundType.AMBIENT_SCREAM, new Location(Bukkit.getWorld("world"), -172, 80, -992), 60, 20),
+
+                // Manor
+                new AmbientSound(SoundType.AMBIENT_SCREAM, new Location(Bukkit.getWorld("world"), -95, 73, -1075), 60, 20),
+                new AmbientSound(SoundType.AMBIENT_SOUL_SAND_ADDITIONS, new Location(Bukkit.getWorld("world"), -76, 75, -1090), 30, 20).withVariation(10, 10, 0),
+                new AmbientSound(SoundType.AMBIENT_CREAK, new Location(Bukkit.getWorld("world"), -92, 75, -1090), 30, 10).withVariation(10, 10, 0),
+                new AmbientSound(SoundType.AMBIENT_CREAK, new Location(Bukkit.getWorld("world"), -82, 73, -1094), 45, 15).withVariation(10, 10, 0)
+
 
                 );
     }
