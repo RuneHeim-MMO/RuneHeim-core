@@ -1,9 +1,9 @@
 package org.zuma.examplePlugin.domain.territory;
 
-import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.zuma.examplePlugin.core.constants.MusicType;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.interfaces.Restrictable;
-import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 
 import javax.annotation.Nullable;
@@ -14,13 +14,18 @@ public class Territory implements Restrictable {
     private final Location centerPoint, spawnPoint;
     private final int radius, minLevel, maxLevel;
     private final String name, description, firstTimeDiscoveryLore, id;
-    private final boolean pvpZone, renderOnMap;
+    private final boolean pvpZone, renderOnMap, silent;
     private final List<String> requiredQuestsIds;
+    private boolean dropItemsOnDeath;
+    private List<SoundType> ambientSounds;
+
     @Nullable
     private String entryDenyMessage;
-    private boolean dropItemsOnDeath;
 
-    public Territory(String id, Location centerPoint, @Nullable Location spawnPoint, int radius, String name, String description, @Nullable String firstTimeDiscoveryLore, int minLevel, int maxLevel, boolean pvpZone, boolean renderOnMap) {
+    @Nullable
+    private MusicType ambientMusic;
+
+    public Territory(String id, Location centerPoint, @Nullable Location spawnPoint, int radius, String name, String description, @Nullable String firstTimeDiscoveryLore, int minLevel, int maxLevel, boolean pvpZone, boolean renderOnMap, boolean silent) {
         this.centerPoint = centerPoint;
         this.radius = radius;
         this.minLevel = minLevel;
@@ -35,6 +40,9 @@ public class Territory implements Restrictable {
         this.requiredQuestsIds = new ArrayList<>();
         this.entryDenyMessage = null;
         this.dropItemsOnDeath = false;
+        this.ambientSounds = new ArrayList<>();
+        this.ambientMusic = null;
+        this.silent = silent; // If true, no messages will be sent to players when they discover/enter/leave the territory
     }
 
     public Location getCenterPoint() {
@@ -119,5 +127,31 @@ public class Territory implements Restrictable {
     @Override
     public List<String> getRequiredCompletedQuests() {
         return requiredQuestsIds;
+    }
+
+    public Territory setAmbientSounds(List<SoundType> ambientSounds) {
+        this.ambientSounds = ambientSounds;
+        return this;
+    }
+
+    @Nullable
+    public SoundType getRandomAmbientSound() {
+        if (ambientSounds.isEmpty()) return null;
+        int index = (int) (Math.random() * ambientSounds.size());
+        return ambientSounds.get(index);
+    }
+
+    @Nullable
+    public MusicType getAmbientMusic() {
+        return ambientMusic;
+    }
+
+    public Territory setAmbientMusic(@Nullable MusicType ambientMusic) {
+        this.ambientMusic = ambientMusic;
+        return this;
+    }
+
+    public boolean isSilent() {
+        return silent;
     }
 }

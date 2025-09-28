@@ -451,7 +451,15 @@ public enum SoundType {
     HELLFLESH_HURT("ENTITY_ZOMBIE_HURT", false, 1.0f, 0.7f),
     HELLFLESH_DEATH("ENTITY_WITHER_SKELETON_DEATH", false, 1.0f, 0.6f),
     HELLFLESH_LAUGH("ENTITY_PIGLIN_ANGRY", false, 1.0f, 0.75f),
-    HELLFLESH_CELEBRATE("ENTITY_PIGLIN_CELEBRATE", false, 1.0f, 0.8f);
+    HELLFLESH_CELEBRATE("ENTITY_PIGLIN_CELEBRATE", false, 1.0f, 0.8f),
+
+    AMBIENT_CREAK("entity.creaking.ambient", false, 1, 1),
+    AMBIENT_SNIFFER_DIGGING_STOP("entity.sniffer.digging_stop", false, 1, 1),
+    AMBIENT_SCREAM("ambient.soul_sand_valley.mood", false, 1, 1),
+
+
+    ROGUE_HAVEN_AMBIENT_1("ambient.warped_forest.mood", false, 1, 1),
+    ROGUE_HAVEN_AMBIENT_2("ambient.nether_wastes.mood", false, 1, 1);
 
 
     private final String soundKey;

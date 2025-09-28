@@ -13,6 +13,7 @@ import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
+import org.zuma.examplePlugin.domain.ambience.sound.AmbientMusicHandler;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.territory.TerritoryEnterEvent;
@@ -22,16 +23,21 @@ import java.time.Duration;
 import java.util.*;
 
 public class TerritoryHandler {
+    private static final long AMBIENT_SOUND_COOLDOWN_SEC = 30;
+
     private final TerritoryRepository repository;
     private final List<Territory> territoryList;
     private final HashMap<UUID, Territory> lastPlayerTerritory;
     private final HashMap<UUID, Location> lastPlayerLocation;
+
+    private final AmbientMusicHandler ambientMusicHandler;
 
     public TerritoryHandler(TerritoryRepository repository) {
         this.repository = repository;
         this.territoryList = new ArrayList<>();
         this.lastPlayerTerritory = new HashMap<>();
         this.lastPlayerLocation = new HashMap<>();
+        this.ambientMusicHandler = new AmbientMusicHandler();
     }
 
     public void initialize() {
@@ -54,6 +60,7 @@ public class TerritoryHandler {
 
     private void startLoop() {
         Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::loopTick, 0L, 10L);
+        Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::ambientSoundLoopTick, 0L, 20 * AMBIENT_SOUND_COOLDOWN_SEC);
     }
 
     private void loopTick() {
@@ -94,6 +101,19 @@ public class TerritoryHandler {
 
                 insideOf = territory;
                 lastInsideOfDistance = (int) distance;
+            }
+
+            if (lastTerritory != null && !lastTerritory.equals(insideOf) && lastTerritory.getAmbientMusic() != null) {
+                if (insideOf == null) {
+                    // If player went to the wilderness, keep playing, but stop the loop;
+                    this.ambientMusicHandler.removePlayerFromLoop(runePlayer);
+                } else {
+                    if (!(insideOf.getAmbientMusic() != null && lastTerritory.getAmbientMusic().name().equals(insideOf.getAmbientMusic().name()))) {
+                        // Different music, stop previous one
+                        this.ambientMusicHandler.stopMusic(runePlayer);
+                    }
+
+                }
             }
 
             if (insideOf == null) {
@@ -144,11 +164,27 @@ public class TerritoryHandler {
 
     }
 
+    private void ambientSoundLoopTick() {
+        this.lastPlayerTerritory.forEach((uuid, territory) -> {
+            if (territory != null) {
+                RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(uuid);
+                if (runePlayer != null && !runePlayer.isDead()) {
+                    playTerritoryAmbientSound(runePlayer, territory);
+                }
+            }
+        });
+    }
+
+
     private void handlePlayerEnterTerritory(Player player, Territory territory, @Nullable Territory lastTerritory) {
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
 
         if (runePlayer == null || runePlayer.isDead() || !runePlayer.meetsRequirements(territory)) {
             return;
+        }
+
+        if (territory.getAmbientMusic() != null) {
+            this.ambientMusicHandler.startPlayerMusicLoop(territory.getAmbientMusic(), runePlayer);
         }
 
         boolean isFirstDiscovery = !runePlayer.getDiscoveredTerritoryIds().contains(territory.getId());
@@ -164,6 +200,8 @@ public class TerritoryHandler {
         if (lastTerritory != null && lastTerritory.isPvpZone() && !territory.isPvpZone()) {
             SoundType.PVP_TERRITORY_LEAVE.play(player, false);
         }
+
+        if (territory.isSilent()) return; // If territory is silent, do not send any messages
 
         if (!isFirstDiscovery) {
             SoundType.TERRITORY_ENTER.play(player, false);
@@ -195,8 +233,10 @@ public class TerritoryHandler {
             }
         }
 
+        String titleIcon = territory.isPvpZone() ? territory.isDropItemsOnDeath() ? "§c" + Icon.RANGED_STR.get() : " §f" + Icon.RANGED_STR.get() : "";
+
         player.showTitle(Title.title(
-                Component.text(territory.getName()),
+                Component.text((!titleIcon.isEmpty() ? titleIcon + " " : "") + territory.getName() + (!titleIcon.isEmpty() ? " " + titleIcon : "")),
                 Component.text(territory.getDescription(), Color.ITEM_LORE_DESCRIPTION.asColor()),
                 Title.Times.times(
                         Duration.ofSeconds(1),
@@ -205,5 +245,13 @@ public class TerritoryHandler {
                 )
         ));
 
+    }
+
+    private void playTerritoryAmbientSound(RunePlayer runePlayer, Territory territory) {
+        SoundType sound = territory.getRandomAmbientSound();
+
+        if (sound == null) return;
+
+        sound.play(runePlayer.asBukkitPlayer(), false);
     }
 }

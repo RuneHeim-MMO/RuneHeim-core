@@ -72,7 +72,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new TerritoryModule(),
                         new CommandModule(),
                         new MountModule(),
-                        new TourModule()
+                        new TourModule(),
+                        new AmbienceModule()
                 ), moduleContext);
     }
 
