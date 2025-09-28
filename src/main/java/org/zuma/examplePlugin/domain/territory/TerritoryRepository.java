@@ -245,7 +245,28 @@ public class TerritoryRepository {
                         "§bTutorial Island",
                         "The first step of every hero.",
                         "Once a training ground for fledgling heroes, untouched by time.",
-                        1, 1, false, true)
+                        1, 1, false, true),
+
+
+                new Territory("rouges-haven",
+                        new Location(Bukkit.getWorld("world"), -130, 0, -1050),
+                        null,
+                        170,
+                        "§cRogue's Haven",
+                        "A lawless island brimming with untapped riches, abandoned by all who once lived here.",
+                        "Once a sanctuary for traders and exiles alike, now only the bold dare claim its treasures.",
+                        70, 90, true, true)
+                        .setDropItemsOnDeath(true),
+
+                new Territory("rouges-haven",
+                        new Location(Bukkit.getWorld("world"), 115, 0, -1050),
+                        null,
+                        170,
+                        "§cRogue's Haven",
+                        "A lawless island brimming with untapped riches, abandoned by all who once lived here.",
+                        "Once a sanctuary for traders and exiles alike, now only the bold dare claim its treasures.",
+                        70, 90, true, true)
+                        .setDropItemsOnDeath(true)
 
         );
     }

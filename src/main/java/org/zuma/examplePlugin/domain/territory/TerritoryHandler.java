@@ -96,7 +96,15 @@ public class TerritoryHandler {
                 lastInsideOfDistance = (int) distance;
             }
 
-            if (insideOf == null) continue;
+            if (insideOf == null) {
+                lastPlayerTerritory.put(player.getUniqueId(), null);
+                lastPlayerLocation.put(player.getUniqueId(), player.getLocation());
+
+                if (lastTerritory != null && lastTerritory.isPvpZone()) {
+                    SoundType.PVP_TERRITORY_LEAVE.play(player, false);
+                }
+                continue;
+            }
 
             // Check if player meets requirements to be in the territory
             if (!runePlayer.meetsRequirements(insideOf)) {

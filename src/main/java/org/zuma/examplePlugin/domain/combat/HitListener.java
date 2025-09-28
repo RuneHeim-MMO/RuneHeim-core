@@ -40,7 +40,7 @@ public class HitListener implements Listener {
         this.hitHandler = hitHandler;
     }
 
-    private boolean isPlayerInPVPDisabledRegion(Player player) {
+    public static boolean isPlayerInPVPDisabledRegion(Player player) {
         LocalPlayer localAttacker = WorldGuardPlugin.inst().wrapPlayer(player);
         Location loc = player.getLocation();
 
