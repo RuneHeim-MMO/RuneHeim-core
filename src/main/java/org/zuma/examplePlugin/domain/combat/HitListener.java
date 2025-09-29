@@ -109,7 +109,10 @@ public class HitListener implements Listener {
 
         hit = hitHandler.handleMeleeHit(attacker, defender);
 
-        event.setCancelled(true);
+        if (hit != null && hit.getDamage() == 0) {
+            event.setCancelled(true); // Cancel knockback if hit is a miss
+        }
+
         // Set mobs target to attacker.
         if (defender.getEntity() instanceof Mob mob && attacker.getEntity() instanceof LivingEntity livingAttacker) {
             if (!(livingAttacker instanceof Player)) {
@@ -181,7 +184,10 @@ public class HitListener implements Listener {
             }
 
             projectile.remove();
-            event.setCancelled(true);
+
+            if (hit != null && hit.getDamage() == 0) {
+                event.setCancelled(true); // Cancel knockback if hit is a miss
+            }
             AttributeInstance followRange = mob.getAttribute(Attribute.GENERIC_FOLLOW_RANGE);
             if (followRange != null) followRange.setBaseValue(100);
 
