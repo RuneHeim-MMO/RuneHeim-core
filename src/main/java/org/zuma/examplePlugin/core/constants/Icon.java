@@ -69,6 +69,9 @@ public enum Icon {
     FISHING_HOOK("⢫"),
     ANCHOR("⏚"),
 
+    SKULL_OPEN_MOUTH("₮"),
+    SKULL_CLOSED_MOUTH("⺳"),
+
     SCROLL_RED("ⵣ"),
     SCROLL_GRAY("⁝"),
     SCROLL_GREEN("Ⅸ"),

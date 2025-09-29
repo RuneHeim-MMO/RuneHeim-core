@@ -233,7 +233,7 @@ public class TerritoryHandler {
             }
         }
 
-        String titleIcon = territory.isPvpZone() ? territory.isDropItemsOnDeath() ? "§c" + Icon.RANGED_STR.get() : " §f" + Icon.RANGED_STR.get() : "";
+        String titleIcon = territory.isPvpZone() ? territory.isDropItemsOnDeath() ? "§c" + Icon.SKULL_CLOSED_MOUTH.get() : " §f" + Icon.SKULL_CLOSED_MOUTH.get() : "";
 
         player.showTitle(Title.title(
                 Component.text((!titleIcon.isEmpty() ? titleIcon + " " : "") + territory.getName() + (!titleIcon.isEmpty() ? " " + titleIcon : "")),

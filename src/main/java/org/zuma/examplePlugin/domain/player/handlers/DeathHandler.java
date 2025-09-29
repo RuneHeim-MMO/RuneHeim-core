@@ -36,6 +36,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
+import org.bukkit.scheduler.BukkitRunnable;
+
 public class DeathHandler {
     private final static Random rand = new Random();
     private final static int cooldownDuration = 10;
@@ -101,22 +103,27 @@ public class DeathHandler {
         player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, (cooldownDuration + 1) * 20, 0, false, false, false));
         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, (cooldownDuration + 1) * 20, 1, false, false, false));
 
-        for (int i = 0; i < cooldownDuration; i++) {
-            int finalI = i;
+        // Replace the hacky for-loop with a clean scheduled task for title flicker
+        new BukkitRunnable() {
+            int ticks = 0;
 
-            Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-                if (!player.isOnline()) {
+            @Override
+            public void run() {
+                if (!player.isOnline() || ticks >= cooldownDuration * 20) {
+                    this.cancel();
                     return;
-
                 }
+                Icon icon = (ticks / 10 % 2 == 0) ? Icon.SKULL_CLOSED_MOUTH : Icon.SKULL_OPEN_MOUTH;
+                int secondsLeft = cooldownDuration - (ticks / 20);
                 player.showTitle(Title.title(
-                        Icon.RANGED_STR.asComponent().append(Component.text("YOU HAVE DIED ").color(Color.ERROR.asColor()).append(Icon.RANGED_STR.asComponent()))
+                        icon.asComponent().append(Component.text("YOU HAVE DIED ").color(Color.ERROR.asColor()).append(icon.asComponent()))
                                 .decorate(TextDecoration.BOLD),
-                        Component.text("Respawning in " + (cooldownDuration - finalI) + " seconds.").color(Color.ERROR_LIGHT.asColor()),
+                        Component.text("Respawning in " + secondsLeft + " seconds.").color(Color.ERROR_LIGHT.asColor()),
                         Title.Times.times(Duration.ZERO, Duration.ofSeconds(cooldownDuration), Duration.ofMillis(0))
                 ));
-            }, i == 0 ? 0L : 20L * i);
-        }
+                ticks += 10;
+            }
+        }.runTaskTimer(RuneQuestPlugin.getInstance(), 0L, 10L);
 
 
         Location finalSpawnPoint = spawnPoint;
