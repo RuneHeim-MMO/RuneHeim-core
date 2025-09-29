@@ -28,14 +28,14 @@ public enum SoundType {
     PERFECT_STRIKE_2("BLOCK_BELL_USE", false, 1.0f, 1.0f),
 
     TRAVEL_CARRIAGE_STEP("BLOCK_WOOD_STEP", false, 1.0f, 1.0f),
+    TRAVEL_CARRIAGE_LOOP("ENTITY_HORSE_GALLOP", false, 0.4f, 1.0f),
+    TRAVEL_CARRIAGE_END("ENTITY_HORSE_AMBIENT", false, 0.8f, 1.0f),
+    TRAVEL_CARRIAGE_DOOR_CLOSE("BLOCK_IRON_DOOR_CLOSE", false, 1f, 1.0f),
 
-    TRAVEL_STEP_1("BLOCK_GRASS_STEP", false, 0.8f, 1.0f),
-    TRAVEL_STEP_2("BLOCK_WOOD_STEP", false, 0.8f, 1.0f),
-    TRAVEL_STEP_3("BLOCK_STONE_STEP", false, 0.8f, 1.0f),
-    TRAVEL_LOOP("ENTITY_HORSE_GALLOP", false, 0.4f, 1.0f),
-    TRAVEL_END("ENTITY_HORSE_AMBIENT", false, 0.8f, 1.0f),
-
-    TRAVEL_DOOR_CLOSE("BLOCK_IRON_DOOR_CLOSE", false, 1f, 1.0f),
+    TRAVEL_SHIP_STEP("BLOCK_WOOD_STEP", false, 1.0f, 1.0f),
+    TRAVEL_SHIP_LOOP("ENTITY_BOAT_PADDLE_WATER", false, 0.4f, 1.0f),
+    TRAVEL_SHIP_END("ENTITY_GENERIC_SPLASH", false, 0.8f, 1.0f),
+    TRAVEL_SHIP_BELL("BLOCK_BELL_USE", false, 1.0f, 1.0f),
 
     ALTAR_PRAYING_LAYER_1("BLOCK_AMETHYST_BLOCK_CHIME", false, 1f, 1f),
     ALTAR_PRAYING_LAYER_2("BLOCK_AMETHYST_BLOCK_RESONATE", false, 1f, 1f),
@@ -451,7 +451,15 @@ public enum SoundType {
     HELLFLESH_HURT("ENTITY_ZOMBIE_HURT", false, 1.0f, 0.7f),
     HELLFLESH_DEATH("ENTITY_WITHER_SKELETON_DEATH", false, 1.0f, 0.6f),
     HELLFLESH_LAUGH("ENTITY_PIGLIN_ANGRY", false, 1.0f, 0.75f),
-    HELLFLESH_CELEBRATE("ENTITY_PIGLIN_CELEBRATE", false, 1.0f, 0.8f);
+    HELLFLESH_CELEBRATE("ENTITY_PIGLIN_CELEBRATE", false, 1.0f, 0.8f),
+
+    AMBIENT_CREAK("entity.creaking.ambient", false, 1, 1),
+    AMBIENT_SNIFFER_DIGGING_STOP("entity.sniffer.digging_stop", false, 1, 1),
+    AMBIENT_SCREAM("ambient.soul_sand_valley.mood", false, 1, 1),
+    AMBIENT_SOUL_SAND_ADDITIONS("ambient.soul_sand_valley.additions", false, 1, 1),
+
+    ROGUE_HAVEN_AMBIENT_1("ambient.warped_forest.mood", false, 1, 1),
+    ROGUE_HAVEN_AMBIENT_2("ambient.nether_wastes.mood", false, 1, 1);
 
 
     private final String soundKey;

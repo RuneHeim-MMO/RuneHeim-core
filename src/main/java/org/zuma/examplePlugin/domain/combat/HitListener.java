@@ -24,7 +24,9 @@ import org.zuma.examplePlugin.domain.combat.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.combat.constants.ProjectileType;
 import org.zuma.examplePlugin.domain.mob.MobRegistry;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
+import org.zuma.examplePlugin.domain.territory.Territory;
 
 import javax.annotation.Nullable;
 
@@ -40,15 +42,23 @@ public class HitListener implements Listener {
         this.hitHandler = hitHandler;
     }
 
-    private boolean isPlayerInPVPDisabledRegion(Player player) {
+    public static boolean isPlayerInPVPDisabledRegion(Player player) {
+        RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
+        if (runePlayer == null) return true;
+
         LocalPlayer localAttacker = WorldGuardPlugin.inst().wrapPlayer(player);
         Location loc = player.getLocation();
 
-        return !WorldGuard.getInstance()
+        boolean WGPVPDisabled = !WorldGuard.getInstance()
                 .getPlatform()
                 .getRegionContainer()
                 .createQuery()
                 .testState(BukkitAdapter.adapt(loc), localAttacker, Flags.PVP);
+
+        Territory playerTerritory = RuneQuestPlugin.getTerritoryHandler().getPlayersTerritory(runePlayer);
+        boolean territoryPVPDisabled = playerTerritory == null || !playerTerritory.isPvpZone();
+
+        return WGPVPDisabled || territoryPVPDisabled;
     }
 
     // Check if PVP is disabled: only allow PVP if both are NOT in a PVP-disabled region

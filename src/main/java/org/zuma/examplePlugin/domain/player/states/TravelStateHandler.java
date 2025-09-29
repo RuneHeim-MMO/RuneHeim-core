@@ -9,6 +9,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.TravelStartEffect;
 import org.zuma.examplePlugin.domain.effect.effects.TravelStopEffect;
@@ -20,13 +21,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class TravelStateHandler {
     private final static int TRANSITION_DURATION_TICKS = 20;
 
-    public static void startTravelingSequence(RunePlayer player, Location waypoint, Location buffer, int durationTicks) {
+    public static void startTravelingSequence(RunePlayer player, Location waypoint, Location buffer, int durationTicks, TravelMode mode) {
         if (durationTicks < TRANSITION_DURATION_TICKS) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot start traveling sequence. Duration is too short.");
             return;
         }
 
-        EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new TravelStartEffect(player));
+        EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new TravelStartEffect(player, mode));
         AtomicBoolean arrived = new AtomicBoolean(false);
         AtomicBoolean cancelled = new AtomicBoolean(false);
 
@@ -38,6 +39,7 @@ public class TravelStateHandler {
 
             player.setInCutscene(player.asBukkitPlayer().getLocation());
             player.asBukkitPlayer().teleport(buffer);
+            PlayerUtils.hideAllPlayersForPlayer(player.asBukkitPlayer());
 
             new BukkitRunnable() {
 
@@ -48,16 +50,7 @@ public class TravelStateHandler {
                         return;
                     }
 
-                    int random = (int) (Math.random() * 4);
-
-                    SoundType stepSound = switch (random) {
-                        case 1 -> SoundType.TRAVEL_STEP_1;
-                        case 2 -> SoundType.TRAVEL_STEP_2;
-                        case 3 -> SoundType.TRAVEL_STEP_3;
-                        default -> SoundType.TRAVEL_STEP_1;
-                    };
-                    stepSound.play(player, false);
-                    SoundType.TRAVEL_LOOP.play(player, false);
+                    mode.getLoopSound().play(player, false);
                 }
             }.runTaskTimer(RuneQuestPlugin.getInstance(), TRANSITION_DURATION_TICKS, 12);
 
@@ -77,13 +70,14 @@ public class TravelStateHandler {
                 if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline() || cancelled.get()) return;
 
                 arrived.set(true);
-                EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new TravelStopEffect(player));
-                SoundType.TRAVEL_END.play(player, false);
+                EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new TravelStopEffect(player, mode));
+                mode.getEndSound().play(player, false);
 
                 Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
                     if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline() || cancelled.get())
                         return;
 
+                    PlayerUtils.restorePlayersVisibilityForPlayer(player.asBukkitPlayer());
                     player.asBukkitPlayer().teleport(waypoint);
                     player.setOutOfCutscene();
                 }, TRANSITION_DURATION_TICKS);

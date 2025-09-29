@@ -184,7 +184,7 @@ public class RunePlayerManager {
         player.teleport(data.getValue().location());
         loadingStateHandler.setPlayerLoaded(player);
         data.getKey().setSurvivalMode();
-        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.getName() + " loaded successfully.");
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.getName() + " (" + data.getKey().getCombatLvl() + "cmb) loaded successfully.");
         Bukkit.getServer().getPluginManager().callEvent(new RunePlayerLoadedEvent(data.getKey(), data.getValue().isFirstJoin()));
         cleanup(uuid);
     }

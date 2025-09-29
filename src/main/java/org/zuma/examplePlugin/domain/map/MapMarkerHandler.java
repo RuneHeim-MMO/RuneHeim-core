@@ -102,7 +102,7 @@ public class MapMarkerHandler {
             Color fillColor = territory.isPvpZone() ? new Color(255, 0, 0, 0.5F) : MinecraftColorConverter.fromMinecraftColorCode(avgLevelColorCode, 0.2F);
 
             String additionalDescription = territory.isPvpZone() ?
-                    "<b><span style='color:red'>PvP Zone</span></b>" :
+                    "<b><span style='color:red'>PvP Zone</span></b>" + (territory.isDropItemsOnDeath() ? "</br><b><span style='color:red'>* All items dropped on death *</span></b>" : "") :
                     "Level range: <b>" + territory.getMinLevel() + " - " + territory.getMaxLevel() + "</b>";
 
             ExtrudeMarker marker = ExtrudeMarker.builder()

@@ -67,6 +67,7 @@ public enum Icon {
     PRAYER("⏲"),
     TRADE("⽝"),
     FISHING_HOOK("⢫"),
+    ANCHOR("⏚"),
 
     SCROLL_RED("ⵣ"),
     SCROLL_GRAY("⁝"),
