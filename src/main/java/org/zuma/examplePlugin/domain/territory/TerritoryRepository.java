@@ -278,7 +278,7 @@ public class TerritoryRepository {
                         .setAmbientMusic(MusicType.TUTORIAL_ISLAND_THEME),
 
 
-                new Territory("rouges-haven",
+                new Territory("rogues-haven",
                         new Location(Bukkit.getWorld("world"), -130, 0, -1050),
                         null,
                         170,
@@ -290,7 +290,7 @@ public class TerritoryRepository {
                         .setAmbientSounds(List.of(SoundType.ROGUE_HAVEN_AMBIENT_1, SoundType.ROGUE_HAVEN_AMBIENT_2))
                         .setAmbientMusic(MusicType.ROGUES_HAVEN_THEME),
 
-                new Territory("rouges-haven",
+                new Territory("rogues-haven",
                         new Location(Bukkit.getWorld("world"), 115, 0, -1050),
                         null,
                         170,
