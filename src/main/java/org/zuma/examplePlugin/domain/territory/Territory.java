@@ -16,7 +16,7 @@ public class Territory implements Restrictable {
     private final String name, description, firstTimeDiscoveryLore, id;
     private final boolean pvpZone, renderOnMap, silent;
     private final List<String> requiredQuestsIds;
-    private boolean dropItemsOnDeath;
+    private boolean dropItemsOnDeath, ignoreCutscene;
     private List<SoundType> ambientSounds;
 
     @Nullable
@@ -153,5 +153,14 @@ public class Territory implements Restrictable {
 
     public boolean isSilent() {
         return silent;
+    }
+
+    public boolean isIgnoreCutscene() {
+        return ignoreCutscene;
+    }
+
+    public Territory setVisibleInCutscene(boolean ignoreCutscene) {
+        this.ignoreCutscene = ignoreCutscene;
+        return this;
     }
 }

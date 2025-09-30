@@ -299,7 +299,17 @@ public class TerritoryRepository {
                         "Once a sanctuary for traders and exiles alike, now only the bold dare claim its treasures.",
                         70, 90, true, true, false)
                         .setDropItemsOnDeath(true).setAmbientSounds(List.of(SoundType.ROGUE_HAVEN_AMBIENT_1, SoundType.ROGUE_HAVEN_AMBIENT_2))
-                        .setAmbientMusic(MusicType.ROGUES_HAVEN_THEME)
+                        .setAmbientMusic(MusicType.ROGUES_HAVEN_THEME),
+
+                new Territory("ship-buffer",
+                        new Location(Bukkit.getWorld("world"), 1415, 0, -1535),
+                        null,
+                        15,
+                        "§bOcean",
+                        "",
+                        null,
+                        1, 1, false, false, true)
+                        .setAmbientMusic(MusicType.SHIP_BUFFER_THEME).setVisibleInCutscene(true)
 
 
         );
