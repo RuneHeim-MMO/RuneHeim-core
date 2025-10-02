@@ -1,5 +1,10 @@
 package org.zuma.examplePlugin.domain.item.constants;
 
+import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.domain.shop.ItemPriceCalculator;
+import org.zuma.examplePlugin.domain.shop.PriceRecord;
+
 public enum ItemId {
     ADMIN_OP_STICK(-5),
     DO_NOT_USE_RESERVED_CUSTOM_MODEL_COINS_PILE(-4),
@@ -320,6 +325,28 @@ public enum ItemId {
 
     public int asInt() {
         return this.id;
+    }
+
+    public Long getBuyPrice() {
+        PriceRecord record = ItemPriceCalculator.getPrice(this);
+
+        if (record == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Attempted to get sell price for item " + this.name() + " but price record was null.");
+            return null;
+        }
+
+        return record.buyPrice();
+    }
+
+    public Long getSellPrice() {
+        PriceRecord record = ItemPriceCalculator.getPrice(this);
+
+        if (record == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Attempted to get sell price for item " + this.name() + " but price record was null.");
+            return null;
+        }
+
+        return record.sellPrice();
     }
 
 

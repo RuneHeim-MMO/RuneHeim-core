@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class ItemPriceCalculator {
-    private static final double SELL_PRICE_MULTIPLIER = 0.25; // NPCs buy items at 80% of the calculated price
+    private static final double SELL_PRICE_MULTIPLIER = 0.19; // NPCs buy items at 80% of the calculated price
     private static final HashMap<Integer, Integer> priceCache = new HashMap<>(); // id : buy price
 
     public static void buildCache() {
@@ -27,12 +27,14 @@ public class ItemPriceCalculator {
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "----------------------------------------------------------------------");
 
         for (AbstractItemType item : items) {
-            Map.Entry<Integer, Integer> buySellPriceKV = getPrice(item);
+            PriceRecord priceRecord = getPrice(item);
 
-            priceCache.put(item.id, buySellPriceKV != null ? buySellPriceKV.getKey() : null);
 
-            if (buySellPriceKV != null)
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "1x " + item.displayName + ": \u001B[93mB " + buySellPriceKV.getKey() + "gp | S \u001B[93m" + buySellPriceKV.getValue() + "gp\u001B[0m\u001B[96m (mult: x" + item.getCraftPriceMultiplier() + ").\u001B[0m");
+            if (priceRecord == null) continue;
+
+            priceCache.put(item.id, Math.toIntExact(priceRecord.buyPrice()));
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "1x " + item.displayName + ": \u001B[93mB " + priceRecord.buyPrice() + "gp | S \u001B[93m" + priceRecord.sellPrice() + "gp\u001B[0m\u001B[96m (mult: x" + item.getCraftPriceMultiplier() + ").\u001B[0m");
+
         }
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "----------------------------------------------------------------------");
 
@@ -40,7 +42,7 @@ public class ItemPriceCalculator {
     }
 
     @Nullable // Buy price, sell price
-    public static Map.Entry<Integer, Integer> getPrice(ItemId id) {
+    public static PriceRecord getPrice(ItemId id) {
         AbstractItemType item = RuneQuestPlugin.getItemRegistry().getType(id);
 
         if (item == null) {
@@ -52,11 +54,12 @@ public class ItemPriceCalculator {
     }
 
     @Nullable // Buy price, sell price
-    public static Map.Entry<Integer, Integer> getPrice(AbstractItemType item) {
+    public static PriceRecord getPrice(AbstractItemType item) {
         if (priceCache.containsKey(item.id)) {
-            int price = priceCache.get(item.id);
+            Integer price = priceCache.get(item.id);
 
-            return Map.entry(priceCache.get(item.id), (int) (price * SELL_PRICE_MULTIPLIER));
+            if (price != null)
+                return new PriceRecord((long) priceCache.get(item.id), (long) (price * SELL_PRICE_MULTIPLIER));
         }
 
         Integer price = calculateFinalPrice(item);
@@ -66,7 +69,7 @@ public class ItemPriceCalculator {
         if (finalPrice == null) {
             return null;
         }
-        return Map.entry(finalPrice, (int) (finalPrice * SELL_PRICE_MULTIPLIER));
+        return new PriceRecord((long) finalPrice, (long) (finalPrice * SELL_PRICE_MULTIPLIER));
     }
 
     @Nullable
@@ -106,14 +109,14 @@ public class ItemPriceCalculator {
             if (!(ingredientItem instanceof Material material)) continue;
             if ((!ingredient.isConsumedOnSuccess() || !ingredientItem.isTradeable)) continue;
 
-            Map.Entry<Integer, Integer> buySellKV = getPrice(material);
+            PriceRecord priceRecord = getPrice(material);
 
-            if (buySellKV == null) {
+            if (priceRecord == null || priceRecord.buyPrice() == null) {
                 basePrice = null;
                 break;
             }
 
-            basePrice += buySellKV.getKey() * ingredient.amount();
+            basePrice += Math.toIntExact(priceRecord.buyPrice() * ingredient.amount());
 
         }
 

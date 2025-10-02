@@ -1349,9 +1349,9 @@ public class RecipeRepository {
                         new ItemRecord(ItemId.RUNITE_AXE, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 75.0)), null
-                ), null)
+                ), null),
 
-                /*
+
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.BRONZE_PICKAXE.getId(), RecipeType.SMITHING_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 1)),
                         List.of(
@@ -1417,8 +1417,6 @@ public class RecipeRepository {
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 75.0)), null
                 ), null)
-*/
-
         );
     }
 }
