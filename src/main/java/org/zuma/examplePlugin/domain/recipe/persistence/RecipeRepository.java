@@ -884,7 +884,7 @@ public class RecipeRepository {
                                 new IngredientRecord(ItemId.BRONZE_BAR, 4, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
-                        new ItemRecord(ItemId.BRONZE_BODY, 5),
+                        new ItemRecord(ItemId.BRONZE_BODY, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 62)), null
                 ), null),

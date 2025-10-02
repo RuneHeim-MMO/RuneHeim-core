@@ -41,7 +41,7 @@ public class ItemFactory {
             case RANGED_WEAPON -> createRangedWeaponItem(meta, json);
             case RANGED_WEAPON_WITH_SOCKETS -> createRangedWeaponWithSockets(meta, json);
             case QUEST -> createQuestItem(meta, json);
-            case MATERIAL -> createMaterialItem(meta);
+            case MATERIAL -> createMaterialItem(meta, json);
             case POTION -> createPotionItem(meta, json);
             case FOOD -> createFoodItem(meta, json);
             case GEM -> createGemItem(meta, json);
@@ -487,8 +487,22 @@ public class ItemFactory {
         }
     }
 
-    private Material createMaterialItem(AbstractItemMeta meta) {
-        return new Material(meta);
+    private Material createMaterialItem(AbstractItemMeta meta, VersionedJson json) {
+        if (json == null) {
+            return new Material(meta);
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                MaterialMeta deserialized = new Gson().fromJson(json.meta(), MaterialMeta.class);
+                Material item = new Material(meta);
+
+                item.setBasePrice(deserialized.basePrice());
+
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
     }
 
     private Potion createPotionItem(AbstractItemMeta meta, @Nullable VersionedJson json) {

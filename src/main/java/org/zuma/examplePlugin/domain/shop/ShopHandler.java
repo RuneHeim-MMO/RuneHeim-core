@@ -20,6 +20,7 @@ public class ShopHandler {
     }
 
     public void initializeShops() {
+        ItemPriceCalculator.buildCache();
         repository.getAll().forEach(config -> {
             Shop newShop = factory.createShop(config);
             registry.registerShop(newShop.getId(), newShop);
