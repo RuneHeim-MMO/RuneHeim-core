@@ -10,9 +10,11 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.EquippableComponent;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
@@ -65,6 +67,19 @@ public class MetaGenerator {
         meta.setAttributeModifiers(emptyModifiers);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_DYE);
+
+        if (itemType instanceof EquipableItemType equipableItemType && equipableItemType.getEquipmentSlot() != null) {
+            EquippableComponent eq = meta.getEquippable(); // snapshot
+            eq.setSlot(equipableItemType.getEquipmentSlot());
+
+            if (equipableItemType.getEquipableModel() != null) {
+                eq.setModel(NamespacedKey.minecraft(equipableItemType.getEquipableModel()));
+            }
+
+            meta.setEquippable(eq);
+        }
+
+
         item.setItemMeta(meta);
     }
 

@@ -1,6 +1,8 @@
 package org.zuma.examplePlugin.domain.item.base;
 
+import org.bukkit.inventory.EquipmentSlot;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.core.interfaces.Restrictable;
 import org.zuma.examplePlugin.domain.item.constants.EquipableType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
@@ -18,6 +20,12 @@ public abstract class EquipableItemType extends AbstractItemType implements Rest
     private final List<SkillModifier> skillModifiers = new ArrayList<>();
     private final List<SkillRequirement> requirements = new ArrayList<>();
     private final List<String> questRequirements = new ArrayList<>();
+
+    @Nullable
+    private EquipmentSlot equipmentSlot;
+
+    @Nullable
+    private String equipableModel;
 
     public EquipableItemType(AbstractItemMeta meta) {
         super(meta);
@@ -78,5 +86,18 @@ public abstract class EquipableItemType extends AbstractItemType implements Rest
     }
 
     public abstract EquipableType getEquipableType();
+
+    public void setEquipableData(@Nullable EquipmentSlot equipmentSlot, @Nullable String model) {
+        this.equipmentSlot = equipmentSlot;
+        this.equipableModel = model;
+    }
+
+    public @Nullable EquipmentSlot getEquipmentSlot() {
+        return equipmentSlot;
+    }
+
+    public @Nullable String getEquipableModel() {
+        return equipableModel;
+    }
 
 }

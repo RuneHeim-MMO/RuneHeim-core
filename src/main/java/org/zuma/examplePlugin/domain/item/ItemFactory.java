@@ -117,6 +117,7 @@ public class ItemFactory {
                 item.addSkillRequirements(deserialized.requirements());
                 item.addQuestRequirements(deserialized.requiredQuests());
                 item.addSkillModifiers(deserialized.skillModifiers());
+                item.setEquipableData(deserialized.equipmentSlot(), deserialized.equipableModel());
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
@@ -138,6 +139,7 @@ public class ItemFactory {
                 item.addSkillRequirements(deserialized.requirements());
                 item.addQuestRequirements(deserialized.requiredQuests());
                 item.addSkillModifiers(deserialized.skillModifiers());
+                item.setEquipableData(deserialized.equipmentSlot(), deserialized.equipableModel());
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
@@ -185,6 +187,7 @@ public class ItemFactory {
                 item.addSkillRequirements(deserialized.equipableTypeMeta().requirements());
                 item.addQuestRequirements(deserialized.equipableTypeMeta().requiredQuests());
                 item.addSkillModifiers(deserialized.equipableTypeMeta().skillModifiers());
+                item.setEquipableData(deserialized.equipableTypeMeta().equipmentSlot(), deserialized.equipableTypeMeta().equipableModel());
                 item.setDefaultStateTemplate(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
                 return item;
             }
@@ -212,6 +215,7 @@ public class ItemFactory {
                 item.addSkillRequirements(deserialized.equipableTypeMeta().requirements());
                 item.addQuestRequirements(deserialized.equipableTypeMeta().requiredQuests());
                 item.addSkillModifiers(deserialized.equipableTypeMeta().skillModifiers());
+
                 item.setDefaultStateTemplate(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
                 return item;
             }
@@ -378,6 +382,8 @@ public class ItemFactory {
                 item.addSkillRequirements(deserialized.requirements());
                 item.addQuestRequirements(deserialized.requiredQuests());
                 item.addSkillModifiers(deserialized.skillModifiers());
+                item.setEquipableData(deserialized.equipmentSlot(), deserialized.equipableModel());
+
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
@@ -400,6 +406,8 @@ public class ItemFactory {
                 item.addSkillRequirements(deserialized.requirements());
                 item.addQuestRequirements(deserialized.requiredQuests());
                 item.addSkillModifiers(deserialized.skillModifiers());
+                item.setEquipableData(deserialized.equipmentSlot(), deserialized.equipableModel());
+
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
@@ -421,6 +429,8 @@ public class ItemFactory {
                 item.addSkillRequirements(deserialized.requirements());
                 item.addQuestRequirements(deserialized.requiredQuests());
                 item.addSkillModifiers(deserialized.skillModifiers());
+                item.setEquipableData(deserialized.equipmentSlot(), deserialized.equipableModel());
+
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
@@ -442,6 +452,7 @@ public class ItemFactory {
                 item.addSkillRequirements(deserialized.requirements());
                 item.addQuestRequirements(deserialized.requiredQuests());
                 item.addSkillModifiers(deserialized.skillModifiers());
+
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
@@ -463,6 +474,7 @@ public class ItemFactory {
                 item.addSkillRequirements(deserialized.requirements());
                 item.addQuestRequirements(deserialized.requiredQuests());
                 item.addSkillModifiers(deserialized.skillModifiers());
+
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
@@ -561,6 +573,7 @@ public class ItemFactory {
                 item.addQuestRequirements(deserialized.equipableTypeMeta().requiredQuests());
                 item.addSkillModifiers(deserialized.equipableTypeMeta().skillModifiers());
                 item.setDefaultStateTemplate(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
+
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
@@ -587,7 +600,9 @@ public class ItemFactory {
                 item.addSkillModifiers(deserialized.equipableTypeMeta().skillModifiers());
                 item.addSkillRequirements(deserialized.equipableTypeMeta().requirements());
                 item.addQuestRequirements(deserialized.equipableTypeMeta().requiredQuests());
+                item.setEquipableData(deserialized.equipableTypeMeta().equipmentSlot(), deserialized.equipableTypeMeta().equipableModel());
                 item.setDefaultStateTemplate(new GearGemSocketsState(new GearGemSocketsStateMeta(gemIds, deserialized.gemSlots())));
+
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());

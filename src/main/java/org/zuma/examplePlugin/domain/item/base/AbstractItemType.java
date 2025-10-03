@@ -49,8 +49,6 @@ public abstract class AbstractItemType {
     public StateType stateType;
     @Nullable
     public final String headTexture;
-    @Nullable
-    public final org.bukkit.Color leatherColor;
 
     public final NamespacedKey untradeableOwnerUUIDKey = PersistenceDataKey.UNTRADEABLE_OWNER_UUID.key(RuneQuestPlugin.getInstance());
     public final PersistentDataType<?, String> untradeableOwnerUUIDType = (PersistentDataType<?, String>) PersistenceDataKey.UNTRADEABLE_OWNER_UUID.getType();
@@ -64,7 +62,6 @@ public abstract class AbstractItemType {
         this.customModelData = meta.id();
         this.rarity = meta.rarity();
         this.headTexture = meta.headTexture();
-        this.leatherColor = meta.leatherColor();
         this.isTradeable = meta.isTradeable();
         this.stateType = null;
         this.typeLore = new ArrayList<>();
