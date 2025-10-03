@@ -98,7 +98,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         }
 
         // Get max Minecraft health for this entity
-        AttributeInstance attr = living.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        AttributeInstance attr = living.getAttribute(Attribute.MAX_HEALTH);
         double maxHealth = attr != null ? attr.getValue() : 20.0; // fallback
 
         if (maxHealth <= 0) maxHealth = 1.0;

@@ -188,7 +188,7 @@ public class HitListener implements Listener {
             if (hit != null && hit.getDamage() == 0) {
                 event.setCancelled(true); // Cancel knockback if hit is a miss
             }
-            AttributeInstance followRange = mob.getAttribute(Attribute.GENERIC_FOLLOW_RANGE);
+            AttributeInstance followRange = mob.getAttribute(Attribute.FOLLOW_RANGE);
             if (followRange != null) followRange.setBaseValue(100);
 
             // If player is in a vehicle, target vehicle

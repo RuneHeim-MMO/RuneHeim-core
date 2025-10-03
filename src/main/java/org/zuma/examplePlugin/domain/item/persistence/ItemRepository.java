@@ -568,9 +568,9 @@ public class ItemRepository {
 
                 // Materials
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.COPPER_ORE.asInt(), Material.COAL, ItemRarity.COMMON, "Copper Ore", List.of("Raw copper ore, ready to be smelted into metal."), null, null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(125), 1)),
+                        toVersionedJson(new MaterialMeta(80), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.TIN_ORE.asInt(), Material.COAL, ItemRarity.COMMON, "Tin Ore", List.of("Raw tin ore, ready to be smelted into metal."), null, null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(125), 1)),
+                        toVersionedJson(new MaterialMeta(60), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.COAL_ORE.asInt(), Material.COAL, ItemRarity.COMMON, "Coal Ore", List.of("Unrefined coal ore, useful as a fuel source."), null, null, true, 1.0),
                         toVersionedJson(new MaterialMeta(150), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.IRON_ORE.asInt(), Material.COAL, ItemRarity.COMMON, "Iron Ore", List.of("Heavy iron ore, a basic material for crafting."), null, null, true, 1.0),
@@ -580,7 +580,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ADAMANTITE_ORE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Adamantite Ore", List.of("Tough adamantite ore, used for elite armor and weapons."), null, null, true, 1.0),
                         toVersionedJson(new MaterialMeta(1500), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RUNITE_ORE.asInt(), Material.COAL, ItemRarity.RARE, "Runite Ore", List.of("Ancient runite ore, infused with magical properties."), null, null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(2000), 1)),
+                        toVersionedJson(new MaterialMeta(4000), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BRONZE_BAR.asInt(), Material.COAL, ItemRarity.COMMON, "Bronze Bar", List.of("Smelted bronze bar, used to forge basic equipment."), null, null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(0), 1)),
@@ -629,11 +629,11 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAPLE_LOG.asInt(), Material.ACACIA_LOG, ItemRarity.UNCOMMON, "Maple Log", List.of("A strong and versatile log with a reddish hue."), null, null, true, 1.0),
                         toVersionedJson(new MaterialMeta(400), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.YEW_LOG.asInt(), Material.DARK_OAK_LOG, ItemRarity.UNCOMMON, "Yew Log", List.of("A dense and durable wood prized in crafting."), null, null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(650), 1)),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAHOGANY_LOG.asInt(), Material.MANGROVE_LOG, ItemRarity.RARE, "Mahogany Log", List.of("A rich, dark wood valued for fine construction."), null, null, true, 1.0),
                         toVersionedJson(new MaterialMeta(850), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAHOGANY_LOG.asInt(), Material.MANGROVE_LOG, ItemRarity.RARE, "Mahogany Log", List.of("A rich, dark wood valued for fine construction."), null, null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(1250), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_LOG.asInt(), Material.CHERRY_LOG, ItemRarity.LEGENDARY, "Magic Log", List.of("Glows faintly with arcane energy, rare and powerful."), null, null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(1200), 1)),
+                        toVersionedJson(new MaterialMeta(1800), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ASHES.asInt(), Material.COAL, ItemRarity.COMMON, "Ashes", List.of("Fine powder left after fire consumes wood."), null, null, true, 1.0),
                         toVersionedJson(new MaterialMeta(1), 1)),

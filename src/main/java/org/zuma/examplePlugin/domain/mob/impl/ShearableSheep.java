@@ -39,7 +39,7 @@ public class ShearableSheep extends GenericCombatant {
                 DisguiseType.SHEEP, DROP_TABLES_WHEN_HAS_WOOL);
 
         HashMap<Attribute, Double> attributes = new HashMap<>();
-        attributes.put(Attribute.GENERIC_MOVEMENT_SPEED, walkSpeed);
+        attributes.put(Attribute.MOVEMENT_SPEED, walkSpeed);
 
         super.setAttributes(attributes);
         super.setBehavior(behavior);
