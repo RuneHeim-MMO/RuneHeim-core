@@ -84,7 +84,7 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.STEEL_BATTLEAXE.asInt(), 4, 120, ItemId.STEEL_BATTLEAXE.getBuyPrice(), ItemId.STEEL_BATTLEAXE.getSellPrice(), null, null),
 
                         new ShopItemConfig(ItemId.STEEL_MEDHELM.asInt(), 2, 30, ItemId.STEEL_MEDHELM.getBuyPrice(), ItemId.STEEL_MEDHELM.getSellPrice(), null, null),
-                        new ShopItemConfig(ItemId.STEEL_BODY.asInt(), 2, 30, ItemId.STEEL_BODY.getBuyPrice(), ItemId.STEEL_BODY.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.STEEL_CHAINBODY.asInt(), 2, 30, ItemId.STEEL_CHAINBODY.getBuyPrice(), ItemId.STEEL_CHAINBODY.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.STEEL_PLATELEGS.asInt(), 2, 30, ItemId.STEEL_PLATELEGS.getBuyPrice(), ItemId.STEEL_PLATELEGS.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.STEEL_BOOTS.asInt(), 2, 30, ItemId.STEEL_BOOTS.getBuyPrice(), ItemId.STEEL_BOOTS.getSellPrice(), null, null)
 
@@ -133,11 +133,11 @@ public class ShopRepository {
                 new ShopConfig(ShopId.ELDARWYN_ARMOR_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
                         new ShopItemConfig(ItemId.MITHRIL_BOOTS.asInt(), 2, 30, ItemId.MITHRIL_BOOTS.getBuyPrice(), ItemId.MITHRIL_BOOTS.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.MITHRIL_PLATELEGS.asInt(), 2, 30, ItemId.MITHRIL_PLATELEGS.getBuyPrice(), ItemId.MITHRIL_PLATELEGS.getSellPrice(), null, null),
-                        new ShopItemConfig(ItemId.MITHRIL_BODY.asInt(), 2, 30, ItemId.MITHRIL_BODY.getBuyPrice(), ItemId.MITHRIL_BODY.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.MITHRIL_CHAINBODY.asInt(), 2, 30, ItemId.MITHRIL_CHAINBODY.getBuyPrice(), ItemId.MITHRIL_CHAINBODY.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.MITHRIL_MEDHELM.asInt(), 2, 30, ItemId.MITHRIL_MEDHELM.getBuyPrice(), ItemId.MITHRIL_MEDHELM.getSellPrice(), null, null),
 
                         new ShopItemConfig(ItemId.ADAMANTITE_PLATELEGS.asInt(), 1, 3600 * 2, ItemId.ADAMANTITE_PLATELEGS.getBuyPrice(), ItemId.ADAMANTITE_PLATELEGS.getSellPrice(), null, null),
-                        new ShopItemConfig(ItemId.ADAMANTITE_BODY.asInt(), 1, 3600 * 2, ItemId.ADAMANTITE_BODY.getBuyPrice(), ItemId.ADAMANTITE_BODY.getSellPrice(), null, null)
+                        new ShopItemConfig(ItemId.ADAMANTITE_CHAINBODY.asInt(), 1, 3600 * 2, ItemId.ADAMANTITE_CHAINBODY.getBuyPrice(), ItemId.ADAMANTITE_CHAINBODY.getSellPrice(), null, null)
                 ))), 1)),
 
                 new ShopConfig(ShopId.SAHARIJIN_FISHING_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
