@@ -1337,6 +1337,80 @@ public class ItemRepository {
                                         null), null, 1), 1)
                 ),
 
+                // Armor -- chainbody
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.BRONZE_CHAINBODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Bronze Chainbody", List.of("Basic bronze chainbody offering minimal protection."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new EquipableTypeMeta(EquipmentSlot.CHEST, "bronze_chainbody", null,
+                                        List.of(
+                                                new Modifier(ModifierType.DEFENCE_STAB, 4),
+                                                new Modifier(ModifierType.DEFENCE_SLASH, 6),
+                                                new Modifier(ModifierType.DEFENCE_CRUSH, 5)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1)),
+                                        null)
+                                , 1)
+                ),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.IRON_CHAINBODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Iron Chainbody", List.of("Sturdy iron chainbody for reliable defense."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new EquipableTypeMeta(EquipmentSlot.CHEST, "iron_chainbody", null,
+                                        List.of(
+                                                new Modifier(ModifierType.DEFENCE_STAB, 8),
+                                                new Modifier(ModifierType.DEFENCE_SLASH, 11),
+                                                new Modifier(ModifierType.DEFENCE_CRUSH, 9)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 1)),
+                                        null)
+                                , 1)
+                ),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STEEL_CHAINBODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Steel Chainbody", List.of("Tough steel chainbody, ideal for frontline combat."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new EquipableTypeMeta(EquipmentSlot.CHEST, "steel_chainbody", null,
+                                        List.of(
+                                                new Modifier(ModifierType.DEFENCE_STAB, 13),
+                                                new Modifier(ModifierType.DEFENCE_SLASH, 16),
+                                                new Modifier(ModifierType.DEFENCE_CRUSH, 15)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 5)),
+                                        null)
+                                , 1)
+                ),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MITHRIL_CHAINBODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.UNCOMMON, "Mithril Chainbody", List.of("Lightweight mithril chainbody balancing agility and defense."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new EquipableTypeMeta(EquipmentSlot.CHEST, "mithril_chainbody", null,
+                                        List.of(
+                                                new Modifier(ModifierType.DEFENCE_STAB, 20),
+                                                new Modifier(ModifierType.DEFENCE_SLASH, 23),
+                                                new Modifier(ModifierType.DEFENCE_CRUSH, 22)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 20)),
+                                        null)
+                                , 1)
+                ),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANTITE_CHAINBODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.UNCOMMON, "Adamantite Chainbody", List.of("Heavy adamantite chainbody offering superior protection."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new EquipableTypeMeta(EquipmentSlot.CHEST, "adamant_chainbody", null,
+                                        List.of(
+                                                new Modifier(ModifierType.DEFENCE_STAB, 28),
+                                                new Modifier(ModifierType.DEFENCE_SLASH, 27),
+                                                new Modifier(ModifierType.DEFENCE_CRUSH, 24)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 30)),
+                                        null)
+                                , 1)
+                ),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNITE_CHAINBODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.RARE, "Runite Chainbody", List.of("Runite chainbody reinforced and enchanted for elite defense."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new SocketedEquipableMeta(new EquipableTypeMeta(EquipmentSlot.CHEST, "runite_chainbody", null,
+                                        List.of(
+                                                new Modifier(ModifierType.DEFENCE_STAB, 34),
+                                                new Modifier(ModifierType.DEFENCE_SLASH, 35),
+                                                new Modifier(ModifierType.DEFENCE_CRUSH, 34)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.DEFENCE, 40)),
+                                        null), null, 1), 1)
+                ),
+
+
                 // Armor - platelegs
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.LEATHER_LEGGINGS.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Leather Chaps", List.of("Basic leather leg armor."), HeadTexture.BRONZE_MED_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
