@@ -31,4 +31,12 @@ public class VanillaDamageDisabler implements Listener {
         }
     }
 
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
+    public void onDrownDamage(EntityDamageEvent event) {
+        if (event.getCause() == EntityDamageEvent.DamageCause.DROWNING) {
+            event.setCancelled(true);
+        }
+    }
+
 }

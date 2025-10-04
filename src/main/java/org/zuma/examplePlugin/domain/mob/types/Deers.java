@@ -20,7 +20,7 @@ public class Deers {
                 null,
                 MobBehaviors.DEER_BABY.getBehavior(),
                 "babydeer",
-                0.36, false, true, 8,
+                0.36, false, false, 8,
                 List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
         ));
 

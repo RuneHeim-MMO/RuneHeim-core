@@ -96,5 +96,36 @@ public class Wolves {
         ));
 
 
+        registry.register(MobType.TUNDRA_WOLF_BASE_45.getId(), () -> new GenericCombatant(
+                "Tundra Wolf", null,
+                getBaseSkills(45),
+                null,
+                MobBehaviors.WOLF.getBehavior(),
+                "yungwilder_isles_wolf_gray_dark_alpha",
+                0.33, true, false, 40,
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
+        ));
+
+        registry.register(MobType.TUNDRA_WOLF_BASE_48.getId(), () -> new GenericCombatant(
+                "Tundra Wolf", null,
+                getBaseSkills(48),
+                null,
+                MobBehaviors.WOLF.getBehavior(),
+                "yungwilder_isles_wolf_gray_light_alpha",
+                0.32, true, false, 43,
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
+        ));
+
+        registry.register(MobType.TUNDRA_WOLF_BASE_47.getId(), () -> new GenericCombatant(
+                "Tundra Wolf", null,
+                getBaseSkills(47),
+                null,
+                MobBehaviors.WOLF.getBehavior(),
+                "yungwilder_isles_wolf_blonde_alpha",
+                0.34, true, false, 42,
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
+        ));
+
+
     }
 }

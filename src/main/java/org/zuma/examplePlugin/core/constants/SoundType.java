@@ -317,6 +317,12 @@ public enum SoundType {
     DEER_DEATH_1("ENTITY_COW_DEATH", false, 1.0f, 1.3f),
     DEER_ATTACK_1("ENTITY_LLAMA_SPIT", false, 0.8f, 1.2f),
 
+
+    OCELOT_AMBIENT_1("ENTITY_OCELOT_AMBIENT", false, 0.95f, 0.95f),
+    OCELOT_HURT_1("ENTITY_OCELOT_HURT", false, 0.95f, 0.95f),
+    OCELOT_DEATH_1("ENTITY_OCELOT_DEATH", false, 0.95f, 0.95f),
+    OCELOT_ATTACK_1("ENTITY_CAT_HISS", false, 0.95f, 0.95f),
+
     COW_AMBIENT_1("ENTITY_COW_AMBIENT", false, 0.8f, 1.0f),
     COW_HURT_1("ENTITY_COW_HURT", false, 0.9f, 1.2f),
     COW_DEATH_1("ENTITY_COW_DEATH", false, 1.0f, 1.1f),
@@ -373,7 +379,7 @@ public enum SoundType {
     FOX_DEATH("ENTITY_FOX_DEATH", false, 1.0f, 1.0f),
 
     FROG_AMBIENT("ENTITY_FROG_AMBIENT", false, 0.9f, 0.9f),
-    FROG_ATTACK("ENTITY_FROG_STEP", false, 1.0f, 1.1f),
+    FROG_ATTACK("ENTITY_FROG_EAT", false, 1.0f, 1.1f),
     FROG_HURT("ENTITY_FROG_HURT", false, 1.0f, 1.0f),
     FROG_DEATH("ENTITY_FROG_DEATH", false, 1.0f, 0.95f),
 

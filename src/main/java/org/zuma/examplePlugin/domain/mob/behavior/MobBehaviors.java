@@ -181,6 +181,14 @@ public enum MobBehaviors {
             List.of(SoundType.DEER_DEATH_1, SoundType.DEER_DEATH_2)
     )),
 
+    OCELOT((pitchModifier) -> new MobBehavior(
+            pitchModifier, List.of(SoundType.OCELOT_AMBIENT_1),
+            List.of(),
+            List.of(SoundType.OCELOT_ATTACK_1),
+            List.of(SoundType.OCELOT_HURT_1),
+            List.of(SoundType.OCELOT_DEATH_1)
+    )),
+
     DEER_BABY((pitchModifier) -> new MobBehavior(
             pitchModifier, List.of(SoundType.DEER_AMBIENT_1, SoundType.DEER_AMBIENT_2),
             List.of(),

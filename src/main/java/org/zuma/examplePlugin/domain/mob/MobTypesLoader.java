@@ -37,6 +37,8 @@ public class MobTypesLoader {
         InteractiveMobs.registerMobs(registry);
         QuestMobs.registerMobs(registry);
         Decorations.registerMobs(registry);
+        Ocelots.registerMobs(registry);
+        Frogs.registerMobs(registry);
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Loaded " + registry.getAvailable().size() + " mob types.");
 
