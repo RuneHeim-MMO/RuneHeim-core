@@ -30,6 +30,7 @@ import org.zuma.examplePlugin.domain.item.helpers.lore.*;
 import org.zuma.examplePlugin.domain.item.impl.EmptyContainer;
 import org.zuma.examplePlugin.domain.item.impl.Mount;
 import org.zuma.examplePlugin.domain.item.impl.consumable.Food;
+import org.zuma.examplePlugin.domain.item.impl.consumable.Potion;
 import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
 import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFood;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
@@ -114,6 +115,10 @@ public class MetaGenerator {
 
         if (itemType instanceof Food food) {
             lore.addAll(new FoodLore(food).getLore());
+        }
+
+        if (itemType instanceof Potion potion) {
+            lore.addAll(new PotionLore(potion).getLore());
         }
 
         if (itemType instanceof EquipableItemType equipable) {
