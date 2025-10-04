@@ -16,6 +16,7 @@ public enum Icon {
     MYTHIC("⛧"),
     DIVINE("⟴"),
 
+    CLEAVE("⣯"),
     BUCKET("⽻"),
     ANVIL("⮯"),
     BOOTS("⭀"),

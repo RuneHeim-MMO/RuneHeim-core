@@ -1655,7 +1655,8 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 4),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 3)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 3),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 1)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 1)),
                                         null)
@@ -1666,7 +1667,8 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 6),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 5)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 5),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 1)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 1)),
                                         null)
@@ -1677,7 +1679,8 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 10),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 9)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 9),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 1)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 5)),
                                         null)
@@ -1688,7 +1691,8 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 16),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 14)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 14),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 1)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 20)),
                                         null)
@@ -1699,7 +1703,8 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 21),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 19)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 19),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 1)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 30)),
                                         null), 1)
@@ -1709,7 +1714,8 @@ public class ItemRepository {
                                 new SocketedWeaponEquipableMeta(new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 30),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 29)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 29),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 1)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 40)),
                                         null), null, 1)
@@ -1722,7 +1728,8 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 3),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 2)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 2),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 1)),
                                         null), 1)
@@ -1732,7 +1739,8 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 5),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 3)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 3),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 1)),
                                         null)
@@ -1743,7 +1751,8 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 8),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 6)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 6),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 5)),
                                         null)
@@ -1754,7 +1763,8 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 14),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 10)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 10),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 20)),
                                         null)
@@ -1765,7 +1775,8 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 18),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 14)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 14),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 30)),
                                         null)
@@ -1776,7 +1787,8 @@ public class ItemRepository {
                                 new SocketedWeaponEquipableMeta(new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 24),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 19)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 19),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 40)),
                                         null), null, 1), 1)
@@ -1789,7 +1801,8 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 5),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 6),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 6)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 6),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 0.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 1)),
                                         null)
@@ -1801,7 +1814,8 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 8),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 9),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 9)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 9),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 0.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 1)),
                                         null)
@@ -1813,7 +1827,8 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 12),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 13),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 13)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 13),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 0.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 5)),
                                         null)
@@ -1825,7 +1840,8 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 18),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 19),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 20)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 20),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 0.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 20)),
                                         null)
@@ -1837,7 +1853,8 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 23),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 24),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 25)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 25),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 0.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 30)),
                                         null)
@@ -1849,7 +1866,8 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 32),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 33),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 34)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 34),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 0.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 40)),
                                         null), null, 1),

@@ -3,14 +3,20 @@ package org.zuma.examplePlugin.domain.combat;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.domain.combat.constants.AttackType;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.SpecialAttackSmokeEffect;
 import org.zuma.examplePlugin.domain.hud.HudService;
+import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
+import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.combat.RuneEntityDamageEntityEvent;
 
@@ -68,17 +74,48 @@ public class HitHandler {
         }
     }
 
+    public void applySplashHit(RunePlayer attacker, AttackType type, boolean isSpecialAttack, int coneDeg, double radius) {
+        Player player = attacker.asBukkitPlayer();
+        Vector direction = player.getLocation().getDirection(); // no normalization needed
+        Location eyeLocation = player.getEyeLocation();
+
+        double radiusWithBaseReach = radius + 3; // 3 blocks is base reach
+        double radiusSquared = radiusWithBaseReach * radiusWithBaseReach;
+        double coneDotThreshold = Math.cos(Math.toRadians(coneDeg / 2.0));
+
+        List<Entity> nearbyEntities = player.getNearbyEntities(radiusWithBaseReach, radiusWithBaseReach, radiusWithBaseReach);
+        for (Entity entity : nearbyEntities) {
+            AbstractMob matchingMob = RuneQuestPlugin.getMobRegistry().getMob(entity);
+            if (!(matchingMob instanceof CombatEntity combatMob)) continue;
+
+            Vector toEntity = entity.getLocation().toVector().subtract(eyeLocation.toVector());
+            if (toEntity.lengthSquared() > radiusSquared) continue; // skip if outside radius
+
+            double dot = toEntity.dot(direction);
+            double magnitude = toEntity.length() * direction.length(); // only magnitude needed once
+            if (dot / magnitude <= coneDotThreshold) continue; // skip if not in front
+
+            Hit splashHit = HitCalculator.getNewHit(attacker, combatMob, type, isSpecialAttack, true);
+            applyHit(attacker, combatMob, splashHit);
+        }
+    }
+
     @Nullable
     public Hit handleMeleeHit(CombatEntity attacker, CombatEntity defender) {
         AttackType type = AttackType.MELEE;
         boolean isSpecialAttack = attacker.isSpecialAttacking();
-        Hit hit = HitCalculator.getNewHit(attacker, defender, type, isSpecialAttack);
+        Hit hit = HitCalculator.getNewHit(attacker, defender, type, isSpecialAttack, false);
+
 
         RuneEntityDamageEntityEvent event = new RuneEntityDamageEntityEvent(attacker, defender, hit, type);
         Bukkit.getServer().getPluginManager().callEvent(event);
 
         if (event.isCancelled()) {
             return null;
+        }
+
+        if (attacker.getEntity() instanceof Player) {
+            applySplashHit((RunePlayer) attacker, type, isSpecialAttack, 60, (int) HitCalculator.getEntityModifierLevel(attacker, ModifierType.CLEAVE_DISTANCE));
         }
 
         applyHit(attacker, defender, hit);
@@ -89,7 +126,7 @@ public class HitHandler {
     public Hit handleRangedHit(CombatEntity attacker, CombatEntity defender) {
         AttackType type = AttackType.RANGED;
         boolean isSpecialAttack = attacker.isSpecialAttacking();
-        Hit hit = HitCalculator.getNewHit(attacker, defender, type, isSpecialAttack);
+        Hit hit = HitCalculator.getNewHit(attacker, defender, type, isSpecialAttack, false);
 
         RuneEntityDamageEntityEvent newEvent = new RuneEntityDamageEntityEvent(attacker, defender, hit, type);
         Bukkit.getServer().getPluginManager().callEvent(newEvent);
@@ -106,7 +143,7 @@ public class HitHandler {
     public Hit handleMagicHit(CombatEntity attacker, CombatEntity defender) {
         AttackType type = AttackType.MAGIC;
         boolean isSpecialAttack = attacker.isSpecialAttacking();
-        Hit hit = HitCalculator.getNewHit(attacker, defender, type, isSpecialAttack);
+        Hit hit = HitCalculator.getNewHit(attacker, defender, type, isSpecialAttack, false);
 
         RuneEntityDamageEntityEvent newEvent = new RuneEntityDamageEntityEvent(attacker, defender, hit, type);
         Bukkit.getServer().getPluginManager().callEvent(newEvent);
@@ -124,14 +161,21 @@ public class HitHandler {
 
         if (isSpecialAttack) {
             attacker.onSpecialAttack(hit);
-            handleSpecialHitSound(attacker, hit);
-            EffectHandler.playAt(defender.getEntity().getLocation(), new SpecialAttackSmokeEffect(hit.getAttackType()));
+
+            if (!hit.isSplashHit()) {
+                handleSpecialHitSound(attacker, hit);
+                EffectHandler.playAt(defender.getEntity().getLocation(), new SpecialAttackSmokeEffect(hit.getAttackType()));
+            }
         }
 
         defender.registerHit(hit);
         attacker.onHitLand(hit);
         handleHitSound(defender, hit);
         HudService.showDamageBubble(defender, hit);
+
+        if (hit.getDamage() > 0 && defender.getEntity() instanceof LivingEntity livingDefender) {
+            livingDefender.damage(0);
+        }
 
         showHitDebugInfo(attacker, defender, hit);
     }
@@ -173,7 +217,9 @@ public class HitHandler {
                     .append(Component.text(String.format("%.3f", hit.getSuccessHitChance()) + " %", NamedTextColor.GREEN))
                     .append(Component.text(" | ", NamedTextColor.GRAY))
                     .append(Component.text("Type: ", NamedTextColor.YELLOW))
-                    .append(Component.text(hit.getAttackType().toString(), NamedTextColor.AQUA));
+                    .append(Component.text(hit.getAttackType().toString(), NamedTextColor.AQUA))
+                    .append(Component.text(" | ", NamedTextColor.GRAY))
+                    .append(hit.isSplashHit() ? Component.text(" S!", NamedTextColor.AQUA) : Component.empty());
 
             attackerPlayer.sendMessage(message);
         }
@@ -190,7 +236,10 @@ public class HitHandler {
                     .append(Component.text(String.format("%.2f", hit.getSuccessHitChance()) + " %", NamedTextColor.GREEN))
                     .append(Component.text(" | ", NamedTextColor.GRAY))
                     .append(Component.text("Type: ", NamedTextColor.YELLOW))
-                    .append(Component.text(hit.getAttackType().toString(), NamedTextColor.AQUA));
+                    .append(Component.text(hit.getAttackType().toString(), NamedTextColor.AQUA))
+                    .append(Component.text(" | ", NamedTextColor.GRAY))
+                    .append(hit.isSplashHit() ? Component.text(" S!", NamedTextColor.AQUA) : Component.empty());
+
 
             defenderPlayer.sendMessage(message);
         }

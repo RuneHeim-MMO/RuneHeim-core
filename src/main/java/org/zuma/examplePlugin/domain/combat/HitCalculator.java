@@ -18,7 +18,7 @@ public class HitCalculator {
     private static final double MAX_HIT_FLOOR_OFFSET = 0.5;
     private static final double HIT_CHANCE_OFFSET = 2.0;
 
-    private static int getEntitySkillLevel(CombatEntity entity, SkillType type) {
+    public static int getEntitySkillLevel(CombatEntity entity, SkillType type) {
         Skill matchingSkill = entity.getSkills().get(type);
 
         if (matchingSkill == null) {
@@ -28,7 +28,7 @@ public class HitCalculator {
         return matchingSkill.getLevelWithBonuses();
     }
 
-    private static double getEntityModifierLevel(CombatEntity entity, ModifierType type) {
+    public static double getEntityModifierLevel(CombatEntity entity, ModifierType type) {
         Modifier matchingModifier = entity.getModifiers().get(type);
 
         if (matchingModifier == null) {
@@ -57,7 +57,7 @@ public class HitCalculator {
         return hitType;
     }
 
-    public static Hit getNewHit(CombatEntity attacker, CombatEntity defender, AttackType type, boolean isSpecialAttack) {
+    public static Hit getNewHit(CombatEntity attacker, CombatEntity defender, AttackType type, boolean isSpecialAttack, boolean isSplashHit) {
         Map.Entry<Boolean, Double> hitRollResult = isHitSuccess(attacker, defender, type, isSpecialAttack);
         boolean hitSuccess = hitRollResult.getKey();
         double hitChance = hitRollResult.getValue();
@@ -67,16 +67,20 @@ public class HitCalculator {
             maxHit *= 1.15;
         }
 
+        if (isSplashHit) {
+            maxHit *= 0.5;
+        }
+
         if (hitSuccess) {
             int baseDamage = (int) (Math.random() * (maxHit + 1));
             int damage = Math.min(defender.getHealth(), baseDamage);
 
-            return new Hit(attacker, defender, type, damage, getHitType(defender, damage), (int) maxHit, hitChance, isSpecialAttack);
+            return new Hit(attacker, defender, type, damage, getHitType(defender, damage), (int) maxHit, hitChance, isSpecialAttack, isSplashHit);
         }
 
 
         int damage = Math.min(defender.getHealth(), 0);
-        return new Hit(attacker, defender, type, damage, getHitType(defender, damage), (int) maxHit, hitChance, isSpecialAttack);
+        return new Hit(attacker, defender, type, damage, getHitType(defender, damage), (int) maxHit, hitChance, isSpecialAttack, isSplashHit);
 
     }
 
