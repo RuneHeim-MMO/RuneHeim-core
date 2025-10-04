@@ -596,31 +596,31 @@ public class ItemRepository {
                         toVersionedJson(new MaterialMeta(0), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_CHICKEN.asInt(), Material.COAL, ItemRarity.COMMON, "Raw Chicken", List.of("A slab of uncooked poultry, still fresh."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(20), 1)),
+                        toVersionedJson(new MaterialMeta(150), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_MEAT.asInt(), Material.COAL, ItemRarity.COMMON, "Raw Meat", List.of("Uncooked cut of meat, ideal for hearty meals."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(20), 1)),
+                        toVersionedJson(new MaterialMeta(150), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_HERRING.asInt(), Material.COAL, ItemRarity.COMMON, "Raw Herring", List.of("A slim, slippery river fish."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(20), 1)),
+                        toVersionedJson(new MaterialMeta(150), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_MINNOW.asInt(), Material.COAL, ItemRarity.COMMON, "Raw Minnow", List.of("A tiny fish, barely worth a bite."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(10), 1)),
+                        toVersionedJson(new MaterialMeta(100), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_TROUT.asInt(), Material.COAL, ItemRarity.COMMON, "Raw Trout", List.of("Caught fresh from the stream."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(60), 1)),
+                        toVersionedJson(new MaterialMeta(250), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_SALMON.asInt(), Material.COAL, ItemRarity.COMMON, "Raw Salmon", List.of("Firm and pink, ready to roast."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(70), 1)),
+                        toVersionedJson(new MaterialMeta(300), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_TUNA.asInt(), Material.COAL, ItemRarity.COMMON, "Raw Tuna", List.of("Heavy and dense sea catch."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(90), 1)),
+                        toVersionedJson(new MaterialMeta(320), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_CRAWLER.asInt(), Material.COAL, ItemRarity.COMMON, "Raw Crawler", List.of("Squirmy shelled creature from the reef."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(120), 1)),
+                        toVersionedJson(new MaterialMeta(420), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_PIKE.asInt(), Material.COAL, ItemRarity.COMMON, "Raw Pike", List.of("Aggressive lake fish with sharp bones."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(140), 1)),
+                        toVersionedJson(new MaterialMeta(500), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_EEL.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Raw Eel", List.of("Slippery and tough to handle."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(160), 1)),
+                        toVersionedJson(new MaterialMeta(700), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_SHARK.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Raw Shark", List.of("Muscle-bound predator, not to be eaten raw."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(200), 1)),
+                        toVersionedJson(new MaterialMeta(1500), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_TURTLE.asInt(), Material.COAL, ItemRarity.RARE, "Raw Turtle", List.of("Its thick shell guards rich meat inside."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(210), 1)),
+                        toVersionedJson(new MaterialMeta(1600), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_RAY.asInt(), Material.COAL, ItemRarity.RARE, "Raw Ray", List.of("Soft flesh beneath leathery wings."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(220), 1)),
+                        toVersionedJson(new MaterialMeta(1900), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.LOG.asInt(), Material.OAK_LOG, ItemRarity.COMMON, "Log", List.of("A basic log used for crafting and building."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(150), 1)),
@@ -1055,7 +1055,7 @@ public class ItemRepository {
 
 
                 // Armor - Helmets
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.COIF.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Coif", List.of("Simple leather helmet offering minimal head protection."), HeadTexture.BRONZE_MED_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.COIF.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Coif", List.of("Simple leather helmet offering minimal head protection."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(EquipmentSlot.HEAD, "coif", null,
                                         List.of(
@@ -1069,7 +1069,7 @@ public class ItemRepository {
                                         null), 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.COWL.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Cowl", List.of("A light hood offering minimal protection."), HeadTexture.BRONZE_MED_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.COWL.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Cowl", List.of("A light hood offering minimal protection."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(EquipmentSlot.HEAD, "cowl", null,
                                         List.of(
@@ -1083,58 +1083,58 @@ public class ItemRepository {
                                         null), 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.BRONZE_MEDHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Bronze Med Helm", List.of("Simple bronze helmet offering minimal head protection."), HeadTexture.BRONZE_MED_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.BRONZE_MEDHELM.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Bronze Med Helm", List.of("Simple bronze helmet offering minimal head protection."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
-                                new EquipableTypeMeta(null, null, null,
+                                new EquipableTypeMeta(EquipmentSlot.HEAD, "bronze_med_helm", null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 1), new Modifier(ModifierType.DEFENCE_SLASH, 1), new Modifier(ModifierType.DEFENCE_CRUSH, 1)),
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 1)),
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.IRON_MEDHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Iron Med Helm", List.of("Sturdy iron helmet to guard against blows."), HeadTexture.IRON_MED_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.IRON_MEDHELM.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Iron Med Helm", List.of("Sturdy iron helmet to guard against blows."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
-                                new EquipableTypeMeta(null, null, null,
+                                new EquipableTypeMeta(EquipmentSlot.HEAD, "iron_med_helm", null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 3), new Modifier(ModifierType.DEFENCE_SLASH, 4), new Modifier(ModifierType.DEFENCE_CRUSH, 2)),
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 1)),
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STEEL_MEDHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Steel Med Helm", List.of("Well-crafted steel helmet for enhanced defense."), HeadTexture.STEEL_MED_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STEEL_MEDHELM.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Steel Med Helm", List.of("Well-crafted steel helmet for enhanced defense."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
-                                new EquipableTypeMeta(null, null, null,
+                                new EquipableTypeMeta(EquipmentSlot.HEAD, "steel_med_helm", null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 5), new Modifier(ModifierType.DEFENCE_SLASH, 6), new Modifier(ModifierType.DEFENCE_CRUSH, 5)),
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 5)),
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MITHRIL_MEDHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.UNCOMMON, "Mithril Med Helm", List.of("Lightweight mithril helmet, combining agility and defense."), HeadTexture.MITHRIL_MED_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MITHRIL_MEDHELM.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.UNCOMMON, "Mithril Med Helm", List.of("Lightweight mithril helmet, combining agility and defense."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
-                                new EquipableTypeMeta(null, null, null,
+                                new EquipableTypeMeta(EquipmentSlot.HEAD, "mithril_med_helm", null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 8), new Modifier(ModifierType.DEFENCE_SLASH, 9), new Modifier(ModifierType.DEFENCE_CRUSH, 7)),
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 20)),
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANT_MEDHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.UNCOMMON, "Adamantite Med Helm", List.of("Heavy adamantite helmet, favored by elite warriors."), HeadTexture.ADAMANT_MED_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANT_MEDHELM.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.UNCOMMON, "Adamantite Med Helm", List.of("Heavy adamantite helmet, favored by elite warriors."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
-                                new EquipableTypeMeta(null, null, null,
+                                new EquipableTypeMeta(EquipmentSlot.HEAD, "adamant_med_helm", null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 12), new Modifier(ModifierType.DEFENCE_SLASH, 13), new Modifier(ModifierType.DEFENCE_CRUSH, 11)),
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 30)),
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNE_MEDHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.RARE, "Runite Med Helm", List.of("Runite helmet radiating magical protection."), HeadTexture.RUNE_MED_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNE_MEDHELM.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.RARE, "Runite Med Helm", List.of("Runite helmet radiating magical protection."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
-                                new SocketedEquipableMeta(new EquipableTypeMeta(null, null, null,
+                                new SocketedEquipableMeta(new EquipableTypeMeta(EquipmentSlot.HEAD, "rune_med_helm", null,
                                         List.of(new Modifier(ModifierType.DEFENCE_STAB, 18), new Modifier(ModifierType.DEFENCE_SLASH, 19), new Modifier(ModifierType.DEFENCE_CRUSH, 17)),
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 40)),
                                         null), null, 1)
                                 , 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.BRONZE_FULLHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Bronze Full Helm", List.of("A full bronze helmet that offers basic protection."), HeadTexture.BRONZE_FULL_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.BRONZE_FULLHELM.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Bronze Full Helm", List.of("A full bronze helmet that offers basic protection."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
-                                new EquipableTypeMeta(null, null, null,
+                                new EquipableTypeMeta(EquipmentSlot.HEAD, "bronze_full_helm", null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 2),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 3),
@@ -1144,9 +1144,9 @@ public class ItemRepository {
                                         null), 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.IRON_FULLHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Iron Full Helm", List.of("A sturdy iron full helm for better protection."), HeadTexture.IRON_FULL_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.IRON_FULLHELM.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Iron Full Helm", List.of("A sturdy iron full helm for better protection."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
-                                new EquipableTypeMeta(null, null, null,
+                                new EquipableTypeMeta(EquipmentSlot.HEAD, "iron_full_helm", null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 5),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 6),
@@ -1156,9 +1156,9 @@ public class ItemRepository {
                                         null), 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STEEL_FULLHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.COMMON, "Steel Full Helm", List.of("A well-made steel full helm that offers decent defense."), HeadTexture.STEEL_FULL_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STEEL_FULLHELM.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Steel Full Helm", List.of("A well-made steel full helm that offers decent defense."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
-                                new EquipableTypeMeta(null, null, null,
+                                new EquipableTypeMeta(EquipmentSlot.HEAD, "steel_full_helm", null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 7),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 8),
@@ -1168,9 +1168,9 @@ public class ItemRepository {
                                         null), 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MITHRIL_FULLHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.UNCOMMON, "Mithril Full Helm", List.of("A lightweight mithril full helm with solid defense."), HeadTexture.MITHRIL_FULL_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MITHRIL_FULLHELM.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.UNCOMMON, "Mithril Full Helm", List.of("A lightweight mithril full helm with solid defense."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
-                                new EquipableTypeMeta(null, null, null,
+                                new EquipableTypeMeta(EquipmentSlot.HEAD, "mithril_full_helm", null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 10),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 11),
@@ -1180,9 +1180,9 @@ public class ItemRepository {
                                         null), 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANT_FULLHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.UNCOMMON, "Adamant Full Helm", List.of("A heavy adamant full helm for superior defense."), HeadTexture.ADAMANT_FULL_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANT_FULLHELM.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.UNCOMMON, "Adamant Full Helm", List.of("A heavy adamant full helm for superior defense."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
-                                new EquipableTypeMeta(null, null, null,
+                                new EquipableTypeMeta(EquipmentSlot.HEAD, "adamant_full_helm", null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 14),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 15),
@@ -1192,9 +1192,9 @@ public class ItemRepository {
                                         null), 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNE_FULLHELM.asInt(), Material.PLAYER_HEAD, ItemRarity.RARE, "Rune Full Helm", List.of("A full helmet forged from runite, offering excellent defense."), HeadTexture.RUNE_FULL_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNE_FULLHELM.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.RARE, "Rune Full Helm", List.of("A full helmet forged from runite, offering excellent defense."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
-                                new SocketedEquipableMeta(new EquipableTypeMeta(null, null, null,
+                                new SocketedEquipableMeta(new EquipableTypeMeta(EquipmentSlot.HEAD, "rune_full_helm", null,
                                         List.of(
                                                 new Modifier(ModifierType.DEFENCE_STAB, 20),
                                                 new Modifier(ModifierType.DEFENCE_SLASH, 22),
@@ -1206,7 +1206,7 @@ public class ItemRepository {
 
 
                 // Armor - Chestplates
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.LEATHER_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Leather Body", List.of("Basic leather torso armor."), HeadTexture.BRONZE_MED_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.LEATHER_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Leather Body", List.of("Basic leather torso armor."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(EquipmentSlot.CHEST, "leather_chestplate", null,
                                         List.of(
@@ -1219,7 +1219,7 @@ public class ItemRepository {
                                         null,
                                         null), 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.HARD_LEATHER_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Hard Leather Body", List.of("Stiffened leather torso protection."), HeadTexture.BRONZE_MED_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.HARD_LEATHER_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Hard Leather Body", List.of("Stiffened leather torso protection."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(EquipmentSlot.CHEST, "hardleather_chestplate", null,
                                         List.of(
@@ -1233,7 +1233,7 @@ public class ItemRepository {
                                         null), 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STUDDED_LEATHER_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Studded Body", List.of("Leather armor reinforced with studs."), HeadTexture.BRONZE_MED_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STUDDED_LEATHER_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Studded Body", List.of("Leather armor reinforced with studs."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(EquipmentSlot.CHEST, "studded_leather_body", null,
                                         List.of(
@@ -1247,7 +1247,7 @@ public class ItemRepository {
                                         null), 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.GREEN_DHIDE_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Green D'hide Body", List.of("Torso armor made of green dragonhide."), HeadTexture.BRONZE_MED_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.GREEN_DHIDE_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Green D'hide Body", List.of("Torso armor made of green dragonhide."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(EquipmentSlot.CHEST, "green_dhide_chestplate", null,
                                         List.of(
@@ -1412,7 +1412,7 @@ public class ItemRepository {
 
 
                 // Armor - platelegs
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.LEATHER_LEGGINGS.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Leather Chaps", List.of("Basic leather leg armor."), HeadTexture.BRONZE_MED_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.LEATHER_LEGGINGS.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Leather Chaps", List.of("Basic leather leg armor."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(EquipmentSlot.LEGS, "leather_leggings", null,
                                         List.of(
@@ -1426,7 +1426,7 @@ public class ItemRepository {
                                         null), 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.HARD_LEATHER_LEGGINGS.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Hard Leather Chaps", List.of("Stiffened leather leg protection."), HeadTexture.BRONZE_MED_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.HARD_LEATHER_LEGGINGS.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Hard Leather Chaps", List.of("Stiffened leather leg protection."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(EquipmentSlot.LEGS, "hardleather_leggings", null,
                                         List.of(
@@ -1440,7 +1440,7 @@ public class ItemRepository {
                                         null), 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STUDDED_LEATHER_LEGGINGS.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Studded Chaps", List.of("Leather chaps reinforced with studs."), HeadTexture.BRONZE_MED_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.STUDDED_LEATHER_LEGGINGS.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Studded Chaps", List.of("Leather chaps reinforced with studs."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(EquipmentSlot.LEGS, "studded_leather_leggings", null,
                                         List.of(
@@ -1454,7 +1454,7 @@ public class ItemRepository {
                                         null), 1)
                 ),
                 new ItemEntity(
-                        new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.GREEN_DHIDE_LEGGINGS.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Green D'hide Chaps", List.of("Leg armor made of green dragonhide."), HeadTexture.BRONZE_MED_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                        new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.GREEN_DHIDE_LEGGINGS.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Green D'hide Chaps", List.of("Leg armor made of green dragonhide."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(EquipmentSlot.LEGS, "green_dhide_leggings", null, List.of(
                                         new Modifier(ModifierType.DEFENCE_STAB, 6),
@@ -1540,7 +1540,7 @@ public class ItemRepository {
 
                 // Armor - Boots
                 new ItemEntity(
-                        new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.LEATHER_BOOTS.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Leather Boots", List.of("Basic leather footwear."), HeadTexture.BRONZE_MED_HELM.asBase64(), true, CRAFTED_ITEM_MULTIPLIER),
+                        new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.LEATHER_BOOTS.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Leather Boots", List.of("Basic leather footwear."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(EquipmentSlot.FEET, "leather_boots", null, List.of(
                                         new Modifier(ModifierType.DEFENCE_STAB, 1),

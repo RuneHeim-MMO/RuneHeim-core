@@ -59,7 +59,7 @@ public class ItemPriceCalculator {
             Integer price = priceCache.get(item.id);
 
             if (price != null)
-                return new PriceRecord((long) priceCache.get(item.id), (long) (price * SELL_PRICE_MULTIPLIER));
+                return new PriceRecord((long) priceCache.get(item.id), Math.max(1, (long) (price * SELL_PRICE_MULTIPLIER)));
         }
 
         Integer price = calculateFinalPrice(item);
@@ -69,6 +69,7 @@ public class ItemPriceCalculator {
         if (finalPrice == null) {
             return null;
         }
+
         return new PriceRecord((long) finalPrice, (long) (finalPrice * SELL_PRICE_MULTIPLIER));
     }
 
@@ -122,7 +123,7 @@ public class ItemPriceCalculator {
 
         if (basePrice != null) {
             basePrice = (int) (basePrice * item.getCraftPriceMultiplier());
-            return basePrice / craftAmount;
+            return Math.max(1, basePrice / craftAmount);
         }
 
         return null;

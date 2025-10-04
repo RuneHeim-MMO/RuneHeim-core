@@ -103,10 +103,10 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.BIRCH_SHORT_BOW.asInt(), 3, 30, ItemId.BIRCH_SHORT_BOW.getBuyPrice(), null, null, null),
                         new ShopItemConfig(ItemId.BIRCH_LONG_BOW.asInt(), 2, 30, ItemId.BIRCH_LONG_BOW.getBuyPrice(), null, null, null),
 
-                        new ShopItemConfig(ItemId.MAPLE_SHORT_BOW.asInt(), 1, 7200, ItemId.MAPLE_SHORT_BOW.getBuyPrice(), null, null, null),
-                        new ShopItemConfig(ItemId.MAPLE_LONG_BOW.asInt(), 1, 7200, ItemId.MAPLE_LONG_BOW.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.MAPLE_SHORT_BOW.asInt(), 1, 600, ItemId.MAPLE_SHORT_BOW.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.MAPLE_LONG_BOW.asInt(), 1, 600, ItemId.MAPLE_LONG_BOW.getBuyPrice(), null, null, null),
 
-                        new ShopItemConfig(ItemId.IRON_CROSSBOW.asInt(), 3, 3600, 1800L, null, null, null),
+                        new ShopItemConfig(ItemId.IRON_CROSSBOW.asInt(), 3, 3600, 1200L, null, null, null),
 
                         new ShopItemConfig(ItemId.BRONZE_ARROW.asInt(), 512, 10, ItemId.BRONZE_ARROW.getBuyPrice(), ItemId.BRONZE_ARROW.getBuyPrice(), null, null),
                         new ShopItemConfig(ItemId.IRON_ARROW.asInt(), 512, 10, ItemId.IRON_ARROW.getBuyPrice(), ItemId.IRON_ARROW.getBuyPrice(), null, null),
@@ -165,7 +165,25 @@ public class ShopRepository {
                 ))), 1)),
 
                 new ShopConfig(ShopId.MURKWATCH_ARCHERY_MERCHANT.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
-                        // todo
+                        new ShopItemConfig(ItemId.SHORT_BOW.asInt(), 4, 30, ItemId.SHORT_BOW.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.LONG_BOW.asInt(), 2, 30, ItemId.LONG_BOW.getBuyPrice(), null, null, null),
+
+                        new ShopItemConfig(ItemId.BIRCH_SHORT_BOW.asInt(), 3, 30, ItemId.BIRCH_SHORT_BOW.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.BIRCH_LONG_BOW.asInt(), 2, 30, ItemId.BIRCH_LONG_BOW.getBuyPrice(), null, null, null),
+
+                        new ShopItemConfig(ItemId.MAPLE_SHORT_BOW.asInt(), 1, 600, ItemId.MAPLE_SHORT_BOW.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.MAPLE_LONG_BOW.asInt(), 1, 600, ItemId.MAPLE_LONG_BOW.getBuyPrice(), null, null, null),
+
+                        new ShopItemConfig(ItemId.YEW_SHORT_BOW.asInt(), 1, 600, ItemId.YEW_SHORT_BOW.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.YEW_LONG_BOW.asInt(), 1, 600, ItemId.YEW_LONG_BOW.getBuyPrice(), null, null, null),
+
+                        new ShopItemConfig(ItemId.IRON_CROSSBOW.asInt(), 3, 3600, 1200L, null, null, null),
+                        new ShopItemConfig(ItemId.STEEL_CROSSBOW.asInt(), 3, 3600, 1800L, null, null, null),
+
+                        new ShopItemConfig(ItemId.BRONZE_ARROW.asInt(), 512, 10, ItemId.BRONZE_ARROW.getBuyPrice(), ItemId.BRONZE_ARROW.getBuyPrice(), null, null),
+                        new ShopItemConfig(ItemId.IRON_ARROW.asInt(), 512, 10, ItemId.IRON_ARROW.getBuyPrice(), ItemId.IRON_ARROW.getBuyPrice(), null, null),
+                        new ShopItemConfig(ItemId.STEEL_ARROW.asInt(), 512, 10, ItemId.STEEL_ARROW.getBuyPrice(), ItemId.STEEL_ARROW.getBuyPrice(), null, null)
+
                 ))), 1)),
 
                 new ShopConfig(ShopId.MURKWATCH_BLACKSMITH.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
@@ -190,9 +208,10 @@ public class ShopRepository {
                 ))), 1)),
 
                 new ShopConfig(ShopId.SAKURMEER_FOOD_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
-                        new ShopItemConfig(ItemId.COOKED_MEAT.asInt(), 32, 30, 40L, null, null, null),
-                        new ShopItemConfig(ItemId.COOKED_CHICKEN.asInt(), 32, 30, 40L, null, null, null)
-                        // Todo
+                        new ShopItemConfig(ItemId.COOKED_SALMON.asInt(), 32, 30, ItemId.COOKED_SALMON.getBuyPrice(), ItemId.COOKED_SALMON.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.COOKED_TROUT.asInt(), 20, 30, ItemId.COOKED_TROUT.getBuyPrice(), ItemId.COOKED_TROUT.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.COOKED_TUNA.asInt(), 14, 30, ItemId.COOKED_TUNA.getBuyPrice(), ItemId.COOKED_TUNA.getSellPrice(), null, null)
+
                 ))), 1)),
 
                 new ShopConfig(ShopId.BRINEPORT_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
