@@ -15,6 +15,7 @@ import org.zuma.examplePlugin.domain.item.impl.Gem;
 import org.zuma.examplePlugin.domain.item.state.states.FairyState;
 import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.player.TemporaryEffect;
 import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 import org.zuma.examplePlugin.events.modifier.GearModifiersRecalculatedEvent;
 
@@ -32,9 +33,23 @@ public class GearModifierHandler {
 
     public void recalculatePlayerModifiers(RunePlayer player, ItemStack itemInHand) {
         Map.Entry<List<Modifier>, List<SkillModifier>> gearModifiers = getGearModifiers(player, itemInHand);
+        List<TemporaryEffect> temporaryEffects = player.getActiveEffects();
 
-        List<Modifier> combined = ModifierUtils.combineModifiersByType(gearModifiers.getKey());
-        List<SkillModifier> combinedSkillModifiers = ModifierUtils.combineSkillModifiersByType(gearModifiers.getValue());
+        List<Modifier> modifiers = new ArrayList<>();
+        List<SkillModifier> skillModifiers = new ArrayList<>();
+
+        for (TemporaryEffect effect : temporaryEffects) {
+            if (effect.isExpired()) continue; // Skip expired effects
+
+            modifiers.addAll(effect.getEffect().modifiers());
+            skillModifiers.addAll(effect.getEffect().skillModifiers());
+        }
+
+        modifiers.addAll(gearModifiers.getKey());
+        skillModifiers.addAll(gearModifiers.getValue());
+
+        List<Modifier> combined = ModifierUtils.combineModifiersByType(modifiers);
+        List<SkillModifier> combinedSkillModifiers = ModifierUtils.combineSkillModifiersByType(skillModifiers);
 
         player.setModifiers(combined);
         player.setSkillModifiers(combinedSkillModifiers);

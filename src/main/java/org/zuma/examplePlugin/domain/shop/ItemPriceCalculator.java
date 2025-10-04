@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ItemPriceCalculator {
     private static final double SELL_PRICE_MULTIPLIER = 0.19; // NPCs buy items at 80% of the calculated price
-    private static final ConcurrentHashMap<Integer, Integer> priceCache = new ConcurrentHashMap<>(); // id : buy price
+    private static final HashMap<Integer, Integer> priceCache = new HashMap<>(); // id : buy price
 
     public static void buildCache() {
         priceCache.clear();

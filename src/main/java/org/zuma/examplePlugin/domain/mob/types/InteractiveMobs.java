@@ -37,17 +37,17 @@ public class InteractiveMobs {
         registry.register(MobType.SAHARIJIN_ARENA_NPC.getId(), () -> new DialogMob(Icon.CROSSED_SWORDS.get() + " Arena Overseer", null,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "saharijin_arena_overseer", null, 0, Dialogs.saharijinArenaGuide));
 
-        registry.register(MobType.ROGUES_HAVEN_SAILOR.getId(), () -> new DialogMob(Icon.ANCHOR.get() + " Sailor", null,
+        registry.register(MobType.ROGUES_HAVEN_SAILOR.getId(), () -> new DialogMob(Icon.ANCHOR.get() + " Sailor", EquipmentSet.COMPASS,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "sailor", null, 0, Dialogs.sailorRoguesHaven));
 
-        registry.register(MobType.ISLENOR_SAILOR.getId(), () -> new DialogMob(Icon.ANCHOR.get() + " Sailor", null,
+        registry.register(MobType.ISLENOR_SAILOR.getId(), () -> new DialogMob(Icon.ANCHOR.get() + " Sailor", EquipmentSet.COMPASS,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "sailor", null, 0, Dialogs.sailorIslenorDialog));
 
-        registry.register(MobType.MURKWATCH_SAILOR.getId(), () -> new DialogMob(Icon.ANCHOR.get() + " Sailor", null,
+        registry.register(MobType.MURKWATCH_SAILOR.getId(), () -> new DialogMob(Icon.ANCHOR.get() + " Sailor", EquipmentSet.COMPASS,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "sailor", null, 0, Dialogs.sailorMurkwatchDialog));
 
 
-        registry.register(MobType.SAILOR_BUFFER.getId(), () -> new DialogMob(Icon.ANCHOR.get() + " Sailor", null,
+        registry.register(MobType.SAILOR_BUFFER.getId(), () -> new DialogMob(Icon.ANCHOR.get() + " Sailor", EquipmentSet.COMPASS,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "sailor", null, 40, Dialogs.sailorBufferDialog));
 
 

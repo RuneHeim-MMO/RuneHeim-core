@@ -31,6 +31,9 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.MUSHROOM_STEW), 100)
     ))),
 
+    COMPASS(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.COMPASS), 100)
+    ))),
 
     BLACKSMITH(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.SMITHING_HAMMER), 100)
@@ -63,15 +66,20 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNITE_SWORD), 100)
     ))),
 
-    MITHRIL_HALF_SET_SWORD(new MobEquipmentMeta(List.of(
-            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.MITHRIL_BODY), 100),
+    RUNE_CHAIN_AND_SWORD(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNITE_CHAINBODY), 100),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNITE_SWORD), 100)
+    ))),
+
+    MITHRIL_CHAIN_HALF_SET_SWORD(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.MITHRIL_CHAINBODY), 100),
             new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.MITHRIL_PLATELEGS), 100),
             new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.MITHRIL_BOOTS), 100),
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.MITHRIL_SWORD), 100)
     ))),
 
-    ADAMANT_HALF_SET_SWORD(new MobEquipmentMeta(List.of(
-            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.ADAMANTITE_BODY), 100),
+    ADAMANT_CHAIN_HALF_SET_SWORD(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.ADAMANTITE_CHAINBODY), 100),
             new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.ADAMANTITE_PLATELEGS), 100),
             new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.ADAMANTITE_BOOTS), 100),
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.ADAMANTITE_SWORD), 100)

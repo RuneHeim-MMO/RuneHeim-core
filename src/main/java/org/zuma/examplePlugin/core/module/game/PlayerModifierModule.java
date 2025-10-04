@@ -23,8 +23,8 @@ public class PlayerModifierModule implements PluginModule {
     public void start(Plugin plugin, ModuleContext context) {
         GearModifierHandler gearModifierHandler = new GearModifierHandler(context.get(ItemRegistry.class), context.get(AdditionalGearSlotHandler.class));
         GearModifierListener gearModifierListener = new GearModifierListener(gearModifierHandler, context.get(RunePlayerManager.class));
-
         plugin.getServer().getPluginManager().registerEvents(gearModifierListener, plugin);
+        context.bind(GearModifierHandler.class, gearModifierHandler);
     }
 
     @Override

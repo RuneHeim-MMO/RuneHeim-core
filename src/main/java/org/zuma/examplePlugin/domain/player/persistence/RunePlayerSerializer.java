@@ -38,7 +38,8 @@ public class RunePlayerSerializer {
                 runePlayer.getHealth(),
                 (float) runePlayer.getSpecialEnergyPercent() / 100,
                 runePlayer.getPrayerEnergy(),
-                runePlayer.getCompletedQuestIds() == null ? new ArrayList<>() : runePlayer.getCompletedQuestIds()
+                runePlayer.getCompletedQuestIds() == null ? new ArrayList<>() : runePlayer.getCompletedQuestIds(),
+                runePlayer.getActiveEffects()
         );
 
         VersionedJson versionedPlayerData = new VersionedJson(gson.toJson(container), 1);
@@ -66,6 +67,7 @@ public class RunePlayerSerializer {
                 player.setSpecialEnergyPercent((int) (playerDataDeserializedJsonContainer.specialEnergy() * 100));
                 player.setPrayerEnergy(playerDataDeserializedJsonContainer.prayerEnergy());
                 player.setCompletedQuestIds(playerDataDeserializedJsonContainer.completedQuestIds());
+                player.setActiveEffects(playerDataDeserializedJsonContainer.effects());
 
                 List<ItemStackSlotPair> inventory = ItemContainerContentSerializer.deserializeItemContainerContentSync(inventoryData);
                 Location location = gson.fromJson(container.location(), Location.class);

@@ -1,6 +1,5 @@
 package org.zuma.examplePlugin.domain.player;
 
-import com.google.gson.Gson;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
@@ -49,6 +48,7 @@ public class RunePlayer implements CombatEntity {
 
     private final EnumMap<ModifierType, Modifier> modifiers;
     private final EnumMap<SkillType, SkillModifier> skillModifiers;
+    private List<TemporaryEffect> activeEffects; // Potions, etc
     private final EnumMap<SkillType, Skill> skills;
     private final PlayerXpHandler xpHandler;
     private final PlayerItemDistributor itemHandler;
@@ -63,7 +63,6 @@ public class RunePlayer implements CombatEntity {
     private boolean isInCutscene;
     private boolean isDialogOptionChoosing;
     private HashMap<String, AbstractQuestStep> activeQuestSteps; // Quest id : step
-
     @Nullable
     private Location safeLocation; // is set when player is in spectator/cutscene mode.
 
@@ -86,6 +85,7 @@ public class RunePlayer implements CombatEntity {
         this.discoveredTerritoryIds = new ArrayList<>();
         this.completedQuestIds = new ArrayList<>();
         this.isDead = false;
+        this.activeEffects = new ArrayList<>();
 
         HudService.updateVanillaGUI(this);
     }
@@ -147,7 +147,6 @@ public class RunePlayer implements CombatEntity {
         this.skills.putAll(skills);
         combatData.setCombatLvl(Math.max(3, XpUtils.getCombatLevelFromSkills(this.skills)));
         HudService.updateVanillaGUI(this);
-        System.out.println(new Gson().toJson(activeQuestSteps));
     }
 
     // Party
@@ -383,5 +382,25 @@ public class RunePlayer implements CombatEntity {
 
     public boolean isInCutscene() {
         return isInCutscene;
+    }
+
+    public List<TemporaryEffect> getActiveEffects() {
+        return activeEffects;
+    }
+
+    public boolean hasActiveEffect(String grantedByKey) {
+        return activeEffects.stream()
+                .anyMatch(effect -> effect.getGrantedBy() != null
+                        && effect.getGrantedBy().equals(grantedByKey)
+                        && !effect.isExpired());
+    }
+
+    public void setActiveEffects(List<TemporaryEffect> effects) {
+        if (effects == null) return;
+        this.activeEffects = effects;
+    }
+
+    public void addActiveEffect(TemporaryEffect effect) {
+        this.activeEffects.add(effect);
     }
 }

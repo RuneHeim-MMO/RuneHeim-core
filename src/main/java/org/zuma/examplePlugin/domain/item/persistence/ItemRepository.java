@@ -8,7 +8,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.droptable.DropTableId;
-import org.zuma.examplePlugin.domain.head.HeadTexture;
+import org.zuma.examplePlugin.domain.item.StatsEffect;
 import org.zuma.examplePlugin.domain.item.constants.*;
 import org.zuma.examplePlugin.domain.item.impl.EmptyContainer;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
@@ -893,20 +893,46 @@ public class ItemRepository {
                         List.of("Wings of the deep skyfish, rich in nutrients."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(22), 1)),
 
                 // Potions
-                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.DEFENCE_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Defence Potion I",
-                        List.of("Increases your defense temporarily.", "Brewed by skilled alchemists."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3, "Potion effects...", CustomModelId.GREEN_POTION), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.DEFENCE_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.UNCOMMON, "Defence Potion I",
+                        List.of("Increases your defense temporarily.", "Brewed by skilled alchemists."), null, true, 1.0), toVersionedJson(new PotionMeta(2, 2,
+                        new StatsEffect("defence-potion", 120, List.of(), List.of(new SkillModifier(SkillType.DEFENCE, 3))), CustomModelId.GREEN_POTION_SMALL), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.ATTACK_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Attack Potion I",
-                        List.of("Boosts your attack power.", "Unleash your fury in battle."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3, "Potion effects...", CustomModelId.BLUE_POTION), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.ATTACK_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.UNCOMMON, "Attack Potion I",
+                        List.of("Boosts your attack power.", "Unleash your fury in battle."), null, true, 1.0), toVersionedJson(new PotionMeta(2, 2,
+                        new StatsEffect("attack-potion", 120, List.of(), List.of(new SkillModifier(SkillType.ATTACK, 3))), CustomModelId.BLUE_POTION_SMALL), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.MAGIC_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Magic Potion I",
-                        List.of("Enhances your magical abilities.", "A favorite among mages."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3, "Potion effects...", CustomModelId.CYAN_POTION), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.RANGED_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.UNCOMMON, "Ranged Potion I",
+                        List.of("Enhances your ranged abilities.", "A favorite among archers."), null, true, 1.0), toVersionedJson(new PotionMeta(2, 2,
+                        new StatsEffect("ranged-potion", 120, List.of(), List.of(new SkillModifier(SkillType.RANGED, 3))), CustomModelId.PURPLE_POTION_SMALL), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.HEALTH_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Health Potion I",
-                        List.of("Restores a small amount of health.", "Always good to have a few."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3, "Potion effects...", CustomModelId.RED_POTION), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.HEALTH_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.UNCOMMON, "Max Health Potion I",
+                        List.of("Boosts small amount of your maximum health.", "Always good to have a few."), null, true, 1.0), toVersionedJson(new PotionMeta(2, 2,
+                        new StatsEffect("max-health-potion", 120, List.of(), List.of(new SkillModifier(SkillType.HITPOINTS, 3))), CustomModelId.RED_POTION_SMALL), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.STRENGTH_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Strength Potion I",
-                        List.of("Temporarily increases strength.", "Tear through enemies with ease."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3, "Potion effects...", CustomModelId.YELLOW_POTION), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.STRENGTH_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.UNCOMMON, "Strength Potion I",
+                        List.of("Temporarily increases strength.", "Tear through enemies with ease."), null, true, 1.0), toVersionedJson(new PotionMeta(2, 2,
+                        new StatsEffect("strength-potion", 120, List.of(), List.of(new SkillModifier(SkillType.STRENGTH, 3))), CustomModelId.YELLOW_POTION_SMALL), 1)),
+
+
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.DEFENCE_POTION_II.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Defence Potion II",
+                        List.of("Increases your defense temporarily.", "Brewed by skilled alchemists."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
+                        new StatsEffect("defence-potion", 300, List.of(), List.of(new SkillModifier(SkillType.DEFENCE, 3))), CustomModelId.GREEN_POTION_MEDIUM), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.ATTACK_POTION_II.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Attack Potion II",
+                        List.of("Boosts your attack power.", "Unleash your fury in battle."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
+                        new StatsEffect("attack-potion", 300, List.of(), List.of(new SkillModifier(SkillType.ATTACK, 3))), CustomModelId.BLUE_POTION_MEDIUM), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.RANGED_POTION_II.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Ranged Potion II",
+                        List.of("Enhances your ranged abilities.", "A favorite among archers."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
+                        new StatsEffect("ranged-potion", 300, List.of(), List.of(new SkillModifier(SkillType.RANGED, 3))), CustomModelId.PURPLE_POTION_MEDIUM), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.HEALTH_POTION_II.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Max Health Potion II",
+                        List.of("Boosts small amount of your maximum health.", "Always good to have a few."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
+                        new StatsEffect("max-health-potion", 300, List.of(), List.of(new SkillModifier(SkillType.HITPOINTS, 3))), CustomModelId.RED_POTION_MEDIUM), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.STRENGTH_POTION_II.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Strength Potion II",
+                        List.of("Temporarily increases strength.", "Tear through enemies with ease."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
+                        new StatsEffect("strength-potion", 300, List.of(), List.of(new SkillModifier(SkillType.STRENGTH, 3))), CustomModelId.YELLOW_POTION_MEDIUM), 1)),
 
 
                 // Tools

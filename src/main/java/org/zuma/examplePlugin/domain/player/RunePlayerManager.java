@@ -8,6 +8,7 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.core.exception.PlayerDataLoadException;
+import org.zuma.examplePlugin.domain.player.handlers.TemporaryEffectHandler;
 import org.zuma.examplePlugin.domain.player.persistence.DeserializedPlayerEntity;
 import org.zuma.examplePlugin.domain.player.persistence.RunePlayerRepository;
 import org.zuma.examplePlugin.domain.player.persistence.RunePlayerSerializer;
@@ -50,6 +51,8 @@ public class RunePlayerManager {
         this.loadingStateHandler = new PlayerLoadingStateHandler(RuneQuestPlugin.getInstance());
         this.repository = repository;
         this.questHandler = questHandler;
+
+        new TemporaryEffectHandler(this).startLoop();
     }
 
     // -------------------- Getters --------------------
@@ -185,6 +188,8 @@ public class RunePlayerManager {
         loadingStateHandler.setPlayerLoaded(player);
         data.getKey().setSurvivalMode();
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.getName() + " (" + data.getKey().getCombatLvl() + "cmb) loaded successfully.");
+        RuneQuestPlugin.getGearModifierHandler().recalculatePlayerModifiers(data.getKey(), player.getInventory().getItemInMainHand());
+
         Bukkit.getServer().getPluginManager().callEvent(new RunePlayerLoadedEvent(data.getKey(), data.getValue().isFirstJoin()));
         cleanup(uuid);
     }

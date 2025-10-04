@@ -529,6 +529,8 @@ public class ItemFactory {
 
                 item.setDefaultStateTemplate(new MultiConsumableState(new MultiConsumableStateMeta(deserialized.usages(), deserialized.maxUsages())));
                 item.setCustomModelData(deserialized.potionModel());
+                item.setEffect(deserialized.effect());
+
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
