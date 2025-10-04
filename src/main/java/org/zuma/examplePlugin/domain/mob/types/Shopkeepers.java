@@ -56,7 +56,7 @@ public class Shopkeepers {
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "jeweler", null, InventoryId.JEWELER.asInt(), 40)
                 .attachDialog(jewlerDialog));
 
-        registry.register(MobType.DRAKKAR_ARMOR_SHOP.getId(), () -> new InventoryOpenerMob(Icon.ARMOR.get() + " Armor Merchant", EquipmentSet.RUNE_HALF_SET_SWORD,
+        registry.register(MobType.DRAKKAR_ARMOR_SHOP.getId(), () -> new InventoryOpenerMob(Icon.ARMOR.get() + " Armor Merchant", EquipmentSet.RUNE_CHAIN_AND_SWORD,
                 MobBehaviors.VILLAGER_MAN_1.getBehavior(), "armor_merchant", null, InventoryId.DRAKKAR_ARMOR_SHOP.asInt(), 40)
                 .attachDialog(genericShopDialog));
 
@@ -98,11 +98,11 @@ public class Shopkeepers {
                 MobBehaviors.VILLAGER_MAN_4.getBehavior(), "saharijin_fisherman", null, InventoryId.SAHARIJIN_FISHING_SHOP.asInt(), 40)
                 .attachDialog(genericShopDialog)); // TODO: shop
 
-        registry.register(MobType.ELDARWYN_ARMOR_SHOP.getId(), () -> new InventoryOpenerMob(Icon.ARMOR.get() + " Armor Merchant", EquipmentSet.MITHRIL_HALF_SET_SWORD,
+        registry.register(MobType.ELDARWYN_ARMOR_SHOP.getId(), () -> new InventoryOpenerMob(Icon.ARMOR.get() + " Armor Merchant", EquipmentSet.MITHRIL_CHAIN_HALF_SET_SWORD,
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "eldarwyn_armor_merchant", null, InventoryId.ELDARWYN_ARMOR_SHOP.asInt(), 30)
                 .attachDialog(genericShopDialog)); // TODO: shop
 
-        registry.register(MobType.VALDRIN_WEAPON_SHOP.getId(), () -> new InventoryOpenerMob(Icon.SWORD.get() + " Weapon Merchant", EquipmentSet.ADAMANT_HALF_SET_SWORD,
+        registry.register(MobType.VALDRIN_WEAPON_SHOP.getId(), () -> new InventoryOpenerMob(Icon.SWORD.get() + " Weapon Merchant", EquipmentSet.ADAMANT_CHAIN_HALF_SET_SWORD,
                 MobBehaviors.VILLAGER_MAN_2.getBehavior(), "valdrin_weapon_merchant", null, InventoryId.VALDRIN_WEAPON_SHOP.asInt(), 30)
                 .attachDialog(genericShopDialog)); // TODO: shop
 
