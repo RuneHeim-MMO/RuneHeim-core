@@ -13,6 +13,7 @@ import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.TravelStartEffect;
 import org.zuma.examplePlugin.domain.effect.effects.TravelStopEffect;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.time.Duration;
@@ -40,6 +41,7 @@ public class TravelStateHandler {
             player.setInCutscene(player.asBukkitPlayer().getLocation());
             player.asBukkitPlayer().teleport(buffer);
             PlayerUtils.hideAllPlayersForPlayer(player.asBukkitPlayer());
+            final int[] ticks = {0};
 
             new BukkitRunnable() {
 
@@ -50,7 +52,10 @@ public class TravelStateHandler {
                         return;
                     }
 
+                    ticks[0] += 12;
                     mode.getLoopSound().play(player, false);
+                    player.asBukkitPlayer().setExp((float) ticks[0] / durationTicks);
+
                 }
             }.runTaskTimer(RuneQuestPlugin.getInstance(), TRANSITION_DURATION_TICKS, 12);
 
@@ -78,6 +83,7 @@ public class TravelStateHandler {
                         return;
 
                     PlayerUtils.restorePlayersVisibilityForPlayer(player.asBukkitPlayer());
+                    HudService.updateVanillaGUI(player);
                     player.asBukkitPlayer().teleport(waypoint);
                     player.setOutOfCutscene();
                 }, TRANSITION_DURATION_TICKS);
