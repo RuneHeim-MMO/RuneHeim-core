@@ -25,7 +25,8 @@ public enum ModifierType {
     STRENGTH_BONUS("Strength Bonus", "Increases overall melee damage.", Icon.STRENGTH.get(), null, null),
     RANGED_STRENGTH("Ranged Strength", "Enhances the power of ranged weapon attacks.", Icon.RANGED_STR.get(), null, null),
     RANGED_ACCURACY("Ranged Accuracy", "Improves hit chance with ranged weapons.", Icon.RANGED_ACCURACY.get(), null, null),
-    CLEAVE_DISTANCE("Cleave Distance", "Extends the range of melee cleave attacks, allowing you to hit additional enemies in front of you.", Icon.CLEAVE.get(), null, null);
+    CLEAVE_DISTANCE("Cleave Distance", "Extends the range of melee cleave attacks, allowing you to hit additional enemies in front of you.", Icon.CLEAVE.get(), null, null),
+    FLYING_SPEED("Flying Speed", "", Icon.CLEAVE.get(), "%", null);
 
     private final String label, description, symbol, numSuffix, numPrefix;
 

@@ -7,6 +7,8 @@ import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.domain.player.RunePlayerListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
+import org.zuma.examplePlugin.domain.player.handlers.FlyingHandler;
+import org.zuma.examplePlugin.domain.player.handlers.TemporaryEffectHandler;
 import org.zuma.examplePlugin.domain.player.persistence.RunePlayerRepository;
 import org.zuma.examplePlugin.domain.quest.QuestHandler;
 
@@ -24,6 +26,9 @@ public class PlayerManagerModule implements PluginModule {
         RunePlayerRepository runePlayerRepository = new RunePlayerRepository(context.get(HikariPool.class));
         RunePlayerManager runePlayerManager = new RunePlayerManager(runePlayerRepository, context.get(QuestHandler.class));
         RunePlayerListener runePlayerListener = new RunePlayerListener(runePlayerManager);
+
+        new TemporaryEffectHandler(runePlayerManager).startLoop();
+        new FlyingHandler(runePlayerManager).startLoop();
 
         plugin.getServer().getPluginManager().registerEvents(runePlayerListener, plugin);
         runePlayerManager.handleOnEnable();
