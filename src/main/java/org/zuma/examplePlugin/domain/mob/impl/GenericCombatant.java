@@ -71,7 +71,7 @@ public class GenericCombatant extends CombatantMob {
         super(new CombatantMobMeta(displayName, equipmentSet, skills, modifiers, skin, model, disguiseType, dropTableIds, health, getMobWithCorrectBehavior(attacksOnSight, attackWithGroup)));
 
         HashMap<Attribute, Double> attributes = new HashMap<>();
-        attributes.put(Attribute.GENERIC_MOVEMENT_SPEED, walkSpeed);
+        attributes.put(Attribute.MOVEMENT_SPEED, walkSpeed);
 
         super.setAttributes(attributes);
         super.setBehavior(behavior);

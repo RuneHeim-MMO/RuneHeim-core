@@ -36,6 +36,7 @@ public abstract class AbstractItemType {
     private final ItemStackCreator creator;
 
     public final int id;
+    private final double craftPriceMultiplier;
     public final ItemType type;
     public final ItemRarity rarity;
     public final Material material;
@@ -48,22 +49,19 @@ public abstract class AbstractItemType {
     public StateType stateType;
     @Nullable
     public final String headTexture;
-    @Nullable
-    public final org.bukkit.Color leatherColor;
 
-    NamespacedKey untradeableOwnerUUIDKey = PersistenceDataKey.UNTRADEABLE_OWNER_UUID.key(RuneQuestPlugin.getInstance());
-    PersistentDataType<?, String> untradeableOwnerUUIDType = (PersistentDataType<?, String>) PersistenceDataKey.UNTRADEABLE_OWNER_UUID.getType();
-
+    public final NamespacedKey untradeableOwnerUUIDKey = PersistenceDataKey.UNTRADEABLE_OWNER_UUID.key(RuneQuestPlugin.getInstance());
+    public final PersistentDataType<?, String> untradeableOwnerUUIDType = (PersistentDataType<?, String>) PersistenceDataKey.UNTRADEABLE_OWNER_UUID.getType();
 
     public AbstractItemType(AbstractItemMeta meta) {
         this.type = meta.type();
         this.id = meta.id();
+        this.craftPriceMultiplier = meta.craftPriceMultiplier();
         this.material = meta.material();
         this.displayName = meta.displayName();
         this.customModelData = meta.id();
         this.rarity = meta.rarity();
         this.headTexture = meta.headTexture();
-        this.leatherColor = meta.leatherColor();
         this.isTradeable = meta.isTradeable();
         this.stateType = null;
         this.typeLore = new ArrayList<>();
@@ -185,5 +183,9 @@ public abstract class AbstractItemType {
 
     public Material getMaterial() {
         return material;
+    }
+
+    public double getCraftPriceMultiplier() {
+        return craftPriceMultiplier;
     }
 }

@@ -3,7 +3,9 @@ package org.zuma.examplePlugin.domain.mob.constants;
 public enum MobType {
 
     // Sailing
-    SAILOR_ROGUES_HAVEN,
+    ROGUES_HAVEN_SAILOR,
+    ISLENOR_SAILOR,
+    MURKWATCH_SAILOR,
     SAILOR_BUFFER,
 
     // Tutorial island

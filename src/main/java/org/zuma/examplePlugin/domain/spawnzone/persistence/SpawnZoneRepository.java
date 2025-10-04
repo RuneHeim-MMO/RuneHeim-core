@@ -1051,22 +1051,35 @@ public class SpawnZoneRepository {
                 ), false, null, null), 1)),
 
 
-                // Rogues haven
+                // Rogues haven quick travel
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(162, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), -140, 63, -993)), toVersionedJson(new PointSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.SAILOR_ROGUES_HAVEN, 1, 100)
-                ), false, null, null), 1)),
+                        new SpawnZoneMobRecord(MobType.ROGUES_HAVEN_SAILOR, 1, 100)
+                ), false, MarkerType.QUICK_TRAVEL, "Sailor"), 1)),
 
 
                 // Sailor buffer ship
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(163, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 1415.5, 68.5, -1527)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.SAILOR_BUFFER, 1, 100)
-                ), false, null, null), 1))
+                ), false, null, null), 1)),
 
 
+                // Islenor quick travel
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(164, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 527, 67, -820)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.ISLENOR_SAILOR, 1, 100)
+                ), false, MarkerType.QUICK_TRAVEL, "Sailor"), 1)),
 
-                // last 163
+
+                // Murkwatch quick travel
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(165, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -1159, 67, 465)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.MURKWATCH_SAILOR, 1, 100)
+                ), false, MarkerType.QUICK_TRAVEL, "Sailor"), 1))
+
+
+                // last 165
 
 
         );

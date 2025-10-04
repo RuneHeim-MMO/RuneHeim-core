@@ -1,11 +1,16 @@
 package org.zuma.examplePlugin.domain.item.helpers;
 
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.components.EquippableComponent;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
 import org.zuma.examplePlugin.domain.head.HeadGenerator;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 
 public class ItemStackCreator {
@@ -32,12 +37,6 @@ public class ItemStackCreator {
 
         if (itemType.material == Material.PLAYER_HEAD && itemType.headTexture != null) {
             HeadGenerator.setHeadMeta(itemStack, itemType.headTexture);
-        }
-
-        if (itemType.material.name().contains("LEATHER_") && itemType.leatherColor != null) {
-            LeatherArmorMeta meta = (LeatherArmorMeta) itemStack.getItemMeta();
-            meta.setColor(itemType.leatherColor);
-            itemStack.setItemMeta(meta);
         }
 
         itemStack.setAmount(amount);

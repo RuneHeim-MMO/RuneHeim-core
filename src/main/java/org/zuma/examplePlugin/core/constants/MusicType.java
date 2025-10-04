@@ -27,7 +27,8 @@ public enum MusicType {
     SPOREFELL_THEME("runequest.sporefell.music", 189, 0.05F,20),
     THORNBARK_THEME("runequest.thornbark.music", 131, 0.05F,20),
     TUTORIAL_ISLAND_THEME("runequest.tutorial_island.music", 109, 0.1F,20),
-    VALDRIN_THEME("runequest.valdrin.music", 157, 0.2F,20);
+    VALDRIN_THEME("runequest.valdrin.music", 157, 0.2F,20),
+    SHIP_BUFFER_THEME("runequest.ship.music", 106, 0.1F,20);
 
     private final String soundKey;
     private final float volume, pitch;

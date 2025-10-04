@@ -1,5 +1,10 @@
 package org.zuma.examplePlugin.domain.item.constants;
 
+import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.domain.shop.ItemPriceCalculator;
+import org.zuma.examplePlugin.domain.shop.PriceRecord;
+
 public enum ItemId {
     ADMIN_OP_STICK(-5),
     DO_NOT_USE_RESERVED_CUSTOM_MODEL_COINS_PILE(-4),
@@ -55,6 +60,12 @@ public enum ItemId {
     HARD_LEATHER_BODY(407), //
     STUDDED_LEATHER_BODY(408), //
     GREEN_DHIDE_BODY(409), //
+    BRONZE_CHAINBODY(410),
+    IRON_CHAINBODY(411),
+    STEEL_CHAINBODY(412),
+    MITHRIL_CHAINBODY(413),
+    ADAMANTITE_CHAINBODY(414),
+    RUNITE_CHAINBODY(415),
 
     BRONZE_PLATELEGS(500),
     IRON_PLATELEGS(501),
@@ -320,6 +331,28 @@ public enum ItemId {
 
     public int asInt() {
         return this.id;
+    }
+
+    public Long getBuyPrice() {
+        PriceRecord record = ItemPriceCalculator.getPrice(this);
+
+        if (record == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Attempted to get buy price for item " + this.name() + " but price record was null.");
+            return null;
+        }
+
+        return record.buyPrice();
+    }
+
+    public Long getSellPrice() {
+        PriceRecord record = ItemPriceCalculator.getPrice(this);
+
+        if (record == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Attempted to get sell price for item " + this.name() + " but price record was null.");
+            return null;
+        }
+
+        return record.sellPrice();
     }
 
 

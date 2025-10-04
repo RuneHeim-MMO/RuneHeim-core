@@ -36,7 +36,7 @@ build.dependsOn shadowJar
 
 dependencies {
     compileOnly group: 'me.libraryaddict.disguises', name: 'libsdisguises', version: '11.0.0'
-    compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
     compileOnly("com.github.decentsoftware-eu:decentholograms:2.8.17")
     compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.3.11'
     compileOnly 'de.bluecolored:bluemap-api:2.7.4'

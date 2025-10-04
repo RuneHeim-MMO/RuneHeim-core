@@ -359,7 +359,7 @@ public abstract class AbstractMob {
         if (!(this.getEntity() instanceof LivingEntity livingEntity)) {
             return;
         }
-        AttributeInstance entityAttr = livingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
+        AttributeInstance entityAttr = livingEntity.getAttribute(Attribute.MOVEMENT_SPEED);
 
         if (entityAttr == null) {
             return;

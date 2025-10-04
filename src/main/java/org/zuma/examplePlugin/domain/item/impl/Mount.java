@@ -145,7 +145,7 @@ public class Mount extends EquipableItemType implements Stateful {
             return;
         }
 
-        AttributeInstance speedAttr = horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
+        AttributeInstance speedAttr = horse.getAttribute(Attribute.MOVEMENT_SPEED);
         if (speedAttr != null) {
             speedAttr.setBaseValue(this.baseSpeed + ((Math.max(0, newLevel - 1)) * this.speedLevelBonus));
         }

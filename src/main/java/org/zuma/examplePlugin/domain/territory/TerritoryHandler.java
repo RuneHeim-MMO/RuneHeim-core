@@ -78,9 +78,6 @@ public class TerritoryHandler {
                 continue;
             }
 
-            if (runePlayer.isInCutscene()) {
-                continue; // skip handling if player is in cutscene
-            }
 
             Territory insideOf = null;
             int lastInsideOfDistance = -1;
@@ -101,6 +98,10 @@ public class TerritoryHandler {
 
                 insideOf = territory;
                 lastInsideOfDistance = (int) distance;
+            }
+
+            if (insideOf != null && !insideOf.isIgnoreCutscene() && runePlayer.isInCutscene()) {
+                continue; // skip handling if player is in cutscene
             }
 
             if (lastTerritory != null && !lastTerritory.equals(insideOf) && lastTerritory.getAmbientMusic() != null) {
@@ -233,7 +234,7 @@ public class TerritoryHandler {
             }
         }
 
-        String titleIcon = territory.isPvpZone() ? territory.isDropItemsOnDeath() ? "§c" + Icon.RANGED_STR.get() : " §f" + Icon.RANGED_STR.get() : "";
+        String titleIcon = territory.isPvpZone() ? territory.isDropItemsOnDeath() ? "§c" + Icon.SKULL_CLOSED_MOUTH.get() : " §f" + Icon.SKULL_CLOSED_MOUTH.get() : "";
 
         player.showTitle(Title.title(
                 Component.text((!titleIcon.isEmpty() ? titleIcon + " " : "") + territory.getName() + (!titleIcon.isEmpty() ? " " + titleIcon : "")),

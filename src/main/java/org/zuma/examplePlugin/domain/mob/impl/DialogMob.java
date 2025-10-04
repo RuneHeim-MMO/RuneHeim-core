@@ -24,7 +24,7 @@ public class DialogMob extends AbstractDialogMob {
         super.setBehavior(behavior);
 
         HashMap<Attribute, Double> attributes = new HashMap<>();
-        attributes.put(Attribute.GENERIC_MOVEMENT_SPEED, 0.23);
+        attributes.put(Attribute.MOVEMENT_SPEED, 0.23);
         super.setAttributes(attributes);
     }
 
