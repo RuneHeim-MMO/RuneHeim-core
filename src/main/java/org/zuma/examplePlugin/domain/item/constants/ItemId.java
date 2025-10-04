@@ -337,7 +337,7 @@ public enum ItemId {
         PriceRecord record = ItemPriceCalculator.getPrice(this);
 
         if (record == null) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Attempted to get sell price for item " + this.name() + " but price record was null.");
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Attempted to get buy price for item " + this.name() + " but price record was null.");
             return null;
         }
 

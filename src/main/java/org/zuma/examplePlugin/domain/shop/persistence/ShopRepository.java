@@ -108,9 +108,9 @@ public class ShopRepository {
 
                         new ShopItemConfig(ItemId.IRON_CROSSBOW.asInt(), 3, 3600, 1200L, null, null, null),
 
-                        new ShopItemConfig(ItemId.BRONZE_ARROW.asInt(), 512, 10, ItemId.BRONZE_ARROW.getBuyPrice(), ItemId.BRONZE_ARROW.getBuyPrice(), null, null),
-                        new ShopItemConfig(ItemId.IRON_ARROW.asInt(), 512, 10, ItemId.IRON_ARROW.getBuyPrice(), ItemId.IRON_ARROW.getBuyPrice(), null, null),
-                        new ShopItemConfig(ItemId.STEEL_ARROW.asInt(), 512, 10, ItemId.STEEL_ARROW.getBuyPrice(), ItemId.STEEL_ARROW.getBuyPrice(), null, null)
+                        new ShopItemConfig(ItemId.BRONZE_ARROW.asInt(), 512, 10, ItemId.BRONZE_ARROW.getBuyPrice(), ItemId.BRONZE_ARROW.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.IRON_ARROW.asInt(), 512, 10, ItemId.IRON_ARROW.getBuyPrice(), ItemId.IRON_ARROW.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.STEEL_ARROW.asInt(), 512, 10, ItemId.STEEL_ARROW.getBuyPrice(), ItemId.STEEL_ARROW.getSellPrice(), null, null)
 
                 ))), 1)),
 
@@ -180,9 +180,9 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.IRON_CROSSBOW.asInt(), 3, 3600, 1200L, null, null, null),
                         new ShopItemConfig(ItemId.STEEL_CROSSBOW.asInt(), 3, 3600, 1800L, null, null, null),
 
-                        new ShopItemConfig(ItemId.BRONZE_ARROW.asInt(), 512, 10, ItemId.BRONZE_ARROW.getBuyPrice(), ItemId.BRONZE_ARROW.getBuyPrice(), null, null),
-                        new ShopItemConfig(ItemId.IRON_ARROW.asInt(), 512, 10, ItemId.IRON_ARROW.getBuyPrice(), ItemId.IRON_ARROW.getBuyPrice(), null, null),
-                        new ShopItemConfig(ItemId.STEEL_ARROW.asInt(), 512, 10, ItemId.STEEL_ARROW.getBuyPrice(), ItemId.STEEL_ARROW.getBuyPrice(), null, null)
+                        new ShopItemConfig(ItemId.BRONZE_ARROW.asInt(), 512, 10, ItemId.BRONZE_ARROW.getBuyPrice(), ItemId.BRONZE_ARROW.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.IRON_ARROW.asInt(), 512, 10, ItemId.IRON_ARROW.getBuyPrice(), ItemId.IRON_ARROW.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.STEEL_ARROW.asInt(), 512, 10, ItemId.STEEL_ARROW.getBuyPrice(), ItemId.STEEL_ARROW.getSellPrice(), null, null)
 
                 ))), 1)),
 
