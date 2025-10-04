@@ -54,8 +54,7 @@ public class TravelStateHandler {
 
                     ticks[0] += 12;
                     mode.getLoopSound().play(player, false);
-                    player.asBukkitPlayer().setExp((float) ticks[0] / durationTicks);
-
+                    player.asBukkitPlayer().setExp(Math.min(1f, (float) ticks[0] / durationTicks));
                 }
             }.runTaskTimer(RuneQuestPlugin.getInstance(), TRANSITION_DURATION_TICKS, 12);
 
