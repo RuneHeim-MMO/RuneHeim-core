@@ -38,7 +38,6 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
 
     private final PendingXPHandler xpHandler;
 
-
     public CombatantMob(CombatantMobMeta meta) {
         super(new AbstractMobMeta(true, true, Component.empty(), meta.baseEntity()));
         this.health = meta.maxHealth();
@@ -67,6 +66,17 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         }
     }
 
+
+    public CombatantMob overrideBaseToSkeleton() {
+        this.setBaseEntity(EntityType.SKELETON);
+        setClearDefaultHandsEquipment(false); // Keep bow in hand
+        return this;
+    }
+
+    public CombatantMob overrideBaseToBlaze() {
+        this.setBaseEntity(EntityType.BLAZE);
+        return this;
+    }
 
     public void setBaseEntity(EntityType type) {
         super.setBaseEntity(type);

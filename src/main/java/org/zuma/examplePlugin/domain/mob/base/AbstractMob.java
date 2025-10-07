@@ -50,7 +50,9 @@ public abstract class AbstractMob {
     private Component displayName;
     private EntityType baseMob;
     private boolean silent;
-    private boolean isBaby, isInvulnerable;
+    private boolean isBaby;
+    private boolean isInvulnerable;
+    private boolean clearDefaultHandsEquipment;
     private int maxWalkDistance, yaw;
     private HashMap<Attribute, Double> customAttributes;
     private List<Integer> dropTableIds;
@@ -76,6 +78,7 @@ public abstract class AbstractMob {
         mobEquipment = null;
         isBaby = false;
         isInvulnerable = false;
+        clearDefaultHandsEquipment = true;
         maxWalkDistance = -1; // -1 means no limits, can walk anywhere.
         customAttributes = new HashMap<>();
         dropTableIds = new ArrayList<>();
@@ -237,8 +240,10 @@ public abstract class AbstractMob {
         equipment.setChestplate(null);
         equipment.setLeggings(null);
         equipment.setBoots(null);
-        equipment.setItemInMainHand(null);
         equipment.setItemInOffHand(null);
+        if (clearDefaultHandsEquipment) {
+            equipment.setItemInMainHand(null);
+        }
 
         if (!(entity instanceof ArmorStand armorStand)) {
             // Set all drop chances to zero
@@ -437,6 +442,15 @@ public abstract class AbstractMob {
             }
         }
     }
+
+    public boolean isClearDefaultHandsEquipment() {
+        return clearDefaultHandsEquipment;
+    }
+
+    public void setClearDefaultHandsEquipment(boolean clearDefaultHandsEquipment) {
+        this.clearDefaultHandsEquipment = clearDefaultHandsEquipment;
+    }
+
 
     public void handleInteraction(RunePlayer player) {
 

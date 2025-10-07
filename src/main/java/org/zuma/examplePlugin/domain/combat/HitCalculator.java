@@ -99,8 +99,6 @@ public class HitCalculator {
 
         if (type == AttackType.RANGED) {
             int attackerRanged = getEntitySkillLevel(attacker, SkillType.RANGED);
-
-            // Ranged max hit = floor(RangedLevel * (RangedStrength + 64) / 640)
             double maxHit = MAX_HIT_FLOOR_OFFSET + attackerRanged * (attackerRangeStr + BASE_BONUS) / MAX_HIT_DIVISOR;
 
             return Math.max(2, (int) Math.ceil(maxHit));

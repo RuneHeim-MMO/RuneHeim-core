@@ -1,13 +1,10 @@
 package org.zuma.examplePlugin.domain.mob.types;
 
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
-import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.domain.droptable.DropTableId;
 import org.zuma.examplePlugin.domain.mob.MobTypeRegistry;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehaviors;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
-import org.zuma.examplePlugin.domain.mob.impl.CombatDummy;
-import org.zuma.examplePlugin.domain.mob.impl.FusionMaster;
 import org.zuma.examplePlugin.domain.mob.impl.GenericCombatant;
 import org.zuma.examplePlugin.domain.mob.impl.ShearableSheep;
 import org.zuma.examplePlugin.domain.skill.SkillLevelRecord;
