@@ -26,6 +26,7 @@ public class SpawnZoneHandler {
             new NamespacedKey(RuneQuestPlugin.getInstance(), MobDataKey.SPAWN_ZONE_ID.toString());
 
     private final static long TICK_RATE = 3 * 20L; //  Every 3 sec
+    private int tickPartition = 0;
     private final Map<Integer, AbstractSpawnZone> spawnZones;
     private final SpawnZoneRepository repository;
     private final SpawnZoneFactory factory;
@@ -145,20 +146,21 @@ public class SpawnZoneHandler {
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Loaded " + spawnZones.size() + " spawn zones.");
     }
 
+
     public void startLoop() {
         if (loop != null) {
             loop.cancel();
         }
-
-        loop = Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::tick, TICK_RATE, TICK_RATE);
-
+        // Run 3x faster
+        loop = Bukkit.getScheduler().runTaskTimer(
+                RuneQuestPlugin.getInstance(), this::tick, TICK_RATE / 3, TICK_RATE / 3
+        );
     }
 
     public void onDisable() {
         if (loop != null) {
             loop.cancel();
         }
-
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Spawn zone loop stopped.");
     }
 
@@ -167,7 +169,16 @@ public class SpawnZoneHandler {
             return;
         }
 
-        spawnZones.values().forEach(AbstractSpawnZone::runTickIfDue);
+        List<AbstractSpawnZone> zones = new ArrayList<>(spawnZones.values());
+        int partitionSize = (int) Math.ceil(zones.size() / 3.0);
+        int start = tickPartition * partitionSize;
+        int end = Math.min(start + partitionSize, zones.size());
+
+        for (int i = start; i < end; i++) {
+            zones.get(i).runTickIfDue();
+        }
+
+        tickPartition = (tickPartition + 1) % 3;
     }
 
 }

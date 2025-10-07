@@ -39,6 +39,8 @@ public class MobTypesLoader {
         Decorations.registerMobs(registry);
         Ocelots.registerMobs(registry);
         Frogs.registerMobs(registry);
+        Armadillo.registerMobs(registry);
+        Foxes.registerMobs(registry);
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Loaded " + registry.getAvailable().size() + " mob types.");
 

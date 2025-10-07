@@ -74,7 +74,7 @@ public class HitHandler {
         }
     }
 
-    public void applySplashHit(RunePlayer attacker, AttackType type, boolean isSpecialAttack, int coneDeg, double radius) {
+    public void applySplashHit(RunePlayer attacker, CombatEntity originalDefender, AttackType type, boolean isSpecialAttack, int coneDeg, double radius) {
         Player player = attacker.asBukkitPlayer();
         Vector direction = player.getLocation().getDirection(); // no normalization needed
         Location eyeLocation = player.getEyeLocation();
@@ -87,6 +87,7 @@ public class HitHandler {
         for (Entity entity : nearbyEntities) {
             AbstractMob matchingMob = RuneQuestPlugin.getMobRegistry().getMob(entity);
             if (!(matchingMob instanceof CombatEntity combatMob)) continue;
+            if (combatMob.equals(originalDefender)) continue; // skip original target
 
             Vector toEntity = entity.getLocation().toVector().subtract(eyeLocation.toVector());
             if (toEntity.lengthSquared() > radiusSquared) continue; // skip if outside radius
@@ -115,7 +116,7 @@ public class HitHandler {
         }
 
         if (attacker.getEntity() instanceof Player) {
-            applySplashHit((RunePlayer) attacker, type, isSpecialAttack, 60, (int) HitCalculator.getEntityModifierLevel(attacker, ModifierType.CLEAVE_DISTANCE));
+            applySplashHit((RunePlayer) attacker, defender, type, isSpecialAttack, 60, (int) HitCalculator.getEntityModifierLevel(attacker, ModifierType.CLEAVE_DISTANCE));
         }
 
         applyHit(attacker, defender, hit);

@@ -15,12 +15,6 @@ public enum MobType {
     TUTOR_SURVIVAL,
 
     COMBAT_DUMMY_FACE_SOUTH,
-    MOLE_BASE_30,
-    MOLE_BASE_50,
-    MOLE_BASE_70,
-    EAGLE_BLACKBASE_57,
-    EAGLE_BROWN_BASE_59,
-    EAGLE_BROWNHEAD_BASE_55,
 
     BROWN_FARMHOUSE_MOUNT_SHOP,
     ABRAHAM_FAIRY_TEACHER,
@@ -104,10 +98,11 @@ public enum MobType {
     BOAR_GRAY_BASE_3,
     BOAR_LIGHT_BROWN_ALPHA_BASE_14,
     BOAR_LIGHT_BROWN_BASE_3,
+
+    // Wild pigs
     WILD_PIG_BASE_48,
     WILD_PIG_BABY_BASE_40,
     WILD_PIG_BASE_45,
-
 
     // Wolves
     WOLF_BLACK_ALPHA_BASE_36,
@@ -139,11 +134,35 @@ public enum MobType {
     OCELOT_BASE_48,
     OCELOT_BASE_44,
 
+    // Moles
+    MOLE_BASE_30,
+    MOLE_BASE_50,
+    MOLE_BASE_70,
+
+    // Eagles
+    EAGLE_BLACK_BASE_50,
+    EAGLE_BROWN_BASE_48,
+    EAGLE_BROWNHEAD_BASE_55,
+
+    // Fox
+    FOX_BASE_8,
+    FOX_BASE_10,
+    FOX_BASE_22,
+
+    // Llamas
+    LLAMA_BASE_56,
+
+    // Armadillo
+    ARMADILLO_BASE_55,
+    ARMADILLO_NON_AGGRO_BASE_15,
+
+    // Other
     CHICKEN_BASE_2,
+    STRIDER_BASE_60,
+    SNIFFER_BASE_65,
+
     RAT,
     AXOLOTL,
-    ARMADILLO_BASE_60,
-    ARMADILLO_NON_AGGRO_BASE_15,
     BEE,
     CAT,
     DONKEY,
