@@ -26,7 +26,7 @@ public enum ModifierType {
     RANGED_STRENGTH("Ranged Strength", "Enhances the power of ranged weapon attacks.", Icon.RANGED_STR.get(), null, null, false),
     RANGED_ACCURACY("Ranged Accuracy", "Improves hit chance with ranged weapons.", Icon.RANGED_ACCURACY.get(), null, null, false),
     CLEAVE_DISTANCE("Cleave Distance", "Extends the range of melee cleave attacks, allowing you to hit additional enemies in front of you.", Icon.CLEAVE.get(), null, null, false),
-    FLYING_SPEED("Flying Speed", "", Icon.FLIGHT.get(), "%", "", true);
+    FLYING_SPEED("Flying Speed", "", Icon.FLIGHT.get(), "%", null, true);
 
     private final String label, description, symbol, numSuffix, numPrefix;
     private final boolean special;

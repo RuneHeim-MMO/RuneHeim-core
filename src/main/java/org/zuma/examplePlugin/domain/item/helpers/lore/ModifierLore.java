@@ -68,7 +68,7 @@ public class ModifierLore implements LoreCreator {
         String suffix = (modifier.type().getNumberSuffix() == null) ? "" : modifier.type().getNumberSuffix();
 
         return Component.text(modifier.type().getSymbol(), NamedTextColor.WHITE)
-                .append(Component.text(" " + prefix + amountStr + suffix + " " + modifier.type().getLabel()).color(color));
+                .append(Component.text(" " + sign + prefix + amountStr + suffix + " " + modifier.type().getLabel()).color(color));
     }
 
     @Override
