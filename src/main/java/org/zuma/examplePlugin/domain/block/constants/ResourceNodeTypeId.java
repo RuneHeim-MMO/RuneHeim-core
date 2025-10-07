@@ -14,8 +14,8 @@ public enum ResourceNodeTypeId {
     COPPER_ORE(100),
     IRON_ORE(101),
     MITHRIL_ORE(103),
-    ADAMANTITE_ORE(104),
-    RUNITE_ORE(105),
+    ADAMANT_ORE(104),
+    RUNE_ORE(105),
     TIN_ORE(106),
     COAL_ORE(107),
 

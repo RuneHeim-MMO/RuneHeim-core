@@ -19,6 +19,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.EntityEquipment;
@@ -481,6 +482,10 @@ public abstract class AbstractMob {
     }
 
     public void onEntityKnockback(EntityKnockbackEvent event) {
+
+    }
+
+    public void onEntityTargetPlayer(EntityTargetEvent event, RunePlayer player) {
 
     }
 }

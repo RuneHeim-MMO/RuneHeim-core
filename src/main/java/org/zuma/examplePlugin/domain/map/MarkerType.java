@@ -25,8 +25,8 @@ public enum MarkerType {
     COAL("ore-coal-markers", "Coal ore veins", "./assets/markers/coal_ore.png"),
     IRON("ore-iron-markers", "Iron ore veins", "./assets/markers/iron_ore.png"),
     MITHRIL("ore-mithril-markers", "Mithril ore veins", "./assets/markers/mithril_ore.png"),
-    ADAMANTITE("ore-adamantite-markers", "Adamantite ore veins", "./assets/markers/adamantite_ore.png"),
-    RUNITE("ore-runite-markers", "Runite ore veins", "./assets/markers/runite_ore.png"),
+    ADAMANT("ore-adamantite-markers", "Adamantite ore veins", "./assets/markers/adamantite_ore.png"),
+    RUNE("ore-runite-markers", "Runite ore veins", "./assets/markers/runite_ore.png"),
 
     FIRE_SOURCE("fire-source-markers", "Fire sources", "./assets/markers/fire_source.png"),
     SMELTING_FURNACE("smelting-furnace-markers", "Smelting furnaces", "./assets/markers/smelting_furnace.png"),

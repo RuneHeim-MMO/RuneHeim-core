@@ -380,6 +380,15 @@ public enum MobBehaviors {
             List.of(SoundType.WITCH_ATTACK),
             List.of(SoundType.WITCH_HURT),
             List.of(SoundType.WITCH_DEATH)
+    )),
+
+
+    BANDIT((pitchModifier) -> new MobBehavior(
+            pitchModifier, List.of(SoundType.BANDIT_AMBIENT_1),
+            List.of(SoundType.BANDIT_YES_1),
+            List.of(SoundType.BANDIT_NO_1),
+            List.of(SoundType.BANDIT_HURT_1),
+            List.of(SoundType.BANDIT_DEATH_1)
     ));
 
 

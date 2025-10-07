@@ -4,7 +4,10 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
+import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 
@@ -102,5 +105,20 @@ public class MobUtils {
         }
 
         return new Location(world, loc.getX(), safeY + 0.5, loc.getZ());
+    }
+
+    public static List<ItemStack> getMobEquipment(LivingEntity mob) {
+        EntityEquipment eq = mob.getEquipment();
+        if (eq == null) return new ArrayList<>(); // no equipment
+
+        List<ItemStack> equipment = new ArrayList<>();
+        if (eq.getHelmet() != null) equipment.add(eq.getHelmet());
+        if (eq.getChestplate() != null) equipment.add(eq.getChestplate());
+        if (eq.getLeggings() != null) equipment.add(eq.getLeggings());
+        if (eq.getBoots() != null) equipment.add(eq.getBoots());
+        if (eq.getItemInMainHand().getType() != Material.AIR) equipment.add(eq.getItemInMainHand());
+        if (eq.getItemInOffHand().getType() != Material.AIR) equipment.add(eq.getItemInOffHand());
+
+        return equipment;
     }
 }

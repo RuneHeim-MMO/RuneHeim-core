@@ -468,7 +468,13 @@ public enum SoundType {
     AMBIENT_SOUL_SAND_ADDITIONS("ambient.soul_sand_valley.additions", false, 1, 1),
 
     ROGUE_HAVEN_AMBIENT_1("ambient.warped_forest.mood", false, 1, 1),
-    ROGUE_HAVEN_AMBIENT_2("ambient.nether_wastes.mood", false, 1, 1);
+    ROGUE_HAVEN_AMBIENT_2("ambient.nether_wastes.mood", false, 1, 1),
+
+    BANDIT_AMBIENT_1("ENTITY_PILLAGER_AMBIENT", false, 1, 1f),
+    BANDIT_HURT_1("ENTITY_PILLAGER_HURT", false, 1, 1f),
+    BANDIT_NO_1("ENTITY_PILLAGER_CELEBRATE", false, 1, 1f),
+    BANDIT_DEATH_1("ENTITY_VILLAGER_DEATH", false, 1, 1f),
+    BANDIT_YES_1("vocal_villagers:entity.villager.yes", true, 1, 0.75f);
 
 
     private final String soundKey;
@@ -533,4 +539,4 @@ public enum SoundType {
             }
         }
     }
-}
+    }

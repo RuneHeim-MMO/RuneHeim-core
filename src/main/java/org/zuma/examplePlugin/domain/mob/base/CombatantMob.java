@@ -4,6 +4,7 @@ import com.ticxo.modelengine.api.ModelEngineAPI;
 import com.ticxo.modelengine.api.model.ModeledEntity;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.*;
@@ -11,13 +12,25 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
+import org.zuma.examplePlugin.core.utils.MobUtils;
+import org.zuma.examplePlugin.core.utils.ModifierUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
+import org.zuma.examplePlugin.domain.item.base.SocketedEquipableItemType;
+import org.zuma.examplePlugin.domain.item.impl.Gem;
+import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
+import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFruit;
+import org.zuma.examplePlugin.domain.item.state.states.FairyState;
+import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
+import org.zuma.examplePlugin.domain.modifier.SkillModifier;
 import org.zuma.examplePlugin.domain.xp.PendingXPHandler;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
 import org.zuma.examplePlugin.domain.mob.meta.CombatantMobMeta;
@@ -29,6 +42,7 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.events.combat.RuneEntityDeathEvent;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     private final EnumMap<ModifierType, Modifier> modifiers = new EnumMap<>(ModifierType.class);
@@ -48,8 +62,9 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         setDropTableIds(meta.dropTableIds());
         meta.skills().forEach(record -> skills.put(record.type(), new Skill(record.type(), record.getXP())));
 
-        if (meta.modifiers() != null)
+        if (meta.modifiers() != null) {
             meta.modifiers().forEach(modifier -> modifiers.put(modifier.type(), modifier));
+        }
 
         combatLvl = XpUtils.getCombatLevelFromSkills(skills);
         String levelColorCode = TextUtils.getLegacyColorCodeForLevel(combatLvl);
@@ -100,6 +115,42 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
 
     public int getMaxHealth() {
         return maxHealth;
+    }
+
+    @Override
+    public Entity spawn(UUID uuid, Location location) {
+        Entity spawnedEntity = super.spawn(uuid, location);
+
+        if (!(spawnedEntity instanceof LivingEntity livingEntity)) {
+            return spawnedEntity;
+        }
+
+        List<ItemStack> spawnedWithEquipment = MobUtils.getMobEquipment(livingEntity);
+        List<Modifier> newModifiers = new ArrayList<>(modifiers.values());
+
+        spawnedWithEquipment.stream()
+                .filter(Objects::nonNull)
+                .flatMap(itemStack -> {
+                    AbstractItemType item = RuneQuestPlugin.getItemRegistry().getType(itemStack);
+                    return item != null
+                            ? Stream.of(Map.entry(itemStack, item))
+                            : Stream.empty();
+                })
+                .filter(entry -> {
+                    AbstractItemType abstractItemType = entry.getValue();
+                    return abstractItemType instanceof EquipableItemType;
+                })
+                .forEach(entry -> {
+                    newModifiers.addAll(((EquipableItemType) entry.getValue()).getModifiers());
+                });
+
+
+        List<Modifier> combined = ModifierUtils.combineModifiersByType(newModifiers);
+        this.modifiers.clear();
+
+        combined.forEach(m -> this.modifiers.put(m.type(), m));
+
+        return spawnedEntity;
     }
 
     public void registerHit(Hit hit) {
