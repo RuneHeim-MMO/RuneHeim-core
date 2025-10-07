@@ -14,10 +14,10 @@ import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.MinecraftColorConverter;
 import org.zuma.examplePlugin.core.utils.TextUtils;
-import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneType;
 import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
 import org.zuma.examplePlugin.domain.spawnzone.impl.AreaSpawnZone;
 import org.zuma.examplePlugin.domain.spawnzone.impl.ChunkSpawnZone;
+import org.zuma.examplePlugin.domain.spawnzone.impl.PointSpawnZone;
 import org.zuma.examplePlugin.domain.territory.Territory;
 
 import java.util.Arrays;
@@ -93,7 +93,7 @@ public class MapMarkerHandler {
         territories.forEach(territory -> {
             if (!territory.isRenderOnMap()) return;
 
-            MarkerType markerType = MarkerType.AREAS;
+            MarkerType markerType = MarkerType.TERRITORY;
             Shape circleShape = MapShapeGenerator.generateCircleShapeAsShape((int) territory.getCenterPoint().x(), (int) territory.getCenterPoint().z(), territory.getRadius(), 20);
 
             String label = territory.getName().replaceAll("§.", "");
@@ -134,7 +134,14 @@ public class MapMarkerHandler {
         AtomicInteger count = new AtomicInteger();
 
         zones.forEach(zone -> {
-            MarkerType markerType = MarkerType.SPAWN_ZONE;
+
+            if (zone instanceof PointSpawnZone) return; // Rendered as markers
+            MarkerType markerType = MarkerType.MOB_SPAWN_ZONE; // Default
+
+            if (zone instanceof AreaSpawnZone areaSpawnZone && areaSpawnZone.isBiomeSpawn()) {
+                markerType = MarkerType.BIOME_SPAWN_ZONE;
+            }
+
             int radius = 1;
 
             if (zone instanceof AreaSpawnZone areaSpawnZone) {

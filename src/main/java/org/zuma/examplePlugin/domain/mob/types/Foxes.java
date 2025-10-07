@@ -18,21 +18,21 @@ public class Foxes {
                 "Fox", null, getBaseSkills(8),
                 null, MobBehaviors.FOX.getBehavior(),
                 0.3, false, false, 9, null, null, DisguiseType.FOX,
-                List.of(DropTableId.BONES.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
         ));
 
         registry.register(MobType.FOX_BASE_10.getId(), () -> new GenericCombatant(
                 "Fox", null, getBaseSkills(15),
                 null, MobBehaviors.FOX.getBehavior(),
                 0.3, false, false, 10, null, null, DisguiseType.FOX,
-                List.of(DropTableId.BONES.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
         ));
 
         registry.register(MobType.FOX_BASE_22.getId(), () -> new GenericCombatant(
                 "Fox", null, getBaseSkills(22),
                 null, MobBehaviors.FOX.getBehavior(),
                 0.3, false, false, 10, null, null, DisguiseType.FOX,
-                List.of(DropTableId.BONES.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
         ));
     }
 }

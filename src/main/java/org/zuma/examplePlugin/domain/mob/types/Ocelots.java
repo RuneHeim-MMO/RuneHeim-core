@@ -22,14 +22,14 @@ public class Ocelots {
                 "Ocelot", null, getBaseSkills(44),
                 null, MobBehaviors.OCELOT.getBehavior(),
                 0.3, true, false, 43, null, null, DisguiseType.OCELOT,
-                List.of(DropTableId.BONES.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
         ));
 
         registry.register(MobType.OCELOT_BASE_45.getId(), () -> new GenericCombatant(
                 "Ocelot", null, getBaseSkills(45),
                 null, MobBehaviors.OCELOT.getBehavior(),
                 0.3, true, false, 42, null, null, DisguiseType.OCELOT,
-                List.of(DropTableId.BONES.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
         ));
 
 
@@ -37,7 +37,7 @@ public class Ocelots {
                 "Ocelot", null, getBaseSkills(48),
                 null, MobBehaviors.OCELOT.getBehavior(),
                 0.3, true, false, 40, null, null, DisguiseType.OCELOT,
-                List.of(DropTableId.BONES.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
         ));
 
 

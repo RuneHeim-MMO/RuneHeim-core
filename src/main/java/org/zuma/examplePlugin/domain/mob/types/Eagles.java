@@ -22,7 +22,7 @@ public class Eagles {
                 MobBehaviors.EAGLE.getBehavior(),
                 "brownheadeagle",
                 0.40, false, false, 32,
-                List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
         ));
 
 
@@ -33,7 +33,7 @@ public class Eagles {
                 MobBehaviors.EAGLE.getBehavior(),
                 "browneagle",
                 0.40, false, false, 35,
-                List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
         ));
 
 
@@ -44,7 +44,7 @@ public class Eagles {
                 MobBehaviors.EAGLE.getBehavior(),
                 "blackeagle",
                 0.40, false, false, 32,
-                List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
         ));
 
 

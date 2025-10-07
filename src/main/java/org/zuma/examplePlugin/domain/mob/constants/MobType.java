@@ -20,21 +20,13 @@ public enum MobType {
     ABRAHAM_FAIRY_TEACHER,
     SHEPHERD, // Sheep shearer quest
 
-    COW_BASE_5,
-    CALF_BASE_3,
 
-    BUNNY_BLACK_BASE_12,
-    BUNNY_BROWN_BASE_14,
-    BUNNY_GRAY_BASE_15,
-    BUNNY_PET_BASE_12,
-    BUNNY_WHITE_BASE_15,
-
+    // Goblins
     GOBLIN_1_BASE_1,
     GOBLIN_2_BASE_1,
     GOBLIN_3_BASE_1,
     GOBLIN_4_BASE_1,
     GOBLIN_5_BASE_1,
-
     GOBLIN_1_BASE_4,
     GOBLIN_2_BASE_4,
     GOBLIN_3_BASE_4,
@@ -90,6 +82,18 @@ public enum MobType {
     // City guards (disguised iron golems to kill aggressive mobs near and inside of the cities)
     CITY_GUARD_STATIC,
     CITY_GUARD_WALKING,
+
+
+    // Cows
+    COW_BASE_5,
+    CALF_BASE_3,
+
+    // Bunnies
+    BUNNY_BLACK_BASE_12,
+    BUNNY_BROWN_BASE_14,
+    BUNNY_GRAY_BASE_15,
+    BUNNY_PET_BASE_12,
+    BUNNY_WHITE_BASE_15,
 
     // Boars
     BOAR_BROWN_ALPHA_BASE10,

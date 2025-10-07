@@ -7,12 +7,13 @@ import org.zuma.examplePlugin.domain.spawnzone.meta.AbstractSpawnZoneMeta;
 
 public class AreaSpawnZone extends AbstractSpawnZone {
     private final int radius;
-    private final boolean spawnAtHighestBlock;
+    private final boolean spawnAtHighestBlock, isBiomeSpawn;
 
-    public AreaSpawnZone(AbstractSpawnZoneMeta meta, int radius, boolean spawnAtHighestBlock) {
+    public AreaSpawnZone(AbstractSpawnZoneMeta meta, int radius, boolean spawnAtHighestBlock, boolean isBiomeSpawn) {
         super(SpawnZoneType.AREA, meta);
         this.radius = radius;
         this.spawnAtHighestBlock = spawnAtHighestBlock;
+        this.isBiomeSpawn = isBiomeSpawn;
     }
 
     @Override
@@ -41,5 +42,9 @@ public class AreaSpawnZone extends AbstractSpawnZone {
 
     public int getRadius() {
         return this.radius;
+    }
+
+    public boolean isBiomeSpawn() {
+        return isBiomeSpawn;
     }
 }

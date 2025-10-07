@@ -49,20 +49,17 @@ public enum MarkerType {
     AXE_SHOP("axe-shops", "Axe Shops", "./assets/markers/axe_shop.png"),
     WEAPON_SHOP("weapon-shops", "Weapon Shops", "./assets/markers/weapon_shop.png"),
 
-
     ALTAR("altars", "Altars", "./assets/markers/altar.png"),
     FUSION_MASTER("fusion-masters", "Fusion Masters", "./assets/markers/fusion_master.png"),
     CONTRACT_BOARD("contract-boards", "Contract Boards", "./assets/markers/contract_board.png"),
-
     QUICK_TRAVEL("quick-travels", "Quick Travel", "./assets/markers/quick_travel.png"),
 
-    // Remove after dev
-    BANDITS("bandits", "Bandits", "./assets/markers/quick_travel.png"),
-
-
     // Dev
-    AREAS("areas", "Areas", ""),
-    SPAWN_ZONE("spawn_zone", "Mob Spawn Zones", "");
+    TERRITORY("territories", "Territories", ""),
+
+
+    BIOME_SPAWN_ZONE("biome_spawn_zone", "Biome Spawn Zones", ""),
+    MOB_SPAWN_ZONE("mob_spawn_zone", "Mob Spawn Zones", "");
 
 
     private final String id, label, iconURL;

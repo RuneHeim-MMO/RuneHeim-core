@@ -28,21 +28,21 @@ public class Common {
                 "Llama", null, getBaseSkills(56),
                 null, MobBehaviors.LLAMA.getBehavior(),
                 0.25, false, false, 48, null, null, DisguiseType.LLAMA,
-                List.of(DropTableId.BONES.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
         ));
 
         registry.register(MobType.STRIDER_BASE_60.getId(), () -> new GenericCombatant(
                 "Strider", null, getBaseSkills(60),
                 null, MobBehaviors.STRIDER.getBehavior(),
                 0.35, false, false, 48, null, null, DisguiseType.STRIDER,
-                List.of(DropTableId.BONES.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
         ));
 
         registry.register(MobType.SNIFFER_BASE_65.getId(), () -> new GenericCombatant(
                 "Sniffer", null, getBaseSkills(65),
                 null, MobBehaviors.SNIFFER.getBehavior(),
                 0.35, false, false, 55, null, null, DisguiseType.SNIFFER,
-                List.of(DropTableId.BONES.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
         ));
 
 
