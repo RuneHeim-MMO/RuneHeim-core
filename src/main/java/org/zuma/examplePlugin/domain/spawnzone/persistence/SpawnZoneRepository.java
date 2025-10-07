@@ -236,7 +236,7 @@ public class SpawnZoneRepository {
                         new SpawnZoneMobRecord(MobType.GOBLIN_4_BASE_4, 5, 100),
                         new SpawnZoneMobRecord(MobType.GOBLIN_5_BASE_4, 5, 100),
                         new SpawnZoneMobRecord(MobType.FOX_BASE_8, 3, 100)
-                        ), 150, false), 1)),
+                ), 150, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(30, SpawnZoneType.AREA, 30, 50,
                         new Location(Bukkit.getWorld("world"), 257, 69, -291)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
@@ -447,7 +447,7 @@ public class SpawnZoneRepository {
                         new SpawnZoneMobRecord(MobType.WOLF_GRAY_LIGHT_ALPHA_BASE_34, 1, 100),
                         new SpawnZoneMobRecord(MobType.WOLF_BLACK_ALPHA_BASE_36, 1, 100),
                         new SpawnZoneMobRecord(MobType.LLAMA_BASE_56, 6, 100)
-                        ), 100, false), 1)),
+                ), 100, false), 1)),
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(55, SpawnZoneType.AREA, 30, 15,
@@ -778,7 +778,7 @@ public class SpawnZoneRepository {
                         new Location(Bukkit.getWorld("world"), 1263, 80, -164)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.SNIFFER_BASE_65, 15, 100),
                         new SpawnZoneMobRecord(MobType.STRIDER_BASE_60, 15, 100)
-                        ), 150, false), 1)),
+                ), 150, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(101, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), -1030, 200, 165)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
@@ -1186,10 +1186,10 @@ public class SpawnZoneRepository {
 
 
                 // Sporefell armadillo beach spawns
-            new SpawnZoneRecord(new AbstractSpawnZoneMeta(172, SpawnZoneType.AREA, 30, 15,
-                    new Location(Bukkit.getWorld("world"), 1116, 65, -174)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                    new SpawnZoneMobRecord(MobType.ARMADILLO_BASE_55, 3, 100)
-            ), 30, false), 1)),
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(172, SpawnZoneType.AREA, 30, 15,
+                        new Location(Bukkit.getWorld("world"), 1116, 65, -174)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.ARMADILLO_BASE_55, 3, 100)
+                ), 30, false), 1)),
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(173, SpawnZoneType.AREA, 30, 15,
@@ -1228,13 +1228,71 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(179, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 1115, 69, -111)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.ARMADILLO_BASE_55, 8, 100)
-                ), 30, false), 1))
+                ), 30, false), 1)),
 
 
+                // Murkwatch bandits
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(180, SpawnZoneType.POINT, 120, 15,
+                        new Location(Bukkit.getWorld("world"), -871, 70, 420)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_20_1, 1, 100),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_20_2, 1, 100),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_20_3, 1, 100),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_20_4, 1, 100)
+                ), false, MarkerType.BANDITS, "Bandits"), 1)),
 
 
+                // Glaciem bandits
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(181, SpawnZoneType.POINT, 120, 15,
+                        new Location(Bukkit.getWorld("world"), 824, 74, 414)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_40_1, 1, 100),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_40_3, 1, 100)
+                ), false, MarkerType.BANDITS, "Bandits"), 1)),
 
-                // last 179
+
+                // Aetheris bandits
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(182, SpawnZoneType.POINT, 600, 50,
+                        new Location(Bukkit.getWorld("world"), 44, 73, 778)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_80_1, 2, 10),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_80_2, 2, 10)
+                ), false, MarkerType.BANDITS, "Bandits"), 1)),
+
+
+                // Rogues haven bandits
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(183, SpawnZoneType.POINT, 300, 50,
+                        new Location(Bukkit.getWorld("world"), -76, 72, -1080)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_80_1, 3, 10),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_60_2, 3, 10)
+                ), false, MarkerType.BANDITS, "Bandits"), 1)),
+
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(184, SpawnZoneType.POINT, 300, 50,
+                        new Location(Bukkit.getWorld("world"), -217, 80, -1090)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_60_1, 3, 10),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_60_2, 3, 10)
+                ), false, MarkerType.BANDITS, "Bandits"), 1)),
+
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(185, SpawnZoneType.POINT, 600, 50,
+                        new Location(Bukkit.getWorld("world"), -76, 72, -1080)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_60_1, 3, 10),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_60_2, 3, 10)
+                ), false, MarkerType.BANDITS, "Bandits"), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(186, SpawnZoneType.POINT, 600, 50,
+                        new Location(Bukkit.getWorld("world"), -176, 86, -993.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_60_1, 3, 10),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_60_2, 3, 10)
+                ), false, MarkerType.BANDITS, "Bandits"), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(187, SpawnZoneType.POINT, 500, 50,
+                        new Location(Bukkit.getWorld("world"), 100, 72, -1056)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_80_1, 1, 80),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_80_2, 2, 80),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_80_3, 1, 80),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_80_4, 1, 80)
+                ), false, MarkerType.BANDITS, "Bandits"), 1))
+                
+                // last 187
 
 
         );

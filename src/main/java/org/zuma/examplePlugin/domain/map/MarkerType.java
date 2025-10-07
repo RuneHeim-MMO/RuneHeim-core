@@ -54,8 +54,10 @@ public enum MarkerType {
     FUSION_MASTER("fusion-masters", "Fusion Masters", "./assets/markers/fusion_master.png"),
     CONTRACT_BOARD("contract-boards", "Contract Boards", "./assets/markers/contract_board.png"),
 
-    // TODO
     QUICK_TRAVEL("quick-travels", "Quick Travel", "./assets/markers/quick_travel.png"),
+
+    // Remove after dev
+    BANDITS("bandits", "Bandits", "./assets/markers/quick_travel.png"),
 
 
     // Dev
