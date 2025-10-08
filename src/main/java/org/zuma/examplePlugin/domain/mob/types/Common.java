@@ -24,6 +24,13 @@ public class Common {
                 List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt(), DropTableId.CHICKEN_MEAT.asInt())
         ));
 
+        registry.register(MobType.INFERNAK_WARHOUND_BASE_80.getId(), () -> new GenericCombatant(
+                "Warhound", null, getBaseSkills(80),
+                null, MobBehaviors.LLAMA.getBehavior(),
+                0.35, false, true, 50, null, null, DisguiseType.RAVAGER,
+                List.of(DropTableId.BONES.asInt())
+        ));
+
         registry.register(MobType.LLAMA_BASE_56.getId(), () -> new GenericCombatant(
                 "Llama", null, getBaseSkills(56),
                 null, MobBehaviors.LLAMA.getBehavior(),
@@ -40,7 +47,7 @@ public class Common {
 
         registry.register(MobType.SNIFFER_BASE_65.getId(), () -> new GenericCombatant(
                 "Sniffer", null, getBaseSkills(65),
-                null, MobBehaviors.SNIFFER.getBehavior(),
+                null, MobBehaviors.RAVAGER.getBehavior(),
                 0.35, false, false, 55, null, null, DisguiseType.SNIFFER,
                 List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
         ));

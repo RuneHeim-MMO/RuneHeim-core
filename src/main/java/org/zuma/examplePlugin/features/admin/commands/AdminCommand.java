@@ -173,6 +173,11 @@ public class AdminCommand implements BasicCommand {
             message.append("§eLast Spawned Wave: §f").append(zone.getLastWaveSpawnedAmount()).append(" mobs\n");
             message.append("§eDead % of Last Wave: §f").append(String.format("%.2f", zone.getDeadEntitiesPercentage())).append("%\n");
 
+            message.append("--- Mob Records ---\n");
+            zone.getMobRecords().forEach(r -> {
+                message.append("§f").append(r.mobId().getId()).append("§e ").append(r.spawnChancePercentage()).append("%\n");
+
+            });
             player.sendMessage(message.toString());
 
         }

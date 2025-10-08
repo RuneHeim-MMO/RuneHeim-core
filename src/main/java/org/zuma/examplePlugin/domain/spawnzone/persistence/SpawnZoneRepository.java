@@ -241,7 +241,7 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(30, SpawnZoneType.AREA, 30, 50,
                         new Location(Bukkit.getWorld("world"), 257, 69, -291)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.CHICKEN_BASE_2, 20, 100)
-                ), 10, false, true), 1)),
+                ), 10, false, false), 1)),
 
                 // Between eldarwyn and brineport
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(31, SpawnZoneType.AREA, 30, 15,
@@ -1347,15 +1347,109 @@ public class SpawnZoneRepository {
                         new SpawnZoneMobRecord(MobType.BUNNY_WHITE_BASE_15, 5, 100)
                 ), 40, false, false), 1)),
 
-            new SpawnZoneRecord(new AbstractSpawnZoneMeta(194, SpawnZoneType.AREA, 30, 50,
-                    new Location(Bukkit.getWorld("world"), 566, 110, -235)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                    new SpawnZoneMobRecord(MobType.BUNNY_BLACK_BASE_12, 10, 100),
-                    new SpawnZoneMobRecord(MobType.BUNNY_GRAY_BASE_15, 10, 100),
-                    new SpawnZoneMobRecord(MobType.BUNNY_BROWN_BASE_14, 10, 100),
-                    new SpawnZoneMobRecord(MobType.BUNNY_WHITE_BASE_15, 10, 100)
-            ), 70, false, false), 1))
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(194, SpawnZoneType.AREA, 30, 50,
+                        new Location(Bukkit.getWorld("world"), 566, 110, -235)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BUNNY_BLACK_BASE_12, 10, 100),
+                        new SpawnZoneMobRecord(MobType.BUNNY_GRAY_BASE_15, 10, 100),
+                        new SpawnZoneMobRecord(MobType.BUNNY_BROWN_BASE_14, 10, 100),
+                        new SpawnZoneMobRecord(MobType.BUNNY_WHITE_BASE_15, 10, 100)
+                ), 70, false, false), 1)),
 
-                // last 194
+                // mountain eagles
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(195, SpawnZoneType.AREA, 30, 15,
+                        new Location(Bukkit.getWorld("world"), -266, 150, -617)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.EAGLE_BLACK_BASE_50, 3, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWNHEAD_BASE_55, 2, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWN_BASE_48, 4, 50)
+                ), 80, false, false), 1)),
+
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(196, SpawnZoneType.AREA, 30, 15,
+                        new Location(Bukkit.getWorld("world"), 262, 180, -596)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.EAGLE_BLACK_BASE_50, 3, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWNHEAD_BASE_55, 2, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWN_BASE_48, 4, 50)
+                ), 60, false, false), 1)),
+
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(197, SpawnZoneType.AREA, 30, 15,
+                        new Location(Bukkit.getWorld("world"), 163, 180, -478)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.EAGLE_BLACK_BASE_50, 3, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWNHEAD_BASE_55, 2, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWN_BASE_48, 4, 50)
+                ), 60, false, false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(199, SpawnZoneType.AREA, 30, 15,
+                        new Location(Bukkit.getWorld("world"), 378, 150, -808)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.EAGLE_BLACK_BASE_50, 3, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWNHEAD_BASE_55, 2, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWN_BASE_48, 4, 50)
+                ), 80, false, false), 1)),
+
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(200, SpawnZoneType.AREA, 30, 15,
+                        new Location(Bukkit.getWorld("world"), 786, 150, -795)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.EAGLE_BLACK_BASE_50, 3, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWNHEAD_BASE_55, 2, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWN_BASE_48, 4, 50)
+                ), 60, false, false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(201, SpawnZoneType.AREA, 30, 15,
+                        new Location(Bukkit.getWorld("world"), 1035, 150, -616)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.EAGLE_BLACK_BASE_50, 3, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWNHEAD_BASE_55, 2, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWN_BASE_48, 4, 50)
+                ), 80, false, false), 1)),
+
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(202, SpawnZoneType.AREA, 30, 15,
+                        new Location(Bukkit.getWorld("world"), 816, 128, -179)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.EAGLE_BLACK_BASE_50, 3, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWNHEAD_BASE_55, 2, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWN_BASE_48, 4, 50)
+                ), 50, false, false), 1)),
+
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(203, SpawnZoneType.AREA, 30, 15,
+                        new Location(Bukkit.getWorld("world"), -218, 200, 507)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.EAGLE_BLACK_BASE_50, 3, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWNHEAD_BASE_55, 2, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWN_BASE_48, 4, 50)
+                ), 50, false, false), 1)),
+
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(204, SpawnZoneType.AREA, 30, 15,
+                        new Location(Bukkit.getWorld("world"), -58, 200, 643)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.EAGLE_BLACK_BASE_50, 3, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWNHEAD_BASE_55, 2, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWN_BASE_48, 4, 50)
+                ), 50, false, false), 1)),
+
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(205, SpawnZoneType.AREA, 30, 15,
+                        new Location(Bukkit.getWorld("world"), 211, 210, 739)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.EAGLE_BLACK_BASE_50, 3, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWNHEAD_BASE_55, 2, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWN_BASE_48, 4, 50)
+                ), 50, false, false), 1)),
+
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(206, SpawnZoneType.AREA, 30, 15,
+                        new Location(Bukkit.getWorld("world"), 355, 230, 639)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.EAGLE_BLACK_BASE_50, 3, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWNHEAD_BASE_55, 2, 50),
+                        new SpawnZoneMobRecord(MobType.EAGLE_BROWN_BASE_48, 4, 50)
+                ), 50, false, false), 1)),
+
+
+                //Infernak warhounds
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(207, SpawnZoneType.AREA, 30, 15,
+                        new Location(Bukkit.getWorld("world"), 1000, 90, -630)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.INFERNAK_WARHOUND_BASE_80, 30, 100)
+                ), 120, false, true), 1))
+
+
+                // last 206
 
 
         );

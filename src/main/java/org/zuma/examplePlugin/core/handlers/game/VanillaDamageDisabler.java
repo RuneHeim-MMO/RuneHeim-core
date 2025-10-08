@@ -18,7 +18,8 @@ public class VanillaDamageDisabler implements Listener {
                     EntityDamageEvent.DamageCause.FIRE_TICK,
                     EntityDamageEvent.DamageCause.CAMPFIRE,
                     EntityDamageEvent.DamageCause.DROWNING,
-                    EntityDamageEvent.DamageCause.FLY_INTO_WALL
+                    EntityDamageEvent.DamageCause.FLY_INTO_WALL,
+                    EntityDamageEvent.DamageCause.WITHER
                     );
 
     @EventHandler

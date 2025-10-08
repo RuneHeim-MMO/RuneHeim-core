@@ -185,6 +185,7 @@ public enum MobType {
     CHICKEN_BASE_2,
     STRIDER_BASE_60,
     SNIFFER_BASE_65,
+    INFERNAK_WARHOUND_BASE_80,
 
     RAT,
     AXOLOTL,
