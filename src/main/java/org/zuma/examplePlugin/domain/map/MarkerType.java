@@ -1,12 +1,12 @@
 package org.zuma.examplePlugin.domain.map;
 
 public enum MarkerType {
-    TREE("tree-markers", "Trees", "./assets/markers/tree.png"),
-    BIRCH("tree-birch-markers", "Birch trees", "./assets/markers/birch.png"),
-    MAGIC("tree-magic-markers", "Magic trees", "./assets/markers/magic_tree.png"),
-    MAHOGANY("tree-mahogany-markers", "Mahogany trees", "./assets/markers/mahogany.png"),
-    MAPLE("tree-maple-markers", "Maple trees", "./assets/markers/maple.png"),
-    YEW("tree-yew-markers", "Yew trees", "./assets/markers/yew.png"),
+    TREE("tree-markers", "Trees", "./assets/markers/tree.webp"),
+    BIRCH("tree-birch-markers", "Birch trees", "./assets/markers/birch.webp"),
+    MAGIC("tree-magic-markers", "Magic trees", "./assets/markers/magic_tree.webp"),
+    MAHOGANY("tree-mahogany-markers", "Mahogany trees", "./assets/markers/mahogany.webp"),
+    MAPLE("tree-maple-markers", "Maple trees", "./assets/markers/maple.webp"),
+    YEW("tree-yew-markers", "Yew trees", "./assets/markers/yew.webp"),
 
     CRAWLER("fish-crawler-markers", "Crawler fishing spots", "./assets/markers/crawler.png"),
     EEL("fish-eel-markers", "Eel fishing spots", "./assets/markers/eel.png"),
