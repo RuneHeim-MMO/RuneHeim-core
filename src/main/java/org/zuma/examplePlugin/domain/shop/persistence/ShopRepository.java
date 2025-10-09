@@ -24,6 +24,11 @@ public class ShopRepository {
             // new ShopItemConfig(ItemId.POT_OF_FLOUR.asInt(), 0, 10, 25L, 8L, null, null)
     );
 
+    private static final List<ShopItemConfig> TANNER_SHOP = List.of(
+            new ShopItemConfig(ItemId.NEEDLE.asInt(), 8, 30, 50L, 5L, null, null),
+            new ShopItemConfig(ItemId.THREAD.asInt(), 128, 30, ItemId.THREAD.getBuyPrice(), ItemId.THREAD.getSellPrice(), null, null)
+    );
+
 
     public List<ShopConfig> getAll() {
         return List.of(
@@ -220,8 +225,9 @@ public class ShopRepository {
                 new ShopConfig(ShopId.SAKURMEER_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
                 new ShopConfig(ShopId.AETHERIS_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
                 new ShopConfig(ShopId.ISLENOR_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
-                new ShopConfig(ShopId.THORNBARK_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1))
+                new ShopConfig(ShopId.THORNBARK_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
 
+                new ShopConfig(ShopId.DRAKKAR_TANNER_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(TANNER_SHOP)), 1))
 
         );
 

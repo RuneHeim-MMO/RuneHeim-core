@@ -19,6 +19,7 @@ public enum ItemId {
     CHISEL(4),
     KNIFE(5),
     COMPASS(6),
+    NEEDLE(7),
 
     COPPER_ORE(100),
     IRON_ORE(101),
@@ -234,6 +235,7 @@ public enum ItemId {
     MAGIC_SHORTBOW_UNFINISHED(2325),
     MAGIC_LONGBOW_UNFINISHED(2326),
     COWHIDE(2327),
+    THREAD(2328),
 
     SHORT_BOW(2400),
     BIRCH_SHORT_BOW(2401),

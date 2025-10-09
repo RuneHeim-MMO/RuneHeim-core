@@ -41,7 +41,8 @@ public class Shopkeepers {
     private static final Supplier<DialogBuilder> tannerDialog = () -> DialogBuilder.create("tanner-dialog")
             .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()))
             .interactiveStep(c -> c.randomText(List.of("Want leather? I’ll tan your hides."))
-                    .option("§aYes" + " §f" + Icon.LEATHER.get(), b -> b.action("dialog_holder_forward_interaction"))
+                    .option("§aYes" + " §f" + Icon.LEATHER.get(), b -> b.action("open_inventory_{id_38}"))
+                    .option("§aSupplies" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
                     .option("§cNo", n -> n.followupSteps(d -> d.passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList())))));
 
 
@@ -152,7 +153,7 @@ public class Shopkeepers {
                 .attachDialog(foodShopDialog));
 
         registry.register(MobType.DRAKKAR_TANNER.getId(), () -> new InventoryOpenerMob(Icon.LEATHER.get() + " Tanner", EquipmentSet.TANNER,
-                MobBehaviors.VILLAGER_MAN_1.getBehavior(), "tanner", null, InventoryId.TANNER.asInt(), 30)
+                MobBehaviors.VILLAGER_MAN_1.getBehavior(), "tanner", null, InventoryId.DRAKKAR_TANNER_SHOP.asInt(), 30)
                 .attachDialog(tannerDialog));
 
 

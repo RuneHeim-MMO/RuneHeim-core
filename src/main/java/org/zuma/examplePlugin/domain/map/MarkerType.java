@@ -55,6 +55,9 @@ public enum MarkerType {
     QUICK_TRAVEL("quick-travels", "Quick Travel", "./assets/markers/quick_travel.png"),
     TANNER("tanners", "Tanner", "./assets/markers/tanner.png"),
 
+    // TODO:
+    FLETCHING_TABLE("fletching-tables", "Fletching Table", "./assets/markers/fletching_table.png"),
+
     // Dev
     TERRITORY("territories", "Territories", ""),
 

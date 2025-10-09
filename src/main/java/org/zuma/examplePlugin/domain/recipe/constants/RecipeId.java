@@ -143,7 +143,19 @@ public enum RecipeId {
     COMPASS(1800),
     LEATHER(1801),
     HARD_LEATHER(1802),
-    GREEN_DRAGON_LEATHER(1803);
+    GREEN_DRAGON_LEATHER(1803),
+
+    COIF(1804),
+    COWL(1805),
+    LEATHER_BODY(1806),
+    LEATHER_CHAPS(1807),
+    LEATHER_BOOTS(1808),
+    HARD_LEATHER_BODY(1809),
+    HARD_LEATHER_CHAPS(1810),
+    STUDDED_LEATHER_BODY(1811),
+    STUDDED_LEATHER_CHAPS(1812),
+    GREEN_DHIDE_BODY(1813),
+    GREEN_DHIDE_CHAPS(1814);
 
 
     private final int id;
@@ -155,4 +167,4 @@ public enum RecipeId {
     public int getId() {
         return id;
     }
-}
+    }
