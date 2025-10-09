@@ -12,6 +12,7 @@ public enum DropTableId {
     WOLF_LOW_LVL_ARMOR(8),
     WOLF_COINS(9),
     GOBLIN_LOW_LVL_ARMOR(10),
+    COWHIDE(11),
 
     WOODCUTTING_RARE_DROPTABLE(100),
     TREE_NODE(101),

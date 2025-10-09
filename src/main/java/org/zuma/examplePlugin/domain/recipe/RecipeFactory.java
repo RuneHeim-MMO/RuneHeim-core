@@ -21,6 +21,7 @@ public class RecipeFactory {
             case CAMPFIRE_RECIPE -> createCampfireRecipe(meta, json);
             case SPINNING_WHEEL_RECIPE -> new SpinningWheelRecipe(displayItem, meta);
             case CRAFTING_TABLE_RECIPE -> new CraftingTableRecipe(displayItem, meta);
+            case TANNER_RECIPE -> new TannerRecipe(displayItem, meta);
             default -> new InventoryRecipe(displayItem, meta);
 
         };

@@ -24,6 +24,14 @@ public class Common {
                 List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt(), DropTableId.CHICKEN_MEAT.asInt())
         ));
 
+
+        registry.register(MobType.HOGLIN_BASE_5.getId(), () -> new GenericCombatant(
+                "Hoglin", null, getBaseSkills(5),
+                null, MobBehaviors.HOGLIN.getBehavior(),
+                0.24, false, false, 9, null, null, DisguiseType.HOGLIN,
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
+        ));
+
         registry.register(MobType.INFERNAK_WARHOUND_BASE_80.getId(), () -> new GenericCombatant(
                 "Warhound", null, getBaseSkills(80),
                 null, MobBehaviors.LLAMA.getBehavior(),
@@ -106,13 +114,6 @@ public class Common {
                 "Goat", null, List.of(new SkillLevelRecord(SkillType.ATTACK, 1)),
                 null, MobBehaviors.GOAT.getBehavior(),
                 0.28, false, false, 3, null, null, DisguiseType.GOAT,
-                List.of(DropTableId.BONES.asInt())
-        ));
-
-        registry.register(MobType.HOGLIN_BASE_5.getId(), () -> new GenericCombatant(
-                "Hoglin", null, getBaseSkills(5),
-                null, MobBehaviors.HOGLIN.getBehavior(),
-                0.24, false, false, 9, null, null, DisguiseType.HOGLIN,
                 List.of(DropTableId.BONES.asInt())
         ));
 

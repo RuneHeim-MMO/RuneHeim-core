@@ -21,6 +21,19 @@ public class RecipeRepository {
     public List<RecipeEntity> getAll() {
         return List.of(
 
+                // Tanner
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.LEATHER.getId(), RecipeType.TANNER_RECIPE, 2000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 1)),
+                        List.of(new IngredientRecord(ItemId.COWHIDE, 1, true, false)),
+                        new ItemRecord(ItemId.LEATHER, 1),
+                        null, List.of(), 20L), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.HARD_LEATHER.getId(), RecipeType.TANNER_RECIPE, 2000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 20)),
+                        List.of(new IngredientRecord(ItemId.COWHIDE, 1, true, false)),
+                        new ItemRecord(ItemId.HARD_LEATHER, 1),
+                        null, List.of(), 35L), null),
+
                 // Gems cutting (crafting)
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.SAPPHIRE.getId(), RecipeType.INVENTORY_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 20)),

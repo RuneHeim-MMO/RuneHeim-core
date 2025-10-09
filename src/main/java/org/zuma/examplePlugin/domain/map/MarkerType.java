@@ -53,6 +53,7 @@ public enum MarkerType {
     FUSION_MASTER("fusion-masters", "Fusion Masters", "./assets/markers/fusion_master.png"),
     CONTRACT_BOARD("contract-boards", "Contract Boards", "./assets/markers/contract_board.png"),
     QUICK_TRAVEL("quick-travels", "Quick Travel", "./assets/markers/quick_travel.png"),
+    TANNER("tanners", "Tanner", "./assets/markers/tanner.png"),
 
     // Dev
     TERRITORY("territories", "Territories", ""),

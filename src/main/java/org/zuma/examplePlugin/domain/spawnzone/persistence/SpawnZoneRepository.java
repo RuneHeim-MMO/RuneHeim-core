@@ -1446,10 +1446,24 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(207, SpawnZoneType.AREA, 30, 15,
                         new Location(Bukkit.getWorld("world"), 1000, 90, -630)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.INFERNAK_WARHOUND_BASE_80, 30, 100)
-                ), 120, false, true), 1))
+                ), 120, false, true), 1)),
+
+                // Ashwale cows
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(208, SpawnZoneType.AREA, 30, 15,
+                        new Location(Bukkit.getWorld("world"), -92, 69, -132)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.COW_BASE_7, 24, 100),
+                        new SpawnZoneMobRecord(MobType.CALF_BASE_5, 6, 100)
+                ), 20, false, true), 1)),
 
 
-                // last 206
+                // Drakkar tanner
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(209, SpawnZoneType.POINT, 20, 1,
+                        new Location(Bukkit.getWorld("world"), 210, 68, -127)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.DRAKKAR_TANNER, 1, 100)
+                ), false, MarkerType.TANNER, "Tanner"), 1))
+
+
+                // last 209
 
 
         );

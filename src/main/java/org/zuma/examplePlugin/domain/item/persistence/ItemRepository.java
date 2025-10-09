@@ -655,12 +655,12 @@ public class ItemRepository {
                         toVersionedJson(new MaterialMeta(1500), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.FEATHER.asInt(), Material.COAL, ItemRarity.COMMON, "Feather", List.of("Light and soft bird feather.", "Useful for fletching arrows."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(5), 1)),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.HARD_LEATHER.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Hard Leather", List.of("Treated for durability.", "Used to craft sturdy gear."), null, true, CRAFTED_ITEM_MULTIPLIER),
-                        toVersionedJson(new MaterialMeta(400), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.HARD_LEATHER.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Hard Leather", List.of("Treated for durability.", "Used to craft sturdy gear."), null, true, 1.5),
+                        toVersionedJson(new MaterialMeta(200), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.HEADLESS_ARROW.asInt(), Material.COAL, ItemRarity.COMMON, "Headless Arrow", List.of("An unfinished arrow lacking a tip.", "Needs a metal head to be complete."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(0), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.LEATHER.asInt(), Material.COAL, ItemRarity.COMMON, "Leather", List.of("Tanned animal hide.", "Used in basic crafting and armor."), null, true, CRAFTED_ITEM_MULTIPLIER),
-                        toVersionedJson(new MaterialMeta(200), 1)),
+                        toVersionedJson(new MaterialMeta(100), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BRONZE_ARROW_TIPS.asInt(), Material.COAL, ItemRarity.COMMON, "Bronze Arrowtips", List.of("Forged from bronze.", "Used to make basic arrows."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(0), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.IRON_ARROW_TIPS.asInt(), Material.COAL, ItemRarity.COMMON, "Iron Arrowtips", List.of("Sharpened iron points.", "Commonly used for training."), null, true, CRAFTED_ITEM_MULTIPLIER),
@@ -693,6 +693,8 @@ public class ItemRepository {
                         toVersionedJson(new MaterialMeta(0), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_LONGBOW_UNFINISHED.asInt(), Material.COAL, ItemRarity.COMMON, "Magic Longbow (unfinished)", List.of("An unstrung magic longbow.", "Needs a bowstring to complete."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(0), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.COWHIDE.asInt(), Material.COAL, ItemRarity.COMMON, "Cowhide", List.of("A thick, durable hide taken from a domesticated cow.", "Can be used for crafting light armor."), null, true, 1.5),
+                        toVersionedJson(new MaterialMeta(50), 1)),
 
 
                 // Gems

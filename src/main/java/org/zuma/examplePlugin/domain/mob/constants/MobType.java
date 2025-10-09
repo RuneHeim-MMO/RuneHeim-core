@@ -63,6 +63,7 @@ public enum MobType {
     ELDARWYN_ARMOR_SHOP,
     VALDRIN_WEAPON_SHOP,
     INFERNAK_BLACKSMITH,
+    DRAKKAR_TANNER,
 
     THORNBARK_GENERAL_STORE,
     ELDARWYN_GENERAL_STORE,
@@ -85,8 +86,8 @@ public enum MobType {
 
 
     // Cows
-    COW_BASE_5,
-    CALF_BASE_3,
+    COW_BASE_7,
+    CALF_BASE_5,
 
     // Bunnies
     BUNNY_BLACK_BASE_12,
@@ -186,6 +187,7 @@ public enum MobType {
     STRIDER_BASE_60,
     SNIFFER_BASE_65,
     INFERNAK_WARHOUND_BASE_80,
+    HOGLIN_BASE_5,
 
     RAT,
     AXOLOTL,
@@ -195,7 +197,6 @@ public enum MobType {
     FOX,
     FROG,
     GOAT,
-    HOGLIN_BASE_5,
     HUSK,
     LLAMA,
     PANDA,

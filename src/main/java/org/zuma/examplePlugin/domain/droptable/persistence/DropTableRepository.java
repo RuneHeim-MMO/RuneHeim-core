@@ -189,6 +189,10 @@ public class DropTableRepository {
                         new DropTableEntry(ItemId.FEATHER.asInt(), 1, 15, 2, DropTableEntry.Type.ITEM)
                 ))), 1)),
 
+                new DropTableDBEntry(DropTableId.COWHIDE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.COWHIDE.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                ))), 1)),
+
 
                 new DropTableDBEntry(DropTableId.WOLF_LOW_LVL_ARMOR.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.IRON_MEDHELM.asInt(), 1, 1, 30, DropTableEntry.Type.ITEM),
@@ -207,7 +211,7 @@ public class DropTableRepository {
                 new DropTableDBEntry(DropTableId.GOBLIN_LOW_LVL_ARMOR.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.IRON_BODY.asInt(), 1, 5, 20, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.BRONZE_BOOTS.asInt(), 10, 50, 10, DropTableEntry.Type.ITEM)
-                        ))), 1))
+                ))), 1))
 
 
         );

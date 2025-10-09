@@ -39,6 +39,10 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.SMITHING_HAMMER), 100)
     ))),
 
+    TANNER(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.DRAGON_LEATHER), 100)
+    ))),
+
     PICKAXES(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.IRON_PICKAXE), 80),
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.STEEL_PICKAXE), 30),

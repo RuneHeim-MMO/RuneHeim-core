@@ -140,7 +140,10 @@ public enum RecipeId {
     EMERALD(1701),
     RUBY(1702),
     DIAMOND(1703),
-    COMPASS(1800);
+    COMPASS(1800),
+    LEATHER(1801),
+    HARD_LEATHER(1802),
+    GREEN_DRAGON_LEATHER(1803);
 
 
     private final int id;

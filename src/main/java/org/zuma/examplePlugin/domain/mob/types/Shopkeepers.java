@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.mob.impl.InventoryOpenerMob;
 
+import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -36,6 +37,14 @@ public class Shopkeepers {
                     .option("§aYes" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
                     .option("§cNo", n -> n.followupSteps(d -> d.passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList())))));
 
+
+    private static final Supplier<DialogBuilder> tannerDialog = () -> DialogBuilder.create("tanner-dialog")
+            .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()))
+            .interactiveStep(c -> c.randomText(List.of("Want leather? I’ll tan your hides."))
+                    .option("§aYes" + " §f" + Icon.LEATHER.get(), b -> b.action("dialog_holder_forward_interaction"))
+                    .option("§cNo", n -> n.followupSteps(d -> d.passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList())))));
+
+
     private static final Supplier<DialogBuilder> guardArcherDialog = () -> DialogBuilder.deserialize("{\"id\":\"guard-archer-dialog\",\"steps\":[{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"cda76b8a-06cf-4344-abc9-dbb70291126d\",\"content\":[{\"line\":\"Psst, hey!\",\"typewriter\":true}],\"uuid\":\"c21378fb-2e9b-42d5-9db5-ed2e7fb423f6\",\"actions\":[]},{\"type\":\"PassiveDialogStep\",\"uniqueIdentifier\":\"1dba6230-3701-48f8-a333-9727af1b45ea\",\"content\":[{\"line\":\"I can't really do this.\",\"typewriter\":true},{\"line\":\"But a man's gotta feed his family.\",\"typewriter\":true}],\"uuid\":\"c7d4f9af-7235-463d-97a0-a2fce726ec59\",\"actions\":[]},{\"type\":\"InteractiveDialogStep\",\"uniqueIdentifier\":\"cd3407fe-ee7a-48bc-90de-944ced8125fc\",\"content\":[{\"line\":\"Don’t even think about snitching.\",\"typewriter\":true}],\"options\":[{\"label\":\"§aTrade §fⓩ\",\"actions\":[\"dialog_holder_forward_interaction\"],\"followup\":{\"id\":\"followup-empty\",\"steps\":[],\"uuid\":\"cbada3a7-c433-482e-b07b-0bf3f571dee3\"}},{\"label\":\"Snitching about what?\",\"actions\":[],\"followup\":{\"id\":\"guard-archer-dialog\",\"steps\":[{\"uuid\":\"b747b606-1b85-4a62-ab5f-6f5399a78e18\",\"uniqueIdentifier\":\"c0cadf45-986f-4252-b3f5-b05628af6023\",\"type\":\"PassiveDialogStep\",\"content\":[{\"line\":\"Nothing, you saw nothing.\",\"typewriter\":true}],\"id\":\"guard-archer-dialog\"}],\"uuid\":\"859c3795-a1fe-46b9-9964-4f7245721d39\"}},{\"label\":\"Or else?\",\"actions\":[],\"followup\":{\"id\":\"guard-archer-dialog\",\"steps\":[{\"uuid\":\"3829c560-6151-4ad8-91d2-877d7bcd5487\",\"uniqueIdentifier\":\"ba18785e-49f2-4707-a067-db5e83cbead1\",\"type\":\"PassiveDialogStep\",\"content\":[{\"line\":\"Don't play with me!\",\"typewriter\":true},{\"line\":\"You don’t want to see the inside of a cell, do you?\",\"typewriter\":true}],\"id\":\"guard-archer-dialog\"}],\"uuid\":\"29a609d6-49a2-4bae-9cdc-079e2422df3c\"}}],\"uuid\":\"ad671081-d76d-4104-8dbd-5053830a2a5f\"}],\"uuid\":\"4e0a81ea-7bc1-4c16-b325-8328b88165e5\"}");
 
     public static void registerMobs(MobTypeRegistry registry) {
@@ -50,7 +59,7 @@ public class Shopkeepers {
 
         registry.register(MobType.MURKWATCH_BLACKSMITH.getId(), () -> new InventoryOpenerMob(Icon.HAMMER.get() + " Blacksmith", EquipmentSet.BLACKSMITH,
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "murkwatch_blacksmith", null, InventoryId.MURKWATCH_BLACKSMITH.asInt(), 40)
-                .attachDialog(genericShopDialog)); // TODO: shop
+                .attachDialog(genericShopDialog));
 
         registry.register(MobType.DRAKKAR_JEWLER.getId(), () -> new InventoryOpenerMob(Icon.BLUE_GEM.get() + " Jeweler", EquipmentSet.JEWELER,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "jeweler", null, InventoryId.JEWELER.asInt(), 40)
@@ -70,41 +79,41 @@ public class Shopkeepers {
 
         registry.register(MobType.MURKWATCH_ARCHER_SHOP.getId(), () -> new InventoryOpenerMob(Icon.BOW.get() + " Archery Merchant", EquipmentSet.RUNE_FULL_CROSSBOW,
                 MobBehaviors.VILLAGER_WOMAN_2.getBehavior(), "murkwatch_archery_merchant", null, InventoryId.MURKWATCH_ARCHERY_SHOP.asInt(), 30)
-                .attachDialog(genericShopDialog));// TODO:  shop
+                .attachDialog(genericShopDialog));
 
         registry.register(MobType.BRINEPORT_FISHING_SHOP.getId(), () -> new InventoryOpenerMob(Icon.FISHING_HOOK.get() + " Fishing Merchant", EquipmentSet.FISHERMAN,
                 MobBehaviors.VILLAGER_MAN_2.getBehavior(), "brineport_fisherman", null, InventoryId.BRINEPORT_FISHING_SHOP.asInt(), 40)
-                .attachDialog(genericShopDialog)); // TODO: shop
+                .attachDialog(genericShopDialog));
 
 
         registry.register(MobType.FENSHADE_MINING_SHOP.getId(), () -> new InventoryOpenerMob(Icon.PICKAXE.get() + " Mining Merchant", EquipmentSet.PICKAXES,
                 MobBehaviors.VILLAGER_WOMAN_5.getBehavior(), "fenshade_miner", null, InventoryId.FENSHADE_MINING_SHOP.asInt(), 40)
-                .attachDialog(genericShopDialog)); // TODO: shop
+                .attachDialog(genericShopDialog));
 
         registry.register(MobType.ASHWALE_MINING_SHOP.getId(), () -> new InventoryOpenerMob(Icon.PICKAXE.get() + " Mining Merchant", EquipmentSet.PICKAXES,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "ashwale_miner", null, InventoryId.ASHWALE_MINING_SHOP.asInt(), 40)
-                .attachDialog(genericShopDialog)); // TODO:  shop
+                .attachDialog(genericShopDialog));
 
         registry.register(MobType.ASHWALE_AXE_SHOP.getId(), () -> new InventoryOpenerMob(Icon.AXE.get() + " Axe Merchant", EquipmentSet.AXES,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "ashwale_lumberjack", null, InventoryId.ASHWALE_AXE_SHOP.asInt(), 40)
-                .attachDialog(genericShopDialog)); // TODO:, shop
+                .attachDialog(genericShopDialog));
 
 
         registry.register(MobType.SPOREFELL_FISHING_SHOP.getId(), () -> new InventoryOpenerMob(Icon.FISHING_HOOK.get() + " Fishing Merchant", EquipmentSet.FISHERMAN,
                 MobBehaviors.VILLAGER_MAN_4.getBehavior(), "sporefell_fisherman", null, InventoryId.SPOREFELL_FISHING_SHOP.asInt(), 40)
-                .attachDialog(genericShopDialog)); // TODO: shop
+                .attachDialog(genericShopDialog));
 
         registry.register(MobType.SAHARIJIN_FISHING_SHOP.getId(), () -> new InventoryOpenerMob(Icon.FISHING_HOOK.get() + " Fishing Merchant", EquipmentSet.FISHERMAN,
                 MobBehaviors.VILLAGER_MAN_4.getBehavior(), "saharijin_fisherman", null, InventoryId.SAHARIJIN_FISHING_SHOP.asInt(), 40)
-                .attachDialog(genericShopDialog)); // TODO: shop
+                .attachDialog(genericShopDialog));
 
         registry.register(MobType.ELDARWYN_ARMOR_SHOP.getId(), () -> new InventoryOpenerMob(Icon.ARMOR.get() + " Armor Merchant", EquipmentSet.MITHRIL_CHAIN_HALF_SET_SWORD,
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "eldarwyn_armor_merchant", null, InventoryId.ELDARWYN_ARMOR_SHOP.asInt(), 30)
-                .attachDialog(genericShopDialog)); // TODO: shop
+                .attachDialog(genericShopDialog));
 
         registry.register(MobType.VALDRIN_WEAPON_SHOP.getId(), () -> new InventoryOpenerMob(Icon.SWORD.get() + " Weapon Merchant", EquipmentSet.ADAMANT_CHAIN_HALF_SET_SWORD,
                 MobBehaviors.VILLAGER_MAN_2.getBehavior(), "valdrin_weapon_merchant", null, InventoryId.VALDRIN_WEAPON_SHOP.asInt(), 30)
-                .attachDialog(genericShopDialog)); // TODO: shop
+                .attachDialog(genericShopDialog));
 
         registry.register(MobType.INFERNAK_BLACKSMITH.getId(), () -> new InventoryOpenerMob(Icon.HAMMER.get() + " Blacksmith", EquipmentSet.BLACKSMITH,
                 MobBehaviors.HELLFLESH_1.getBehavior(), "infernak_blacksmith", null, InventoryId.INFERNAK_BLACKSMITH.asInt(), 30)
@@ -121,7 +130,7 @@ public class Shopkeepers {
         registry.register(MobType.BRINEPORT_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1,
                 MobBehaviors.VILLAGER_MAN_2.getBehavior(), "shopkeeper_4", null, InventoryId.BRINEPORT_GENERAL_STORE.asInt(), 40)
                 .attachDialog(genericShopDialog));
-        
+
         registry.register(MobType.SAKURMEER_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1,
                 MobBehaviors.VILLAGER_MAN_4.getBehavior(), "shopkeeper_5", null, InventoryId.SAKURMEER_GENERAL_STORE.asInt(), 40)
                 .attachDialog(genericShopDialog));
@@ -142,7 +151,9 @@ public class Shopkeepers {
                 MobBehaviors.VILLAGER_MAN_2.getBehavior(), "waiter", null, InventoryId.SAKURMEER_FOOD_SHOP.asInt(), 40)
                 .attachDialog(foodShopDialog));
 
-
+        registry.register(MobType.DRAKKAR_TANNER.getId(), () -> new InventoryOpenerMob(Icon.LEATHER.get() + " Tanner", EquipmentSet.TANNER,
+                MobBehaviors.VILLAGER_MAN_1.getBehavior(), "tanner", null, InventoryId.TANNER.asInt(), 30)
+                .attachDialog(tannerDialog));
 
 
     }
