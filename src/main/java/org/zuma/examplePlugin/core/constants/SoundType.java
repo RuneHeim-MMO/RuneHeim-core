@@ -130,6 +130,10 @@ public enum SoundType {
     SPINNING_WHEEL_RECIPE_STEP("BLOCK_BARREL_OPEN", false, 1.0f, 1.0f),
     SPINNING_WHEEL_RECIPE_SUCCESS("ENTITY_ITEM_FRAME_REMOVE_ITEM", false, 1.0f, 1.1f),
 
+    TANNER_RECIPE_START("ITEM_ARMOR_EQUIP_LEATHER", false, 1.0f, 1.0f),
+    TANNER_RECIPE_STEP("BLOCK_CRAFTER_CRAFT", false, 0.9f, 1.0f),
+    TANNER_RECIPE_SUCCESS("ENTITY_ITEM_PICKUP", false, 1.0f, 1.1f),
+
     MOUNT_EQUIP("ENTITY_HORSE_SADDLE", false, 0.45f, 1.0f),
     MOUNT_UNEQUIP("ENTITY_HORSE_SADDLE", false, 0.45f, 0.9f),
 
@@ -317,6 +321,12 @@ public enum SoundType {
     DEER_DEATH_1("ENTITY_COW_DEATH", false, 1.0f, 1.3f),
     DEER_ATTACK_1("ENTITY_LLAMA_SPIT", false, 0.8f, 1.2f),
 
+
+    OCELOT_AMBIENT_1("ENTITY_OCELOT_AMBIENT", false, 0.95f, 0.95f),
+    OCELOT_HURT_1("ENTITY_OCELOT_HURT", false, 0.95f, 0.95f),
+    OCELOT_DEATH_1("ENTITY_OCELOT_DEATH", false, 0.95f, 0.95f),
+    OCELOT_ATTACK_1("ENTITY_CAT_HISS", false, 0.95f, 0.95f),
+
     COW_AMBIENT_1("ENTITY_COW_AMBIENT", false, 0.8f, 1.0f),
     COW_HURT_1("ENTITY_COW_HURT", false, 0.9f, 1.2f),
     COW_DEATH_1("ENTITY_COW_DEATH", false, 1.0f, 1.1f),
@@ -373,7 +383,7 @@ public enum SoundType {
     FOX_DEATH("ENTITY_FOX_DEATH", false, 1.0f, 1.0f),
 
     FROG_AMBIENT("ENTITY_FROG_AMBIENT", false, 0.9f, 0.9f),
-    FROG_ATTACK("ENTITY_FROG_STEP", false, 1.0f, 1.1f),
+    FROG_ATTACK("ENTITY_FROG_EAT", false, 1.0f, 1.1f),
     FROG_HURT("ENTITY_FROG_HURT", false, 1.0f, 1.0f),
     FROG_DEATH("ENTITY_FROG_DEATH", false, 1.0f, 0.95f),
 
@@ -462,7 +472,13 @@ public enum SoundType {
     AMBIENT_SOUL_SAND_ADDITIONS("ambient.soul_sand_valley.additions", false, 1, 1),
 
     ROGUE_HAVEN_AMBIENT_1("ambient.warped_forest.mood", false, 1, 1),
-    ROGUE_HAVEN_AMBIENT_2("ambient.nether_wastes.mood", false, 1, 1);
+    ROGUE_HAVEN_AMBIENT_2("ambient.nether_wastes.mood", false, 1, 1),
+
+    BANDIT_AMBIENT_1("ENTITY_PILLAGER_AMBIENT", false, 1, 1f),
+    BANDIT_HURT_1("ENTITY_PILLAGER_HURT", false, 1, 1f),
+    BANDIT_NO_1("ENTITY_PILLAGER_CELEBRATE", false, 1, 1f),
+    BANDIT_DEATH_1("ENTITY_VILLAGER_DEATH", false, 1, 1f),
+    BANDIT_YES_1("vocal_villagers:entity.villager.yes", true, 1, 0.75f);
 
 
     private final String soundKey;
@@ -527,4 +543,4 @@ public enum SoundType {
             }
         }
     }
-}
+    }

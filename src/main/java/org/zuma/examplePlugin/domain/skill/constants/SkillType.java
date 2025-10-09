@@ -13,7 +13,7 @@ public enum SkillType {
     COOKING(7, "Cooking", "Prepare food to heal yourself in combat.", 0, Icon.EGGS, Material.COOKED_BEEF),
     WOODCUTTING(8, "Woodcutting", "Chop trees to collect logs for crafting and firemaking.", 0, Icon.AXE, Material.IRON_AXE),
     FISHING(9, "Fishing", "Catch fish to cook and eat or sell for profit.", 0, Icon.FISH, Material.FISHING_ROD),
-    FIREMAKING(10, "Firemaking", "Light fires to cook food or for warmth.", 0, Icon.FIRE, Material.CAMPFIRE),
+    FIREMAKING(10, "Firemaking", "Light fires to cook food or for warmth.", 0, Icon.CAMPFIRE, Material.CAMPFIRE),
 
     CRAFTING(11, "Crafting", "Create jewelry, armor, and other useful items.", 0, Icon.CRAFTING, Material.CRAFTING_TABLE),
     SMITHING(12, "Smithing", "Forge ores into weapons and armor.", 0, Icon.ANVIL, Material.ANVIL),

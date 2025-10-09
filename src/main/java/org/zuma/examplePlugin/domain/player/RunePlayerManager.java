@@ -8,6 +8,7 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.core.exception.PlayerDataLoadException;
+import org.zuma.examplePlugin.domain.player.handlers.FlyingHandler;
 import org.zuma.examplePlugin.domain.player.handlers.TemporaryEffectHandler;
 import org.zuma.examplePlugin.domain.player.persistence.DeserializedPlayerEntity;
 import org.zuma.examplePlugin.domain.player.persistence.RunePlayerRepository;
@@ -51,8 +52,6 @@ public class RunePlayerManager {
         this.loadingStateHandler = new PlayerLoadingStateHandler(RuneQuestPlugin.getInstance());
         this.repository = repository;
         this.questHandler = questHandler;
-
-        new TemporaryEffectHandler(this).startLoop();
     }
 
     // -------------------- Getters --------------------

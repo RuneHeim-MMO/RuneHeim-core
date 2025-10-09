@@ -60,6 +60,18 @@ public class MobListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void onEntityTargetPlayer(EntityTargetEvent event) {
+        if (!(event.getTarget() instanceof Player bukkitPlayer)) {
+            return;
+        }
+
+
+        withMobAndPlayer(bukkitPlayer, event.getEntity(), (mob, player) -> {
+            mobHandler.onEntityTargetPlayer(event, mob, player);
+        });
+    }
+
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerAttackEntity(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player bukkitPlayer)) {
             return;

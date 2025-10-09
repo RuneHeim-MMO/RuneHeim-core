@@ -99,12 +99,12 @@ public class DropTableRepository {
                         new DropTableEntry(ItemId.MITHRIL_ORE.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
                 ))), 1)),
 
-                new DropTableDBEntry(DropTableId.ADAMANTITE_NODE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
-                        new DropTableEntry(ItemId.ADAMANTITE_ORE.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                new DropTableDBEntry(DropTableId.ADAMANT_NODE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.ADAMANT_ORE.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
                 ))), 1)),
 
-                new DropTableDBEntry(DropTableId.RUNITE_NODE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
-                        new DropTableEntry(ItemId.RUNITE_ORE.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                new DropTableDBEntry(DropTableId.RUNE_NODE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.RUNE_ORE.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
                 ))), 1)),
 
 
@@ -113,7 +113,7 @@ public class DropTableRepository {
                         new DropTableEntry(ItemId.COINS.asInt(), 1, 10, 10, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.COINS.asInt(), 1, 50, 50, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.SCRATCH_CARD.asInt(), 1, 1, 150, DropTableEntry.Type.ITEM)
-                        ))), 1)),
+                ))), 1)),
                 new DropTableDBEntry(DropTableId.HERRING_NODE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.RAW_HERRING.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
                 ))), 1)),
@@ -169,6 +169,10 @@ public class DropTableRepository {
                         new DropTableEntry(ItemId.COINS.asInt(), 1, 8, 3, DropTableEntry.Type.ITEM)
                 ))), 1)),
 
+                new DropTableDBEntry(DropTableId.COINS_MEDIUM.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.COINS.asInt(), 10, 150, 3, DropTableEntry.Type.ITEM)
+                ))), 1)),
+
                 new DropTableDBEntry(DropTableId.WOOL.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.WOOL.asInt(), 1, 1, 4, DropTableEntry.Type.ITEM)
                 ))), 1)),
@@ -183,7 +187,32 @@ public class DropTableRepository {
 
                 new DropTableDBEntry(DropTableId.FEATHERS.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.FEATHER.asInt(), 1, 15, 2, DropTableEntry.Type.ITEM)
+                ))), 1)),
+
+                new DropTableDBEntry(DropTableId.COWHIDE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.COWHIDE.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                ))), 1)),
+
+
+                new DropTableDBEntry(DropTableId.WOLF_LOW_LVL_ARMOR.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.IRON_MEDHELM.asInt(), 1, 1, 30, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.IRON_BOOTS.asInt(), 1, 1, 30, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.STEEL_MEDHELM.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.HARD_LEATHER_LEGGINGS.asInt(), 1, 1, 20, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.LEATHER_LEGGINGS.asInt(), 1, 1, 20, DropTableEntry.Type.ITEM)
+                ))), 1)),
+
+                new DropTableDBEntry(DropTableId.WOLF_COINS.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.COINS.asInt(), 1, 5, 5, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.COINS.asInt(), 10, 50, 10, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.COINS.asInt(), 10, 100, 20, DropTableEntry.Type.ITEM)
+                ))), 1)),
+
+                new DropTableDBEntry(DropTableId.GOBLIN_LOW_LVL_ARMOR.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.IRON_BODY.asInt(), 1, 5, 20, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.BRONZE_BOOTS.asInt(), 10, 50, 10, DropTableEntry.Type.ITEM)
                 ))), 1))
+
 
         );
     }

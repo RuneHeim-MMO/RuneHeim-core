@@ -41,7 +41,8 @@ public enum InventoryId {
     AETHERIS_GENERAL_STORE(34),
     ISLENOR_GENERAL_STORE(35),
     THORNBARK_GENERAL_STORE(36),
-    SAKURMEER_FOOD_SHOP(37);
+    SAKURMEER_FOOD_SHOP(37),
+    TANNER(38);
 
 
     private final int id;

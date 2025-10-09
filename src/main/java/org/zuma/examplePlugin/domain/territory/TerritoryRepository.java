@@ -259,7 +259,7 @@ public class TerritoryRepository {
 
                 new Territory("infernak",
                         new Location(Bukkit.getWorld("world"), 1000, 0, -630),
-                        new Location(Bukkit.getWorld("world"), 933, 75, -645),
+                        new Location(Bukkit.getWorld("world"), 865, 72, -622),
                         160,
                         "§cInfernak",
                         "A volcanic land forged in fire and brimstone.",

@@ -118,7 +118,7 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.SMITHING_HAMMER.asInt(), 8, 30, 90L, 20L, null, null),
                         new ShopItemConfig(ItemId.STEEL_BAR.asInt(), 16, 30, ItemId.STEEL_BAR.getBuyPrice(), ItemId.STEEL_BAR.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.MITHRIL_BAR.asInt(), 4, 30, ItemId.MITHRIL_BAR.getBuyPrice(), ItemId.MITHRIL_BAR.getSellPrice(), null, null),
-                        new ShopItemConfig(ItemId.ADAMANTITE_BAR.asInt(), 4, 30, ItemId.ADAMANTITE_BAR.getBuyPrice(), ItemId.ADAMANTITE_BAR.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.ADAMANT_BAR.asInt(), 4, 30, ItemId.ADAMANT_BAR.getBuyPrice(), ItemId.ADAMANT_BAR.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.COAL_ORE.asInt(), 64, 30, ItemId.COAL_ORE.getBuyPrice(), ItemId.COAL_ORE.getSellPrice(), null, null)
                 ))), 1)),
 
@@ -136,8 +136,8 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.MITHRIL_CHAINBODY.asInt(), 2, 30, ItemId.MITHRIL_CHAINBODY.getBuyPrice(), ItemId.MITHRIL_CHAINBODY.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.MITHRIL_MEDHELM.asInt(), 2, 30, ItemId.MITHRIL_MEDHELM.getBuyPrice(), ItemId.MITHRIL_MEDHELM.getSellPrice(), null, null),
 
-                        new ShopItemConfig(ItemId.ADAMANTITE_PLATELEGS.asInt(), 1, 3600 * 2, ItemId.ADAMANTITE_PLATELEGS.getBuyPrice(), ItemId.ADAMANTITE_PLATELEGS.getSellPrice(), null, null),
-                        new ShopItemConfig(ItemId.ADAMANTITE_CHAINBODY.asInt(), 1, 3600 * 2, ItemId.ADAMANTITE_CHAINBODY.getBuyPrice(), ItemId.ADAMANTITE_CHAINBODY.getSellPrice(), null, null)
+                        new ShopItemConfig(ItemId.ADAMANT_PLATELENG.asInt(), 1, 3600 * 2, ItemId.ADAMANT_PLATELENG.getBuyPrice(), ItemId.ADAMANT_PLATELENG.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.ADAMANT_CHAINBODY.asInt(), 1, 3600 * 2, ItemId.ADAMANT_CHAINBODY.getBuyPrice(), ItemId.ADAMANT_CHAINBODY.getSellPrice(), null, null)
                 ))), 1)),
 
                 new ShopConfig(ShopId.SAHARIJIN_FISHING_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(

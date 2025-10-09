@@ -198,6 +198,7 @@ public abstract class AbstractSpawnZone {
 
     public void runTickIfDue() {
         if (!this.getCenterPoint().getWorld().isChunkLoaded(this.getCenterPoint().getBlockX() >> 4, this.getCenterPoint().getBlockZ() >> 4)) {
+            this.lastWaveAttemptOccurred = 0L; // Reset timer if chunk is not loaded.
             return;
         }
 

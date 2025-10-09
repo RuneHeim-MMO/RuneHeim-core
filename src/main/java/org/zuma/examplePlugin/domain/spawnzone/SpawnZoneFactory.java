@@ -56,7 +56,7 @@ public class SpawnZoneFactory {
         switch (json.version()) {
             case 1 -> {
                 AreaSpawnZoneMeta deserialized = new Gson().fromJson(json.meta(), AreaSpawnZoneMeta.class);
-                AreaSpawnZone zone = new AreaSpawnZone(meta, deserialized.radius(), deserialized.spawnAtHighestBlock());
+                AreaSpawnZone zone = new AreaSpawnZone(meta, deserialized.radius(), deserialized.spawnAtHighestBlock(), deserialized.isBiomeSpawn());
                 zone.setMobRecords(deserialized.mobRecords());
 
                 return zone;

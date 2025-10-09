@@ -10,6 +10,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
@@ -86,6 +87,10 @@ public class MobHandler {
 
     public void onPlayerAttackEntity(EntityDamageByEntityEvent event, AbstractMob mob, RunePlayer player) {
         mob.onPlayerAttackEntity(event, player);
+    }
+
+    public void onEntityTargetPlayer(EntityTargetEvent event, AbstractMob mob, RunePlayer player) {
+        mob.onEntityTargetPlayer(event, player);
     }
 
     public void onEntityAttackEntity(EntityDamageByEntityEvent event, AbstractMob mob, Entity attacker) {

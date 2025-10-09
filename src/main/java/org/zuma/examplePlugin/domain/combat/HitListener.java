@@ -72,7 +72,7 @@ public class HitListener implements Listener {
 
 
     @Nullable
-    private CombatEntity getCombatEntity(Entity entity) {
+    public CombatEntity getCombatEntity(Entity entity) {
         if (entity instanceof Player player) {
             return playerManager.getRunePlayer(player);
         }

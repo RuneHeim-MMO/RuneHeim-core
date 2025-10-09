@@ -16,6 +16,13 @@ public enum Icon {
     MYTHIC("⛧"),
     DIVINE("⟴"),
 
+    LEATHER("ⱦ"),
+    CAMPFIRE("ⷚ"),
+    CHAT_BUBBLE("┬"),
+    DOLLAR("⋗"),
+    FLIGHT("⊙"),
+    HERBLORE("⪩"),
+    CLEAVE("⣯"),
     BUCKET("⽻"),
     ANVIL("⮯"),
     BOOTS("⭀"),

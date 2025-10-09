@@ -25,8 +25,8 @@ public enum MarkerType {
     COAL("ore-coal-markers", "Coal ore veins", "./assets/markers/coal_ore.png"),
     IRON("ore-iron-markers", "Iron ore veins", "./assets/markers/iron_ore.png"),
     MITHRIL("ore-mithril-markers", "Mithril ore veins", "./assets/markers/mithril_ore.png"),
-    ADAMANTITE("ore-adamantite-markers", "Adamantite ore veins", "./assets/markers/adamantite_ore.png"),
-    RUNITE("ore-runite-markers", "Runite ore veins", "./assets/markers/runite_ore.png"),
+    ADAMANT("ore-adamantite-markers", "Adamantite ore veins", "./assets/markers/adamantite_ore.png"),
+    RUNE("ore-runite-markers", "Runite ore veins", "./assets/markers/runite_ore.png"),
 
     FIRE_SOURCE("fire-source-markers", "Fire sources", "./assets/markers/fire_source.png"),
     SMELTING_FURNACE("smelting-furnace-markers", "Smelting furnaces", "./assets/markers/smelting_furnace.png"),
@@ -49,18 +49,18 @@ public enum MarkerType {
     AXE_SHOP("axe-shops", "Axe Shops", "./assets/markers/axe_shop.png"),
     WEAPON_SHOP("weapon-shops", "Weapon Shops", "./assets/markers/weapon_shop.png"),
 
-
     ALTAR("altars", "Altars", "./assets/markers/altar.png"),
     FUSION_MASTER("fusion-masters", "Fusion Masters", "./assets/markers/fusion_master.png"),
     CONTRACT_BOARD("contract-boards", "Contract Boards", "./assets/markers/contract_board.png"),
-
-    // TODO
     QUICK_TRAVEL("quick-travels", "Quick Travel", "./assets/markers/quick_travel.png"),
-
+    TANNER("tanners", "Tanner", "./assets/markers/tanner.png"),
 
     // Dev
-    AREAS("areas", "Areas", ""),
-    SPAWN_ZONE("spawn_zone", "Mob Spawn Zones", "");
+    TERRITORY("territories", "Territories", ""),
+
+
+    BIOME_SPAWN_ZONE("biome_spawn_zone", "Biome Spawn Zones", ""),
+    MOB_SPAWN_ZONE("mob_spawn_zone", "Mob Spawn Zones", "");
 
 
     private final String id, label, iconURL;

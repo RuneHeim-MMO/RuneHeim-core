@@ -21,6 +21,19 @@ public class RecipeRepository {
     public List<RecipeEntity> getAll() {
         return List.of(
 
+                // Tanner
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.LEATHER.getId(), RecipeType.TANNER_RECIPE, 2000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 1)),
+                        List.of(new IngredientRecord(ItemId.COWHIDE, 1, true, false)),
+                        new ItemRecord(ItemId.LEATHER, 1),
+                        null, List.of(), 20L), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.HARD_LEATHER.getId(), RecipeType.TANNER_RECIPE, 2000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 20)),
+                        List.of(new IngredientRecord(ItemId.COWHIDE, 1, true, false)),
+                        new ItemRecord(ItemId.HARD_LEATHER, 1),
+                        null, List.of(), 35L), null),
+
                 // Gems cutting (crafting)
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.SAPPHIRE.getId(), RecipeType.INVENTORY_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 20)),
@@ -308,20 +321,20 @@ public class RecipeRepository {
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANT_ARROW.getId(), RecipeType.INVENTORY_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.FLETCHING, 60)),
                         List.of(
-                                new IngredientRecord(ItemId.ADAMANTITE_ARROW_TIPS, 15, true, false),
+                                new IngredientRecord(ItemId.ADAMANT_ARROW_TIPS, 15, true, false),
                                 new IngredientRecord(ItemId.HEADLESS_ARROW, 15, true, false)
                         ),
                         new ItemRecord(ItemId.ADAMANT_ARROW, 15),
                         null,
                         List.of(new SkillXpRecord(SkillType.FLETCHING, 150.0)), null), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNITE_ARROW.getId(), RecipeType.INVENTORY_RECIPE, 3000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNE_ARROW.getId(), RecipeType.INVENTORY_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.FLETCHING, 75)),
                         List.of(
-                                new IngredientRecord(ItemId.RUNITE_ARROW_TIPS, 15, true, false),
+                                new IngredientRecord(ItemId.RUNE_ARROW_TIPS, 15, true, false),
                                 new IngredientRecord(ItemId.HEADLESS_ARROW, 15, true, false)
                         ),
-                        new ItemRecord(ItemId.RUNITE_ARROW, 15),
+                        new ItemRecord(ItemId.RUNE_ARROW, 15),
                         null,
                         List.of(new SkillXpRecord(SkillType.FLETCHING, 187.5)), null), null),
 
@@ -558,19 +571,19 @@ public class RecipeRepository {
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 50.0)), null), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANTITE_ARROW_TIPS.getId(), RecipeType.SMITHING_RECIPE, 5000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANT_ARROW_TIPS.getId(), RecipeType.SMITHING_RECIPE, 5000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 70)),
-                        List.of(new IngredientRecord(ItemId.ADAMANTITE_BAR, 1, true, false),
+                        List.of(new IngredientRecord(ItemId.ADAMANT_BAR, 1, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)),
-                        new ItemRecord(ItemId.ADAMANTITE_ARROW_TIPS, 15),
+                        new ItemRecord(ItemId.ADAMANT_ARROW_TIPS, 15),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 62.5)), null), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNITE_ARROW_TIPS.getId(), RecipeType.SMITHING_RECIPE, 500,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNE_ARROW_TIPS.getId(), RecipeType.SMITHING_RECIPE, 500,
                         List.of(new SkillRequirement(SkillType.SMITHING, 90)),
-                        List.of(new IngredientRecord(ItemId.RUNITE_BAR, 1, true, false),
+                        List.of(new IngredientRecord(ItemId.RUNE_BAR, 1, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)),
-                        new ItemRecord(ItemId.RUNITE_ARROW_TIPS, 15),
+                        new ItemRecord(ItemId.RUNE_ARROW_TIPS, 15),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 75.0)), null), null),
 
@@ -616,24 +629,24 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 30.0)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANTITE_BAR.getId(), RecipeType.SMELTING_RECIPE, 10000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANT_BAR.getId(), RecipeType.SMELTING_RECIPE, 10000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 70)),
                         List.of(
-                                new IngredientRecord(ItemId.ADAMANTITE_ORE, 1, true, false),
+                                new IngredientRecord(ItemId.ADAMANT_ORE, 1, true, false),
                                 new IngredientRecord(ItemId.COAL_ORE, 6, true, false)
                         ),
-                        new ItemRecord(ItemId.ADAMANTITE_BAR, 1),
+                        new ItemRecord(ItemId.ADAMANT_BAR, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 37.5)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNITE_BAR.getId(), RecipeType.SMELTING_RECIPE, 15000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNE_BAR.getId(), RecipeType.SMELTING_RECIPE, 15000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 85)),
                         List.of(
-                                new IngredientRecord(ItemId.RUNITE_ORE, 1, true, false),
+                                new IngredientRecord(ItemId.RUNE_ORE, 1, true, false),
                                 new IngredientRecord(ItemId.COAL_ORE, 8, true, false)
                         ),
-                        new ItemRecord(ItemId.RUNITE_BAR, 1),
+                        new ItemRecord(ItemId.RUNE_BAR, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 50.0)), null
                 ), null),
@@ -788,10 +801,10 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 50.0)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANTITE_MEDHELM.getId(), RecipeType.SMITHING_RECIPE, 7000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANT_MEDHELM.getId(), RecipeType.SMITHING_RECIPE, 7000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 73)),
                         List.of(
-                                new IngredientRecord(ItemId.ADAMANTITE_BAR, 2, true, false),
+                                new IngredientRecord(ItemId.ADAMANT_BAR, 2, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
                         new ItemRecord(ItemId.ADAMANT_MEDHELM, 1),
@@ -799,10 +812,10 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 62.5)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNITE_MEDHELM.getId(), RecipeType.SMITHING_RECIPE, 8000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNE_MEDHELM.getId(), RecipeType.SMITHING_RECIPE, 8000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 88)),
                         List.of(
-                                new IngredientRecord(ItemId.RUNITE_BAR, 2, true, false),
+                                new IngredientRecord(ItemId.RUNE_BAR, 2, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
                         new ItemRecord(ItemId.RUNE_MEDHELM, 1),
@@ -854,10 +867,10 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 100.0)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANTITE_FULLHELM.getId(), RecipeType.SMITHING_RECIPE, 7000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANT_FULLHELM.getId(), RecipeType.SMITHING_RECIPE, 7000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 77)),
                         List.of(
-                                new IngredientRecord(ItemId.ADAMANTITE_BAR, 3, true, false),
+                                new IngredientRecord(ItemId.ADAMANT_BAR, 3, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
                         new ItemRecord(ItemId.ADAMANT_FULLHELM, 1),
@@ -865,10 +878,10 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 125)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNITE_FULLHELM.getId(), RecipeType.SMITHING_RECIPE, 8000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNE_FULLHELM.getId(), RecipeType.SMITHING_RECIPE, 8000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 92)),
                         List.of(
-                                new IngredientRecord(ItemId.RUNITE_BAR, 3, true, false),
+                                new IngredientRecord(ItemId.RUNE_BAR, 3, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
                         new ItemRecord(ItemId.RUNE_FULLHELM, 1),
@@ -922,24 +935,24 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 200)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANTITE_BODY.getId(), RecipeType.SMITHING_RECIPE, 9000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANT_BODY.getId(), RecipeType.SMITHING_RECIPE, 9000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 65)),
                         List.of(
-                                new IngredientRecord(ItemId.ADAMANTITE_BAR, 5, true, false),
+                                new IngredientRecord(ItemId.ADAMANT_BAR, 5, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
-                        new ItemRecord(ItemId.ADAMANTITE_BODY, 1),
+                        new ItemRecord(ItemId.ADAMANT_BODY, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 260.0)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNITE_BODY.getId(), RecipeType.SMITHING_RECIPE, 12000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNE_BODY.getId(), RecipeType.SMITHING_RECIPE, 12000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 99)),
                         List.of(
-                                new IngredientRecord(ItemId.RUNITE_BAR, 5, true, false),
+                                new IngredientRecord(ItemId.RUNE_BAR, 5, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
-                        new ItemRecord(ItemId.RUNITE_BODY, 1),
+                        new ItemRecord(ItemId.RUNE_BODY, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 300)), null
                 ), null),
@@ -989,24 +1002,24 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 200)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANTITE_CHAINBODY.getId(), RecipeType.SMITHING_RECIPE, 9000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANT_CHAINBODY.getId(), RecipeType.SMITHING_RECIPE, 9000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 60)),
                         List.of(
-                                new IngredientRecord(ItemId.ADAMANTITE_BAR, 3, true, false),
+                                new IngredientRecord(ItemId.ADAMANT_BAR, 3, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
-                        new ItemRecord(ItemId.ADAMANTITE_CHAINBODY, 1),
+                        new ItemRecord(ItemId.ADAMANT_CHAINBODY, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 260.0)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNITE_CHAINBODY.getId(), RecipeType.SMITHING_RECIPE, 12000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNE_CHAINBODY.getId(), RecipeType.SMITHING_RECIPE, 12000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 90)),
                         List.of(
-                                new IngredientRecord(ItemId.RUNITE_BAR, 3, true, false),
+                                new IngredientRecord(ItemId.RUNE_BAR, 3, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
-                        new ItemRecord(ItemId.RUNITE_CHAINBODY, 1),
+                        new ItemRecord(ItemId.RUNE_CHAINBODY, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 300)), null
                 ), null),
@@ -1060,24 +1073,24 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 150)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANTITE_PLATELEGS.getId(), RecipeType.SMITHING_RECIPE, 9000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANT_PLATELEGS.getId(), RecipeType.SMITHING_RECIPE, 9000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 64)),
                         List.of(
-                                new IngredientRecord(ItemId.ADAMANTITE_BAR, 3, true, false),
+                                new IngredientRecord(ItemId.ADAMANT_BAR, 3, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
-                        new ItemRecord(ItemId.ADAMANTITE_PLATELEGS, 1),
+                        new ItemRecord(ItemId.ADAMANT_PLATELENG, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 170.0)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNITE_PLATELEGS.getId(), RecipeType.SMITHING_RECIPE, 12000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNE_PLATELEGS.getId(), RecipeType.SMITHING_RECIPE, 12000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 99)),
                         List.of(
-                                new IngredientRecord(ItemId.RUNITE_BAR, 3, true, false),
+                                new IngredientRecord(ItemId.RUNE_BAR, 3, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
-                        new ItemRecord(ItemId.RUNITE_PLATELEGS, 1),
+                        new ItemRecord(ItemId.RUNE_PLATELEGS, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 225)), null
                 ), null),
@@ -1128,24 +1141,24 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 75.0)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANTITE_BOOTS.getId(), RecipeType.SMITHING_RECIPE, 7000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANT_BOOTS.getId(), RecipeType.SMITHING_RECIPE, 7000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 62)),
                         List.of(
-                                new IngredientRecord(ItemId.ADAMANTITE_BAR, 3, true, false),
+                                new IngredientRecord(ItemId.ADAMANT_BAR, 3, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
-                        new ItemRecord(ItemId.ADAMANTITE_BOOTS, 1),
+                        new ItemRecord(ItemId.ADAMANT_BOOTS, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 100.0)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNITE_BOOTS.getId(), RecipeType.SMITHING_RECIPE, 9000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNE_BOOTS.getId(), RecipeType.SMITHING_RECIPE, 9000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 78)),
                         List.of(
-                                new IngredientRecord(ItemId.RUNITE_BAR, 3, true, false),
+                                new IngredientRecord(ItemId.RUNE_BAR, 3, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
-                        new ItemRecord(ItemId.RUNITE_BOOTS, 1),
+                        new ItemRecord(ItemId.RUNE_BOOTS, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 125.0)), null
                 ), null),
@@ -1195,24 +1208,24 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 50.0)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANTITE_SWORD.getId(), RecipeType.SMITHING_RECIPE, 5000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANT_SWORD.getId(), RecipeType.SMITHING_RECIPE, 5000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 50)),
                         List.of(
-                                new IngredientRecord(ItemId.ADAMANTITE_BAR, 1, true, false),
+                                new IngredientRecord(ItemId.ADAMANT_BAR, 1, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
-                        new ItemRecord(ItemId.ADAMANTITE_SWORD, 1),
+                        new ItemRecord(ItemId.ADAMANT_SWORD, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 62.5)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNITE_SWORD.getId(), RecipeType.SMITHING_RECIPE, 6000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNE_SWORD.getId(), RecipeType.SMITHING_RECIPE, 6000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 70)),
                         List.of(
-                                new IngredientRecord(ItemId.RUNITE_BAR, 1, true, false),
+                                new IngredientRecord(ItemId.RUNE_BAR, 1, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
-                        new ItemRecord(ItemId.RUNITE_SWORD, 1),
+                        new ItemRecord(ItemId.RUNE_SWORD, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 75.0)), null
                 ), null),
@@ -1262,24 +1275,24 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 50.0)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANTITE_DAGGER.getId(), RecipeType.SMITHING_RECIPE, 5000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANT_DAGGER.getId(), RecipeType.SMITHING_RECIPE, 5000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 50)),
                         List.of(
-                                new IngredientRecord(ItemId.ADAMANTITE_BAR, 1, true, false),
+                                new IngredientRecord(ItemId.ADAMANT_BAR, 1, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
-                        new ItemRecord(ItemId.ADAMANTITE_DAGGER, 1),
+                        new ItemRecord(ItemId.ADAMANT_DAGGER, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 62.5)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNITE_DAGGER.getId(), RecipeType.SMITHING_RECIPE, 6000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNE_DAGGER.getId(), RecipeType.SMITHING_RECIPE, 6000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 70)),
                         List.of(
-                                new IngredientRecord(ItemId.RUNITE_BAR, 1, true, false),
+                                new IngredientRecord(ItemId.RUNE_BAR, 1, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
-                        new ItemRecord(ItemId.RUNITE_DAGGER, 1),
+                        new ItemRecord(ItemId.RUNE_DAGGER, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 75.0)), null
                 ), null),
@@ -1329,24 +1342,24 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 150.0)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANTITE_BATTLEAXE.getId(), RecipeType.SMITHING_RECIPE, 6000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANT_BATTLEAXE.getId(), RecipeType.SMITHING_RECIPE, 6000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 61)),
                         List.of(
-                                new IngredientRecord(ItemId.ADAMANTITE_BAR, 3, true, false),
+                                new IngredientRecord(ItemId.ADAMANT_BAR, 3, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
-                        new ItemRecord(ItemId.ADAMANTITE_BATTLEAXE, 1),
+                        new ItemRecord(ItemId.ADAMANT_BATTLEAXE, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 185.5)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNITE_BATTLEAXE.getId(), RecipeType.SMITHING_RECIPE, 7000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNE_BATTLEAXE.getId(), RecipeType.SMITHING_RECIPE, 7000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 75)),
                         List.of(
-                                new IngredientRecord(ItemId.RUNITE_BAR, 3, true, false),
+                                new IngredientRecord(ItemId.RUNE_BAR, 3, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
-                        new ItemRecord(ItemId.RUNITE_BATTLEAXE, 1),
+                        new ItemRecord(ItemId.RUNE_BATTLEAXE, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 225.0)), null
                 ), null),
@@ -1396,24 +1409,24 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 50.0)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANTITE_AXE.getId(), RecipeType.SMITHING_RECIPE, 6000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANT_AXE.getId(), RecipeType.SMITHING_RECIPE, 6000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 46)),
                         List.of(
-                                new IngredientRecord(ItemId.ADAMANTITE_BAR, 3, true, false),
+                                new IngredientRecord(ItemId.ADAMANT_BAR, 3, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
-                        new ItemRecord(ItemId.ADAMANTITE_AXE, 1),
+                        new ItemRecord(ItemId.ADAMANT_AXE, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 62.5)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNITE_AXE.getId(), RecipeType.SMITHING_RECIPE, 7000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNE_AXE.getId(), RecipeType.SMITHING_RECIPE, 7000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 61)),
                         List.of(
-                                new IngredientRecord(ItemId.RUNITE_BAR, 3, true, false),
+                                new IngredientRecord(ItemId.RUNE_BAR, 3, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
-                        new ItemRecord(ItemId.RUNITE_AXE, 1),
+                        new ItemRecord(ItemId.RUNE_AXE, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 75.0)), null
                 ), null),
@@ -1463,24 +1476,24 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.SMITHING, 50.0)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANTITE_PICKAXE.getId(), RecipeType.SMITHING_RECIPE, 6000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANT_PICKAXE.getId(), RecipeType.SMITHING_RECIPE, 6000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 46)),
                         List.of(
-                                new IngredientRecord(ItemId.ADAMANTITE_BAR, 3, true, false),
+                                new IngredientRecord(ItemId.ADAMANT_BAR, 3, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
-                        new ItemRecord(ItemId.ADAMANTITE_PICKAXE, 1),
+                        new ItemRecord(ItemId.ADAMANT_PICKAXE, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 62.5)), null
                 ), null),
 
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNITE_PICKAXE.getId(), RecipeType.SMITHING_RECIPE, 7000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RUNE_PICKAXE.getId(), RecipeType.SMITHING_RECIPE, 7000,
                         List.of(new SkillRequirement(SkillType.SMITHING, 61)),
                         List.of(
-                                new IngredientRecord(ItemId.RUNITE_BAR, 3, true, false),
+                                new IngredientRecord(ItemId.RUNE_BAR, 3, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
-                        new ItemRecord(ItemId.RUNITE_PICKAXE, 1),
+                        new ItemRecord(ItemId.RUNE_PICKAXE, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 75.0)), null
                 ), null)

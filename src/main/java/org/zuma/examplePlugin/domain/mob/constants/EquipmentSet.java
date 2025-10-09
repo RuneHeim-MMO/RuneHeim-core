@@ -17,10 +17,10 @@ public enum EquipmentSet {
 
     RUNE_SET_BATTLEAXE(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.RUNE_FULLHELM), 100),
-            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNITE_BODY), 100),
-            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNITE_PLATELEGS), 100),
-            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.RUNITE_BOOTS), 100),
-            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNITE_BATTLEAXE), 100)
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNE_BODY), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNE_PLATELEGS), 100),
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.RUNE_BOOTS), 100),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNE_BATTLEAXE), 100)
     ))),
 
     SHOPKEEPER_1(new MobEquipmentMeta(List.of(
@@ -37,6 +37,10 @@ public enum EquipmentSet {
 
     BLACKSMITH(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.SMITHING_HAMMER), 100)
+    ))),
+
+    TANNER(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.DRAGON_LEATHER), 100)
     ))),
 
     PICKAXES(new MobEquipmentMeta(List.of(
@@ -60,15 +64,15 @@ public enum EquipmentSet {
     ))),
 
     RUNE_HALF_SET_SWORD(new MobEquipmentMeta(List.of(
-            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNITE_BODY), 100),
-            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNITE_PLATELEGS), 100),
-            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.RUNITE_BOOTS), 100),
-            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNITE_SWORD), 100)
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNE_BODY), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNE_PLATELEGS), 100),
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.RUNE_BOOTS), 100),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNE_SWORD), 100)
     ))),
 
     RUNE_CHAIN_AND_SWORD(new MobEquipmentMeta(List.of(
-            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNITE_CHAINBODY), 100),
-            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNITE_SWORD), 100)
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNE_CHAINBODY), 100),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNE_SWORD), 100)
     ))),
 
     MITHRIL_CHAIN_HALF_SET_SWORD(new MobEquipmentMeta(List.of(
@@ -79,10 +83,10 @@ public enum EquipmentSet {
     ))),
 
     ADAMANT_CHAIN_HALF_SET_SWORD(new MobEquipmentMeta(List.of(
-            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.ADAMANTITE_CHAINBODY), 100),
-            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.ADAMANTITE_PLATELEGS), 100),
-            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.ADAMANTITE_BOOTS), 100),
-            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.ADAMANTITE_SWORD), 100)
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.ADAMANT_CHAINBODY), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.ADAMANT_PLATELENG), 100),
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.ADAMANT_BOOTS), 100),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.ADAMANT_SWORD), 100)
     ))),
 
 
@@ -118,15 +122,15 @@ public enum EquipmentSet {
     ))),
 
     RUNE_FULL_CROSSBOW(new MobEquipmentMeta(List.of(
-            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNITE_CROSSBOW, 1), 100),
-            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNITE_BODY, 1), 100),
-            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNITE_PLATELEGS, 1), 100)
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNE_CROSSBOW, 1), 100),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNE_BODY, 1), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNE_PLATELEGS, 1), 100)
     ))),
 
     RUNE_FULL_IRON_CROSSBOW(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.IRON_CROSSBOW, 1), 100),
-            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNITE_BODY, 1), 100),
-            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNITE_PLATELEGS, 1), 100)
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNE_BODY, 1), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNE_PLATELEGS, 1), 100)
     ))),
 
     BRONZE_PICKAXE(new MobEquipmentMeta(List.of(
@@ -152,8 +156,131 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.IRON_BODY), 5),
             new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.BRONZE_BOOTS), 30),
             new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.STICK), 20)
-    )));
+    ))),
 
+
+    LOW_LEVEL_RANDOM_GEAR(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.BRONZE_MEDHELM), 10),
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.IRON_MEDHELM), 10),
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.STEEL_MEDHELM), 10),
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.BRONZE_FULLHELM), 10),
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.IRON_FULLHELM), 10),
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.STEEL_FULLHELM), 10),
+
+
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.BRONZE_CHAINBODY), 10),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.IRON_CHAINBODY), 10),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.STEEL_CHAINBODY), 10),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.BRONZE_BODY), 10),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.IRON_BODY), 10),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.STEEL_BODY), 10),
+
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.BRONZE_PLATELEGS), 30),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.IRON_PLATELEGS), 30),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.STEEL_PLATELEGS), 30),
+
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.BRONZE_BOOTS), 30),
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.IRON_BOOTS), 30),
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.STEEL_BOOTS), 30),
+
+
+            new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.STICK), 10),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.BRONZE_BATTLEAXE), 10),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.BRONZE_DAGGER), 10),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.BRONZE_SWORD), 10),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.IRON_BATTLEAXE), 10),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.IRON_DAGGER), 10),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.IRON_SWORD), 10),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.STEEL_BATTLEAXE), 10),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.STEEL_DAGGER), 10),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.STEEL_SWORD), 10)
+    ))),
+
+    MEDIUM_LEVEL_RANDOM_GEAR(new MobEquipmentMeta(List.of(
+            // Head - medhelms (Steel -> Mithril -> Adamant)
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.STEEL_MEDHELM), 10),
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.MITHRIL_MEDHELM), 10),
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.ADAMANT_MEDHELM), 10),
+
+            // Head - fullhelms (Steel -> Mithril -> Adamant)
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.STEEL_FULLHELM), 10),
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.MITHRIL_FULLHELM), 10),
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.ADAMANT_FULLHELM), 10),
+
+            // Chest - chainbodies (Steel -> Mithril -> Adamant)
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.STEEL_CHAINBODY), 10),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.MITHRIL_CHAINBODY), 10),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.ADAMANT_CHAINBODY), 10),
+
+            // Chest - bodies (Steel -> Mithril -> Adamant)
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.STEEL_BODY), 10),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.MITHRIL_BODY), 10),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.ADAMANT_BODY), 10),
+
+            // Legs - platelegs (Steel -> Mithril -> Adamant)
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.STEEL_PLATELEGS), 30),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.MITHRIL_PLATELEGS), 30),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.ADAMANT_PLATELENG), 30),
+
+            // Feet - boots (Steel -> Mithril -> Adamant)
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.STEEL_BOOTS), 30),
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.MITHRIL_BOOTS), 30),
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.ADAMANT_BOOTS), 30),
+
+            // Hand - battleaxes (Steel -> Mithril -> Adamant)
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.STEEL_BATTLEAXE), 10),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.MITHRIL_BATTLEAXE), 10),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.ADAMANT_BATTLEAXE), 10),
+
+            // Hand - daggers (Steel -> Mithril -> Adamant)
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.STEEL_DAGGER), 10),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.MITHRIL_DAGGER), 10),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.ADAMANT_DAGGER), 10),
+
+            // Hand - swords (Steel -> Mithril -> Adamant)
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.STEEL_SWORD), 10),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.MITHRIL_SWORD), 10),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.ADAMANT_SWORD), 10)
+    ))),
+
+
+    HIGH_LEVEL_RANDOM_GEAR(new MobEquipmentMeta(List.of(
+            // Head - medhelms (Adamant -> Rune)
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.ADAMANT_MEDHELM), 10),
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.RUNE_MEDHELM), 10),
+
+            // Head - fullhelms (Adamant -> Rune)
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.ADAMANT_FULLHELM), 10),
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.RUNE_FULLHELM), 10),
+
+            // Chest - chainbodies (Adamant -> Rune)
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.ADAMANT_CHAINBODY), 10),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNE_CHAINBODY), 10),
+
+            // Chest - bodies (Adamant -> Rune)
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.ADAMANT_BODY), 10),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNE_BODY), 10),
+
+            // Legs - platelegs (Adamant -> Rune)
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.ADAMANT_PLATELENG), 30),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNE_PLATELEGS), 30),
+
+            // Feet - boots (Adamant -> Rune)
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.ADAMANT_BOOTS), 30),
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.RUNE_BOOTS), 30),
+
+            // Hand - battleaxes (Adamant -> Rune)
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.ADAMANT_BATTLEAXE), 10),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNE_BATTLEAXE), 10),
+
+            // Hand - daggers (Adamant -> Rune)
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.ADAMANT_DAGGER), 10),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNE_DAGGER), 10),
+
+            // Hand - swords (Adamant -> Rune)
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.ADAMANT_SWORD), 10),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNE_SWORD), 10)
+    )));
 
     private static ItemStack getRuneItem(ItemId id) {
         return getRuneItem(id, 1);

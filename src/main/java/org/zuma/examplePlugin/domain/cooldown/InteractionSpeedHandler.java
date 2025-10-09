@@ -15,7 +15,7 @@ public class InteractionSpeedHandler implements Listener {
     private static final long INTERACTION_THROTTLE_INTERVAL = 150L;
     private static final long BLOCK_INTERACTION_THROTTLE_INTERVAL = 400L;
     private static final long MOB_INTERACTION_THROTTLE_INTERVAL = 1000L;
-    private static final long ITEM_PICKUP_THROTTLE_INTERVAL = 250L;
+    private static final long ITEM_PICKUP_THROTTLE_INTERVAL = 50L;
 
     private final CooldownHandler interactionSpeedHandler;
     private final CooldownHandler miscSpeedHandler;

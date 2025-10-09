@@ -295,7 +295,7 @@ public class ItemRepository {
                                 new SkillRequirement(SkillType.DEFENCE, 20)),
                                 null), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_RING, ItemId.ADAMANTITE_RING.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Adamantite Ring", List.of("A strong ring offering moderate boosts to attack and defence."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_RING, ItemId.ADAMANT_RING.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Adamantite Ring", List.of("A strong ring offering moderate boosts to attack and defence."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new EquipableTypeMeta(null, null, null,
                                 List.of(
                                         new Modifier(ModifierType.ATTACK_STAB, 4),
@@ -306,7 +306,7 @@ public class ItemRepository {
                                 new SkillRequirement(SkillType.DEFENCE, 30)),
                                 null), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_RING, ItemId.RUNITE_RING.asInt(), Material.COAL, ItemRarity.RARE, "Runite Ring", List.of("A rare ring that greatly improves your combat prowess."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_RING, ItemId.RUNE_RING.asInt(), Material.COAL, ItemRarity.RARE, "Runite Ring", List.of("A rare ring that greatly improves your combat prowess."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new EquipableTypeMeta(null, null, null,
                                 List.of(
                                         new Modifier(ModifierType.ATTACK_STAB, 6),
@@ -517,7 +517,7 @@ public class ItemRepository {
                                 null),
                         1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.RUNITE_ARROW.asInt(), Material.ARROW, ItemRarity.RARE, "Runite Arrow", List.of("Top-tier arrow made from runite.", "Delivers deadly ranged attacks."), null, true, CRAFTED_ITEM_MULTIPLIER), toVersionedJson(
+                new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.RUNE_ARROW.asInt(), Material.ARROW, ItemRarity.RARE, "Runite Arrow", List.of("Top-tier arrow made from runite.", "Delivers deadly ranged attacks."), null, true, CRAFTED_ITEM_MULTIPLIER), toVersionedJson(
                         new EquipableTypeMeta(null, null, null,
                                 List.of(
                                         new Modifier(ModifierType.RANGED_STRENGTH, 7)
@@ -577,9 +577,9 @@ public class ItemRepository {
                         toVersionedJson(new MaterialMeta(175), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MITHRIL_ORE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Mithril Ore", List.of("Rare mithril ore, prized for its lightweight strength."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(600), 1)),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ADAMANTITE_ORE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Adamantite Ore", List.of("Tough adamantite ore, used for elite armor and weapons."), null, true, 1.0),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ADAMANT_ORE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Adamantite Ore", List.of("Tough adamantite ore, used for elite armor and weapons."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(1500), 1)),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RUNITE_ORE.asInt(), Material.COAL, ItemRarity.RARE, "Runite Ore", List.of("Ancient runite ore, infused with magical properties."), null, true, 1.0),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RUNE_ORE.asInt(), Material.COAL, ItemRarity.RARE, "Runite Ore", List.of("Ancient runite ore, infused with magical properties."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(4000), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BRONZE_BAR.asInt(), Material.COAL, ItemRarity.COMMON, "Bronze Bar", List.of("Smelted bronze bar, used to forge basic equipment."), null, true, CRAFTED_ITEM_MULTIPLIER),
@@ -590,9 +590,9 @@ public class ItemRepository {
                         toVersionedJson(new MaterialMeta(0), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MITHRIL_BAR.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Mithril Bar", List.of("Light yet strong mithril bar, perfect for advanced gear."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(0), 1)),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ADAMANTITE_BAR.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Adamantite Bar", List.of("Durable adamantite bar, for crafting superior items."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ADAMANT_BAR.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Adamantite Bar", List.of("Durable adamantite bar, for crafting superior items."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(0), 1)),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RUNITE_BAR.asInt(), Material.COAL, ItemRarity.RARE, "Runite Bar", List.of("Runite bar pulsing with arcane energy, highly prized."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RUNE_BAR.asInt(), Material.COAL, ItemRarity.RARE, "Runite Bar", List.of("Runite bar pulsing with arcane energy, highly prized."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(0), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RAW_CHICKEN.asInt(), Material.COAL, ItemRarity.COMMON, "Raw Chicken", List.of("A slab of uncooked poultry, still fresh."), null, true, 1.0),
@@ -655,12 +655,12 @@ public class ItemRepository {
                         toVersionedJson(new MaterialMeta(1500), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.FEATHER.asInt(), Material.COAL, ItemRarity.COMMON, "Feather", List.of("Light and soft bird feather.", "Useful for fletching arrows."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(5), 1)),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.HARD_LEATHER.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Hard Leather", List.of("Treated for durability.", "Used to craft sturdy gear."), null, true, CRAFTED_ITEM_MULTIPLIER),
-                        toVersionedJson(new MaterialMeta(400), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.HARD_LEATHER.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Hard Leather", List.of("Treated for durability.", "Used to craft sturdy gear."), null, true, 1.5),
+                        toVersionedJson(new MaterialMeta(200), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.HEADLESS_ARROW.asInt(), Material.COAL, ItemRarity.COMMON, "Headless Arrow", List.of("An unfinished arrow lacking a tip.", "Needs a metal head to be complete."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(0), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.LEATHER.asInt(), Material.COAL, ItemRarity.COMMON, "Leather", List.of("Tanned animal hide.", "Used in basic crafting and armor."), null, true, CRAFTED_ITEM_MULTIPLIER),
-                        toVersionedJson(new MaterialMeta(200), 1)),
+                        toVersionedJson(new MaterialMeta(100), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BRONZE_ARROW_TIPS.asInt(), Material.COAL, ItemRarity.COMMON, "Bronze Arrowtips", List.of("Forged from bronze.", "Used to make basic arrows."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(0), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.IRON_ARROW_TIPS.asInt(), Material.COAL, ItemRarity.COMMON, "Iron Arrowtips", List.of("Sharpened iron points.", "Commonly used for training."), null, true, CRAFTED_ITEM_MULTIPLIER),
@@ -669,9 +669,9 @@ public class ItemRepository {
                         toVersionedJson(new MaterialMeta(0), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MITHRIL_ARROW_TIPS.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Mithril Arrowtips", List.of("Lightweight and sharp.", "Favored by skilled archers."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(0), 1)),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ADAMANTITE_ARROW_TIPS.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Adamantite Arrowtips", List.of("Tough and deadly.", "Crafted for elite arrows."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ADAMANT_ARROW_TIPS.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Adamantite Arrowtips", List.of("Tough and deadly.", "Crafted for elite arrows."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(0), 1)),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RUNITE_ARROW_TIPS.asInt(), Material.COAL, ItemRarity.RARE, "Runite Arrowtips", List.of("Forged from rare runite.", "Used in mastercrafted ammunition."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.RUNE_ARROW_TIPS.asInt(), Material.COAL, ItemRarity.RARE, "Runite Arrowtips", List.of("Forged from rare runite.", "Used in mastercrafted ammunition."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(0), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.SHORTBOW_UNFINISHED.asInt(), Material.COAL, ItemRarity.COMMON, "Shortbow (unfinished)", List.of("An unstrung shortbow.", "Needs a bowstring to complete."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(0), 1)),
@@ -693,6 +693,8 @@ public class ItemRepository {
                         toVersionedJson(new MaterialMeta(0), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_LONGBOW_UNFINISHED.asInt(), Material.COAL, ItemRarity.COMMON, "Magic Longbow (unfinished)", List.of("An unstrung magic longbow.", "Needs a bowstring to complete."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(0), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.COWHIDE.asInt(), Material.COAL, ItemRarity.COMMON, "Cowhide", List.of("A thick, durable hide taken from a domesticated cow.", "Can be used for crafting light armor."), null, true, 1.5),
+                        toVersionedJson(new MaterialMeta(50), 1)),
 
 
                 // Gems
@@ -968,7 +970,7 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.ADAMANTITE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.UNCOMMON, "Adamantite Pickaxe", List.of("Adamantite pickaxe, mines the hardest ores."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.ADAMANT_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.UNCOMMON, "Adamantite Pickaxe", List.of("Adamantite pickaxe, mines the hardest ores."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(null, null, null,
                                         List.of(new Modifier(ModifierType.MINING_BOOST, 1.5)),
@@ -976,7 +978,7 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.TOOL_WITH_GEM_SOCKETS, ItemId.RUNITE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.RARE, "Runite Pickaxe", List.of("Runite pickaxe, enchanted for maximum yield."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.TOOL_WITH_GEM_SOCKETS, ItemId.RUNE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.RARE, "Runite Pickaxe", List.of("Runite pickaxe, enchanted for maximum yield."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new SocketedToolMeta(new EquipableTypeMeta(null, null, null,
                                         List.of(new Modifier(ModifierType.MINING_BOOST, 1.8)),
@@ -1017,7 +1019,7 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.ADAMANTITE_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.UNCOMMON, "Adamantite axe", List.of("Adamantite axe, built to last."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.ADAMANT_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.UNCOMMON, "Adamantite axe", List.of("Adamantite axe, built to last."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(null, null, null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.5)),
@@ -1025,7 +1027,7 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.TOOL_WITH_GEM_SOCKETS, ItemId.RUNITE_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.RARE, "Runite axe", List.of("Runite axe glowing with magical energy."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.TOOL_WITH_GEM_SOCKETS, ItemId.RUNE_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.RARE, "Runite axe", List.of("Runite axe glowing with magical energy."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new SocketedToolMeta(new EquipableTypeMeta(null, null, null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.8)),
@@ -1339,7 +1341,7 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANTITE_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.UNCOMMON, "Adamantite Body", List.of("Heavy adamantite chestplate for supreme protection."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANT_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.UNCOMMON, "Adamantite Body", List.of("Heavy adamantite chestplate for supreme protection."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(EquipmentSlot.CHEST, "adamant_chestplate", null,
                                         List.of(
@@ -1351,7 +1353,7 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNITE_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.RARE, "Runite Body", List.of("Runite chestplate enchanted for extra resilience."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNE_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.RARE, "Runite Body", List.of("Runite chestplate enchanted for extra resilience."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new SocketedEquipableMeta(new EquipableTypeMeta(EquipmentSlot.CHEST, "runite_chestplate", null,
                                         List.of(
@@ -1412,7 +1414,7 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANTITE_CHAINBODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.UNCOMMON, "Adamantite Chainbody", List.of("Heavy adamantite chainbody offering superior protection."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANT_CHAINBODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.UNCOMMON, "Adamantite Chainbody", List.of("Heavy adamantite chainbody offering superior protection."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(EquipmentSlot.CHEST, "adamant_chainbody", null,
                                         List.of(
@@ -1424,7 +1426,7 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNITE_CHAINBODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.RARE, "Runite Chainbody", List.of("Runite chainbody reinforced and enchanted for elite defense."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNE_CHAINBODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.RARE, "Runite Chainbody", List.of("Runite chainbody reinforced and enchanted for elite defense."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new SocketedEquipableMeta(new EquipableTypeMeta(EquipmentSlot.CHEST, "runite_chainbody", null,
                                         List.of(
@@ -1539,7 +1541,7 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANTITE_PLATELEGS.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.UNCOMMON, "Adamantite Platelegs", List.of("Adamantite platelegs, thick and durable."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANT_PLATELENG.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.UNCOMMON, "Adamantite Platelegs", List.of("Adamantite platelegs, thick and durable."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(EquipmentSlot.LEGS, "adamant_leggings", null,
                                         List.of(
@@ -1551,7 +1553,7 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNITE_PLATELEGS.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.RARE, "Runite Platelegs", List.of("Runite platelegs shimmering with magical energy."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNE_PLATELEGS.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.RARE, "Runite Platelegs", List.of("Runite platelegs shimmering with magical energy."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new SocketedEquipableMeta(new EquipableTypeMeta(EquipmentSlot.LEGS, "runite_leggings", null,
                                         List.of(
@@ -1623,7 +1625,7 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANTITE_BOOTS.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.UNCOMMON, "Adamantite Boots", List.of("Adamantite boots, heavy and protective."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANT_BOOTS.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.UNCOMMON, "Adamantite Boots", List.of("Adamantite boots, heavy and protective."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(EquipmentSlot.FEET, "adamant_boots", null,
                                         List.of(
@@ -1635,7 +1637,7 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNITE_BOOTS.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.RARE, "Runite Boots", List.of("Runite boots imbued with arcane power."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemId.RUNE_BOOTS.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.RARE, "Runite Boots", List.of("Runite boots imbued with arcane power."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new SocketedEquipableMeta(new EquipableTypeMeta(EquipmentSlot.FEET, "runite_boots", null,
                                         List.of(
@@ -1655,7 +1657,8 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 4),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 3)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 3),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 1)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 1)),
                                         null)
@@ -1666,7 +1669,8 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 6),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 5)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 5),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 1)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 1)),
                                         null)
@@ -1677,7 +1681,8 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 10),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 9)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 9),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 1)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 5)),
                                         null)
@@ -1688,28 +1693,31 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 16),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 14)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 14),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 1)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 20)),
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.ADAMANTITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Sword", List.of("Adamantite sword, powerful and heavy."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.ADAMANT_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Sword", List.of("Adamantite sword, powerful and heavy."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 21),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 19)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 19),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 1)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 30)),
                                         null), 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON_WITH_GEM_SOCKETS, ItemId.RUNITE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Sword", List.of("Runite sword crackling with magical energy."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON_WITH_GEM_SOCKETS, ItemId.RUNE_SWORD.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Sword", List.of("Runite sword crackling with magical energy."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new SocketedWeaponEquipableMeta(new EquipableWeaponTypeMeta(WeaponSpeed.NORMAL, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 30),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 29)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 29),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 1)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 40)),
                                         null), null, 1)
@@ -1722,7 +1730,8 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 3),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 2)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 2),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 1)),
                                         null), 1)
@@ -1732,7 +1741,8 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 5),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 3)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 3),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 1)),
                                         null)
@@ -1743,7 +1753,8 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 8),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 6)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 6),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 5)),
                                         null)
@@ -1754,29 +1765,32 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 14),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 10)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 10),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 20)),
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.ADAMANTITE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Dagger", List.of("Adamantite dagger, strong and lethal."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.ADAMANT_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Dagger", List.of("Adamantite dagger, strong and lethal."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 18),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 14)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 14),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 30)),
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON_WITH_GEM_SOCKETS, ItemId.RUNITE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Dagger", List.of("Runite dagger glowing with mystical power."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON_WITH_GEM_SOCKETS, ItemId.RUNE_DAGGER.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Dagger", List.of("Runite dagger glowing with mystical power."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new SocketedWeaponEquipableMeta(new EquipableWeaponTypeMeta(WeaponSpeed.FAST, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 24),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 19)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 19),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 40)),
                                         null), null, 1), 1)
@@ -1789,7 +1803,8 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 5),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 6),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 6)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 6),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 0.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 1)),
                                         null)
@@ -1801,7 +1816,8 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 8),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 9),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 9)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 9),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 0.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 1)),
                                         null)
@@ -1813,7 +1829,8 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 12),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 13),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 13)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 13),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 0.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 5)),
                                         null)
@@ -1825,31 +1842,34 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 18),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 19),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 20)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 20),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 0.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 20)),
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.ADAMANTITE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Battleaxe", List.of("Adamantite battleaxe, crushing blows guaranteed."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.ADAMANT_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.UNCOMMON, "Adamantite Battleaxe", List.of("Adamantite battleaxe, crushing blows guaranteed."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 23),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 24),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 25)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 25),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 0.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 30)),
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON_WITH_GEM_SOCKETS, ItemId.RUNITE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Battleaxe", List.of("Runite battleaxe, imbued with arcane fury."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON_WITH_GEM_SOCKETS, ItemId.RUNE_BATTLEAXE.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Runite Battleaxe", List.of("Runite battleaxe, imbued with arcane fury."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new SocketedWeaponEquipableMeta(new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_SLASH, 32),
                                                 new Modifier(ModifierType.ATTACK_CRUSH, 33),
-                                                new Modifier(ModifierType.STRENGTH_BONUS, 34)
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 34),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, 0.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 40)),
                                         null), null, 1),
@@ -2031,7 +2051,7 @@ public class ItemRepository {
                                 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON_WITH_SOCKETS, ItemId.RUNITE_CROSSBOW.asInt(), Material.CROSSBOW, ItemRarity.LEGENDARY, "Runite Crossbow", List.of("The ultimate runite crossbow with unmatched precision."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON_WITH_SOCKETS, ItemId.RUNE_CROSSBOW.asInt(), Material.CROSSBOW, ItemRarity.LEGENDARY, "Runite Crossbow", List.of("The ultimate runite crossbow with unmatched precision."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new SocketedWeaponEquipableMeta(new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
                                         List.of(

@@ -24,7 +24,8 @@ public enum GUIOverlay {
     GENERAL_STORE_OVERLAY("⍏"),
     FOOD_SHOP_OVERLAY("⾦"),
     TOOL_SHOP_OVERLAY("⯃"),
-    WEAPON_SHOP_OVERLAY("⓲");
+    WEAPON_SHOP_OVERLAY("⓲"),
+    TANNER_OVERLAY("ⴻ");
 
     private final String glyph;
 

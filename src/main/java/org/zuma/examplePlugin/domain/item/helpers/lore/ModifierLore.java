@@ -33,21 +33,42 @@ public class ModifierLore implements LoreCreator {
             }
         }
 
+        List<Modifier> specialModifiers = modifiers.stream().filter(modifier -> modifier.type().isSpecial()).toList();
+
         if (!modifiers.isEmpty()) {
-            modifiers.forEach(modifier -> {
-                double amount = modifier.amount();
-                String amountStr = (amount == Math.floor(amount)) ? String.format("%.0f", amount) : String.valueOf(amount);
-                String sign = amount > 0 ? "+" : "";
-                TextColor color = amount > 0 ? Color.ITEM_BONUS_POSITIVE.asColor() : Color.ITEM_BONUS_NEGATIVE.asColor();
+            // Regular modifiers
+            modifiers.stream().filter(modifier -> !modifier.type().isSpecial()).forEach(modifier -> {
+                lore.add(getModifierLine(modifier));
+            });
 
-                String prefix = (modifier.type().getNumberPrefix() == null) ? "" : modifier.type().getNumberPrefix();
-                String suffix = (modifier.type().getNumberSuffix() == null) ? "" : modifier.type().getNumberSuffix();
+            if (!specialModifiers.isEmpty()) {
+                lore.add(Component.empty());
+            }
+        }
 
-                lore.add(Component.text(modifier.type().getSymbol(), NamedTextColor.WHITE)
-                        .append(Component.text(" " + sign + prefix + amountStr + suffix + " " + modifier.type().getLabel()).color(color)));
+        if (!specialModifiers.isEmpty()) {
+            if (!hideLabel) {
+                lore.add(Component.text("Special Modifiers: ", Color.ITEM_CATEGORY_LABEL.asColor()));
+            }
+
+            modifiers.stream().filter(modifier -> modifier.type().isSpecial()).forEach(modifier -> {
+                lore.add(getModifierLine(modifier));
             });
         }
 
+    }
+
+    private Component getModifierLine(Modifier modifier) {
+        double amount = modifier.amount();
+        String amountStr = (amount == Math.floor(amount)) ? String.format("%.0f", amount) : String.valueOf(amount);
+        String sign = amount > 0 ? "+" : "";
+        TextColor color = amount > 0 ? Color.ITEM_BONUS_POSITIVE.asColor() : Color.ITEM_BONUS_NEGATIVE.asColor();
+
+        String prefix = (modifier.type().getNumberPrefix() == null) ? "" : modifier.type().getNumberPrefix();
+        String suffix = (modifier.type().getNumberSuffix() == null) ? "" : modifier.type().getNumberSuffix();
+
+        return Component.text(modifier.type().getSymbol(), NamedTextColor.WHITE)
+                .append(Component.text(" " + sign + prefix + amountStr + suffix + " " + modifier.type().getLabel()).color(color));
     }
 
     @Override

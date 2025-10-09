@@ -15,36 +15,36 @@ public class Eagles {
     public static void registerMobs(MobTypeRegistry registry) {
 
 
+        registry.register(MobType.EAGLE_BLACK_BASE_50.getId(), () -> new GenericCombatant(
+                "Eagle", null,
+                getBaseSkills(50),
+                null,
+                MobBehaviors.EAGLE.getBehavior(),
+                "brownheadeagle",
+                0.40, false, false, 32,
+                List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
+        ));
+
+
+        registry.register(MobType.EAGLE_BROWN_BASE_48.getId(), () -> new GenericCombatant(
+                "Eagle", null,
+                getBaseSkills(48),
+                null,
+                MobBehaviors.EAGLE.getBehavior(),
+                "browneagle",
+                0.40, false, false, 35,
+                List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
+        ));
+
+
         registry.register(MobType.EAGLE_BROWNHEAD_BASE_55.getId(), () -> new GenericCombatant(
                 "Eagle", null,
                 getBaseSkills(55),
                 null,
                 MobBehaviors.EAGLE.getBehavior(),
-                "brownheadeagle",
-                0.40, false, false, 32,
-                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
-        ));
-
-
-        registry.register(MobType.EAGLE_BROWN_BASE_59.getId(), () -> new GenericCombatant(
-                "Eagle", null,
-                getBaseSkills(59),
-                null,
-                MobBehaviors.EAGLE.getBehavior(),
-                "browneagle",
-                0.40, false, false, 35,
-                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
-        ));
-
-
-        registry.register(MobType.EAGLE_BLACKBASE_57.getId(), () -> new GenericCombatant(
-                "Eagle", null,
-                getBaseSkills(57),
-                null,
-                MobBehaviors.EAGLE.getBehavior(),
                 "blackeagle",
                 0.40, false, false, 32,
-                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
         ));
 
 

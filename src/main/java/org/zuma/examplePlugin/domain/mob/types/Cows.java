@@ -14,20 +14,20 @@ import static org.zuma.examplePlugin.domain.mob.MobTypesLoader.getBaseSkills;
 public class Cows {
 
     public static void registerMobs(MobTypeRegistry registry) {
-        registry.register(MobType.COW_BASE_5.getId(), () -> new GenericCombatant(
+        registry.register(MobType.COW_BASE_7.getId(), () -> new GenericCombatant(
                 "Cow", null,
-                getBaseSkills(5),
+                getBaseSkills(7),
                 null,
                 MobBehaviors.COW.getBehavior(),
                 0.25,
                 false, false, 8, null, null, DisguiseType.COW,
-                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt(), DropTableId.COWHIDE.asInt())
         ));
 
 
-        registry.register(MobType.CALF_BASE_3.getId(), () -> new GenericCombatant(
+        registry.register(MobType.CALF_BASE_5.getId(), () -> new GenericCombatant(
                 "Calf", null,
-                getBaseSkills(3),
+                getBaseSkills(5),
                 null,
                 MobBehaviors.EAGLE.getBehavior(),
                 0.25,
