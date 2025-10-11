@@ -160,7 +160,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(
                         ItemType.QUEST,
                         ItemId.FROG_EYE_THE_SICK_CAMELS_QUEST.asInt(),
-                        Material.SPIDER_EYE,
+                        Material.IRON_NUGGET,
                         ItemRarity.COMMON,
                         "Frog Eye",
                         List.of("An eye taken from a swamp frog.", "Might be useful for a potion."),
@@ -170,7 +170,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(
                         ItemType.QUEST,
                         ItemId.WOLF_FANG_THE_SICK_CAMELS_QUEST.asInt(),
-                        Material.SPIDER_EYE,
+                        Material.IRON_NUGGET,
                         ItemRarity.COMMON,
                         "Wolf Fang",
                         List.of("A sharp fang from a wolf.", "Could be used as an ingredient."),
@@ -180,7 +180,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(
                         ItemType.QUEST,
                         ItemId.CAMEL_CURE_THE_SICK_CAMELS_QUEST.asInt(),
-                        Material.SPIDER_EYE,
+                        Material.IRON_NUGGET,
                         ItemRarity.COMMON,
                         "Camel Cure",
                         List.of("A potent mixture to cure sick camels.", "Deliver it to the Rafiq."),
