@@ -53,7 +53,7 @@ public class ScriptedActionHandler {
                         player.giveItemOrDrop(new ItemRecord(Integer.parseInt(args.get("id")), Integer.parseInt(args.get("amount"))));
                 case ROLL_DROP_TABLE -> {
                     DropTable table = RuneQuestPlugin.getDropTableHandler().getByID(Integer.parseInt(args.get("id")));
-                    ItemRecord result = table.roll();
+                    ItemRecord result = table.roll(player);
 
                     if (result != null) player.giveItemOrDrop(result);
                 }

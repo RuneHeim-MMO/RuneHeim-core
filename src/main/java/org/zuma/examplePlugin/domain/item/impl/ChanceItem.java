@@ -54,7 +54,7 @@ public class ChanceItem extends AbstractItemType {
                 return;
             }
 
-            ItemRecord rollReward = matchingTable.roll();
+            ItemRecord rollReward = matchingTable.roll(player);
 
             if (rollReward != null) {
                 rewards.add(rollReward);

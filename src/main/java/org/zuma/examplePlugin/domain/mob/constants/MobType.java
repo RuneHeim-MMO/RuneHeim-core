@@ -78,7 +78,8 @@ public enum MobType {
     SAHARIJIN_ARENA_NPC,
 
     SHEEP, // Can shear wool off these
-    STATIC_HORSE, // decoration
+    STATIC_HORSE,
+    STATIC_CAMEL,
 
     // City guards (disguised iron golems to kill aggressive mobs near and inside of the cities)
     CITY_GUARD_STATIC,

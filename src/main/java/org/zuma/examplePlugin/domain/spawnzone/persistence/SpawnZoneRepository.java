@@ -1460,7 +1460,39 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(209, SpawnZoneType.POINT, 20, 1,
                         new Location(Bukkit.getWorld("world"), 210, 68, -127)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.DRAKKAR_TANNER, 1, 100)
-                ), false, MarkerType.TANNER, "Tanner"), 1))
+                ), false, MarkerType.TANNER, "Tanner"), 1)),
+
+                // Saharijin camel bazaar
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(210, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -1002, 73, -556)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.STATIC_CAMEL, 1, 100)
+                ), false, null, null), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(211, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -1009, 73, -556)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.STATIC_CAMEL, 1, 100)
+                ), false, null, null), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(212, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -1016, 73, -556)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.STATIC_CAMEL, 1, 100)
+                ), false, null, null), 1)),
+
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(213, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -1002, 73, -567)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.STATIC_CAMEL, 1, 100)
+                ), false, null, null), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(214, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -1009, 73, -567)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.STATIC_CAMEL, 1, 100)
+                ), false, null, null), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(215, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -1016, 73, -567)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.STATIC_CAMEL, 1, 100)
+                ), false, null, null), 1))
 
 
                 // last 209

@@ -374,7 +374,7 @@ public abstract class AbstractMob {
         entityAttr.setBaseValue(speed);
     }
 
-    public List<ItemStack> rollDropTables() {
+    public List<ItemStack> rollDropTables(RunePlayer activator) {
         List<ItemStack> drops = new ArrayList<>();
 
         this.dropTableIds.forEach(id -> {
@@ -386,7 +386,7 @@ public abstract class AbstractMob {
             }
 
             @Nullable
-            ItemRecord drop = table.roll();
+            ItemRecord drop = table.roll(activator);
 
             if (drop == null) {
                 return;
@@ -398,7 +398,13 @@ public abstract class AbstractMob {
                 return;
             }
 
-            drops.add(type.createItemStackOfType(drop.getAmount()));
+            ItemStack stack = type.createItemStackOfType(drop.getAmount());
+
+            if (!type.isTradeable) {
+                type.setUntradeableOwnerUUID(stack, activator.getUUID());
+            }
+
+            drops.add(stack);
         });
 
         return drops;
