@@ -1,6 +1,9 @@
 package org.zuma.examplePlugin.domain.mob.constants;
 
 public enum MobType {
+    // The sick camels quest
+    RAFIQ_CAMEL_TRADER,
+    SHAMIRA_SHAMAN,
 
     // Sailing
     ROGUES_HAVEN_SAILOR,

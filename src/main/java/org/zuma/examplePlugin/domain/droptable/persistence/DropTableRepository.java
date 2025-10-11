@@ -6,6 +6,7 @@ import org.zuma.examplePlugin.domain.droptable.DropTableEntry;
 import org.zuma.examplePlugin.domain.droptable.DropTableId;
 import org.zuma.examplePlugin.domain.droptable.DropTableRecord;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
+import org.zuma.examplePlugin.domain.quest.constants.QuestId;
 
 import java.util.List;
 
@@ -14,6 +15,16 @@ public class DropTableRepository {
 
     public List<DropTableDBEntry> getAll() {
         return List.of(
+
+                // Quest Drops
+                new DropTableDBEntry(DropTableId.TUNDRA_WOLF_THE_SICK_CAMELS.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.WOLF_FANG_THE_SICK_CAMELS_QUEST.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                ), QuestId.THE_SICK_CAMELS)), 1)),
+
+                new DropTableDBEntry(DropTableId.SWAMP_FROG_THE_SICK_CAMELS.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.FROG_EYE_THE_SICK_CAMELS_QUEST.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                ), QuestId.THE_SICK_CAMELS)), 1)),
+
 
                 // Chance items
                 new DropTableDBEntry(DropTableId.SCRATCH_CARD_COINS_UNDER_2K_COINS.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
@@ -197,8 +208,8 @@ public class DropTableRepository {
                 new DropTableDBEntry(DropTableId.WOLF_LOW_LVL_ARMOR.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.IRON_MEDHELM.asInt(), 1, 1, 30, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.IRON_BOOTS.asInt(), 1, 1, 30, DropTableEntry.Type.ITEM),
-                        new DropTableEntry(ItemId.STEEL_MEDHELM.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
-                        new DropTableEntry(ItemId.HARD_LEATHER_LEGGINGS.asInt(), 1, 1, 20, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.STEEL_MEDHELM.asInt(), 1, 1, 100, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.HARD_LEATHER_LEGGINGS.asInt(), 1, 1, 70, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.LEATHER_LEGGINGS.asInt(), 1, 1, 20, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 

@@ -94,7 +94,6 @@ public class Quest implements Restrictable {
     }
 
     public QuestStatus getPlayerQuestStatus(RunePlayer player) {
-
         if (player.getActiveQuestSteps().containsKey(this.getId())) {
             return QuestStatus.STARTED;
         }

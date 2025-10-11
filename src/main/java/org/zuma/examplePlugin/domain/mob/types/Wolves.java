@@ -103,7 +103,7 @@ public class Wolves {
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_gray_dark_alpha",
                 0.33, true, false, 40,
-                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt(), DropTableId.WOLF_LOW_LVL_ARMOR.asInt(), DropTableId.WOLF_COINS.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt(), DropTableId.WOLF_LOW_LVL_ARMOR.asInt(), DropTableId.WOLF_COINS.asInt(), DropTableId.TUNDRA_WOLF_THE_SICK_CAMELS.asInt())
         ));
 
         registry.register(MobType.TUNDRA_WOLF_BASE_48.getId(), () -> new GenericCombatant(
@@ -113,7 +113,7 @@ public class Wolves {
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_gray_light_alpha",
                 0.32, true, false, 43,
-                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt(), DropTableId.WOLF_LOW_LVL_ARMOR.asInt(), DropTableId.WOLF_COINS.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt(), DropTableId.WOLF_LOW_LVL_ARMOR.asInt(), DropTableId.WOLF_COINS.asInt(), DropTableId.TUNDRA_WOLF_THE_SICK_CAMELS.asInt())
         ));
 
         registry.register(MobType.TUNDRA_WOLF_BASE_47.getId(), () -> new GenericCombatant(
@@ -123,7 +123,7 @@ public class Wolves {
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_blonde_alpha",
                 0.34, true, false, 42,
-                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt(), DropTableId.WOLF_LOW_LVL_ARMOR.asInt(), DropTableId.WOLF_COINS.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt(), DropTableId.WOLF_LOW_LVL_ARMOR.asInt(), DropTableId.WOLF_COINS.asInt(), DropTableId.TUNDRA_WOLF_THE_SICK_CAMELS.asInt())
         ));
 
 

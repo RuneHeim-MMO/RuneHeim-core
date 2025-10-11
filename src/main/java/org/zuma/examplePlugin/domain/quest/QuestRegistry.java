@@ -9,6 +9,7 @@ import org.zuma.examplePlugin.domain.quest.constants.QuestDifficulty;
 import org.zuma.examplePlugin.domain.quest.constants.QuestId;
 import org.zuma.examplePlugin.domain.quest.impl.CollectionStep;
 import org.zuma.examplePlugin.domain.quest.impl.DialogStep;
+import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import javax.annotation.Nullable;
@@ -77,6 +78,19 @@ public class QuestRegistry {
 
         Quest saharijinPVPArenaIntroduction = new Quest(QuestId.SAHARIJIN_ARENA_INTRO.getId(), "Saharijin Arena Intro", QuestDifficulty.EASY, true);
         registerQuest(saharijinPVPArenaIntroduction); // No steps, just used for tracking if player has talked to the NPC.
+
+
+        Quest theSickCamels = new Quest(QuestId.THE_SICK_CAMELS.getId(), "The Sick Camels", QuestDifficulty.MEDIUM, false)
+                .setRewards(new QuestReward(null, null, 500))
+                .setRequirements(List.of(new SkillRequirement(SkillType.ATTACK, 50), new SkillRequirement(SkillType.STRENGTH, 50), new SkillRequirement(SkillType.DEFENCE, 50)));
+
+        registerQuest(theSickCamels.addSteps(List.of(
+                new DialogStep(RuneQuestPlugin.getInstance(), theSickCamels, "Talk to the §6Shamira§f in Zarali", "the-sick-camels.talk-to-shamira", null),
+                new CollectionStep(RuneQuestPlugin.getInstance(), theSickCamels, "Collect §615x Frog eyes.", "the-sick-camels.collect-frog-eyes", List.of(new ItemRecord(ItemId.FROG_EYE_THE_SICK_CAMELS_QUEST, 15)), null),
+                new CollectionStep(RuneQuestPlugin.getInstance(), theSickCamels, "Collect §68x Wolf fangs.", "the-sick-camels.collect-wolf-fangs", List.of(new ItemRecord(ItemId.WOLF_FANG_THE_SICK_CAMELS_QUEST, 8)), null),
+                new DialogStep(RuneQuestPlugin.getInstance(), theSickCamels, "Bring ingredients back to §6Shamira§f in Zarali", "the-sick-camels.bring-ingredients", null),
+                new DialogStep(RuneQuestPlugin.getInstance(), theSickCamels, "Bring camels cure to §6Rafiq§f in Saharijin", "the-sick-camels.bring-cure", null)
+        )));
 
     }
 
