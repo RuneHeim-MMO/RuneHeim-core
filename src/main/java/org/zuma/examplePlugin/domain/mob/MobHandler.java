@@ -28,6 +28,7 @@ import org.zuma.examplePlugin.domain.mob.behavior.MobIdleBehaviorHandler;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
@@ -111,7 +112,9 @@ public class MobHandler {
 
     public void onEntityDeath(EntityDeathEvent event, AbstractMob mob) {
         boolean killedByPlayer = event.getEntity().hasMetadata("killer");
-        RunePlayer killer = RuneQuestPlugin.getPlayerManager().getRunePlayer(UUID.fromString(event.getEntity().getMetadata("killer").getFirst().asString()));
+
+        @Nullable
+        RunePlayer killer = killedByPlayer ? RuneQuestPlugin.getPlayerManager().getRunePlayer(UUID.fromString(event.getEntity().getMetadata("killer").getFirst().asString())) : null;
 
         // Roll drops only if killed by a player.
         List<ItemStack> drops = killedByPlayer ? mob.rollDropTables(killer) : List.of();
