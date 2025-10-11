@@ -143,7 +143,7 @@ public abstract class AbstractRecipe implements Restrictable {
         itemLore.add(Component.text("⏱ " + chanceOfSuccess + "% chance of success", Color.coloredProgressValue(chanceOfSuccess, 0, 100, false)));
 
         List<ItemRecord> recipeIngredients = !ingredients.isEmpty() ? ingredients.stream()
-                .filter(record -> registry.getType(record.itemId()) instanceof org.zuma.examplePlugin.domain.item.impl.Material)
+                .filter(record -> !(registry.getType(record.itemId()) instanceof Tool))
                 .map(record -> new ItemRecord(record.itemId(), record.amount())).toList() : new ArrayList<>();
 
         List<ItemRecord> requiredTools = !ingredients.isEmpty() ? ingredients.stream()

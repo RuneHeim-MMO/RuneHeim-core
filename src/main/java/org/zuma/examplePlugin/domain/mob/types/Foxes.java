@@ -31,7 +31,7 @@ public class Foxes {
         registry.register(MobType.FOX_BASE_22.getId(), () -> new GenericCombatant(
                 "Fox", null, getBaseSkills(22),
                 null, MobBehaviors.FOX.getBehavior(),
-                0.3, false, false, 10, null, null, DisguiseType.FOX,
+                0.3, false, false, 14, null, null, DisguiseType.FOX,
                 List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
         ));
     }

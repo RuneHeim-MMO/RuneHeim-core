@@ -259,6 +259,17 @@ public class ItemRepository {
                         null, true, 1.0),
                         toVersionedJson(new MountMeta(null, EntityType.LLAMA, null, null, 7, 0.14, 0.48, 0.03, 0.065, null, null), 1)),
 
+                // Camel
+                new ItemEntity(new AbstractItemMeta(
+                        ItemType.MOUNT,
+                        ItemId.CAMEL.asInt(),
+                        Material.SADDLE,
+                        ItemRarity.LEGENDARY,
+                        "Camel",
+                        List.of("A hardy desert beast, built for endurance and long journeys.", "Can hold up to 2 passengers."),
+                        null, true, 1.0),
+                        toVersionedJson(new MountMeta(null, EntityType.CAMEL, null, null, 10, 0.14, 0.2, 0.02, 0.015, null, null), 1)),
+
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MOUNT, ItemId.OBELIX_MOUNT.asInt(), Material.SADDLE, ItemRarity.LEGENDARY, "Obelix", List.of("Your own personal obelix"), null, true, 1.0),
                         toVersionedJson(new MountMeta("chieftain", null, null, null, 10, 0.15, 0.5, 0.03, 0.075, List.of(new SkillRequirement(SkillType.ATTACK, 5)),
@@ -527,6 +538,13 @@ public class ItemRepository {
 
 
                 // Tools
+                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.NEEDLE.asInt(), Material.COAL, ItemRarity.COMMON, "Needle", List.of("A small, sharp tool used for sewing or crafting."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new EquipableTypeMeta(null, null, null, null, null, null), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.THREAD.asInt(), Material.COAL, ItemRarity.COMMON, "Thread", List.of("A thin strand of fiber used with a needle for sewing or crafting."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(6), 1)),
+
+
                 new ItemEntity(new AbstractItemMeta(ItemType.COMPASS, ItemId.COMPASS.asInt(), Material.COMPASS, ItemRarity.COMMON, "Compass", List.of("A simple tool to help you find your way."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(null, null, null,
@@ -659,7 +677,7 @@ public class ItemRepository {
                         toVersionedJson(new MaterialMeta(200), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.HEADLESS_ARROW.asInt(), Material.COAL, ItemRarity.COMMON, "Headless Arrow", List.of("An unfinished arrow lacking a tip.", "Needs a metal head to be complete."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(0), 1)),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.LEATHER.asInt(), Material.COAL, ItemRarity.COMMON, "Leather", List.of("Tanned animal hide.", "Used in basic crafting and armor."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.LEATHER.asInt(), Material.COAL, ItemRarity.COMMON, "Leather", List.of("Tanned animal hide.", "Used in basic crafting and armor."), null, true, 1.5),
                         toVersionedJson(new MaterialMeta(100), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BRONZE_ARROW_TIPS.asInt(), Material.COAL, ItemRarity.COMMON, "Bronze Arrowtips", List.of("Forged from bronze.", "Used to make basic arrows."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(0), 1)),

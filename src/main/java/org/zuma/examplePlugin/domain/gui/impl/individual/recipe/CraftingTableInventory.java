@@ -5,6 +5,7 @@ import org.zuma.examplePlugin.domain.gui.base.RecipeInventory;
 import org.zuma.examplePlugin.domain.recipe.base.AbstractRecipe;
 import org.zuma.examplePlugin.domain.recipe.constants.RecipeType;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
+import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -22,7 +23,10 @@ public class CraftingTableInventory extends RecipeInventory {
         List<AbstractRecipe> inventoryRecipes = RuneQuestPlugin.getRecipeRegistry().getRecipesByType(RecipeType.INVENTORY_RECIPE, false);
         List<AbstractRecipe> craftingTableRecipes = RuneQuestPlugin.getRecipeRegistry().getRecipesByType(RecipeType.CRAFTING_TABLE_RECIPE, false);
 
-        Stream<AbstractRecipe> stream = Stream.concat(inventoryRecipes.stream(), craftingTableRecipes.stream());
+        Stream<AbstractRecipe> stream = Stream.concat(
+                // Hide fletching recipes from inventory recipes
+                inventoryRecipes.stream().filter(recipe -> !recipe.getSkillRequirements().stream().allMatch(s -> s.type() == SkillType.FLETCHING)),
+                craftingTableRecipes.stream());
 
         return stream.sorted(Comparator.comparingInt(recipe ->
                         recipe.getSkillRequirements().stream()
