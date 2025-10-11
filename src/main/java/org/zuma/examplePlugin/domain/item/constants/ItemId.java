@@ -328,7 +328,8 @@ public enum ItemId {
     SKELETAL_CHARGER_MOUNT(3309),
 
     // Llama
-    BROWN_LLAMA_MOUNT(3310);
+    BROWN_LLAMA_MOUNT(3310),
+    CAMEL(3311);
 
 
     private final int id;

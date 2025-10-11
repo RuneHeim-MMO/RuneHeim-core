@@ -147,8 +147,6 @@ public class MountHandler {
                 return;
             }
 
-            // todo redirect damage to horse
-
             ItemStack itemStack = slotHandler.getSlotItem(player, ReservedSlot.MOUNT_SLOT);
             AbstractItemType item = RuneQuestPlugin.getItemRegistry().getType(itemStack);
 
@@ -207,6 +205,31 @@ public class MountHandler {
         SoundType.MOUNT_SPAWN.play(player, true);
         SoundType.MOUNT_SADDLE.play(player, true);
 
+    }
+
+    public void restoreMountAttributes(RunePlayer player, Entity entity) {
+        UUID playerUUID = player.getUUID();
+
+        if (!mounts.containsKey(playerUUID)) {
+            return;
+        }
+
+        PlayerMount playerMount = mounts.get(playerUUID);
+        AbstractItemType item = RuneQuestPlugin.getItemRegistry().getType(playerMount.getMountID());
+
+        if (!(item instanceof Mount mount)) {
+            return;
+        }
+
+        ItemStack itemStack = slotHandler.getSlotItem(player, ReservedSlot.MOUNT_SLOT);
+        MountState state = mount.getState(itemStack);
+
+        if (state == null) {
+            return;
+        }
+
+        // This updates attributes like speed, jump height, etc. based on the mount's level
+        mount.onLevelChange(player, state.getLevel(mount), entity.getUniqueId(), false);
     }
 
     private void removePlayersActiveMount(UUID playerUUID) {
