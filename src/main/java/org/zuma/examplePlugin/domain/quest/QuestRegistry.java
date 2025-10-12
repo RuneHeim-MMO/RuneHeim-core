@@ -35,6 +35,7 @@ public class QuestRegistry {
                 .setRewards(new QuestReward(List.of(
                         new ItemRecord(ItemId.BRONZE_SWORD, 1),
                         new ItemRecord(ItemId.BRONZE_PICKAXE, 1),
+                        new ItemRecord(ItemId.BRONZE_AXE, 1),
                         new ItemRecord(ItemId.SHORT_BOW, 1),
                         new ItemRecord(ItemId.BRONZE_ARROW, 128),
                         new ItemRecord(ItemId.COIF, 1),

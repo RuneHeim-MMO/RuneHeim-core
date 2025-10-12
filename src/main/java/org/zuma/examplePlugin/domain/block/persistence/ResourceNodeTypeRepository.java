@@ -149,7 +149,7 @@ public class ResourceNodeTypeRepository {
                         List.of(new SkillXpRecord(SkillType.MINING, 125.0))),
 
 
-                new ResourceNodeType(ResourceNodeTypeId.HERRING_POOL.asInt(), MarkerType.HERRING, "Herring Pool", Material.BARRIER, true,
+                new ResourceNodeType(ResourceNodeTypeId.HERRING_POOL.asInt(), MarkerType.HERRING, "Herring Pool", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 1)),
                         ModifierType.BASIC_FISHING, 10000, 5,
                         List.of(DropTableId.HERRING_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_HERRING.asInt(),
@@ -157,7 +157,7 @@ public class ResourceNodeTypeRepository {
                         SoundType.FISHING_START_NET, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
                         List.of(new SkillXpRecord(SkillType.FISHING, 4.0))),
 
-                new ResourceNodeType(ResourceNodeTypeId.MINNOW_POOL.asInt(), MarkerType.MINNOW, "Minnow Pool", Material.BARRIER, true,
+                new ResourceNodeType(ResourceNodeTypeId.MINNOW_POOL.asInt(), MarkerType.MINNOW, "Minnow Pool", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 5)),
                         ModifierType.BASIC_FISHING, 11000, 6,
                         List.of(DropTableId.MINNOW_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_MINNOW.asInt(),
@@ -165,7 +165,7 @@ public class ResourceNodeTypeRepository {
                         SoundType.FISHING_START_NET, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
                         List.of(new SkillXpRecord(SkillType.FISHING, 5.0))),
 
-                new ResourceNodeType(ResourceNodeTypeId.TROUT_STREAM.asInt(), MarkerType.TROUT, "Trout Stream", Material.BARRIER, true,
+                new ResourceNodeType(ResourceNodeTypeId.TROUT_STREAM.asInt(), MarkerType.TROUT, "Trout Stream", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 15)),
                         ModifierType.REGULAR_FISHING, 12000, 7,
                         List.of(DropTableId.TROUT_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_TROUT.asInt(),
@@ -173,7 +173,7 @@ public class ResourceNodeTypeRepository {
                         SoundType.FISHING_START_ROD, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
                         List.of(new SkillXpRecord(SkillType.FISHING, 7.0))),
 
-                new ResourceNodeType(ResourceNodeTypeId.SALMON_STREAM.asInt(), MarkerType.SALMON, "Salmon Stream", Material.BARRIER, true,
+                new ResourceNodeType(ResourceNodeTypeId.SALMON_STREAM.asInt(), MarkerType.SALMON, "Salmon Stream", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 25)),
                         ModifierType.REGULAR_FISHING, 13000, 7,
                         List.of(DropTableId.SALMON_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_SALMON.asInt(),
@@ -181,7 +181,7 @@ public class ResourceNodeTypeRepository {
                         SoundType.FISHING_START_ROD, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
                         List.of(new SkillXpRecord(SkillType.FISHING, 10.0))),
 
-                new ResourceNodeType(ResourceNodeTypeId.TUNA_SPOT.asInt(), MarkerType.TUNA, "Tuna Spot", Material.BARRIER, true,
+                new ResourceNodeType(ResourceNodeTypeId.TUNA_SPOT.asInt(), MarkerType.TUNA, "Tuna Spot", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 35)),
                         ModifierType.REGULAR_FISHING, 14000, 8,
                         List.of(DropTableId.TUNA_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_TUNA.asInt(),
@@ -189,7 +189,7 @@ public class ResourceNodeTypeRepository {
                         SoundType.FISHING_START_ROD, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
                         List.of(new SkillXpRecord(SkillType.FISHING, 13.0))),
 
-                new ResourceNodeType(ResourceNodeTypeId.CRAWLER_REEF.asInt(), MarkerType.CRAWLER, "Crawler Reef", Material.BARRIER, true,
+                new ResourceNodeType(ResourceNodeTypeId.CRAWLER_REEF.asInt(), MarkerType.CRAWLER, "Crawler Reef", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 45)),
                         ModifierType.REGULAR_FISHING, 15000, 8,
                         List.of(DropTableId.CRAWLER_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_CRAWLER.asInt(),
@@ -197,7 +197,7 @@ public class ResourceNodeTypeRepository {
                         SoundType.FISHING_START_ROD, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
                         List.of(new SkillXpRecord(SkillType.FISHING, 15.0))),
 
-                new ResourceNodeType(ResourceNodeTypeId.PIKE_LAKE.asInt(), MarkerType.PIKE, "Pike Lake", Material.BARRIER, true,
+                new ResourceNodeType(ResourceNodeTypeId.PIKE_LAKE.asInt(), MarkerType.PIKE, "Pike Lake", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 55)),
                         ModifierType.REGULAR_FISHING, 16000, 9,
                         List.of(DropTableId.PIKE_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_PIKE.asInt(),
@@ -205,7 +205,7 @@ public class ResourceNodeTypeRepository {
                         SoundType.FISHING_START_ROD, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
                         List.of(new SkillXpRecord(SkillType.FISHING, 18.0))),
 
-                new ResourceNodeType(ResourceNodeTypeId.EEL_SWAMP.asInt(), MarkerType.EEL, "Eel Swamp", Material.BARRIER, true,
+                new ResourceNodeType(ResourceNodeTypeId.EEL_SWAMP.asInt(), MarkerType.EEL, "Eel Swamp", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 65)),
                         ModifierType.REGULAR_FISHING, 17000, 10,
                         List.of(DropTableId.EEL_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_EEL.asInt(),
@@ -213,7 +213,7 @@ public class ResourceNodeTypeRepository {
                         SoundType.FISHING_START_ROD, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
                         List.of(new SkillXpRecord(SkillType.FISHING, 22.0))),
 
-                new ResourceNodeType(ResourceNodeTypeId.SHARK_DEPTHS.asInt(), MarkerType.SHARK, "Shark Depths", Material.BARRIER, true,
+                new ResourceNodeType(ResourceNodeTypeId.SHARK_DEPTHS.asInt(), MarkerType.SHARK, "Shark Depths", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 75)),
                         ModifierType.ADVANCED_FISHING, 18000, 12,
                         List.of(DropTableId.SHARK_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_SHARK.asInt(),
@@ -221,7 +221,7 @@ public class ResourceNodeTypeRepository {
                         SoundType.FISHING_START_REINFORCED_ROD, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
                         List.of(new SkillXpRecord(SkillType.FISHING, 26.0))),
 
-                new ResourceNodeType(ResourceNodeTypeId.TURTLE_BAY.asInt(), MarkerType.TURTLE, "Turtle Bay", Material.BARRIER, true,
+                new ResourceNodeType(ResourceNodeTypeId.TURTLE_BAY.asInt(), MarkerType.TURTLE, "Turtle Bay", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 85)),
                         ModifierType.TRAP_FISHING, 20000, 15,
                         List.of(DropTableId.TURTLE_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_TURTLE.asInt(),
@@ -229,7 +229,7 @@ public class ResourceNodeTypeRepository {
                         SoundType.FISHING_START_TRAP, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
                         List.of(new SkillXpRecord(SkillType.FISHING, 30.0))),
 
-                new ResourceNodeType(ResourceNodeTypeId.RAY_SANDBANK.asInt(), MarkerType.RAY, "Ray Sandbank", Material.BARRIER, true,
+                new ResourceNodeType(ResourceNodeTypeId.RAY_SANDBANK.asInt(), MarkerType.RAY, "Ray Sandbank", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 95)),
                         ModifierType.TRAP_FISHING, 22000, 18,
                         List.of(DropTableId.RAY_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_RAY.asInt(),

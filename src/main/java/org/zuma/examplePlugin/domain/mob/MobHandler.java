@@ -112,10 +112,10 @@ public class MobHandler {
     }
 
     public void onEntityDeath(EntityDeathEvent event, AbstractMob mob) {
-        boolean killedByPlayer = event.getEntity().hasMetadata(MetadataKeys.KILLER_UUID.asString());
+        boolean killedByPlayer = event.getEntity().hasMetadata(MetadataKeys.MOST_DAMAGING_PLAYER_UUID.asString());
 
         @Nullable
-        RunePlayer killer = killedByPlayer ? RuneQuestPlugin.getPlayerManager().getRunePlayer(UUID.fromString(event.getEntity().getMetadata(MetadataKeys.KILLER_UUID.asString()).getFirst().asString())) : null;
+        RunePlayer killer = killedByPlayer ? RuneQuestPlugin.getPlayerManager().getRunePlayer(UUID.fromString(event.getEntity().getMetadata(MetadataKeys.MOST_DAMAGING_PLAYER_UUID.asString()).getFirst().asString())) : null;
 
         // Roll drops only if killed by a player.
         List<ItemStack> drops = killedByPlayer ? mob.rollDropTables(killer) : List.of();

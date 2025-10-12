@@ -220,8 +220,8 @@ public class DropTableRepository {
                 ), null)), 1)),
 
                 new DropTableDBEntry(DropTableId.GOBLIN_LOW_LVL_ARMOR.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
-                        new DropTableEntry(ItemId.IRON_BODY.asInt(), 1, 5, 20, DropTableEntry.Type.ITEM),
-                        new DropTableEntry(ItemId.BRONZE_BOOTS.asInt(), 10, 50, 10, DropTableEntry.Type.ITEM)
+                        new DropTableEntry(ItemId.IRON_BODY.asInt(), 1, 1, 20, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.BRONZE_BOOTS.asInt(), 1, 1, 10, DropTableEntry.Type.ITEM)
                 ), null)), 1))
 
 
