@@ -1673,6 +1673,8 @@ public class SpawnZoneRepository {
                 ), 40, false, true), 1))
 
 
+                // TODO: random city citizens
+                
                 // last 246
 
 
