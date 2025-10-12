@@ -116,11 +116,11 @@ public class ScriptedActionHandler {
             }
 
             RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO,
-                    "\u001B[36m[SCRIPT] Action " +
+                    "\u001B[36m[SCRIPT] Act " +
                             "\u001B[93m" + input +
-                            "\u001B[36m executed by " +
+                            "\u001B[36m by: " +
                             "\u001B[93m" + executor.type +
-                            "\u001B[36m target " +
+                            "\u001B[36m on: " +
                             "\u001B[93m" + player.asBukkitPlayer().getName() +
                             "\u001B[36m identifier: " +
                             "\u001B[93m" + executor.identifier +

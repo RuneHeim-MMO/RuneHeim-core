@@ -1510,28 +1510,34 @@ public class SpawnZoneRepository {
                 // Saharijin guards
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(218, SpawnZoneType.AREA, 20, 1,
                         new Location(Bukkit.getWorld("world"), -1226, 70, -807)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 4, 100)
+                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 4, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_SAHARIJIN, 3, 100)
                 ), 40, false, true), 1)),
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(219, SpawnZoneType.AREA, 20, 1,
                         new Location(Bukkit.getWorld("world"), -1223, 70, -760)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 4, 100)
+                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 4, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_SAHARIJIN, 3, 100)
                 ), 40, false, true), 1)),
 
                 // Eldarwyn guards
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(220, SpawnZoneType.AREA, 20, 1,
                         new Location(Bukkit.getWorld("world"), -845, 80, -346)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 10, 100)
+                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 10, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 8, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 3, 100)
                 ), 50, false, true), 1)),
 
                 // Branleft guards
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(221, SpawnZoneType.AREA, 20, 1,
                         new Location(Bukkit.getWorld("world"), -638, 68, -294)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 10, 100)
+                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 10, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 3, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 3, 100)
                 ), 50, false, true), 1)),
 
-                // Murkwatch guards
+                // Murkwatch guards // TODO: citizens
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(222, SpawnZoneType.POINT, 20, 1,
                         new Location(Bukkit.getWorld("world"), -1031, 69, 450)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.CITY_GUARD_STATIC, 1, 100)
@@ -1575,13 +1581,17 @@ public class SpawnZoneRepository {
                 // Aetheris guards
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(229, SpawnZoneType.AREA, 20, 1,
                         new Location(Bukkit.getWorld("world"), -157, 80, 791)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 3, 100)
+                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 3, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 5, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 1, 100)
                 ), 30, false, true), 1)),
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(230, SpawnZoneType.AREA, 20, 1,
                         new Location(Bukkit.getWorld("world"), -100, 80, 774)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 5, 100)
+                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 5, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 3, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 3, 100)
                 ), 40, false, true), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(231, SpawnZoneType.POINT, 20, 1,
@@ -1597,7 +1607,9 @@ public class SpawnZoneRepository {
                 // Glaciem guards
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(233, SpawnZoneType.AREA, 20, 1,
                         new Location(Bukkit.getWorld("world"), 953, 70, 503)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 3, 100)
+                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 3, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 4, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 1, 100)
                 ), 30, false, true), 1)),
 
                 // Sakurmeer guards
@@ -1613,24 +1625,31 @@ public class SpawnZoneRepository {
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(236, SpawnZoneType.AREA, 20, 1,
                         new Location(Bukkit.getWorld("world"), 844, 120, 157)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 2, 100)
+                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 2, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 1, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 2, 100)
                 ), 20, false, true), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(237, SpawnZoneType.AREA, 20, 1,
                         new Location(Bukkit.getWorld("world"), 854, 122, 233)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 2, 100)
+                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 2, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 2, 100)
                 ), 20, false, true), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(238, SpawnZoneType.AREA, 20, 1,
                         new Location(Bukkit.getWorld("world"), 931, 134, 191)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 5, 100)
+                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 5, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 3, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 2, 100)
                 ), 30, false, true), 1)),
 
 
                 // Islenor guards
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(239, SpawnZoneType.AREA, 20, 1,
                         new Location(Bukkit.getWorld("world"), 496, 67, -715)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 5, 100)
+                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 5, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 3, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 2, 100)
                 ), 40, false, true), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(240, SpawnZoneType.POINT, 20, 1,
@@ -1651,31 +1670,64 @@ public class SpawnZoneRepository {
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(243, SpawnZoneType.AREA, 20, 1,
                         new Location(Bukkit.getWorld("world"), -12, 116, -528)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 3, 100)
+                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 3, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 3, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 2, 100)
                 ), 20, false, true), 1)),
 
                 // Zarali guards
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(244, SpawnZoneType.AREA, 20, 1,
                         new Location(Bukkit.getWorld("world"), 476, 69, 469)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 3, 100)
+                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 3, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_JUNGLE, 5, 100)
                 ), 20, false, true), 1)),
 
                 // Ashwale guards
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(245, SpawnZoneType.AREA, 20, 1,
                         new Location(Bukkit.getWorld("world"), -66, 67, -88)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 3, 100)
+                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 3, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 1, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 1, 100)
                 ), 20, false, true), 1)),
 
                 // Oakshade guards
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(246, SpawnZoneType.AREA, 20, 1,
                         new Location(Bukkit.getWorld("world"), 530, 70, 2)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 4, 100)
+                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 4, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 3, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 2, 100)
+                ), 40, false, true), 1)),
+
+
+                // Drakkar citizens
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(247, SpawnZoneType.AREA, 20, 1,
+                        new Location(Bukkit.getWorld("world"), 195, 73, -84)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 10, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 8, 100)
+                ), 80, false, true), 1)),
+
+                // Saharijin citizens
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(248, SpawnZoneType.AREA, 20, 1,
+                        new Location(Bukkit.getWorld("world"), -999, 67, -591)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_SAHARIJIN, 3, 100)
+                ), 40, false, true), 1)),
+
+                // Thronbark guards
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(249, SpawnZoneType.AREA, 20, 1,
+                        new Location(Bukkit.getWorld("world"), 1092, 68, -343)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CITY_GUARD_WALKING, 4, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 3, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 3, 100)
+                ), 40, false, true), 1)),
+
+                // Infernak citizens
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(250, SpawnZoneType.AREA, 20, 1,
+                        new Location(Bukkit.getWorld("world"), 1030, 80, -666)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_INFERNAK, 3, 100)
                 ), 40, false, true), 1))
 
 
-                // TODO: random city citizens
-                
-                // last 246
+                // last 248
 
 
         );

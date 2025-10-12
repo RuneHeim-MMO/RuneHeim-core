@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public abstract class AbstractDialogMob extends FriendlyImmortalMob {
-    private final Supplier<DialogBuilder> dialogTemplate;
+    private Supplier<DialogBuilder> dialogTemplate;
     private int activeDialogs;
 
     public AbstractDialogMob(FriendlyImmortalMobMeta meta, @Nullable String skin, @Nullable String model, int maxWalkDistance, Supplier<DialogBuilder> dialog) {
@@ -24,6 +24,10 @@ public abstract class AbstractDialogMob extends FriendlyImmortalMob {
         if (skin != null) setPlayerDisguise(skin);
         if (model != null) setModel(model);
         setMaxWalkDistance(maxWalkDistance);
+    }
+
+    public void setDialogTemplate(Supplier<DialogBuilder> dialogTemplate) {
+        this.dialogTemplate = dialogTemplate;
     }
 
     @Override
@@ -58,6 +62,4 @@ public abstract class AbstractDialogMob extends FriendlyImmortalMob {
 
     }
 
-
-    public abstract void onInventoryClose(RunePlayer player);
 }

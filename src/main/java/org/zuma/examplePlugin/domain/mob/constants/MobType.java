@@ -23,6 +23,12 @@ public enum MobType {
     ABRAHAM_FAIRY_TEACHER,
     SHEPHERD, // Sheep shearer quest
 
+    // Random citizens
+    CITY_CITIZEN_MAN,
+    CITY_CITIZEN_WOMAN,
+    CITY_CITIZEN_INFERNAK,
+    CITY_CITIZEN_SAHARIJIN,
+    CITY_CITIZEN_JUNGLE,
 
     // Goblins
     GOBLIN_1_BASE_1,

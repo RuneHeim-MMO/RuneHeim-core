@@ -55,7 +55,7 @@ public class InteractiveDialogStep extends DialogStep {
             return;
         }
 
-        super.replaceDialogLine(newSlot + textContent.size(), (prevContent) -> "§a" + Icon.ARROW_RIGHT.get() + " §f" + prevContent + " §a" + Icon.ARROW_LEFT.get());
+        super.replaceDialogLine(newSlot + textContent.size(), (prevContent) -> "§a" + Icon.ARROW_RIGHT.get() + " §f§n" + prevContent + " §r§a" + Icon.ARROW_LEFT.get());
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
             if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) {

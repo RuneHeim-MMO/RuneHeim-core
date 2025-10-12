@@ -164,11 +164,11 @@ public class ScriptedConditionHandler {
 
     private static boolean loggerWrapper(String input, RunePlayer player, boolean conditionResult) {
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO,
-                "\u001B[36m[SCRIPT] Condition " +
+                "\u001B[36m[SCRIPT] Check " +
                         "\u001B[93m" + input +
-                        "\u001B[36m executed on target " +
+                        "\u001B[36m on: " +
                         "\u001B[93m" + player.asBukkitPlayer().getName() +
-                        "\u001B[36m condition result " +
+                        "\u001B[36m result: " +
                         "\u001B[93m" + conditionResult +
                         "\u001B[0m.");
 
