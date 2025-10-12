@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
@@ -45,6 +46,14 @@ public abstract class AbstractQuestStep implements Listener {
         if (getOwner() != null) {
             plugin.getServer().getPluginManager().registerEvents(this, plugin);
         }
+    }
+
+    @EventHandler
+    public void onPlayerDisconnect(PlayerQuitEvent event) {
+        if (owner == null || !event.getPlayer().getUniqueId().equals(owner))
+            return;
+
+        HandlerList.unregisterAll(this);
     }
 
     @EventHandler

@@ -214,6 +214,11 @@ public class Quest implements Restrictable {
     }
 
     public void handleCompletion(RunePlayer player) {
+        if (getPlayerQuestStatus(player) == QuestStatus.COMPLETED) {
+            // Some weird edge case where this gets called multiple times. (Should be fixed now)
+            return;
+        }
+
         player.getCompletedQuestIds().add(id);
         player.getActiveQuestSteps().remove(id);
         reward.applyRewards(player);
