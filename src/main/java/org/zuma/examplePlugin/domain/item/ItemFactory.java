@@ -492,7 +492,8 @@ public class ItemFactory {
                 QuestItemMeta deserialized = new Gson().fromJson(json.meta(), QuestItemMeta.class);
                 QuestItem item = new QuestItem(meta);
 
-                item.setQuestName(deserialized.questName());
+                item.setQuestId(deserialized.questId());
+                item.setAttributes(deserialized.droppable());
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());

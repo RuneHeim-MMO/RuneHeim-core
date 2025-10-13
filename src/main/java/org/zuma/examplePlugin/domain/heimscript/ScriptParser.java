@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.MalformedParametersException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -76,8 +77,14 @@ public class ScriptParser {
     }
 
     public static <T extends Enum<T> & ScriptedStatement> T matchInputToStatement(String input, Class<T> enumType) {
-        for (T action : enumType.getEnumConstants()) {
+        List<T> actions = Arrays.asList(enumType.getEnumConstants());
+
+        // Sort by trigger length descending to match the longest trigger first
+        actions.sort((a, b) -> Integer.compare(b.getTrigger().length(), a.getTrigger().length()));
+
+        for (T action : actions) {
             long argCount = input.chars().filter(c -> c == '{').count();
+
             if (input.startsWith(action.getTrigger()) && argCount == action.getArgsTemplates().size()) {
                 return action;
             }

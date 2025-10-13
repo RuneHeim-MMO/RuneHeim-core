@@ -33,6 +33,14 @@ public class TourHandler {
         }
 
         try {
+            // Check if ServerToursAPI is available (Reflectively)
+            try {
+                Class.forName("com.melluh.servertours.api.ServerToursAPI");
+            } catch (ClassNotFoundException e) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "ServerToursAPI is missing from the classpath. Skipping cutscene.");
+                return;
+            }
+
             Route route = ServerToursAPI.getRouteManager().getRoute(tour);
             player.setInCutscene(player.asBukkitPlayer().getLocation());
 

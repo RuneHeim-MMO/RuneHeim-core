@@ -329,7 +329,13 @@ public enum ItemId {
 
     // Llama
     BROWN_LLAMA_MOUNT(3310),
-    CAMEL(3311);
+    CAMEL(3311),
+
+    // Quests
+    FROG_EYE_THE_SICK_CAMELS_QUEST(3400),
+    WOLF_FANG_THE_SICK_CAMELS_QUEST(3401),
+    CAMEL_CURE_THE_SICK_CAMELS_QUEST(3402),
+    PROMISE_IN_A_BOX_ENGAGEMENT_RING(3403);
 
 
     private final int id;

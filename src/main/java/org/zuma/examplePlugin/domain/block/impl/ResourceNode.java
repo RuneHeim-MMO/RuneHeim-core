@@ -219,11 +219,11 @@ public class ResourceNode extends AbstractInteractableBlock {
         Modifier gatheringLuck = player.getModifiers().get(ModifierType.GATHERING_LUCK);
         double gatheringLuckPercentage = baseGatheringLuckPercentage + (gatheringLuck != null ? gatheringLuck.amount() : 0);
 
-        List<ItemRecord> gatheringDrops = blockType.rollGatheringDrops();
+        List<ItemRecord> gatheringDrops = blockType.rollGatheringDrops(player);
 
         // Do not allow double loot for items that don't require tools.
         if (random.nextDouble() * 100 < gatheringLuckPercentage && requiresTool) {
-            gatheringDrops.addAll(blockType.rollGatheringDrops());
+            gatheringDrops.addAll(blockType.rollGatheringDrops(player));
             SoundType.LUCKY_DROP_TABLE_SECOND_ROLL.play(player, true);
             player.asBukkitPlayer().showTitle(Title.title(
                     Component.text("2x Loot!", Color.ACCENT.asColor()),

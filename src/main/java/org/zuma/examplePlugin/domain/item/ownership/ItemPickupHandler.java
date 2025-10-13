@@ -5,6 +5,7 @@ import org.bukkit.event.player.PlayerAttemptPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -12,6 +13,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import java.util.UUID;
 
 public class ItemPickupHandler {
+    private final CooldownHandler messageCooldowns = new CooldownHandler();
 
 
     public boolean canPickupItem(RunePlayer player, AbstractItemType type, ItemStack stack) {
@@ -32,7 +34,12 @@ public class ItemPickupHandler {
         }
 
         if (!player.getUUID().equals(untradeableOwnerUUID)) {
-            HudService.sendFailMessage(player, Component.text("Cannot pick up item. It is untradeable and not owned by you."));
+
+            if (!messageCooldowns.isCooldownInProgress(player)) {
+                messageCooldowns.startCooldown(player, 3000L);
+                HudService.sendFailMessage(player, Component.text("Cannot pick up item. It is untradeable and not owned by you."));
+            }
+
             return false;
         }
 

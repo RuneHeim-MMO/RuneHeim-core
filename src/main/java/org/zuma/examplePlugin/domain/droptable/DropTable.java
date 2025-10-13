@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.quest.constants.QuestId;
 import org.zuma.examplePlugin.events.droptable.DropTableRollEvent;
 
 import javax.annotation.Nullable;
@@ -14,14 +16,20 @@ public class DropTable {
     private static final Random rand = new Random();
     private final List<DropTableEntry> drops;
     private final int id;
+    private final QuestId activeForQuest;
 
-    public DropTable(int id, List<DropTableEntry> drops) {
+    public DropTable(int id, List<DropTableEntry> drops, @Nullable QuestId activeForQuest) {
         this.id = id;
         this.drops = drops;
+        this.activeForQuest = activeForQuest;
     }
 
     @Nullable
-    public ItemRecord roll() {
+    public ItemRecord roll(RunePlayer player) {
+        // If this drop table is only active for a specific quest, check if the player has that quest active.
+        if (this.activeForQuest != null && !player.getActiveQuestSteps().containsKey(this.activeForQuest.getId())) {
+            return null;
+        }
 
         for (DropTableEntry drop : drops) {
             boolean isMatch = rand.nextInt(drop.oneInNChance) == 0;
@@ -49,7 +57,7 @@ public class DropTable {
 
 
                 for (int i = 0; i < amount; i++) {
-                    ItemRecord currentRoll = matchingTable.roll();
+                    ItemRecord currentRoll = matchingTable.roll(player);
                     Bukkit.getServer().getPluginManager().callEvent(new DropTableRollEvent(this, currentRoll));
                     if (currentRoll != null) return currentRoll;
                 }
@@ -64,5 +72,9 @@ public class DropTable {
 
     public int getId() {
         return id;
+    }
+
+    public QuestId getActiveForQuest() {
+        return activeForQuest;
     }
 }

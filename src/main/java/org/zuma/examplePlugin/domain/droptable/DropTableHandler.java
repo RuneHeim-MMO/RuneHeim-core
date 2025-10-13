@@ -40,7 +40,7 @@ public class DropTableHandler {
             switch (json.version()) {
                 case 1 -> {
                     DropTableRecord deserialized = gson.fromJson(json.meta(), DropTableRecord.class);
-                    DropTable table = new DropTable(id, deserialized.drops());
+                    DropTable table = new DropTable(id, deserialized.drops(), deserialized.activeForQuest());
                     dropTables.put(id, table);
                 }
                 default -> throw new UnsupportedJsonVersionException("Drop table id " + id, json.version());

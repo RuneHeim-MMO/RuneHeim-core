@@ -16,6 +16,7 @@ import org.zuma.examplePlugin.domain.item.meta.v1.*;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.SkillModifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
+import org.zuma.examplePlugin.domain.quest.constants.QuestId;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
@@ -152,6 +153,51 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
+
+
+                // Quest items
+                // The Sick Camels
+                new ItemEntity(new AbstractItemMeta(
+                        ItemType.QUEST,
+                        ItemId.FROG_EYE_THE_SICK_CAMELS_QUEST.asInt(),
+                        Material.IRON_NUGGET,
+                        ItemRarity.COMMON,
+                        "Frog Eye",
+                        List.of("An eye taken from a swamp frog.", "Might be useful for a potion."),
+                        null, false, 1.0),
+                        toVersionedJson(new QuestItemMeta(QuestId.THE_SICK_CAMELS.getId(), true), 1)),
+
+                new ItemEntity(new AbstractItemMeta(
+                        ItemType.QUEST,
+                        ItemId.WOLF_FANG_THE_SICK_CAMELS_QUEST.asInt(),
+                        Material.IRON_NUGGET,
+                        ItemRarity.COMMON,
+                        "Wolf Fang",
+                        List.of("A sharp fang from a wolf.", "Could be used as an ingredient."),
+                        null, false, 1.0),
+                        toVersionedJson(new QuestItemMeta(QuestId.THE_SICK_CAMELS.getId(), true), 1)),
+
+                new ItemEntity(new AbstractItemMeta(
+                        ItemType.QUEST,
+                        ItemId.CAMEL_CURE_THE_SICK_CAMELS_QUEST.asInt(),
+                        Material.IRON_NUGGET,
+                        ItemRarity.COMMON,
+                        "Camel Cure",
+                        List.of("A potent mixture to cure sick camels.", "Deliver it to the Rafiq."),
+                        null, false, 1.0),
+                        toVersionedJson(new QuestItemMeta(QuestId.THE_SICK_CAMELS.getId(), false), 1)),
+
+                // Promise in a Box
+                new ItemEntity(new AbstractItemMeta(
+                        ItemType.QUEST,
+                        ItemId.PROMISE_IN_A_BOX_ENGAGEMENT_RING.asInt(),
+                        Material.IRON_NUGGET,
+                        ItemRarity.COMMON,
+                        "Engagement ring",
+                        List.of("A beautiful ring symbolizing a promise.", "Deliver it to its rightful owner."),
+                        null, false, 1.0),
+                        toVersionedJson(new QuestItemMeta(QuestId.PROMISE_IN_A_BOX.getId(), false), 1)),
+
 
                 // Mounts
 

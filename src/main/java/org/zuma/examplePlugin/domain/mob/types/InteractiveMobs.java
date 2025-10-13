@@ -17,6 +17,12 @@ public class InteractiveMobs {
 
 
     public static void registerMobs(MobTypeRegistry registry) {
+        registry.register(MobType.RAFIQ_CAMEL_TRADER.getId(), () -> new DialogMob("Rafiq", null,
+                MobBehaviors.VILLAGER_MAN_5.getBehavior(), "rafiq_camel_trader", null, 50, Dialogs.rafiqCamelTrader));
+
+        registry.register(MobType.SHAMIRA_SHAMAN.getId(), () -> new DialogMob("Shamira", null,
+                MobBehaviors.VILLAGER_WOMAN_5.getBehavior(), "shamira_shaman", null, 50, Dialogs.shamiraShaman));
+
         registry.register(MobType.ABRAHAM_FAIRY_TEACHER.getId(), () -> new DialogMob("Abraham", null,
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "abraham_fairy_teacher", null, 0, Dialogs.fairyTeacher));
 

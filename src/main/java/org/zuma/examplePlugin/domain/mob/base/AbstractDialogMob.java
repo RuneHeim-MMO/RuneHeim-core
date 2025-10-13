@@ -13,15 +13,21 @@ import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public abstract class AbstractDialogMob extends FriendlyImmortalMob {
-    private final Supplier<DialogBuilder> dialogTemplate;
+    private Supplier<DialogBuilder> dialogTemplate;
+    private int activeDialogs;
 
     public AbstractDialogMob(FriendlyImmortalMobMeta meta, @Nullable String skin, @Nullable String model, int maxWalkDistance, Supplier<DialogBuilder> dialog) {
         super(meta);
         this.dialogTemplate = dialog;
+        this.activeDialogs = 0;
 
         if (skin != null) setPlayerDisguise(skin);
         if (model != null) setModel(model);
         setMaxWalkDistance(maxWalkDistance);
+    }
+
+    public void setDialogTemplate(Supplier<DialogBuilder> dialogTemplate) {
+        this.dialogTemplate = dialogTemplate;
     }
 
     @Override
@@ -37,7 +43,17 @@ public abstract class AbstractDialogMob extends FriendlyImmortalMob {
             DialogBuilder newDialogTemplate = dialogTemplate.get();
             System.out.println(newDialogTemplate.serialize());
             Dialog dialog = newDialogTemplate.build(super.getUUID());
-            RuneQuestPlugin.getDialogHandler().startDialog(player, dialog, this::unfreezeMob);
+
+            freezeMob();
+            activeDialogs++;
+
+
+            RuneQuestPlugin.getDialogHandler().startDialog(player, dialog, () -> {
+                // Decrease active dialog count but not below 0
+                activeDialogs = Math.max(0, activeDialogs - 1);
+                // Only unfreeze if no active dialogs remain
+                if (activeDialogs == 0) unfreezeMob();
+            });
             return;
         }
 
@@ -46,6 +62,4 @@ public abstract class AbstractDialogMob extends FriendlyImmortalMob {
 
     }
 
-
-    public abstract void onInventoryClose(RunePlayer player);
 }

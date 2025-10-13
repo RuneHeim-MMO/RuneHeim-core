@@ -16,6 +16,8 @@ public enum Icon {
     MYTHIC("⛧"),
     DIVINE("⟴"),
 
+    ARROW_LEFT("⬓"),
+    ARROW_RIGHT("⤊"),
     LEATHER("ⱦ"),
     CAMPFIRE("ⷚ"),
     CHAT_BUBBLE("┬"),

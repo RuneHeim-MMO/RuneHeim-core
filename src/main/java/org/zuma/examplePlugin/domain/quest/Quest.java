@@ -94,7 +94,6 @@ public class Quest implements Restrictable {
     }
 
     public QuestStatus getPlayerQuestStatus(RunePlayer player) {
-
         if (player.getActiveQuestSteps().containsKey(this.getId())) {
             return QuestStatus.STARTED;
         }
@@ -215,9 +214,20 @@ public class Quest implements Restrictable {
     }
 
     public void handleCompletion(RunePlayer player) {
+        if (getPlayerQuestStatus(player) == QuestStatus.COMPLETED) {
+            // Some weird edge case where this gets called multiple times. (Should be fixed now)
+            return;
+        }
+
         player.getCompletedQuestIds().add(id);
         player.getActiveQuestSteps().remove(id);
-        reward.applyRewards(player);
+
+        // Delay reward application and effects/messages to ensure any clear inventory from quests like tutorial island run first.
+        Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+            if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) return;
+
+            reward.applyRewards(player);
+        }, 10L);
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
             if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) return;

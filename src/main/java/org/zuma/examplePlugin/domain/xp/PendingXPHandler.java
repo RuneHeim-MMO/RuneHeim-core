@@ -54,7 +54,6 @@ public class PendingXPHandler {
     }
 
     public void distributePendingXP() {
-
         pendingPlayerXP.forEach((uuid, container) -> {
             try {
                 long minuteAgo = System.currentTimeMillis() - 60_000;
@@ -131,5 +130,10 @@ public class PendingXPHandler {
 
     }
 
-
+    public UUID getPlayerWithMostPendingXP() {
+        return pendingPlayerXP.entrySet().stream()
+                .max(Comparator.comparingDouble(entry -> entry.getValue().getPendingXP().values().stream().mapToDouble(Double::doubleValue).sum()))
+                .map(Map.Entry::getKey)
+                .orElse(null);
+    }
 }

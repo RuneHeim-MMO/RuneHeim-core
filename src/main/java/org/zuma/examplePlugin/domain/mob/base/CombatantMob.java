@@ -30,6 +30,7 @@ import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
 import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFruit;
 import org.zuma.examplePlugin.domain.item.state.states.FairyState;
 import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
+import org.zuma.examplePlugin.domain.mob.constants.MetadataKeys;
 import org.zuma.examplePlugin.domain.modifier.SkillModifier;
 import org.zuma.examplePlugin.domain.xp.PendingXPHandler;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
@@ -174,7 +175,11 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
 
         // Set killer metadata on last hit
         if (scaledHealth == 0 && hit.getAttacker().getEntity() instanceof Player playerAttacker) {
-            living.setMetadata("killer", new FixedMetadataValue(RuneQuestPlugin.getInstance(), playerAttacker.getUniqueId().toString()));
+            living.setMetadata(MetadataKeys.KILLER_UUID.asString(), new FixedMetadataValue(RuneQuestPlugin.getInstance(), playerAttacker.getUniqueId().toString()));
+
+            if (this.xpHandler.getPlayerWithMostPendingXP() != null) {
+                living.setMetadata(MetadataKeys.MOST_DAMAGING_PLAYER_UUID.asString(), new FixedMetadataValue(RuneQuestPlugin.getInstance(), this.xpHandler.getPlayerWithMostPendingXP().toString()));
+            }
 
             RuneEntityDeathEvent event = new RuneEntityDeathEvent(hit.getAttacker(), hit.getDefender(), hit, hit.getAttackType());
             Bukkit.getServer().getPluginManager().callEvent(event);

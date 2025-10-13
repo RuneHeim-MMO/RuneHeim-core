@@ -25,9 +25,11 @@ import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.behavior.MobIdleBehaviorHandler;
+import org.zuma.examplePlugin.domain.mob.constants.MetadataKeys;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
@@ -110,12 +112,18 @@ public class MobHandler {
     }
 
     public void onEntityDeath(EntityDeathEvent event, AbstractMob mob) {
-        List<ItemStack> drops = mob.rollDropTables();
+        boolean killedByPlayer = event.getEntity().hasMetadata(MetadataKeys.MOST_DAMAGING_PLAYER_UUID.asString());
+
+        @Nullable
+        RunePlayer killer = killedByPlayer ? RuneQuestPlugin.getPlayerManager().getRunePlayer(UUID.fromString(event.getEntity().getMetadata(MetadataKeys.MOST_DAMAGING_PLAYER_UUID.asString()).getFirst().asString())) : null;
+
+        // Roll drops only if killed by a player.
+        List<ItemStack> drops = killedByPlayer ? mob.rollDropTables(killer) : List.of();
         Location dropLocation = event.getEntity().getLocation();
 
         drops.forEach(drop -> {
-            if (event.getEntity().hasMetadata("killer")) {
-                ItemOwnershipHandler.setDroppedItemPrivate(drop, UUID.fromString(event.getEntity().getMetadata("killer").getFirst().asString()));
+            if (event.getEntity().hasMetadata(MetadataKeys.MOST_DAMAGING_PLAYER_UUID.asString())) {
+                ItemOwnershipHandler.setDroppedItemPrivate(drop, UUID.fromString(event.getEntity().getMetadata(MetadataKeys.MOST_DAMAGING_PLAYER_UUID.asString()).getFirst().asString()));
             }
 
             dropLocation.getWorld().dropItem(dropLocation, drop);

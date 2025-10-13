@@ -2,6 +2,8 @@ package org.zuma.examplePlugin.domain.dialog.base;
 
 import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
+import eu.decentsoftware.holograms.api.holograms.HologramLine;
+import eu.decentsoftware.holograms.api.holograms.HologramPage;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -19,6 +21,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
 
 public abstract class DialogStep {
     protected Dialog parent;
@@ -99,7 +102,7 @@ public abstract class DialogStep {
         new BukkitRunnable() {
             int lineIndex = 0;
             int charIndex = 0;
-            StringBuilder displayed = new StringBuilder();
+            final StringBuilder displayed = new StringBuilder();
             String currentLine = "";
             boolean isTypewriter = false;
 
@@ -168,6 +171,19 @@ public abstract class DialogStep {
 
     public void cleanUp() {
         DHAPI.removeHologram(hologramUUID.toString());
+    }
+
+    protected void replaceDialogLine(int lineIndex, Function<String, String> newLineFunction) {
+        Hologram hologram = DHAPI.getHologram(hologramUUID.toString());
+
+        if (hologram != null) {
+            HologramPage page = DHAPI.getHologramPage(hologram, 0);
+            HologramLine line = page != null ? DHAPI.getHologramLine(page, lineIndex) : null;
+            String previousLine = line != null ? line.getContent() : "";
+
+            DHAPI.setHologramLine(hologram, lineIndex, newLineFunction.apply(previousLine));
+        }
+
     }
 
     public abstract void onDialogFinishRendering(RunePlayer player);

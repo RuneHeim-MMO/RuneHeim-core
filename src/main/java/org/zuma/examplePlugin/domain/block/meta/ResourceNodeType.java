@@ -8,6 +8,7 @@ import org.zuma.examplePlugin.domain.droptable.DropTable;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.map.MarkerType;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.SkillXpRecord;
 
@@ -85,11 +86,11 @@ public class ResourceNodeType {
         return new ItemRecord(displayItemStackID, 1);
     }
 
-    public List<ItemRecord> rollGatheringDrops() {
+    public List<ItemRecord> rollGatheringDrops(RunePlayer activator) {
         List<ItemRecord> drops = new ArrayList<>();
 
         this.dropTables.forEach(dropTable -> {
-            ItemRecord drop = dropTable.roll();
+            ItemRecord drop = dropTable.roll(activator);
 
             if (drop != null) drops.add(drop);
 

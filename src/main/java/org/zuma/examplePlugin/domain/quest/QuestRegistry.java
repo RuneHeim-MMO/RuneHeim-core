@@ -1,6 +1,5 @@
 package org.zuma.examplePlugin.domain.quest;
 
-import com.google.gson.Gson;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
@@ -9,6 +8,7 @@ import org.zuma.examplePlugin.domain.quest.constants.QuestDifficulty;
 import org.zuma.examplePlugin.domain.quest.constants.QuestId;
 import org.zuma.examplePlugin.domain.quest.impl.CollectionStep;
 import org.zuma.examplePlugin.domain.quest.impl.DialogStep;
+import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import javax.annotation.Nullable;
@@ -34,6 +34,7 @@ public class QuestRegistry {
                 .setRewards(new QuestReward(List.of(
                         new ItemRecord(ItemId.BRONZE_SWORD, 1),
                         new ItemRecord(ItemId.BRONZE_PICKAXE, 1),
+                        new ItemRecord(ItemId.BRONZE_AXE, 1),
                         new ItemRecord(ItemId.SHORT_BOW, 1),
                         new ItemRecord(ItemId.BRONZE_ARROW, 128),
                         new ItemRecord(ItemId.COIF, 1),
@@ -77,6 +78,27 @@ public class QuestRegistry {
 
         Quest saharijinPVPArenaIntroduction = new Quest(QuestId.SAHARIJIN_ARENA_INTRO.getId(), "Saharijin Arena Intro", QuestDifficulty.EASY, true);
         registerQuest(saharijinPVPArenaIntroduction); // No steps, just used for tracking if player has talked to the NPC.
+
+
+        Quest theSickCamels = new Quest(QuestId.THE_SICK_CAMELS.getId(), "The Sick Camels", QuestDifficulty.MEDIUM, false)
+                .setRewards(new QuestReward(null, null, 500))
+                .setRequirements(List.of(new SkillRequirement(SkillType.ATTACK, 50), new SkillRequirement(SkillType.STRENGTH, 50), new SkillRequirement(SkillType.DEFENCE, 50)));
+
+        registerQuest(theSickCamels.addSteps(List.of(
+                new DialogStep(RuneQuestPlugin.getInstance(), theSickCamels, "Talk to the §6Shamira§f in Zarali", "the-sick-camels.talk-to-shamira", null),
+                new CollectionStep(RuneQuestPlugin.getInstance(), theSickCamels, "Collect §615x Frog eyes.", "the-sick-camels.collect-frog-eyes", List.of(new ItemRecord(ItemId.FROG_EYE_THE_SICK_CAMELS_QUEST, 15)), null),
+                new CollectionStep(RuneQuestPlugin.getInstance(), theSickCamels, "Collect §68x Wolf fangs.", "the-sick-camels.collect-wolf-fangs", List.of(new ItemRecord(ItemId.WOLF_FANG_THE_SICK_CAMELS_QUEST, 8)), null),
+                new DialogStep(RuneQuestPlugin.getInstance(), theSickCamels, "Bring ingredients back to §6Shamira§f in Zarali", "the-sick-camels.bring-ingredients", null),
+                new DialogStep(RuneQuestPlugin.getInstance(), theSickCamels, "Bring camels cure to §6Rafiq§f in Saharijin", "the-sick-camels.bring-cure", null)
+        )));
+
+
+        Quest promiseInABox = new Quest(QuestId.PROMISE_IN_A_BOX.getId(), "Promise in a box", QuestDifficulty.EASY, false)
+                .setRewards(new QuestReward(null, null, 500));
+
+        registerQuest(promiseInABox.addSteps(List.of(
+                new DialogStep(RuneQuestPlugin.getInstance(), promiseInABox, "Deliver §61x Engagement Ring§f to the §6Fishing Merchant§f in §6Brineport.", "promise-in-a-box.deliver", null)
+        )));
 
     }
 

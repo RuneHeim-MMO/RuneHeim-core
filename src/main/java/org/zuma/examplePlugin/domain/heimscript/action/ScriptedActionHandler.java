@@ -53,7 +53,7 @@ public class ScriptedActionHandler {
                         player.giveItemOrDrop(new ItemRecord(Integer.parseInt(args.get("id")), Integer.parseInt(args.get("amount"))));
                 case ROLL_DROP_TABLE -> {
                     DropTable table = RuneQuestPlugin.getDropTableHandler().getByID(Integer.parseInt(args.get("id")));
-                    ItemRecord result = table.roll();
+                    ItemRecord result = table.roll(player);
 
                     if (result != null) player.giveItemOrDrop(result);
                 }
@@ -116,11 +116,11 @@ public class ScriptedActionHandler {
             }
 
             RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO,
-                    "\u001B[36m[SCRIPT] Action " +
+                    "\u001B[36m[SCRIPT] Act " +
                             "\u001B[93m" + input +
-                            "\u001B[36m executed by " +
+                            "\u001B[36m by: " +
                             "\u001B[93m" + executor.type +
-                            "\u001B[36m target " +
+                            "\u001B[36m on: " +
                             "\u001B[93m" + player.asBukkitPlayer().getName() +
                             "\u001B[36m identifier: " +
                             "\u001B[93m" + executor.identifier +

@@ -13,8 +13,6 @@ import org.zuma.examplePlugin.domain.mob.impl.InventoryOpenerMob;
 
 import java.util.List;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Shopkeepers {
 
@@ -29,14 +27,6 @@ public class Shopkeepers {
             .interactiveStep(c -> c.randomText(DialogPreset.WANT_TO_SEE_FOOD_STOCK.getList())
                     .option("§aYes" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
                     .option("§cNo", n -> n.followupSteps(d -> d.passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList())))));
-
-
-    private static final Supplier<DialogBuilder> jewlerDialog = () -> DialogBuilder.create("jeweler-dialog")
-            .passiveStep(p -> p.randomText(Stream.concat(DialogPreset.WELCOME.getList().stream(), Stream.of("Have you seen my sapphire?"))
-                    .collect(Collectors.toList()))).interactiveStep(c -> c.randomText(DialogPreset.WANT_TO_SEE_STOCK.getList())
-                    .option("§aYes" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
-                    .option("§cNo", n -> n.followupSteps(d -> d.passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList())))));
-
 
     private static final Supplier<DialogBuilder> tannerDialog = () -> DialogBuilder.create("tanner-dialog")
             .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()))
@@ -64,7 +54,7 @@ public class Shopkeepers {
 
         registry.register(MobType.DRAKKAR_JEWLER.getId(), () -> new InventoryOpenerMob(Icon.BLUE_GEM.get() + " Jeweler", EquipmentSet.JEWELER,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "jeweler", null, InventoryId.JEWELER.asInt(), 40)
-                .attachDialog(jewlerDialog));
+                .attachDialog(Dialogs.drakkarJewelerDialog));
 
         registry.register(MobType.DRAKKAR_ARMOR_SHOP.getId(), () -> new InventoryOpenerMob(Icon.ARMOR.get() + " Armor Merchant", EquipmentSet.RUNE_CHAIN_AND_SWORD,
                 MobBehaviors.VILLAGER_MAN_1.getBehavior(), "armor_merchant", null, InventoryId.DRAKKAR_ARMOR_SHOP.asInt(), 40)
@@ -84,7 +74,7 @@ public class Shopkeepers {
 
         registry.register(MobType.BRINEPORT_FISHING_SHOP.getId(), () -> new InventoryOpenerMob(Icon.FISHING_HOOK.get() + " Fishing Merchant", EquipmentSet.FISHERMAN,
                 MobBehaviors.VILLAGER_MAN_2.getBehavior(), "brineport_fisherman", null, InventoryId.BRINEPORT_FISHING_SHOP.asInt(), 40)
-                .attachDialog(genericShopDialog));
+                .attachDialog(Dialogs.brineportFishermanDialog));
 
 
         registry.register(MobType.FENSHADE_MINING_SHOP.getId(), () -> new InventoryOpenerMob(Icon.PICKAXE.get() + " Mining Merchant", EquipmentSet.PICKAXES,

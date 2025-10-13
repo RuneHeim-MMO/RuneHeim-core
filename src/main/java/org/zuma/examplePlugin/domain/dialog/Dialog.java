@@ -45,6 +45,11 @@ public class Dialog {
         player.asBukkitPlayer().getInventory().setHeldItemSlot(Dialog.HOT_BAR_LOCK_SLOT_DURING_DIALOG);
     }
 
+    @Nullable
+    public Runnable getOnDialogFinish() {
+        return onDialogFinish;
+    }
+
     protected void startDialog(RunePlayer player) {
         nextStepIndex = 0;
         participantUUID = player.getUUID();
@@ -53,10 +58,19 @@ public class Dialog {
     }
 
     public void cleanUp() {
+        if (aborted) {
+            return;
+        }
+
         aborted = true;
         slotLocked = false;
         scenario.forEach(DialogStep::cleanUp);
         this.restoreInitialSlot();
+
+        if (onDialogFinish != null) {
+            onDialogFinish.run();
+        }
+
     }
 
     public void advanceDialogStep() {

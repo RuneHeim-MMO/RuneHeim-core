@@ -1,6 +1,9 @@
 package org.zuma.examplePlugin.domain.mob.constants;
 
 public enum MobType {
+    // The sick camels quest
+    RAFIQ_CAMEL_TRADER,
+    SHAMIRA_SHAMAN,
 
     // Sailing
     ROGUES_HAVEN_SAILOR,
@@ -20,6 +23,12 @@ public enum MobType {
     ABRAHAM_FAIRY_TEACHER,
     SHEPHERD, // Sheep shearer quest
 
+    // Random citizens
+    CITY_CITIZEN_MAN,
+    CITY_CITIZEN_WOMAN,
+    CITY_CITIZEN_INFERNAK,
+    CITY_CITIZEN_SAHARIJIN,
+    CITY_CITIZEN_JUNGLE,
 
     // Goblins
     GOBLIN_1_BASE_1,
@@ -78,7 +87,8 @@ public enum MobType {
     SAHARIJIN_ARENA_NPC,
 
     SHEEP, // Can shear wool off these
-    STATIC_HORSE, // decoration
+    STATIC_HORSE,
+    STATIC_CAMEL,
 
     // City guards (disguised iron golems to kill aggressive mobs near and inside of the cities)
     CITY_GUARD_STATIC,

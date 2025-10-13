@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.player;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,6 +34,8 @@ public class RunePlayerListener implements Listener {
 
         playerHandler.loadPlayerData(player);
 
+        // TODO: Regular players have creative mode on login, no idea why...
+        event.getPlayer().setGameMode(GameMode.SURVIVAL);
     }
 
     @EventHandler
