@@ -194,7 +194,7 @@ public class ItemRepository {
                         Material.IRON_NUGGET,
                         ItemRarity.COMMON,
                         "Engagement ring",
-                        List.of("A potent mixture to cure sick camels.", "Deliver it to the Rafiq."),
+                        List.of("A beautiful ring symbolizing a promise.", "Deliver it to its rightful owner."),
                         null, false, 1.0),
                         toVersionedJson(new QuestItemMeta(QuestId.PROMISE_IN_A_BOX.getId(), false), 1)),
 
