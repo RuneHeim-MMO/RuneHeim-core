@@ -1,6 +1,5 @@
 package org.zuma.examplePlugin.domain.quest;
 
-import com.google.gson.Gson;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
@@ -91,6 +90,14 @@ public class QuestRegistry {
                 new CollectionStep(RuneQuestPlugin.getInstance(), theSickCamels, "Collect §68x Wolf fangs.", "the-sick-camels.collect-wolf-fangs", List.of(new ItemRecord(ItemId.WOLF_FANG_THE_SICK_CAMELS_QUEST, 8)), null),
                 new DialogStep(RuneQuestPlugin.getInstance(), theSickCamels, "Bring ingredients back to §6Shamira§f in Zarali", "the-sick-camels.bring-ingredients", null),
                 new DialogStep(RuneQuestPlugin.getInstance(), theSickCamels, "Bring camels cure to §6Rafiq§f in Saharijin", "the-sick-camels.bring-cure", null)
+        )));
+
+
+        Quest promiseInABox = new Quest(QuestId.PROMISE_IN_A_BOX.getId(), "Promise in a box", QuestDifficulty.EASY, false)
+                .setRewards(new QuestReward(null, null, 500));
+
+        registerQuest(promiseInABox.addSteps(List.of(
+                new DialogStep(RuneQuestPlugin.getInstance(), promiseInABox, "Deliver §61x Engagement Ring§f to the §6Fishing Merchant§f in §6Brineport.", "promise-in-a-box.deliver", null)
         )));
 
     }

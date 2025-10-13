@@ -187,6 +187,17 @@ public class ItemRepository {
                         null, false, 1.0),
                         toVersionedJson(new QuestItemMeta(QuestId.THE_SICK_CAMELS.getId(), false), 1)),
 
+                // Promise in a Box
+                new ItemEntity(new AbstractItemMeta(
+                        ItemType.QUEST,
+                        ItemId.PROMISE_IN_A_BOX_ENGAGEMENT_RING.asInt(),
+                        Material.IRON_NUGGET,
+                        ItemRarity.COMMON,
+                        "Engagement ring",
+                        List.of("A potent mixture to cure sick camels.", "Deliver it to the Rafiq."),
+                        null, false, 1.0),
+                        toVersionedJson(new QuestItemMeta(QuestId.PROMISE_IN_A_BOX.getId(), false), 1)),
+
 
                 // Mounts
 

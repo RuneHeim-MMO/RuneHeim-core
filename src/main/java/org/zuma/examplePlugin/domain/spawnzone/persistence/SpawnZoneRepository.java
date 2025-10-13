@@ -805,12 +805,12 @@ public class SpawnZoneRepository {
                 ), 100, false, true), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(105, SpawnZoneType.AREA, 15, 15,
-                        new Location(Bukkit.getWorld("world"), -415, 80, 180)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new Location(Bukkit.getWorld("world"), -415, 65, 180)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.ARMADILLO_NON_AGGRO_BASE_15, 20, 100)
                 ), 80, false, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(106, SpawnZoneType.AREA, 15, 15,
-                        new Location(Bukkit.getWorld("world"), -328, 80, 290)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new Location(Bukkit.getWorld("world"), -328, 67, 290)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.ARMADILLO_NON_AGGRO_BASE_15, 20, 100)
                 ), 80, false, false), 1)),
 
@@ -1724,10 +1724,55 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(250, SpawnZoneType.AREA, 20, 1,
                         new Location(Bukkit.getWorld("world"), 1030, 80, -666)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.CITY_CITIZEN_INFERNAK, 3, 100)
-                ), 40, false, true), 1))
+                ), 40, false, true), 1)),
+
+                // Brineport citizens
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(251, SpawnZoneType.POINT, 20, 1,
+                        new Location(Bukkit.getWorld("world"), -489, 65.5, 180)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 1, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 1, 100)
+                ), false, null, null), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(252, SpawnZoneType.POINT, 20, 1,
+                        new Location(Bukkit.getWorld("world"), -478, 65, 215)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 1, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 1, 100)
+                ), false, null, null), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(253, SpawnZoneType.POINT, 20, 1,
+                        new Location(Bukkit.getWorld("world"), -452, 65.5, 274)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 1, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 1, 100)
+                ), false, null, null), 1)),
+
+                // Murkwatch citizens
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(254, SpawnZoneType.POINT, 20, 1,
+                        new Location(Bukkit.getWorld("world"), -1011, 68, 447)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 2, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 1, 100)
+                ), false, null, null), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(255, SpawnZoneType.POINT, 20, 1,
+                        new Location(Bukkit.getWorld("world"), -969, 68, 409)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 1, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 1, 100)
+                ), false, null, null), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(256, SpawnZoneType.POINT, 20, 1,
+                        new Location(Bukkit.getWorld("world"), -1027, 68, 384)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 1, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 1, 100)
+                ), false, null, null), 1)),
+
+                // Nearby Murkwatch village citizens
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(257, SpawnZoneType.AREA, 20, 1,
+                        new Location(Bukkit.getWorld("world"), -739, 71, 388)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 1, 100),
+                        new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 2, 100)
+                ), 30, false, true), 1))
 
 
-                // last 248
+                // last 256
 
 
         );

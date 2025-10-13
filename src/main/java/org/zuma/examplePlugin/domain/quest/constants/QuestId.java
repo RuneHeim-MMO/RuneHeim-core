@@ -5,7 +5,8 @@ public enum QuestId {
     SHEEP_SHEARER("sheep-shearer"),
     SAHARIJIN_ARENA_INTRO("saharijin-pvp-arena-intro"),
     BLACKSMITHS_RIGHT_HAND_I("blacksmiths-right-hand-i"),
-    THE_SICK_CAMELS("the-sick-camels");
+    THE_SICK_CAMELS("the-sick-camels"),
+    PROMISE_IN_A_BOX("promise-in-a-box");
 
     private final String id;
 
