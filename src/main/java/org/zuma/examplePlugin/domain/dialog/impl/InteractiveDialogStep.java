@@ -55,6 +55,7 @@ public class InteractiveDialogStep extends DialogStep {
             return;
         }
 
+        SoundType.DIALOG_CHOICE_SELECT.play(player, false);
         super.replaceDialogLine(newSlot + textContent.size(), (prevContent) -> "§a" + Icon.ARROW_RIGHT.get() + " §f§n" + prevContent + " §r§a" + Icon.ARROW_LEFT.get());
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
