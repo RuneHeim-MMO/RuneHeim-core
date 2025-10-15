@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.modifier;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.utils.ModifierUtils;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -46,6 +47,7 @@ public class GearModifierHandler {
         }
 
         modifiers.addAll(gearModifiers.getKey());
+        modifiers.addAll(RuneQuestPlugin.getGlobalModifierHandler().getActiveModifiers().stream().map(m -> new Modifier(m.type(), m.amount())).toList());
         skillModifiers.addAll(gearModifiers.getValue());
 
         List<Modifier> combined = ModifierUtils.combineModifiersByType(modifiers);

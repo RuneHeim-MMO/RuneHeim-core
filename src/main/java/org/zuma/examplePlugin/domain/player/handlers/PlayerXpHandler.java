@@ -53,19 +53,22 @@ public class PlayerXpHandler {
     public void addXp(SkillType type, double xp, XpSource source) {
         Skill skill = player.getSkills().get(type);
 
-        if (player.getModifiers().containsKey(ModifierType.XP_BOOST)) {
-            double multiplier = player.getModifiers().get(ModifierType.XP_BOOST).amount();
-            xp = xp + (xp * multiplier);
-        }
+        // Apply modifiers only if not quest XP
+        if (source != XpSource.QUEST) {
+            if (player.getModifiers().containsKey(ModifierType.XP_BOOST)) {
+                double multiplier = player.getModifiers().get(ModifierType.XP_BOOST).amount();
+                xp = xp + (xp * multiplier);
+            }
 
-        if (player.getModifiers().containsKey(ModifierType.COMBAT_XP_BOOST) && Arrays.stream(combatSkills).anyMatch(s -> s == type)) {
-            double multiplier = player.getModifiers().get(ModifierType.COMBAT_XP_BOOST).amount();
-            xp = xp + (xp * multiplier);
-        }
+            if (player.getModifiers().containsKey(ModifierType.COMBAT_XP_BOOST) && Arrays.stream(combatSkills).anyMatch(s -> s == type)) {
+                double multiplier = player.getModifiers().get(ModifierType.COMBAT_XP_BOOST).amount();
+                xp = xp + (xp * multiplier);
+            }
 
-        if (player.getModifiers().containsKey(ModifierType.SKILLING_XP_BOOST) && Arrays.stream(skillingSkills).anyMatch(s -> s == type)) {
-            double multiplier = player.getModifiers().get(ModifierType.SKILLING_XP_BOOST).amount();
-            xp = xp + (xp * multiplier);
+            if (player.getModifiers().containsKey(ModifierType.SKILLING_XP_BOOST) && Arrays.stream(skillingSkills).anyMatch(s -> s == type)) {
+                double multiplier = player.getModifiers().get(ModifierType.SKILLING_XP_BOOST).amount();
+                xp = xp + (xp * multiplier);
+            }
         }
 
         RunePlayerGainedXPEvent event = new RunePlayerGainedXPEvent(player, type, xp, source);
