@@ -1,7 +1,6 @@
 package org.zuma.examplePlugin.domain.modifier.persistence;
 
 import org.zuma.examplePlugin.core.database.HikariPool;
-import org.zuma.examplePlugin.domain.block.persistence.BlockEntity;
 import org.zuma.examplePlugin.domain.modifier.GlobalModifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 

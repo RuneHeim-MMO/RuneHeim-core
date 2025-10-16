@@ -21,26 +21,13 @@ import java.util.Arrays;
 public class PlayerXpHandler {
     private final RunePlayer player;
 
-    private final SkillType[] combatSkills = {
-            SkillType.ATTACK,
-            SkillType.STRENGTH,
-            SkillType.DEFENCE,
-            SkillType.RANGED,
-            //SkillType.MAGIC,
-            SkillType.HITPOINTS
-    };
+    private final java.util.Set<SkillType> combatSkills = java.util.EnumSet.of(
+            SkillType.ATTACK, SkillType.STRENGTH, SkillType.DEFENCE, SkillType.RANGED, SkillType.HITPOINTS);
 
-    private final SkillType[] skillingSkills = {
-            SkillType.WOODCUTTING,
-            SkillType.FISHING,
-            SkillType.COOKING,
-            SkillType.MINING,
-            SkillType.SMITHING,
-            SkillType.FIREMAKING,
-            SkillType.CRAFTING,
-            SkillType.FLETCHING,
-            SkillType.PRAYER,
-    };
+    private final java.util.Set<SkillType> skillingSkills = java.util.EnumSet.of(
+            SkillType.WOODCUTTING, SkillType.FISHING, SkillType.COOKING, SkillType.MINING,
+            SkillType.SMITHING, SkillType.FIREMAKING, SkillType.CRAFTING, SkillType.FLETCHING, SkillType.PRAYER);
+
 
     @Nullable
     private SkillType lastXPGainedSkillType;
@@ -55,20 +42,24 @@ public class PlayerXpHandler {
 
         // Apply modifiers only if not quest XP
         if (source != XpSource.QUEST) {
+            double combined = 1.0;
+
             if (player.getModifiers().containsKey(ModifierType.XP_BOOST)) {
                 double multiplier = player.getModifiers().get(ModifierType.XP_BOOST).amount();
-                xp = xp + (xp * multiplier);
+                combined *= 1.0 + multiplier;
             }
 
-            if (player.getModifiers().containsKey(ModifierType.COMBAT_XP_BOOST) && Arrays.stream(combatSkills).anyMatch(s -> s == type)) {
+            if (player.getModifiers().containsKey(ModifierType.COMBAT_XP_BOOST) && combatSkills.contains(type)) {
                 double multiplier = player.getModifiers().get(ModifierType.COMBAT_XP_BOOST).amount();
-                xp = xp + (xp * multiplier);
+                combined *= 1.0 + multiplier;
             }
 
-            if (player.getModifiers().containsKey(ModifierType.SKILLING_XP_BOOST) && Arrays.stream(skillingSkills).anyMatch(s -> s == type)) {
+            if (player.getModifiers().containsKey(ModifierType.SKILLING_XP_BOOST) && skillingSkills.contains(type)) {
                 double multiplier = player.getModifiers().get(ModifierType.SKILLING_XP_BOOST).amount();
-                xp = xp + (xp * multiplier);
+                combined *= 1.0 + multiplier;
             }
+
+            xp *= combined;
         }
 
         RunePlayerGainedXPEvent event = new RunePlayerGainedXPEvent(player, type, xp, source);
