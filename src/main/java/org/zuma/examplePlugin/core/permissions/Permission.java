@@ -12,6 +12,9 @@ public enum Permission {
     INTERACTABLE_SPAWN(null),
     DEBUG_COMMAND(null),
 
+    CHAT_PROXIMITY_BYPASS(List.of("runeheim.chat", "runeheim.chat.proximity", "runeheim.chat.proximity.server", "runeheim.chat.proximity.network")),
+    CHAT_PROFANITY_BYPASS(List.of("runeheim.chat.profanity")),
+
     STAFF_MOVEMENT(List.of(
             "essentials.fly", "essentials.back", "essentials.back.ondeath",
             "essentials.back.onteleport", "essentials.vanish",
@@ -28,7 +31,7 @@ public enum Permission {
     STAFF_MODERATION(List.of(
             "essentials.invsee", "essentials.invsee.equip", "essentials.joinfullserver",
             "essentials.kick", "essentials.socialspy", "essentials.time", "essentials.time.set",
-            "essentials.kick.notify", "essentials.ban.notify","essentials.list")),
+            "essentials.kick.notify", "essentials.ban.notify", "essentials.list")),
 
     PLAYER_DEFAULTS(List.of(
             "essentials.msg", "essentials.silentjoin", "essentials.silentquit"));

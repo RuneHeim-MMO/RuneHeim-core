@@ -75,6 +75,8 @@ public class RunePlayerListener implements Listener {
         event.getBukkitPlayer().sendMessage(Component.text(TextUtils.repeatString("-", 53)).color(Color.SUCCESS.asColor()).decorate(TextDecoration.STRIKETHROUGH));
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+            if (RuneQuestPlugin.getGlobalModifierHandler().getActiveModifiers().isEmpty()) return;
+
             if (event.getPlayer() != null && event.getPlayer().asBukkitPlayer().isOnline()) {
                 RuneQuestPlugin.getPlayerManager().getOnlinePlayers().forEach(p -> HudService.globalModifiersActivated(p, RuneQuestPlugin.getGlobalModifierHandler().getActiveModifiers().stream().toList()));
                 SoundType.GLOBAL_EFFECT_ACTIVATED.play(event.getPlayer(), true);

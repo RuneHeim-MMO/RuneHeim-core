@@ -59,8 +59,7 @@ public class InteractionDisabler implements Listener {
 
             // PLAYER_DEFAULTS
             "/msg",
-            "/silentjoin",
-            "/silentquit"
+            "/chat"
     };
 
     public void disableTourViewPermission() {

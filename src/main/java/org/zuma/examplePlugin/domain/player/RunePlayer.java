@@ -98,7 +98,10 @@ public class RunePlayer implements CombatEntity {
 
         this.permissionAttachment = asBukkitPlayer().addAttachment(RuneQuestPlugin.getInstance());
         HudService.updateVanillaGUI(this);
-        role.reloadPermissions(this);
+
+        Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+            role.reloadPermissions(this);
+        });
     }
 
     public UUID getUUID() {

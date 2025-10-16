@@ -9,7 +9,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import java.util.*;
 
 public enum PlayerRole {
-    ADMIN(0, true, List.of(Permission.WORLD_MANIPULATION, Permission.ITEM_WATCHDOG_BYPASS, Permission.INTERACTABLE_SPAWN, Permission.DEBUG_COMMAND, Permission.STAFF_ITEM_SPAWN, Permission.BLOCKED_CMD_BYPASS)),
+    ADMIN(0, true, List.of(Permission.WORLD_MANIPULATION, Permission.ITEM_WATCHDOG_BYPASS, Permission.INTERACTABLE_SPAWN, Permission.DEBUG_COMMAND, Permission.STAFF_ITEM_SPAWN, Permission.BLOCKED_CMD_BYPASS, Permission.CHAT_PROXIMITY_BYPASS, Permission.CHAT_PROFANITY_BYPASS)),
     MODERATOR(1, false, List.of(Permission.STAFF_MODERATION, Permission.STAFF_MESSAGING)),
     PLAYER(1000, false, List.of(Permission.PLAYER_DEFAULTS));
 
