@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.player;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -15,10 +16,10 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.core.interfaces.CombatEntity;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
-import org.zuma.examplePlugin.domain.territory.Territory;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.events.player.RunePlayerLoadedEvent;
 
 public class RunePlayerListener implements Listener {
@@ -72,6 +73,15 @@ public class RunePlayerListener implements Listener {
         event.getBukkitPlayer().sendMessage(Component.text(TextUtils.centerText("Players data successfully loaded!", 70)).color(Color.SUCCESS.asColor()));
         event.getBukkitPlayer().sendMessage(Component.empty());
         event.getBukkitPlayer().sendMessage(Component.text(TextUtils.repeatString("-", 53)).color(Color.SUCCESS.asColor()).decorate(TextDecoration.STRIKETHROUGH));
+
+        Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+            if (RuneQuestPlugin.getGlobalModifierHandler().getActiveModifiers().isEmpty()) return;
+
+            if (event.getPlayer() != null && event.getPlayer().asBukkitPlayer().isOnline()) {
+                RuneQuestPlugin.getPlayerManager().getOnlinePlayers().forEach(p -> HudService.globalModifiersActivated(p, RuneQuestPlugin.getGlobalModifierHandler().getActiveModifiers().stream().toList()));
+                SoundType.GLOBAL_EFFECT_ACTIVATED.play(event.getPlayer(), true);
+            }
+        }, 20L);
     }
 
     @EventHandler

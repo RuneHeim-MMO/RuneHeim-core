@@ -10,6 +10,9 @@ import org.bukkit.event.player.PlayerAttemptPickupItemEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.permissions.Permission;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class InteractionSpeedHandler implements Listener {
     private static final long INTERACTION_THROTTLE_INTERVAL = 150L;
@@ -29,7 +32,9 @@ public class InteractionSpeedHandler implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.getPlayer().isOp()) {
+        RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(event.getPlayer());
+
+        if (player != null && player.getRole().hasPermission(Permission.COOLDOWN_BYPASS)) {
             return;
         }
 
@@ -65,7 +70,9 @@ public class InteractionSpeedHandler implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerBlockInteract(PlayerInteractEvent event) {
-        if (event.getPlayer().isOp()) {
+        RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(event.getPlayer());
+
+        if (player != null && player.getRole().hasPermission(Permission.COOLDOWN_BYPASS)) {
             return;
         }
 

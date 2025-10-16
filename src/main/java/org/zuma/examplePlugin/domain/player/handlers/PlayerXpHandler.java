@@ -8,6 +8,7 @@ import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.LevelUpEffect;
+import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -15,9 +16,18 @@ import org.zuma.examplePlugin.events.player.RunePlayerGainedXPEvent;
 import org.zuma.examplePlugin.events.player.RunePlayerLevelUpEvent;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 
 public class PlayerXpHandler {
     private final RunePlayer player;
+
+    private final java.util.Set<SkillType> combatSkills = java.util.EnumSet.of(
+            SkillType.ATTACK, SkillType.STRENGTH, SkillType.DEFENCE, SkillType.RANGED, SkillType.HITPOINTS);
+
+    private final java.util.Set<SkillType> skillingSkills = java.util.EnumSet.of(
+            SkillType.WOODCUTTING, SkillType.FISHING, SkillType.COOKING, SkillType.MINING,
+            SkillType.SMITHING, SkillType.FIREMAKING, SkillType.CRAFTING, SkillType.FLETCHING, SkillType.PRAYER);
+
 
     @Nullable
     private SkillType lastXPGainedSkillType;
@@ -29,6 +39,28 @@ public class PlayerXpHandler {
 
     public void addXp(SkillType type, double xp, XpSource source) {
         Skill skill = player.getSkills().get(type);
+
+        // Apply modifiers only if not quest XP
+        if (source != XpSource.QUEST) {
+            double combined = 1.0;
+
+            if (player.getModifiers().containsKey(ModifierType.XP_BOOST)) {
+                double multiplier = player.getModifiers().get(ModifierType.XP_BOOST).amount();
+                combined *= 1.0 + multiplier;
+            }
+
+            if (player.getModifiers().containsKey(ModifierType.COMBAT_XP_BOOST) && combatSkills.contains(type)) {
+                double multiplier = player.getModifiers().get(ModifierType.COMBAT_XP_BOOST).amount();
+                combined *= 1.0 + multiplier;
+            }
+
+            if (player.getModifiers().containsKey(ModifierType.SKILLING_XP_BOOST) && skillingSkills.contains(type)) {
+                double multiplier = player.getModifiers().get(ModifierType.SKILLING_XP_BOOST).amount();
+                combined *= 1.0 + multiplier;
+            }
+
+            xp *= combined;
+        }
 
         RunePlayerGainedXPEvent event = new RunePlayerGainedXPEvent(player, type, xp, source);
         Bukkit.getServer().getPluginManager().callEvent(event);

@@ -26,6 +26,7 @@ import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.impl.FusionMaster;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.FusionThunderEffect;
+import org.zuma.examplePlugin.domain.modifier.GlobalModifier;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.Quest;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
@@ -38,6 +39,19 @@ import java.util.UUID;
 
 public class HudService {
     private static final Random random = new Random();
+
+
+    public static void globalModifiersActivated(RunePlayer player, List<GlobalModifier> activeModifiers) {
+        if (activeModifiers.isEmpty()) return;
+        Component body = Component.text(String.join("\n", activeModifiers.stream().map(m -> "§f" + Icon.UPGRADE.get() + " §e" + m.label() + " is active for " + DateUtils.getTimeDifference(m.activeUntilMillis())).toList()) + "!");
+        player.asBukkitPlayer().sendMessage(body);
+    }
+
+    public static void globalModifiersExpired(RunePlayer player, List<GlobalModifier> activeModifiers) {
+        if (activeModifiers.isEmpty()) return;
+        Component body = Component.text(String.join("\n", activeModifiers.stream().map(m -> "§f" + Icon.DOWNGRADE.get() + " §7" + m.label() + " has expired!").toList()));
+        player.asBukkitPlayer().sendMessage(body);
+    }
 
     public static void sendQuestRewards(RunePlayer player, Quest quest) {
         Map<SkillType, Double> xpRewards = quest.getReward().getXpRewards();

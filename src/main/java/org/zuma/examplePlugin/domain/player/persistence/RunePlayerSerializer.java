@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.zuma.examplePlugin.core.adapters.LocationAdapter;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
+import org.zuma.examplePlugin.core.permissions.PlayerRole;
 import org.zuma.examplePlugin.domain.gui.ItemStackSlotPair;
 import org.zuma.examplePlugin.domain.gui.serializer.ItemContainerContentSerializer;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -47,7 +48,7 @@ public class RunePlayerSerializer {
         String serializedPlayerData = gson.toJson(versionedPlayerData);
         String serializedLocation = gson.toJson(runePlayer.getSafeLocation() != null ? runePlayer.getSafeLocation() : player.getLocation());
         String inventoryData = ItemContainerContentSerializer.serializeItemSlotPairsSync(getPlayerInventoryContent(player), clearStateCache);
-        return new SerializedPlayerContainer(runePlayer.getUUID(), player.getName(), serializedLocation, serializedPlayerData, inventoryData);
+        return new SerializedPlayerContainer(runePlayer.getUUID(), player.getName(), runePlayer.getRole().toString(), serializedLocation, serializedPlayerData, inventoryData);
     }
 
     public static AbstractMap.SimpleEntry<RunePlayer, DeserializedPlayerEntity> deserializePlayerSync(SerializedPlayerContainer container) {
@@ -68,6 +69,7 @@ public class RunePlayerSerializer {
                 player.setPrayerEnergy(playerDataDeserializedJsonContainer.prayerEnergy());
                 player.setCompletedQuestIds(playerDataDeserializedJsonContainer.completedQuestIds());
                 player.setActiveEffects(playerDataDeserializedJsonContainer.effects());
+                player.setRole(PlayerRole.valueOf(container.role()));
 
                 List<ItemStackSlotPair> inventory = ItemContainerContentSerializer.deserializeItemContainerContentSync(inventoryData);
                 Location location = gson.fromJson(container.location(), Location.class);

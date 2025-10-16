@@ -50,7 +50,7 @@ public class QuestReward {
         }
 
         if (xpRewards != null) {
-            xpRewards.forEach((type, xp) -> player.addXp(type, xp, XpSource.PERSONAL));
+            xpRewards.forEach((type, xp) -> player.addXp(type, xp, XpSource.QUEST));
         }
 
         if (coins != null) {

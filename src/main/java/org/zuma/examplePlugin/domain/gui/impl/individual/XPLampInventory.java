@@ -16,6 +16,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
@@ -175,7 +176,7 @@ public class XPLampInventory extends IndividualGUI {
         }
 
         PlayerUtils.subtractOneFromMainHand(player);
-        player.distributeXp(selectedSkill, inHandLamp.getXpReward());
+        player.addXp(selectedSkill, inHandLamp.getXpReward(), XpSource.PERSONAL);
         player.asBukkitPlayer().closeInventory();
         SoundType.XP_LAMP_SKILL_SELECT.play(player, true);
     }

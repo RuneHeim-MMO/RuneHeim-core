@@ -16,6 +16,8 @@ public enum Icon {
     MYTHIC("⛧"),
     DIVINE("⟴"),
 
+    UPGRADE("⏭"),
+    DOWNGRADE("ↇ"),
     ARROW_LEFT("⬓"),
     ARROW_RIGHT("⤊"),
     LEATHER("ⱦ"),

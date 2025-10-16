@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.core.handlers.game;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
@@ -13,17 +14,53 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerShearEntityEvent;
-import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
+
+import java.util.Locale;
 
 public class InteractionDisabler implements Listener {
+    private static final String[] WHITELISTED_COMMANDS = {
+            "/mount", "/pouch", "/skills",
+
+            // STAFF_MOVEMENT
+            "/fly",
+            "/back",
+            "/vanish",
+            "/speed",
+            "/tp",
+            "/tpall",
+            "/tphere",
+            "/tppos",
+            "/warp",
+
+            // STAFF_MESSAGING
+            "/broadcast",
+
+            // STAFF_ITEM_SPAWN
+            "/gamemode",
+            "/clear",
+            "/invsee",
+
+            // STAFF_MODERATION
+            "/joinfullserver",
+            "/kick",
+            "/socialspy",
+            "/time",
+            "/list",
+            "/ban",
+
+            // PLAYER_DEFAULTS
+            "/msg",
+            "/chat"
+    };
 
     public void disableTourViewPermission() {
         if (RuneQuestPlugin.getInstance().getServer().getPluginManager().getPermission("servertours.commands.play") == null) {
@@ -54,7 +91,9 @@ public class InteractionDisabler implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.getPlayer().isOp() && event.getPlayer().getGameMode() == GameMode.CREATIVE) {
+        RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(event.getPlayer());
+
+        if (player != null && player.getRole().hasPermission(org.zuma.examplePlugin.core.permissions.Permission.WORLD_MANIPULATION) && event.getPlayer().getGameMode() == GameMode.CREATIVE) {
             return;
         }
 
@@ -104,6 +143,39 @@ public class InteractionDisabler implements Listener {
         if (!(event.getEntity() instanceof Player)) {
             event.setCancelled(true);
         }
+    }
+
+    @EventHandler
+    public void onCommand(PlayerCommandPreprocessEvent event) {
+        RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(event.getPlayer());
+
+        if(player == null){
+            event.setCancelled(true);
+            return;
+        }
+
+        if (player.getRole().hasPermission(org.zuma.examplePlugin.core.permissions.Permission.BLOCKED_CMD_BYPASS)) {
+            return;
+        }
+
+        String msg = event.getMessage();
+        String cmd = msg.split("\\s+")[0].toLowerCase(Locale.ROOT);
+
+        boolean found = false;
+        for (String enabled : WHITELISTED_COMMANDS) {
+            if (cmd.equalsIgnoreCase(enabled)) {
+                found = true;
+                break;
+            }
+
+        }
+
+        if (!found) {
+            event.setCancelled(true);
+            player.asBukkitPlayer().sendMessage(Component.text("You do not have access to that command.", Color.ERROR.asColor()));
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Blocked command attempt: " + event.getPlayer().getName() + " tried to use command: " + cmd);
+        }
+
     }
 
 }

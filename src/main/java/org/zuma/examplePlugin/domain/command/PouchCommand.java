@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.permissions.Permission;
 import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
@@ -48,7 +49,7 @@ public class PouchCommand implements BasicCommand {
         if (args.length == 2 && args[0].equalsIgnoreCase("drop") && TypeUtils.isInteger(args[1])) {
 
             Long dropTime = dropTimes.get(runePlayer.getUUID());
-            if (dropTime != null && System.currentTimeMillis() - dropTime <= DROP_COOLDOWN_SECONDS * 1000L && !bukkitPlayer.isOp()) {
+            if (dropTime != null && System.currentTimeMillis() - dropTime <= DROP_COOLDOWN_SECONDS * 1000L && !runePlayer.getRole().hasPermission(Permission.COOLDOWN_BYPASS)) {
                 HudService.showFailTitle(runePlayer, "Whoa there, slow down, cowboy. Try that again in a second.");
                 return;
             }

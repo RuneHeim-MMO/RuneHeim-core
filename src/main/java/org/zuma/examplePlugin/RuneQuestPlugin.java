@@ -23,6 +23,7 @@ import org.zuma.examplePlugin.domain.item.*;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.mob.*;
 import org.zuma.examplePlugin.domain.modifier.GearModifierHandler;
+import org.zuma.examplePlugin.domain.modifier.GlobalModifierHandler;
 import org.zuma.examplePlugin.domain.mount.MountHandler;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.quest.QuestHandler;
@@ -74,7 +75,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new CommandModule(),
                         new MountModule(),
                         new TourModule(),
-                        new AmbienceModule()
+                        new AmbienceModule(),
+                        new GlobalModifierModule()
                 ), moduleContext);
     }
 
@@ -193,8 +195,11 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
         return pluginInstance.moduleContext.get(TourHandler.class);
     }
 
-
     public static GearModifierHandler getGearModifierHandler() {
         return pluginInstance.moduleContext.get(GearModifierHandler.class);
+    }
+
+    public static GlobalModifierHandler getGlobalModifierHandler() {
+        return pluginInstance.moduleContext.get(GlobalModifierHandler.class);
     }
 }
