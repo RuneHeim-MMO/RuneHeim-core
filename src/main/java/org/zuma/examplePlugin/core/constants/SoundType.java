@@ -30,6 +30,9 @@ public enum SoundType {
     POTION_EFFECT_START("BLOCK_CHISELED_BOOKSHELF_PICKUP", false, 1.0f, 1.0f),
     POTION_EFFECT_EXPIRY("ENTITY_WITCH_THROW", false, 1.0f, 1.0f),
 
+    GLOBAL_EFFECT_ACTIVATED("BLOCK_CONDUIT_ACTIVATE", false, 1.0f, 1.0f),
+    GLOBAL_EFFECT_EXPIRED("BLOCK_CONDUIT_ACTIVATE", false, 1.0f, 1.0f),
+
     TRAVEL_CARRIAGE_STEP("BLOCK_WOOD_STEP", false, 1.0f, 1.0f),
     TRAVEL_CARRIAGE_LOOP("ENTITY_HORSE_GALLOP", false, 0.4f, 1.0f),
     TRAVEL_CARRIAGE_END("ENTITY_HORSE_AMBIENT", false, 0.8f, 1.0f),
@@ -544,4 +547,4 @@ public enum SoundType {
             }
         }
     }
-    }
+}

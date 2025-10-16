@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.modifier;
 
 import org.bukkit.Bukkit;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.modifier.persistence.GlobalModifierRepository;
@@ -71,11 +72,21 @@ public class GlobalModifierHandler {
         }
 
         if (!expiredModifiers.isEmpty()) {
-            RuneQuestPlugin.getPlayerManager().getOnlinePlayers().forEach(p -> HudService.globalModifiersExpired(p, expiredModifiers));
+            Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+                RuneQuestPlugin.getPlayerManager().getOnlinePlayers().forEach(p -> {
+                    HudService.globalModifiersExpired(p, expiredModifiers);
+                    SoundType.GLOBAL_EFFECT_EXPIRED.play(p, true);
+                });
+            });
         }
 
         if (!newModifiers.isEmpty()) {
-            RuneQuestPlugin.getPlayerManager().getOnlinePlayers().forEach(p -> HudService.globalModifiersActivated(p, newModifiers));
+            Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+                RuneQuestPlugin.getPlayerManager().getOnlinePlayers().forEach(p -> {
+                    HudService.globalModifiersActivated(p, newModifiers);
+                    SoundType.GLOBAL_EFFECT_ACTIVATED.play(p, true);
+                });
+            });
         }
 
     }

@@ -16,6 +16,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
@@ -76,6 +77,7 @@ public class RunePlayerListener implements Listener {
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
             if (event.getPlayer() != null && event.getPlayer().asBukkitPlayer().isOnline()) {
                 RuneQuestPlugin.getPlayerManager().getOnlinePlayers().forEach(p -> HudService.globalModifiersActivated(p, RuneQuestPlugin.getGlobalModifierHandler().getActiveModifiers().stream().toList()));
+                SoundType.GLOBAL_EFFECT_ACTIVATED.play(event.getPlayer(), true);
             }
         }, 20L);
     }

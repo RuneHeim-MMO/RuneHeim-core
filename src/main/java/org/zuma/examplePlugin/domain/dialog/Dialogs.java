@@ -48,10 +48,8 @@ public class Dialogs {
 
 
     public static final Supplier<DialogBuilder> auctioneerDialog = () -> DialogBuilder.create("auctioneer-dialog")
-            .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()))
-            .interactiveStep(c -> c.text("Open auction?")
-                    .option("§aYes" + " §f" + Icon.TRADE.get(), b -> b.action("dialog_holder_forward_interaction"))
-                    .option("§cNo", n -> n.followupSteps(d -> d.passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList())))));
+            .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()).text("Sorry, the Auction is not available yet."));
+
 
 
 }
