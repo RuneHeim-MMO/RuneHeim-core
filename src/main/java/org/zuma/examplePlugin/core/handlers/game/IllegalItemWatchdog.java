@@ -1,7 +1,6 @@
 package org.zuma.examplePlugin.core.handlers.game;
 
 import net.kyori.adventure.text.Component;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -16,8 +15,10 @@ import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.permissions.Permission;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 import org.zuma.examplePlugin.domain.player.inventory.ReservedSlot;
 
@@ -62,8 +63,10 @@ public class IllegalItemWatchdog implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerPickupItem(EntityPickupItemEvent event) {
         if (!(event.getEntity() instanceof Player player)) return;
+        RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
 
-        if (player.getGameMode() == GameMode.CREATIVE || player.isOp()) {
+
+        if (runePlayer != null && runePlayer.getRole().hasPermission(Permission.ITEM_WATCHDOG_BYPASS)) {
             return;
         }
 
@@ -80,8 +83,9 @@ public class IllegalItemWatchdog implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onInventoryClose(InventoryCloseEvent event) {
         if (!(event.getPlayer() instanceof Player player)) return;
+        RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
 
-        if (player.getGameMode() == GameMode.CREATIVE || player.isOp()) {
+        if (runePlayer != null && runePlayer.getRole().hasPermission(Permission.ITEM_WATCHDOG_BYPASS)) {
             return;
         }
 

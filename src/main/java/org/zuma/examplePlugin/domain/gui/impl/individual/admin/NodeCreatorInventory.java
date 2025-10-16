@@ -17,6 +17,7 @@ import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
+import org.zuma.examplePlugin.core.permissions.Permission;
 import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
@@ -58,7 +59,7 @@ public class NodeCreatorInventory extends IndividualGUI {
 
     @Override
     public boolean attemptOpenInventory(RunePlayer player, Runnable onFail) {
-        if (!player.asBukkitPlayer().isOp()) {
+        if (!player.getRole().hasPermission(Permission.INTERACTABLE_SPAWN)) {
             return false;
         }
 

@@ -8,10 +8,13 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.permissions.PlayerRole;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
@@ -42,10 +45,14 @@ import java.util.stream.Collectors;
 
 public class RunePlayer implements CombatEntity {
     private final UUID uuid;
+
+    private PlayerRole role;
+    private PermissionAttachment permissionAttachment;
+
     private final PlayerCombatData combatData;
     private @Nullable Party party;
-    private final PendingXPHandler pendingXPHandler;
 
+    private final PendingXPHandler pendingXPHandler;
     private final EnumMap<ModifierType, Modifier> modifiers;
     private final EnumMap<SkillType, SkillModifier> skillModifiers;
     private List<TemporaryEffect> activeEffects; // Potions, etc
@@ -68,6 +75,8 @@ public class RunePlayer implements CombatEntity {
 
     public RunePlayer(UUID uuid, EnumMap<SkillType, Skill> skills) {
         this.uuid = uuid;
+        this.role = PlayerRole.PLAYER;
+
         this.skills = skills;
         this.combatData = new PlayerCombatData(this, skills.get(SkillType.HITPOINTS).getBaseLevel(), Math.min(3, XpUtils.getCombatLevelFromSkills(skills)), 1, 1);
 
@@ -87,7 +96,9 @@ public class RunePlayer implements CombatEntity {
         this.isDead = false;
         this.activeEffects = new ArrayList<>();
 
+        this.permissionAttachment = asBukkitPlayer().addAttachment(RuneQuestPlugin.getInstance());
         HudService.updateVanillaGUI(this);
+        role.reloadPermissions(this);
     }
 
     public UUID getUUID() {
@@ -125,8 +136,6 @@ public class RunePlayer implements CombatEntity {
 
             matchingSkill.setBonus(skillModifier.amount());
         });
-
-        // System.out.println("Recalculated skill modifiers " + newModifiers);
     }
 
     public EnumMap<ModifierType, Modifier> getModifiers() {
@@ -402,5 +411,22 @@ public class RunePlayer implements CombatEntity {
 
     public void addActiveEffect(TemporaryEffect effect) {
         this.activeEffects.add(effect);
+    }
+
+    public PlayerRole getRole() {
+        return role;
+    }
+
+    public void setRole(PlayerRole role) {
+        this.role = role;
+        role.reloadPermissions(this);
+    }
+
+    public PermissionAttachment getPermissionAttachment() {
+        return permissionAttachment;
+    }
+
+    public void setPermissionAttachment(PermissionAttachment permissionAttachment) {
+        this.permissionAttachment = permissionAttachment;
     }
 }

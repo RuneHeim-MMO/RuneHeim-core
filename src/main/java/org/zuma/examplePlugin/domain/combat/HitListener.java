@@ -87,11 +87,8 @@ public class HitListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityAttackEntityMelee(EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Player player && player.isOp() && player.getGameMode() == GameMode.CREATIVE)) {
-            event.setDamage(0);
-        }
-
         Entity defenderEntity = event.getEntity();
+        event.setDamage(0);
 
         if (defenderEntity instanceof AbstractHorse horse && !horse.getPassengers().isEmpty()) {
             defenderEntity = horse.getPassengers().getFirst();
@@ -132,11 +129,8 @@ public class HitListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityAttackEntityProjectile(EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Player player && player.isOp() && player.getGameMode() == GameMode.CREATIVE)) {
-            event.setDamage(0);
-        }
-
         Entity defenderEntity = event.getEntity();
+        event.setDamage(0);
 
         if (defenderEntity instanceof AbstractHorse horse && !horse.getPassengers().isEmpty()) {
             defenderEntity = horse.getPassengers().getFirst();

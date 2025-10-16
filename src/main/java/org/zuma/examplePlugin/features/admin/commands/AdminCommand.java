@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
+import org.zuma.examplePlugin.core.permissions.Permission;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.block.BlockManager;
@@ -92,15 +93,10 @@ public class AdminCommand implements BasicCommand {
             return;
         }
 
-        if (!player.isOp()) {
-            sender.sendMessage(Component.text("Invalid command.").color(Color.ERROR.asColor()));
-            return;
-        }
-
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
 
-        if (runePlayer == null) {
-            sender.sendMessage(Component.text("Could not find RunePlayer instance!").color(Color.ERROR.asColor()));
+        if (runePlayer == null || !runePlayer.getRole().hasPermission(Permission.DEBUG_COMMAND)) {
+            sender.sendMessage(Component.text("Invalid command.").color(Color.ERROR.asColor()));
             return;
         }
 
@@ -134,8 +130,8 @@ public class AdminCommand implements BasicCommand {
 
         }
 
-        if (args[0].equalsIgnoreCase("scene")) {
-            RuneQuestPlugin.getTourHandler().startTour(runePlayer, Tour.WELCOME_TOUR.getRouteName(), null);
+        if (args[0].equalsIgnoreCase("perms")) {
+            player.sendMessage(runePlayer.getRole().getFormattedAllPermissionComponent());
         }
 
 

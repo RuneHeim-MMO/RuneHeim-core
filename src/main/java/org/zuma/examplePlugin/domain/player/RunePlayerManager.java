@@ -4,12 +4,11 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.permissions.PlayerRole;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.core.exception.PlayerDataLoadException;
-import org.zuma.examplePlugin.domain.player.handlers.FlyingHandler;
-import org.zuma.examplePlugin.domain.player.handlers.TemporaryEffectHandler;
 import org.zuma.examplePlugin.domain.player.persistence.DeserializedPlayerEntity;
 import org.zuma.examplePlugin.domain.player.persistence.RunePlayerRepository;
 import org.zuma.examplePlugin.domain.player.persistence.RunePlayerSerializer;
@@ -177,19 +176,27 @@ public class RunePlayerManager {
 
     private void finalizePlayerLoad(Player player, AbstractMap.SimpleEntry<RunePlayer, DeserializedPlayerEntity> data) {
         UUID uuid = player.getUniqueId();
+        RunePlayer runePlayer = data.getKey();
+        DeserializedPlayerEntity playerData = data.getValue();
+
         if (!player.isOnline()) {
             cleanup(uuid);
             return;
         }
-        players.put(uuid, data.getKey());
-        RunePlayerSerializer.setPlayerInventoryContent(player, data.getValue().inventory());
-        player.teleport(data.getValue().location());
+        players.put(uuid, runePlayer);
+        RunePlayerSerializer.setPlayerInventoryContent(player, playerData.inventory());
+        player.teleport(playerData.location());
         loadingStateHandler.setPlayerLoaded(player);
-        data.getKey().setSurvivalMode();
-        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.getName() + " (" + data.getKey().getCombatLvl() + "cmb) loaded successfully.");
-        RuneQuestPlugin.getGearModifierHandler().recalculatePlayerModifiers(data.getKey(), player.getInventory().getItemInMainHand());
+        runePlayer.setSurvivalMode();
 
-        Bukkit.getServer().getPluginManager().callEvent(new RunePlayerLoadedEvent(data.getKey(), data.getValue().isFirstJoin()));
+
+       // TODO: save to DB!!! runePlayer.setRole(PlayerRole.ADMIN);
+
+
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.getName() + " (" + runePlayer.getCombatLvl() + "cmb) loaded successfully.");
+        RuneQuestPlugin.getGearModifierHandler().recalculatePlayerModifiers(runePlayer, player.getInventory().getItemInMainHand());
+
+        Bukkit.getServer().getPluginManager().callEvent(new RunePlayerLoadedEvent(runePlayer, playerData.isFirstJoin()));
         cleanup(uuid);
     }
 
