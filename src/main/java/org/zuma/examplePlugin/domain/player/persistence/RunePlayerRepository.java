@@ -20,7 +20,7 @@ public class RunePlayerRepository {
     }
 
     public SerializedPlayerContainer getPlayerByUUID(UUID uuid) throws AccountNotFoundException, IllegalAccessException {
-        String sql = "SELECT p.uuid, p.last_username, p.online, p.location, p.json, pic.json AS inventory_json " +
+        String sql = "SELECT p.uuid, p.last_username, p.role, p.online, p.location, p.json, pic.json AS inventory_json " +
                 "FROM players p " +
                 "INNER JOIN player_inventory_contents pic ON p.uuid = pic.uuid " +
                 "WHERE p.uuid = ?";
@@ -37,6 +37,7 @@ public class RunePlayerRepository {
 
                 String json = rs.getString("json");
                 String lastUsername = rs.getString("last_username");
+                String role = rs.getString("role");
                 String inventoryData = rs.getString("inventory_json");
                 String location = rs.getString("location");
                 boolean isOnline = rs.getBoolean("online");
@@ -45,7 +46,7 @@ public class RunePlayerRepository {
                     throw new IllegalAccessException("Player is already online.");
                 }
 
-                return new SerializedPlayerContainer(uuid, lastUsername, location, json, inventoryData == null ? "{}" : inventoryData);
+                return new SerializedPlayerContainer(uuid, lastUsername, role, location, json, inventoryData == null ? "{}" : inventoryData);
             }
 
         } catch (IllegalAccessException | AccountNotFoundException e) {
@@ -57,10 +58,11 @@ public class RunePlayerRepository {
 
     public void upsertPlayer(SerializedPlayerContainer container) {
         String playerSql = """
-                INSERT INTO players (uuid, last_username, online, location, json, updated_at)
-                VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+                INSERT INTO players (uuid, last_username, role, online, location, json, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
                 ON DUPLICATE KEY UPDATE
                     last_username = VALUES(last_username),
+                    role = VALUES(role),
                     online = VALUES(online),
                     location = VALUES(location),
                     json = VALUES(json),
@@ -86,9 +88,10 @@ public class RunePlayerRepository {
                 // Upsert player
                 playerStmt.setString(1, container.uuid().toString());
                 playerStmt.setString(2, container.username());
-                playerStmt.setBoolean(3, false);
-                playerStmt.setString(4, container.location());
-                playerStmt.setString(5, container.playerData());
+                playerStmt.setString(3, container.role());
+                playerStmt.setBoolean(4, false);
+                playerStmt.setString(5, container.location());
+                playerStmt.setString(6, container.playerData());
                 playerStmt.executeUpdate();
 
                 // Upsert inventory

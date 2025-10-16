@@ -189,11 +189,7 @@ public class RunePlayerManager {
         loadingStateHandler.setPlayerLoaded(player);
         runePlayer.setSurvivalMode();
 
-
-       // TODO: save to DB!!! runePlayer.setRole(PlayerRole.ADMIN);
-
-
-        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.getName() + " (" + runePlayer.getCombatLvl() + "cmb) loaded successfully.");
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.getName() + " (" + runePlayer.getCombatLvl() + "cmb) loaded successfully [" + runePlayer.getRole().toString() + "].");
         RuneQuestPlugin.getGearModifierHandler().recalculatePlayerModifiers(runePlayer, player.getInventory().getItemInMainHand());
 
         Bukkit.getServer().getPluginManager().callEvent(new RunePlayerLoadedEvent(runePlayer, playerData.isFirstJoin()));
