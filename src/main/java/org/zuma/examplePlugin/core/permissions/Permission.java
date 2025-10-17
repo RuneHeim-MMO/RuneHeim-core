@@ -14,6 +14,7 @@ public enum Permission {
 
     CHAT_PROXIMITY_BYPASS(List.of("runeheim.chat", "runeheim.chat.proximity", "runeheim.chat.proximity.server", "runeheim.chat.proximity.network")),
     CHAT_PROFANITY_BYPASS(List.of("runeheim.chat.profanity")),
+    CHAT_COOLDOWN_BYPASS(List.of("runeheim.chat.cooldown")),
 
     STAFF_MOVEMENT(List.of(
             "essentials.fly", "essentials.back", "essentials.back.ondeath",
@@ -34,7 +35,7 @@ public enum Permission {
             "essentials.kick.notify", "essentials.ban.notify", "essentials.list")),
 
     PLAYER_DEFAULTS(List.of(
-            "essentials.msg", "essentials.silentjoin", "essentials.silentquit"));
+            "essentials.silentjoin", "essentials.silentquit", "runeheim.msg"));
 
 
     private final List<String> nodes;
