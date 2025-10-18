@@ -12,7 +12,6 @@ public enum Permission {
     INTERACTABLE_SPAWN(null),
     DEBUG_COMMAND(null),
 
-    CHAT_PROXIMITY_BYPASS(List.of("runeheim.chat", "runeheim.chat.proximity", "runeheim.chat.proximity.server", "runeheim.chat.proximity.network")),
     CHAT_SPY(List.of("runeheim.chat", "runeheim.chat.spy", "runeheim.chat.spy.server", "runeheim.chat.spy.network")),
     CHAT_PROFANITY_BYPASS(List.of("runeheim.chat.profanity")),
     CHAT_COOLDOWN_BYPASS(List.of("runeheim.chat.cooldown")),
@@ -24,7 +23,7 @@ public enum Permission {
             "essentials.tp.position", "essentials.tpall", "essentials.tphere",
             "essentials.tppos", "essentials.warp", "essentials.warp.list")),
 
-    STAFF_MESSAGING(List.of("essentials.broadcast")),
+    STAFF_MESSAGING(List.of("runeheim.chat", "runeheim.chat.proximity", "runeheim.chat.proximity.server", "runeheim.chat.proximity.network")),
 
     STAFF_ITEM_SPAWN(List.of(
             "essentials.gamemode", "essentials.gamemode.all", "essentials.clearinventory",
@@ -32,8 +31,11 @@ public enum Permission {
 
     STAFF_MODERATION(List.of(
             "essentials.invsee", "essentials.invsee.equip", "essentials.joinfullserver",
-            "essentials.kick", "essentials.socialspy", "essentials.time", "essentials.time.set",
-            "essentials.kick.notify", "essentials.ban.notify", "essentials.list")),
+            "essentials.time", "essentials.time.set", "litebans.group.moderator",
+            "litebans.tempban", "litebans.warn", "litebans.kick",
+            "litebans.tempmute", "litebans.history", "litebans.banlist",
+            "litebans.mutelist", "litebans.warnlist", "litebans.checkban",
+            "litebans.checkmute", "litebans.checkwarn", "litebans.notify")),
 
     PLAYER_DEFAULTS(List.of(
             "essentials.silentjoin", "essentials.silentquit", "runeheim.msg"));

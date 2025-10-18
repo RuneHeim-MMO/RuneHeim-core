@@ -28,8 +28,6 @@ import java.util.Locale;
 
 public class InteractionDisabler implements Listener {
     private static final String[] WHITELISTED_COMMANDS = {
-            "/mount", "/pouch", "/skills",
-
             // STAFF_MOVEMENT
             "/fly",
             "/back",
@@ -41,26 +39,35 @@ public class InteractionDisabler implements Listener {
             "/tppos",
             "/warp",
 
-            // STAFF_MESSAGING
-            "/broadcast",
-
             // STAFF_ITEM_SPAWN
             "/gamemode",
             "/clear",
             "/invsee",
 
             // STAFF_MODERATION
-            "/joinfullserver",
-            "/kick",
-            "/socialspy",
-            "/time",
-            "/list",
             "/ban",
+            "/kick",
+            "/mute",
+            "/tempmute",
+            "/ipban",
+            "/ipmute",
+            "/tempban",
+            "/warn",
+            "/tempmute",
+            "/history",
+            "/checkban",
+            "/checkmute",
+            "/checkwarn",
+            "/warnlist",
+
 
             // PLAYER_DEFAULTS
             "/msg",
             "/chat",
-            "/r"
+            "/r",
+            "/mount",
+            "/pouch",
+            "/skills",
     };
 
     public void disableTourViewPermission() {
