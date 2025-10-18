@@ -59,7 +59,8 @@ public class InteractionDisabler implements Listener {
 
             // PLAYER_DEFAULTS
             "/msg",
-            "/chat"
+            "/chat",
+            "/r"
     };
 
     public void disableTourViewPermission() {
@@ -149,7 +150,7 @@ public class InteractionDisabler implements Listener {
     public void onCommand(PlayerCommandPreprocessEvent event) {
         RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(event.getPlayer());
 
-        if(player == null){
+        if (player == null) {
             event.setCancelled(true);
             return;
         }

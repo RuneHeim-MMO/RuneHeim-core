@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
@@ -37,10 +38,7 @@ public class RedisConnection {
                 @Override
                 public void message(String channel, String message) {
                     System.out.println("Received message: " + message + " on channel: " + channel);
-
-                    if (Objects.equals(channel, "global-events")) {
-                        Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> GlobalEventHandler.onRedisEventReceived(message));
-                    }
+                    Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> GlobalEventHandler.onRedisEventReceived(message));
                 }
 
                 @Override
@@ -64,6 +62,10 @@ public class RedisConnection {
                 }
             });
 
+            for (int id = -1; id < 100; id++) {
+                pubSub.subscribe("server-" + id).get();
+            }
+
             pubSub.subscribe("global-events").get();
             RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Redis connected: true. Global events available.");
         } catch (Exception e) {
@@ -72,7 +74,7 @@ public class RedisConnection {
 
     }
 
-    public static void broadcastEvent(String data) {
+    public static void broadcastEvent(String data, List<Integer> targetServerIds) {
         if (pubConnection == null) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed publishing event. Payload: " + data + ". pubConnection is null!");
             return;
@@ -81,7 +83,15 @@ public class RedisConnection {
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
             try {
                 RedisAsyncCommands<String, String> asyncCommands = pubConnection.async();
-                asyncCommands.publish("global-events", data);
+
+                if (targetServerIds.isEmpty()) {
+                    asyncCommands.publish("global-events", data);
+                    return;
+                } else {
+                    for (Integer serverId : targetServerIds) {
+                        asyncCommands.publish("server-" + serverId, data);
+                    }
+                }
             } catch (Exception e) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed publishing event. Payload: " + data, e);
             }

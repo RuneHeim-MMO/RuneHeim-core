@@ -13,6 +13,7 @@ public enum Permission {
     DEBUG_COMMAND(null),
 
     CHAT_PROXIMITY_BYPASS(List.of("runeheim.chat", "runeheim.chat.proximity", "runeheim.chat.proximity.server", "runeheim.chat.proximity.network")),
+    CHAT_SPY(List.of("runeheim.chat", "runeheim.chat.spy", "runeheim.chat.spy.server", "runeheim.chat.spy.network")),
     CHAT_PROFANITY_BYPASS(List.of("runeheim.chat.profanity")),
     CHAT_COOLDOWN_BYPASS(List.of("runeheim.chat.cooldown")),
 

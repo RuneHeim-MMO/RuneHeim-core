@@ -20,8 +20,8 @@ public abstract class RedisEvent<T extends RedisEvent.RedisPayload> extends Even
         public String event;
         public Integer serverId;
         public Long timestamp;
-        public List<Integer> targetServers; // Empty - broadcast to all
-        public boolean replayAtOrigin;
+        public List<Integer> targetServers = new ArrayList<>(); // Empty - broadcast to all
+        public boolean replayAtOrigin = true;
     }
 
     protected RedisEvent() {
@@ -33,8 +33,6 @@ public abstract class RedisEvent<T extends RedisEvent.RedisPayload> extends Even
         composedPayload.event = this.getClass().getSimpleName();
         composedPayload.serverId = ConfigManager.getServerId();
         composedPayload.timestamp = System.currentTimeMillis();
-        composedPayload.targetServers = new ArrayList<>();
-        composedPayload.replayAtOrigin = true;
 
         return composedPayload;
     }
