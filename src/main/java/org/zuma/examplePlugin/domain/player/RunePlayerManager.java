@@ -250,7 +250,7 @@ public class RunePlayerManager {
         }
 
         if (uuidsAccessingDB.contains(uuid)) {
-            if (!waitForPlayerFree(uuid, 10000)) {
+            if (!waitForPlayerFree(uuid, 60000)) {
                 return;
             }
         }
