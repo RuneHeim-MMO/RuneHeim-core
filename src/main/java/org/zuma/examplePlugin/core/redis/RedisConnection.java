@@ -10,6 +10,7 @@ import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
 import io.lettuce.core.pubsub.api.async.RedisPubSubAsyncCommands;
 import org.bukkit.Bukkit;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 
 import java.util.List;
@@ -62,11 +63,10 @@ public class RedisConnection {
                 }
             });
 
-            for (int id = -1; id < 100; id++) {
-                pubSub.subscribe("server-" + id).get();
-            }
 
+            pubSub.subscribe("server-" + ConfigManager.getServerId()).get();
             pubSub.subscribe("global-events").get();
+            
             RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Redis connected: true. Global events available.");
         } catch (Exception e) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed redis connection init. Global events halted.", e);
