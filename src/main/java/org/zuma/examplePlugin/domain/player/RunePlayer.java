@@ -96,8 +96,10 @@ public class RunePlayer implements CombatEntity {
         this.isDead = false;
         this.activeEffects = new ArrayList<>();
 
-        this.permissionAttachment = asBukkitPlayer().addAttachment(RuneQuestPlugin.getInstance());
-        HudService.updateVanillaGUI(this);
+        Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+            this.permissionAttachment = asBukkitPlayer().addAttachment(RuneQuestPlugin.getInstance());
+            HudService.updateVanillaGUI(this);
+        });
     }
 
     public UUID getUUID() {
@@ -419,15 +421,20 @@ public class RunePlayer implements CombatEntity {
     public void setRole(PlayerRole role, boolean reload) {
         this.role = role;
 
-        if (reload)
+        if (reload) {
             role.reloadPermissions(this);
+        }
     }
 
     public PermissionAttachment getPermissionAttachment() {
         return permissionAttachment;
     }
 
-    public void setPermissionAttachment(PermissionAttachment permissionAttachment) {
-        this.permissionAttachment = permissionAttachment;
+    public PlayerScoreboardManager getScoreboardManager() {
+        return scoreboardManager;
+    }
+
+    public void reloadNametags() {
+        this.scoreboardManager.reloadNametags();
     }
 }
