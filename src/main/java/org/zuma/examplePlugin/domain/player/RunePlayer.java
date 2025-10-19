@@ -416,9 +416,11 @@ public class RunePlayer implements CombatEntity {
         return role;
     }
 
-    public void setRole(PlayerRole role) {
+    public void setRole(PlayerRole role, boolean reload) {
         this.role = role;
-        role.reloadPermissions(this);
+
+        if (reload)
+            role.reloadPermissions(this);
     }
 
     public PermissionAttachment getPermissionAttachment() {

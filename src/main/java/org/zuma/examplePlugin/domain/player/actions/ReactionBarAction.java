@@ -125,14 +125,14 @@ public class ReactionBarAction implements InteractiveActionStrategy, Listener {
 
                     Component segmentComponent = (i == arrowPosition)
                             ? switch (segmentType) {
-                        case RED -> Icon.SELECTED_RED.asComponent();
-                        case YELLOW -> Icon.SELECTED_YELLOW.asComponent();
-                        case GREEN -> Icon.SELECTED_GREEN.asComponent();
+                        case RED -> Icon.REACTIO_BAR_SEL_RED.asComponent();
+                        case YELLOW -> Icon.REACTIO_BAR_SEL_YELLOW.asComponent();
+                        case GREEN -> Icon.REACTIO_BAR_SEL_GREEN.asComponent();
                     }
                             : switch (segmentType) {
-                        case RED -> Icon.UNSELECTED_RED.asComponent();
-                        case YELLOW -> Icon.UNSELECTED_YELLOW.asComponent();
-                        case GREEN -> Icon.UNSELECTED_GREEN.asComponent();
+                        case RED -> Icon.REACTION_BAR_UNSEL_RED.asComponent();
+                        case YELLOW -> Icon.REACTION_BAR_UNSEL_YELLOW.asComponent();
+                        case GREEN -> Icon.REACTION_BAR_UNSEL_GREEN.asComponent();
                     };
 
                     baseBar = baseBar.append(segmentComponent);

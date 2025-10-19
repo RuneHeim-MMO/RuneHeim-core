@@ -128,12 +128,18 @@ public enum Icon {
 
 
     // Reaction bar segments
-    SELECTED_GREEN("ⲅ"),
-    SELECTED_YELLOW("⾼"),
-    SELECTED_RED("ⓜ"),
-    UNSELECTED_GREEN("ⱹ"),
-    UNSELECTED_YELLOW("⤡"),
-    UNSELECTED_RED("⮭");
+    REACTIO_BAR_SEL_GREEN("ⲅ"),
+    REACTIO_BAR_SEL_YELLOW("⾼"),
+    REACTIO_BAR_SEL_RED("ⓜ"),
+    REACTION_BAR_UNSEL_GREEN("ⱹ"),
+    REACTION_BAR_UNSEL_YELLOW("⤡"),
+    REACTION_BAR_UNSEL_RED("⮭"),
+
+
+    RANK_BADGE_OWNER("⸋"),
+    RANK_BADGE_ADMIN("⥿"),
+    RANK_BADGE_MOD("⭋"),
+    RANK_BADGE_HELPER("⤳");
 
 
     private final String icon;
