@@ -124,7 +124,16 @@ public enum Icon {
     MOUNT_BADGE_WEARING("⢧"),
     MOUNT_BADGE_ACTIVE("ↀ"),
     LOGO("◾"),
-    LOGO_FULL("⍗");
+    LOGO_FULL("⍗"),
+
+
+    // Reaction bar segments
+    SELECTED_GREEN("ⲅ"),
+    SELECTED_YELLOW("⾼"),
+    SELECTED_RED("ⓜ"),
+    UNSELECTED_GREEN("ⱹ"),
+    UNSELECTED_YELLOW("⤡"),
+    UNSELECTED_RED("⮭");
 
 
     private final String icon;
