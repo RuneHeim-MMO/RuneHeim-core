@@ -3,6 +3,8 @@ package org.zuma.examplePlugin.domain.player;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.permissions.PlayerRole;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
@@ -189,6 +191,11 @@ public class RunePlayerManager {
         loadingStateHandler.setPlayerLoaded(player);
         runePlayer.setSurvivalMode();
 
+        Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+            runePlayer.getRole().reloadPermissions(runePlayer);
+            runePlayer.reloadNametags();
+        }, 1L);
+
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.getName() + " (" + runePlayer.getCombatLvl() + "cmb) loaded successfully [" + runePlayer.getRole().toString() + "].");
         RuneQuestPlugin.getGearModifierHandler().recalculatePlayerModifiers(runePlayer, player.getInventory().getItemInMainHand());
 
@@ -250,7 +257,7 @@ public class RunePlayerManager {
         }
 
         if (uuidsAccessingDB.contains(uuid)) {
-            if (!waitForPlayerFree(uuid, 10000)) {
+            if (!waitForPlayerFree(uuid, 60000)) {
                 return;
             }
         }

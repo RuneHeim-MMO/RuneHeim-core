@@ -5,10 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-import org.bukkit.scoreboard.Criteria;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.*;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
@@ -29,7 +26,7 @@ public class PlayerScoreboardManager {
     int ticks = 0;
 
     @Nullable
-    Scoreboard scoreboard = null;
+    private Scoreboard scoreboard = null;
 
     public PlayerScoreboardManager(RunePlayer player) {
         this.player = player;
@@ -133,7 +130,33 @@ public class PlayerScoreboardManager {
 
             }
         }.runTaskTimer(RuneQuestPlugin.getInstance(), 0L, 10L);
+    }
 
+    private void attachNametag(RunePlayer player) {
+        String teamName = player.asBukkitPlayer().getName();
+
+        if (scoreboard == null) return;
+
+        Team team = scoreboard.getTeam(teamName);
+
+        if (team == null) {
+            team = scoreboard.registerNewTeam(teamName);
+        }
+
+        team.prefix(player.getRole().getPrefix());
+        team.addEntry(player.asBukkitPlayer().getName());
+    }
+
+    public void reloadNametags() {
+        // Attach all online player nametags
+        RuneQuestPlugin.getPlayerManager().getOnlinePlayers().forEach(otherPlayer -> {
+            player.getScoreboardManager().attachNametag(otherPlayer);
+        });
+
+        // Attach this player's nametag to all online players
+        RuneQuestPlugin.getPlayerManager().getOnlinePlayers().forEach(otherPlayer -> {
+            otherPlayer.getScoreboardManager().attachNametag(player);
+        });
     }
 
 }

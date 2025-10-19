@@ -26,6 +26,7 @@ import org.zuma.examplePlugin.domain.item.impl.equipable.Tool;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.actions.ActionParams;
 import org.zuma.examplePlugin.domain.player.actions.ProgressBarAction;
+import org.zuma.examplePlugin.domain.player.actions.ReactionBarAction;
 import org.zuma.examplePlugin.domain.recipe.IngredientRecord;
 import org.zuma.examplePlugin.domain.recipe.constants.RecipeType;
 import org.zuma.examplePlugin.domain.recipe.meta.AbstractRecipeMeta;
@@ -309,7 +310,11 @@ public abstract class AbstractRecipe implements Restrictable {
                 .onFailure(() -> this.handleRecipeCraftingAborted(player))
                 .build();
 
-        player.startAction(new ProgressBarAction(true, true), params);
+        if (this.type == RecipeType.CAMPFIRE_RECIPE) {
+            player.startAction(new ReactionBarAction(), params);
+        } else {
+            player.startAction(new ProgressBarAction(true, true), params);
+        }
 
         return true;
     }

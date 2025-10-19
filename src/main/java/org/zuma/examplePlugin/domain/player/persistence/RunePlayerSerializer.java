@@ -69,7 +69,7 @@ public class RunePlayerSerializer {
                 player.setPrayerEnergy(playerDataDeserializedJsonContainer.prayerEnergy());
                 player.setCompletedQuestIds(playerDataDeserializedJsonContainer.completedQuestIds());
                 player.setActiveEffects(playerDataDeserializedJsonContainer.effects());
-                player.setRole(PlayerRole.valueOf(container.role()));
+                player.setRole(PlayerRole.valueOf(container.role()), false);
 
                 List<ItemStackSlotPair> inventory = ItemContainerContentSerializer.deserializeItemContainerContentSync(inventoryData);
                 Location location = gson.fromJson(container.location(), Location.class);

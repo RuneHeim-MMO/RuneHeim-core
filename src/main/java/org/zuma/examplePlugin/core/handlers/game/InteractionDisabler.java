@@ -28,8 +28,6 @@ import java.util.Locale;
 
 public class InteractionDisabler implements Listener {
     private static final String[] WHITELISTED_COMMANDS = {
-            "/mount", "/pouch", "/skills",
-
             // STAFF_MOVEMENT
             "/fly",
             "/back",
@@ -41,25 +39,35 @@ public class InteractionDisabler implements Listener {
             "/tppos",
             "/warp",
 
-            // STAFF_MESSAGING
-            "/broadcast",
-
             // STAFF_ITEM_SPAWN
             "/gamemode",
             "/clear",
             "/invsee",
 
             // STAFF_MODERATION
-            "/joinfullserver",
-            "/kick",
-            "/socialspy",
-            "/time",
-            "/list",
             "/ban",
+            "/kick",
+            "/mute",
+            "/tempmute",
+            "/ipban",
+            "/ipmute",
+            "/tempban",
+            "/warn",
+            "/tempmute",
+            "/history",
+            "/checkban",
+            "/checkmute",
+            "/checkwarn",
+            "/warnlist",
+
 
             // PLAYER_DEFAULTS
             "/msg",
-            "/chat"
+            "/chat",
+            "/r",
+            "/mount",
+            "/pouch",
+            "/skills",
     };
 
     public void disableTourViewPermission() {
@@ -149,7 +157,7 @@ public class InteractionDisabler implements Listener {
     public void onCommand(PlayerCommandPreprocessEvent event) {
         RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(event.getPlayer());
 
-        if(player == null){
+        if (player == null) {
             event.setCancelled(true);
             return;
         }

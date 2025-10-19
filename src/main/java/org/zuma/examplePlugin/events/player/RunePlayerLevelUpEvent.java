@@ -1,26 +1,21 @@
 package org.zuma.examplePlugin.events.player;
 
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.core.constants.XpSource;
-import org.zuma.examplePlugin.core.redis.RedisEvent;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
-import java.util.UUID;
-
-public class RunePlayerLevelUpEvent extends RedisEvent<RunePlayerLevelUpEvent.Payload> implements Cancellable {
+public class RunePlayerLevelUpEvent extends Event implements Cancellable {
+    private static final HandlerList HANDLERS = new HandlerList();
     private final RunePlayer player;
     private final SkillType type;
     private final int newLevel;
     private final XpSource source;
     private boolean cancelled;
 
-    public static class Payload extends RedisPayload {
-        public String playerName;
-        public UUID playerUUID;
-        public SkillType skillType;
-        public int newLevel;
-    }
 
     public RunePlayerLevelUpEvent(RunePlayer player, SkillType type, int newLevel, XpSource source) {
         this.player = player;
@@ -56,16 +51,12 @@ public class RunePlayerLevelUpEvent extends RedisEvent<RunePlayerLevelUpEvent.Pa
     }
 
     @Override
-    public Payload composePayload() {
-        Payload payload = new Payload();
-
-        payload.playerName = this.player.asBukkitPlayer().getName();
-        payload.playerUUID = this.player.getUUID();
-        payload.skillType = this.type;
-        payload.newLevel = this.newLevel;
-
-        return payload;
-
+    public @NotNull HandlerList getHandlers() {
+        return HANDLERS;
     }
 
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
 }

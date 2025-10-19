@@ -16,7 +16,6 @@ public class EventDeserializer {
     private final static Gson gson = new Gson();
 
     static {
-        addEvent(RunePlayerLevelUpEvent.class, RunePlayerLevelUpEvent.Payload.class);
         addEvent(NetworkRestartEvent.class, NetworkRestartEvent.Payload.class);
     }
 

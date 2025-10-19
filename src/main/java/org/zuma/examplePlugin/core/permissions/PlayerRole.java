@@ -3,24 +3,28 @@ package org.zuma.examplePlugin.core.permissions;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.permissions.PermissionAttachment;
-import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 public enum PlayerRole {
-    ADMIN(0, true, List.of(Permission.WORLD_MANIPULATION, Permission.ITEM_WATCHDOG_BYPASS, Permission.INTERACTABLE_SPAWN, Permission.DEBUG_COMMAND, Permission.STAFF_ITEM_SPAWN, Permission.BLOCKED_CMD_BYPASS, Permission.CHAT_PROXIMITY_BYPASS, Permission.CHAT_PROFANITY_BYPASS)),
-    MODERATOR(1, false, List.of(Permission.STAFF_MODERATION, Permission.STAFF_MESSAGING)),
-    PLAYER(1000, false, List.of(Permission.PLAYER_DEFAULTS));
+    OWNER(0, true, Icon.RANK_BADGE_OWNER, List.of()),
+    ADMIN(1, false, Icon.RANK_BADGE_ADMIN, List.of(Permission.WORLD_MANIPULATION, Permission.ITEM_WATCHDOG_BYPASS, Permission.INTERACTABLE_SPAWN, Permission.DEBUG_COMMAND, Permission.STAFF_ITEM_SPAWN, Permission.BLOCKED_CMD_BYPASS, Permission.CHAT_PROFANITY_BYPASS)),
+    MODERATOR(2, false, Icon.RANK_BADGE_MOD, List.of(Permission.STAFF_MODERATION, Permission.STAFF_MESSAGING)),
+    PLAYER(1000, false, null, List.of(Permission.PLAYER_DEFAULTS));
 
     private final int priority;
     private final List<Permission> permissions;
     private final boolean isOp;
+    private final Icon prefix;
 
-    PlayerRole(int priority, boolean isOp, List<Permission> permissions) {
+    PlayerRole(int priority, boolean isOp, @Nullable Icon prefix, List<Permission> permissions) {
         this.priority = priority;
         this.isOp = isOp;
         this.permissions = permissions;
+        this.prefix = prefix;
     }
 
     public int getPriority() {
@@ -130,5 +134,9 @@ public enum PlayerRole {
                 .append(Component.text(" [").color(NamedTextColor.GRAY))
                 .append(nodesComponent)
                 .append(Component.text("]").color(NamedTextColor.GRAY));
+    }
+
+    public Component getPrefix() {
+        return prefix != null ? prefix.asComponent() : Component.empty();
     }
 }

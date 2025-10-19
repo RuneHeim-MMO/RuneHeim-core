@@ -10,10 +10,11 @@ public class CatchAllListener implements Listener {
 
     @EventHandler
     public static void onRedisEventBroadcastedInternally(RedisEvent<?> event) {
-        String payload = gson.toJson(event.getComposedPayload());
+        RedisEvent.RedisPayload payload = event.getComposedPayload();
+        String serializedPayload = gson.toJson(payload);
 
         event.setForwarded(true);
-        RedisConnection.broadcastEvent(payload);
+        RedisConnection.broadcastEvent(serializedPayload, payload.targetServers);
     }
 
 

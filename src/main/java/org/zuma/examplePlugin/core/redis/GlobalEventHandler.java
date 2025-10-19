@@ -43,8 +43,9 @@ public class GlobalEventHandler {
                 for (Consumer<RedisEvent.RedisPayload> handler : handlerList) {
                     var payload = deserializeEvent.getValue();
 
-                    if (shouldHandleEvent(payload))
+                    if (shouldHandleEvent(payload)) {
                         handler.accept(payload);
+                    }
                 }
 
             });
