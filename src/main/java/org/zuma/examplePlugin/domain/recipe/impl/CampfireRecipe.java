@@ -60,21 +60,24 @@ public class CampfireRecipe extends AbstractRecipe {
 
     @Override
     public boolean isCraftSuccessful(RunePlayer player) {
-        if (mainRequirement == null) {
+        return true;
+       /* if (mainRequirement == null) {
             return true;
         }
 
-        return ThreadLocalRandom.current().nextInt(0, 101) < getChanceOfSuccess(player);
+        return ThreadLocalRandom.current().nextInt(0, 101) < getChanceOfSuccess(player);*/
 
     }
 
     @Override
     public int getChanceOfSuccess(RunePlayer player) {
-        if (mainRequirement == null) {
+        return 100;
+
+        /* if (mainRequirement == null) {
             return 100;
         }
 
-        return PlayerUtils.getCraftSuccessChance(player, mainRequirement, MINIMUM_SUCCESS_CHANCE);
+        return PlayerUtils.getCraftSuccessChance(player, mainRequirement, MINIMUM_SUCCESS_CHANCE);*/
     }
 
     @Override
