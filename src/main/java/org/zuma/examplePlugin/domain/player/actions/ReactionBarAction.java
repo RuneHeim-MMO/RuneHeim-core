@@ -46,7 +46,6 @@ public class ReactionBarAction implements InteractiveActionStrategy, Listener {
         RuneQuestPlugin.getInstance().getServer().getPluginManager().registerEvents(this, RuneQuestPlugin.getInstance());
 
         this.uuid = player.getUUID();
-        UUID uuid = player.getUUID();
 
         int redSegments = 6;
         int yellowSegments = 2;
@@ -125,9 +124,9 @@ public class ReactionBarAction implements InteractiveActionStrategy, Listener {
 
                     Component segmentComponent = (i == arrowPosition)
                             ? switch (segmentType) {
-                        case RED -> Icon.REACTIO_BAR_SEL_RED.asComponent();
-                        case YELLOW -> Icon.REACTIO_BAR_SEL_YELLOW.asComponent();
-                        case GREEN -> Icon.REACTIO_BAR_SEL_GREEN.asComponent();
+                        case RED -> Icon.REACTION_BAR_SEL_RED.asComponent();
+                        case YELLOW -> Icon.REACTION_BAR_SEL_YELLOW.asComponent();
+                        case GREEN -> Icon.REACTION_BAR_SEL_GREEN.asComponent();
                     }
                             : switch (segmentType) {
                         case RED -> Icon.REACTION_BAR_UNSEL_RED.asComponent();

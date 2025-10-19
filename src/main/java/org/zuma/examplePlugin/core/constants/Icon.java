@@ -128,9 +128,9 @@ public enum Icon {
 
 
     // Reaction bar segments
-    REACTIO_BAR_SEL_GREEN("ⲅ"),
-    REACTIO_BAR_SEL_YELLOW("⾼"),
-    REACTIO_BAR_SEL_RED("ⓜ"),
+    REACTION_BAR_SEL_GREEN("ⲅ"),
+    REACTION_BAR_SEL_YELLOW("⾼"),
+    REACTION_BAR_SEL_RED("ⓜ"),
     REACTION_BAR_UNSEL_GREEN("ⱹ"),
     REACTION_BAR_UNSEL_YELLOW("⤡"),
     REACTION_BAR_UNSEL_RED("⮭"),
