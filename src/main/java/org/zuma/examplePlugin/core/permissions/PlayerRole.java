@@ -10,9 +10,9 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public enum PlayerRole {
-    OWNER(0, true, Icon.RANK_BADGE_OWNER, List.of()),
-    ADMIN(1, false, Icon.RANK_BADGE_ADMIN, List.of(Permission.WORLD_MANIPULATION, Permission.ITEM_WATCHDOG_BYPASS, Permission.INTERACTABLE_SPAWN, Permission.DEBUG_COMMAND, Permission.STAFF_ITEM_SPAWN, Permission.BLOCKED_CMD_BYPASS, Permission.CHAT_PROFANITY_BYPASS)),
-    MODERATOR(2, false, Icon.RANK_BADGE_MOD, List.of(Permission.STAFF_MODERATION, Permission.STAFF_MESSAGING)),
+    OWNER(0, true, Icon.RANK_BADGE_OWNER, List.of(Permission.INTERACTABLE_SPAWN)),
+    ADMIN(1, false, Icon.RANK_BADGE_ADMIN, List.of(Permission.STAFF_MOVEMENT, Permission.COOLDOWN_BYPASS, Permission.WORLD_MANIPULATION, Permission.ITEM_WATCHDOG_BYPASS, Permission.DEBUG_COMMAND, Permission.STAFF_ITEM_SPAWN, Permission.BLOCKED_CMD_BYPASS, Permission.CHAT_PROFANITY_BYPASS)),
+    MODERATOR(2, false, Icon.RANK_BADGE_MOD, List.of(Permission.CHAT_COOLDOWN_BYPASS, Permission.STAFF_MODERATION, Permission.STAFF_MESSAGING, Permission.CHAT_SPY)),
     PLAYER(1000, false, null, List.of(Permission.PLAYER_DEFAULTS));
 
     private final int priority;
