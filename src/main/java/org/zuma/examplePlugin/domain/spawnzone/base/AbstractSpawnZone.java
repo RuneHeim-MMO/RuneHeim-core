@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.spawnzone.base;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
@@ -19,7 +20,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class AbstractSpawnZone {
-    private static final int BLOCK_DISTANCE_FROM_CENTER_KILL_THRESHOLD = 128; // If too far away, kill entity.
+    private static final int BLOCK_DISTANCE_FROM_CENTER_KILL_THRESHOLD = 256; // If too far away, kill entity.
     private static final Random RANDOM = new Random();
 
     private List<SpawnZoneMobRecord> mobRecords;
@@ -185,6 +186,10 @@ public abstract class AbstractSpawnZone {
             if (!entity.isValid() || entity.isDead()) {
                 iterator.remove();
                 continue;
+            }
+
+            if (entity instanceof LivingEntity living && living.getTargetEntity(32) != null) {
+                continue; // Don't remove if has target
             }
 
             Location entityLocation = entity.getLocation();
