@@ -41,18 +41,19 @@ public class RunePlayerManager {
     private final RunePlayerRepository repository;
     private final QuestHandler questHandler;
 
-    public static final EnumMap<SkillType, Skill> defaultSkills = Arrays.stream(SkillType.values())
-            .collect(Collectors.toMap(
-                    Function.identity(),
-                    type -> type == SkillType.HITPOINTS ? new Skill(type, XpUtils.getXpForLevel(10)) : new Skill(type, XpUtils.getXpForLevel(1)),
-                    (a, b) -> b,
-                    () -> new EnumMap<>(SkillType.class)
-            ));
-
     public RunePlayerManager(RunePlayerRepository repository, QuestHandler questHandler) {
         this.loadingStateHandler = new PlayerLoadingStateHandler(RuneQuestPlugin.getInstance());
         this.repository = repository;
         this.questHandler = questHandler;
+    }
+
+    public static EnumMap<SkillType, Skill> createDefaultSkills() {
+        EnumMap<SkillType, Skill> map = new EnumMap<>(SkillType.class);
+        for (SkillType type : SkillType.values()) {
+            int xp = type == SkillType.HITPOINTS ? XpUtils.getXpForLevel(10) : XpUtils.getXpForLevel(1);
+            map.put(type, new Skill(type, xp));
+        }
+        return map;
     }
 
     // -------------------- Getters --------------------
@@ -149,7 +150,7 @@ public class RunePlayerManager {
         UUID uuid = player.getUniqueId();
         try {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Creating new profile for " + player.getName());
-            RunePlayer newPlayer = new RunePlayer(uuid, new EnumMap<>(defaultSkills));
+            RunePlayer newPlayer = new RunePlayer(uuid, new EnumMap<>(createDefaultSkills()));
             SerializedPlayerContainer serialized = RunePlayerSerializer.serializePlayerSync(newPlayer, player, false);
             repository.upsertPlayer(serialized);
             return new AbstractMap.SimpleEntry<>(newPlayer, new DeserializedPlayerEntity(new ArrayList<>(), player.getLocation(), true));
