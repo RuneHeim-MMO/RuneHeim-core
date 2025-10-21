@@ -12,6 +12,7 @@ import org.zuma.examplePlugin.core.permissions.PlayerRole;
 import org.zuma.examplePlugin.domain.gui.ItemStackSlotPair;
 import org.zuma.examplePlugin.domain.gui.serializer.ItemContainerContentSerializer;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.player.persistence.meta.v1.PlayerDataDeserializedJsonContainer;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -23,8 +24,6 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
-
-import static org.zuma.examplePlugin.domain.player.RunePlayerManager.defaultSkills;
 
 public class RunePlayerSerializer {
     private static final Gson gson = new GsonBuilder()
@@ -59,7 +58,7 @@ public class RunePlayerSerializer {
             case 1 -> {
                 PlayerDataDeserializedJsonContainer playerDataDeserializedJsonContainer = gson.fromJson(playerData.meta(), PlayerDataDeserializedJsonContainer.class);
                 EnumMap<SkillType, Skill> mappedSkills = playerDataDeserializedJsonContainer.skills().stream().collect(Collectors.toMap(Skill::getType, Function.identity(), (a, b) -> b, () -> new EnumMap<>(SkillType.class)));
-                RunePlayer player = new RunePlayer(container.uuid(), new EnumMap<>(defaultSkills));
+                RunePlayer player = new RunePlayer(container.uuid(), RunePlayerManager.createDefaultSkills());
 
                 player.setDiscoveredTerritoryIds(playerDataDeserializedJsonContainer.discoveredTerritoryIds());
                 player.setPouchCoins(playerDataDeserializedJsonContainer.pouchCoins(), true);
