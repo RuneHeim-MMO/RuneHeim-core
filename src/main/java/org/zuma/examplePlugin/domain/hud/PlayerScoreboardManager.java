@@ -136,19 +136,35 @@ public class PlayerScoreboardManager {
         }.runTaskTimer(RuneQuestPlugin.getInstance(), 0L, 10L);
     }
 
-    private void attachNametag(RunePlayer player) {
-        String teamName = player.asBukkitPlayer().getName();
+    private Team getPlayerTeam() {
+        Player bukkitPlayer = player.asBukkitPlayer();
+        String teamName = bukkitPlayer.getName();
 
-        if (scoreboard == null) return;
-
+        if (scoreboard == null) return null;
         Team team = scoreboard.getTeam(teamName);
 
         if (team == null) {
             team = scoreboard.registerNewTeam(teamName);
         }
 
+        return team;
+    }
+
+    private void attachNametag(RunePlayer player) {
+        Team team = getPlayerTeam();
+
+        if (team == null) return;
         team.prefix(player.getRole().getPrefix());
         team.addEntry(player.asBukkitPlayer().getName());
+    }
+
+    public void setPlayerCollision(boolean enabled) {
+        Player bukkitPlayer = player.asBukkitPlayer();
+        Team team = getPlayerTeam();
+
+        if (team == null) return;
+        team.addEntry(bukkitPlayer.getName());
+        team.setOption(Team.Option.COLLISION_RULE, enabled ? Team.OptionStatus.ALWAYS : Team.OptionStatus.NEVER);
     }
 
     public void reloadNametags() {

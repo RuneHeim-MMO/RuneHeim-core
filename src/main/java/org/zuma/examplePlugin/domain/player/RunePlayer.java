@@ -203,6 +203,7 @@ public class RunePlayer implements CombatEntity {
 
         InteractiveActionStrategy action = strategy.startAction(this, params);
         pendingActions.add(action);
+        scoreboardManager.setPlayerCollision(false);
     }
 
     public boolean isBusy() {
@@ -219,8 +220,10 @@ public class RunePlayer implements CombatEntity {
             SoundType.INTERRUPT_ACTION.play(this, false);
         }
 
+
         this.pendingActions.forEach(InteractiveActionStrategy::cancelTask);
         this.pendingActions.clear();
+        scoreboardManager.setPlayerCollision(true);
     }
 
     // XP handling
