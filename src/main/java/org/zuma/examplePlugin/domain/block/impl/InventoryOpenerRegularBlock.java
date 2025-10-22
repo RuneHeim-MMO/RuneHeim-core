@@ -7,6 +7,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.interfaces.InventoryOpenerBlock;
 import org.zuma.examplePlugin.core.interfaces.Restrictable;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
@@ -20,7 +21,7 @@ import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class InventoryOpenerRegularBlock extends AbstractInteractableBlock implements Restrictable, org.zuma.examplePlugin.core.interfaces.InventoryOpenerBlock {
+public class InventoryOpenerRegularBlock extends AbstractInteractableBlock implements Restrictable, InventoryOpenerBlock {
     private int inventoryId;
     private final List<UUID> createdInventoryInstances;
     private List<SkillRequirement> requirements;
@@ -97,4 +98,5 @@ public class InventoryOpenerRegularBlock extends AbstractInteractableBlock imple
     public List<String> getRequiredCompletedQuests() {
         return List.of();
     }
+
 }
