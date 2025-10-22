@@ -64,73 +64,80 @@ public class ProgressBarAction implements InteractiveActionStrategy {
             public void run() {
                 Player onlinePlayer = Bukkit.getPlayer(uuid);
 
-                if (onlinePlayer == null || !onlinePlayer.isOnline()) {
-                    player.cancelActionTask(true);
+                if (onlinePlayer == null || !onlinePlayer.isOnline() || player.asBukkitPlayer() == null) {
                     this.cancel();
                     return;
                 }
 
-                if (isCancelled) {
-                    this.cancel();
+                try {
+                    if (isCancelled) {
+                        this.cancel();
 
-                    if (params.getOnFailure() != null) {
-                        params.getOnFailure().run();
+                        if (params.getOnFailure() != null) {
+                            params.getOnFailure().run();
+                        }
+
+                        if (params.getOnFinally() != null) {
+                            params.getOnFinally().run();
+                        }
+                        return;
                     }
 
-                    if (params.getOnFinally() != null) {
-                        params.getOnFinally().run();
+                    if (currentSteps.incrementAndGet() >= steps) {
+                        player.cancelActionTask(false);
+                        this.cancel();
+
+                        if (params.getSuccessSound() != null) params.getSuccessSound().play(onlinePlayer, true);
+
+                        onlinePlayer.showTitle(Title.title(
+                                Component.empty(),
+                                Component.text(params.getSuccessActionLabel()).color(Color.SUCCESS.asColor()),
+                                TextUtils.getGenericDuration()
+                        ));
+
+                        params.getOnSuccess().run();
+
+                        if (params.getOnFinally() != null) {
+                            params.getOnFinally().run();
+                        }
+                        return;
                     }
-                    return;
-                }
 
-                if (currentSteps.incrementAndGet() >= steps) {
-                    player.cancelActionTask(false);
-                    this.cancel();
+                    int secondsLeft = (int) Math.ceil(((params.getDurationMs() / (double) steps) * (steps - currentSteps.get())) / 1000.0);
 
-                    if (params.getSuccessSound() != null) params.getSuccessSound().play(onlinePlayer, true);
-                    onlinePlayer.showTitle(Title.title(
-                            Component.empty(),
-                            Component.text(params.getSuccessActionLabel()).color(Color.SUCCESS.asColor()),
-                            TextUtils.getGenericDuration()
+                    Component progressBar = progressBarVisible ? new LoadingBarBuilder()
+                            .totalSteps(steps)
+                            .currentStep(currentSteps.get())
+                            .barLength(16)
+                            .segment(Icon.PROGRESS_SHORT_SEGMENT.get())
+                            .start(Icon.PROGRESS_SHORT_START.get())
+                            .stop(Icon.PROGRESS_SHORT_END.get())
+                            .emptyColor(Color.BUSY_BAR_EMPTY.asColor())
+                            .fillColor(Color.BUSY_BAR_FILL.asColor())
+                            .build() : Component.empty();
+
+                    if (params.getStepSound() != null && currentSteps.get() % params.getStepSoundEveryNth() == 0) {
+                        float randomPitch = -0.3f + random.nextFloat() * 0.6f;
+                        params.getStepSound().play(onlinePlayer.getLocation(), null, randomPitch);
+                    }
+
+                    if (swingHand) onlinePlayer.swingMainHand();
+
+                    onlinePlayer.showTitle(Title.title(progressBar,
+                            Component.text("[" + secondsLeft + "s] ").color(Color.SUCCESS.asColor())
+                                    .append(Component.text(params.getActionLabel()).color(Color.SUBTITLE.asColor())),
+                            Title.Times.times(
+                                    Duration.ZERO,
+                                    Duration.ofSeconds(20L),  // convert ticks to seconds
+                                    Duration.ofMillis(500)
+                            )
                     ));
-
-                    params.getOnSuccess().run();
-
-                    if (params.getOnFinally() != null) {
-                        params.getOnFinally().run();
+                } catch (Exception e) {
+                    if (player.asBukkitPlayer() != null) {
+                        player.cancelActionTask(true);
                     }
-                    return;
+                    this.cancel();
                 }
-
-                int secondsLeft = (int) Math.ceil(((params.getDurationMs() / (double) steps) * (steps - currentSteps.get())) / 1000.0);
-
-                Component progressBar = progressBarVisible ? new LoadingBarBuilder()
-                        .totalSteps(steps)
-                        .currentStep(currentSteps.get())
-                        .barLength(16)
-                        .segment(Icon.PROGRESS_SHORT_SEGMENT.get())
-                        .start(Icon.PROGRESS_SHORT_START.get())
-                        .stop(Icon.PROGRESS_SHORT_END.get())
-                        .emptyColor(Color.BUSY_BAR_EMPTY.asColor())
-                        .fillColor(Color.BUSY_BAR_FILL.asColor())
-                        .build() : Component.empty();
-
-                if (params.getStepSound() != null && currentSteps.get() % params.getStepSoundEveryNth() == 0) {
-                    float randomPitch = -0.3f + random.nextFloat() * 0.6f;
-                    params.getStepSound().play(onlinePlayer.getLocation(), null, randomPitch);
-                }
-
-                if (swingHand) onlinePlayer.swingMainHand();
-
-                onlinePlayer.showTitle(Title.title(progressBar,
-                        Component.text("[" + secondsLeft + "s] ").color(Color.SUCCESS.asColor())
-                                .append(Component.text(params.getActionLabel()).color(Color.SUBTITLE.asColor())),
-                        Title.Times.times(
-                                Duration.ZERO,
-                                Duration.ofSeconds(20L),  // convert ticks to seconds
-                                Duration.ofMillis(500)
-                        )
-                ));
             }
         }.runTaskTimer(RuneQuestPlugin.getInstance(), 0L, stepDuration);
 

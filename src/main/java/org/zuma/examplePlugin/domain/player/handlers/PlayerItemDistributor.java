@@ -86,11 +86,14 @@ public class PlayerItemDistributor {
                     }
             );
 
+            if (runePlayer.getQueuedTasks() > 0) {
+                runePlayer.cancelActionTask(true);
+            }
+
             if (dropMessage != null && !dropMessage.isEmpty()) {
                 player.sendMessage(Icon.INFO.asComponent().append(Component.text(dropMessage).color(Color.INFO.asColor())));
                 SoundType.INVENTORY_FULL.play(player, true);
             }
-
             return;
         }
 

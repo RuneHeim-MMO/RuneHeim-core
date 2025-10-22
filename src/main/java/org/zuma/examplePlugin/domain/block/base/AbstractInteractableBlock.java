@@ -38,6 +38,8 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
     @Nullable
     private String markerLabel;
 
+    private boolean disabled = false;
+
     public AbstractInteractableBlock(AbstractInteractableBlockMeta meta, @Nullable MarkerType markerType, @Nullable String markerLabel) {
         this.id = meta.id();
         this.type = meta.type();
@@ -143,5 +145,13 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
 
     public List<Location> getInteractableBlocks() {
         return List.of(this.location);
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
     }
 }

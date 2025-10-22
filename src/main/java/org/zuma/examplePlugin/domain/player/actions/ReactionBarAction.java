@@ -88,87 +88,92 @@ public class ReactionBarAction implements InteractiveActionStrategy, Listener {
             public void run() {
                 Player onlinePlayer = Bukkit.getPlayer(uuid);
 
-                if (onlinePlayer == null || !onlinePlayer.isOnline()) {
-                    player.cancelActionTask(true);
+                if (onlinePlayer == null || !onlinePlayer.isOnline() || player.asBukkitPlayer() == null) {
                     HandlerList.unregisterAll(thisListener);
                     this.cancel();
                     return;
                 }
+                try {
+                    if (isCancelled) {
+                        this.cancel();
 
-                if (isCancelled) {
-                    this.cancel();
+                        if (params.getOnFailure() != null) {
+                            params.getOnFailure().run();
+                        }
 
-                    if (params.getOnFailure() != null) {
-                        params.getOnFailure().run();
+                        if (params.getOnFinally() != null) {
+                            params.getOnFinally().run();
+                        }
+
+                        HandlerList.unregisterAll(thisListener);
+                        player.cancelActionTask(false);
+                        return;
                     }
 
-                    if (params.getOnFinally() != null) {
-                        params.getOnFinally().run();
+                    arrowPosition += 1;
+                    if (arrowPosition >= totalSegments) {
+                        arrowPosition = 0;
+                    }
+                    stepsCompleted[0] += 1;
+
+                    Component baseBar = Component.empty();
+
+                    for (int i = 0; i < totalSegments; i++) {
+                        SegmentType segmentType = layout.get(i);
+
+                        Component segmentComponent = (i == arrowPosition)
+                                ? switch (segmentType) {
+                            case RED -> Icon.REACTION_BAR_SEL_RED.asComponent();
+                            case YELLOW -> Icon.REACTION_BAR_SEL_YELLOW.asComponent();
+                            case GREEN -> Icon.REACTION_BAR_SEL_GREEN.asComponent();
+                        }
+                                : switch (segmentType) {
+                            case RED -> Icon.REACTION_BAR_UNSEL_RED.asComponent();
+                            case YELLOW -> Icon.REACTION_BAR_UNSEL_YELLOW.asComponent();
+                            case GREEN -> Icon.REACTION_BAR_UNSEL_GREEN.asComponent();
+                        };
+
+                        baseBar = baseBar.append(segmentComponent);
                     }
 
-                    HandlerList.unregisterAll(thisListener);
-                    player.cancelActionTask(false);
-                    return;
-                }
-
-                arrowPosition += 1;
-                if (arrowPosition >= totalSegments) {
-                    arrowPosition = 0;
-                }
-                stepsCompleted[0] += 1;
-
-                Component baseBar = Component.empty();
-
-                for (int i = 0; i < totalSegments; i++) {
-                    SegmentType segmentType = layout.get(i);
-
-                    Component segmentComponent = (i == arrowPosition)
-                            ? switch (segmentType) {
-                        case RED -> Icon.REACTION_BAR_SEL_RED.asComponent();
-                        case YELLOW -> Icon.REACTION_BAR_SEL_YELLOW.asComponent();
-                        case GREEN -> Icon.REACTION_BAR_SEL_GREEN.asComponent();
-                    }
-                            : switch (segmentType) {
-                        case RED -> Icon.REACTION_BAR_UNSEL_RED.asComponent();
-                        case YELLOW -> Icon.REACTION_BAR_UNSEL_YELLOW.asComponent();
-                        case GREEN -> Icon.REACTION_BAR_UNSEL_GREEN.asComponent();
-                    };
-
-                    baseBar = baseBar.append(segmentComponent);
-                }
-
-                onlinePlayer.showTitle(Title.title(
-                        Component.text(successPositions.contains(arrowPosition) ? ">> CLICK NOW! <<<" : ">>> WAIT... <<<").color(Color.INFO.asColor()),
-                        baseBar,
-                        TextUtils.getGenericDuration()
-                ));
-
-                if (params.getStepSound() != null && stepsCompleted[0] % params.getStepSoundEveryNth() == 0) {
-                    float randomPitch = -0.3f + random.nextFloat() * 0.6f;
-                    params.getStepSound().play(onlinePlayer.getLocation(), null, randomPitch);
-                }
-
-
-                if (isSuccess) {
-                    player.cancelActionTask(false);
-                    this.cancel();
-                    HandlerList.unregisterAll(thisListener);
-
-                    if (params.getSuccessSound() != null) params.getSuccessSound().play(onlinePlayer, true);
                     onlinePlayer.showTitle(Title.title(
-                            Component.empty(),
-                            Component.text(params.getSuccessActionLabel()).color(Color.SUCCESS.asColor()),
+                            Component.text(successPositions.contains(arrowPosition) ? ">> CLICK NOW! <<<" : ">>> WAIT... <<<").color(Color.INFO.asColor()),
+                            baseBar,
                             TextUtils.getGenericDuration()
                     ));
 
-                    params.getOnSuccess().run();
-
-                    if (params.getOnFinally() != null) {
-                        params.getOnFinally().run();
+                    if (params.getStepSound() != null && stepsCompleted[0] % params.getStepSoundEveryNth() == 0) {
+                        float randomPitch = -0.3f + random.nextFloat() * 0.6f;
+                        params.getStepSound().play(onlinePlayer.getLocation(), null, randomPitch);
                     }
+
+
+                    if (isSuccess) {
+                        player.cancelActionTask(false);
+                        this.cancel();
+                        HandlerList.unregisterAll(thisListener);
+
+                        if (params.getSuccessSound() != null) params.getSuccessSound().play(onlinePlayer, true);
+                        onlinePlayer.showTitle(Title.title(
+                                Component.empty(),
+                                Component.text(params.getSuccessActionLabel()).color(Color.SUCCESS.asColor()),
+                                TextUtils.getGenericDuration()
+                        ));
+
+                        params.getOnSuccess().run();
+
+                        if (params.getOnFinally() != null) {
+                            params.getOnFinally().run();
+                        }
+                    }
+
+                } catch (Exception e) {
+                    if (player.asBukkitPlayer() != null) {
+                        player.cancelActionTask(true);
+                    }
+
+                    this.cancel();
                 }
-
-
             }
         }.runTaskTimer(RuneQuestPlugin.getInstance(), 0L, stepDurationTicks);
 

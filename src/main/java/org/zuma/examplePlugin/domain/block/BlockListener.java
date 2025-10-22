@@ -66,7 +66,7 @@ public class BlockListener implements Listener {
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
         AbstractInteractableBlock block = manager.getAbstractInteractableBlock(dumbBlock);
 
-        if (runePlayer == null || block == null) {
+        if (runePlayer == null || block == null || block.isDisabled()) {
             return;
         }
 

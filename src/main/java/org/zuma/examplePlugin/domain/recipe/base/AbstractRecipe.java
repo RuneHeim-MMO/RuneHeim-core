@@ -256,12 +256,12 @@ public abstract class AbstractRecipe implements Restrictable {
                     .append(CurrencyUtils.getCoinsCurrencyComponent(getRecipeCost() * times)).append(Component.text(" coins.")));
         }
 
-        if (player.isBusy()) {
-            return Optional.of(Component.text("You are already busy with something else!"));
-        }
-
         if (!player.meetsRequirements(this)) {
             return Optional.of(Component.text("You do not meet requirements to " + type.getVerb().toLowerCase() + " ").append(resultComponent));
+        }
+
+        if (!this.type.isStackable() && player.hasPendingActions()) {
+            return Optional.of(Component.text("You are already busy with something else!"));
         }
 
         if (!PlayerUtils.hasItems(player, getRequiredIngredients(times))) {
@@ -293,12 +293,13 @@ public abstract class AbstractRecipe implements Restrictable {
             return false;
         }
 
-        type.getStartSound().play(player, true);
         boolean isCraftStartSuccess = this.handleRecipeCraftingStart(player);
 
         if (!isCraftStartSuccess) {
             return false;
         }
+
+        boolean queueingSuccess;
 
         ActionParams params = new ActionParams.Builder()
                 .durationMs(this.craftTimeMs * times)
@@ -311,17 +312,22 @@ public abstract class AbstractRecipe implements Restrictable {
                 .build();
 
         if (this.type == RecipeType.CAMPFIRE_RECIPE) {
-            player.startAction(new ReactionBarAction(), params);
+            queueingSuccess = player.queueOrStartAction(new ReactionBarAction(), params, this.type.isStackable());
         } else {
-            player.startAction(new ProgressBarAction(true, true), params);
+            queueingSuccess = player.queueOrStartAction(new ProgressBarAction(true, true), params, this.type.isStackable());
         }
 
-        return true;
+        if (queueingSuccess) {
+            type.getStartSound().play(player, true);
+        }
+
+        return queueingSuccess;
     }
 
     private void executeCraft(RunePlayer player, int times, long totalCost, Component resultComponent) {
         Optional<Component> blockReason = getCraftBlockReason(player, times);
         if (blockReason.isPresent()) {
+            if(player.hasPendingActions()) player.cancelActionTask(true);
             HudService.sendFailMessage(player, blockReason.get());
             return;
         }

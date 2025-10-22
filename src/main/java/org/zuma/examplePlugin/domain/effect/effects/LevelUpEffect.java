@@ -32,7 +32,7 @@ public class LevelUpEffect implements AnimatedEffect {
         this.player = player;
         this.isMaxedSkill = XpUtils.isMaxLevel(skill.getBaseLevel());
         this.type = skill.getType();
-        this.count = isMaxedSkill ? 50 : 5;
+        this.count = isMaxedSkill ? 25 : 2;
         this.delayBetween = 5;
 
         // Play initial sound

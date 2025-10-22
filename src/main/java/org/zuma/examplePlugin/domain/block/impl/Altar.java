@@ -1,18 +1,12 @@
 package org.zuma.examplePlugin.domain.block.impl;
 
-import com.sk89q.worldedit.bukkit.BukkitPlayer;
 import eu.decentsoftware.holograms.api.DHAPI;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.block.Lectern;
-import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
@@ -128,7 +122,7 @@ public class Altar extends AbstractInteractableBlock implements POIMarkerable {
                 })
                 .build();
 
-        player.startAction(new ProgressBarAction(false, false), params);
+        player.queueOrStartAction(new ProgressBarAction(false, false), params, false);
     }
 
     public Location getLocation() {

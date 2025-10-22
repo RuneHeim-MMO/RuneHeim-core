@@ -70,6 +70,10 @@ public class ActionBarManager {
             return Component.text("Use the number keys (above the letters) to choose an option.", Color.ACCENT.asColor());
         }
 
+        if (player.getQueuedTasks() > 1) {
+            return Component.text(player.getQueuedTasks() + " tasks in queue.", Color.WARNING.asColor());
+        }
+
         boolean playerHasFairy = !fairyStatus.equals(FairyStatus.NONE);
         boolean playerHasMount = !mountStatus.equals(MountStatus.NONE);
         NamedTextColor fairyIconColor = NamedTextColor.WHITE;

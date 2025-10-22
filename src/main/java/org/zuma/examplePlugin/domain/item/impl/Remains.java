@@ -1,11 +1,9 @@
 package org.zuma.examplePlugin.domain.item.impl;
 
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
-import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
@@ -36,7 +34,7 @@ public class Remains extends AbstractItemType {
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player, StateManager itemStateManager) {
-        if (player.isBusy()) return;
+        if (player.hasPendingActions()) return;
 
         ActionParams params = new ActionParams.Builder()
                 .durationMs(buryingDurationMs)
@@ -47,7 +45,7 @@ public class Remains extends AbstractItemType {
                 .onSuccess(() -> handleBury(player))
                 .build();
 
-        player.startAction(new ProgressBarAction(true, false), params);
+        player.queueOrStartAction(new ProgressBarAction(true, false), params, false);
     }
 
     private void handleBury(RunePlayer player) {

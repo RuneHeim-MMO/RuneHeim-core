@@ -56,7 +56,11 @@ public class ScheduledRestartHandler implements Listener {
             Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), Bukkit::shutdown, 60L);
         }
 
-        restartTask = Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), ScheduledRestartHandler::taskTick, isMoreThanOneMinute(restartAt - 1000L /* compensation */) ? 20L * 60L : 60L);
+        restartTask = Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), ScheduledRestartHandler::taskTick,
+                isMoreThanOneMinute(restartAt - 1000L /* compensation */) ?
+                        20L * 60 /* >1 minute: notify every minute*/ :
+                        20L * 10 /* <1 minute: notify every 10 seconds */);
+
         broadcastRestartMessage(restartAt, restartReason);
 
     }

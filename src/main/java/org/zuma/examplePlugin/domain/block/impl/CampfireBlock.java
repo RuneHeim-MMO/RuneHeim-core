@@ -52,6 +52,7 @@ public class CampfireBlock extends InventoryOpenerRegularBlock implements Despaw
         this.despawnDrop = despawnDrop;
         super.initializeBlock(InventoryId.FIRE.asInt(), new ArrayList<>(), "", null, soulSkin ? Material.SOUL_CAMPFIRE : Material.CAMPFIRE, null, null);
         setLitBlockState(false);
+        super.setDisabled(true);
         updateHologram();
     }
 
@@ -120,6 +121,7 @@ public class CampfireBlock extends InventoryOpenerRegularBlock implements Despaw
         }
 
         this.burning = true;
+        super.setDisabled(false);
         setLitBlockState(true);
         updateHologram();
         startLoop();
@@ -141,10 +143,12 @@ public class CampfireBlock extends InventoryOpenerRegularBlock implements Despaw
 
         forceCloseOpenedInventories();
         setLitBlockState(false);
+        super.setDisabled(true);
     }
 
     private void setLitBlockState(boolean isLit) {
         Block block = getLocation().getBlock();
+
         if (block.getType() == Material.CAMPFIRE || block.getType() == Material.SOUL_CAMPFIRE) {
             BlockData data = block.getBlockData();
             if (data instanceof Campfire campfireData) {
