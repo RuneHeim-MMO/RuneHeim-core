@@ -13,7 +13,6 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.ResourceNodeSchematicHandler;
@@ -194,7 +193,7 @@ public class ResourceNode extends AbstractInteractableBlock {
                 .onFailure(null)
                 .build();
 
-        player.startAction(new ProgressBarAction(true, true), params);
+        player.queueOrStartAction(new ProgressBarAction(true, true), params, false);
     }
 
     private void onGather(RunePlayer player, double baseGatheringLuckPercentage) {
@@ -301,7 +300,7 @@ public class ResourceNode extends AbstractInteractableBlock {
     @Override
     public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItemType itemInHand) {
         // Cancel interaction if player is busy or the resource is depleted
-        if (player.isBusy() || isDepleted) {
+        if (player.hasPendingActions() || isDepleted) {
             event.setCancelled(true);
             return;
         }

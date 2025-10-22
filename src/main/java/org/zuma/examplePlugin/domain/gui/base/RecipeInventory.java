@@ -55,11 +55,10 @@ public abstract class RecipeInventory extends PaginatedIndividualGUI {
         }
 
         int times = event.isShiftClick() ? SHIFT_CLICK_CRAFT_AMOUNT : LEFT_CLICK_CRAFT_AMOUNT;
-        boolean craftStarted = RuneQuestPlugin.getRecipeHandler().craftRecipe(player, RuneQuestPlugin.getRecipeRegistry().getRecipeById(menuValue), times);
+        AbstractRecipe recipe = RuneQuestPlugin.getRecipeRegistry().getRecipeById(menuValue);
 
-        if (craftStarted) {
-            player.asBukkitPlayer().closeInventory();
-        }
+        if (recipe == null) return;
+        RuneQuestPlugin.getRecipeHandler().craftRecipe(player, recipe, times);
 
     }
 }

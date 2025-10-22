@@ -1,7 +1,6 @@
 package org.zuma.examplePlugin.domain.player;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.title.Title;
+
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -13,7 +12,6 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.permissions.PlayerRole;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
@@ -30,6 +28,7 @@ import org.zuma.examplePlugin.domain.modifier.SkillModifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.party.Party;
 import org.zuma.examplePlugin.domain.player.actions.ActionParams;
+import org.zuma.examplePlugin.domain.player.handlers.BusyStateHandler;
 import org.zuma.examplePlugin.domain.player.handlers.DeathHandler;
 import org.zuma.examplePlugin.domain.player.handlers.PlayerItemDistributor;
 import org.zuma.examplePlugin.domain.player.handlers.PlayerXpHandler;
@@ -60,10 +59,10 @@ public class RunePlayer implements CombatEntity {
     private final PlayerXpHandler xpHandler;
     private final PlayerItemDistributor itemHandler;
     private final ActionBarManager actionBarManager;
+    private final BusyStateHandler busyStateHandler;
     private final PlayerScoreboardManager scoreboardManager;
 
     private long pouchCoins;
-    private final List<InteractiveActionStrategy> pendingActions;
     private List<String> discoveredTerritoryIds;
     private List<String> completedQuestIds;
     private boolean isDead;
@@ -84,13 +83,13 @@ public class RunePlayer implements CombatEntity {
         this.modifiers = new EnumMap<>(ModifierType.class);
         this.skillModifiers = new EnumMap<>(SkillType.class);
         this.actionBarManager = new ActionBarManager(this);
+        this.busyStateHandler = new BusyStateHandler(this);
         this.scoreboardManager = new PlayerScoreboardManager(this);
         this.itemHandler = new PlayerItemDistributor(this);
         this.xpHandler = new PlayerXpHandler(this);
         this.pendingXPHandler = new PendingXPHandler();
 
         this.pouchCoins = 0;
-        this.pendingActions = new ArrayList<>();
         this.discoveredTerritoryIds = new ArrayList<>();
         this.completedQuestIds = new ArrayList<>();
         this.isDead = false;
@@ -195,35 +194,20 @@ public class RunePlayer implements CombatEntity {
     }
 
     // Busy state management
-    public void startAction(InteractiveActionStrategy strategy, ActionParams params) {
-        if (isBusy()) {
-            HudService.showFailTitle(this, "You are already busy!");
-            return;
-        }
-
-        InteractiveActionStrategy action = strategy.startAction(this, params);
-        pendingActions.add(action);
-        scoreboardManager.setPlayerCollision(false);
+    public boolean queueOrStartAction(InteractiveActionStrategy strategy, ActionParams params, boolean stackable) {
+        return busyStateHandler.queueOrStartAction(strategy, params, stackable);
     }
 
-    public boolean isBusy() {
-        return !this.pendingActions.isEmpty();
+    public boolean hasPendingActions() {
+        return this.busyStateHandler.hasPendingActions();
     }
 
     public void cancelActionTask(boolean interrupted) {
-        if (interrupted && isBusy()) {
-            this.asBukkitPlayer().showTitle(Title.title(
-                    Component.empty(),
-                    Component.text("Task interrupted.").color(Color.ERROR.asColor()),
-                    TextUtils.getGenericDuration()
-            ));
-            SoundType.INTERRUPT_ACTION.play(this, false);
-        }
+        this.busyStateHandler.cancelActionTask(interrupted);
+    }
 
-
-        this.pendingActions.forEach(InteractiveActionStrategy::cancelTask);
-        this.pendingActions.clear();
-        scoreboardManager.setPlayerCollision(true);
+    public int getQueuedTasks() {
+        return this.busyStateHandler.getQueuedTasks();
     }
 
     // XP handling

@@ -89,7 +89,7 @@ public class RunePlayerListener implements Listener {
     public void onPlayerActionInterruptedByMovement(PlayerMoveEvent event) {
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(event.getPlayer());
 
-        if (runePlayer == null || !runePlayer.isBusy()) {
+        if (runePlayer == null || !runePlayer.hasPendingActions()) {
             return;
         }
 
@@ -113,7 +113,7 @@ public class RunePlayerListener implements Listener {
 
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
 
-        if (runePlayer == null || !runePlayer.isBusy()) {
+        if (runePlayer == null || !runePlayer.hasPendingActions()) {
             return;
         }
 
