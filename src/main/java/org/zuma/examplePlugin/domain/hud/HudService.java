@@ -127,7 +127,8 @@ public class HudService {
     }
 
     public static void showXpGainMessage(RunePlayer player, SkillType type, double xp, XpSource source) {
-        String xpStr = "§f" + type.getSymbol() + Color.SUCCESS.asSpigotHex() + " " + xp + " XP";
+        String formattedXP = String.format("%.1f", xp);
+        String xpStr = "§f" + type.getSymbol() + Color.SUCCESS.asSpigotHex() + " " + formattedXP + " XP";
         boolean isPartySource = source == org.zuma.examplePlugin.core.constants.XpSource.PARTY;
 
         spawnVerticalHologramBubble(player, Color.SUCCESS.asSpigotHex() + "+ " + xpStr + " " + (isPartySource ? "[Party]" : ""));
