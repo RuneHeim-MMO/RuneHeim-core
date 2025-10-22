@@ -45,6 +45,7 @@ public class DeathHandler {
     public static void handlePlayerDeath(RunePlayer runePlayer, Hit lastHit) {
         RuneEntityDeathEvent event = new RuneEntityDeathEvent(lastHit.getAttacker(), lastHit.getDefender(), lastHit, lastHit.getAttackType());
         Bukkit.getServer().getPluginManager().callEvent(event);
+        runePlayer.cancelActionTask(true);
 
         Player player = runePlayer.asBukkitPlayer();
         Territory closestTerritory = PlayerUtils.getClosestDiscoveredTerritory(runePlayer);

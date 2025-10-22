@@ -9,10 +9,7 @@ import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
 import org.zuma.examplePlugin.domain.combat.HitHandler;
-import org.zuma.examplePlugin.domain.command.ConsoleActionCommand;
-import org.zuma.examplePlugin.domain.command.MountCommand;
-import org.zuma.examplePlugin.domain.command.PouchCommand;
-import org.zuma.examplePlugin.domain.command.SkillsCommand;
+import org.zuma.examplePlugin.domain.command.*;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
 import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
@@ -38,10 +35,16 @@ public class CommandModule implements PluginModule {
                         context.get(BlockManager.class),
                         new ResourceNodeTypeRepository()))
         );
+
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("skills", new SkillsCommand()));
+
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("pouch", new PouchCommand()));
+
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("stuck", new StuckCommand()));
+
 
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("actions", new ConsoleActionCommand()));
