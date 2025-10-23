@@ -145,7 +145,6 @@ public abstract class AbstractQuestStep implements Listener {
     }
 
     public void setPlugin(RuneQuestPlugin plugin) {
-        System.out.println("plugin set");
         this.plugin = plugin;
     }
 
