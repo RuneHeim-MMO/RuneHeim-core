@@ -1,12 +1,15 @@
 package org.zuma.examplePlugin.domain.quest.impl;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.PlayerQuestState;
 import org.zuma.examplePlugin.domain.quest.Quest;
 import org.zuma.examplePlugin.domain.quest.constants.StepType;
@@ -69,7 +72,28 @@ public class CollectionStep extends AbstractQuestStep {
         }
 
         addItemsToAcquired(itemStack, type);
+    }
 
+    @EventHandler
+    public void onPlayerCloseInventory(InventoryCloseEvent event) {
+        if (!(event.getPlayer() instanceof Player player)) return;
+        checkPlayerInventoryForExistingItems(player.getUniqueId());
+    }
+
+    private void checkPlayerInventoryForExistingItems(UUID playerUUID) {
+        Player player = Bukkit.getPlayer(playerUUID);
+        if (player == null || !player.isOnline() || !playerUUID.equals(getOwner())) return;
+
+        Arrays.stream(player.getInventory().getContents()).forEach(itemStack -> {
+            if (itemStack == null) return;
+            AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(itemStack);
+
+            if (type == null || !acquiredItems.containsKey(type.id)) {
+                return;
+            }
+            
+            addItemsToAcquired(itemStack, type);
+        });
     }
 
     private void addItemsToAcquired(ItemStack itemStack, AbstractItemType type) {
@@ -100,6 +124,11 @@ public class CollectionStep extends AbstractQuestStep {
         requiredItems.forEach(required -> acquiredItems.put(required.getItemId(), 0));
         step.setAcquiredItems(acquiredItems);
         step.setId(this.getId());
+
+        Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+            // Initial check in case player already has some required items
+            step.checkPlayerInventoryForExistingItems(ownerUUID);
+        }, 10L); // Delay to ensure everything is loaded.
 
         return step;
     }

@@ -32,6 +32,7 @@ public class BusyStateHandler {
         }
 
         if (pendingActions.size() >= MAX_QUEUED_ACTIONS) {
+            SoundType.ACTION_QUEUE_FAIL_SOUND.play(player, false);
             return false;
         }
 
@@ -41,6 +42,10 @@ public class BusyStateHandler {
 
         pendingActions.add(new QueuedAction(strategy, params));
         this.player.getScoreboardManager().setPlayerCollision(false);
+
+        if (pendingActions.size() > 1) {
+            SoundType.ACTION_QUEUE_SUCCESS_SOUND.play(player, false);
+        }
 
         return true;
     }

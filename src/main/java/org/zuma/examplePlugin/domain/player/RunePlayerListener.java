@@ -106,22 +106,6 @@ public class RunePlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerActionInterruptedByDamage(EntityDamageEvent event) {
-        if (!(event.getEntity() instanceof Player player)) {
-            return;
-        }
-
-        RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
-
-        if (runePlayer == null || !runePlayer.hasPendingActions()) {
-            return;
-        }
-
-
-        runePlayer.cancelActionTask(true);
-    }
-
-    @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
         event.setKeepInventory(true);
         event.getDrops().clear();

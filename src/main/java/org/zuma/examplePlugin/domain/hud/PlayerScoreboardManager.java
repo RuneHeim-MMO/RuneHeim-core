@@ -137,10 +137,17 @@ public class PlayerScoreboardManager {
     }
 
     private Team getPlayerTeam() {
-        Player bukkitPlayer = player.asBukkitPlayer();
+        return getPlayerTeam(this.player);
+    }
+
+    private Team getPlayerTeam(RunePlayer target) {
+        if (scoreboard == null) return null;
+
+        Player bukkitPlayer = target.asBukkitPlayer();
+        if (bukkitPlayer == null) return null;
+
         String teamName = bukkitPlayer.getName();
 
-        if (scoreboard == null) return null;
         Team team = scoreboard.getTeam(teamName);
 
         if (team == null) {
@@ -150,17 +157,18 @@ public class PlayerScoreboardManager {
         return team;
     }
 
-    private void attachNametag(RunePlayer player) {
-        Team team = getPlayerTeam();
+
+    private void attachNametag(RunePlayer target) {
+        Team team = getPlayerTeam(target);
 
         if (team == null) return;
-        team.prefix(player.getRole().getPrefix());
-        team.addEntry(player.asBukkitPlayer().getName());
+        team.prefix(target.getRole().getPrefix());
+        team.addEntry(target.asBukkitPlayer().getName());
     }
 
     public void setPlayerCollision(boolean enabled) {
         Player bukkitPlayer = player.asBukkitPlayer();
-        Team team = getPlayerTeam();
+        Team team = getPlayerTeam(player);
 
         if (team == null) return;
         team.addEntry(bukkitPlayer.getName());
