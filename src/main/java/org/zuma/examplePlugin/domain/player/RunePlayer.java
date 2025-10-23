@@ -28,10 +28,7 @@ import org.zuma.examplePlugin.domain.modifier.SkillModifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.party.Party;
 import org.zuma.examplePlugin.domain.player.actions.ActionParams;
-import org.zuma.examplePlugin.domain.player.handlers.BusyStateHandler;
-import org.zuma.examplePlugin.domain.player.handlers.DeathHandler;
-import org.zuma.examplePlugin.domain.player.handlers.PlayerItemDistributor;
-import org.zuma.examplePlugin.domain.player.handlers.PlayerXpHandler;
+import org.zuma.examplePlugin.domain.player.handlers.*;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -61,6 +58,7 @@ public class RunePlayer implements CombatEntity {
     private final ActionBarManager actionBarManager;
     private final BusyStateHandler busyStateHandler;
     private final PlayerScoreboardManager scoreboardManager;
+    private final UsernameRenderer usernameRenderer;
 
     private long pouchCoins;
     private List<String> discoveredTerritoryIds;
@@ -88,6 +86,7 @@ public class RunePlayer implements CombatEntity {
         this.itemHandler = new PlayerItemDistributor(this);
         this.xpHandler = new PlayerXpHandler(this);
         this.pendingXPHandler = new PendingXPHandler();
+        this.usernameRenderer = new UsernameRenderer(this);
 
         this.pouchCoins = 0;
         this.discoveredTerritoryIds = new ArrayList<>();
@@ -97,6 +96,7 @@ public class RunePlayer implements CombatEntity {
 
         Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
             this.permissionAttachment = asBukkitPlayer().addAttachment(RuneQuestPlugin.getInstance());
+            this.usernameRenderer.updateTabUsername();
             HudService.updateVanillaGUI(this);
         });
     }
@@ -186,6 +186,7 @@ public class RunePlayer implements CombatEntity {
 
     public void setCombatLvl(int combatLvl) {
         combatData.setCombatLvl(combatLvl);
+        this.usernameRenderer.updateTabUsername();
     }
 
     public void registerHit(Hit hit) {
@@ -429,5 +430,9 @@ public class RunePlayer implements CombatEntity {
 
     public void reloadNametags() {
         this.scoreboardManager.reloadNametags();
+    }
+
+    public UsernameRenderer getUsernameRenderer() {
+        return usernameRenderer;
     }
 }
