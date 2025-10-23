@@ -8,12 +8,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
+import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
 import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -22,6 +25,7 @@ import java.util.HashMap;
 
 public class AdditionalGearSlotListener implements Listener {
     private final AdditionalGearSlotHandler slotHandler;
+    private final CooldownHandler cooldownHandler = new CooldownHandler();
 
     public AdditionalGearSlotListener(AdditionalGearSlotHandler slotHandler) {
         this.slotHandler = slotHandler;
@@ -101,16 +105,34 @@ public class AdditionalGearSlotListener implements Listener {
     public void onOwnInventoryClick(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player player)) return;
 
-        Inventory clickedInventory = event.getClickedInventory();
-        if (clickedInventory == null || !clickedInventory.equals(player.getInventory())) {
-            return;
-        }
+        if (cooldownHandler.isCooldownInProgress(player)) return;
+        cooldownHandler.startCooldown(player, 200L);
 
+        int rawSlot = event.getRawSlot();
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
 
         if (runePlayer == null) {
             return;
         }
+
+        if (event.getView().getTopInventory() instanceof CraftingInventory) {
+            if (rawSlot >= 1 && rawSlot <= 4) {
+                slotHandler.handleCraftingGridClick(runePlayer, event);
+                return;
+            }
+
+            if (rawSlot == 45) {
+                slotHandler.handleShieldSlotClick(runePlayer, event);
+                return;
+            }
+        }
+
+
+        Inventory clickedInventory = event.getClickedInventory();
+        if (clickedInventory == null || !clickedInventory.equals(player.getInventory())) {
+            return;
+        }
+
 
         slotHandler.handleOwnInventoryClick(runePlayer, event);
 

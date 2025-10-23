@@ -6,6 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.zuma.examplePlugin.RuneQuestPlugin;
@@ -23,6 +25,9 @@ import java.util.*;
 public class AdditionalGearSlotHandler {
     public static final int INFO_SLOT = 16;
     public static final int SETTINGS_SLOT = 17;
+
+    // Raw slots in crafting grid inventory (1-4)
+    public static final int SKILLS_SLOT = 1;
 
     private final Map<Integer, ReservedSlot> slotsDef = ReservedSlot.getSlotMap();
     private final List<Integer> slots = slotsDef.keySet().stream().toList();
@@ -76,6 +81,22 @@ public class AdditionalGearSlotHandler {
 
     }
 
+    public void handleCraftingGridClick(RunePlayer player, InventoryClickEvent event) {
+        int slot = event.getSlot();
+
+        if (slot == SKILLS_SLOT) {
+            Bukkit.dispatchCommand(player.asBukkitPlayer(), "skills");
+            SoundType.UI_CLICK.play(player, false);
+            return;
+        }
+
+    }
+
+    public void handleShieldSlotClick(RunePlayer player, InventoryClickEvent event) {
+        SoundType.UI_CLICK.play(player, false);
+        Bukkit.dispatchCommand(player.asBukkitPlayer(), "stuck");
+    }
+
     public void handleOwnInventoryClick(RunePlayer player, InventoryClickEvent event) {
         PlayerInventory inventory = player.asBukkitPlayer().getInventory();
         int slot = event.getSlot();
@@ -88,6 +109,7 @@ public class AdditionalGearSlotHandler {
             if (slot == SETTINGS_SLOT) {
                 player.asBukkitPlayer().sendMessage("Settings");
             }
+
 
             SoundType.UI_CLICK.play(player, false);
             event.setCancelled(true);
