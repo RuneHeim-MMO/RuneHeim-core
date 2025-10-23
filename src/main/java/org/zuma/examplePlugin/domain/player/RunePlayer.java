@@ -191,6 +191,12 @@ public class RunePlayer implements CombatEntity {
     public void registerHit(Hit hit) {
         this.pendingXPHandler.calculatePendingXP(hit);
         this.combatData.registerHit(hit);
+
+        if (!this.hasPendingActions()) {
+            return;
+        }
+
+        this.cancelActionTask(true);
     }
 
     // Busy state management
