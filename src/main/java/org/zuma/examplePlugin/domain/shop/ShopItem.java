@@ -32,6 +32,8 @@ public class ShopItem {
     @Nullable
     private AbstractItemType buyCustomCurrency, sellCustomCurrency;
 
+    // Indicates if shop is buy-all and the item is temporary (created & removed dynamically), disappears after stock is bought.
+    private final boolean temporaryItem;
 
     // Constructor
     public ShopItem(int itemId,
@@ -44,7 +46,8 @@ public class ShopItem {
                     @Nullable Integer buyCustomCurrencyId,
                     @Nullable Integer sellCustomCurrencyId,
                     boolean sellable,
-                    boolean buyable) {
+                    boolean buyable,
+                    boolean isTemporaryItem) {
         this.itemId = itemId;
         this.defaultStock = defaultStock;
         this.currentStock = currentStock;
@@ -54,6 +57,7 @@ public class ShopItem {
         this.sellPrice = sellPrice;
         this.sellable = sellable;
         this.buyable = buyable;
+        this.temporaryItem = isTemporaryItem;
 
         if (buyCustomCurrencyId != null) {
             AbstractItemType currencyType = RuneQuestPlugin.getItemRegistry().getType(buyCustomCurrencyId);
@@ -167,4 +171,7 @@ public class ShopItem {
         this.buyable = buyable;
     }
 
+    public boolean isTemporaryItem() {
+        return temporaryItem;
+    }
 }

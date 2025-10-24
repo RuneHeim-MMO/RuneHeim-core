@@ -2,9 +2,12 @@ package org.zuma.examplePlugin.domain.shop;
 
 import org.bukkit.Bukkit;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.shop.persistence.ShopRepository;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class ShopHandler {
     private final ShopRegistry registry;
@@ -34,6 +37,7 @@ public class ShopHandler {
 
             shops.forEach(shop -> {
                 Collection<ShopItem> itemRecords = shop.getStock().values();
+                List<Integer> toBeRemoved = new ArrayList<>();
 
                 itemRecords.forEach(record -> {
                     boolean toBeReplenished = false;
@@ -62,8 +66,19 @@ public class ShopHandler {
                         shop.notifyStockSubscribers();
                     }
 
+                    // Remove temporary items with 0 stock
+                    if (record.isTemporaryItem() && record.getCurrentStock() == 0) {
+                        toBeRemoved.add(record.getItemId());
+                    }
+
 
                 });
+
+                if (!toBeRemoved.isEmpty()) {
+                    toBeRemoved.forEach(id -> shop.getStock().remove(id));
+                    shop.notifyStockSubscribers();
+                }
+
             });
 
 

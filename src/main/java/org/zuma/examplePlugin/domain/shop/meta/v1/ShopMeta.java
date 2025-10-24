@@ -4,5 +4,5 @@ import org.zuma.examplePlugin.domain.shop.persistence.ShopItemConfig;
 
 import java.util.List;
 
-public record ShopMeta(List<ShopItemConfig> stockConfiguration) {
+public record ShopMeta(boolean buyAll, List<ShopItemConfig> stockConfiguration) {
 }
