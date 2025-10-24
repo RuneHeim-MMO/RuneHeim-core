@@ -93,6 +93,7 @@ public class ItemFactory {
             case 1 -> {
                 RemainsItemMeta deserialized = new Gson().fromJson(json.meta(), RemainsItemMeta.class);
                 Remains item = new Remains(meta);
+                item.setBasePrice(deserialized.basePrice());
                 item.setBuryXPReward(deserialized.buryXp());
                 item.setBuryingDurationMs(deserialized.buryingDurationMs());
 

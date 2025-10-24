@@ -786,28 +786,28 @@ public class ItemRepository {
                         "Bones",
                         List.of("Weathered fragments of a fallen creature."),
                         null, true, 1.0),
-                        toVersionedJson(new RemainsItemMeta(10, 1000), 1)),
+                        toVersionedJson(new RemainsItemMeta(10, 10, 1000), 1)),
 
                 new ItemEntity(new AbstractItemMeta(
                         ItemType.REMAINS, ItemId.BIG_BONES.asInt(), Material.COAL, ItemRarity.COMMON,
                         "Big Bones",
                         List.of("Sturdy bones from a larger beast, still faintly echoing its strength."),
                         null, true, 1.0),
-                        toVersionedJson(new RemainsItemMeta(25, 2000), 1)),
+                        toVersionedJson(new RemainsItemMeta(20, 25, 2000), 1)),
 
                 new ItemEntity(new AbstractItemMeta(
                         ItemType.REMAINS, ItemId.LARGE_BONES.asInt(), Material.COAL, ItemRarity.COMMON,
                         "Large Bones",
                         List.of("Massive skeletal remains, once supporting a formidable creature."),
                         null, true, 1.0),
-                        toVersionedJson(new RemainsItemMeta(70, 3000), 1)),
+                        toVersionedJson(new RemainsItemMeta(150, 70, 3000), 1)),
 
                 new ItemEntity(new AbstractItemMeta(
                         ItemType.REMAINS, ItemId.HUGE_BONES.asInt(), Material.COAL, ItemRarity.COMMON,
                         "Huge Bones",
                         List.of("Colossal bones that whisper of a beast towering above mortals."),
                         null, true, 1.0),
-                        toVersionedJson(new RemainsItemMeta(120, 4000), 1)),
+                        toVersionedJson(new RemainsItemMeta(500, 120, 300), 1)),
 
 
                 new ItemEntity(new AbstractItemMeta(ItemType.EMPTY_CONTAINER, ItemId.EMPTY_POT.asInt(), Material.COAL, ItemRarity.COMMON, "Empty Pot", List.of("A regular pot, made of clay."), null, true, 1.0),
