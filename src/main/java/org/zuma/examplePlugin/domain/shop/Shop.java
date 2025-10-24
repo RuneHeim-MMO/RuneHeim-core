@@ -7,6 +7,7 @@ import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.Throttler;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.impl.QuestItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.shop.persistence.ShopItemConfig;
 
@@ -18,12 +19,14 @@ import java.util.List;
 
 public class Shop {
     private final int id;
+    private final boolean buyAll;
     private final LinkedHashMap<Integer, ShopItem> stock = new LinkedHashMap<>(); // Preserves order
     private final List<ShopSubscriber> updateSubscribers = new ArrayList<>();
     private final Throttler updateThrottler = new Throttler(500);
 
-    public Shop(int id, List<ShopItemConfig> stockConfiguration) {
+    public Shop(int id, boolean buyAll, List<ShopItemConfig> stockConfiguration) {
         this.id = id;
+        this.buyAll = buyAll;
 
         stockConfiguration.forEach(config -> {
             stock.put(config.itemId(), new ShopItem(
@@ -37,7 +40,8 @@ public class Shop {
                     config.buyCustomCurrencyId(),
                     config.sellCustomCurrencyId(),
                     config.sellPrice() != null,
-                    config.buyPrice() != null));
+                    config.buyPrice() != null,
+                    false));
         });
 
     }
@@ -87,21 +91,30 @@ public class Shop {
             throw new IllegalStateException("Invalid item");
         }
 
-        if (!type.isTradeable) {
+        if (!type.isTradeable || type instanceof QuestItem) {
             throw new IllegalStateException("This item is untradeable!");
         }
 
-        if (!stock.containsKey(type.id)) {
+        if (!this.buyAll && !stock.containsKey(type.id)) {
             throw new IllegalStateException("You cannot sell this item to this shop!");
         }
 
         ShopItem shopItem = stock.get(type.id);
 
-        if (!shopItem.isSellable()) {
-            throw new IllegalStateException("You cannot sell this item to this shop!");
+        if (this.buyAll && !stock.containsKey(type.id)) {
+            PriceRecord algorithmicSellPrice = ItemPriceCalculator.getPrice(type);
+
+            if (algorithmicSellPrice == null || algorithmicSellPrice.sellPrice() == null) {
+                throw new IllegalStateException("You cannot sell this item to this shop!");
+            }
+        } else {
+            if (!shopItem.isSellable()) {
+                throw new IllegalStateException("You cannot sell this item to this shop!");
+            }
         }
 
-        if (shopItem.getCurrentStock() + item.getAmount() >= 10000) {
+
+        if (shopItem != null && shopItem.getCurrentStock() + item.getAmount() >= 512) {
             throw new IllegalStateException("This shop is full and can't accept more of this item.");
         }
 
@@ -121,7 +134,40 @@ public class Shop {
 
         ShopItem shopItem = stock.get(type.id);
 
-        if (shopItem == null || shopItem.getSellPrice() == null) {
+        if (!buyAll && (shopItem == null || shopItem.getSellPrice() == null)) {
+            throw new IllegalStateException("This item cannot be sold to this shop!");
+        }
+
+        if (buyAll && shopItem == null) {
+            PriceRecord algorithmicSellPrice = ItemPriceCalculator.getPrice(type);
+
+            if (algorithmicSellPrice == null || algorithmicSellPrice.sellPrice() == null) {
+                throw new IllegalStateException("You cannot sell this item to this shop!");
+            }
+
+            // Create a temporary ShopItem
+            shopItem = new ShopItem(
+                    type.id,
+                    0,
+                    0,
+                    null,
+                    300,
+                    algorithmicSellPrice.buyPrice() == null ? 0L : algorithmicSellPrice.buyPrice(),
+                    algorithmicSellPrice.sellPrice(),
+                    null,
+                    null,
+                    true,
+                    algorithmicSellPrice.buyPrice() != null,
+                    true
+            );
+
+            shopItem.setLastReplenishedMillis(System.currentTimeMillis());
+
+            // Add to stock for tracking
+            stock.put(type.id, shopItem);
+        }
+
+        if (shopItem.getSellPrice() == null) {
             throw new IllegalStateException("This item cannot be sold to this shop!");
         }
 
@@ -162,6 +208,11 @@ public class Shop {
         long totalOrderPrice = item.getBuyPrice() * amount;
         item.setCurrentStock(item.getCurrentStock() - amount);
 
+        if (item.isTemporaryItem() && item.getCurrentStock() == 0) {
+            // Remove temporary item from shop when out of stock
+            stock.remove(item.getItemId());
+        }
+
         if (item.getBuyCurrency() != null) {
             boolean currencyDeductSuccess = PlayerUtils.removeItems(player, List.of(new ItemRecord(item.getBuyCurrency().id, Math.toIntExact(totalOrderPrice))));
 
@@ -180,5 +231,9 @@ public class Shop {
 
         player.giveItemOrDrop(type.createItemStackOfType(amount));
         notifyStockSubscribers();
+    }
+
+    public boolean isBuyAll() {
+        return buyAll;
     }
 }

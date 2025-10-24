@@ -15,7 +15,7 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.util.List;
 
-public class Remains extends AbstractItemType {
+public class Remains extends Material {
     private double buryXPReward;
     private int buryingDurationMs;
 

@@ -33,7 +33,7 @@ public class ShopRepository {
     public List<ShopConfig> getAll() {
         return List.of(
 
-                new ShopConfig(ShopId.JEWLER.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                new ShopConfig(ShopId.JEWLER.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.UNCUT_SAPPHIRE.asInt(), 4, 30, ItemId.UNCUT_SAPPHIRE.getBuyPrice(), ItemId.UNCUT_SAPPHIRE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.UNCUT_EMERALD.asInt(), 3, 30, ItemId.UNCUT_EMERALD.getBuyPrice(), ItemId.UNCUT_EMERALD.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.UNCUT_RUBY.asInt(), 2, 30, ItemId.UNCUT_RUBY.getBuyPrice(), ItemId.UNCUT_RUBY.getSellPrice(), null, null),
@@ -48,14 +48,14 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.AMULET_OF_GUARDING.asInt(), 1, 300, 1000L, 360L, null, null)
                 ))), 1)),
 
-                new ShopConfig(ShopId.INVESTMENT_BANKER.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                new ShopConfig(ShopId.INVESTMENT_BANKER.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.PLATINUM_TOKEN.asInt(), 1000, 30, 1000L, 1000L, null, null),
                         new ShopItemConfig(ItemId.SCRATCH_CARD.asInt(), 10, 30, 1000L, 500L, null, null)
                 ))), 1)),
 
-                new ShopConfig(ShopId.GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
+                new ShopConfig(ShopId.GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(true, GENERAL_STORE_ITEMS)), 1)),
 
-                new ShopConfig(ShopId.DRAKKAR_BLACKSMITH.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                new ShopConfig(ShopId.DRAKKAR_BLACKSMITH.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.SMITHING_HAMMER.asInt(), 8, 30, 90L, 20L, null, null),
                         new ShopItemConfig(ItemId.BRONZE_BAR.asInt(), 8, 30, ItemId.BRONZE_BAR.getBuyPrice(), ItemId.BRONZE_BAR.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.IRON_BAR.asInt(), 8, 30, ItemId.IRON_BAR.getBuyPrice(), ItemId.IRON_BAR.getSellPrice(), null, null),
@@ -63,7 +63,7 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.COAL_ORE.asInt(), 4, 30, ItemId.COAL_ORE.getBuyPrice(), ItemId.COAL_ORE.getSellPrice(), null, null)
                 ))), 1)),
 
-                new ShopConfig(ShopId.DRAKKAR_ARMOR_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                new ShopConfig(ShopId.DRAKKAR_ARMOR_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.BRONZE_DAGGER.asInt(), 8, 30, ItemId.BRONZE_DAGGER.getBuyPrice(), ItemId.BRONZE_DAGGER.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.BRONZE_SWORD.asInt(), 8, 30, ItemId.BRONZE_SWORD.getBuyPrice(), ItemId.BRONZE_SWORD.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.BRONZE_BATTLEAXE.asInt(), 8, 30, ItemId.BRONZE_BATTLEAXE.getBuyPrice(), ItemId.BRONZE_BATTLEAXE.getSellPrice(), null, null),
@@ -96,12 +96,12 @@ public class ShopRepository {
 
                 ))), 1)),
 
-                new ShopConfig(ShopId.BASIC_FOOD_STALL.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                new ShopConfig(ShopId.BASIC_FOOD_STALL.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.COOKED_MEAT.asInt(), 32, 30, ItemId.COOKED_MEAT.getBuyPrice(), null, null, null),
                         new ShopItemConfig(ItemId.COOKED_CHICKEN.asInt(), 32, 30, ItemId.COOKED_CHICKEN.getBuyPrice(), null, null, null)
                 ))), 1)),
 
-                new ShopConfig(ShopId.DRAKKAR_GUARD_ARCHER_MERCHANT.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                new ShopConfig(ShopId.DRAKKAR_GUARD_ARCHER_MERCHANT.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.SHORT_BOW.asInt(), 4, 30, ItemId.SHORT_BOW.getBuyPrice(), null, null, null),
                         new ShopItemConfig(ItemId.LONG_BOW.asInt(), 2, 30, ItemId.LONG_BOW.getBuyPrice(), null, null, null),
 
@@ -119,7 +119,7 @@ public class ShopRepository {
 
                 ))), 1)),
 
-                new ShopConfig(ShopId.INFERNAK_BLACKSMITH.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                new ShopConfig(ShopId.INFERNAK_BLACKSMITH.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.SMITHING_HAMMER.asInt(), 8, 30, 90L, 20L, null, null),
                         new ShopItemConfig(ItemId.STEEL_BAR.asInt(), 16, 30, ItemId.STEEL_BAR.getBuyPrice(), ItemId.STEEL_BAR.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.MITHRIL_BAR.asInt(), 4, 30, ItemId.MITHRIL_BAR.getBuyPrice(), ItemId.MITHRIL_BAR.getSellPrice(), null, null),
@@ -128,14 +128,14 @@ public class ShopRepository {
                 ))), 1)),
 
 
-                new ShopConfig(ShopId.VALDRIN_WEAPON_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                new ShopConfig(ShopId.VALDRIN_WEAPON_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.MITHRIL_SWORD.asInt(), 2, 30, ItemId.MITHRIL_SWORD.getBuyPrice(), ItemId.MITHRIL_SWORD.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.STEEL_BATTLEAXE.asInt(), 4, 30, ItemId.STEEL_BATTLEAXE.getBuyPrice(), ItemId.STEEL_BATTLEAXE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.STEEL_DAGGER.asInt(), 4, 30, ItemId.STEEL_DAGGER.getBuyPrice(), ItemId.STEEL_DAGGER.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.STEEL_SWORD.asInt(), 4, 30, ItemId.STEEL_SWORD.getBuyPrice(), ItemId.STEEL_SWORD.getSellPrice(), null, null)
                 ))), 1)),
 
-                new ShopConfig(ShopId.ELDARWYN_ARMOR_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                new ShopConfig(ShopId.ELDARWYN_ARMOR_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.MITHRIL_BOOTS.asInt(), 2, 30, ItemId.MITHRIL_BOOTS.getBuyPrice(), ItemId.MITHRIL_BOOTS.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.MITHRIL_PLATELEGS.asInt(), 2, 30, ItemId.MITHRIL_PLATELEGS.getBuyPrice(), ItemId.MITHRIL_PLATELEGS.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.MITHRIL_CHAINBODY.asInt(), 2, 30, ItemId.MITHRIL_CHAINBODY.getBuyPrice(), ItemId.MITHRIL_CHAINBODY.getSellPrice(), null, null),
@@ -145,31 +145,31 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.ADAMANT_CHAINBODY.asInt(), 1, 3600 * 2, ItemId.ADAMANT_CHAINBODY.getBuyPrice(), ItemId.ADAMANT_CHAINBODY.getSellPrice(), null, null)
                 ))), 1)),
 
-                new ShopConfig(ShopId.SAHARIJIN_FISHING_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                new ShopConfig(ShopId.SAHARIJIN_FISHING_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.REINFORCED_FISHING_ROD.asInt(), 2, 600, 1800L, null, null, null),
                         new ShopItemConfig(ItemId.FISHING_TRAP.asInt(), 2, 600, 2800L, null, null, null)
                 ))), 1)),
 
-                new ShopConfig(ShopId.SPOREFELL_FISHING_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                new ShopConfig(ShopId.SPOREFELL_FISHING_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.FISHING_NET.asInt(), 8, 600, 180L, null, null, null),
                         new ShopItemConfig(ItemId.FISHING_ROD.asInt(), 4, 600, 360L, null, null, null),
                         new ShopItemConfig(ItemId.REINFORCED_FISHING_ROD.asInt(), 2, 600, 1800L, null, null, null)
                 ))), 1)),
 
-                new ShopConfig(ShopId.ASHWALE_MINING_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                new ShopConfig(ShopId.ASHWALE_MINING_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.BRONZE_PICKAXE.asInt(), 8, 300, ItemId.BRONZE_PICKAXE.getBuyPrice(), ItemId.BRONZE_PICKAXE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.IRON_PICKAXE.asInt(), 6, 300, ItemId.IRON_PICKAXE.getBuyPrice(), ItemId.IRON_PICKAXE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.STEEL_PICKAXE.asInt(), 4, 300, ItemId.STEEL_PICKAXE.getBuyPrice(), ItemId.STEEL_PICKAXE.getSellPrice(), null, null)
                 ))), 1)),
 
-                new ShopConfig(ShopId.ASHWALE_AXE_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                new ShopConfig(ShopId.ASHWALE_AXE_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.BRONZE_AXE.asInt(), 8, 300, ItemId.BRONZE_AXE.getBuyPrice(), ItemId.BRONZE_AXE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.IRON_AXE.asInt(), 6, 300, ItemId.IRON_AXE.getBuyPrice(), ItemId.IRON_AXE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.STEEL_AXE.asInt(), 4, 300, ItemId.STEEL_AXE.getBuyPrice(), ItemId.STEEL_AXE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.MITHRIL_AXE.asInt(), 2, 300, ItemId.MITHRIL_AXE.getBuyPrice(), ItemId.MITHRIL_AXE.getSellPrice(), null, null)
                 ))), 1)),
 
-                new ShopConfig(ShopId.MURKWATCH_ARCHERY_MERCHANT.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                new ShopConfig(ShopId.MURKWATCH_ARCHERY_MERCHANT.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.SHORT_BOW.asInt(), 4, 30, ItemId.SHORT_BOW.getBuyPrice(), null, null, null),
                         new ShopItemConfig(ItemId.LONG_BOW.asInt(), 2, 30, ItemId.LONG_BOW.getBuyPrice(), null, null, null),
 
@@ -191,7 +191,7 @@ public class ShopRepository {
 
                 ))), 1)),
 
-                new ShopConfig(ShopId.MURKWATCH_BLACKSMITH.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                new ShopConfig(ShopId.MURKWATCH_BLACKSMITH.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.SMITHING_HAMMER.asInt(), 8, 30, 90L, 20L, null, null),
                         new ShopItemConfig(ItemId.STEEL_BAR.asInt(), 8, 30, ItemId.STEEL_BAR.getBuyPrice(), ItemId.STEEL_BAR.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.MITHRIL_BAR.asInt(), 4, 30, ItemId.MITHRIL_BAR.getBuyPrice(), ItemId.MITHRIL_BAR.getSellPrice(), null, null),
@@ -199,35 +199,35 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.COAL_ORE.asInt(), 32, 30, ItemId.COAL_ORE.getBuyPrice(), ItemId.COAL_ORE.getSellPrice(), null, null)
                 ))), 1)),
 
-                new ShopConfig(ShopId.BRINEPORT_FISHING_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                new ShopConfig(ShopId.BRINEPORT_FISHING_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.FISHING_NET.asInt(), 8, 600, 180L, null, null, null),
                         new ShopItemConfig(ItemId.FISHING_ROD.asInt(), 4, 600, 360L, null, null, null)
                 ))), 1)),
 
 
-                new ShopConfig(ShopId.FENSHADE_MINING_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                new ShopConfig(ShopId.FENSHADE_MINING_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.BRONZE_PICKAXE.asInt(), 8, 300, ItemId.BRONZE_PICKAXE.getBuyPrice(), ItemId.BRONZE_PICKAXE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.IRON_PICKAXE.asInt(), 6, 300, ItemId.IRON_PICKAXE.getBuyPrice(), ItemId.IRON_PICKAXE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.STEEL_PICKAXE.asInt(), 4, 300, ItemId.STEEL_PICKAXE.getBuyPrice(), ItemId.STEEL_PICKAXE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.MITHRIL_PICKAXE.asInt(), 4, 300, ItemId.MITHRIL_PICKAXE.getBuyPrice(), ItemId.MITHRIL_PICKAXE.getSellPrice(), null, null)
                 ))), 1)),
 
-                new ShopConfig(ShopId.SAKURMEER_FOOD_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(List.of(
+                new ShopConfig(ShopId.SAKURMEER_FOOD_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.COOKED_SALMON.asInt(), 32, 30, ItemId.COOKED_SALMON.getBuyPrice(), ItemId.COOKED_SALMON.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.COOKED_TROUT.asInt(), 20, 30, ItemId.COOKED_TROUT.getBuyPrice(), ItemId.COOKED_TROUT.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.COOKED_TUNA.asInt(), 14, 30, ItemId.COOKED_TUNA.getBuyPrice(), ItemId.COOKED_TUNA.getSellPrice(), null, null)
 
                 ))), 1)),
 
-                new ShopConfig(ShopId.BRINEPORT_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
-                new ShopConfig(ShopId.MURKWATCH_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
-                new ShopConfig(ShopId.ELDARWYN_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
-                new ShopConfig(ShopId.SAKURMEER_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
-                new ShopConfig(ShopId.AETHERIS_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
-                new ShopConfig(ShopId.ISLENOR_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
-                new ShopConfig(ShopId.THORNBARK_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(GENERAL_STORE_ITEMS)), 1)),
+                new ShopConfig(ShopId.BRINEPORT_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(true, GENERAL_STORE_ITEMS)), 1)),
+                new ShopConfig(ShopId.MURKWATCH_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(true, GENERAL_STORE_ITEMS)), 1)),
+                new ShopConfig(ShopId.ELDARWYN_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(true, GENERAL_STORE_ITEMS)), 1)),
+                new ShopConfig(ShopId.SAKURMEER_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(true, GENERAL_STORE_ITEMS)), 1)),
+                new ShopConfig(ShopId.AETHERIS_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(true, GENERAL_STORE_ITEMS)), 1)),
+                new ShopConfig(ShopId.ISLENOR_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(true, GENERAL_STORE_ITEMS)), 1)),
+                new ShopConfig(ShopId.THORNBARK_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(true, GENERAL_STORE_ITEMS)), 1)),
 
-                new ShopConfig(ShopId.DRAKKAR_TANNER_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(TANNER_SHOP)), 1))
+                new ShopConfig(ShopId.DRAKKAR_TANNER_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, TANNER_SHOP)), 1))
 
         );
 

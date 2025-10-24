@@ -23,9 +23,7 @@ import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.shop.Shop;
-import org.zuma.examplePlugin.domain.shop.ShopItem;
-import org.zuma.examplePlugin.domain.shop.ShopSubscriber;
+import org.zuma.examplePlugin.domain.shop.*;
 import org.zuma.examplePlugin.domain.shop.lore.ShopItemLore;
 
 import javax.annotation.Nullable;
@@ -60,6 +58,7 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
             }
 
             if (!iterator.hasNext()) {
+                shopInventory.setItem(slot, null);
                 break; // no more items to place
             }
 
@@ -73,6 +72,7 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
             } else {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Couldn't create display item for item id " + item.getItemId() + " for shop id " + shop.getId() + "! Item is null!");
             }
+
         }
     }
 
@@ -198,6 +198,36 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
 
         List<Component> invoice = new ArrayList<>(toBeSold.stream().map(itemStack -> {
             ShopItem item = shop.getShopItem(itemStack);
+
+            if (shop.isBuyAll() && item == null) {
+                AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(itemStack);
+
+                if (type == null) {
+                    return Component.text("Unknown Item");
+                }
+
+                PriceRecord algorithmicSellPrice = ItemPriceCalculator.getPrice(type);
+
+                if (algorithmicSellPrice == null) {
+                    return Component.text("Unknown Item");
+                }
+
+                // create a temporary ShopItem for pricing purposes
+                item = new ShopItem(
+                        type.id,
+                        0,
+                        0,
+                        null,
+                        120,
+                        algorithmicSellPrice.buyPrice() == null ? 0L : algorithmicSellPrice.buyPrice(),
+                        algorithmicSellPrice.sellPrice(),
+                        null,
+                        null,
+                        true,
+                        algorithmicSellPrice.buyPrice() != null,
+                        true
+                );
+            }
 
             if (item == null || item.getSellPrice() == null) {
                 return Component.text("Unknown Item");
