@@ -9,6 +9,8 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.core.utils.MobUtils;
+import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
+import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneHandler;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneMobRecord;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneType;
@@ -189,7 +191,13 @@ public abstract class AbstractSpawnZone {
             }
 
             if (entity instanceof LivingEntity living && living.getTargetEntity(32) != null) {
-                continue; // Don't remove if has target
+                AbstractMob mob = RuneQuestPlugin.getMobRegistry().getMob(entity);
+
+                if (!(mob instanceof CombatantMob combatantMob)) return;
+
+                if (System.currentTimeMillis() - combatantMob.getLastDamagedAt() < 10_000L) {
+                    continue; // Recently in combat, do not remove.
+                }
             }
 
             Location entityLocation = entity.getLocation();

@@ -50,6 +50,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     private final EnumMap<SkillType, Skill> skills = new EnumMap<>(SkillType.class);
     private final int maxHealth, combatLvl;
     private int health;
+    private long lastDamagedAt = 0L;
 
     private final PendingXPHandler xpHandler;
 
@@ -188,6 +189,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         // Apply the scaled health to the entity
         this.xpHandler.calculatePendingXP(hit);
         living.setHealth(scaledHealth);
+        this.lastDamagedAt = System.currentTimeMillis();
     }
 
     @Override
@@ -255,4 +257,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         this.xpHandler.distributePendingXP();
     }
 
+    public long getLastDamagedAt() {
+        return lastDamagedAt;
+    }
 }
