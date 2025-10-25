@@ -30,7 +30,16 @@ public enum ModifierType {
 
     XP_BOOST("XP Boost", "Increases experience gain rate by a multiplier.", Icon.EPIC.get(), "x", null, true),
     COMBAT_XP_BOOST("Combat XP Boost", "Increases experience gain rate by a multiplier.", Icon.EPIC.get(), "x", null, true),
-    SKILLING_XP_BOOST("Skilling XP Boost", "Increases experience gain rate by a multiplier.", Icon.EPIC.get(), "x", null, true);
+    SKILLING_XP_BOOST("Skilling XP Boost", "Increases experience gain rate by a multiplier.", Icon.EPIC.get(), "x", null, true),
+
+    ATTACK_BOOST_PERCENT("Attack Bonus", "", Icon.PRAYER.get(), null, null, false),
+    STRENGTH_BOOST_PERCENT("Strength Bonus", "", Icon.PRAYER.get(), null, null, false),
+    DEFENCE_BOOST_PERCENT("Defence Bonus", "", Icon.PRAYER.get(), null, null, false),
+    RANGED_STR_BOOST_PERCENT("Ranged Strength Bonus", "", Icon.PRAYER.get(), null, null, false),
+    RANGED_ACC_BOOST_PERCENT("Ranged Bonus", "", Icon.PRAYER.get(), null, null, false),
+    RANGED_BOOST_PERCENT("Ranged Bonus", "", Icon.PRAYER.get(), null, null, false),
+    HP_RECOVERY_BOOST_PERCENT("HP Recovery Bonus", "", Icon.PRAYER.get(), null, null, false);
+
 
     private final String label, description, symbol, numSuffix, numPrefix;
     private final boolean special;

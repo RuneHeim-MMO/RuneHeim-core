@@ -28,6 +28,7 @@ public class AdditionalGearSlotHandler {
 
     // Raw slots in crafting grid inventory (1-4)
     public static final int SKILLS_SLOT = 1;
+    public static final int PRAYER_SLOT = 2;
 
     private final Map<Integer, ReservedSlot> slotsDef = ReservedSlot.getSlotMap();
     private final List<Integer> slots = slotsDef.keySet().stream().toList();
@@ -86,6 +87,12 @@ public class AdditionalGearSlotHandler {
 
         if (slot == SKILLS_SLOT) {
             Bukkit.dispatchCommand(player.asBukkitPlayer(), "skills");
+            SoundType.UI_CLICK.play(player, false);
+            return;
+        }
+
+        if (slot == PRAYER_SLOT) {
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.PRAYER_MENU.asInt(), player, null);
             SoundType.UI_CLICK.play(player, false);
             return;
         }

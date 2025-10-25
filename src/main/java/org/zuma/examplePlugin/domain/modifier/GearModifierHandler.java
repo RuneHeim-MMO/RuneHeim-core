@@ -18,6 +18,7 @@ import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.TemporaryEffect;
 import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
+import org.zuma.examplePlugin.domain.prayer.Prayer;
 import org.zuma.examplePlugin.events.modifier.GearModifiersRecalculatedEvent;
 
 import java.util.*;
@@ -34,8 +35,14 @@ public class GearModifierHandler {
 
     public void recalculatePlayerModifiers(RunePlayer player, ItemStack itemInHand) {
         Map.Entry<List<Modifier>, List<SkillModifier>> gearModifiers = getGearModifiers(player, itemInHand);
+        List<Modifier> prayerModifiers = new ArrayList<>();
         List<TemporaryEffect> temporaryEffects = player.getActiveEffects();
 
+        for (Prayer prayer : RuneQuestPlugin.getPrayerManager().getActivePrayers(player.getUUID())) {
+            prayerModifiers.addAll(prayer.getModifiers());
+        }
+
+        // Combined
         List<Modifier> modifiers = new ArrayList<>();
         List<SkillModifier> skillModifiers = new ArrayList<>();
 
@@ -46,6 +53,7 @@ public class GearModifierHandler {
             skillModifiers.addAll(effect.getEffect().skillModifiers());
         }
 
+        modifiers.addAll(prayerModifiers);
         modifiers.addAll(gearModifiers.getKey());
         modifiers.addAll(RuneQuestPlugin.getGlobalModifierHandler().getActiveModifiers().stream().map(m -> new Modifier(m.type(), m.amount())).toList());
         skillModifiers.addAll(gearModifiers.getValue());

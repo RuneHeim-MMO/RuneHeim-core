@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -67,8 +68,15 @@ public class HPRegenerationHandler {
                 int maxHp = player.getMaxHealth();
                 int currentHp = player.getHealth();
 
-                int regen = Math.max(1, maxHp / 40);
-                int newHp = Math.min(currentHp + regen, maxHp);
+                double regen = Math.max(1, maxHp / 40);
+
+                if (player.getModifiers().containsKey(ModifierType.HP_RECOVERY_BOOST_PERCENT)) {
+                    double regedModifier = player.getModifiers().get(ModifierType.HP_RECOVERY_BOOST_PERCENT).amount();
+
+                    regen *= 1 + (regedModifier / 100.0);
+                }
+
+                int newHp = (int) Math.min(currentHp + regen, maxHp);
 
                 player.setHealth(newHp, RunePlayerHealthChangedEvent.Cause.REGENERATION);
                 entry.setValue(now);

@@ -76,6 +76,7 @@ public enum Icon {
     CLOVER("Ⅹ"),
     CONTRACT_SKULL("⥵"),
     PRAYER("⏲"),
+    PRAYER_ACTIVE("⯆"),
     TRADE("⽝"),
     FISHING_HOOK("⢫"),
     ANCHOR("⏚"),

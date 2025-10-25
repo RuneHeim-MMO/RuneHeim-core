@@ -351,11 +351,11 @@ public class RunePlayer implements CombatEntity {
         isDead = dead;
     }
 
-    public void setPrayerEnergy(int amount) {
+    public void setPrayerEnergy(double amount) {
         this.combatData.setPrayerEnergy(amount);
     }
 
-    public int getPrayerEnergy() {
+    public double getPrayerEnergy() {
         return this.combatData.getPrayerEnergy();
     }
 

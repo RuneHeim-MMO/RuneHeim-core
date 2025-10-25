@@ -27,7 +27,8 @@ public enum GUIOverlay {
     WEAPON_SHOP_OVERLAY("⓲"),
     TANNER_OVERLAY("ⴻ"),
     FLETCHING_TABLE_OVERLAY("⩳"),
-    TANNER_SHOP_OVERLAY("❠");
+    TANNER_SHOP_OVERLAY("❠"),
+    PRAYER_MENU_OVERLAY("⦦");
 
     private final String glyph;
 

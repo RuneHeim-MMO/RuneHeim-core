@@ -105,6 +105,7 @@ public class GUIHandler {
         this.registry.register(InventoryId.TANNER.asInt(), () -> new TannerInventory(GUIOverlay.TANNER_OVERLAY.asGlyph() + "§f" + Icon.FIRE.get() + "§f Tanner", InventoryId.TANNER.asInt()));
         this.registry.register(InventoryId.FLETCHING_TABLE.asInt(), () -> new FletchingTableInventory(GUIOverlay.FLETCHING_TABLE_OVERLAY.asGlyph() + "§f" + Icon.ARROW.get() + "§f Fletching Table", InventoryId.FLETCHING_TABLE.asInt()));
         this.registry.register(InventoryId.DRAKKAR_TANNER_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.TANNER_SHOP_OVERLAY.asGlyph() + "§f" + Icon.SWORD.get() + "§f Tanner Shop", InventoryId.DRAKKAR_TANNER_SHOP.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_TANNER_SHOP.asInt())));
+        this.registry.register(InventoryId.PRAYER_MENU.asInt(), () -> new PrayerMenu(GUIOverlay.PRAYER_MENU_OVERLAY.asGlyph() + "§f" + Icon.PRAYER.get() + "§b Prayer", InventoryId.PRAYER_MENU.asInt()));
 
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");

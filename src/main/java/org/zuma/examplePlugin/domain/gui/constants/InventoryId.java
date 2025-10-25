@@ -44,7 +44,8 @@ public enum InventoryId {
     SAKURMEER_FOOD_SHOP(37),
     TANNER(38),
     FLETCHING_TABLE(39),
-    DRAKKAR_TANNER_SHOP(40);
+    DRAKKAR_TANNER_SHOP(40),
+    PRAYER_MENU(41);
 
 
     private final int id;
