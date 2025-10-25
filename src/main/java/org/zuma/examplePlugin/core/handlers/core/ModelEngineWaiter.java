@@ -13,8 +13,16 @@ public class ModelEngineWaiter implements Listener {
     private boolean ranCallback = false;
     private final Runnable callback;
 
-    public ModelEngineWaiter(Runnable cb) {
+    public ModelEngineWaiter(Runnable cb, int timeoutSeconds, Runnable timeoutCallback) {
         this.callback = cb;
+
+        Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+            if (!ranCallback) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[ModelEngineWaiter] ModelEngine did not load all models in time, running timeout callback.");
+                timeoutCallback.run();
+            }
+        }, timeoutSeconds * 20L);
+
     }
 
     @EventHandler

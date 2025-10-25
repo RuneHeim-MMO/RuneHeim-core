@@ -94,6 +94,9 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
             ModelEngineWaiter waiter = new ModelEngineWaiter(() -> {
                 moduleContext.get(BlockLoader.class).loadInteractableBlocks();
                 RuneQuestPlugin.reloadMarkers();
+            }, 30, () -> {
+                // Timeout callback, shut down server
+                getServer().shutdown();
             });
 
             this.getServer().getPluginManager().registerEvents(waiter, this);
