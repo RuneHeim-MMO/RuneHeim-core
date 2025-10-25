@@ -37,6 +37,7 @@ import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSlot;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
+import org.zuma.examplePlugin.domain.mob.mechanics.MobMechanic;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
 import org.zuma.examplePlugin.domain.mob.meta.MobEquipmentMeta;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -47,13 +48,10 @@ import java.util.function.Function;
 
 public abstract class AbstractMob {
     private UUID uuid;
-    private boolean ai;
     private Component displayName;
     private EntityType baseMob;
-    private boolean silent;
-    private boolean isBaby;
-    private boolean isInvulnerable;
-    private boolean clearDefaultHandsEquipment;
+    private boolean ai, silent, isBaby, isInvulnerable, clearDefaultHandsEquipment;
+
     private int maxWalkDistance, yaw;
     private HashMap<Attribute, Double> customAttributes;
     private List<Integer> dropTableIds;
@@ -66,6 +64,8 @@ public abstract class AbstractMob {
     private @Nullable Disguise disguise;
     private @Nullable String model;
     private @Nullable MobBehavior behavior;
+
+    private final List<MobMechanic> mobMechanics;
 
     public AbstractMob(AbstractMobMeta meta) {
         this.ai = meta.ai();
@@ -86,6 +86,7 @@ public abstract class AbstractMob {
         healthBarSafeName = this instanceof CombatantMob ? "" : getDisplayName();
         onSpawnRunnable = null;
         yaw = 0;
+        mobMechanics = new ArrayList<>();
     }
 
     public void setYaw(int yaw) {
@@ -136,6 +137,8 @@ public abstract class AbstractMob {
         if (onSpawnRunnable != null) {
             onSpawnRunnable.apply(entity);
         }
+
+        mobMechanics.forEach(MobMechanic::onSpawn);
 
         return entity;
     }
@@ -456,6 +459,14 @@ public abstract class AbstractMob {
 
     public void setClearDefaultHandsEquipment(boolean clearDefaultHandsEquipment) {
         this.clearDefaultHandsEquipment = clearDefaultHandsEquipment;
+    }
+
+    public List<MobMechanic> getMobMechanics() {
+        return this.mobMechanics;
+    }
+
+    public void addMobMechanic(MobMechanic mechanic) {
+        this.mobMechanics.add(mechanic);
     }
 
 

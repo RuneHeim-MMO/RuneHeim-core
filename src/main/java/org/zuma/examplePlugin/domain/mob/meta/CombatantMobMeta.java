@@ -12,5 +12,5 @@ import java.util.List;
 public record CombatantMobMeta(String displayName, EquipmentSet equipmentSet, List<SkillLevelRecord> skills,
                                @Nullable List<Modifier> modifiers, @Nullable String skin, @Nullable String model,
                                @Nullable DisguiseType disguiseType, List<Integer> dropTableIds,
-                               int maxHealth, EntityType baseEntity) {
+                               boolean safeSpottable, int maxHealth, EntityType baseEntity) {
 }

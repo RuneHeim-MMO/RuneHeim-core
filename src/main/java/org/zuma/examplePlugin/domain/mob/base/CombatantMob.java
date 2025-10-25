@@ -24,14 +24,8 @@ import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
-import org.zuma.examplePlugin.domain.item.base.SocketedEquipableItemType;
-import org.zuma.examplePlugin.domain.item.impl.Gem;
-import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
-import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFruit;
-import org.zuma.examplePlugin.domain.item.state.states.FairyState;
-import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 import org.zuma.examplePlugin.domain.mob.constants.MetadataKeys;
-import org.zuma.examplePlugin.domain.modifier.SkillModifier;
+import org.zuma.examplePlugin.domain.mob.mechanics.AntiSafeSpotPullMechanic;
 import org.zuma.examplePlugin.domain.xp.PendingXPHandler;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
 import org.zuma.examplePlugin.domain.mob.meta.CombatantMobMeta;
@@ -50,7 +44,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     private final EnumMap<SkillType, Skill> skills = new EnumMap<>(SkillType.class);
     private final int maxHealth, combatLvl;
     private int health;
-    private long lastDamagedAt = 0L;
+    private long lastDamagedAt;
 
     private final PendingXPHandler xpHandler;
 
@@ -59,6 +53,10 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         this.health = meta.maxHealth();
         this.maxHealth = meta.maxHealth();
         this.xpHandler = new PendingXPHandler();
+
+        if (!meta.safeSpottable()) {
+            this.addMobMechanic(new AntiSafeSpotPullMechanic(this));
+        }
 
         setModel(meta.model());
         setDropTableIds(meta.dropTableIds());
@@ -182,14 +180,29 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
                 living.setMetadata(MetadataKeys.MOST_DAMAGING_PLAYER_UUID.asString(), new FixedMetadataValue(RuneQuestPlugin.getInstance(), this.xpHandler.getPlayerWithMostPendingXP().toString()));
             }
 
+            RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(playerAttacker);
+            if (runePlayer != null) {
+                this.getMobMechanics().forEach(m -> m.onDeath(runePlayer, hit));
+            }
+
             RuneEntityDeathEvent event = new RuneEntityDeathEvent(hit.getAttacker(), hit.getDefender(), hit, hit.getAttackType());
             Bukkit.getServer().getPluginManager().callEvent(event);
         }
 
         // Apply the scaled health to the entity
         this.xpHandler.calculatePendingXP(hit);
-        living.setHealth(scaledHealth);
         this.lastDamagedAt = System.currentTimeMillis();
+
+        // Notify mob mechanics of player damage
+        if (hit.getAttacker().getEntity() instanceof Player playerAttacker) {
+            RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(playerAttacker);
+            if (runePlayer != null) {
+                this.getMobMechanics().forEach(m -> m.onDamagedByPlayer(runePlayer, hit));
+            }
+        }
+
+
+        living.setHealth(scaledHealth);
     }
 
     @Override
@@ -210,6 +223,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         }
 
         if (health == 0) {
+
             if (entity instanceof LivingEntity livingEntity) {
                 livingEntity.setHealth(0.0);
             } else {
@@ -238,17 +252,20 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
 
     @Override
     public void onEntityAttackPlayer(EntityDamageByEntityEvent event, RunePlayer runePlayer) {
-        Entity hit = getEntity();
-        if (hit != null) {
-            ModeledEntity me = ModelEngineAPI.getModeledEntity(hit);
+        Entity entity = getEntity();
+        if (entity == null) return;
 
-            if (me != null) {
-                me.getModels().values().forEach(am -> {
-                    am.getAnimationHandler().playAnimation("attack", 0f, 0.3f, 1, true);
-                });
-            }
+        // Notify mob mechanics of mob damage to player
+        this.getMobMechanics().forEach(m -> m.onMobDamagePlayer(runePlayer));
 
+        ModeledEntity me = ModelEngineAPI.getModeledEntity(entity);
+
+        if (me != null) {
+            me.getModels().values().forEach(am -> {
+                am.getAnimationHandler().playAnimation("attack", 0f, 0.3f, 1, true);
+            });
         }
+
 
     }
 
@@ -260,4 +277,5 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     public long getLastDamagedAt() {
         return lastDamagedAt;
     }
+
 }
