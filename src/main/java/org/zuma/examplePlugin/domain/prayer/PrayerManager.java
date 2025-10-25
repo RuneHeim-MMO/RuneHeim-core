@@ -1,6 +1,10 @@
 package org.zuma.examplePlugin.domain.prayer;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
@@ -12,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class PrayerManager {
+public class PrayerManager implements Listener {
     private final HashMap<UUID, List<Prayer>> activePrayers = new HashMap<>();
 
     public PrayerManager() {
@@ -25,6 +29,8 @@ public class PrayerManager {
     }
 
     private void tick() {
+        List<UUID> offlinePlayers = new ArrayList<>();
+
         RuneQuestPlugin.getPlayerManager().getOnlinePlayers().forEach(player -> {
             if (!activePrayers.containsKey(player.getUUID())) {
                 activePrayers.put(player.getUUID(), new ArrayList<>());
@@ -44,9 +50,16 @@ public class PrayerManager {
                 prayers.clear();
                 handlePrayerDepletion(player);
             }
-
-
         });
+
+        activePrayers.forEach(((uuid, prayers) -> {
+            Player player = Bukkit.getPlayer(uuid);
+            if (player == null || !player.isOnline()) {
+                offlinePlayers.add(uuid);
+            }
+        }));
+
+        offlinePlayers.forEach(activePrayers::remove);
     }
 
     private void handlePrayerDepletion(RunePlayer player) {
@@ -125,4 +138,5 @@ public class PrayerManager {
     public List<Prayer> getActivePrayers(UUID playerUUID) {
         return activePrayers.getOrDefault(playerUUID, new ArrayList<>());
     }
+
 }
