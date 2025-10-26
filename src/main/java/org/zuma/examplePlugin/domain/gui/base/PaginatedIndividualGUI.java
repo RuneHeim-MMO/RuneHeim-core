@@ -154,8 +154,11 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
         // Place pagination icons in the last row (full row assumed)
         int lastRowStart = (rows - 1) * ITEMS_IN_ROW;
 
+        ItemStack pageCountIcon = GUIControl.fromNumber(page).asItemstack(Component.text("Page: " + page));
+        assignMenuValue(pageCountIcon, -9000); // Dummy value to identify as a menu item
+
         inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 6, previousPageIcon());
-        inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 5, GUIControl.fromNumber(page).asItemstack(Component.text("Page: " + page)));
+        inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 5, pageCountIcon);
         inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 4, nextPageIcon());
 
         return inventory;
@@ -170,6 +173,12 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
         }
 
         Integer menuValue = getMenuValue(currentItem);
+
+        if (menuValue != null && menuValue == -9000) {
+            // Clicked on page count icon, do nothing
+            event.setCancelled(true);
+            return;
+        }
 
         if (menuValue != null && menuValue == 10000) {
             nextPage();
