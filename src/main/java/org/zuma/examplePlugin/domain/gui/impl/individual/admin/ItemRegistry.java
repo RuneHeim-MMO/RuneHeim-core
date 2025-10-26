@@ -6,6 +6,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.permissions.Permission;
 import org.zuma.examplePlugin.domain.gui.base.PaginatedIndividualGUI;
+import org.zuma.examplePlugin.domain.gui.constants.GUIOverlay;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -15,7 +16,7 @@ import java.util.Comparator;
 
 public class ItemRegistry extends PaginatedIndividualGUI {
     public ItemRegistry(int id) {
-        super("Item Registry", id, 6, null);
+        super(GUIOverlay.GENERIC_OVERLAY_6.asGlyph() + "Item Registry", id, 6, null);
     }
 
     @Override
