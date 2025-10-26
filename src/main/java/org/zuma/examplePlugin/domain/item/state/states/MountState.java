@@ -156,5 +156,13 @@ public class MountState extends AbstractState {
 
         this.name = name;
     }
-    
+
+    public void setLevel(Mount mount, int levels) {
+        if (levels <= getMaxLevel(mount)) {
+            this.level = levels;
+
+            if (this.onLevelUp != null)
+                this.onLevelUp.apply(this.level);
+        }
+    }
 }

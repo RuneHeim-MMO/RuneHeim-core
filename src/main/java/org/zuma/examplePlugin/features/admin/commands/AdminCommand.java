@@ -2,8 +2,6 @@ package org.zuma.examplePlugin.features.admin.commands;
 
 
 import com.google.gson.Gson;
-import com.melluh.servertours.api.ServerToursAPI;
-import com.melluh.servertours.api.object.Route;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
@@ -28,20 +26,23 @@ import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
 import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
 import org.zuma.examplePlugin.domain.combat.HitHandler;
-import org.zuma.examplePlugin.domain.effect.EffectHandler;
-import org.zuma.examplePlugin.domain.effect.effects.FirstJoinEffect;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.impl.Mount;
+import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
+import org.zuma.examplePlugin.domain.item.state.states.FairyState;
+import org.zuma.examplePlugin.domain.item.state.states.MountState;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.player.states.TravelStateHandler;
+import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
+import org.zuma.examplePlugin.domain.player.inventory.ReservedSlot;
 import org.zuma.examplePlugin.domain.quest.Quest;
 import org.zuma.examplePlugin.domain.quest.QuestSerializer;
 import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
-import org.zuma.examplePlugin.domain.tour.Tour;
 import org.zuma.examplePlugin.events.core.NetworkRestartEvent;
 import org.zuma.examplePlugin.features.admin.inventories.ItemRegistryInventory;
 import org.zuma.examplePlugin.features.admin.inventories.RecipesInventory;
@@ -132,6 +133,44 @@ public class AdminCommand implements BasicCommand {
 
         if (args[0].equalsIgnoreCase("perms")) {
             player.sendMessage(runePlayer.getRole().getFormattedAllPermissionComponent());
+        }
+
+        if (args[0].equalsIgnoreCase("level") && args[1].equalsIgnoreCase("mount")) {
+            AdditionalGearSlotHandler slotHandler = RuneQuestPlugin.getModuleContext().get(AdditionalGearSlotHandler.class);
+            ItemStack itemStack = slotHandler.getSlotItem(runePlayer, ReservedSlot.MOUNT_SLOT);
+            AbstractItemType item = RuneQuestPlugin.getItemRegistry().getType(itemStack);
+
+            if (!(item instanceof Mount mount) || itemStack == null) {
+                return;
+            }
+
+            MountState state = mount.getState(itemStack);
+
+            if (state == null) {
+                return;
+            }
+
+            state.setLevel(mount, Integer.parseInt(args[2]));
+            item.getMetaGenerator().updatePresentationLayer(itemStack);
+        }
+
+        if (args[0].equalsIgnoreCase("level") && args[1].equalsIgnoreCase("fairy")) {
+            AdditionalGearSlotHandler slotHandler = RuneQuestPlugin.getModuleContext().get(AdditionalGearSlotHandler.class);
+            ItemStack itemStack = slotHandler.getSlotItem(runePlayer, ReservedSlot.FAIRY_SLOT);
+            AbstractItemType item = RuneQuestPlugin.getItemRegistry().getType(itemStack);
+
+            if (!(item instanceof Fairy fairy) || itemStack == null) {
+                return;
+            }
+
+            FairyState state = fairy.getState(itemStack);
+
+            if (state == null) {
+                return;
+            }
+
+            state.setMaxExp();
+            item.getMetaGenerator().updatePresentationLayer(itemStack);
         }
 
 

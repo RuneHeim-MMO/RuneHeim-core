@@ -211,4 +211,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     public static PrayerManager getPrayerManager() {
         return pluginInstance.moduleContext.get(PrayerManager.class);
     }
+
+    public static ModuleContext getModuleContext() {
+        return pluginInstance.moduleContext;
+    }
 }
