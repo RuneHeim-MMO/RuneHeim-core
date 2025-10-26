@@ -68,7 +68,8 @@ public class InteractionDisabler implements Listener {
             "/mount",
             "/pouch",
             "/skills",
-            "/stuck"
+            "/stuck",
+            "/party"
     };
 
     public void disableTourViewPermission() {

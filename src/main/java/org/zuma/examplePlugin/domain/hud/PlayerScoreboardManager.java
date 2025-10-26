@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.combat.HitListener;
+import org.zuma.examplePlugin.domain.party.Party;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.domain.territory.Territory;
@@ -162,7 +163,16 @@ public class PlayerScoreboardManager {
         Team team = getPlayerTeam(target);
 
         if (team == null) return;
-        team.prefix(target.getRole().getPrefix());
+
+        Party targetParty = RuneQuestPlugin.getPartyManager().getPlayersParty(target);
+        Component base = target.getRole().getPrefix();
+
+        if (targetParty != null && targetParty.getMemberUUIDs().contains(player.getUUID())) {
+            team.prefix(Icon.PARTY.asComponent().append(base));
+        } else {
+            team.prefix(base);
+        }
+
         team.addEntry(target.asBukkitPlayer().getName());
     }
 
@@ -179,10 +189,6 @@ public class PlayerScoreboardManager {
         // Attach all online player nametags
         RuneQuestPlugin.getPlayerManager().getOnlinePlayers().forEach(otherPlayer -> {
             player.getScoreboardManager().attachNametag(otherPlayer);
-        });
-
-        // Attach this player's nametag to all online players
-        RuneQuestPlugin.getPlayerManager().getOnlinePlayers().forEach(otherPlayer -> {
             otherPlayer.getScoreboardManager().attachNametag(player);
         });
     }

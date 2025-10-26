@@ -46,7 +46,7 @@ public class RunePlayer implements CombatEntity {
     private PermissionAttachment permissionAttachment;
 
     private final PlayerCombatData combatData;
-    private @Nullable Party party;
+    private @Nullable UUID partyUUID;
 
     private final PendingXPHandler pendingXPHandler;
     private final EnumMap<ModifierType, Modifier> modifiers;
@@ -160,11 +160,15 @@ public class RunePlayer implements CombatEntity {
 
     // Party
     public @Nullable Party getParty() {
-        return party;
+        if (partyUUID != null) {
+            return RuneQuestPlugin.getPartyManager().getPartyByUUID(partyUUID);
+        }
+
+        return null;
     }
 
     public void setParty(@Nullable Party party) {
-        this.party = party;
+        this.partyUUID = party != null ? party.getUuid() : null;
     }
 
     // Combat data (health, combat level)
