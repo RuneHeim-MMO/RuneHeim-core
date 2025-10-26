@@ -1051,7 +1051,7 @@ public class ItemRepository {
                                 , 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.BRONZE_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Bronze axe", List.of("Bronze axe, useful for combat and chopping."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.BRONZE_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Bronze Axe", List.of("Bronze axe, useful for combat and chopping."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(null, null, null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1)),
@@ -1059,7 +1059,7 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.IRON_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Iron axe", List.of("Iron axe, sturdy and reliable."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.IRON_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Iron Axe", List.of("Iron axe, sturdy and reliable."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(null, null, null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.1)),
@@ -1067,7 +1067,7 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.STEEL_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Steel axe", List.of("Steel axe, stronger and more durable."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.STEEL_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.COMMON, "Steel Axe", List.of("Steel axe, stronger and more durable."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(null, null, null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.2)),
@@ -1075,7 +1075,7 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.MITHRIL_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.UNCOMMON, "Mithril axe", List.of("Mithril axe, light and efficient."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.MITHRIL_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.UNCOMMON, "Mithril Axe", List.of("Mithril axe, light and efficient."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(null, null, null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.3)),
@@ -1083,7 +1083,7 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.ADAMANT_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.UNCOMMON, "Adamantite axe", List.of("Adamantite axe, built to last."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.ADAMANT_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.UNCOMMON, "Adamantite Axe", List.of("Adamantite axe, built to last."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(null, null, null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.5)),
@@ -1091,7 +1091,7 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.TOOL_WITH_GEM_SOCKETS, ItemId.RUNE_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.RARE, "Runite axe", List.of("Runite axe glowing with magical energy."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.TOOL_WITH_GEM_SOCKETS, ItemId.RUNE_AXE.asInt(), Material.WOODEN_AXE, ItemRarity.RARE, "Runite Axe", List.of("Runite axe glowing with magical energy."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new SocketedToolMeta(new EquipableTypeMeta(null, null, null,
                                         List.of(new Modifier(ModifierType.WOODCUTTING_BOOST, 1.8)),
