@@ -29,7 +29,7 @@ public class RecipeRegistry extends PaginatedIndividualGUI {
             return false;
         }
 
-        setContent(RuneQuestPlugin.getRecipeRegistry().getAllRecipes().stream().sorted(Comparator.comparingInt(AbstractRecipe::getId)).map(r -> r.getDisplayItemstack(player, RuneQuestPlugin.getItemRegistry())).toList());
+        setContent(RuneQuestPlugin.getRecipeRegistry().getAllRecipes().stream().sorted(Comparator.comparingInt(AbstractRecipe::getId)).map(r -> r.getDisplayItemstack(player, RuneQuestPlugin.getItemRegistry())).toList(), true);
         player.asBukkitPlayer().openInventory(getBaseInventory());
         return true;
     }

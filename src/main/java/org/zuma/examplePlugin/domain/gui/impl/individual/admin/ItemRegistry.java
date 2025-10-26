@@ -2,8 +2,10 @@ package org.zuma.examplePlugin.domain.gui.impl.individual.admin;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
 import org.zuma.examplePlugin.core.permissions.Permission;
 import org.zuma.examplePlugin.domain.gui.base.PaginatedIndividualGUI;
 import org.zuma.examplePlugin.domain.gui.constants.GUIOverlay;
@@ -29,7 +31,7 @@ public class ItemRegistry extends PaginatedIndividualGUI {
             return false;
         }
 
-        setContent(RuneQuestPlugin.getItemRegistry().getAllItems().stream().sorted(Comparator.comparingInt(a -> a.id)).map(AbstractItemType::createItemStackOfType).toList());
+        setContent(RuneQuestPlugin.getItemRegistry().getAllItems().stream().sorted(Comparator.comparingInt(a -> a.id)).map(AbstractItemType::createItemStackOfType).toList(), false);
         player.asBukkitPlayer().openInventory(getBaseInventory());
         return true;
     }

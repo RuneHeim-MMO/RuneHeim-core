@@ -32,7 +32,7 @@ public abstract class RecipeInventory extends PaginatedIndividualGUI {
             super.setActionsLore(icon, this.actionLabel + " x" + this.LEFT_CLICK_CRAFT_AMOUNT, this.actionLabel + " x" + SHIFT_CLICK_CRAFT_AMOUNT);
 
             return icon;
-        }).toList());
+        }).toList(), true);
 
         player.asBukkitPlayer().openInventory(getBaseInventory());
         return true;

@@ -72,10 +72,14 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
     }
 
 
-    public void setContent(List<ItemStack> items) {
+    public void setContent(List<ItemStack> items, boolean tagIllegal) {
         this.totalItems = items.size();
 
-        this.items = List.copyOf(items).stream().peek(IllegalItemWatchdog::tagIllegalItem).toList();
+        if (tagIllegal) {
+            this.items = List.copyOf(items).stream().peek(IllegalItemWatchdog::tagIllegalItem).toList();
+        } else {
+            this.items = List.copyOf(items);
+        }
 
         int usableSlots = getUsableSlotsCount();
 

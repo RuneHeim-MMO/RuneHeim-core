@@ -1,8 +1,6 @@
 package org.zuma.examplePlugin.domain.gui.impl.individual;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.gui.base.PaginatedIndividualGUI;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -36,8 +34,8 @@ public class QuestsInventory extends PaginatedIndividualGUI {
                                 }
                         ))
                         .map(quest -> quest.getDisplayItemStack(player))
-                        .toList()
-        );
+                        .toList(),
+                true);
 
         player.asBukkitPlayer().openInventory(getBaseInventory());
         return true;
