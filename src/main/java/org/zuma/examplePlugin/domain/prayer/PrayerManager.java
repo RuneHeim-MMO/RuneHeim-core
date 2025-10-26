@@ -1,6 +1,9 @@
 package org.zuma.examplePlugin.domain.prayer;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,10 +14,7 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class PrayerManager implements Listener {
     private final HashMap<UUID, List<Prayer>> activePrayers = new HashMap<>();
@@ -25,6 +25,7 @@ public class PrayerManager implements Listener {
 
     public void startLoop() {
         Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::tick, 0L, 60L);
+        Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::presentationTick, 0L, 10L);
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "PrayerManager loop started.");
     }
 
@@ -60,6 +61,41 @@ public class PrayerManager implements Listener {
         }));
 
         offlinePlayers.forEach(activePrayers::remove);
+    }
+
+    private void presentationTick() {
+        for (Map.Entry<UUID, List<Prayer>> entry : activePrayers.entrySet()) {
+            UUID playerUUID = entry.getKey();
+            List<Prayer> prayers = entry.getValue();
+
+            if (prayers.isEmpty()) continue;
+
+
+            Player player = Bukkit.getPlayer(playerUUID);
+            if (player == null || !player.isOnline()) {
+                continue;
+            }
+
+            int highestLevel = prayers.stream()
+                    .mapToInt(Prayer::getLevelRequirement)
+                    .max()
+                    .orElse(1);
+
+            Color color = Color.WHITE;
+
+            if (highestLevel <= 9) {
+                color = Color.WHITE;
+            } else if (highestLevel <= 29) {
+                color = Color.YELLOW;
+            } else {
+                color = Color.PURPLE;
+            }
+
+            Location loc = player.getLocation().clone();
+            Particle.DustOptions dust = new Particle.DustOptions(color, 0.5f + (prayers.size() * 0.25f));
+            player.getWorld().spawnParticle(Particle.DUST, loc, 10, 0.5, 0.5, 0.5, dust);
+
+        }
     }
 
     private void handlePrayerDepletion(RunePlayer player) {
