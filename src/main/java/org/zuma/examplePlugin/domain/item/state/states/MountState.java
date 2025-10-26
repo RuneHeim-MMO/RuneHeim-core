@@ -1,25 +1,14 @@
 package org.zuma.examplePlugin.domain.item.state.states;
 
 import com.google.gson.Gson;
-import net.kyori.adventure.text.Component;
-import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
-import org.zuma.examplePlugin.domain.hud.HudService;
-import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.impl.Mount;
-import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFruit;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
-import org.zuma.examplePlugin.domain.item.state.meta.v1.FairyStateMeta;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.MountStateMeta;
 
 import javax.annotation.Nullable;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 
 /*
@@ -65,7 +54,7 @@ console.log(totalhrs + "total hrs")
 public class MountState extends AbstractState {
     private static final int BASE_XP = 500;
     private static final double XP_POWER_AMOUNT = 1.15;
-    private static final double EXPERIENCE_GAIN_PER_TICK = 0.1;
+    private static final double EXPERIENCE_GAIN_PER_TICK = 0.25;
 
     @Nullable
     private String name;
@@ -167,4 +156,5 @@ public class MountState extends AbstractState {
 
         this.name = name;
     }
+    
 }
