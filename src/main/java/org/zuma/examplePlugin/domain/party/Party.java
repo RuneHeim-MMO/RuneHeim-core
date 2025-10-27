@@ -2,8 +2,10 @@ package org.zuma.examplePlugin.domain.party;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -36,7 +38,7 @@ public class Party {
         return uuid;
     }
 
-    public List<RunePlayer> getMembers() {
+    public List<RunePlayer> getOnlineMembers() {
         List<RunePlayer> memberList = new ArrayList<>();
 
         for (UUID playerUuid : players) {
@@ -72,11 +74,11 @@ public class Party {
         ownerUsername = player.asBukkitPlayer().getName();
         Bukkit.getServer().getPluginManager().callEvent(new PartyOwnerUpdateEvent(this, player));
 
-        this.players.forEach(uuid -> {
-            RunePlayer member = RuneQuestPlugin.getPlayerManager().getRunePlayer(uuid);
-            if (member != null) {
-                member.asBukkitPlayer().sendMessage(Component.text(player.asBukkitPlayer().getName() + " is the new owner of the party.", Color.INFO.asColor()));
-            }
+        this.getOnlineMembers().forEach(member -> {
+            member.asBukkitPlayer().sendMessage(
+                    Icon.PARTY.asComponent().append(Component.text(player.asBukkitPlayer().getName(), Color.ACCENT.asColor())
+                            .append(Component.text(" is the new owner of the party.", Color.INFO.asColor())))
+            );
         });
 
         reloadMemberNametags();
@@ -98,11 +100,11 @@ public class Party {
         invites.add(player.getUUID());
         Bukkit.getServer().getPluginManager().callEvent(new PartyPlayerInvited(this, player));
 
-        this.players.forEach(uuid -> {
-            RunePlayer member = RuneQuestPlugin.getPlayerManager().getRunePlayer(uuid);
-            if (member != null) {
-                member.asBukkitPlayer().sendMessage(Component.text(player.asBukkitPlayer().getName() + " has been invited to the party.", Color.INFO.asColor()));
-            }
+        this.getOnlineMembers().forEach(member -> {
+            member.asBukkitPlayer().sendMessage(
+                    Icon.PARTY.asComponent().append(Component.text(player.asBukkitPlayer().getName(), Color.ACCENT.asColor())
+                            .append(Component.text(" has been invited to the party.", Color.INFO.asColor())))
+            );
         });
     }
 
@@ -124,12 +126,13 @@ public class Party {
         player.setParty(this);
         Bukkit.getServer().getPluginManager().callEvent(new PartyPlayerJoinedEvent(this, player));
 
-        this.players.forEach(uuid -> {
-            RunePlayer member = RuneQuestPlugin.getPlayerManager().getRunePlayer(uuid);
-            if (member != null) {
-                member.asBukkitPlayer().sendMessage(Component.text(player.asBukkitPlayer().getName() + " has joined the party.", Color.SUCCESS.asColor()));
-            }
+        this.getOnlineMembers().forEach(member -> {
+            member.asBukkitPlayer().sendMessage(
+                    Icon.PARTY.asComponent().append(Component.text(player.asBukkitPlayer().getName(), Color.ACCENT.asColor())
+                            .append(Component.text(" has joined the party.", Color.SUCCESS.asColor())))
+            );
         });
+
 
         reloadMemberNametags();
     }
@@ -142,49 +145,60 @@ public class Party {
         players.remove(player.getUUID());
         player.setParty(null);
 
+        this.getOnlineMembers().forEach(member -> {
+            member.asBukkitPlayer().sendMessage(
+                    Icon.PARTY.asComponent().append(Component.text(player.asBukkitPlayer().getName(), Color.ACCENT.asColor())
+                            .append(Component.text(" has left the party.", Color.ERROR.asColor())))
+            );
+        });
 
+
+        // Transfer ownership if the owner leaves
         if (player.getUUID().equals(ownerUuid)) {
-            if (players.isEmpty()) {
+            if (this.getOnlineMembers().isEmpty()) {
                 RuneQuestPlugin.getPartyManager().removeParty(this.uuid);
                 return;
             } else {
-                RunePlayer newOwner = RuneQuestPlugin.getPlayerManager().getRunePlayer(players.getFirst());
-                if (newOwner != null) setNewOwner(newOwner);
+                RunePlayer newOwner = this.getOnlineMembers().getFirst();
+                setNewOwner(newOwner);
+
             }
         }
-
-        this.players.forEach(uuid -> {
-            RunePlayer member = RuneQuestPlugin.getPlayerManager().getRunePlayer(uuid);
-            if (member != null) {
-                member.asBukkitPlayer().sendMessage(Component.text(player.asBukkitPlayer().getName() + " has left the party.", Color.ERROR.asColor()));
-            }
-        });
 
         reloadMemberNametags();
     }
 
-    public void kickPlayer(RunePlayer whoKicked, RunePlayer player) {
+    public void kickPlayer(RunePlayer whoKicked, UUID playerUUID) {
         if (!ownerUuid.equals(whoKicked.getUUID())) {
             throw new IllegalStateException("You are not a party owner.");
         }
 
-        if (!players.contains(player.getUUID())) {
+        if (!players.contains(playerUUID)) {
             throw new IllegalArgumentException("The player is not in this party.");
         }
 
-        if (player.getUUID().equals(ownerUuid)) {
+        if (playerUUID.equals(ownerUuid)) {
             throw new IllegalStateException("Cannot kick party owner.");
         }
 
-        players.remove(player.getUUID());
-        player.setParty(null);
-        Bukkit.getServer().getPluginManager().callEvent(new PartyPlayerKickedEvent(this, player));
+        players.remove(playerUUID);
+        OfflinePlayer bukkitPlayer = Bukkit.getOfflinePlayer(playerUUID);
+        RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(playerUUID);
 
+        if (player != null) {
+            player.setParty(null);
+            Bukkit.getServer().getPluginManager().callEvent(new PartyPlayerKickedEvent(this, player));
+        }
 
-        this.players.forEach(uuid -> {
-            RunePlayer member = RuneQuestPlugin.getPlayerManager().getRunePlayer(uuid);
-            if (member != null) {
-                member.asBukkitPlayer().sendMessage(Component.text(player.asBukkitPlayer().getName() + " has been kicked from the party.", Color.ERROR.asColor()));
+        this.getOnlineMembers().forEach(member -> {
+            String name = bukkitPlayer.getName();
+
+            if (name != null) {
+                member.asBukkitPlayer().sendMessage(
+                        Icon.PARTY.asComponent().append(Component.text(bukkitPlayer.getName(), Color.ACCENT.asColor())
+                                .append(Component.text(" has been kicked from the party by ", Color.ERROR.asColor()))
+                                .append(Component.text(whoKicked.asBukkitPlayer().getName(), Color.ACCENT.asColor())))
+                );
             }
         });
         reloadMemberNametags();
@@ -195,28 +209,13 @@ public class Party {
     }
 
     private void reloadMemberNametags() {
-        for (UUID memberUuid : players) {
-            RunePlayer member = RuneQuestPlugin.getPlayerManager().getRunePlayer(memberUuid);
+        this.getOnlineMembers().forEach(RunePlayer::reloadNametags);
 
-            if (member != null) {
-                member.reloadNametags();
-            }
-
-        }
     }
 
     public void splitXPBetweenMembers(SkillType type, double xp) {
         if (players.isEmpty()) return;
-
-        double equalXp = xp / players.size();
-
-        players.forEach(uuid -> {
-            RunePlayer member = RuneQuestPlugin.getPlayerManager().getRunePlayer(uuid);
-
-            if (member != null) {
-                member.addXp(type, equalXp, XpSource.PARTY);
-            }
-
-        });
+        double equalXp = xp / this.getOnlineMembers().size();
+        this.getOnlineMembers().forEach(member -> member.addXp(type, equalXp, XpSource.PARTY));
     }
 }

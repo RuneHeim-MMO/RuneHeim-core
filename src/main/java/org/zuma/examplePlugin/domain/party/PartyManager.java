@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.party.PartyCreatedEvent;
 import org.zuma.examplePlugin.events.party.PartyDisbandedEvent;
@@ -30,7 +31,11 @@ public class PartyManager {
         creator.setParty(party);
 
         Bukkit.getServer().getPluginManager().callEvent(new PartyCreatedEvent(party));
-        creator.asBukkitPlayer().sendMessage(Component.text("Party created! Use /party invite <player> to invite members.", Color.SUCCESS.asColor()));
+        creator.asBukkitPlayer().sendMessage(
+                Icon.PARTY.asComponent().append(Component.text("Party created! Use ", Color.SUCCESS.asColor())
+                        .append(Component.text("/party invite <player>", Color.ACCENT.asColor()))
+                        .append(Component.text(" to invite members.", Color.SUCCESS.asColor())))
+        );
     }
 
     public void disbandParty(RunePlayer disbander) {
@@ -44,17 +49,17 @@ public class PartyManager {
             throw new IllegalStateException(disbander.asBukkitPlayer().getName() + " is not party owner.");
         }
 
-        List<RunePlayer> partyMembers = existingParty.getMembers().stream().toList();
+        List<RunePlayer> partyMembers = existingParty.getOnlineMembers().stream().toList();
         parties.remove(existingParty.getUuid());
 
         partyMembers.forEach(member -> {
             member.setParty(null);
-            member.asBukkitPlayer().sendMessage(Component.text("Your party has been disbanded."));
+            member.asBukkitPlayer().sendMessage(Icon.PARTY.asComponent().append(Component.text("Your party has been disbanded.")));
             member.reloadNametags();
         });
 
         Bukkit.getServer().getPluginManager().callEvent(new PartyDisbandedEvent(existingParty));
-        disbander.asBukkitPlayer().sendMessage(Component.text("You have disbanded your party.", Color.SUCCESS.asColor()));
+        disbander.asBukkitPlayer().sendMessage(Icon.PARTY.asComponent().append(Component.text("You have disbanded your party.", Color.SUCCESS.asColor())));
     }
 
     public List<Party> getPartyInvites(RunePlayer player) {
@@ -83,14 +88,6 @@ public class PartyManager {
     @Nullable
     public Party getPlayersParty(UUID uuid) {
         return parties.values().stream()
-                .filter(party -> {
-                    List<UUID> memberUUIDs = party.getMembers().stream()
-                            .map(RunePlayer::getUUID)
-                            .toList();
-
-                    return memberUUIDs.contains(uuid);
-                })
-                .findFirst()
-                .orElse(null);
+                .filter(party -> party.getMemberUUIDs().contains(uuid)).findFirst().orElse(null);
     }
 }

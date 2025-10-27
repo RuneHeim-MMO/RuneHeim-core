@@ -27,6 +27,8 @@ public class PartyModule implements PluginModule {
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("party", new PartyCommand()));
 
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("p", new PartyCommand()));
 
         context.bind(PartyManager.class, partyManager);
     }

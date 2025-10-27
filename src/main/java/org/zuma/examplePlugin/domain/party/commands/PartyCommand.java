@@ -4,18 +4,23 @@ import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.constants.Icon;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.party.Party;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public class PartyCommand implements BasicCommand {
+    private static final Set<String> SUBCOMMANDS = Set.of("create", "disband", "invite", "join", "kick", "leave", "chat", "c");
 
     @Override
     public void execute(CommandSourceStack commandSourceStack, String[] args) {
@@ -35,7 +40,9 @@ public class PartyCommand implements BasicCommand {
 
         try {
             if (args.length == 0) {
-                runePlayer.asBukkitPlayer().sendMessage(Component.text("Usage: /party <create|disband|invite|join|kick|leave>"));
+                runePlayer.asBukkitPlayer().sendMessage(
+                        Component.text("Usage: ", Color.INFO.asColor())
+                                .append(Component.text("/party <" + String.join("|", SUBCOMMANDS) + ">", Color.ACCENT.asColor())));
                 return;
             }
 
@@ -57,7 +64,11 @@ public class PartyCommand implements BasicCommand {
                 }
 
                 playersParty.leaveParty(runePlayer);
-                runePlayer.asBukkitPlayer().sendMessage(Component.text("You have left " + playersParty.getOwnerUsername() + "'s party.", Color.INFO.asColor()));
+                runePlayer.asBukkitPlayer().sendMessage(
+                        Icon.PARTY.asComponent().append(Component.text("You have left ", Color.INFO.asColor())
+                                .append(Component.text(playersParty.getOwnerUsername(), Color.ACCENT.asColor()))
+                                .append(Component.text("'s party.", Color.INFO.asColor())))
+                );
                 return;
             }
 
@@ -80,8 +91,17 @@ public class PartyCommand implements BasicCommand {
                     throw new IllegalStateException("Could not find player with name: " + args[1]);
                 }
 
+                if (playersParty == null) return;
+
                 playersParty.sendInvite(runeCandidate);
-                runeCandidate.asBukkitPlayer().sendMessage(Component.text("You have been invited to " + playersParty.getOwnerUsername() + "'s party. Use /party join " + playersParty.getOwnerUsername() + " to join.", Color.INFO.asColor()));
+                SoundType.NOTIFICATION.play(runeCandidate, false);
+                runeCandidate.asBukkitPlayer().sendMessage(
+                        Icon.PARTY.asComponent().append(Component.text("You have been invited to ", Color.INFO.asColor())
+                                .append(Component.text(playersParty.getOwnerUsername(), Color.ACCENT.asColor()))
+                                .append(Component.text("'s party. Use ", Color.INFO.asColor()))
+                                .append(Component.text("/party join " + playersParty.getOwnerUsername(), Color.ACCENT.asColor()))
+                                .append(Component.text(" to join.", Color.INFO.asColor())))
+                );
                 return;
             }
 
@@ -123,17 +143,23 @@ public class PartyCommand implements BasicCommand {
                     throw new IllegalStateException("You are not in a party!");
                 }
 
-                Player candidate = Bukkit.getPlayer(args[1]);
-                RunePlayer runeCandidate = RuneQuestPlugin.getPlayerManager().getRunePlayer(candidate);
+                OfflinePlayer candidate = Bukkit.getOfflinePlayer(args[1]);
 
-                if (runeCandidate == null) {
+                if (!candidate.hasPlayedBefore()) {
                     throw new IllegalStateException("Could not find player with name: " + args[1]);
                 }
 
+                playersParty.kickPlayer(runePlayer, candidate.getUniqueId());
 
-                playersParty.kickPlayer(runePlayer, runeCandidate);
-                runeCandidate.asBukkitPlayer().sendMessage(Component.text("You have been kicked from " + playersParty.getOwnerUsername() + "'s party.", Color.ERROR.asColor()));
-                return;
+                if (candidate.isOnline()) {
+                    Player onlinePlayer = (Player) candidate;
+
+                    onlinePlayer.sendMessage(
+                            Icon.PARTY.asComponent().append(Component.text("You have been kicked from ", Color.ERROR.asColor())
+                                    .append(Component.text(playersParty.getOwnerUsername(), Color.ACCENT.asColor()))
+                                    .append(Component.text("'s party.", Color.ERROR.asColor())))
+                    );
+                }
             }
 
         } catch (Exception e) {
@@ -156,7 +182,7 @@ public class PartyCommand implements BasicCommand {
         }
 
 
-        return List.of("create", "disband", "invite", "join", "kick", "leave");
+        return SUBCOMMANDS;
     }
 
 }
