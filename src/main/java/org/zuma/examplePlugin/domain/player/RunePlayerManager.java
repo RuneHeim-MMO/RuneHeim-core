@@ -59,6 +59,7 @@ public class RunePlayerManager {
     // -------------------- Getters --------------------
 
     public @Nullable RunePlayer getRunePlayer(Player player) {
+        if(player == null) return null;
         return getRunePlayer(player.getUniqueId());
     }
 

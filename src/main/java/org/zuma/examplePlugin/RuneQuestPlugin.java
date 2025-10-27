@@ -25,6 +25,7 @@ import org.zuma.examplePlugin.domain.mob.*;
 import org.zuma.examplePlugin.domain.modifier.GearModifierHandler;
 import org.zuma.examplePlugin.domain.modifier.GlobalModifierHandler;
 import org.zuma.examplePlugin.domain.mount.MountHandler;
+import org.zuma.examplePlugin.domain.party.PartyManager;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.prayer.PrayerManager;
 import org.zuma.examplePlugin.domain.quest.QuestHandler;
@@ -78,7 +79,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new TourModule(),
                         new AmbienceModule(),
                         new GlobalModifierModule(),
-                        new PrayerModule()
+                        new PrayerModule(),
+                        new PartyModule()
                 ), moduleContext);
     }
 
@@ -210,6 +212,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static PrayerManager getPrayerManager() {
         return pluginInstance.moduleContext.get(PrayerManager.class);
+    }
+
+    public static PartyManager getPartyManager() {
+        return pluginInstance.moduleContext.get(PartyManager.class);
     }
 
     public static ModuleContext getModuleContext() {

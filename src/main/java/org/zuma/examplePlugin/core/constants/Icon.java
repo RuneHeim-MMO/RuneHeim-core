@@ -80,6 +80,7 @@ public enum Icon {
     TRADE("⽝"),
     FISHING_HOOK("⢫"),
     ANCHOR("⏚"),
+    PARTY("⾱"),
 
     SKULL_OPEN_MOUTH("₮"),
     SKULL_CLOSED_MOUTH("⺳"),
