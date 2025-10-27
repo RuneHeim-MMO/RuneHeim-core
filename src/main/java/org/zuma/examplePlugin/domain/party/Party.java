@@ -87,10 +87,6 @@ public class Party {
     }
 
     public void sendInvite(RunePlayer player) {
-        if (!invites.add(player.getUUID())) {
-            throw new IllegalStateException("The player is already invited.");
-        }
-
         if (players.contains(player.getUUID())) {
             throw new IllegalStateException("The player is already in this party.");
         }
@@ -99,7 +95,10 @@ public class Party {
             throw new IllegalStateException("This party can have maximum of " + maxMembers + " members.");
         }
 
-        invites.add(player.getUUID());
+        if (!invites.add(player.getUUID())) {
+            throw new IllegalStateException("The player is already invited.");
+        }
+        
         Bukkit.getServer().getPluginManager().callEvent(new PartyPlayerInvited(this, player));
 
         this.getOnlineMembers().forEach(member -> {
