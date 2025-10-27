@@ -100,6 +100,12 @@ public class AdditionalGearSlotHandler {
             return;
         }
 
+        if (slot == PARTY_SLOT) {
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.PARTY_MENU.asInt(), player, null);
+            SoundType.UI_CLICK.play(player, false);
+            return;
+        }
+
         if (slot == MAP_SLOT) {
             RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.TERRITORY_INVENTORY.asInt(), player, null);
             SoundType.UI_CLICK.play(player, false);
