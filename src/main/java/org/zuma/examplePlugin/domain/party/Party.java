@@ -1,5 +1,9 @@
 package org.zuma.examplePlugin.domain.party;
 
+import io.papermc.paper.chat.ChatRenderer;
+import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.chat.SignedMessage;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -9,12 +13,10 @@ import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
-import org.zuma.examplePlugin.events.party.PartyOwnerUpdateEvent;
-import org.zuma.examplePlugin.events.party.PartyPlayerInvited;
-import org.zuma.examplePlugin.events.party.PartyPlayerJoinedEvent;
-import org.zuma.examplePlugin.events.party.PartyPlayerKickedEvent;
+import org.zuma.examplePlugin.events.party.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Party {
     private final UUID uuid;
@@ -206,6 +208,11 @@ public class Party {
 
     public boolean playerHasInvite(RunePlayer player) {
         return invites.contains(player.getUUID());
+    }
+
+    public void sendMessageToMembers(RunePlayer sender, String message) {
+        PartyMessageEvent event = new PartyMessageEvent(this, sender, getOnlineMembers(), message);
+        Bukkit.getPluginManager().callEvent(event);
     }
 
     private void reloadMemberNametags() {

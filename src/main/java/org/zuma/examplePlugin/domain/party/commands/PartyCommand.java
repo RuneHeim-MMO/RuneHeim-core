@@ -46,6 +46,19 @@ public class PartyCommand implements BasicCommand {
                 return;
             }
 
+            if (args.length > 1 && args[0].equalsIgnoreCase("chat") || args[0].equalsIgnoreCase("c")) {
+                String message = String.join(" ", List.of(args).subList(1, args.length));
+                Party playersParty = RuneQuestPlugin.getPartyManager().getPlayersParty(runePlayer);
+
+                if (playersParty == null) {
+                    throw new IllegalStateException("You are not in a party!");
+                }
+
+                playersParty.sendMessageToMembers(runePlayer, message);
+                return;
+
+            }
+
             if (args.length == 1 && args[0].equalsIgnoreCase("create")) {
                 RuneQuestPlugin.getPartyManager().createParty(runePlayer);
                 return;
