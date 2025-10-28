@@ -35,12 +35,12 @@ import java.util.stream.Collectors;
 
 
 public class PartyMenu extends PaginatedIndividualGUI {
-    private final static int OWNER_HEAD_SLOT = 13;
+    private final static int OWNER_HEAD_SLOT = 4;
     private UUID partyUUID;
     private long lastUpdate;
 
     public PartyMenu(String title, int id) {
-        super(title, id, 6, Set.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 13));
+        super(title, id, 6, Set.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 24, 25, 26, 27, 28, 29, 33, 34, 35, 36, 37, 38, 42, 43, 44));
     }
 
     private ItemStack getPlayerDisplayItem(PartyMember member) {
@@ -56,10 +56,7 @@ public class PartyMenu extends PaginatedIndividualGUI {
         List<Component> lore = new ArrayList<>();
         Component name = offlinePlayer.isOnline() ? Component.text(offlinePlayer.getName(), Color.SUCCESS.asColor()) : Component.text(offlinePlayer.getName(), NamedTextColor.GRAY);
         meta.displayName(name.decoration(TextDecoration.ITALIC, false));
-
         lore.add(Icon.PARTY.asComponent().append(Component.text(member.getRole().getLabel(), Color.ACCENT.asColor())));
-        lore.add(Component.empty());
-        lore.add(Icon.EXPERIENCE.asComponent().append(Component.text("Contributions:", Color.INFO.asColor())));
 
         List<Component> contributionsComponents = new ArrayList<>();
 
@@ -74,11 +71,10 @@ public class PartyMenu extends PaginatedIndividualGUI {
         });
 
         if (!contributionsComponents.isEmpty()) {
+            lore.add(Component.empty());
+            lore.add(Icon.EXPERIENCE.asComponent().append(Component.text("Contributions:", Color.INFO.asColor())));
             lore.addAll(contributionsComponents);
-        } else {
-            lore.add(Component.text("None", Color.ITEM_LORE_DESCRIPTION.asColor()));
         }
-
 
         meta.lore(lore.stream().map(c -> c.decoration(TextDecoration.ITALIC, false)).toList());
         icon.setItemMeta(meta);
