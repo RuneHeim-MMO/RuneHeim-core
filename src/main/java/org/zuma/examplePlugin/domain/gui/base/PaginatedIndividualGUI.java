@@ -26,6 +26,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
     private int indexEnd = 0;
     private int maxPages = 1;
     private List<ItemStack> items;
+    private HashMap<Integer, ItemStack> overrideItems = new HashMap<>();
     private final Set<Integer> ignoredSlots;
 
     public PaginatedIndividualGUI(String title, int id, int rows, @Nullable Set<Integer> ignoredSlots) {
@@ -34,6 +35,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
         this.inventory = super.getBaseInventory();
         this.items = new ArrayList<>();
         this.ignoredSlots = ignoredSlots == null ? new HashSet<>() : ignoredSlots;
+        this.overrideItems = new HashMap<>();
 
         if (rows < 2) {
             throw new IllegalStateException("PaginatedIndividualGUI can have minimum of 2 rows!");
@@ -71,6 +73,12 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
         }
     }
 
+    public void setOverrideItems(HashMap<Integer, ItemStack> overrideItems, boolean tagIllegal) {
+        if (tagIllegal) {
+            overrideItems.values().forEach(IllegalItemWatchdog::tagIllegalItem);
+        }
+        this.overrideItems = overrideItems;
+    }
 
     public void setContent(List<ItemStack> items, boolean tagIllegal) {
         this.totalItems = items.size();
@@ -153,6 +161,15 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
             ItemStack item = pageItems.get(itemIndex);
             inventory.setItem(i, item);
             itemIndex++;
+        }
+
+        for (Map.Entry<Integer, ItemStack> entry : overrideItems.entrySet()) {
+            int slot = entry.getKey();
+            ItemStack item = entry.getValue();
+
+            if (slot >= 0 && slot < inventory.getSize()) {
+                inventory.setItem(slot, item);
+            }
         }
 
         // Place pagination icons in the last row (full row assumed)

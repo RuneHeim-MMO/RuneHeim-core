@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.gui;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.InventoryHolder;
@@ -109,7 +110,7 @@ public class GUIHandler {
         this.registry.register(InventoryId.FLETCHING_TABLE.asInt(), () -> new FletchingTableInventory(GUIOverlay.FLETCHING_TABLE_OVERLAY.asGlyph() + "§f" + Icon.ARROW.get() + "§f Fletching Table", InventoryId.FLETCHING_TABLE.asInt()));
         this.registry.register(InventoryId.DRAKKAR_TANNER_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.TANNER_SHOP_OVERLAY.asGlyph() + "§f" + Icon.SWORD.get() + "§f Tanner Shop", InventoryId.DRAKKAR_TANNER_SHOP.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_TANNER_SHOP.asInt())));
         this.registry.register(InventoryId.PRAYER_MENU.asInt(), () -> new PrayerMenu(GUIOverlay.PRAYER_MENU_OVERLAY.asGlyph() + "§f" + Icon.PRAYER.get() + "§b Prayer", InventoryId.PRAYER_MENU.asInt()));
-        this.registry.register(InventoryId.PARTY_MENU.asInt(), () -> new TerritoriesInventory(GUIOverlay.LOCATION_DISCOVERY_OVERLAY.asGlyph() + "§f" + Icon.MAP.get() + "§f Discovered Locations", InventoryId.PARTY_MENU.asInt()));
+        this.registry.register(InventoryId.PARTY_MENU.asInt(), () -> new PartyMenu(GUIOverlay.PARTY_MENU_OVERLAY.asGlyph() + "§f" + Icon.PARTY.get() + "§f Party", InventoryId.PARTY_MENU.asInt()));
 
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
@@ -126,6 +127,7 @@ public class GUIHandler {
 
         if (matchingGUI == null) {
             matchingGUI = this.registry.createInstance(player.getUUID(), id);
+            Bukkit.getServer().getPluginManager().registerEvents(matchingGUI, RuneQuestPlugin.getInstance());
         }
 
         if (matchingGUI == null) {
@@ -149,6 +151,7 @@ public class GUIHandler {
             registry.removePlayersActiveInstance(player.getUUID());
         })) {
             if (onClose != null) {
+                HandlerList.unregisterAll(matchingGUI);
                 onClose.run();
             }
             registry.removePlayersActiveInstance(player.getUUID());
@@ -217,6 +220,7 @@ public class GUIHandler {
 
         if (matchingGUI != null) {
             matchingGUI.onInventoryClose(event, player);
+            HandlerList.unregisterAll(matchingGUI);
         }
 
         registry.removePlayersActiveInstance(bukkitPlayer.getUniqueId());

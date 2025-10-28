@@ -29,6 +29,7 @@ public enum GUIOverlay {
     FLETCHING_TABLE_OVERLAY("⩳"),
     TANNER_SHOP_OVERLAY("❠"),
     PRAYER_MENU_OVERLAY("⦦"),
+    PARTY_MENU_OVERLAY("⮉"),
 
     GENERIC_OVERLAY_1("⼮"),
     GENERIC_OVERLAY_2("⌱"),

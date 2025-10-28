@@ -15,12 +15,13 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.events.party.*;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Party {
     private final UUID uuid;
-    private final List<UUID> players;
+    private final List<PartyMember> players;
     private UUID ownerUuid;
     private String ownerUsername;
     private final Set<UUID> invites;
@@ -32,7 +33,7 @@ public class Party {
         this.ownerUsername = owner.asBukkitPlayer().getName();
         this.players = new ArrayList<>();
         this.invites = new HashSet<>();
-        this.players.add(owner.getUUID());
+        this.players.add(new PartyMember(owner.getUUID(), PartyRole.OWNER));
         this.maxMembers = maxMembers;
     }
 
@@ -40,23 +41,21 @@ public class Party {
         return uuid;
     }
 
-    public List<RunePlayer> getOnlineMembers() {
-        List<RunePlayer> memberList = new ArrayList<>();
+    public List<RunePlayer> getOnlinePlayers() {
+        return players.stream().map(PartyMember::getRunePlayer).filter(Objects::nonNull).toList();
+    }
 
-        for (UUID playerUuid : players) {
-            RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(playerUuid);
+    @Nullable
+    public PartyMember getPartyMember(UUID playerUUID) {
+        return players.stream().filter(pm -> pm.getUuid().equals(playerUUID)).findFirst().orElse(null);
+    }
 
-            if (player != null) {
-                memberList.add(player);
-            }
-
-        }
-
-        return memberList;
+    public List<PartyMember> getAllMembers() {
+        return Collections.unmodifiableList(players);
     }
 
     public List<UUID> getMemberUUIDs() {
-        return players;
+        return players.stream().map(PartyMember::getUuid).toList();
     }
 
     public UUID getOwnerUuid() {
@@ -68,15 +67,16 @@ public class Party {
     }
 
     public void setNewOwner(RunePlayer player) {
-        if (!players.contains(player.getUUID())) {
+        if (!getMemberUUIDs().contains(player.getUUID())) {
             throw new IllegalStateException("This player is not in this party!");
         }
 
         ownerUuid = player.getUUID();
         ownerUsername = player.asBukkitPlayer().getName();
         Bukkit.getServer().getPluginManager().callEvent(new PartyOwnerUpdateEvent(this, player));
+        Bukkit.getServer().getPluginManager().callEvent(new PartyUpdateEvent(this));
 
-        this.getOnlineMembers().forEach(member -> {
+        this.getOnlinePlayers().forEach(member -> {
             member.asBukkitPlayer().sendMessage(
                     Icon.PARTY.asComponent().append(Component.text(player.asBukkitPlayer().getName(), Color.ACCENT.asColor())
                             .append(Component.text(" is the new owner of the party.", Color.INFO.asColor())))
@@ -87,7 +87,7 @@ public class Party {
     }
 
     public void sendInvite(RunePlayer player) {
-        if (players.contains(player.getUUID())) {
+        if (getMemberUUIDs().contains(player.getUUID())) {
             throw new IllegalStateException("The player is already in this party.");
         }
 
@@ -98,10 +98,11 @@ public class Party {
         if (!invites.add(player.getUUID())) {
             throw new IllegalStateException("The player is already invited.");
         }
-        
-        Bukkit.getServer().getPluginManager().callEvent(new PartyPlayerInvited(this, player));
 
-        this.getOnlineMembers().forEach(member -> {
+        Bukkit.getServer().getPluginManager().callEvent(new PartyPlayerInvited(this, player));
+        Bukkit.getServer().getPluginManager().callEvent(new PartyUpdateEvent(this));
+
+        this.getOnlinePlayers().forEach(member -> {
             member.asBukkitPlayer().sendMessage(
                     Icon.PARTY.asComponent().append(Component.text(player.asBukkitPlayer().getName(), Color.ACCENT.asColor())
                             .append(Component.text(" has been invited to the party.", Color.INFO.asColor())))
@@ -110,7 +111,7 @@ public class Party {
     }
 
     public void acceptInvite(RunePlayer player) {
-        if (players.contains(player.getUUID())) {
+        if (getMemberUUIDs().contains(player.getUUID())) {
             throw new IllegalStateException("You are already in this party.");
         }
 
@@ -123,11 +124,12 @@ public class Party {
         }
 
         invites.remove(player.getUUID());
-        players.add(player.getUUID());
+        players.add(new PartyMember(player.getUUID(), PartyRole.MEMBER));
         player.setParty(this);
         Bukkit.getServer().getPluginManager().callEvent(new PartyPlayerJoinedEvent(this, player));
+        Bukkit.getServer().getPluginManager().callEvent(new PartyUpdateEvent(this));
 
-        this.getOnlineMembers().forEach(member -> {
+        this.getOnlinePlayers().forEach(member -> {
             member.asBukkitPlayer().sendMessage(
                     Icon.PARTY.asComponent().append(Component.text(player.asBukkitPlayer().getName(), Color.ACCENT.asColor())
                             .append(Component.text(" has joined the party.", Color.SUCCESS.asColor())))
@@ -139,14 +141,14 @@ public class Party {
     }
 
     public void leaveParty(RunePlayer player) {
-        if (!players.contains(player.getUUID())) {
+        if (!getMemberUUIDs().contains(player.getUUID())) {
             throw new IllegalArgumentException("The player is not in this party.");
         }
 
-        players.remove(player.getUUID());
+        players.remove(players.stream().filter(pm -> pm.getUuid().equals(player.getUUID())).findFirst().orElse(null));
         player.setParty(null);
 
-        this.getOnlineMembers().forEach(member -> {
+        this.getOnlinePlayers().forEach(member -> {
             member.asBukkitPlayer().sendMessage(
                     Icon.PARTY.asComponent().append(Component.text(player.asBukkitPlayer().getName(), Color.ACCENT.asColor())
                             .append(Component.text(" has left the party.", Color.ERROR.asColor())))
@@ -156,16 +158,17 @@ public class Party {
 
         // Transfer ownership if the owner leaves
         if (player.getUUID().equals(ownerUuid)) {
-            if (this.getOnlineMembers().isEmpty()) {
+            if (this.getOnlinePlayers().isEmpty()) {
                 RuneQuestPlugin.getPartyManager().removeParty(this.uuid);
                 return;
             } else {
-                RunePlayer newOwner = this.getOnlineMembers().getFirst();
+                RunePlayer newOwner = this.getOnlinePlayers().getFirst();
                 setNewOwner(newOwner);
 
             }
         }
 
+        Bukkit.getServer().getPluginManager().callEvent(new PartyUpdateEvent(this));
         reloadMemberNametags();
     }
 
@@ -174,7 +177,7 @@ public class Party {
             throw new IllegalStateException("You are not a party owner.");
         }
 
-        if (!players.contains(playerUUID)) {
+        if (!getMemberUUIDs().contains(playerUUID)) {
             throw new IllegalArgumentException("The player is not in this party.");
         }
 
@@ -182,16 +185,17 @@ public class Party {
             throw new IllegalStateException("Cannot kick party owner.");
         }
 
-        players.remove(playerUUID);
+        players.remove(players.stream().filter(pm -> pm.getUuid().equals(playerUUID)).findFirst().orElse(null));
         OfflinePlayer bukkitPlayer = Bukkit.getOfflinePlayer(playerUUID);
         RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(playerUUID);
 
         if (player != null) {
             player.setParty(null);
             Bukkit.getServer().getPluginManager().callEvent(new PartyPlayerKickedEvent(this, player));
+            Bukkit.getServer().getPluginManager().callEvent(new PartyUpdateEvent(this));
         }
 
-        this.getOnlineMembers().forEach(member -> {
+        this.getOnlinePlayers().forEach(member -> {
             String name = bukkitPlayer.getName();
 
             if (name != null) {
@@ -210,18 +214,23 @@ public class Party {
     }
 
     public void sendMessageToMembers(RunePlayer sender, String message) {
-        PartyMessageEvent event = new PartyMessageEvent(this, sender, getOnlineMembers(), message);
+        PartyMessageEvent event = new PartyMessageEvent(this, sender, getOnlinePlayers(), message);
         Bukkit.getPluginManager().callEvent(event);
     }
 
     private void reloadMemberNametags() {
-        this.getOnlineMembers().forEach(RunePlayer::reloadNametags);
-
+        this.getOnlinePlayers().forEach(RunePlayer::reloadNametags);
     }
 
-    public void splitXPBetweenMembers(SkillType type, double xp) {
+    public void splitXPBetweenMembers(RunePlayer contributor, SkillType type, double xp) {
         if (players.isEmpty()) return;
-        double equalXp = xp / this.getOnlineMembers().size();
-        this.getOnlineMembers().forEach(member -> member.addXp(type, equalXp, XpSource.PARTY));
+        double equalXp = xp / this.getOnlinePlayers().size();
+        this.getOnlinePlayers().forEach(member -> member.addXp(type, equalXp, XpSource.PARTY));
+
+        PartyMember matchingMember = players.stream().filter(pm -> pm.getUuid().equals(contributor.getUUID())).findFirst().orElse(null);
+        if (matchingMember != null) {
+            matchingMember.addXpContribution(type, (int) xp);
+            Bukkit.getPluginManager().callEvent(new PartyUpdateEvent(this));
+        }
     }
 }

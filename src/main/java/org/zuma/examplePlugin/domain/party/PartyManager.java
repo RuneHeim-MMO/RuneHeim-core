@@ -49,16 +49,16 @@ public class PartyManager {
             throw new IllegalStateException(disbander.asBukkitPlayer().getName() + " is not party owner.");
         }
 
-        List<RunePlayer> partyMembers = existingParty.getOnlineMembers().stream().toList();
+        List<RunePlayer> partyMembers = existingParty.getOnlinePlayers().stream().toList();
         parties.remove(existingParty.getUuid());
+        Bukkit.getServer().getPluginManager().callEvent(new PartyDisbandedEvent(existingParty));
 
         partyMembers.forEach(member -> {
             member.setParty(null);
-            member.asBukkitPlayer().sendMessage(Icon.PARTY.asComponent().append(Component.text("Your party has been disbanded.")));
+            member.asBukkitPlayer().sendMessage(Icon.PARTY.asComponent().append(Component.text("Your party has been disbanded.", Color.INFO.asColor())));
             member.reloadNametags();
         });
 
-        Bukkit.getServer().getPluginManager().callEvent(new PartyDisbandedEvent(existingParty));
         disbander.asBukkitPlayer().sendMessage(Icon.PARTY.asComponent().append(Component.text("You have disbanded your party.", Color.SUCCESS.asColor())));
     }
 
