@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.party;
+package org.zuma.examplePlugin.domain.party.constants;
 
 public enum PartyRole {
     OWNER("Owner"),

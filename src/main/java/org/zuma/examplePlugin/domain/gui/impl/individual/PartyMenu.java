@@ -16,13 +16,16 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.gui.base.PaginatedIndividualGUI;
+import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
 import org.zuma.examplePlugin.domain.head.HeadGenerator;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.party.Party;
 import org.zuma.examplePlugin.domain.party.PartyMember;
+import org.zuma.examplePlugin.domain.party.constants.ContributionMode;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.territory.Territory;
 import org.zuma.examplePlugin.events.party.PartyDisbandedEvent;
@@ -37,6 +40,9 @@ import java.util.stream.Collectors;
 
 public class PartyMenu extends PaginatedIndividualGUI {
     private final static int OWNER_HEAD_SLOT = 4;
+    private final static int XP_CONTRIBUTION_BUTTON = 44;
+    private final static int XP_SHARING_TOGGLE_BUTTON = 53;
+
     private UUID partyUUID;
     private long lastUpdate;
 
@@ -58,7 +64,6 @@ public class PartyMenu extends PaginatedIndividualGUI {
         Component name = offlinePlayer.isOnline() ? Component.text(offlinePlayer.getName(), Color.SUCCESS.asColor()) : Component.text(offlinePlayer.getName(), NamedTextColor.GRAY);
         meta.displayName(name.decoration(TextDecoration.ITALIC, false));
         lore.add(Icon.PARTY.asComponent().append(Component.text(member.getRole().getLabel(), Color.ACCENT.asColor())));
-
         List<Component> contributionsComponents = new ArrayList<>();
 
         NumberFormat nf = NumberFormat.getNumberInstance();
@@ -77,6 +82,8 @@ public class PartyMenu extends PaginatedIndividualGUI {
             lore.addAll(contributionsComponents);
         }
 
+        lore.add(Component.empty());
+        lore.add(Component.text("Contributing " + member.getContributionMode().getPercent() + "% of experience.", Color.ITEM_LORE_DESCRIPTION.asColor()));
         meta.lore(lore.stream().map(c -> c.decoration(TextDecoration.ITALIC, false)).toList());
         icon.setItemMeta(meta);
 
@@ -84,23 +91,50 @@ public class PartyMenu extends PaginatedIndividualGUI {
     }
 
     private void reloadInventory(Party party) {
+        PartyMember viewer = party.getPartyMember(this.getOwner());
+        PartyMember partyOwner = party.getPartyMember(party.getOwnerUuid());
+
+        if (viewer == null || partyOwner == null) {
+            return;
+        }
+
         this.lastUpdate = System.currentTimeMillis();
 
-        ItemStack ownerHead = getPlayerDisplayItem(party.getPartyMember(party.getOwnerUuid()));
+        ItemStack ownerHead = getPlayerDisplayItem(partyOwner);
         List<ItemStack> otherIcons = party.getAllMembers().stream()
                 .filter(u -> !u.getUuid().equals(party.getOwnerUuid()))
                 .sorted(Comparator.comparing(a -> a.getRunePlayer() == null))
                 .map(this::getPlayerDisplayItem).toList();
 
-        HashMap<Integer, ItemStack> ownerIconOverride = new HashMap<>();
-        ownerIconOverride.put(OWNER_HEAD_SLOT, ownerHead);
+        ItemStack xpContributionButton = viewer.getContributionMode().getGuiControl().asItemstack(
+                Component.text("You are contributing " + viewer.getContributionMode().getPercent() + "% of your XP", Color.INFO.asColor()),
+                List.of(
+                        Component.text("Click to adjust how much XP you ", Color.ITEM_LORE_DESCRIPTION.asColor()),
+                        Component.text("contribute to your party members.", Color.ITEM_LORE_DESCRIPTION.asColor())
+                )
+        );
+
+        ItemStack xpSharingToggleButton = (party.isXpSharingEnabled() ? GUIControl.PARTY_XP_SHARING_ON : GUIControl.PARTY_XP_SHARING_OFF).asItemstack(
+                Component.text("XP Sharing is " + (party.isXpSharingEnabled() ? "Enabled" : "Disabled"), Color.INFO.asColor()),
+                List.of(
+                        Component.text("Click to " + (party.isXpSharingEnabled() ? "disable" : "enable") + " XP sharing", Color.ITEM_LORE_DESCRIPTION.asColor()),
+                        Component.text("among party members.", Color.ITEM_LORE_DESCRIPTION.asColor())
+                )
+        );
+
+        assignMenuValue(xpContributionButton, -1);
+        assignMenuValue(xpSharingToggleButton, -2);
+
+        HashMap<Integer, ItemStack> overrideIcons = new HashMap<>();
+        overrideIcons.put(OWNER_HEAD_SLOT, ownerHead);
+        overrideIcons.put(XP_CONTRIBUTION_BUTTON, xpContributionButton);
+        overrideIcons.put(XP_SHARING_TOGGLE_BUTTON, xpSharingToggleButton);
 
         setContent(otherIcons, true);
-        setOverrideItems(ownerIconOverride, true);
+        setOverrideItems(overrideIcons, true);
 
         getBaseInventory();
     }
-
 
     @Override
     public boolean attemptOpenInventory(RunePlayer player, Runnable onFail) {
@@ -131,6 +165,42 @@ public class PartyMenu extends PaginatedIndividualGUI {
             return;
         }
 
+        Party viewerParty = RuneQuestPlugin.getPartyManager().getPlayersParty(player);
+
+        if (viewerParty == null) {
+            return;
+        }
+
+        PartyMember viewer = viewerParty.getPartyMember(player.getUUID());
+
+        if (viewer == null) {
+            return;
+        }
+
+        if (menuValue == -1) {
+            ContributionMode[] allModes = ContributionMode.values();
+            int currentIndex = Arrays.asList(allModes).indexOf(viewer.getContributionMode());
+            int nextIndex = (currentIndex + 1) % allModes.length;
+
+            viewerParty.setContributionMode(player, allModes[nextIndex]);
+            player.asBukkitPlayer().sendMessage(Component.text("You are now contributing " + allModes[nextIndex].getPercent() + "% of your XP to your party members.", Color.SUCCESS.asColor()));
+            SoundType.NOTIFICATION.play(player, false);
+            return;
+        }
+
+        if (menuValue == -2) {
+            boolean nextMode = !viewerParty.isXpSharingEnabled();
+
+            try {
+                viewerParty.setXPSharing(player, nextMode);
+                SoundType.NOTIFICATION.play(player, false);
+            } catch (Exception e) {
+                HudService.sendFailMessage(player, Component.text(e.getMessage()));
+            }
+
+            return;
+        }
+
 
     }
 
@@ -150,9 +220,9 @@ public class PartyMenu extends PaginatedIndividualGUI {
             return;
         }
 
-        if (System.currentTimeMillis() - this.lastUpdate < 1000) {
+      /*  if (System.currentTimeMillis() - this.lastUpdate < 1000) {
             return;
-        }
+        } */
 
         Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
             Party ownerParty = owner.getParty();
