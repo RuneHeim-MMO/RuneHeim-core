@@ -131,7 +131,7 @@ public class HudService {
         String xpStr = "§f" + type.getSymbol() + Color.SUCCESS.asSpigotHex() + " " + formattedXP + " XP";
         boolean isPartySource = source == org.zuma.examplePlugin.core.constants.XpSource.PARTY;
 
-        spawnVerticalHologramBubble(player, Color.SUCCESS.asSpigotHex() + "+ " + xpStr + " " + (isPartySource ? "[Party]" : ""));
+        spawnVerticalHologramBubble(player, (isPartySource ? "§f" + Icon.PARTY.get() + " " : "") + Color.SUCCESS.asSpigotHex() + "+ " + xpStr);
     }
 
     public static void showDamageBubble(CombatEntity entity, Hit hit) {

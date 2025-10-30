@@ -22,8 +22,8 @@ public class Eagles {
                 MobBehaviors.EAGLE.getBehavior(),
                 "brownheadeagle",
                 0.40, false, false, 32,
-                List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
-        ));
+                List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
+                true));
 
 
         registry.register(MobType.EAGLE_BROWN_BASE_48.getId(), () -> new GenericCombatant(
@@ -33,8 +33,8 @@ public class Eagles {
                 MobBehaviors.EAGLE.getBehavior(),
                 "browneagle",
                 0.40, false, false, 35,
-                List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
-        ));
+                List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
+                true));
 
 
         registry.register(MobType.EAGLE_BROWNHEAD_BASE_55.getId(), () -> new GenericCombatant(
@@ -44,8 +44,8 @@ public class Eagles {
                 MobBehaviors.EAGLE.getBehavior(),
                 "blackeagle",
                 0.40, false, false, 32,
-                List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
-        ));
+                List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
+                true));
 
 
     }

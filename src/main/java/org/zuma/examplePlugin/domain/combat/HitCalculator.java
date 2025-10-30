@@ -1,7 +1,5 @@
 package org.zuma.examplePlugin.domain.combat;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.domain.combat.constants.AttackType;
 import org.zuma.examplePlugin.domain.combat.constants.HitType;
@@ -18,17 +16,34 @@ public class HitCalculator {
     private static final double MAX_HIT_FLOOR_OFFSET = 0.5;
     private static final double HIT_CHANCE_OFFSET = 2.0;
 
-    public static int getEntitySkillLevel(CombatEntity entity, SkillType type) {
+    public static double getEntitySkillLevel(CombatEntity entity, SkillType type) {
         Skill matchingSkill = entity.getSkills().get(type);
 
         if (matchingSkill == null) {
             return 0;
         }
 
-        return matchingSkill.getLevelWithBonuses();
+        double level = matchingSkill.getLevelWithBonuses();
+
+        switch (type) {
+            case ATTACK -> {
+                level *= 1 + (getEntityModifierAmount(entity, ModifierType.ATTACK_BOOST_PERCENT) / 100.0);
+            }
+            case STRENGTH -> {
+                level *= 1 + (getEntityModifierAmount(entity, ModifierType.STRENGTH_BOOST_PERCENT) / 100.0);
+            }
+            case DEFENCE -> {
+                level *= 1 + (getEntityModifierAmount(entity, ModifierType.DEFENCE_BOOST_PERCENT) / 100.0);
+            }
+            case RANGED -> {
+                level *= 1 + (getEntityModifierAmount(entity, ModifierType.RANGED_BOOST_PERCENT) / 100.0);
+            }
+        }
+
+        return level;
     }
 
-    public static double getEntityModifierLevel(CombatEntity entity, ModifierType type) {
+    public static double getEntityModifierAmount(CombatEntity entity, ModifierType type) {
         Modifier matchingModifier = entity.getModifiers().get(type);
 
         if (matchingModifier == null) {
@@ -85,11 +100,13 @@ public class HitCalculator {
     }
 
     public static int getMaxHit(CombatEntity attacker, AttackType type) {
-        double attackerStrBonus = getEntityModifierLevel(attacker, ModifierType.STRENGTH_BONUS);
-        double attackerRangeStr = getEntityModifierLevel(attacker, ModifierType.RANGED_STRENGTH);
+        double attackerStrBonus = getEntityModifierAmount(attacker, ModifierType.STRENGTH_BONUS);
+        double attackerRangeStr = getEntityModifierAmount(attacker, ModifierType.RANGED_STRENGTH);
+
+        attackerRangeStr *= 1 + (getEntityModifierAmount(attacker, ModifierType.RANGED_STR_BOOST_PERCENT) / 100.0);
 
         if (type == AttackType.MELEE) {
-            int attackerStrength = getEntitySkillLevel(attacker, SkillType.STRENGTH);
+            double attackerStrength = getEntitySkillLevel(attacker, SkillType.STRENGTH);
 
             // Melee max hit = floor(0.5 + StrengthLevel * (StrengthBonus + 64) / 640)
             double maxHit = MAX_HIT_FLOOR_OFFSET + attackerStrength * (attackerStrBonus + BASE_BONUS) / MAX_HIT_DIVISOR;
@@ -98,7 +115,7 @@ public class HitCalculator {
         }
 
         if (type == AttackType.RANGED) {
-            int attackerRanged = getEntitySkillLevel(attacker, SkillType.RANGED);
+            double attackerRanged = getEntitySkillLevel(attacker, SkillType.RANGED);
             double maxHit = MAX_HIT_FLOOR_OFFSET + attackerRanged * (attackerRangeStr + BASE_BONUS) / MAX_HIT_DIVISOR;
 
             return Math.max(2, (int) Math.ceil(maxHit));
@@ -115,8 +132,8 @@ public class HitCalculator {
     // Returns Entry<isHitSuccess, chance>
     public static Map.Entry<Boolean, Double> isHitSuccess(CombatEntity attacker, CombatEntity defender, AttackType type, boolean isSpecialAttack) {
         if (type == AttackType.MELEE) {
-            int attackerAttack = getEntitySkillLevel(attacker, SkillType.ATTACK);
-            int defenderDefence = getEntitySkillLevel(defender, SkillType.DEFENCE);
+            double attackerAttack = getEntitySkillLevel(attacker, SkillType.ATTACK);
+            double defenderDefence = getEntitySkillLevel(defender, SkillType.DEFENCE);
 
             double atkBonus = getCombinedMeleeAttackBonus(attacker);
             double defBonus = getCombinedDefenceBonus(defender);
@@ -128,12 +145,14 @@ public class HitCalculator {
         }
 
         if (type == AttackType.RANGED) {
-            int attackerRanged = getEntitySkillLevel(attacker, SkillType.RANGED);
-            int defenderDefence = getEntitySkillLevel(defender, SkillType.DEFENCE);
+            double attackerRanged = getEntitySkillLevel(attacker, SkillType.RANGED);
+            double defenderDefence = getEntitySkillLevel(defender, SkillType.DEFENCE);
 
             double meleeDefBonus = getCombinedDefenceBonus(defender);
-            double defenderRangeDef = getEntityModifierLevel(defender, ModifierType.DEFENCE_RANGED);
-            double attackerRangeAcc = getEntityModifierLevel(attacker, ModifierType.RANGED_ACCURACY);
+            double defenderRangeDef = getEntityModifierAmount(defender, ModifierType.DEFENCE_RANGED);
+            double attackerRangeAcc = getEntityModifierAmount(attacker, ModifierType.RANGED_ACCURACY);
+
+            attackerRangeAcc *= 1 + (getEntityModifierAmount(attacker, ModifierType.RANGED_ACC_BOOST_PERCENT) / 100.0);
 
             double defBonus = 0.7 * defenderRangeDef + 0.3 * meleeDefBonus;
 
@@ -169,17 +188,17 @@ public class HitCalculator {
 
 
     private static double getCombinedMeleeAttackBonus(CombatEntity entity) {
-        double stab = getEntityModifierLevel(entity, ModifierType.ATTACK_STAB);
-        double slash = getEntityModifierLevel(entity, ModifierType.ATTACK_SLASH);
-        double crush = getEntityModifierLevel(entity, ModifierType.ATTACK_CRUSH);
+        double stab = getEntityModifierAmount(entity, ModifierType.ATTACK_STAB);
+        double slash = getEntityModifierAmount(entity, ModifierType.ATTACK_SLASH);
+        double crush = getEntityModifierAmount(entity, ModifierType.ATTACK_CRUSH);
 
         return (stab + slash + crush) / 3.0;
     }
 
     private static double getCombinedDefenceBonus(CombatEntity entity) {
-        double stab = getEntityModifierLevel(entity, ModifierType.DEFENCE_STAB);
-        double slash = getEntityModifierLevel(entity, ModifierType.DEFENCE_SLASH);
-        double crush = getEntityModifierLevel(entity, ModifierType.DEFENCE_CRUSH);
+        double stab = getEntityModifierAmount(entity, ModifierType.DEFENCE_STAB);
+        double slash = getEntityModifierAmount(entity, ModifierType.DEFENCE_SLASH);
+        double crush = getEntityModifierAmount(entity, ModifierType.DEFENCE_CRUSH);
 
         return (stab + slash + crush) / 3.0;
     }

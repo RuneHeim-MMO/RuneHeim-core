@@ -74,7 +74,7 @@ public class TerritoriesInventory extends PaginatedIndividualGUI {
                     index.getAndIncrement();
                     return displayItem;
                 }
-        ).toList());
+        ).toList(), true);
 
         player.asBukkitPlayer().openInventory(getBaseInventory());
         return true;

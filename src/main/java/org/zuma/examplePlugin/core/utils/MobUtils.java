@@ -4,11 +4,14 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 
 import java.util.ArrayList;
@@ -120,5 +123,19 @@ public class MobUtils {
         if (eq.getItemInOffHand().getType() != Material.AIR) equipment.add(eq.getItemInOffHand());
 
         return equipment;
+    }
+
+
+    public static void pullPlayerTowardMob(Player player, Entity mob, double strength, double upwardLift) {
+        // Get direction vector from player to mob
+        Vector direction = mob.getLocation().toVector().subtract(player.getLocation().toVector());
+
+        // Normalize (so it's just direction, not distance)
+        direction.normalize();
+        Vector velocity = direction.multiply(strength);
+        velocity.setY(upwardLift);
+
+        // Apply velocity
+        player.setVelocity(velocity);
     }
 }

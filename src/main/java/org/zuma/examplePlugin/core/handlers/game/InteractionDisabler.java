@@ -68,7 +68,9 @@ public class InteractionDisabler implements Listener {
             "/mount",
             "/pouch",
             "/skills",
-            "/stuck"
+            "/stuck",
+            "/party",
+            "/p"
     };
 
     public void disableTourViewPermission() {
@@ -147,11 +149,7 @@ public class InteractionDisabler implements Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onEntityRegainHealth(EntityRegainHealthEvent event) {
         if (!(event.getEntity() instanceof LivingEntity)) return;
-
-        // Cancel health regen for non-player entities
-        if (!(event.getEntity() instanceof Player)) {
-            event.setCancelled(true);
-        }
+        event.setCancelled(true);
     }
 
     @EventHandler

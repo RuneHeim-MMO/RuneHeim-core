@@ -4,20 +4,15 @@ import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityTargetEvent;
-import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
-import org.zuma.examplePlugin.domain.mob.meta.CombatantMobMeta;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.SkillLevelRecord;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,7 +35,7 @@ public class TalkingCombatant extends GenericCombatant {
                             @Nullable String model,
                             @Nullable DisguiseType disguiseType,
                             List<Integer> dropTableIds) {
-        super(displayName, equipmentSet, skills, modifiers, behavior, walkSpeed, true, false, health, skin, model, disguiseType, dropTableIds);
+        super(displayName, equipmentSet, skills, modifiers, behavior, walkSpeed, true, false, health, skin, model, disguiseType, dropTableIds, true);
         this.attackMessages = attackMessages;
     }
 

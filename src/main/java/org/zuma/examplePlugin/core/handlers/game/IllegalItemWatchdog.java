@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.core.handlers.game;
 
 import net.kyori.adventure.text.Component;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -52,6 +53,19 @@ public class IllegalItemWatchdog implements Listener {
 
 
         return LegalityType.LEGAL;
+    }
+
+    public static void setItemLegal(ItemStack item) {
+        if (item == null || !item.hasItemMeta()) return;
+
+        ItemMeta meta = item.getItemMeta();
+        NamespacedKey key = PersistenceDataKey.ILLEGAL_ITEM.key(RuneQuestPlugin.getInstance());
+        PersistentDataContainer container = meta.getPersistentDataContainer();
+
+        if (container.has(key, PersistentDataType.INTEGER)) {
+            container.remove(key);
+            item.setItemMeta(meta);
+        }
     }
 
     private void handleIllegalItem(Player player, String itemName, LegalityType type) {

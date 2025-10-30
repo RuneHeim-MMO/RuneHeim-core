@@ -4,6 +4,9 @@ public enum InventoryId {
     ADMIN_NODE_CREATE(-100),
     ADMIN_INTERACTABLE_BLOCK_CREATE(-99),
     ADMIN_MODELLED_INTERACTABLE_BLOCK_CREATE(-98),
+    ADMIN_ITEM_REGISTRY(-97),
+    ADMIN_RECIPE_REGISTRY(-96),
+
     BASIC_FURNACE(0),
     STOVE(1),
     FIRE(2),
@@ -44,7 +47,9 @@ public enum InventoryId {
     SAKURMEER_FOOD_SHOP(37),
     TANNER(38),
     FLETCHING_TABLE(39),
-    DRAKKAR_TANNER_SHOP(40);
+    DRAKKAR_TANNER_SHOP(40),
+    PRAYER_MENU(41),
+    PARTY_MENU(42);
 
 
     private final int id;

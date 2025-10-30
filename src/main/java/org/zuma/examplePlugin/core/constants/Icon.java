@@ -76,9 +76,11 @@ public enum Icon {
     CLOVER("Ⅹ"),
     CONTRACT_SKULL("⥵"),
     PRAYER("⏲"),
+    PRAYER_ACTIVE("⯆"),
     TRADE("⽝"),
     FISHING_HOOK("⢫"),
     ANCHOR("⏚"),
+    PARTY("⾱"),
 
     SKULL_OPEN_MOUTH("₮"),
     SKULL_CLOSED_MOUTH("⺳"),

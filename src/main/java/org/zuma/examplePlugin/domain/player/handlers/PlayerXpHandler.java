@@ -117,7 +117,7 @@ public class PlayerXpHandler {
         double roundedXP = Math.round(xp * 100.0) / 100.0;
 
         if (player.getParty() != null) {
-            player.getParty().splitXPBetweenMembers(type, roundedXP);
+            player.getParty().splitXPBetweenMembers(this.player, type, roundedXP);
         } else {
             addXp(type, roundedXP, XpSource.PERSONAL);
         }

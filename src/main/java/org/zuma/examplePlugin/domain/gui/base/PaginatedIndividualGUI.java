@@ -26,6 +26,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
     private int indexEnd = 0;
     private int maxPages = 1;
     private List<ItemStack> items;
+    private HashMap<Integer, ItemStack> overrideItems = new HashMap<>();
     private final Set<Integer> ignoredSlots;
 
     public PaginatedIndividualGUI(String title, int id, int rows, @Nullable Set<Integer> ignoredSlots) {
@@ -34,6 +35,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
         this.inventory = super.getBaseInventory();
         this.items = new ArrayList<>();
         this.ignoredSlots = ignoredSlots == null ? new HashSet<>() : ignoredSlots;
+        this.overrideItems = new HashMap<>();
 
         if (rows < 2) {
             throw new IllegalStateException("PaginatedIndividualGUI can have minimum of 2 rows!");
@@ -71,11 +73,21 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
         }
     }
 
+    public void setOverrideItems(HashMap<Integer, ItemStack> overrideItems, boolean tagIllegal) {
+        if (tagIllegal) {
+            overrideItems.values().forEach(IllegalItemWatchdog::tagIllegalItem);
+        }
+        this.overrideItems = overrideItems;
+    }
 
-    public void setContent(List<ItemStack> items) {
+    public void setContent(List<ItemStack> items, boolean tagIllegal) {
         this.totalItems = items.size();
 
-        this.items = List.copyOf(items).stream().peek(IllegalItemWatchdog::tagIllegalItem).toList();
+        if (tagIllegal) {
+            this.items = List.copyOf(items).stream().peek(IllegalItemWatchdog::tagIllegalItem).toList();
+        } else {
+            this.items = List.copyOf(items);
+        }
 
         int usableSlots = getUsableSlotsCount();
 
@@ -151,11 +163,23 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
             itemIndex++;
         }
 
+        for (Map.Entry<Integer, ItemStack> entry : overrideItems.entrySet()) {
+            int slot = entry.getKey();
+            ItemStack item = entry.getValue();
+
+            if (slot >= 0 && slot < inventory.getSize()) {
+                inventory.setItem(slot, item);
+            }
+        }
+
         // Place pagination icons in the last row (full row assumed)
         int lastRowStart = (rows - 1) * ITEMS_IN_ROW;
 
+        ItemStack pageCountIcon = GUIControl.fromNumber(page).asItemstack(Component.text("Page: " + page));
+        assignMenuValue(pageCountIcon, -9000); // Dummy value to identify as a menu item
+
         inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 6, previousPageIcon());
-        inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 5, GUIControl.fromNumber(page).asItemstack(Component.text("Page: " + page)));
+        inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 5, pageCountIcon);
         inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 4, nextPageIcon());
 
         return inventory;
@@ -170,6 +194,12 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
         }
 
         Integer menuValue = getMenuValue(currentItem);
+
+        if (menuValue != null && menuValue == -9000) {
+            // Clicked on page count icon, do nothing
+            event.setCancelled(true);
+            return;
+        }
 
         if (menuValue != null && menuValue == 10000) {
             nextPage();

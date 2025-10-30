@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class ShopInventory extends IndividualGUI implements ShopSubscriber {
     private static final Set<Integer> IGNORED_SLOTS = new HashSet<>(Arrays.asList(0, 1, 9, 10));
-    private static final int SHOP_ITEMS_UNTIL_SLOT = 35;
+    private static final int SHOP_ITEMS_UNTIL_SLOT = 36;
     private static final int SELLING_SLOTS_START = 45;
     private static final int SELLING_SLOT_END = 52;
     private static final int SELLING_CONFIRM_SLOT = 53;

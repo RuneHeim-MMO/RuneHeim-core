@@ -37,7 +37,7 @@ public class CityGuardMob extends GenericCombatant {
                 new SkillLevelRecord(SkillType.HITPOINTS, 99),
                 new SkillLevelRecord(SkillType.STRENGTH, 99),
                 new SkillLevelRecord(SkillType.DEFENCE, 99)
-        ), null, null, restWalkingSpeed, false, false, 9999, skin, model, disguiseType, List.of());
+        ), null, null, restWalkingSpeed, false, false, 9999, skin, model, disguiseType, List.of(), true);
 
         this.initialWalkingDistance = walkingDistance;
         this.restWalkingSpeed = restWalkingSpeed;

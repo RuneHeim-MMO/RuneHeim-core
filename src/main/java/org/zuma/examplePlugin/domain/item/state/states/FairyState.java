@@ -199,6 +199,11 @@ public class FairyState extends AbstractState {
         return list;
     }
 
+    public void setMaxExp() {
+        this.experience = getXPForLevel(getLevel() + 1);
+        this.canConsumeFruit = true;
+    }
+
     @Override
     public AbstractStateMeta serialize(Gson gson) {
         return new AbstractStateMeta(this.getStateType(), new VersionedJson(gson.toJson(new FairyStateMeta(this.upgradeIds, this.stamina, this.experience, this.canConsumeFruit, this.getGeneration())), 1));

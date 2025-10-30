@@ -27,7 +27,7 @@ public class CombatDummy extends GenericCombatant {
                 new SkillLevelRecord(SkillType.HITPOINTS, 1),
                 new SkillLevelRecord(SkillType.STRENGTH, 1),
                 new SkillLevelRecord(SkillType.DEFENCE, 1)
-        ), null, null, 0, false, false, 99999, null, "dummy", null, List.of());
+        ), null, null, 0, false, false, 99999, null, "dummy", null, List.of(), true);
 
         setMaxWalkDistance(0);
         setBaseEntity(EntityType.PIG); // Pig hides health bar

@@ -21,8 +21,8 @@ public class Cows {
                 MobBehaviors.COW.getBehavior(),
                 0.25,
                 false, false, 8, null, null, DisguiseType.COW,
-                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt(), DropTableId.COWHIDE.asInt())
-        ));
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt(), DropTableId.COWHIDE.asInt()),
+                true));
 
 
         registry.register(MobType.CALF_BASE_5.getId(), () -> new GenericCombatant(
@@ -32,8 +32,8 @@ public class Cows {
                 MobBehaviors.EAGLE.getBehavior(),
                 0.25,
                 false, false, 5, null, null, DisguiseType.COW,
-                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
-        ).setBaby(true));
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
+                true).setBaby(true));
 
 
     }

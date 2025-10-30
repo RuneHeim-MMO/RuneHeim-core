@@ -47,7 +47,6 @@ public class Food extends AbstractItemType {
         PlayerUtils.subtractOneFromMainHand(player);
         player.setHealth(healthAfterEating, RunePlayerHealthChangedEvent.Cause.HEALING);
         HudService.showHealBubble(player, healedAmount);
-        HudService.updateVanillaGUI(player);
     }
 
 

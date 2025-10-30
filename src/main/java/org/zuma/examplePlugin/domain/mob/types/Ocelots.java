@@ -6,9 +6,6 @@ import org.zuma.examplePlugin.domain.mob.MobTypeRegistry;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehaviors;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.mob.impl.GenericCombatant;
-import org.zuma.examplePlugin.domain.mob.impl.ShearableSheep;
-import org.zuma.examplePlugin.domain.skill.SkillLevelRecord;
-import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.util.List;
 
@@ -22,23 +19,23 @@ public class Ocelots {
                 "Ocelot", null, getBaseSkills(44),
                 null, MobBehaviors.OCELOT.getBehavior(),
                 0.3, true, false, 43, null, null, DisguiseType.OCELOT,
-                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
-        ));
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
+                true));
 
         registry.register(MobType.OCELOT_BASE_45.getId(), () -> new GenericCombatant(
                 "Ocelot", null, getBaseSkills(45),
                 null, MobBehaviors.OCELOT.getBehavior(),
                 0.3, true, false, 42, null, null, DisguiseType.OCELOT,
-                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
-        ));
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
+                true));
 
 
         registry.register(MobType.OCELOT_BASE_48.getId(), () -> new GenericCombatant(
                 "Ocelot", null, getBaseSkills(48),
                 null, MobBehaviors.OCELOT.getBehavior(),
                 0.3, true, false, 40, null, null, DisguiseType.OCELOT,
-                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt())
-        ));
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
+                true));
 
 
     }

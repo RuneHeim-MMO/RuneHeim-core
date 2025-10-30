@@ -116,7 +116,7 @@ public class HitHandler {
         }
 
         if (attacker.getEntity() instanceof Player) {
-            applySplashHit((RunePlayer) attacker, defender, type, isSpecialAttack, 60, (int) HitCalculator.getEntityModifierLevel(attacker, ModifierType.CLEAVE_DISTANCE));
+            applySplashHit((RunePlayer) attacker, defender, type, isSpecialAttack, 60, (int) HitCalculator.getEntityModifierAmount(attacker, ModifierType.CLEAVE_DISTANCE));
         }
 
         applyHit(attacker, defender, hit);

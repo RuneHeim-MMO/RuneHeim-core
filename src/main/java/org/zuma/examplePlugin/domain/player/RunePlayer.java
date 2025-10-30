@@ -46,7 +46,7 @@ public class RunePlayer implements CombatEntity {
     private PermissionAttachment permissionAttachment;
 
     private final PlayerCombatData combatData;
-    private @Nullable Party party;
+    private @Nullable UUID partyUUID;
 
     private final PendingXPHandler pendingXPHandler;
     private final EnumMap<ModifierType, Modifier> modifiers;
@@ -160,11 +160,15 @@ public class RunePlayer implements CombatEntity {
 
     // Party
     public @Nullable Party getParty() {
-        return party;
+        if (partyUUID != null) {
+            return RuneQuestPlugin.getPartyManager().getPartyByUUID(partyUUID);
+        }
+
+        return null;
     }
 
     public void setParty(@Nullable Party party) {
-        this.party = party;
+        this.partyUUID = party != null ? party.getUuid() : null;
     }
 
     // Combat data (health, combat level)
@@ -174,6 +178,7 @@ public class RunePlayer implements CombatEntity {
 
     public void setHealth(int hp, RunePlayerHealthChangedEvent.Cause cause) {
         combatData.setHealth(hp, cause);
+        HudService.updateVanillaGUI(this);
     }
 
     public int getMaxHealth() {
@@ -351,11 +356,11 @@ public class RunePlayer implements CombatEntity {
         isDead = dead;
     }
 
-    public void setPrayerEnergy(int amount) {
+    public void setPrayerEnergy(double amount) {
         this.combatData.setPrayerEnergy(amount);
     }
 
-    public int getPrayerEnergy() {
+    public double getPrayerEnergy() {
         return this.combatData.getPrayerEnergy();
     }
 

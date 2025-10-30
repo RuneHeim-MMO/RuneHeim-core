@@ -13,9 +13,9 @@ public class PlayerCombatData {
     private int combatLvl, health;
     private Long damagedAt;
     private float specialEnergy;
-    private int prayerEnergy;
+    private double prayerEnergy;
 
-    public PlayerCombatData(RunePlayer player, int health, int combatLvl, float specialEnergy, int prayerEnergy) {
+    public PlayerCombatData(RunePlayer player, int health, int combatLvl, float specialEnergy, double prayerEnergy) {
         this.player = player;
         this.combatLvl = combatLvl;
         this.health = health;
@@ -87,11 +87,11 @@ public class PlayerCombatData {
         this.specialEnergy = (float) percent / 100;
     }
 
-    public void setPrayerEnergy(int amount) {
+    public void setPrayerEnergy(double amount) {
         this.prayerEnergy = amount;
     }
 
-    public int getPrayerEnergy() {
+    public double getPrayerEnergy() {
         return this.prayerEnergy;
     }
 

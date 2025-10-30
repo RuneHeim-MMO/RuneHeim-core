@@ -105,13 +105,16 @@ public class ActionBarManager {
                 .fillColor(Color.SPECIAL_BAR_FILL.asColor())
                 .build();
 
+        boolean prayerEnergyAvailable = player.getPrayerEnergy() > 0;
+        boolean isPrayerActive = RuneQuestPlugin.getPrayerManager().hasActivePrayers(player.getUUID());
+
         return Component.text(
                         Icon.HEART_BIG.get(), NamedTextColor.WHITE)
                 .append(Component.text(" " + player.getHealth() + "/" + player.getSkill(SkillType.HITPOINTS).getLevelWithBonuses(), Color.ERROR.asColor()))
 
                 .append(SPACE_DIVIDER)
-                .append(Component.text(Icon.PRAYER.get(), NamedTextColor.WHITE))
-                .append(Component.text(" " + player.getPrayerEnergy() + "/" + player.getSkill(SkillType.PRAYER).getLevelWithBonuses(), Color.PRAYER_ENERGY.asColor()))
+                .append(Component.text(isPrayerActive ? Icon.PRAYER_ACTIVE.get() : Icon.PRAYER.get(), prayerEnergyAvailable ? NamedTextColor.WHITE : NamedTextColor.GRAY))
+                .append(Component.text(" " + ((int) player.getPrayerEnergy()) + "/" + player.getSkill(SkillType.PRAYER).getLevelWithBonuses(), prayerEnergyAvailable ? Color.PRAYER_ENERGY.asColor() : NamedTextColor.GRAY))
 
                 .append(SPACE_DIVIDER)
                 .append(playerHasMount ? mountIcon : Component.empty())

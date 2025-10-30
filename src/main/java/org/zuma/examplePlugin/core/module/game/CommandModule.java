@@ -28,12 +28,7 @@ public class CommandModule implements PluginModule {
     public void start(Plugin plugin, ModuleContext context) {
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("admin", new AdminCommand(
-                        context.get(HitHandler.class),
-                        context.get(InteractableBlockRepository.class),
-                        context.get(ItemRegistry.class),
-                        context.get(RecipeRegistry.class),
-                        context.get(BlockManager.class),
-                        new ResourceNodeTypeRepository()))
+                        context.get(HitHandler.class)))
         );
 
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,

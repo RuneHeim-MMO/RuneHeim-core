@@ -25,7 +25,9 @@ import org.zuma.examplePlugin.domain.mob.*;
 import org.zuma.examplePlugin.domain.modifier.GearModifierHandler;
 import org.zuma.examplePlugin.domain.modifier.GlobalModifierHandler;
 import org.zuma.examplePlugin.domain.mount.MountHandler;
+import org.zuma.examplePlugin.domain.party.PartyManager;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
+import org.zuma.examplePlugin.domain.prayer.PrayerManager;
 import org.zuma.examplePlugin.domain.quest.QuestHandler;
 import org.zuma.examplePlugin.domain.recipe.RecipeHandler;
 import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
@@ -76,7 +78,9 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new MountModule(),
                         new TourModule(),
                         new AmbienceModule(),
-                        new GlobalModifierModule()
+                        new GlobalModifierModule(),
+                        new PrayerModule(),
+                        new PartyModule()
                 ), moduleContext);
     }
 
@@ -94,6 +98,9 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
             ModelEngineWaiter waiter = new ModelEngineWaiter(() -> {
                 moduleContext.get(BlockLoader.class).loadInteractableBlocks();
                 RuneQuestPlugin.reloadMarkers();
+            }, 30, () -> {
+                // Timeout callback, shut down server
+                getServer().shutdown();
             });
 
             this.getServer().getPluginManager().registerEvents(waiter, this);
@@ -201,5 +208,17 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static GlobalModifierHandler getGlobalModifierHandler() {
         return pluginInstance.moduleContext.get(GlobalModifierHandler.class);
+    }
+
+    public static PrayerManager getPrayerManager() {
+        return pluginInstance.moduleContext.get(PrayerManager.class);
+    }
+
+    public static PartyManager getPartyManager() {
+        return pluginInstance.moduleContext.get(PartyManager.class);
+    }
+
+    public static ModuleContext getModuleContext() {
+        return pluginInstance.moduleContext;
     }
 }

@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.gui;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.InventoryHolder;
@@ -17,9 +18,7 @@ import org.zuma.examplePlugin.domain.gui.base.AbstractGUI;
 import org.zuma.examplePlugin.domain.gui.constants.GUIOverlay;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.gui.impl.individual.*;
-import org.zuma.examplePlugin.domain.gui.impl.individual.admin.BlockInvCreatorInventory;
-import org.zuma.examplePlugin.domain.gui.impl.individual.admin.ModelledBlockInvCreatorInventory;
-import org.zuma.examplePlugin.domain.gui.impl.individual.admin.NodeCreatorInventory;
+import org.zuma.examplePlugin.domain.gui.impl.individual.admin.*;
 import org.zuma.examplePlugin.domain.gui.impl.individual.recipe.*;
 import org.zuma.examplePlugin.domain.mob.base.AbstractInventoryOpener;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -59,15 +58,20 @@ public class GUIHandler {
     }
 
     public void initializeInventories(BlockLoader blockLoader, BankQueryLockController bankQueryLockController) {
+
+        // Admin
+        this.registry.register(InventoryId.ADMIN_NODE_CREATE.asInt(), () -> new NodeCreatorInventory("[A] Create Resource Node", InventoryId.ADMIN_NODE_CREATE.asInt(), blockLoader));
+        this.registry.register(InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), () -> new BlockInvCreatorInventory("[A] Create Inventory Opener", InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), blockLoader, this));
+        this.registry.register(InventoryId.ADMIN_MODELLED_INTERACTABLE_BLOCK_CREATE.asInt(), () -> new ModelledBlockInvCreatorInventory("[A] Create Inventory Opener", InventoryId.ADMIN_MODELLED_INTERACTABLE_BLOCK_CREATE.asInt(), blockLoader, this));
+        this.registry.register(InventoryId.ADMIN_ITEM_REGISTRY.asInt(), () -> new ItemRegistry(InventoryId.ADMIN_ITEM_REGISTRY.asInt()));
+        this.registry.register(InventoryId.ADMIN_RECIPE_REGISTRY.asInt(), () -> new RecipeRegistry(InventoryId.ADMIN_RECIPE_REGISTRY.asInt()));
+
         this.registry.register(InventoryId.BASIC_FURNACE.asInt(), () -> new FurnaceInventory(GUIOverlay.FURNACE_OVERLAY.asGlyph() + "§f" + Icon.FURNACE.get() + "§f Furnace", InventoryId.BASIC_FURNACE.asInt()));
         this.registry.register(InventoryId.STOVE.asInt(), () -> new CookingInventory(GUIOverlay.COOKING_OVERLAY.asGlyph() + "§f" + Icon.FIRE.get() + "§f Stove", InventoryId.STOVE.asInt()));
         this.registry.register(InventoryId.FIRE.asInt(), () -> new CookingInventory(GUIOverlay.CAMPFIRE_OVERLAY.asGlyph() + "§f" + Icon.FIRE.get() + "§f Campfire", InventoryId.FIRE.asInt()));
         this.registry.register(InventoryId.ANVIL.asInt(), () -> new AnvilInventory(GUIOverlay.ANVIL_OVERLAY.asGlyph() + "§f" + Icon.ANVIL.get() + "§f Anvil", InventoryId.ANVIL.asInt()));
         this.registry.register(InventoryId.CRAFTING_TABLE.asInt(), () -> new CraftingTableInventory(GUIOverlay.CRAFTING_TABLE_OVERLAY.asGlyph() + "§f" + Icon.CRAFTING.get() + "§f Crafting Table", InventoryId.CRAFTING_TABLE.asInt()));
         this.registry.register(InventoryId.FUSION_MASTER.asInt(), () -> new FusionMasterInventory(GUIOverlay.FUSION_MASTER_OVERLAY.asGlyph() + "§f" + Icon.SCROLL_RED.get() + "§f Fusion Master", InventoryId.FUSION_MASTER.asInt()));
-        this.registry.register(InventoryId.ADMIN_NODE_CREATE.asInt(), () -> new NodeCreatorInventory("[A] Create Resource Node", InventoryId.ADMIN_NODE_CREATE.asInt(), blockLoader));
-        this.registry.register(InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), () -> new BlockInvCreatorInventory("[A] Create Inventory Opener", InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), blockLoader, this));
-        this.registry.register(InventoryId.ADMIN_MODELLED_INTERACTABLE_BLOCK_CREATE.asInt(), () -> new ModelledBlockInvCreatorInventory("[A] Create Inventory Opener", InventoryId.ADMIN_MODELLED_INTERACTABLE_BLOCK_CREATE.asInt(), blockLoader, this));
         this.registry.register(InventoryId.GENERAL_STORE.asInt(), () -> new ShopInventory(GUIOverlay.GENERAL_STORE_OVERLAY.asGlyph() + "§f" + Icon.CHEST.get() + "§f General Store", InventoryId.GENERAL_STORE.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.GENERAL_STORE.asInt())));
         this.registry.register(InventoryId.SPINNING_WHEEL.asInt(), () -> new SpinningWheelInventory(GUIOverlay.SPINNING_WHEEL_OVERLAY.asGlyph() + "§f" + Icon.MATERIAL.get() + "§f Spinning Wheel", InventoryId.SPINNING_WHEEL.asInt()));
         this.registry.register(InventoryId.DRAKKAR_BLACKSMITH.asInt(), () -> new ShopInventory(GUIOverlay.BLACKSMITH_SHOP_OVERLAY.asGlyph() + "§f" + Icon.HAMMER.get() + "§f Blacksmith", InventoryId.DRAKKAR_BLACKSMITH.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_BLACKSMITH.asInt())));
@@ -102,9 +106,11 @@ public class GUIHandler {
         this.registry.register(InventoryId.THORNBARK_GENERAL_STORE.asInt(), () -> new ShopInventory(GUIOverlay.GENERAL_STORE_OVERLAY.asGlyph() + "§f" + Icon.CHEST.get() + "§f General Store", InventoryId.THORNBARK_GENERAL_STORE.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.THORNBARK_GENERAL_STORE.asInt())));
         this.registry.register(InventoryId.SAKURMEER_FOOD_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.FOOD_SHOP_OVERLAY.asGlyph() + "§f" + Icon.FRUIT.get() + "§f Food Shop", InventoryId.SAKURMEER_FOOD_SHOP.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.SAKURMEER_FOOD_SHOP.asInt())));
         this.registry.register(InventoryId.VALDRIN_WEAPON_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.WEAPON_SHOP_OVERLAY.asGlyph() + "§f" + Icon.SWORD.get() + "§f Weapon Shop", InventoryId.VALDRIN_WEAPON_SHOP.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.VALDRIN_WEAPON_SHOP.asInt())));
-        this.registry.register(InventoryId.TANNER.asInt(), () -> new TannerInventory(GUIOverlay.TANNER_OVERLAY.asGlyph() + "§f" + Icon.FIRE.get() + "§f Tanner", InventoryId.TANNER.asInt()));
+        this.registry.register(InventoryId.TANNER.asInt(), () -> new TannerInventory(GUIOverlay.TANNER_OVERLAY.asGlyph() + "§f" + Icon.LEATHER.get() + "§f Tanner", InventoryId.TANNER.asInt()));
         this.registry.register(InventoryId.FLETCHING_TABLE.asInt(), () -> new FletchingTableInventory(GUIOverlay.FLETCHING_TABLE_OVERLAY.asGlyph() + "§f" + Icon.ARROW.get() + "§f Fletching Table", InventoryId.FLETCHING_TABLE.asInt()));
-        this.registry.register(InventoryId.DRAKKAR_TANNER_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.TANNER_SHOP_OVERLAY.asGlyph() + "§f" + Icon.SWORD.get() + "§f Tanner Shop", InventoryId.DRAKKAR_TANNER_SHOP.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_TANNER_SHOP.asInt())));
+        this.registry.register(InventoryId.DRAKKAR_TANNER_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.TANNER_SHOP_OVERLAY.asGlyph() + "§f" + Icon.LEATHER.get() + "§f Tanner Shop", InventoryId.DRAKKAR_TANNER_SHOP.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_TANNER_SHOP.asInt())));
+        this.registry.register(InventoryId.PRAYER_MENU.asInt(), () -> new PrayerMenu(GUIOverlay.PRAYER_MENU_OVERLAY.asGlyph() + "§f" + Icon.PRAYER.get() + "§b Prayer", InventoryId.PRAYER_MENU.asInt()));
+        this.registry.register(InventoryId.PARTY_MENU.asInt(), () -> new PartyMenu(GUIOverlay.PARTY_MENU_OVERLAY.asGlyph() + "§f" + Icon.PARTY.get() + "§f Party", InventoryId.PARTY_MENU.asInt()));
 
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
@@ -121,6 +127,7 @@ public class GUIHandler {
 
         if (matchingGUI == null) {
             matchingGUI = this.registry.createInstance(player.getUUID(), id);
+            Bukkit.getServer().getPluginManager().registerEvents(matchingGUI, RuneQuestPlugin.getInstance());
         }
 
         if (matchingGUI == null) {
@@ -144,6 +151,7 @@ public class GUIHandler {
             registry.removePlayersActiveInstance(player.getUUID());
         })) {
             if (onClose != null) {
+                HandlerList.unregisterAll(matchingGUI);
                 onClose.run();
             }
             registry.removePlayersActiveInstance(player.getUUID());
@@ -212,6 +220,7 @@ public class GUIHandler {
 
         if (matchingGUI != null) {
             matchingGUI.onInventoryClose(event, player);
+            HandlerList.unregisterAll(matchingGUI);
         }
 
         registry.removePlayersActiveInstance(bukkitPlayer.getUniqueId());
