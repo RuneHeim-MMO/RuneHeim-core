@@ -17,19 +17,16 @@ import java.util.function.Supplier;
 public class Shopkeepers {
 
     private static final Supplier<DialogBuilder> genericShopDialog = () -> DialogBuilder.create("generic-shop-dialog")
-            .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()))
             .interactiveStep(c -> c.randomText(DialogPreset.WANT_TO_SEE_STOCK.getList())
                     .option("§aYes" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
                     .option("§cNo", n -> n.followupSteps(d -> d.passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList())))));
 
     private static final Supplier<DialogBuilder> foodShopDialog = () -> DialogBuilder.create("food-shop-dialog")
-            .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()))
             .interactiveStep(c -> c.randomText(DialogPreset.WANT_TO_SEE_FOOD_STOCK.getList())
                     .option("§aYes" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
                     .option("§cNo", n -> n.followupSteps(d -> d.passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList())))));
 
     private static final Supplier<DialogBuilder> tannerDialog = () -> DialogBuilder.create("tanner-dialog")
-            .passiveStep(p -> p.randomText(DialogPreset.WELCOME.getList()))
             .interactiveStep(c -> c.randomText(List.of("Want leather? I’ll tan your hides."))
                     .option("§aYes" + " §f" + Icon.LEATHER.get(), b -> b.action("open_inventory_{id_38}"))
                     .option("§aSupplies" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
