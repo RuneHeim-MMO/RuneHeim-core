@@ -178,6 +178,7 @@ public class RunePlayer implements CombatEntity {
 
     public void setHealth(int hp, RunePlayerHealthChangedEvent.Cause cause) {
         combatData.setHealth(hp, cause);
+        HudService.updateVanillaGUI(this);
     }
 
     public int getMaxHealth() {
