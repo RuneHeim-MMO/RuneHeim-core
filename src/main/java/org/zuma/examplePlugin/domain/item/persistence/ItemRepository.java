@@ -1948,7 +1948,7 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 5),
-                                                new Modifier(ModifierType.RANGED_ACCURACY, 6)
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 9)
                                         ),
                                         List.of(new SkillRequirement(SkillType.RANGED, 1)),
                                         null),
@@ -1960,7 +1960,7 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 7),
-                                                new Modifier(ModifierType.RANGED_ACCURACY, 9)
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 12)
                                         ),
                                         List.of(new SkillRequirement(SkillType.RANGED, 5)),
                                         null),
@@ -1972,7 +1972,7 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 12),
-                                                new Modifier(ModifierType.RANGED_ACCURACY, 15)
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 18)
                                         ),
                                         List.of(new SkillRequirement(SkillType.RANGED, 20)),
                                         null),
@@ -1984,7 +1984,7 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 17),
-                                                new Modifier(ModifierType.RANGED_ACCURACY, 20)
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 23)
                                         ),
                                         List.of(new SkillRequirement(SkillType.RANGED, 30)),
                                         null),
@@ -1996,7 +1996,7 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 22),
-                                                new Modifier(ModifierType.RANGED_ACCURACY, 28)
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 31)
                                         ),
                                         List.of(new SkillRequirement(SkillType.RANGED, 50)),
                                         null),
@@ -2010,7 +2010,7 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 6),
-                                                new Modifier(ModifierType.RANGED_ACCURACY, 8)
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 11)
                                         ),
                                         List.of(new SkillRequirement(SkillType.RANGED, 1)),
                                         null),
@@ -2022,7 +2022,7 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 9),
-                                                new Modifier(ModifierType.RANGED_ACCURACY, 12)
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 15)
                                         ),
                                         List.of(new SkillRequirement(SkillType.RANGED, 5)),
                                         null),
@@ -2034,7 +2034,7 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 14),
-                                                new Modifier(ModifierType.RANGED_ACCURACY, 18)
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 21)
                                         ),
                                         List.of(new SkillRequirement(SkillType.RANGED, 20)),
                                         null),
@@ -2046,7 +2046,7 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 19),
-                                                new Modifier(ModifierType.RANGED_ACCURACY, 24)
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 27)
                                         ),
                                         List.of(new SkillRequirement(SkillType.RANGED, 30)),
                                         null),
@@ -2058,7 +2058,7 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 24),
-                                                new Modifier(ModifierType.RANGED_ACCURACY, 32)
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 35)
                                         ),
                                         List.of(new SkillRequirement(SkillType.RANGED, 50)),
                                         null),
@@ -2072,7 +2072,7 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 15),
-                                                new Modifier(ModifierType.RANGED_ACCURACY, 18)
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 21)
                                         ),
                                         List.of(new SkillRequirement(SkillType.RANGED, 20)),
                                         null),
@@ -2084,7 +2084,7 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 20),
-                                                new Modifier(ModifierType.RANGED_ACCURACY, 22)
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 25)
                                         ),
                                         List.of(new SkillRequirement(SkillType.RANGED, 30)),
                                         null),
@@ -2096,7 +2096,7 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 28),
-                                                new Modifier(ModifierType.RANGED_ACCURACY, 30)
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 33)
                                         ),
                                         List.of(new SkillRequirement(SkillType.RANGED, 40)),
                                         null),
@@ -2108,7 +2108,7 @@ public class ItemRepository {
                                 new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 35),
-                                                new Modifier(ModifierType.RANGED_ACCURACY, 38)
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 41)
                                         ),
                                         List.of(new SkillRequirement(SkillType.RANGED, 50)),
                                         null),
@@ -2120,7 +2120,7 @@ public class ItemRepository {
                                 new SocketedWeaponEquipableMeta(new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
                                         List.of(
                                                 new Modifier(ModifierType.RANGED_STRENGTH, 42),
-                                                new Modifier(ModifierType.RANGED_ACCURACY, 45)
+                                                new Modifier(ModifierType.RANGED_ACCURACY, 48)
                                         ),
                                         List.of(new SkillRequirement(SkillType.RANGED, 60)),
                                         null), null, 1),
