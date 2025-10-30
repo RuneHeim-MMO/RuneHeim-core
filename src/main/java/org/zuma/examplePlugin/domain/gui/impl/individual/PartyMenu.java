@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -145,6 +146,7 @@ public class PartyMenu extends PaginatedIndividualGUI {
 
         if (owner == null || party == null || !party.getMemberUUIDs().contains(this.getOwner())) {
             RuneQuestPlugin.getGUIHandler().forceCloseOpenedInventories(this.getUuid());
+            HandlerList.unregisterAll(this);
             return;
         }
 
@@ -162,10 +164,12 @@ public class PartyMenu extends PaginatedIndividualGUI {
 
         if (owner == null || party == null || !party.getMemberUUIDs().contains(this.getOwner())) {
             RuneQuestPlugin.getGUIHandler().forceCloseOpenedInventories(this.getUuid());
+            HandlerList.unregisterAll(this);
             return;
         }
 
         RuneQuestPlugin.getGUIHandler().forceCloseOpenedInventories(this.getUuid());
+        HandlerList.unregisterAll(this);
     }
 
 }
