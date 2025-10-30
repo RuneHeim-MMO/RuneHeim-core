@@ -193,7 +193,7 @@ public abstract class AbstractSpawnZone {
             if (entity instanceof LivingEntity living && living.getTargetEntity(32) != null) {
                 AbstractMob mob = RuneQuestPlugin.getMobRegistry().getMob(entity);
 
-                if (!(mob instanceof CombatantMob combatantMob)) return;
+                if (!(mob instanceof CombatantMob combatantMob)) continue;
 
                 if (System.currentTimeMillis() - combatantMob.getLastDamagedAt() < 10_000L) {
                     continue; // Recently in combat, do not remove.

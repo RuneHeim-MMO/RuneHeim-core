@@ -183,19 +183,19 @@ public class PartyCommand implements BasicCommand {
 
     @Override
     public Collection<String> suggest(CommandSourceStack commandSourceStack, String[] args) {
-        String prefix = args.length == 3 ? args[2].toLowerCase() : null;
+        String prefix = args.length >= 2 ? args[1].toLowerCase() : "";
         String senderName = commandSourceStack.getSender().getName();
 
         if (args.length == 2 && (args[0].equalsIgnoreCase("invite") || args[0].equalsIgnoreCase("kick") || args[0].equalsIgnoreCase("join"))) {
             return Bukkit.getOnlinePlayers().stream()
                     .map(Player::getName)
-                    .filter(name -> !senderName.equalsIgnoreCase(name))   // exclude sender
-                    .filter(name -> prefix != null ? name.toLowerCase().startsWith(prefix) : true) // match typed prefix
+                    .filter(name -> !senderName.equalsIgnoreCase(name))
+                    .filter(name -> name.toLowerCase().startsWith(prefix))
                     .toList();
         }
 
-
         return SUBCOMMANDS;
     }
+
 
 }

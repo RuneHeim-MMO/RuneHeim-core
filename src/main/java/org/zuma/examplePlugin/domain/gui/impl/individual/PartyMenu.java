@@ -154,7 +154,14 @@ public class PartyMenu extends PaginatedIndividualGUI {
             return;
         }
 
-        Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> reloadInventory(owner.getParty()));
+        Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+            Party ownerParty = owner.getParty();
+
+            if (ownerParty != null) {
+                reloadInventory(party);
+            }
+
+        });
     }
 
     @EventHandler

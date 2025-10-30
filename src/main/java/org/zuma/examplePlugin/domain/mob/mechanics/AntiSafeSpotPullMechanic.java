@@ -24,16 +24,17 @@ public class AntiSafeSpotPullMechanic implements MobMechanic {
         this.recentAttackers = new HashMap<>();
     }
 
+    @Override
     public void onDamagedByPlayer(RunePlayer attacker, Hit hit) {
         Entity entity = mob.getEntity();
 
-        if ((hit.getAttackType() != AttackType.MELEE) || !(entity instanceof LivingEntity livingEntity)) {
+        if ((hit.getAttackType() != AttackType.MELEE) || !(entity instanceof LivingEntity)) {
             return;
         }
 
-        Long now = System.currentTimeMillis();
+        long now = System.currentTimeMillis();
         UUID uuid = attacker.getUUID();
-        
+
         if (!recentAttackers.containsKey(uuid)) {
             List<Long> timestamps = new ArrayList<>();
             timestamps.add(now);
@@ -54,6 +55,7 @@ public class AntiSafeSpotPullMechanic implements MobMechanic {
         }
     }
 
+    @Override
     public void onMobDamagePlayer(RunePlayer target) {
         this.recentAttackers.remove(target.getUUID());
     }
