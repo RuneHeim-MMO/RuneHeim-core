@@ -1,7 +1,7 @@
 package org.zuma.examplePlugin.domain.party.constants;
 
 public enum PartyRole {
-    OWNER("Owner"),
+    LEADER("Leader"),
     MEMBER("Member");
 
     private final String label;

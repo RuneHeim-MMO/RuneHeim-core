@@ -31,7 +31,7 @@ public class Party {
         this.ownerUsername = owner.asBukkitPlayer().getName();
         this.players = new ArrayList<>();
         this.invites = new HashSet<>();
-        this.players.add(new PartyMember(owner.getUUID(), PartyRole.OWNER));
+        this.players.add(new PartyMember(owner.getUUID(), PartyRole.LEADER));
         this.maxMembers = maxMembers;
         this.xpSharing = true;
     }
