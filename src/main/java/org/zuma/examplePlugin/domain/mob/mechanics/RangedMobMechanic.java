@@ -32,13 +32,14 @@ public class RangedMobMechanic implements MobMechanic {
         if (!(mob.getEntity() instanceof LivingEntity e && e instanceof Mob mobEntity)) return;
         Entity target = mobEntity.getTarget();
 
-        if (target instanceof Player playerTarget) {
+        if (target instanceof Player playerTarget || target instanceof AbstractHorse abstractHorse) {
+            LivingEntity targetEntity = (LivingEntity) target;
 
             if (e.getType().equals(EntityType.SKELETON)) return; // Skeletons have their own shooting mechanic
-            if (canHybridAttack && MathUtils.getLocationsDistanceXZ(e.getLocation(), playerTarget.getLocation()) < 3)
+            if (canHybridAttack && MathUtils.getLocationsDistanceXZ(e.getLocation(), targetEntity.getLocation()) < 3)
                 return; // Skip ranged attack if in melee range and hybrid attack is allowed
 
-            mob.shootProjectileAtTarget(playerTarget);
+            mob.shootProjectileAtTarget(targetEntity);
         }
     }
 }
