@@ -1,5 +1,9 @@
 package org.zuma.examplePlugin.domain.mob;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketEvent;
 import io.papermc.paper.event.entity.EntityKnockbackEvent;
 import me.libraryaddict.disguise.DisguiseAPI;
 import org.bukkit.Bukkit;
@@ -7,16 +11,12 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.entity.*;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.MathUtils;
@@ -53,6 +53,7 @@ public class MobHandler {
                 m.tick();
             });
         }, 0L, 20L);
+
     }
 
     // Clears all mobs with MOB_UUID data keys.
@@ -165,6 +166,14 @@ public class MobHandler {
         mob.onEntityDamaged(event);
     }
 
+    public void onShootProjectile(ProjectileLaunchEvent event, AbstractMob mob) {
+        if (mob.getBehavior() != null && !event.isCancelled()) {
+            mob.getBehavior().playSound(event.getEntity(), MobBehavior.MobSoundType.NEGATIVE);
+        }
+
+        mob.onEntityShootProjectile(event);
+    }
+
     public void handleRedisguisingOnPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
@@ -215,6 +224,27 @@ public class MobHandler {
                 }
             }
 
+        }
+    }
+
+    private void handleArrowSpawnPacket(PacketEvent event) {
+        Object entityIdObj = event.getPacket().getIntegers().read(0);
+        if (entityIdObj == null) return;
+
+        int entityId = (int) entityIdObj;
+        Arrow arrow = null;
+
+        for (Arrow a : event.getPlayer().getWorld().getEntitiesByClass(Arrow.class)) {
+            if (a.getEntityId() == entityId) {
+                arrow = a;
+                break;
+            }
+        }
+
+        if (arrow == null) return;
+
+        if (arrow.hasMetadata("custom_projectile")) {
+            event.setCancelled(true);
         }
     }
 

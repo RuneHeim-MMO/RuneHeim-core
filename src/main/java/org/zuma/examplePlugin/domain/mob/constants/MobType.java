@@ -199,6 +199,11 @@ public enum MobType {
     INFERNAK_WARHOUND_BASE_80,
     HOGLIN_BASE_5,
 
+    // Dungeon Mobs
+    LAVA_DUNGEON_BLAZE_BASE_35,
+    LAVA_DUNGEON_BLAZE_BASE_37,
+    LAVA_DUNGEON_BLAZE_BASE_39,
+
     RAT,
     AXOLOTL,
     BEE,

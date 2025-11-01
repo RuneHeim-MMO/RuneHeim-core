@@ -45,7 +45,7 @@ dependencies {
     implementation 'com.zaxxer:HikariCP:5.1.0'
     implementation 'io.lettuce:lettuce-core:6.2.1.RELEASE'
     compileOnly 'com.sk89q.worldguard:worldguard-bukkit:7.0.13'
-    compileOnly files('libs/packetevents-spigot-2.8.0.jar')
+    compileOnly files('libs/packetevents-spigot-2.9.5.jar')
     compileOnly files('libs/ProtocolLib.jar')
     compileOnly files('libs/ModelEngine-4.0.8.jar')
     compileOnly files("libs/ServerTours-2.1.8.jar")

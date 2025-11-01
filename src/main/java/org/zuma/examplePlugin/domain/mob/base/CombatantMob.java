@@ -15,6 +15,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -26,10 +27,14 @@ import org.zuma.examplePlugin.core.utils.ModifierUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
+import org.zuma.examplePlugin.domain.combat.constants.ProjectileType;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.mob.constants.MetadataKeys;
 import org.zuma.examplePlugin.domain.mob.mechanics.AntiSafeSpotPullMechanic;
+import org.zuma.examplePlugin.domain.mob.mechanics.MobEnergyMechanic;
+import org.zuma.examplePlugin.domain.mob.mechanics.RangedMobMechanic;
+import org.zuma.examplePlugin.domain.mob.projectiles.RuneProjectile;
 import org.zuma.examplePlugin.domain.xp.PendingXPHandler;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
 import org.zuma.examplePlugin.domain.mob.meta.CombatantMobMeta;
@@ -50,6 +55,8 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     private int health;
     private long lastDamagedAt;
 
+    private RuneProjectile projectileType = new RuneProjectile(ProjectileType.RANGED, EntityType.ARROW, 2);
+
     private final PendingXPHandler xpHandler;
 
     public CombatantMob(CombatantMobMeta meta) {
@@ -59,7 +66,9 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         this.xpHandler = new PendingXPHandler();
 
         if (!meta.safeSpottable()) {
-            this.addMobMechanic(new AntiSafeSpotPullMechanic(this));
+            AntiSafeSpotPullMechanic mechanic = new AntiSafeSpotPullMechanic();
+            this.addMobMechanic(mechanic);
+            mechanic.setParent(this);
         }
 
         setModel(meta.model());
@@ -93,6 +102,11 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
 
     public CombatantMob overrideBaseToBlaze() {
         this.setBaseEntity(EntityType.BLAZE);
+        return this;
+    }
+
+    public CombatantMob setProjectileType(RuneProjectile projectileType) {
+        this.projectileType = projectileType;
         return this;
     }
 
@@ -256,6 +270,14 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         this.xpHandler.distributePendingXP();
     }
 
+    @Override
+    public void onEntityShootProjectile(ProjectileLaunchEvent event) {
+        Projectile projectile = event.getEntity();
+
+        if (projectileType == null) return;
+        Projectile newProjectile = projectileType.replaceProjectile(projectile);
+    }
+
 
     public long getLastDamagedAt() {
         return lastDamagedAt;
@@ -263,6 +285,15 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
 
     public List<RunePlayer> getRecentAttackers(Long durationMillis) {
         return this.xpHandler.getRecentAttackers(durationMillis);
+    }
+
+    public void shootProjectileAtTarget(LivingEntity target) {
+        if (!(getEntity() instanceof LivingEntity shooter)) {
+            return;
+        }
+
+        this.projectileType.shootProjectileAtTarget(shooter, target);
+
     }
 
 }

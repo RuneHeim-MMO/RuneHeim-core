@@ -16,10 +16,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.*;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.EntityEquipment;
@@ -467,8 +464,10 @@ public abstract class AbstractMob {
         return this.mobMechanics;
     }
 
-    public void addMobMechanic(MobMechanic mechanic) {
+    public AbstractMob addMobMechanic(MobMechanic mechanic) {
         this.mobMechanics.put(mechanic.getClass(), mechanic);
+        mechanic.setParent(this);
+        return this;
     }
 
     public void playAnimation(String animationName, float speed, float blendIn, int loopCount) {
@@ -504,6 +503,11 @@ public abstract class AbstractMob {
     public void onEntityAttackPlayer(EntityDamageByEntityEvent event, RunePlayer player) {
 
     }
+
+    public void onEntityShootProjectile(ProjectileLaunchEvent event) {
+
+    }
+
 
     public void onEntityDamaged(EntityDamageEvent event) {
 

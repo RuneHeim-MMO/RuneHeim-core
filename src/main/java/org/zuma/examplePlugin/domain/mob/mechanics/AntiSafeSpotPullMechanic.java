@@ -7,6 +7,7 @@ import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.MobUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.combat.constants.AttackType;
+import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
@@ -16,13 +17,21 @@ public class AntiSafeSpotPullMechanic implements MobMechanic {
     // Number of hits within the time frame to trigger pull
     private static final int HIT_THRESHOLD = 3;
 
-    private final CombatantMob mob;
+    private  CombatantMob mob;
     private final HashMap<UUID, List<Long>> recentAttackers;
 
-    public AntiSafeSpotPullMechanic(CombatantMob mob) {
-        this.mob = mob;
+    public AntiSafeSpotPullMechanic() {
         this.recentAttackers = new HashMap<>();
     }
+
+    public void setParent(AbstractMob mob) {
+        if (!(mob instanceof CombatantMob combatantMob)) {
+            throw new IllegalArgumentException("RangedMobMechanic can only be applied to CombatantMob");
+        }
+
+        this.mob = combatantMob;
+    }
+
 
     @Override
     public void onDamagedByPlayer(RunePlayer attacker, Hit hit) {
