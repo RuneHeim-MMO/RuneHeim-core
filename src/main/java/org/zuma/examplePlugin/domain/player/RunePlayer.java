@@ -273,8 +273,8 @@ public class RunePlayer implements CombatEntity {
         this.pouchCoins = coins;
     }
 
-    public void onDeath(Hit lastHit) {
-        DeathHandler.handlePlayerDeath(this, lastHit);
+    public void killPlayer(@Nullable Hit lastHit) {
+        DeathHandler.killPlayer(this, lastHit);
 
         this.pendingXPHandler.distributePendingXP();
     }

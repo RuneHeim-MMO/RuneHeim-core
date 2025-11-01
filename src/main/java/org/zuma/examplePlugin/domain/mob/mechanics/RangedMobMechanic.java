@@ -10,11 +10,13 @@ public class RangedMobMechanic implements MobMechanic {
     private CombatantMob mob;
     private final RuneProjectile projectileType;
     private final boolean canHybridAttack;
+    private final int tickShotPercentage;
 
 
-    public RangedMobMechanic(RuneProjectile projectileType, boolean canHybridAttack) {
+    public RangedMobMechanic(RuneProjectile projectileType, boolean canHybridAttack, int tickShotPercentage) {
         this.projectileType = projectileType;
         this.canHybridAttack = canHybridAttack;
+        this.tickShotPercentage = tickShotPercentage;
     }
 
     public void setParent(AbstractMob mob) {
@@ -30,12 +32,12 @@ public class RangedMobMechanic implements MobMechanic {
     public void tick() {
         if (mob == null) return;
         if (!(mob.getEntity() instanceof LivingEntity e && e instanceof Mob mobEntity)) return;
-        Entity target = mobEntity.getTarget();
+        LivingEntity targetEntity = mobEntity.getTarget();
 
-        if (target instanceof Player playerTarget || target instanceof AbstractHorse abstractHorse) {
-            LivingEntity targetEntity = (LivingEntity) target;
+        if (targetEntity instanceof Player || targetEntity instanceof AbstractHorse) {
+            if (MathUtils.getRandomInt(1, 100) > tickShotPercentage)
+                return; // Skip this tick based on percentage chance
 
-            if (e.getType().equals(EntityType.SKELETON)) return; // Skeletons have their own shooting mechanic
             if (canHybridAttack && MathUtils.getLocationsDistanceXZ(e.getLocation(), targetEntity.getLocation()) < 3)
                 return; // Skip ranged attack if in melee range and hybrid attack is allowed
 

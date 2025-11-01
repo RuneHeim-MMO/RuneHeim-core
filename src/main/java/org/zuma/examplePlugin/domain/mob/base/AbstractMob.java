@@ -175,8 +175,9 @@ public abstract class AbstractMob {
         return this;
     }
 
-    public void setMaxWalkDistance(int distance) {
+    public AbstractMob setMaxWalkDistance(int distance) {
         this.maxWalkDistance = distance;
+        return this;
     }
 
     public int getMaxWalkDistance() {

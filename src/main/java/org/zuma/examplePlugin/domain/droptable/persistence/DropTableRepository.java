@@ -222,8 +222,27 @@ public class DropTableRepository {
                 new DropTableDBEntry(DropTableId.GOBLIN_LOW_LVL_ARMOR.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.IRON_BODY.asInt(), 1, 1, 20, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.BRONZE_BOOTS.asInt(), 1, 1, 10, DropTableEntry.Type.ITEM)
-                ), null)), 1))
+                ), null)), 1)),
 
+
+                new DropTableDBEntry(DropTableId.DUNGEON_TURRET.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.IRON_BAR.asInt(), 1, 2, 10, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(DropTableId.COINS_SMALL.asInt(), 1, 1, 3, DropTableEntry.Type.NESTED_DROP_TABLE),
+                        new DropTableEntry(DropTableId.GEM_DROP_TABLE.asInt(), 1, 1, 50, DropTableEntry.Type.NESTED_DROP_TABLE)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.LAVA_DUNGEON_KEY_A.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.LAVA_DUNGEON_KEY_A.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+                new DropTableDBEntry(DropTableId.LAVA_DUNGEON_KEY_B.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.LAVA_DUNGEON_KEY_B.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+                new DropTableDBEntry(DropTableId.LAVA_DUNGEON_KEY_C.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.LAVA_DUNGEON_KEY_C.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+                new DropTableDBEntry(DropTableId.LAVA_DUNGEON_KEY_D.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.LAVA_DUNGEON_KEY_D.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                ), null)), 1))
 
         );
     }

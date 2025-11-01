@@ -377,6 +377,12 @@ public enum SoundType {
     ARMADILLO_HURT("ENTITY_TURTLE_HURT", false, 1.0f, 1.0f),
     ARMADILLO_DEATH("ENTITY_TURTLE_DEATH", false, 1.0f, 0.9f),
 
+    BLAZE_AMBIENT("ENTITY_BLAZE_AMBIENT", false, 1.0f, 1.0f),
+    BLAZE_BURN("ENTITY_BLAZE_BURN", false, 1.0f, 1.0f),
+    BLAZE_ATTACK("ENTITY_BLAZE_SHOOT", false, 1.0f, 1.0f),
+    BLAZE_HURT("ENTITY_BLAZE_HURT", false, 1.0f, 1.0f),
+    BLAZE_DEATH("ENTITY_BLAZE_DEATH", false, 1.0f, 1.0f),
+
     BEE_AMBIENT("ENTITY_BEE_LOOP", false, 0.7f, 2.0f),
     BEE_ATTACK("ENTITY_BEE_STING", false, 1.0f, 1.6f),
     BEE_HURT("ENTITY_BEE_HURT", false, 1.0f, 1.3f),

@@ -1189,7 +1189,7 @@ public class RecipeRepository {
                                 new IngredientRecord(ItemId.ADAMANT_BAR, 3, true, false),
                                 new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
                         ),
-                        new ItemRecord(ItemId.ADAMANT_PLATELENG, 1),
+                        new ItemRecord(ItemId.ADAMANT_PLATELEGS, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 170.0)), null
                 ), null),

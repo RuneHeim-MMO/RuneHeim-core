@@ -175,6 +175,7 @@ public abstract class AbstractSpawnZone {
         double deadPercentage = getDeadEntitiesPercentage();
 
         if (!spawnedAndLoadedEntities.isEmpty() && deadPercentage < deadThresholdForWave) {
+            lastWaveAttemptOccurred = System.currentTimeMillis();
             return;
         }
 

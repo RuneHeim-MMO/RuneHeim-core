@@ -275,6 +275,11 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     public void onEntityShootProjectile(ProjectileLaunchEvent event) {
         Projectile projectile = event.getEntity();
 
+        if (this.getMobMechanics().containsKey(RangedMobMechanic.class)) {
+            event.setCancelled(true);
+            return;
+        }
+
         if (projectileType == null) return;
         Projectile newProjectile = projectileType.replaceProjectile(projectile);
     }

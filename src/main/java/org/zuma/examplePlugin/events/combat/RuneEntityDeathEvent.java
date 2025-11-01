@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.events.combat;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.combat.constants.AttackType;
@@ -21,6 +22,7 @@ public class RuneEntityDeathEvent extends Event {
         this.type = type;
     }
 
+    @Nullable
     public CombatEntity getAttacker() {
         return attacker;
     }
@@ -29,10 +31,12 @@ public class RuneEntityDeathEvent extends Event {
         return defender;
     }
 
+    @Nullable
     public Hit getHit() {
         return hit;
     }
 
+    @Nullable
     public AttackType getAttackType() {
         return type;
     }

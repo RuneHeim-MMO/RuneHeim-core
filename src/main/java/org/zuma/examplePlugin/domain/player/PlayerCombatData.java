@@ -63,7 +63,7 @@ public class PlayerCombatData {
         this.damagedAt = System.currentTimeMillis();
 
         if (this.health <= 0) {
-            player.onDeath(hit);
+            player.killPlayer(hit);
             this.damagedAt = 0L;
             setHealth(player.getSkills().get(SkillType.HITPOINTS).getBaseLevel(), RunePlayerHealthChangedEvent.Cause.COMBAT);
         }

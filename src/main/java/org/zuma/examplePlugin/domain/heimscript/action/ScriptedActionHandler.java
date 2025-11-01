@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.heimscript.action;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.zuma.examplePlugin.RuneQuestPlugin;
@@ -46,6 +47,13 @@ public class ScriptedActionHandler {
                 }
                 case DIALOG_HOLDER_FORWARD_INTERACTION -> {
                     holder.handleInteraction(player);
+                }
+                case KILL_PLAYER -> {
+                    if(player.asBukkitPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
+                        player.killPlayer(null);
+                    } else {
+                        RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[SCRIPT] Cannot kill player " + player.asBukkitPlayer().getName() + " because they are not in SURVIVAL mode!");
+                    }
                 }
                 case OPEN_INVENTORY ->
                         RuneQuestPlugin.getGUIHandler().openInventory(Integer.parseInt(args.get("id")), player, callback);
