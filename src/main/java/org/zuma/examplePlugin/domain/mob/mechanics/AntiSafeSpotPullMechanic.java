@@ -1,8 +1,10 @@
 package org.zuma.examplePlugin.domain.mob.mechanics;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.MobUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
@@ -17,7 +19,7 @@ public class AntiSafeSpotPullMechanic implements MobMechanic {
     // Number of hits within the time frame to trigger pull
     private static final int HIT_THRESHOLD = 3;
 
-    private  CombatantMob mob;
+    private CombatantMob mob;
     private final HashMap<UUID, List<Long>> recentAttackers;
 
     public AntiSafeSpotPullMechanic() {
@@ -26,7 +28,7 @@ public class AntiSafeSpotPullMechanic implements MobMechanic {
 
     public void setParent(AbstractMob mob) {
         if (!(mob instanceof CombatantMob combatantMob)) {
-            throw new IllegalArgumentException("RangedMobMechanic can only be applied to CombatantMob");
+            throw new IllegalArgumentException("AntiSafeSpotPullMechanic can only be applied to CombatantMob");
         }
 
         this.mob = combatantMob;
@@ -65,7 +67,7 @@ public class AntiSafeSpotPullMechanic implements MobMechanic {
     }
 
     @Override
-    public void onMobDamagePlayer(RunePlayer target) {
+    public void onMobDamagePlayer(RunePlayer target, Hit hit) {
         this.recentAttackers.remove(target.getUUID());
     }
 

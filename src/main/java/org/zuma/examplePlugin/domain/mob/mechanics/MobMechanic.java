@@ -13,7 +13,7 @@ public interface MobMechanic {
     }
 
 
-    default void onMobDamagePlayer(RunePlayer target) {
+    default void onMobDamagePlayer(RunePlayer target, Hit hit) {
     }
 
 

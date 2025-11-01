@@ -107,7 +107,6 @@ public class HitHandler {
         boolean isSpecialAttack = attacker.isSpecialAttacking();
         Hit hit = HitCalculator.getNewHit(attacker, defender, type, isSpecialAttack, false);
 
-
         RuneEntityDamageEntityEvent event = new RuneEntityDamageEntityEvent(attacker, defender, hit, type);
         Bukkit.getServer().getPluginManager().callEvent(event);
 
@@ -157,7 +156,17 @@ public class HitHandler {
         return hit;
     }
 
+    private void notifyMobDamageMechanics(CombatEntity attacker, CombatEntity defender, Hit hit) {
+        AbstractMob mobAttacker = RuneQuestPlugin.getMobRegistry().getMob(attacker.getEntity());
+        if (mobAttacker != null && defender.getEntity() instanceof Player) {
+            RunePlayer defenderRunePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer((Player) defender.getEntity());
+            if (defenderRunePlayer != null)
+                mobAttacker.getMobMechanics().values().forEach(m -> m.onMobDamagePlayer(defenderRunePlayer, hit));
+        }
+    }
+
     private void applyHit(CombatEntity attacker, CombatEntity defender, Hit hit) {
+        notifyMobDamageMechanics(attacker, defender, hit); // Can mutate hit
         boolean isSpecialAttack = attacker.isSpecialAttacking();
 
         if (isSpecialAttack) {
@@ -220,7 +229,7 @@ public class HitHandler {
                     .append(Component.text("Type: ", NamedTextColor.YELLOW))
                     .append(Component.text(hit.getAttackType().toString(), NamedTextColor.AQUA))
                     .append(Component.text(" | ", NamedTextColor.GRAY))
-                    .append(hit.isSplashHit() ? Component.text(" S!", NamedTextColor.AQUA) : Component.empty());
+                    .append(hit.isSplashHit() ? Component.text(" Splash!", NamedTextColor.AQUA) : Component.empty());
 
             attackerPlayer.sendMessage(message);
         }
@@ -239,7 +248,7 @@ public class HitHandler {
                     .append(Component.text("Type: ", NamedTextColor.YELLOW))
                     .append(Component.text(hit.getAttackType().toString(), NamedTextColor.AQUA))
                     .append(Component.text(" | ", NamedTextColor.GRAY))
-                    .append(hit.isSplashHit() ? Component.text(" S!", NamedTextColor.AQUA) : Component.empty());
+                    .append(hit.isSplashHit() ? Component.text(" Splash!", NamedTextColor.AQUA) : Component.empty());
 
 
             defenderPlayer.sendMessage(message);

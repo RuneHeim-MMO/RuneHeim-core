@@ -51,11 +51,11 @@ import java.util.stream.Stream;
 public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     private final EnumMap<ModifierType, Modifier> modifiers = new EnumMap<>(ModifierType.class);
     private final EnumMap<SkillType, Skill> skills = new EnumMap<>(SkillType.class);
+    private RuneProjectile projectileType = new RuneProjectile(ProjectileType.RANGED, EntityType.ARROW, 2);
     private final int maxHealth, combatLvl;
     private int health;
     private long lastDamagedAt;
-
-    private RuneProjectile projectileType = new RuneProjectile(ProjectileType.RANGED, EntityType.ARROW, 2);
+    private boolean isSpecialAttacking;
 
     private final PendingXPHandler xpHandler;
 
@@ -64,6 +64,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         this.health = meta.maxHealth();
         this.maxHealth = meta.maxHealth();
         this.xpHandler = new PendingXPHandler();
+        this.isSpecialAttacking = false;
 
         if (!meta.safeSpottable()) {
             AntiSafeSpotPullMechanic mechanic = new AntiSafeSpotPullMechanic();
@@ -252,7 +253,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     @Override
     public void onEntityAttackPlayer(EntityDamageByEntityEvent event, RunePlayer runePlayer) {
         // Notify mob mechanics of mob damage to player
-        this.getMobMechanics().forEach(m -> m.onMobDamagePlayer(runePlayer));
+        this.getMobMechanics().values().forEach(m -> m.onMobDamagePlayer(runePlayer));
 
        this.playAnimation("attack", 0f, 0.3f, 1);
 
@@ -261,7 +262,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
             disguise.playAnimation(DisguiseAnimation.SWING_MAIN_HAND);
             return;
         }
-        this.getMobMechanics().values().forEach(m -> m.onMobDamagePlayer(runePlayer));
+
  
     }
 
@@ -296,4 +297,12 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
 
     }
 
+    @Override
+    public boolean isSpecialAttacking() {
+        return isSpecialAttacking;
+    }
+
+    public void setSpecialAttacking(boolean specialAttacking) {
+        isSpecialAttacking = specialAttacking;
+    }
 }
