@@ -2,12 +2,10 @@ package org.zuma.examplePlugin.domain.mob.impl;
 
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Mob;
+import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.MobUtils;
@@ -57,6 +55,21 @@ public class CityGuardMob extends GenericCombatant {
     @Override
     public void onEntityAttackEntity(EntityDamageByEntityEvent event, Entity attacker) {
         event.setCancelled(true);
+
+        // Remove iron golem upwards vel on attack (city guards).
+        if (event.getDamager() instanceof IronGolem) {
+            Entity victim = event.getEntity();
+
+            Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+                Vector vel = victim.getVelocity();
+
+                if (vel.getY() > 0.3) {
+                    double newY = vel.getY() - 0.5;
+                    if (newY < 0) newY = 0;
+                    victim.setVelocity(new Vector(vel.getX(), newY, vel.getZ()));
+                }
+            });
+        }
     }
 
     public void engage(LivingEntity target) {
@@ -66,10 +79,6 @@ public class CityGuardMob extends GenericCombatant {
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> SoundType.GUARD_TARGETED_MOB_SOUND.play(target.getLocation()), ThreadLocalRandom.current().nextInt(0, 21));
         Entity thisEntity = this.getEntity();
-
-        if (!(thisEntity instanceof LivingEntity livingEntity)) {
-            return;
-        }
 
         if (!(thisEntity instanceof Mob mob)) {
             return;
@@ -89,14 +98,9 @@ public class CityGuardMob extends GenericCombatant {
 
         Entity thisEntity = this.getEntity();
 
-        if (!(thisEntity instanceof LivingEntity livingEntity)) {
-            return;
-        }
-
         if (!(thisEntity instanceof Mob mob)) {
             return;
         }
-
 
         this.engaged = false;
         walkingBack = true;

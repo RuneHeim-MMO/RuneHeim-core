@@ -59,4 +59,5 @@ public class AntiSafeSpotPullMechanic implements MobMechanic {
     public void onMobDamagePlayer(RunePlayer target) {
         this.recentAttackers.remove(target.getUUID());
     }
+
 }

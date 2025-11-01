@@ -196,7 +196,7 @@ public class RunePlayer implements CombatEntity {
     }
 
     public void registerHit(Hit hit) {
-        this.pendingXPHandler.calculatePendingXP(hit);
+        this.pendingXPHandler.registerHit(hit);
         this.combatData.registerHit(hit);
 
         if (hit.getDamage() > 0) {

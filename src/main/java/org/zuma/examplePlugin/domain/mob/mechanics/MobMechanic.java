@@ -21,4 +21,8 @@ public interface MobMechanic {
     default void onDeath(RunePlayer attacker, Hit lastHit) {
     }
 
+    default void tick() {
+
+    }
+
 }

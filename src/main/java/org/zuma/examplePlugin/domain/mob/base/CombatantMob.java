@@ -85,7 +85,6 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         }
     }
 
-
     public CombatantMob overrideBaseToSkeleton() {
         this.setBaseEntity(EntityType.SKELETON);
         setClearDefaultHandsEquipment(false); // Keep bow in hand
@@ -186,7 +185,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
 
             RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(playerAttacker);
             if (runePlayer != null) {
-                this.getMobMechanics().forEach(m -> m.onDeath(runePlayer, hit));
+                this.getMobMechanics().values().forEach(m -> m.onDeath(runePlayer, hit));
             }
 
             RuneEntityDeathEvent event = new RuneEntityDeathEvent(hit.getAttacker(), hit.getDefender(), hit, hit.getAttackType());
@@ -194,14 +193,14 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         }
 
         // Apply the scaled health to the entity
-        this.xpHandler.calculatePendingXP(hit);
+        this.xpHandler.registerHit(hit);
         this.lastDamagedAt = System.currentTimeMillis();
 
         // Notify mob mechanics of player damage
         if (hit.getAttacker().getEntity() instanceof Player playerAttacker) {
             RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(playerAttacker);
             if (runePlayer != null) {
-                this.getMobMechanics().forEach(m -> m.onDamagedByPlayer(runePlayer, hit));
+                this.getMobMechanics().values().forEach(m -> m.onDamagedByPlayer(runePlayer, hit));
             }
         }
 
@@ -237,44 +236,19 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     }
 
     @Override
-    public void onEntityAttackEntity(EntityDamageByEntityEvent event, Entity attacker) {
-        // Remove iron golem upwards vel on attack.
-        if (event.getDamager() instanceof IronGolem) {
-            Entity victim = event.getEntity();
-
-            Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                Vector vel = victim.getVelocity();
-
-                if (vel.getY() > 0.3) {
-                    double newY = vel.getY() - 0.5;
-                    if (newY < 0) newY = 0;
-                    victim.setVelocity(new Vector(vel.getX(), newY, vel.getZ()));
-                }
-            });
-        }
-    }
-
-    @Override
     public void onEntityAttackPlayer(EntityDamageByEntityEvent event, RunePlayer runePlayer) {
-        Entity entity = getEntity();
-        if (entity == null) return;
-
         // Notify mob mechanics of mob damage to player
         this.getMobMechanics().forEach(m -> m.onMobDamagePlayer(runePlayer));
 
-        ModeledEntity me = ModelEngineAPI.getModeledEntity(entity);
-        if (me != null) {
-            me.getModels().values().forEach(am -> {
-                am.getAnimationHandler().playAnimation("attack", 0f, 0.3f, 1, true);
-            });
-            return;
-        }
+       this.playAnimation("attack", 0f, 0.3f, 1);
 
         Disguise disguise = DisguiseAPI.getDisguise(entity);
         if (disguise != null) {
             disguise.playAnimation(DisguiseAnimation.SWING_MAIN_HAND);
             return;
         }
+        this.getMobMechanics().values().forEach(m -> m.onMobDamagePlayer(runePlayer));
+ 
     }
 
     @Override
@@ -282,8 +256,13 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         this.xpHandler.distributePendingXP();
     }
 
+
     public long getLastDamagedAt() {
         return lastDamagedAt;
+    }
+
+    public List<RunePlayer> getRecentAttackers(Long durationMillis) {
+        return this.xpHandler.getRecentAttackers(durationMillis);
     }
 
 }

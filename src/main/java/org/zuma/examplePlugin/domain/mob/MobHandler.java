@@ -43,6 +43,16 @@ public class MobHandler {
         MobIdleBehaviorHandler idleManager = new MobIdleBehaviorHandler(registry);
         idleManager.start();
         startTargetSyncForMountedPlayersLoop();
+        startTickingLoop();
+    }
+
+    public void startTickingLoop() {
+        Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), () -> {
+            registry.getAll().forEach(m -> {
+                if (m.getEntity() == null || !m.getEntity().isValid() || m.getEntity().isDead()) return;
+                m.tick();
+            });
+        }, 0L, 20L);
     }
 
     // Clears all mobs with MOB_UUID data keys.
@@ -138,11 +148,12 @@ public class MobHandler {
             event.setDroppedExp(0);
         }
 
+        mob.onEntityDeath(event);
+
         if (mob.getUUID() != null) {
             registry.removeMob(mob.getUUID());
         }
 
-        mob.onEntityDeath(event);
     }
 
 

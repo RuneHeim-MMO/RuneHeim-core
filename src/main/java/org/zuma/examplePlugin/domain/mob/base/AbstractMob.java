@@ -52,7 +52,7 @@ public abstract class AbstractMob {
     private EntityType baseMob;
     private boolean ai, silent, isBaby, isInvulnerable, clearDefaultHandsEquipment;
 
-    private int maxWalkDistance, yaw;
+    private int maxWalkDistance, yaw, secondsAlive;
     private HashMap<Attribute, Double> customAttributes;
     private List<Integer> dropTableIds;
     private Function<Entity, Void> onSpawnRunnable;
@@ -65,7 +65,7 @@ public abstract class AbstractMob {
     private @Nullable String model;
     private @Nullable MobBehavior behavior;
 
-    private final List<MobMechanic> mobMechanics;
+    private final HashMap<Class<? extends MobMechanic>, MobMechanic> mobMechanics;
 
     public AbstractMob(AbstractMobMeta meta) {
         this.ai = meta.ai();
@@ -73,20 +73,21 @@ public abstract class AbstractMob {
         this.baseMob = meta.baseEntity();
         this.silent = meta.silent();
 
-        disguise = null;
-        model = null;
-        behavior = null;
-        mobEquipment = null;
-        isBaby = false;
-        isInvulnerable = false;
-        clearDefaultHandsEquipment = true;
-        maxWalkDistance = -1; // -1 means no limits, can walk anywhere.
-        customAttributes = new HashMap<>();
-        dropTableIds = new ArrayList<>();
-        healthBarSafeName = this instanceof CombatantMob ? "" : getDisplayName();
-        onSpawnRunnable = null;
-        yaw = 0;
-        mobMechanics = new ArrayList<>();
+        this.disguise = null;
+        this.model = null;
+        this.behavior = null;
+        this.mobEquipment = null;
+        this.isBaby = false;
+        this.isInvulnerable = false;
+        this.clearDefaultHandsEquipment = true;
+        this.maxWalkDistance = -1; // -1 means no limits, can walk anywhere.
+        this.customAttributes = new HashMap<>();
+        this.dropTableIds = new ArrayList<>();
+        this.healthBarSafeName = this instanceof CombatantMob ? "" : getDisplayName();
+        this.onSpawnRunnable = null;
+        this.yaw = 0;
+        this.secondsAlive = 0;
+        this.mobMechanics = new HashMap<>();
     }
 
     public void setYaw(int yaw) {
@@ -126,6 +127,7 @@ public abstract class AbstractMob {
         }
 
         Entity entity = location.getWorld().spawnEntity(spawnLocation, baseMob);
+        this.secondsAlive = 0;
         this.entity = entity;
 
         this.setEntityPersistenceKey(entity);
@@ -138,7 +140,7 @@ public abstract class AbstractMob {
             onSpawnRunnable.apply(entity);
         }
 
-        mobMechanics.forEach(MobMechanic::onSpawn);
+        mobMechanics.values().forEach(MobMechanic::onSpawn);
 
         return entity;
     }
@@ -461,14 +463,27 @@ public abstract class AbstractMob {
         this.clearDefaultHandsEquipment = clearDefaultHandsEquipment;
     }
 
-    public List<MobMechanic> getMobMechanics() {
+    public HashMap<Class<? extends MobMechanic>, MobMechanic> getMobMechanics() {
         return this.mobMechanics;
     }
 
     public void addMobMechanic(MobMechanic mechanic) {
-        this.mobMechanics.add(mechanic);
+        this.mobMechanics.put(mechanic.getClass(), mechanic);
     }
 
+    public void playAnimation(String animationName, float speed, float blendIn, int loopCount) {
+        Entity entity = getEntity();
+        if (entity == null) return;
+
+        ModeledEntity me = ModelEngineAPI.getModeledEntity(entity);
+
+        if (me == null) return;
+
+        me.getModels().values().forEach(am -> {
+            am.getAnimationHandler().playAnimation(animationName, speed, blendIn, loopCount, true);
+        });
+
+    }
 
     public void handleInteraction(RunePlayer player) {
 
@@ -505,4 +520,14 @@ public abstract class AbstractMob {
     public void onEntityTargetPlayer(EntityTargetEvent event, RunePlayer player) {
 
     }
+
+    public void tick() {
+        this.secondsAlive++;
+        this.mobMechanics.values().forEach(MobMechanic::tick);
+    }
+
+    public int getSecondsAlive() {
+        return this.secondsAlive;
+    }
+
 }
