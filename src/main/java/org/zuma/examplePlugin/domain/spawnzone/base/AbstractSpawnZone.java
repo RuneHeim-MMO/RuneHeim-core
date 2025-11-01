@@ -30,6 +30,7 @@ public abstract class AbstractSpawnZone {
     private final int id, waveRateSeconds, deadThresholdForWave;
     private final Location centerPoint;
     private Long lastWaveAttemptOccurred;
+    private final int centerChunkX, centerChunkZ;
 
     private final Set<UUID> spawnedAndLoadedEntities;
     private int maximumMobs, lastWaveSpawnedAmount;
@@ -46,6 +47,9 @@ public abstract class AbstractSpawnZone {
         this.lastWaveAttemptOccurred = 0L;
         this.maximumMobs = 0;
         this.lastWaveSpawnedAmount = 0;
+
+        this.centerChunkX = centerPoint.getBlockX() >> 4;
+        this.centerChunkZ = centerPoint.getBlockZ() >> 4;
 
     }
 
@@ -210,7 +214,7 @@ public abstract class AbstractSpawnZone {
     }
 
     public void runTickIfDue() {
-        if (!this.getCenterPoint().getWorld().isChunkLoaded(this.getCenterPoint().getBlockX() >> 4, this.getCenterPoint().getBlockZ() >> 4)) {
+        if (!this.getCenterPoint().getWorld().isChunkLoaded(this.centerChunkX, this.centerChunkZ)) {
             this.lastWaveAttemptOccurred = 0L; // Reset timer if chunk is not loaded.
             return;
         }

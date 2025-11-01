@@ -169,13 +169,23 @@ public class SpawnZoneHandler {
             return;
         }
 
-        List<AbstractSpawnZone> zones = new ArrayList<>(spawnZones.values());
-        int partitionSize = (int) Math.ceil(zones.size() / 3.0);
-        int start = tickPartition * partitionSize;
-        int end = Math.min(start + partitionSize, zones.size());
+        Collection<AbstractSpawnZone> zones = spawnZones.values();
+        int totalZones = zones.size();
+        if (totalZones == 0) return;
 
-        for (int i = start; i < end; i++) {
-            zones.get(i).runTickIfDue();
+        int partitionSize = (int) Math.ceil(totalZones / 3.0);
+        int start = tickPartition * partitionSize;
+        int end = Math.min(start + partitionSize, totalZones);
+
+        // Iterate using index on the collection directly
+        int currentIndex = 0;
+        for (AbstractSpawnZone zone : zones) {
+            if (currentIndex >= start && currentIndex < end) {
+                zone.runTickIfDue();
+            }
+            currentIndex++;
+            // Early exit if we've processed our partition
+            if (currentIndex >= end) break;
         }
 
         tickPartition = (tickPartition + 1) % 3;
