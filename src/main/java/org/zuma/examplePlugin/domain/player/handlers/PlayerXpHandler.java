@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.player.handlers;
 
 import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
@@ -16,7 +17,8 @@ import org.zuma.examplePlugin.events.player.RunePlayerGainedXPEvent;
 import org.zuma.examplePlugin.events.player.RunePlayerLevelUpEvent;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.Map;
 
 public class PlayerXpHandler {
     private final RunePlayer player;
@@ -28,13 +30,81 @@ public class PlayerXpHandler {
             SkillType.WOODCUTTING, SkillType.FISHING, SkillType.COOKING, SkillType.MINING,
             SkillType.SMITHING, SkillType.FIREMAKING, SkillType.CRAFTING, SkillType.FLETCHING, SkillType.PRAYER);
 
+    private final java.util.Set<SkillType> skillsToBeCombined = java.util.EnumSet.of(
+            SkillType.ATTACK, SkillType.STRENGTH, SkillType.DEFENCE);
+
 
     @Nullable
     private SkillType lastXPGainedSkillType;
+    private final EnumMap<SkillType, Double> deferredXPHolograms = new EnumMap<>(SkillType.class);
+    private BukkitTask debouncedXPBubbleTask;
+
 
     public PlayerXpHandler(RunePlayer player) {
         this.player = player;
         this.lastXPGainedSkillType = null;
+    }
+
+    private void scheduleXPBubble(SkillType type, double xp, XpSource source) {
+        final double EPSILON = 1e-6;
+
+        if (deferredXPHolograms.containsKey(type)) {
+            deferredXPHolograms.put(type, deferredXPHolograms.get(type) + xp);
+        } else {
+            deferredXPHolograms.put(type, xp);
+        }
+
+        if (debouncedXPBubbleTask != null) {
+            debouncedXPBubbleTask.cancel(); // Cancel the previous task to reschedule
+        }
+
+        debouncedXPBubbleTask = Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+            if (player.asBukkitPlayer() == null) return;
+
+            boolean shouldCombine = true;
+            Double firstValue = null;
+
+            for (SkillType skill : skillsToBeCombined) {
+                double value = deferredXPHolograms.getOrDefault(skill, 0.0);
+                if (firstValue == null) {
+                    firstValue = value;
+                } else if (Math.abs(firstValue - value) > EPSILON) {
+                    shouldCombine = false;
+                    break;
+                }
+            }
+
+            if (!shouldCombine) {
+                for (Map.Entry<SkillType, Double> entry : deferredXPHolograms.entrySet()) {
+                    final SkillType skillType = entry.getKey();
+                    final double amount = entry.getValue(); // capture value safely
+                    Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+                        if (player.asBukkitPlayer() == null) return;
+                        HudService.showXpGainMessage(player, skillType, amount, source);
+                    }, skillType.ordinal() * 5L);
+                }
+            } else {
+                deferredXPHolograms.forEach((skillType, amount) -> {
+                    if (skillsToBeCombined.contains(skillType)) return;
+                    Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+                        if (player.asBukkitPlayer() == null) return;
+
+                        HudService.showXpGainMessage(player, skillType, amount, source);
+                    }, skillType.ordinal() * 5L);
+                });
+
+                double firstXP = firstValue != null ? firstValue : 0.0;
+
+                if (firstXP != 0.0) {
+                    HudService.showCombinedCombatXPGainMessage(player, firstXP, source);
+                }
+            }
+
+            deferredXPHolograms.clear();
+
+        }, 40L);
+
+
     }
 
     public void addXp(SkillType type, double xp, XpSource source) {
@@ -98,7 +168,8 @@ public class PlayerXpHandler {
             }
         }
 
-        HudService.showXpGainMessage(player, type, xp, source);
+
+        scheduleXPBubble(type, xp, source);
         skill.addXp(xp);
 
         if (leveledUp) {

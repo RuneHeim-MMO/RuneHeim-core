@@ -126,6 +126,14 @@ public class HudService {
         spawnVerticalHologramBubble(player, prefix + CurrencyUtils.formatCurrencyString(absChange) + " " + icon);
     }
 
+    public static void showCombinedCombatXPGainMessage(RunePlayer player, double xp, XpSource source) {
+        String formattedXP = String.format("%.1f", xp);
+        String xpStr = "§f" + Icon.CROSSED_SWORDS.get() + Color.SUCCESS.asSpigotHex() + " " + formattedXP + " XP";
+        boolean isPartySource = source == org.zuma.examplePlugin.core.constants.XpSource.PARTY;
+
+        spawnVerticalHologramBubble(player, (isPartySource ? "§f" + Icon.PARTY.get() + " " : "") + Color.SUCCESS.asSpigotHex() + "+ " + xpStr);
+    }
+
     public static void showXpGainMessage(RunePlayer player, SkillType type, double xp, XpSource source) {
         String formattedXP = String.format("%.1f", xp);
         String xpStr = "§f" + type.getSymbol() + Color.SUCCESS.asSpigotHex() + " " + formattedXP + " XP";
