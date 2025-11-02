@@ -15,21 +15,21 @@ public class Foxes {
 
     public static void registerMobs(MobTypeRegistry registry) {
         registry.register(MobType.FOX_BASE_8.getId(), () -> new GenericCombatant(
-                "Fox", null, getBaseSkills(8),
+                "Fox", null, getBaseSkills(8, 0.5),
                 null, MobBehaviors.FOX.getBehavior(),
                 0.3, false, false, 9, null, null, DisguiseType.FOX,
                 List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
                 true));
 
         registry.register(MobType.FOX_BASE_10.getId(), () -> new GenericCombatant(
-                "Fox", null, getBaseSkills(15),
+                "Fox", null, getBaseSkills(15, 0.5),
                 null, MobBehaviors.FOX.getBehavior(),
                 0.3, false, false, 10, null, null, DisguiseType.FOX,
                 List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
                 true));
 
         registry.register(MobType.FOX_BASE_22.getId(), () -> new GenericCombatant(
-                "Fox", null, getBaseSkills(22),
+                "Fox", null, getBaseSkills(22, 0.5),
                 null, MobBehaviors.FOX.getBehavior(),
                 0.3, false, false, 14, null, null, DisguiseType.FOX,
                 List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),

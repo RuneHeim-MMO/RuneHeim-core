@@ -1,7 +1,5 @@
 package org.zuma.examplePlugin.domain.mob.base;
 
-import com.ticxo.modelengine.api.ModelEngineAPI;
-import com.ticxo.modelengine.api.model.ModeledEntity;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
@@ -19,7 +17,6 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.core.utils.MobUtils;
@@ -31,9 +28,8 @@ import org.zuma.examplePlugin.domain.combat.constants.ProjectileType;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.mob.constants.MetadataKeys;
-import org.zuma.examplePlugin.domain.mob.mechanics.AntiSafeSpotPullMechanic;
-import org.zuma.examplePlugin.domain.mob.mechanics.MobEnergyMechanic;
-import org.zuma.examplePlugin.domain.mob.mechanics.RangedMobMechanic;
+import org.zuma.examplePlugin.domain.mob.mechanics.traits.AntiSafeSpotPullMechanic;
+import org.zuma.examplePlugin.domain.mob.mechanics.traits.RangedMobMechanic;
 import org.zuma.examplePlugin.domain.mob.projectiles.RuneProjectile;
 import org.zuma.examplePlugin.domain.xp.PendingXPHandler;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;

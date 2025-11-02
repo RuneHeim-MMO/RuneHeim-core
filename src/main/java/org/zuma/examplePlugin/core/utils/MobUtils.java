@@ -7,7 +7,6 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -126,16 +125,23 @@ public class MobUtils {
     }
 
 
-    public static void pullPlayerTowardMob(Player player, Entity mob, double strength, double upwardLift) {
+    public static void pullEntityTowardMob(LivingEntity entity, Entity mob, double strength, double upwardLift) {
         // Get direction vector from player to mob
-        Vector direction = mob.getLocation().toVector().subtract(player.getLocation().toVector());
+        Vector direction = mob.getLocation().toVector().subtract(entity.getLocation().toVector());
+
+        if (direction.lengthSquared() < 1e-6) {
+            // Avoid division by zero (NaN velocity)
+            return;
+        }
 
         // Normalize (so it's just direction, not distance)
         direction.normalize();
         Vector velocity = direction.multiply(strength);
         velocity.setY(upwardLift);
 
-        // Apply velocity
-        player.setVelocity(velocity);
+        // Only apply if finite
+        if (Double.isFinite(direction.getX()) && Double.isFinite(direction.getY()) && Double.isFinite(direction.getZ())) {
+            entity.setVelocity(direction);
+        }
     }
 }

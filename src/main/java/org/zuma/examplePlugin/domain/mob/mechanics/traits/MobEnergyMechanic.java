@@ -1,20 +1,8 @@
-package org.zuma.examplePlugin.domain.mob.mechanics;
+package org.zuma.examplePlugin.domain.mob.mechanics.traits;
 
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.zuma.examplePlugin.core.constants.SoundType;
-import org.zuma.examplePlugin.core.utils.MobUtils;
-import org.zuma.examplePlugin.domain.combat.Hit;
-import org.zuma.examplePlugin.domain.combat.constants.AttackType;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
-import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
-import org.zuma.examplePlugin.domain.player.RunePlayer;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import org.zuma.examplePlugin.domain.mob.mechanics.base.MobMechanic;
 
 public class MobEnergyMechanic implements MobMechanic {
     private final int maxEnergy, restoreRatePerSecond;
@@ -26,7 +14,7 @@ public class MobEnergyMechanic implements MobMechanic {
         this.restoreRatePerSecond = restoreRatePerSecond;
     }
 
-    public void setParent(AbstractMob mob){
+    public void setParent(AbstractMob mob) {
 
     }
 
@@ -38,8 +26,26 @@ public class MobEnergyMechanic implements MobMechanic {
                 energy = maxEnergy;
             }
         }
+    }
 
+    public void execute(LivingEntity target) {
+        // No implementation needed for this mechanic
+    }
 
+    public int getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(int energy) {
+        this.energy = Math.min(energy, maxEnergy);
+    }
+
+    public int getMaxEnergy() {
+        return maxEnergy;
+    }
+
+    public int getRegenPerSecond() {
+        return restoreRatePerSecond;
     }
 
 

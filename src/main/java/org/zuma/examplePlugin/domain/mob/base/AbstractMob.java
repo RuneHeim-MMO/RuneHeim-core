@@ -11,6 +11,8 @@ import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import me.libraryaddict.disguise.disguisetypes.watchers.LivingWatcher;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
@@ -34,7 +36,7 @@ import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSlot;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
-import org.zuma.examplePlugin.domain.mob.mechanics.MobMechanic;
+import org.zuma.examplePlugin.domain.mob.mechanics.base.MobMechanic;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
 import org.zuma.examplePlugin.domain.mob.meta.MobEquipmentMeta;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -194,6 +196,25 @@ public abstract class AbstractMob {
 
     public void setSilent(boolean silent) {
         this.silent = silent;
+    }
+
+    public void sendMessageToPlayer(Player player, String message) {
+        player.sendMessage(Component.text(this.getDisplayName(), NamedTextColor.WHITE)
+                .append(Component.text(" » ", TextColor.color(150, 150, 150)))
+                .append(Component.text(message, NamedTextColor.WHITE)));
+    }
+
+    public void sendMessageToNearbyPlayers(String message, int radius) {
+        if (this.entity == null) return;
+
+        Component chatMessage = Component.text(getDisplayName(), NamedTextColor.WHITE)
+                .append(Component.text(" » ", TextColor.color(150, 150, 150)))
+                .append(Component.text(message, NamedTextColor.WHITE));
+
+        for (Player player : entity.getLocation().getNearbyPlayers(radius)) {
+            player.sendMessage(chatMessage);
+        }
+
     }
 
     @Nullable
@@ -375,6 +396,19 @@ public abstract class AbstractMob {
         }
 
         entityAttr.setBaseValue(speed);
+    }
+
+    public double getLivingEntitySpeedAttr() {
+        if (!(this.getEntity() instanceof LivingEntity livingEntity)) {
+            return 0;
+        }
+        AttributeInstance entityAttr = livingEntity.getAttribute(Attribute.MOVEMENT_SPEED);
+
+        if (entityAttr == null) {
+            return 0;
+        }
+
+        return entityAttr.getBaseValue();
     }
 
     public List<ItemStack> rollDropTables(RunePlayer activator) {

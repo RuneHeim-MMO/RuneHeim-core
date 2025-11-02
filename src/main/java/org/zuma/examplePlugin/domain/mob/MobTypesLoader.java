@@ -10,13 +10,13 @@ import java.util.List;
 
 public class MobTypesLoader {
 
-    public static List<SkillLevelRecord> getBaseSkills(int base) {
+    public static List<SkillLevelRecord> getBaseSkills(int base, double strDefMultiplier) {
         return List.of(
                 new SkillLevelRecord(SkillType.ATTACK, Math.max(1, base)),
                 new SkillLevelRecord(SkillType.RANGED, Math.max(1, base)),
                 new SkillLevelRecord(SkillType.HITPOINTS, Math.max(1, base)),
-                new SkillLevelRecord(SkillType.STRENGTH, Math.max(1, (int) (base * 0.5))),
-                new SkillLevelRecord(SkillType.DEFENCE, Math.max(1, (int) (base * 0.5)))
+                new SkillLevelRecord(SkillType.STRENGTH, Math.max(1, (int) (base * strDefMultiplier))),
+                new SkillLevelRecord(SkillType.DEFENCE, Math.max(1, (int) (base * strDefMultiplier)))
         );
     }
 

@@ -1,9 +1,10 @@
-package org.zuma.examplePlugin.domain.mob.mechanics;
+package org.zuma.examplePlugin.domain.mob.mechanics.traits;
 
 import org.bukkit.entity.*;
 import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
+import org.zuma.examplePlugin.domain.mob.mechanics.base.MobMechanic;
 import org.zuma.examplePlugin.domain.mob.projectiles.RuneProjectile;
 
 public class RangedMobMechanic implements MobMechanic {
@@ -43,5 +44,10 @@ public class RangedMobMechanic implements MobMechanic {
 
             mob.shootProjectileAtTarget(targetEntity);
         }
+    }
+
+    public void execute(LivingEntity target) {
+        if (mob == null) return;
+        mob.shootProjectileAtTarget(target);
     }
 }

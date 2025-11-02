@@ -16,7 +16,7 @@ public class Boars {
 
         registry.register(MobType.WILD_PIG_BASE_48.getId(), () -> new GenericCombatant(
                 "Wild Pig", null,
-                getBaseSkills(48),
+                getBaseSkills(48, 0.5),
                 null,
                 MobBehaviors.WILD_PIG.getBehavior(),
                 "boar_generic",
@@ -26,7 +26,7 @@ public class Boars {
 
         registry.register(MobType.WILD_PIG_BASE_45.getId(), () -> new GenericCombatant(
                 "Wild Pig", null,
-                getBaseSkills(45),
+                getBaseSkills(45, 0.5),
                 null,
                 MobBehaviors.WILD_PIG.getBehavior(0.5F),
                 "boar_female",
@@ -36,7 +36,7 @@ public class Boars {
 
         registry.register(MobType.WILD_PIG_BABY_BASE_40.getId(), () -> new GenericCombatant(
                 "Wild Pig Baby", null,
-                getBaseSkills(40),
+                getBaseSkills(40, 0.5),
                 null,
                 MobBehaviors.WILD_PIG.getBehavior(1F),
                 "boar_baby",
@@ -46,7 +46,7 @@ public class Boars {
 
         registry.register(MobType.BOAR_BROWN_BASE_3.getId(), () -> new GenericCombatant(
                 "Brown Boar", null,
-                getBaseSkills(3),
+                getBaseSkills(3, 0.5),
                 null,
                 MobBehaviors.BOAR.getBehavior(),
                 "yungwilder_isles_boar_brown",
@@ -56,7 +56,7 @@ public class Boars {
 
         registry.register(MobType.BOAR_LIGHT_BROWN_BASE_3.getId(), () -> new GenericCombatant(
                 "Light Brown Boar", null,
-                getBaseSkills(3),
+                getBaseSkills(3, 0.5),
                 null,
                 MobBehaviors.BOAR.getBehavior(),
                 "yungwilder_isles_boar_light_brown",
@@ -66,7 +66,7 @@ public class Boars {
 
         registry.register(MobType.BOAR_GRAY_BASE_3.getId(), () -> new GenericCombatant(
                 "Gray Boar", null,
-                getBaseSkills(3),
+                getBaseSkills(3, 0.5),
                 null,
                 MobBehaviors.BOAR.getBehavior(),
                 "yungwilder_isles_boar_gray",
@@ -76,7 +76,7 @@ public class Boars {
 
         registry.register(MobType.BOAR_BROWN_ALPHA_BASE10.getId(), () -> new GenericCombatant(
                 "Alpha Brown Boar", null,
-                getBaseSkills(10),
+                getBaseSkills(10, 0.5),
                 null,
                 MobBehaviors.BOAR.getBehavior(),
                 "yungwilder_isles_boar_brown_alpha",
@@ -87,7 +87,7 @@ public class Boars {
 
         registry.register(MobType.BOAR_GRAY_ALPHA_BASE_12.getId(), () -> new GenericCombatant(
                 "Alpha Gray Boar", null,
-                getBaseSkills(12),
+                getBaseSkills(12, 0.5),
                 null,
                 MobBehaviors.BOAR.getBehavior(),
                 "yungwilder_isles_boar_gray_alpha",
@@ -97,7 +97,7 @@ public class Boars {
 
         registry.register(MobType.BOAR_LIGHT_BROWN_ALPHA_BASE_14.getId(), () -> new GenericCombatant(
                 "Alpha Light Brown Boar", null,
-                getBaseSkills(14),
+                getBaseSkills(14, 0.5),
                 null,
                 MobBehaviors.BOAR.getBehavior(),
                 "yungwilder_isles_boar_light_brown_alpha",

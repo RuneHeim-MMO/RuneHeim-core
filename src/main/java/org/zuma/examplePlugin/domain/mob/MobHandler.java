@@ -30,6 +30,7 @@ import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,7 +49,7 @@ public class MobHandler {
 
     public void startTickingLoop() {
         Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), () -> {
-            registry.getAll().forEach(m -> {
+            new ArrayList<>(registry.getAll()).forEach(m -> {
                 if (m.getEntity() == null || !m.getEntity().isValid() || m.getEntity().isDead()) return;
                 m.tick();
             });
@@ -104,6 +105,7 @@ public class MobHandler {
 
     public void onEntityTargetPlayer(EntityTargetEvent event, AbstractMob mob, RunePlayer player) {
         mob.onEntityTargetPlayer(event, player);
+        mob.getMobMechanics().values().forEach(m -> m.onEntityTargetPlayer(event, player));
     }
 
     public void onEntityAttackEntity(EntityDamageByEntityEvent event, AbstractMob mob, Entity attacker) {

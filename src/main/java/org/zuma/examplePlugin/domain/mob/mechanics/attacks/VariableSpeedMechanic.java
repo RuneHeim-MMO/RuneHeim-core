@@ -1,0 +1,51 @@
+package org.zuma.examplePlugin.domain.mob.mechanics.attacks;
+
+import org.bukkit.entity.LivingEntity;
+import org.zuma.examplePlugin.domain.combat.Hit;
+import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
+import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
+import org.zuma.examplePlugin.domain.mob.mechanics.base.MobMechanic;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
+
+public class VariableSpeedMechanic implements MobMechanic {
+    private CombatantMob mob;
+    private final double activeSpeed;
+    private Double baseSpeed;
+    private final int durationSeconds;
+    private int secondsRemaining = 0;
+
+    public VariableSpeedMechanic(int durationSeconds, double activeSpeed) {
+        this.durationSeconds = durationSeconds;
+        this.activeSpeed = activeSpeed;
+    }
+
+    public void setParent(AbstractMob mob) {
+        if (!(mob instanceof CombatantMob combatantMob)) {
+            throw new IllegalArgumentException("VariableSpeedMechanic can only be applied to CombatantMob");
+        }
+
+        this.mob = combatantMob;
+    }
+
+
+    public void execute(LivingEntity target) {
+        secondsRemaining = durationSeconds;
+        mob.setLivingEntitySpeedAttr(activeSpeed);
+    }
+
+    @Override
+    public void tick() {
+        if (baseSpeed == null && mob.getEntity() != null) {
+            baseSpeed = mob.getLivingEntitySpeedAttr();
+            System.out.println("VariableSpeedMechanic set base speed to " + baseSpeed);
+        }
+
+
+        if (secondsRemaining > 0) {
+            secondsRemaining--;
+            if (secondsRemaining == 0) {
+                mob.setLivingEntitySpeedAttr(baseSpeed);
+            }
+        }
+    }
+}

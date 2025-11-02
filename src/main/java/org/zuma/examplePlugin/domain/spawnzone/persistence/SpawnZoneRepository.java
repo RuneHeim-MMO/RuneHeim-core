@@ -1819,10 +1819,15 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(266, SpawnZoneType.POINT, 60, 100,
                         new Location(Bukkit.getWorld("world"), 605, 45, -216)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_GUARD_4_BASE_50, 1, 100)
+                ), false, null, null), 1)),
+
+                // Lava dungeon boss
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(267, SpawnZoneType.POINT, 60, 100,
+                        new Location(Bukkit.getWorld("world"), 741, 15, -227)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_BOSS_BASE_55, 1, 100)
                 ), false, null, null), 1))
 
-
-                // last 266
+                // last 267
 
 
         );

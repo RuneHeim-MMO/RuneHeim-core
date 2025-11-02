@@ -15,14 +15,14 @@ public class Armadillo {
 
     public static void registerMobs(MobTypeRegistry registry) {
         registry.register(MobType.ARMADILLO_BASE_55.getId(), () -> new GenericCombatant(
-                "Armadillo", null, getBaseSkills(55),
+                "Armadillo", null, getBaseSkills(55, 0.5),
                 null, MobBehaviors.ARMADILLO.getBehavior(),
                 0.3, true, false, 37, null, null, DisguiseType.ARMADILLO,
                 List.of(DropTableId.BONES.asInt()),
                 true));
 
         registry.register(MobType.ARMADILLO_NON_AGGRO_BASE_15.getId(), () -> new GenericCombatant(
-                "Armadillo", null, getBaseSkills(15),
+                "Armadillo", null, getBaseSkills(15, 0.5),
                 null, MobBehaviors.ARMADILLO.getBehavior(),
                 0.3, false, false, 10, null, null, DisguiseType.ARMADILLO,
                 List.of(DropTableId.BONES.asInt()),
