@@ -2,6 +2,10 @@ package org.zuma.examplePlugin.domain.mob.base;
 
 import com.ticxo.modelengine.api.ModelEngineAPI;
 import com.ticxo.modelengine.api.model.ModeledEntity;
+import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.disguisetypes.Disguise;
+import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
+import me.libraryaddict.disguise.utilities.animations.DisguiseAnimation;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -259,14 +263,18 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         this.getMobMechanics().forEach(m -> m.onMobDamagePlayer(runePlayer));
 
         ModeledEntity me = ModelEngineAPI.getModeledEntity(entity);
-
         if (me != null) {
             me.getModels().values().forEach(am -> {
                 am.getAnimationHandler().playAnimation("attack", 0f, 0.3f, 1, true);
             });
+            return;
         }
 
-
+        Disguise disguise = DisguiseAPI.getDisguise(entity);
+        if (disguise != null) {
+            disguise.playAnimation(DisguiseAnimation.SWING_MAIN_HAND);
+            return;
+        }
     }
 
     @Override
