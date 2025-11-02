@@ -40,6 +40,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class RunePlayer implements CombatEntity {
+    private static final double HP_SKILL_XP_PER_DMG_POINT_RECEIVED = 4.5;
     private final UUID uuid;
 
     private PlayerRole role;
@@ -203,6 +204,7 @@ public class RunePlayer implements CombatEntity {
         }
 
         this.cancelActionTask(true);
+        this.addXp(SkillType.HITPOINTS, hit.getDamage() * HP_SKILL_XP_PER_DMG_POINT_RECEIVED, XpSource.PERSONAL);
     }
 
     // Busy state management

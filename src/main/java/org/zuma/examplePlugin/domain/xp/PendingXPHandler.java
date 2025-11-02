@@ -115,7 +115,7 @@ public class PendingXPHandler {
         int damage = hit.getDamage();
 
         container.updateLastInteraction(now);
-        container.addXP(SkillType.HITPOINTS, damage * HP_SKILL_XP_PER_DMG_POINT);
+        //container.addXP(SkillType.HITPOINTS, damage * HP_SKILL_XP_PER_DMG_POINT);
 
         switch (hit.getAttackType()) {
             case RANGED -> container.addXP(SkillType.RANGED, damage * COMBAT_SKILL_XP_PER_DMG_POINT);
