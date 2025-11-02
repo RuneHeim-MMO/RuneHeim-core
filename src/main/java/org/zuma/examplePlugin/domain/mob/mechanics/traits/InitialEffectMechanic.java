@@ -43,7 +43,7 @@ public class InitialEffectMechanic implements MobMechanic {
 
     @Override
     public void onEntityTargetPlayer(EntityTargetEvent event, RunePlayer player) {
-        if (executed) return;
+        if (mob == null || executed) return;
 
         Collection<Player> targets = nearbyRange > 1
                 ? player.asBukkitPlayer().getLocation().getNearbyPlayers(nearbyRange)
@@ -60,5 +60,10 @@ public class InitialEffectMechanic implements MobMechanic {
 
     public void execute(LivingEntity target) {
 
+    }
+
+    @Override
+    public void cleanup() {
+        this.mob = null;
     }
 }

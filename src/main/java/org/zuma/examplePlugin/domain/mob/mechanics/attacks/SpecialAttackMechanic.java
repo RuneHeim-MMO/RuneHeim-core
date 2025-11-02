@@ -23,10 +23,17 @@ public class SpecialAttackMechanic implements MobMechanic {
 
     @Override
     public void onMobDamagePlayer(RunePlayer target, Hit hit) {
-        if (mob != null) mob.setSpecialAttacking(false);
+        if (mob == null) return;
+        mob.setSpecialAttacking(false);
     }
 
     public void execute(LivingEntity target) {
+        if (mob == null) return;
         mob.setSpecialAttacking(true);
+    }
+
+    @Override
+    public void cleanup() {
+        this.mob = null;
     }
 }

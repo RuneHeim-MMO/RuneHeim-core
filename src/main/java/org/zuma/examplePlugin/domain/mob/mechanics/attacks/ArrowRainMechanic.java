@@ -85,4 +85,9 @@ public class ArrowRainMechanic implements MobMechanic {
         }.runTaskTimer(RuneQuestPlugin.getInstance(), 0L, delayBetweenTicks);
     }
 
+    @Override
+    public void cleanup() {
+        this.mob = null;
+    }
+
 }

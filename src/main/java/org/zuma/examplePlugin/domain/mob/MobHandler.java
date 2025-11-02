@@ -50,7 +50,8 @@ public class MobHandler {
     public void startTickingLoop() {
         Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), () -> {
             new ArrayList<>(registry.getAll()).forEach(m -> {
-                if (m.getEntity() == null || !m.getEntity().isValid() || m.getEntity().isDead()) return;
+                if (m.getEntity() == null || !m.getEntity().isValid() || m.getEntity().isDead())
+                    return;
                 m.tick();
             });
         }, 0L, 20L);
@@ -105,6 +106,8 @@ public class MobHandler {
 
     public void onEntityTargetPlayer(EntityTargetEvent event, AbstractMob mob, RunePlayer player) {
         mob.onEntityTargetPlayer(event, player);
+
+
         mob.getMobMechanics().values().forEach(m -> m.onEntityTargetPlayer(event, player));
     }
 
@@ -152,6 +155,7 @@ public class MobHandler {
         }
 
         mob.onEntityDeath(event);
+        mob.handleMechanicsCleanup();
 
         if (mob.getUUID() != null) {
             registry.removeMob(mob.getUUID());

@@ -48,5 +48,9 @@ public class MobEnergyMechanic implements MobMechanic {
         return restoreRatePerSecond;
     }
 
+    @Override
+    public void cleanup() {
+    }
+
 
 }

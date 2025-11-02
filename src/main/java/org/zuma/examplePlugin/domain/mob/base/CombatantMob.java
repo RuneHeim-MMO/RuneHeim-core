@@ -48,7 +48,8 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     private final EnumMap<ModifierType, Modifier> modifiers = new EnumMap<>(ModifierType.class);
     private final EnumMap<SkillType, Skill> skills = new EnumMap<>(SkillType.class);
     private RuneProjectile projectileType = new RuneProjectile(ProjectileType.RANGED, EntityType.ARROW, 2);
-    private final int maxHealth, combatLvl;
+    private int maxHealth;
+    private final int combatLvl;
     private int health;
     private long lastDamagedAt;
     private boolean isSpecialAttacking;
@@ -91,6 +92,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         }
     }
 
+
     public CombatantMob overrideBaseToSkeleton() {
         this.setBaseEntity(EntityType.SKELETON);
         setClearDefaultHandsEquipment(false); // Keep bow in hand
@@ -125,6 +127,14 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
 
     public int getHealth() {
         return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = Math.min(health, maxHealth);
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
     }
 
     public int getMaxHealth() {
@@ -168,9 +178,18 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     }
 
     public void registerHit(Hit hit) {
-        if (!(getEntity() instanceof LivingEntity living)) {
+        if (!(getEntity() instanceof LivingEntity living) || super.isInvulnerable()) {
             return;
         }
+
+        // Notify mob mechanics of player damage
+        if (hit.getAttacker().getEntity() instanceof Player playerAttacker) {
+            RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(playerAttacker);
+            if (runePlayer != null) {
+                this.getMobMechanics().values().forEach(m -> m.onDamagedByPlayer(runePlayer, hit));
+            }
+        }
+
 
         // Get max Minecraft health for this entity
         AttributeInstance attr = living.getAttribute(Attribute.MAX_HEALTH);
@@ -186,6 +205,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
 
         scaledHealth = Math.max(0, Math.min(maxHealth, scaledHealth));
 
+
         // Set killer metadata on last hit
         if (scaledHealth == 0 && hit.getAttacker().getEntity() instanceof Player playerAttacker) {
             living.setMetadata(MetadataKeys.KILLER_UUID.asString(), new FixedMetadataValue(RuneQuestPlugin.getInstance(), playerAttacker.getUniqueId().toString()));
@@ -197,6 +217,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
             RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(playerAttacker);
             if (runePlayer != null) {
                 this.getMobMechanics().values().forEach(m -> m.onDeath(runePlayer, hit));
+
             }
 
             RuneEntityDeathEvent event = new RuneEntityDeathEvent(hit.getAttacker(), hit.getDefender(), hit, hit.getAttackType());
@@ -206,14 +227,6 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         // Apply the scaled health to the entity
         this.xpHandler.registerHit(hit);
         this.lastDamagedAt = System.currentTimeMillis();
-
-        // Notify mob mechanics of player damage
-        if (hit.getAttacker().getEntity() instanceof Player playerAttacker) {
-            RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(playerAttacker);
-            if (runePlayer != null) {
-                this.getMobMechanics().values().forEach(m -> m.onDamagedByPlayer(runePlayer, hit));
-            }
-        }
 
 
         living.setHealth(scaledHealth);

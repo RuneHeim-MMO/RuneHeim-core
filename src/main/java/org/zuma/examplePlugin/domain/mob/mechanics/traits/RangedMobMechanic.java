@@ -50,4 +50,9 @@ public class RangedMobMechanic implements MobMechanic {
         if (mob == null) return;
         mob.shootProjectileAtTarget(target);
     }
+
+    @Override
+    public void cleanup() {
+        this.mob = null;
+    }
 }

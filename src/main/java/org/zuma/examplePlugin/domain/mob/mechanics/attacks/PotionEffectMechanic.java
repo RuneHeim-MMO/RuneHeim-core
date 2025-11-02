@@ -40,4 +40,8 @@ public class PotionEffectMechanic implements MobMechanic {
             effectList.forEach(t::addPotionEffect);
         });
     }
+
+    @Override
+    public void cleanup() {
+    }
 }

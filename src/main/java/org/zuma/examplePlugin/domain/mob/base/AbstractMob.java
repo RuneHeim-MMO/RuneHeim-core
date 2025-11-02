@@ -49,7 +49,7 @@ public abstract class AbstractMob {
     private UUID uuid;
     private Component displayName;
     private EntityType baseMob;
-    private boolean ai, silent, isBaby, isInvulnerable, clearDefaultHandsEquipment;
+    private boolean ai, silent, isBaby, isInvulnerable, clearDefaultHandsEquipment, pausedMechanics;
 
     private int maxWalkDistance, yaw, secondsAlive;
     private HashMap<Attribute, Double> customAttributes;
@@ -558,6 +558,11 @@ public abstract class AbstractMob {
 
     public void onEntityTargetPlayer(EntityTargetEvent event, RunePlayer player) {
 
+    }
+
+    public void handleMechanicsCleanup() {
+        this.mobMechanics.values().forEach(MobMechanic::cleanup);
+        this.mobMechanics.clear();
     }
 
     public void tick() {

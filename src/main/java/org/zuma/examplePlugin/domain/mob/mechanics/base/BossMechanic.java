@@ -4,16 +4,20 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
+import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.mob.mechanics.traits.MobEnergyMechanic;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.*;
 
-public class MechanicRandomizer implements MobMechanic {
+public class BossMechanic implements MobMechanic {
     private AbstractMob mob;
-    private final List<WeightedMechanic> weightedMechanics;
-    private boolean stopped;
+    private final LinkedList<BossPhase> phases;
     private final List<Candidate> candidates = new ArrayList<>();
+
+    private boolean stopped;
 
     // Internal state & config
     private final Random rnd = new Random();
@@ -21,27 +25,36 @@ public class MechanicRandomizer implements MobMechanic {
     private final double temperature = 0.7;         // lower => greedier, higher => more random
     private final double utilityExponent = 1.0;     // >1 favors higher utility-per-energy
     private final int lookaheadTicks = 5;           // how many ticks ahead we'll consider "can afford soon"
-    private final int targetSearchRadius = 12;      // blocks to search for a LivingEntity target
     private final double saveThreshold = 2.0;       // if top score >> second * this and we lack energy, we'll try to save
 
-    public MechanicRandomizer(List<WeightedMechanic> weightedMechanics) {
-        this.weightedMechanics = weightedMechanics;
+    public BossMechanic(List<BossPhase> phases) {
+        this.phases = new LinkedList<>(phases);
         this.stopped = false;
     }
 
+
     @Override
     public void setParent(AbstractMob mob) {
+        if (!(mob instanceof CombatantMob combatantMob)) {
+            throw new IllegalArgumentException("VariableSpeedMechanic can only be applied to CombatantMob");
+        }
+
         this.mob = mob;
-        this.weightedMechanics.forEach(we -> we.mechanic().setParent(mob));
+        phases.getFirst().getWeightedMechanics().forEach(we -> we.mechanic().setParent(mob));
+
+        combatantMob.setMaxHealth(this.phases.getFirst().getNewMaxHealth());
+        combatantMob.setHealth(this.phases.getFirst().getNewHealth());
+
     }
 
     @Override
     public void tick() {
         if (mob == null || stopped) return;
+
         Entity entity = mob.getEntity();
         if (entity == null) return;
 
-        this.weightedMechanics.forEach(we -> we.mechanic().tick());
+        phases.getFirst().getWeightedMechanics().forEach(we -> we.mechanic().tick());
 
         // Find energy mechanic
         MobEnergyMechanic energyMechanics = (MobEnergyMechanic) mob.getMobMechanics().get(MobEnergyMechanic.class);
@@ -68,7 +81,7 @@ public class MechanicRandomizer implements MobMechanic {
 
         // Build candidate list: affordable now OR affordable within lookahead AND not on internal cooldown
         candidates.clear();
-        for (WeightedMechanic wm : weightedMechanics) {
+        for (WeightedMechanic wm : phases.getFirst().getWeightedMechanics()) {
             MobMechanic mech = wm.mechanic();
             int cost = wm.cost();
 
@@ -96,7 +109,7 @@ public class MechanicRandomizer implements MobMechanic {
 
         if (candidates.isEmpty()) {
             // No candidate: fallback. Try cheapest available mechanic that is off-cooldown and execute if cost == 0
-            Optional<WeightedMechanic> cheap = weightedMechanics.stream()
+            Optional<WeightedMechanic> cheap = phases.getFirst().getWeightedMechanics().stream()
                     .filter(wm -> !isOnCooldown(wm.mechanic())).min(Comparator.comparingInt(WeightedMechanic::cost));
 
             return;
@@ -164,6 +177,35 @@ public class MechanicRandomizer implements MobMechanic {
         // This mechanic doesn't implement a single-execute behaviour.
     }
 
+    @Override
+    public void onDamagedByPlayer(RunePlayer attacker, Hit hit) {
+        if (!(mob instanceof CombatantMob combatMob)) return;
+
+        if (hit.getDamage() >= combatMob.getHealth()) {
+            if (phases.size() <= 1) {
+                stopped = true;
+                // Death
+                return;
+            }
+
+
+            // Advance phase
+            this.phases.removeFirst();
+            internalCooldownTicks.clear();
+            phases.getFirst().getWeightedMechanics().forEach(we -> we.mechanic().setParent(mob));
+            hit.overrideDamage(0);
+            combatMob.setMaxHealth(this.phases.getFirst().getNewMaxHealth());
+            combatMob.setHealth(this.phases.getFirst().getNewHealth());
+            MobMechanic phaseTransition = phases.getFirst().getTransitionMechanic();
+
+            if (phaseTransition != null) {
+                phaseTransition.setParent(mob);
+                phaseTransition.execute(attacker.asBukkitPlayer());
+            }
+        }
+    }
+
+
     // --------------------
     // Helpers & utilities
     // --------------------
@@ -204,5 +246,20 @@ public class MechanicRandomizer implements MobMechanic {
             this.score = score;
             this.affordableNow = affordableNow;
         }
+    }
+
+    @Override
+    public void cleanup() {
+        this.mob = null;
+        this.stopped = true;
+        this.candidates.clear();
+
+        this.phases.forEach(p -> {
+            if (p.getTransitionMechanic() != null) {
+                p.getTransitionMechanic().cleanup();
+            }
+
+            p.getWeightedMechanics().forEach(we -> we.mechanic().cleanup());
+        });
     }
 }

@@ -55,5 +55,10 @@ public class SummonCreaturesMechanic implements MobMechanic {
         }
     }
 
+    @Override
+    public void cleanup() {
+        this.mob = null;
+    }
+
 
 }

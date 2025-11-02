@@ -35,6 +35,8 @@ public class AntiSafeSpotPullMechanic implements MobMechanic {
 
     @Override
     public void onDamagedByPlayer(RunePlayer attacker, Hit hit) {
+        if (mob == null) return;
+
         Entity entity = mob.getEntity();
 
         if ((hit.getAttackType() != AttackType.MELEE) || !(entity instanceof LivingEntity)) {
@@ -69,10 +71,20 @@ public class AntiSafeSpotPullMechanic implements MobMechanic {
     }
 
     public void execute(LivingEntity target) {
+        if (mob == null) return;
+
         Entity entity = mob.getEntity();
 
         if (entity == null) return;
         MobUtils.pullEntityTowardMob(target, entity, 1, 0.3);
         SoundType.PLAYER_PULL.play(entity.getLocation());
     }
+
+    @Override
+    public void cleanup() {
+        this.mob = null;
+        this.recentAttackers.clear();
+    }
+
+
 }

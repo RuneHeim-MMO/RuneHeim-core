@@ -29,15 +29,17 @@ public class VariableSpeedMechanic implements MobMechanic {
 
 
     public void execute(LivingEntity target) {
+        if (mob == null || mob.getEntity() == null) return;
         secondsRemaining = durationSeconds;
         mob.setLivingEntitySpeedAttr(activeSpeed);
     }
 
     @Override
     public void tick() {
-        if (baseSpeed == null && mob.getEntity() != null) {
+        if (mob == null || mob.getEntity() != null) return;
+
+        if (baseSpeed == null) {
             baseSpeed = mob.getLivingEntitySpeedAttr();
-            System.out.println("VariableSpeedMechanic set base speed to " + baseSpeed);
         }
 
 
@@ -47,5 +49,10 @@ public class VariableSpeedMechanic implements MobMechanic {
                 mob.setLivingEntitySpeedAttr(baseSpeed);
             }
         }
+    }
+
+    @Override
+    public void cleanup() {
+        this.mob = null;
     }
 }
