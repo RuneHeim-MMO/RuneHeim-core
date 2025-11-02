@@ -10,6 +10,7 @@ import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import me.libraryaddict.disguise.disguisetypes.watchers.LivingWatcher;
+import me.libraryaddict.disguise.utilities.animations.DisguiseAnimation;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -511,11 +512,22 @@ public abstract class AbstractMob {
 
         ModeledEntity me = ModelEngineAPI.getModeledEntity(entity);
 
-        if (me == null) return;
 
-        me.getModels().values().forEach(am -> {
-            am.getAnimationHandler().playAnimation(animationName, speed, blendIn, loopCount, true);
-        });
+        if (Objects.equals(animationName, "attack")) {
+            Disguise disguise = DisguiseAPI.getDisguise(getEntity());
+            if (disguise != null) {
+                disguise.playAnimation(DisguiseAnimation.SWING_MAIN_HAND);
+                return;
+            }
+        }
+
+        if (me != null) {
+            me.getModels().values().forEach(am -> {
+                am.getAnimationHandler().playAnimation(animationName, speed, blendIn, loopCount, true);
+            });
+            return;
+        }
+
 
     }
 

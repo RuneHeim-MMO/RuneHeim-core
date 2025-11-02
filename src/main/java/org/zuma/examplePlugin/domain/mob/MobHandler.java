@@ -106,8 +106,6 @@ public class MobHandler {
 
     public void onEntityTargetPlayer(EntityTargetEvent event, AbstractMob mob, RunePlayer player) {
         mob.onEntityTargetPlayer(event, player);
-
-
         mob.getMobMechanics().values().forEach(m -> m.onEntityTargetPlayer(event, player));
     }
 

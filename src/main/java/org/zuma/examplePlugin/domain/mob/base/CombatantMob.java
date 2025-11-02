@@ -261,18 +261,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
 
     @Override
     public void onEntityAttackPlayer(EntityDamageByEntityEvent event, RunePlayer runePlayer) {
-        // Notify mob mechanics of mob damage to player
-        this.getMobMechanics().values().forEach(m -> m.onMobDamagePlayer(runePlayer));
-
-       this.playAnimation("attack", 0f, 0.3f, 1);
-
-        Disguise disguise = DisguiseAPI.getDisguise(entity);
-        if (disguise != null) {
-            disguise.playAnimation(DisguiseAnimation.SWING_MAIN_HAND);
-            return;
-        }
-
- 
+        this.playAnimation("attack", 0f, 0.3f, 1);
     }
 
     @Override
