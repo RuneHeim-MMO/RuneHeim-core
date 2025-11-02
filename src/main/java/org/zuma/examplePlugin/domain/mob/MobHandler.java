@@ -233,25 +233,4 @@ public class MobHandler {
         }
     }
 
-    private void handleArrowSpawnPacket(PacketEvent event) {
-        Object entityIdObj = event.getPacket().getIntegers().read(0);
-        if (entityIdObj == null) return;
-
-        int entityId = (int) entityIdObj;
-        Arrow arrow = null;
-
-        for (Arrow a : event.getPlayer().getWorld().getEntitiesByClass(Arrow.class)) {
-            if (a.getEntityId() == entityId) {
-                arrow = a;
-                break;
-            }
-        }
-
-        if (arrow == null) return;
-
-        if (arrow.hasMetadata("custom_projectile")) {
-            event.setCancelled(true);
-        }
-    }
-
 }
