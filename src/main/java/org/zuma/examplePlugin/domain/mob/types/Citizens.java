@@ -1,19 +1,13 @@
 package org.zuma.examplePlugin.domain.mob.types;
 
-import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import org.zuma.examplePlugin.domain.dialog.DialogBuilder;
-import org.zuma.examplePlugin.domain.dialog.Dialogs;
-import org.zuma.examplePlugin.domain.droptable.DropTableId;
 import org.zuma.examplePlugin.domain.mob.MobTypeRegistry;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehaviors;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
-import org.zuma.examplePlugin.domain.mob.impl.GenericCombatant;
 import org.zuma.examplePlugin.domain.mob.impl.RandomDialogCitizen;
 
 import java.util.List;
 import java.util.function.Supplier;
-
-import static org.zuma.examplePlugin.domain.mob.MobTypesLoader.getBaseSkills;
 
 public class Citizens {
 

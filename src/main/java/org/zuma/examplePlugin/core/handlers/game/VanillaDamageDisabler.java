@@ -14,6 +14,8 @@ public class VanillaDamageDisabler implements Listener {
     private final EnumSet<EntityDamageEvent.DamageCause> IGNORED_CAUSES =
             EnumSet.of(
                     EntityDamageEvent.DamageCause.FALL,
+                    EntityDamageEvent.DamageCause.SUFFOCATION,
+                    EntityDamageEvent.DamageCause.LAVA,
                     EntityDamageEvent.DamageCause.FIRE,
                     EntityDamageEvent.DamageCause.FIRE_TICK,
                     EntityDamageEvent.DamageCause.CAMPFIRE,

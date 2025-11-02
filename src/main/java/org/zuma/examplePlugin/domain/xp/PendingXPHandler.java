@@ -86,7 +86,7 @@ public class PendingXPHandler {
         });
     }
 
-    public void calculatePendingXP(Hit hit) {
+    public void registerHit(Hit hit) {
         if (hit.getHitType() == HitType.MISS) {
             return;
         }
@@ -135,5 +135,23 @@ public class PendingXPHandler {
                 .max(Comparator.comparingDouble(entry -> entry.getValue().getPendingXP().values().stream().mapToDouble(Double::doubleValue).sum()))
                 .map(Map.Entry::getKey)
                 .orElse(null);
+    }
+
+    public List<RunePlayer> getRecentAttackers(Long durationMillis) {
+        List<RunePlayer> recentAttackers = new ArrayList<>();
+        long minuteAgo = System.currentTimeMillis() - durationMillis;
+
+        pendingPlayerXP.forEach((uuid, container) -> {
+            if (container.getLastInteraction() >= minuteAgo) {
+                RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(uuid);
+
+                if (player != null) {
+                    recentAttackers.add(player);
+                }
+            }
+        });
+
+        return recentAttackers;
+
     }
 }

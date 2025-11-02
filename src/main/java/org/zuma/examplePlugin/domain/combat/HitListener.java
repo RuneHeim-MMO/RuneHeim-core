@@ -20,8 +20,10 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
+import org.zuma.examplePlugin.core.utils.EntityUtils;
 import org.zuma.examplePlugin.domain.combat.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.combat.constants.ProjectileType;
+import org.zuma.examplePlugin.domain.mob.MobHandler;
 import org.zuma.examplePlugin.domain.mob.MobRegistry;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -150,6 +152,12 @@ public class HitListener implements Listener {
             return;
         }
 
+        // Prevent mob vs mob projectile hits
+        if (livingShooter instanceof Mob && defenderEntity instanceof Mob) {
+            event.setCancelled(true);
+            return;
+        }
+
         CombatEntity attacker = getCombatEntity(livingShooter);
         CombatEntity defender = getCombatEntity(livingDefenderEntity);
 
@@ -176,8 +184,6 @@ public class HitListener implements Listener {
             if (!(livingDefenderEntity instanceof Mob mob)) {
                 return;
             }
-
-            projectile.remove();
 
             if (hit != null && hit.getDamage() == 0) {
                 event.setCancelled(true); // Cancel knockback if hit is a miss

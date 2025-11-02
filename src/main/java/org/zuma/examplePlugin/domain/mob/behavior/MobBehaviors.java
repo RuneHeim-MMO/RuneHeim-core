@@ -230,6 +230,15 @@ public enum MobBehaviors {
             List.of(SoundType.ARMADILLO_DEATH)
     )),
 
+    BLAZE((pitchModifier) -> new MobBehavior(
+            pitchModifier,
+            List.of(SoundType.BLAZE_AMBIENT),
+            List.of(SoundType.BLAZE_BURN),
+            List.of(SoundType.BLAZE_ATTACK),
+            List.of(SoundType.BLAZE_HURT),
+            List.of(SoundType.BLAZE_DEATH)
+    )),
+
     BEE((pitchModifier) -> new MobBehavior(
             pitchModifier, List.of(SoundType.BEE_AMBIENT),
             List.of(),

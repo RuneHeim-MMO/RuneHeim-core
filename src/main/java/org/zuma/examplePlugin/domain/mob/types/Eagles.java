@@ -17,7 +17,7 @@ public class Eagles {
 
         registry.register(MobType.EAGLE_BLACK_BASE_50.getId(), () -> new GenericCombatant(
                 "Eagle", null,
-                getBaseSkills(50),
+                getBaseSkills(50, 0.5),
                 null,
                 MobBehaviors.EAGLE.getBehavior(),
                 "brownheadeagle",
@@ -28,7 +28,7 @@ public class Eagles {
 
         registry.register(MobType.EAGLE_BROWN_BASE_48.getId(), () -> new GenericCombatant(
                 "Eagle", null,
-                getBaseSkills(48),
+                getBaseSkills(48, 0.5),
                 null,
                 MobBehaviors.EAGLE.getBehavior(),
                 "browneagle",
@@ -39,7 +39,7 @@ public class Eagles {
 
         registry.register(MobType.EAGLE_BROWNHEAD_BASE_55.getId(), () -> new GenericCombatant(
                 "Eagle", null,
-                getBaseSkills(55),
+                getBaseSkills(55, 0.5),
                 null,
                 MobBehaviors.EAGLE.getBehavior(),
                 "blackeagle",

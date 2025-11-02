@@ -7,6 +7,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.projectiles.ProjectileSource;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.impl.CityGuardMob;
@@ -45,29 +46,37 @@ public class CityGuardHandler implements Listener {
 
     @EventHandler
     public void onMobAttackNearCityGuard(EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Mob damagerMob)) return;
+        Entity damager = event.getDamager();
+        AbstractMob attacker = null;
 
-        if (event.getEntity() instanceof Player) {
-            // entity is a player
-        } else if (event.getEntity() instanceof AbstractHorse h && !h.getPassengers().isEmpty()) {
-            // entity is a horse with passengers
-        } else {
-            return; // skip everything else
+        // Handle direct mob attacks
+        if (damager instanceof Mob damagerMob) {
+            attacker = RuneQuestPlugin.getMobRegistry().getMob(damagerMob);
+        }
+        // Handle projectiles (arrows, snowballs, etc.)
+        else if (damager instanceof Projectile projectile) {
+            ProjectileSource shooter = projectile.getShooter();
+            if (shooter instanceof Mob shooterMob) {
+                attacker = RuneQuestPlugin.getMobRegistry().getMob(shooterMob);
+            }
         }
 
-        AbstractMob attacker = RuneQuestPlugin.getMobRegistry().getMob(damagerMob);
+        if (attacker == null) return;
 
-        if (attacker == null) {
+        // Only interested if the target is a player or a horse with passengers
+        Entity target = event.getEntity();
+        if (!(target instanceof Player) && !(target instanceof AbstractHorse h && !h.getPassengers().isEmpty())) {
             return;
         }
 
-        for (Entity entity : damagerMob.getNearbyEntities(20, 10, 20)) {
-            AbstractMob witness = RuneQuestPlugin.getMobRegistry().getMob(entity);
-            if (!(witness instanceof CityGuardMob cityGuardMob)) {
-                continue;
-            }
+        if (!(attacker.getEntity() instanceof LivingEntity livingAttacker)) return;
 
-            cityGuardMob.onWitnessAttack(damagerMob);
+        // Notify nearby city guards
+        for (Entity entity : attacker.getEntity().getNearbyEntities(20, 10, 20)) {
+            AbstractMob witness = RuneQuestPlugin.getMobRegistry().getMob(entity);
+            if (witness instanceof CityGuardMob cityGuardMob) {
+                cityGuardMob.onWitnessAttack(livingAttacker);
+            }
         }
     }
 }

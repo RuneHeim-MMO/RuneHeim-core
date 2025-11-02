@@ -1769,10 +1769,65 @@ public class SpawnZoneRepository {
                         new Location(Bukkit.getWorld("world"), -739, 71, 388)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.CITY_CITIZEN_MAN, 1, 100),
                         new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 2, 100)
-                ), 30, false, true), 1))
+                ), 30, false, true), 1)),
 
 
-                // last 256
+                // Lava dungeon entrance
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(258, SpawnZoneType.AREA, 50, 30,
+                        new Location(Bukkit.getWorld("world"), 566, 45, -266)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_TURRET_BASE_20, 3, 100)
+                ), 10, false, true), 1)),
+
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(259, SpawnZoneType.AREA, 50, 30,
+                        new Location(Bukkit.getWorld("world"), 568, 45, -217)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_TURRET_BASE_20, 3, 100)
+                ), 10, false, true), 1)),
+
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(260, SpawnZoneType.AREA, 50, 30,
+                        new Location(Bukkit.getWorld("world"), 588, 45, -239)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_TURRET_BASE_20, 3, 100)
+                ), 10, false, true), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(261, SpawnZoneType.AREA, 50, 30,
+                        new Location(Bukkit.getWorld("world"), 605, 45, -216)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_TURRET_BASE_20, 3, 100)
+                ), 10, false, true), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(262, SpawnZoneType.AREA, 50, 30,
+                        new Location(Bukkit.getWorld("world"), 613, 45, -251)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_TURRET_BASE_20, 3, 100)
+                ), 10, false, true), 1)),
+
+                // guards
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(263, SpawnZoneType.POINT, 60, 100,
+                        new Location(Bukkit.getWorld("world"), 568, 45, -217)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_GUARD_1_BASE_35, 1, 100)
+                ), false, null, null), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(264, SpawnZoneType.POINT, 60, 100,
+                        new Location(Bukkit.getWorld("world"), 587, 45, -238)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_GUARD_2_BASE_40, 1, 100)
+                ), false, null, null), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(265, SpawnZoneType.POINT, 60, 100,
+                        new Location(Bukkit.getWorld("world"), 612, 45, -251)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_GUARD_3_BASE_45, 1, 100)
+                ), false, null, null), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(266, SpawnZoneType.POINT, 60, 100,
+                        new Location(Bukkit.getWorld("world"), 605, 45, -216)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_GUARD_4_BASE_50, 1, 100)
+                ), false, null, null), 1)),
+
+                // Lava dungeon boss
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(267, SpawnZoneType.POINT, 60, 100,
+                        new Location(Bukkit.getWorld("world"), 741, 15, -227)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_BOSS_BASE_55, 1, 100)
+                ), false, null, null), 1))
+
+                // last 267
 
 
         );

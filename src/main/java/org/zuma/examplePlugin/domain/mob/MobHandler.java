@@ -1,5 +1,9 @@
 package org.zuma.examplePlugin.domain.mob;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketEvent;
 import io.papermc.paper.event.entity.EntityKnockbackEvent;
 import me.libraryaddict.disguise.DisguiseAPI;
 import org.bukkit.Bukkit;
@@ -7,16 +11,12 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.entity.*;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.MathUtils;
@@ -30,6 +30,7 @@ import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,6 +44,18 @@ public class MobHandler {
         MobIdleBehaviorHandler idleManager = new MobIdleBehaviorHandler(registry);
         idleManager.start();
         startTargetSyncForMountedPlayersLoop();
+        startTickingLoop();
+    }
+
+    public void startTickingLoop() {
+        Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), () -> {
+            new ArrayList<>(registry.getAll()).forEach(m -> {
+                if (m.getEntity() == null || !m.getEntity().isValid() || m.getEntity().isDead())
+                    return;
+                m.tick();
+            });
+        }, 0L, 20L);
+
     }
 
     // Clears all mobs with MOB_UUID data keys.
@@ -93,6 +106,7 @@ public class MobHandler {
 
     public void onEntityTargetPlayer(EntityTargetEvent event, AbstractMob mob, RunePlayer player) {
         mob.onEntityTargetPlayer(event, player);
+        mob.getMobMechanics().values().forEach(m -> m.onEntityTargetPlayer(event, player));
     }
 
     public void onEntityAttackEntity(EntityDamageByEntityEvent event, AbstractMob mob, Entity attacker) {
@@ -138,11 +152,13 @@ public class MobHandler {
             event.setDroppedExp(0);
         }
 
+        mob.onEntityDeath(event);
+        mob.handleMechanicsCleanup();
+
         if (mob.getUUID() != null) {
             registry.removeMob(mob.getUUID());
         }
 
-        mob.onEntityDeath(event);
     }
 
 
@@ -152,6 +168,14 @@ public class MobHandler {
         }
 
         mob.onEntityDamaged(event);
+    }
+
+    public void onShootProjectile(ProjectileLaunchEvent event, AbstractMob mob) {
+        if (mob.getBehavior() != null && !event.isCancelled()) {
+            mob.getBehavior().playSound(event.getEntity(), MobBehavior.MobSoundType.NEGATIVE);
+        }
+
+        mob.onEntityShootProjectile(event);
     }
 
     public void handleRedisguisingOnPlayerJoin(PlayerJoinEvent event) {

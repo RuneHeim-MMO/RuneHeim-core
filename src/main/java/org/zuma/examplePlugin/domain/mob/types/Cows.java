@@ -16,7 +16,7 @@ public class Cows {
     public static void registerMobs(MobTypeRegistry registry) {
         registry.register(MobType.COW_BASE_7.getId(), () -> new GenericCombatant(
                 "Cow", null,
-                getBaseSkills(7),
+                getBaseSkills(7, 0.5),
                 null,
                 MobBehaviors.COW.getBehavior(),
                 0.25,
@@ -27,7 +27,7 @@ public class Cows {
 
         registry.register(MobType.CALF_BASE_5.getId(), () -> new GenericCombatant(
                 "Calf", null,
-                getBaseSkills(5),
+                getBaseSkills(5, 0.5),
                 null,
                 MobBehaviors.EAGLE.getBehavior(),
                 0.25,

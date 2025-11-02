@@ -196,7 +196,7 @@ public class RunePlayer implements CombatEntity {
     }
 
     public void registerHit(Hit hit) {
-        this.pendingXPHandler.calculatePendingXP(hit);
+        this.pendingXPHandler.registerHit(hit);
         this.combatData.registerHit(hit);
 
         if (hit.getDamage() > 0) {
@@ -273,8 +273,8 @@ public class RunePlayer implements CombatEntity {
         this.pouchCoins = coins;
     }
 
-    public void onDeath(Hit lastHit) {
-        DeathHandler.handlePlayerDeath(this, lastHit);
+    public void killPlayer(@Nullable Hit lastHit) {
+        DeathHandler.killPlayer(this, lastHit);
 
         this.pendingXPHandler.distributePendingXP();
     }

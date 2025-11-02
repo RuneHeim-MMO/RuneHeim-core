@@ -10,16 +10,16 @@ import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import me.libraryaddict.disguise.disguisetypes.watchers.LivingWatcher;
+import me.libraryaddict.disguise.utilities.animations.DisguiseAnimation;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.*;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.EntityEquipment;
@@ -37,7 +37,7 @@ import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSlot;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
-import org.zuma.examplePlugin.domain.mob.mechanics.MobMechanic;
+import org.zuma.examplePlugin.domain.mob.mechanics.base.MobMechanic;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
 import org.zuma.examplePlugin.domain.mob.meta.MobEquipmentMeta;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -50,9 +50,9 @@ public abstract class AbstractMob {
     private UUID uuid;
     private Component displayName;
     private EntityType baseMob;
-    private boolean ai, silent, isBaby, isInvulnerable, clearDefaultHandsEquipment;
+    private boolean ai, silent, isBaby, isInvulnerable, clearDefaultHandsEquipment, pausedMechanics;
 
-    private int maxWalkDistance, yaw;
+    private int maxWalkDistance, yaw, secondsAlive;
     private HashMap<Attribute, Double> customAttributes;
     private List<Integer> dropTableIds;
     private Function<Entity, Void> onSpawnRunnable;
@@ -65,7 +65,7 @@ public abstract class AbstractMob {
     private @Nullable String model;
     private @Nullable MobBehavior behavior;
 
-    private final List<MobMechanic> mobMechanics;
+    private final HashMap<Class<? extends MobMechanic>, MobMechanic> mobMechanics;
 
     public AbstractMob(AbstractMobMeta meta) {
         this.ai = meta.ai();
@@ -73,20 +73,21 @@ public abstract class AbstractMob {
         this.baseMob = meta.baseEntity();
         this.silent = meta.silent();
 
-        disguise = null;
-        model = null;
-        behavior = null;
-        mobEquipment = null;
-        isBaby = false;
-        isInvulnerable = false;
-        clearDefaultHandsEquipment = true;
-        maxWalkDistance = -1; // -1 means no limits, can walk anywhere.
-        customAttributes = new HashMap<>();
-        dropTableIds = new ArrayList<>();
-        healthBarSafeName = this instanceof CombatantMob ? "" : getDisplayName();
-        onSpawnRunnable = null;
-        yaw = 0;
-        mobMechanics = new ArrayList<>();
+        this.disguise = null;
+        this.model = null;
+        this.behavior = null;
+        this.mobEquipment = null;
+        this.isBaby = false;
+        this.isInvulnerable = false;
+        this.clearDefaultHandsEquipment = true;
+        this.maxWalkDistance = -1; // -1 means no limits, can walk anywhere.
+        this.customAttributes = new HashMap<>();
+        this.dropTableIds = new ArrayList<>();
+        this.healthBarSafeName = this instanceof CombatantMob ? "" : getDisplayName();
+        this.onSpawnRunnable = null;
+        this.yaw = 0;
+        this.secondsAlive = 0;
+        this.mobMechanics = new HashMap<>();
     }
 
     public void setYaw(int yaw) {
@@ -126,6 +127,7 @@ public abstract class AbstractMob {
         }
 
         Entity entity = location.getWorld().spawnEntity(spawnLocation, baseMob);
+        this.secondsAlive = 0;
         this.entity = entity;
 
         this.setEntityPersistenceKey(entity);
@@ -138,7 +140,7 @@ public abstract class AbstractMob {
             onSpawnRunnable.apply(entity);
         }
 
-        mobMechanics.forEach(MobMechanic::onSpawn);
+        mobMechanics.values().forEach(MobMechanic::onSpawn);
 
         return entity;
     }
@@ -176,8 +178,9 @@ public abstract class AbstractMob {
         return this;
     }
 
-    public void setMaxWalkDistance(int distance) {
+    public AbstractMob setMaxWalkDistance(int distance) {
         this.maxWalkDistance = distance;
+        return this;
     }
 
     public int getMaxWalkDistance() {
@@ -194,6 +197,25 @@ public abstract class AbstractMob {
 
     public void setSilent(boolean silent) {
         this.silent = silent;
+    }
+
+    public void sendMessageToPlayer(Player player, String message) {
+        player.sendMessage(Component.text(this.getDisplayName(), NamedTextColor.WHITE)
+                .append(Component.text(" » ", TextColor.color(150, 150, 150)))
+                .append(Component.text(message, NamedTextColor.WHITE)));
+    }
+
+    public void sendMessageToNearbyPlayers(String message, int radius) {
+        if (this.entity == null) return;
+
+        Component chatMessage = Component.text(getDisplayName(), NamedTextColor.WHITE)
+                .append(Component.text(" » ", TextColor.color(150, 150, 150)))
+                .append(Component.text(message, NamedTextColor.WHITE));
+
+        for (Player player : entity.getLocation().getNearbyPlayers(radius)) {
+            player.sendMessage(chatMessage);
+        }
+
     }
 
     @Nullable
@@ -377,6 +399,19 @@ public abstract class AbstractMob {
         entityAttr.setBaseValue(speed);
     }
 
+    public double getLivingEntitySpeedAttr() {
+        if (!(this.getEntity() instanceof LivingEntity livingEntity)) {
+            return 0;
+        }
+        AttributeInstance entityAttr = livingEntity.getAttribute(Attribute.MOVEMENT_SPEED);
+
+        if (entityAttr == null) {
+            return 0;
+        }
+
+        return entityAttr.getBaseValue();
+    }
+
     public List<ItemStack> rollDropTables(RunePlayer activator) {
         List<ItemStack> drops = new ArrayList<>();
 
@@ -461,14 +496,40 @@ public abstract class AbstractMob {
         this.clearDefaultHandsEquipment = clearDefaultHandsEquipment;
     }
 
-    public List<MobMechanic> getMobMechanics() {
+    public HashMap<Class<? extends MobMechanic>, MobMechanic> getMobMechanics() {
         return this.mobMechanics;
     }
 
-    public void addMobMechanic(MobMechanic mechanic) {
-        this.mobMechanics.add(mechanic);
+    public AbstractMob addMobMechanic(MobMechanic mechanic) {
+        this.mobMechanics.put(mechanic.getClass(), mechanic);
+        mechanic.setParent(this);
+        return this;
     }
 
+    public void playAnimation(String animationName, float speed, float blendIn, int loopCount) {
+        Entity entity = getEntity();
+        if (entity == null) return;
+
+        ModeledEntity me = ModelEngineAPI.getModeledEntity(entity);
+
+
+        if (Objects.equals(animationName, "attack")) {
+            Disguise disguise = DisguiseAPI.getDisguise(getEntity());
+            if (disguise != null) {
+                disguise.playAnimation(DisguiseAnimation.SWING_MAIN_HAND);
+                return;
+            }
+        }
+
+        if (me != null) {
+            me.getModels().values().forEach(am -> {
+                am.getAnimationHandler().playAnimation(animationName, speed, blendIn, loopCount, true);
+            });
+            return;
+        }
+
+
+    }
 
     public void handleInteraction(RunePlayer player) {
 
@@ -490,6 +551,11 @@ public abstract class AbstractMob {
 
     }
 
+    public void onEntityShootProjectile(ProjectileLaunchEvent event) {
+
+    }
+
+
     public void onEntityDamaged(EntityDamageEvent event) {
 
     }
@@ -505,4 +571,19 @@ public abstract class AbstractMob {
     public void onEntityTargetPlayer(EntityTargetEvent event, RunePlayer player) {
 
     }
+
+    public void handleMechanicsCleanup() {
+        this.mobMechanics.values().forEach(MobMechanic::cleanup);
+        this.mobMechanics.clear();
+    }
+
+    public void tick() {
+        this.secondsAlive++;
+        this.mobMechanics.values().forEach(MobMechanic::tick);
+    }
+
+    public int getSecondsAlive() {
+        return this.secondsAlive;
+    }
+
 }
