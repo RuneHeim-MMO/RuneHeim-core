@@ -139,9 +139,8 @@ public class MobUtils {
         Vector velocity = direction.multiply(strength);
         velocity.setY(upwardLift);
 
-        // Only apply if finite
-        if (Double.isFinite(direction.getX()) && Double.isFinite(direction.getY()) && Double.isFinite(direction.getZ())) {
-            entity.setVelocity(direction);
+        if (Double.isFinite(velocity.getX()) && Double.isFinite(velocity.getY()) && Double.isFinite(velocity.getZ())) {
+            entity.setVelocity(velocity);
         }
     }
 }

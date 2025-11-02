@@ -19,6 +19,7 @@ public class VariableSpeedMechanic implements MobMechanic {
         this.activeSpeed = activeSpeed;
     }
 
+    @Override
     public void setParent(AbstractMob mob) {
         if (!(mob instanceof CombatantMob combatantMob)) {
             throw new IllegalArgumentException("VariableSpeedMechanic can only be applied to CombatantMob");
@@ -27,7 +28,7 @@ public class VariableSpeedMechanic implements MobMechanic {
         this.mob = combatantMob;
     }
 
-
+    @Override
     public void execute(LivingEntity target) {
         if (mob == null || mob.getEntity() == null) return;
         secondsRemaining = durationSeconds;
@@ -36,7 +37,7 @@ public class VariableSpeedMechanic implements MobMechanic {
 
     @Override
     public void tick() {
-        if (mob == null || mob.getEntity() != null) return;
+        if (mob == null || mob.getEntity() == null) return;
 
         if (baseSpeed == null) {
             baseSpeed = mob.getLivingEntitySpeedAttr();

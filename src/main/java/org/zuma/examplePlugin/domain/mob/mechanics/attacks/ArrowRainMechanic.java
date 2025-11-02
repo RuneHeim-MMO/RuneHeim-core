@@ -33,6 +33,7 @@ public class ArrowRainMechanic implements MobMechanic {
         this.spread = spread;
     }
 
+    @Override
     public void setParent(AbstractMob mob) {
         if (!(mob instanceof CombatantMob combatantMob)) {
             throw new IllegalArgumentException("SpecialAttackMechanic can only be applied to CombatantMob");
@@ -42,10 +43,6 @@ public class ArrowRainMechanic implements MobMechanic {
     }
 
     @Override
-    public void onMobDamagePlayer(RunePlayer target, Hit hit) {
-
-    }
-
     public void execute(LivingEntity target) {
         if (mob == null || mob.getEntity() == null || target == null || target.isDead()) return;
 

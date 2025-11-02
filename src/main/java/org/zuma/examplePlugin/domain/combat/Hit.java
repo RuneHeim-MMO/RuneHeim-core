@@ -69,7 +69,4 @@ public class Hit {
         return isSplashHit;
     }
 
-    public boolean setSpecialAttack(boolean specialAttack) {
-        return specialAttack;
-    }
 }

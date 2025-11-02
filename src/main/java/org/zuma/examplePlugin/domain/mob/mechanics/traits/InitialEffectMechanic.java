@@ -33,6 +33,7 @@ public class InitialEffectMechanic implements MobMechanic {
         this.soundType = soundType;
     }
 
+    @Override
     public void setParent(AbstractMob mob) {
         if (!(mob instanceof CombatantMob combatantMob)) {
             throw new IllegalArgumentException("InitialEffectMechanic can only be applied to CombatantMob");

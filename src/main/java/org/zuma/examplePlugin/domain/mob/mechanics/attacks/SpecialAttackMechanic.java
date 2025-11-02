@@ -13,6 +13,7 @@ public class SpecialAttackMechanic implements MobMechanic {
     public SpecialAttackMechanic() {
     }
 
+    @Override
     public void setParent(AbstractMob mob) {
         if (!(mob instanceof CombatantMob combatantMob)) {
             throw new IllegalArgumentException("SpecialAttackMechanic can only be applied to CombatantMob");
@@ -27,6 +28,7 @@ public class SpecialAttackMechanic implements MobMechanic {
         mob.setSpecialAttacking(false);
     }
 
+    @Override
     public void execute(LivingEntity target) {
         if (mob == null) return;
         mob.setSpecialAttacking(true);

@@ -22,6 +22,7 @@ public class SummonCreaturesMechanic implements MobMechanic {
         this.summonRadius = summonRadius;
     }
 
+    @Override
     public void setParent(AbstractMob mob) {
         if (!(mob instanceof CombatantMob combatantMob)) {
             throw new IllegalArgumentException("SummonCreaturesMechanic can only be applied to CombatantMob");
@@ -31,6 +32,7 @@ public class SummonCreaturesMechanic implements MobMechanic {
     }
 
 
+    @Override
     public void execute(LivingEntity target) {
         if (mob == null || mob.getEntity() == null) return;
         Location center = mob.getEntity().getLocation();

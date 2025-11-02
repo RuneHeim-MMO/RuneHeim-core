@@ -24,9 +24,11 @@ public class PotionEffectMechanic implements MobMechanic {
         this.effectList = effectList;
     }
 
+    @Override
     public void setParent(AbstractMob mob) {
     }
 
+    @Override
     public void execute(LivingEntity target) {
         if (!(target instanceof Player player)) {
             return;
