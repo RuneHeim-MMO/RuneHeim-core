@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.domain.mob.mechanics.base;
 
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.zuma.examplePlugin.RuneQuestPlugin;
@@ -49,10 +50,15 @@ public class BossMechanic implements MobMechanic {
 
     @Override
     public void tick() {
+        Particle phaseParticlesType = phases.getFirst().getParticles();
         if (mob == null || stopped) return;
 
         Entity entity = mob.getEntity();
         if (entity == null) return;
+
+        if(phaseParticlesType != null){
+            entity.getWorld().spawnParticle(phaseParticlesType, entity.getLocation(), 50, 2, 2, 2, 0.05);
+        }
 
         phases.getFirst().getWeightedMechanics().forEach(we -> we.mechanic().tick());
 

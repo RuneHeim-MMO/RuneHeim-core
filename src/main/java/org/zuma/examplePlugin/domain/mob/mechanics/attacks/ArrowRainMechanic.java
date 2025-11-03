@@ -56,7 +56,7 @@ public class ArrowRainMechanic implements MobMechanic {
 
             @Override
             public void run() {
-                if (spawned >= totalArrows || mob.getEntity() == null || !mob.getEntity().isValid()) {
+                if (spawned >= totalArrows || mob == null || mob.getEntity() == null || !mob.getEntity().isValid()) {
                     cancel();
                     return;
                 }

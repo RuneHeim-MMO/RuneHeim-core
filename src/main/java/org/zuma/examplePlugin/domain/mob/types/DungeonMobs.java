@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.mob.types;
 
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
+import org.bukkit.Particle;
 import org.bukkit.entity.EntityType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -19,7 +20,7 @@ import org.zuma.examplePlugin.domain.mob.mechanics.base.WeightedMechanic;
 import org.zuma.examplePlugin.domain.mob.mechanics.traits.InitialEffectMechanic;
 import org.zuma.examplePlugin.domain.mob.mechanics.traits.MobEnergyMechanic;
 import org.zuma.examplePlugin.domain.mob.mechanics.traits.RangedMobMechanic;
-import org.zuma.examplePlugin.domain.mob.mechanics.transitions.AirBlastPhaseTransition;
+import org.zuma.examplePlugin.domain.mob.mechanics.transitions.ArrowAirBlastPhaseTransition;
 import org.zuma.examplePlugin.domain.mob.projectiles.RuneProjectile;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneMobRecord;
 
@@ -82,7 +83,7 @@ public class DungeonMobs {
                                 new WeightedMechanic(10, 25, new SummonCreaturesMechanic(List.of(
                                         new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_TURRET_BASE_20, 2, 100),
                                         new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_GUARD_1_BASE_35, 1, 50)
-                                ), 10), "Minions, arise!", SoundType.SUMMON_MINIONS)), new AirBlastPhaseTransition(10)),
+                                ), 10), "Minions, arise!", SoundType.SUMMON_MINIONS)), new ArrowAirBlastPhaseTransition(10),null),
                         new BossPhase(150, 150, List.of(
                                 new WeightedMechanic(5, 8, new RangedMobMechanic(
                                         new RuneProjectile(ProjectileType.RANGED, EntityType.SHULKER_BULLET, 5), false, 100),
@@ -103,7 +104,7 @@ public class DungeonMobs {
                                         new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_TURRET_BASE_20, 2, 100),
                                         new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_GUARD_1_BASE_35, 1, 50)
                                 ), 10), "Rise, my minions! Tear them apart!", SoundType.SUMMON_MINIONS)
-                        ), new AirBlastPhaseTransition(10))))
+                        ), new ArrowAirBlastPhaseTransition(10), Particle.DRAGON_BREATH)))
 
 
                 ));
