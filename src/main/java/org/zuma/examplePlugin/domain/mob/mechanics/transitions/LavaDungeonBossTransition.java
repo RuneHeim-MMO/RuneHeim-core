@@ -1,5 +1,9 @@
 package org.zuma.examplePlugin.domain.mob.mechanics.transitions;
 
+import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.DisguiseConfig;
+import me.libraryaddict.disguise.disguisetypes.Disguise;
+import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
@@ -19,12 +23,12 @@ import org.zuma.examplePlugin.domain.mob.mechanics.base.MobMechanic;
 
 import java.util.Random;
 
-public class ArrowAirBlastPhaseTransition implements MobMechanic {
+public class LavaDungeonBossTransition implements MobMechanic {
     public static final NamespacedKey projectileType = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.PROJECTILE_TYPE.asString());
     private CombatantMob mob;
     private final double height;
 
-    public ArrowAirBlastPhaseTransition(int height) {
+    public LavaDungeonBossTransition(int height) {
         this.height = height;
     }
 

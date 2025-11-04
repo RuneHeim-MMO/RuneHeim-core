@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.base.ModelledInteractableBlock;
 import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerRegularBlock;
+import org.zuma.examplePlugin.domain.block.impl.door.DoorBlock;
 import org.zuma.examplePlugin.domain.gui.IDHolder;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -33,7 +34,6 @@ public class BlockManager {
 
             @Override
             public void run() {
-
                 blocks.values().forEach((block) -> {
                     if (!(block instanceof DespawnableBlock despawnable)) {
                         return;
@@ -95,6 +95,25 @@ public class BlockManager {
         }
     }
 
+    public void setDoorState(String doorId, boolean open) {
+        boolean found = false;
+
+        for (AbstractInteractableBlock block : blocks.values()) {
+            if (found) break;
+            if (block instanceof DoorBlock doorBlock) {
+                if (doorBlock.getDoorId().equals(doorId)) {
+                    doorBlock.setOpen(!open);
+                    found = true;
+                }
+            }
+        }
+
+        if (!found) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Could not find door with ID " + doorId + " to set state to " + (open ? "open" : "closed") + ".");
+        }
+
+    }
+
     public Map<Chunk, List<AbstractInteractableBlock>> getBlocksByChunk() {
         return this.blocksByChunk;
     }
@@ -125,7 +144,7 @@ public class BlockManager {
             modelledBlocks.put(block.getLocation(), modelledInteractableBlock);
         }
 
-        block.getInteractableBlocks().forEach(location -> {
+        block.getHitboxLocations().forEach(location -> {
             Location blockLocation = location.toBlockLocation();
             blockLocation.setYaw(0f);
             blockLocation.setPitch(0f);

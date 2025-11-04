@@ -13,6 +13,8 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
+import org.zuma.examplePlugin.domain.block.meta.HologramSide;
+import org.zuma.examplePlugin.domain.block.meta.v1.DoorBlockMeta;
 
 import javax.annotation.Nullable;
 import java.sql.Connection;
@@ -80,6 +82,13 @@ public class InteractableBlockRepository {
                 result.add(entity);
             }
 
+            /*   public AbstractInteractableBlockMeta(int id, BlockType type, BlockFace face, Location location, HologramSide hologramSide) {
+        this(id, type, face, location, computeHologramLocation(location, hologramSide));
+    }*/
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9999, BlockType.Door, BlockFace.EAST, new Location(Bukkit.getWorld("world"), 5049, 102, 4920), HologramSide.FRONT),
+                    new VersionedJson(new Gson().toJson(new DoorBlockMeta("test-door", 5, 6)), 1)));
 
         } catch (Exception e) {
             throw new RuntimeException("Failed to fetch block entities", e);
