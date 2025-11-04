@@ -23,7 +23,7 @@ public class DoorBlock extends AbstractInteractableBlock implements MultiBlockHi
     private final List<Location> hitboxLocations;
     private boolean isOpen;
 
-    public DoorBlock(AbstractInteractableBlockMeta meta, String id, int height, int width) {
+    public DoorBlock(AbstractInteractableBlockMeta meta, String id, int width, int height) {
         super(meta, null, null);
         this.height = height;
         this.width = width;

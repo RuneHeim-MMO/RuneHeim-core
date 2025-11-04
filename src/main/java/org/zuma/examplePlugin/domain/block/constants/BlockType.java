@@ -7,7 +7,8 @@ public enum BlockType {
     InventoryOpener(1, Material.BARRIER),
     InventoryOpenerModelled(2, Material.BARRIER),
     Altar(3, Material.LECTERN),
-    Door(4, Material.IRON_BARS);
+    Door(4, Material.IRON_BARS),
+    ItemTrigger(5, Material.DROPPER);
 
     private final int id;
     private final Material material;
@@ -25,4 +26,4 @@ public enum BlockType {
         return id;
     }
 
-    }
+}
