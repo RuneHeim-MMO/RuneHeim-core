@@ -77,7 +77,7 @@ public class DungeonMobs {
                 "Dungeon Keeper", null, getBaseSkills(50, 1),
                 null, MobBehaviors.RAVAGER.getBehavior(),
                 0.45, true, false, 100000, "lava_dungeon_boss", null, null, // Hp controlled by boss mechanic
-                List.of(),
+                List.of(DropTableId.LAVA_DUNGEON_BOSS_BONES.asInt(), DropTableId.LAVA_DUNGEON_BOSS_COINS.asInt(), DropTableId.LAVA_DUNGEON_BOSS_COMMON.asInt(), DropTableId.LAVA_DUNGEON_BOSS_RARE.asInt()),
                 false)
                 .addMobMechanic(new MobEnergyMechanic(200, 10, 3))
                 .addMobMechanic(new InitialEffectMechanic(20, List.of(new PotionEffect(PotionEffectType.BLINDNESS, 200, 1), new PotionEffect(PotionEffectType.SLOWNESS, 200, 1)), "The air grows thick with smoke...", SoundType.RAVAGER_DEATH))
@@ -90,7 +90,7 @@ public class DungeonMobs {
                                 new WeightedMechanic(10, 25, new SummonCreaturesMechanic(List.of(
                                         new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_TURRET_BASE_20, 2, 100),
                                         new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_GUARD_MINION, 1, 50)
-                                ), 10), "Minions, arise!", SoundType.SUMMON_MINIONS)), null,null),
+                                ), 10), "Minions, arise!", SoundType.SUMMON_MINIONS)), null, null),
                         new BossPhase(150, 150, List.of(
                                 new WeightedMechanic(5, 8, new RangedMobMechanic(
                                         new RuneProjectile(ProjectileType.RANGED, EntityType.SHULKER_BULLET, 5), false, 100),
