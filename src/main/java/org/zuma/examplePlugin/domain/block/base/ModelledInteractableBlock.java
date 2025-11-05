@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class ModelledInteractableBlock extends AbstractInteractableBlock {
+public abstract class ModelledInteractableBlock extends AbstractInteractableBlock implements MultiBlockHitbox {
     private UUID armorStandUUID = null;
     private final String model;
     private final int height, width;
@@ -36,36 +36,6 @@ public abstract class ModelledInteractableBlock extends AbstractInteractableBloc
         this.interactableBlockLocations = new ArrayList<>();
 
         this.getHologramLocation().add(0, (double) height / 2, 0);
-    }
-
-    private void calculateHitboxSize() {
-        Location base = super.getLocation();
-        BlockFace face = getFace();
-
-        int halfWidth = this.width / 2;
-
-        for (int w = -halfWidth; w <= halfWidth; w++) {
-            for (int h = 0; h < this.height; h++) {
-                Location nextLocation = base.clone();
-
-                switch (face) {
-                    case NORTH:
-                        nextLocation.add(w, h, 0);
-                        break;
-                    case SOUTH:
-                        nextLocation.add(-w, h, 0);
-                        break;
-                    case EAST:
-                        nextLocation.add(0, h, w);
-                        break;
-                    case WEST:
-                        nextLocation.add(0, h, -w);
-                        break;
-                }
-
-                interactableBlockLocations.add(nextLocation);
-            }
-        }
     }
 
     public static float[] getRotationForFace(BlockFace face) {
@@ -131,7 +101,7 @@ public abstract class ModelledInteractableBlock extends AbstractInteractableBloc
         chunk.load(true);
         chunk.setForceLoaded(true);
 
-        calculateHitboxSize();
+        interactableBlockLocations.addAll(calculateHitboxSize());
         interactableBlockLocations.forEach(location -> location.getBlock().setType(Material.BARRIER));
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
@@ -153,7 +123,7 @@ public abstract class ModelledInteractableBlock extends AbstractInteractableBloc
     }
 
     @Override
-    public List<Location> getInteractableBlocks() {
+    public List<Location> getHitboxLocations() {
         return this.interactableBlockLocations;
     }
 

@@ -16,7 +16,7 @@ public class Deers {
 
         registry.register(MobType.DEER_BABY_BASE_15.getId(), () -> new GenericCombatant(
                 "Baby Deer", null,
-                getBaseSkills(15),
+                getBaseSkills(15, 0.5),
                 null,
                 MobBehaviors.DEER_BABY.getBehavior(),
                 "babydeer",
@@ -26,7 +26,7 @@ public class Deers {
 
         registry.register(MobType.DEER_FEMALE_BASE_29.getId(), () -> new GenericCombatant(
                 "Deer", null,
-                getBaseSkills(29),
+                getBaseSkills(29, 0.5),
                 null,
                 MobBehaviors.DEER.getBehavior(0.5F),
                 "femaledeer",
@@ -36,7 +36,7 @@ public class Deers {
 
         registry.register(MobType.DEER_BASE_34.getId(), () -> new GenericCombatant(
                 "Deer", null,
-                getBaseSkills(34),
+                getBaseSkills(34, 0.5),
                 null,
                 MobBehaviors.DEER.getBehavior(1F),
                 "deer",

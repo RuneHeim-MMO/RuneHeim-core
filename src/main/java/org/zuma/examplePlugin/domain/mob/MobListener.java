@@ -14,8 +14,10 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
+import org.bukkit.projectiles.ProjectileSource;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.EntityUtils;
 import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.impl.CityGuardMob;
@@ -118,7 +120,7 @@ public class MobListener implements Listener {
         });
     }
 
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onEntityDamaged(EntityDamageEvent event) {
         Entity entity = event.getEntity();
 
@@ -143,6 +145,11 @@ public class MobListener implements Listener {
         if (mob == null) return;
 
         mobHandler.onEntityDeath(event, mob);
+    }
+
+    @EventHandler
+    public void onProjectileHit(ProjectileHitEvent event){
+        EntityUtils.removeEntityWithPassengers(event.getEntity());
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
@@ -177,5 +184,20 @@ public class MobListener implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityCombust(EntityCombustEvent event) {
         event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onProjectileLaunch(ProjectileLaunchEvent event) {
+        Projectile projectile = event.getEntity();
+        ProjectileSource shooter = projectile.getShooter();
+
+        if (!(shooter instanceof Entity entity)) {
+            return;
+        }
+
+        AbstractMob mob = mobRegistry.getMob(entity);
+        if (mob == null) return;
+
+        mobHandler.onShootProjectile(event, mob);
     }
 }

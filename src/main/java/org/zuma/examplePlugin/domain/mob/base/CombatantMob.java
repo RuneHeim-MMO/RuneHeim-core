@@ -1,7 +1,9 @@
 package org.zuma.examplePlugin.domain.mob.base;
 
-import com.ticxo.modelengine.api.ModelEngineAPI;
-import com.ticxo.modelengine.api.model.ModeledEntity;
+import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.disguisetypes.Disguise;
+import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
+import me.libraryaddict.disguise.utilities.animations.DisguiseAnimation;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -11,10 +13,10 @@ import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.core.utils.MobUtils;
@@ -22,10 +24,13 @@ import org.zuma.examplePlugin.core.utils.ModifierUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
+import org.zuma.examplePlugin.domain.combat.constants.ProjectileType;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.mob.constants.MetadataKeys;
-import org.zuma.examplePlugin.domain.mob.mechanics.AntiSafeSpotPullMechanic;
+import org.zuma.examplePlugin.domain.mob.mechanics.traits.AntiSafeSpotPullMechanic;
+import org.zuma.examplePlugin.domain.mob.mechanics.traits.RangedMobMechanic;
+import org.zuma.examplePlugin.domain.mob.projectiles.RuneProjectile;
 import org.zuma.examplePlugin.domain.xp.PendingXPHandler;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
 import org.zuma.examplePlugin.domain.mob.meta.CombatantMobMeta;
@@ -42,9 +47,12 @@ import java.util.stream.Stream;
 public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     private final EnumMap<ModifierType, Modifier> modifiers = new EnumMap<>(ModifierType.class);
     private final EnumMap<SkillType, Skill> skills = new EnumMap<>(SkillType.class);
-    private final int maxHealth, combatLvl;
+    private RuneProjectile projectileType = new RuneProjectile(ProjectileType.RANGED, EntityType.ARROW, 2);
+    private int maxHealth;
+    private final int combatLvl;
     private int health;
     private long lastDamagedAt;
+    private boolean isSpecialAttacking;
 
     private final PendingXPHandler xpHandler;
 
@@ -53,9 +61,12 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         this.health = meta.maxHealth();
         this.maxHealth = meta.maxHealth();
         this.xpHandler = new PendingXPHandler();
+        this.isSpecialAttacking = false;
 
         if (!meta.safeSpottable()) {
-            this.addMobMechanic(new AntiSafeSpotPullMechanic(this));
+            AntiSafeSpotPullMechanic mechanic = new AntiSafeSpotPullMechanic();
+            this.addMobMechanic(mechanic);
+            mechanic.setParent(this);
         }
 
         setModel(meta.model());
@@ -93,6 +104,11 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         return this;
     }
 
+    public CombatantMob setProjectileType(RuneProjectile projectileType) {
+        this.projectileType = projectileType;
+        return this;
+    }
+
     public void setBaseEntity(EntityType type) {
         super.setBaseEntity(type);
     }
@@ -111,6 +127,14 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
 
     public int getHealth() {
         return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = Math.min(health, maxHealth);
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
     }
 
     public int getMaxHealth() {
@@ -154,9 +178,18 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     }
 
     public void registerHit(Hit hit) {
-        if (!(getEntity() instanceof LivingEntity living)) {
+        if (!(getEntity() instanceof LivingEntity living) || super.isInvulnerable()) {
             return;
         }
+
+        // Notify mob mechanics of player damage
+        if (hit.getAttacker().getEntity() instanceof Player playerAttacker) {
+            RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(playerAttacker);
+            if (runePlayer != null) {
+                this.getMobMechanics().values().forEach(m -> m.onDamagedByPlayer(runePlayer, hit));
+            }
+        }
+
 
         // Get max Minecraft health for this entity
         AttributeInstance attr = living.getAttribute(Attribute.MAX_HEALTH);
@@ -172,6 +205,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
 
         scaledHealth = Math.max(0, Math.min(maxHealth, scaledHealth));
 
+
         // Set killer metadata on last hit
         if (scaledHealth == 0 && hit.getAttacker().getEntity() instanceof Player playerAttacker) {
             living.setMetadata(MetadataKeys.KILLER_UUID.asString(), new FixedMetadataValue(RuneQuestPlugin.getInstance(), playerAttacker.getUniqueId().toString()));
@@ -182,7 +216,8 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
 
             RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(playerAttacker);
             if (runePlayer != null) {
-                this.getMobMechanics().forEach(m -> m.onDeath(runePlayer, hit));
+                this.getMobMechanics().values().forEach(m -> m.onDeath(runePlayer, hit));
+
             }
 
             RuneEntityDeathEvent event = new RuneEntityDeathEvent(hit.getAttacker(), hit.getDefender(), hit, hit.getAttackType());
@@ -190,16 +225,8 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         }
 
         // Apply the scaled health to the entity
-        this.xpHandler.calculatePendingXP(hit);
+        this.xpHandler.registerHit(hit);
         this.lastDamagedAt = System.currentTimeMillis();
-
-        // Notify mob mechanics of player damage
-        if (hit.getAttacker().getEntity() instanceof Player playerAttacker) {
-            RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(playerAttacker);
-            if (runePlayer != null) {
-                this.getMobMechanics().forEach(m -> m.onDamagedByPlayer(runePlayer, hit));
-            }
-        }
 
 
         living.setHealth(scaledHealth);
@@ -233,40 +260,8 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     }
 
     @Override
-    public void onEntityAttackEntity(EntityDamageByEntityEvent event, Entity attacker) {
-        // Remove iron golem upwards vel on attack.
-        if (event.getDamager() instanceof IronGolem) {
-            Entity victim = event.getEntity();
-
-            Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                Vector vel = victim.getVelocity();
-
-                if (vel.getY() > 0.3) {
-                    double newY = vel.getY() - 0.5;
-                    if (newY < 0) newY = 0;
-                    victim.setVelocity(new Vector(vel.getX(), newY, vel.getZ()));
-                }
-            });
-        }
-    }
-
-    @Override
     public void onEntityAttackPlayer(EntityDamageByEntityEvent event, RunePlayer runePlayer) {
-        Entity entity = getEntity();
-        if (entity == null) return;
-
-        // Notify mob mechanics of mob damage to player
-        this.getMobMechanics().forEach(m -> m.onMobDamagePlayer(runePlayer));
-
-        ModeledEntity me = ModelEngineAPI.getModeledEntity(entity);
-
-        if (me != null) {
-            me.getModels().values().forEach(am -> {
-                am.getAnimationHandler().playAnimation("attack", 0f, 0.3f, 1, true);
-            });
-        }
-
-
+        this.playAnimation("attack", 0f, 0.3f, 1);
     }
 
     @Override
@@ -274,8 +269,43 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         this.xpHandler.distributePendingXP();
     }
 
+    @Override
+    public void onEntityShootProjectile(ProjectileLaunchEvent event) {
+        Projectile projectile = event.getEntity();
+
+        if (this.getMobMechanics().containsKey(RangedMobMechanic.class)) {
+            event.setCancelled(true);
+            return;
+        }
+
+        if (projectileType == null) return;
+        Projectile newProjectile = projectileType.replaceProjectile(projectile);
+    }
+
+
     public long getLastDamagedAt() {
         return lastDamagedAt;
     }
 
+    public List<RunePlayer> getRecentAttackers(Long durationMillis) {
+        return this.xpHandler.getRecentAttackers(durationMillis);
+    }
+
+    public void shootProjectileAtTarget(LivingEntity target) {
+        if (!(getEntity() instanceof LivingEntity shooter)) {
+            return;
+        }
+
+        this.projectileType.shootProjectileAtTarget(shooter, target);
+
+    }
+
+    @Override
+    public boolean isSpecialAttacking() {
+        return isSpecialAttacking;
+    }
+
+    public void setSpecialAttacking(boolean specialAttacking) {
+        isSpecialAttacking = specialAttacking;
+    }
 }

@@ -48,49 +48,45 @@ public class Altar extends AbstractInteractableBlock implements POIMarkerable {
         final Block block = super.getLocation().getBlock();
         final Location center = block.getLocation().add(0.5, 0.6, 0.5);
         final World world = block.getWorld();
-        // Ring parameters
-        double radius = 1.2;
-        int points = 2;
+        final double[][] RING_POS = precomputeRing(2, 1.2);
 
         new BukkitRunnable() {
             private int tickCounter = 0;
 
             @Override
             public void run() {
-                if (!block.getChunk().isLoaded()) {
-                    return;
-                }
-
-                if (tickCounter > 1_000_000) {
-                    tickCounter = 0;
-                }
-
-                if (block.isEmpty()) {
+                if (!block.getChunk().isLoaded() || block.isEmpty()) {
                     cancel();
                     return;
                 }
 
-                // rotating ring of END_ROD particles
-                for (int i = 0; i < points; i++) {
-                    double angle = (2 * Math.PI * i / points) + (tickCounter * 0.15); // rotating effect
-                    double x = center.getX() + Math.cos(angle) * radius;
-                    double z = center.getZ() + Math.sin(angle) * radius;
-                    double y = center.getY() - 0.5;
+                double rotation = tickCounter * 0.15;
 
-                    world.spawnParticle(Particle.END_ROD, x, y, z, 1, 0, 0, 0, 0);
-                }
+                world.spawnParticle(Particle.CRIT, center.getX(), center.getY() + 1, center.getZ(), 1, 0, 0, 0, 0);
 
-                // some random sparkles above the portal
-                for (int i = 0; i < 6; i++) {
-                    double rx = center.getX() + (Math.random() - 0.5) * 1.6;
-                    double rz = center.getZ() + (Math.random() - 0.5) * 1.6;
-                    double ry = center.getY() + Math.random() * 1.2;
-                    world.spawnParticle(Particle.CRIT, rx, ry, rz, 1, 0, 0, 0, 0);
+                for (double[] pos : RING_POS) {
+                    double angle = pos[0] + rotation;
+                    double x = center.getX() + Math.cos(angle) * pos[1];
+                    double z = center.getZ() + Math.sin(angle) * pos[1];
+                    world.spawnParticle(Particle.END_ROD, x, center.getY() - 0.5, z, 1, 0, 0, 0, 0);
                 }
 
                 tickCounter++;
             }
-        }.runTaskTimer(RuneQuestPlugin.getInstance(), 0L, 5L);
+        }.runTaskTimer(RuneQuestPlugin.getInstance(), 0L, 10L);
+    }
+
+
+    private static double[][] precomputeRing(int points, double radius) {
+        double[][] ring = new double[points][2];
+        double step = 2 * Math.PI / points;
+
+        for (int i = 0; i < points; i++) {
+            ring[i][0] = i * step;   // base angle
+            ring[i][1] = radius;     // constant radius (can vary if needed)
+        }
+
+        return ring;
     }
 
 

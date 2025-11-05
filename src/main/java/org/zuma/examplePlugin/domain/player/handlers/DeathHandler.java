@@ -18,7 +18,6 @@ import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
-import org.zuma.examplePlugin.domain.gui.GUIHandler;
 import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -32,8 +31,6 @@ import org.zuma.examplePlugin.events.player.RunePlayerHealthChangedEvent;
 import javax.annotation.Nullable;
 import java.time.Duration;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 import org.bukkit.scheduler.BukkitRunnable;
@@ -42,8 +39,8 @@ public class DeathHandler {
     private final static Random rand = new Random();
     private final static int cooldownDuration = 10;
 
-    public static void handlePlayerDeath(RunePlayer runePlayer, Hit lastHit) {
-        RuneEntityDeathEvent event = new RuneEntityDeathEvent(lastHit.getAttacker(), lastHit.getDefender(), lastHit, lastHit.getAttackType());
+    public static void killPlayer(RunePlayer runePlayer, @Nullable Hit lastHit) {
+        RuneEntityDeathEvent event = new RuneEntityDeathEvent(lastHit != null ? lastHit.getAttacker() : null, lastHit != null ? lastHit.getDefender() : null, lastHit, lastHit != null ? lastHit.getAttackType() : null);
         Bukkit.getServer().getPluginManager().callEvent(event);
         runePlayer.cancelActionTask(true);
 

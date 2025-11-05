@@ -16,7 +16,7 @@ public class Wolves {
 
         registry.register(MobType.WOLF_BLACK_BASE_20.getId(), () -> new GenericCombatant(
                 "Black Wolf", null,
-                getBaseSkills(20),
+                getBaseSkills(20, 0.5),
                 null,
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_black",
@@ -26,7 +26,7 @@ public class Wolves {
 
         registry.register(MobType.WOLF_BLONDE_BASE_22.getId(), () -> new GenericCombatant(
                 "Blonde Wolf", null,
-                getBaseSkills(22),
+                getBaseSkills(22, 0.5),
                 null,
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_blonde",
@@ -37,7 +37,7 @@ public class Wolves {
 
         registry.register(MobType.WOLF_GRAY_DARK_BASE_24.getId(), () -> new GenericCombatant(
                 "Dark Gray Wolf", null,
-                getBaseSkills(24),
+                getBaseSkills(24, 0.5),
                 null,
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_gray_dark",
@@ -47,7 +47,7 @@ public class Wolves {
 
         registry.register(MobType.WOLF_GRAY_LIGHT_BASE_26.getId(), () -> new GenericCombatant(
                 "Light Gray Wolf", null,
-                getBaseSkills(26),
+                getBaseSkills(26, 0.5),
                 null,
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_gray_light",
@@ -57,7 +57,7 @@ public class Wolves {
 
         registry.register(MobType.WOLF_BLONDE_ALPHA_BASE_30.getId(), () -> new GenericCombatant(
                 "Alpha Blonde Wolf", null,
-                getBaseSkills(30),
+                getBaseSkills(30, 0.5),
                 null,
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_blonde_alpha",
@@ -67,7 +67,7 @@ public class Wolves {
 
         registry.register(MobType.WOLF_GRAY_DARK_ALPHA_BASE_32.getId(), () -> new GenericCombatant(
                 "Alpha Dark Gray Wolf", null,
-                getBaseSkills(32),
+                getBaseSkills(32, 0.5),
                 null,
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_gray_dark_alpha",
@@ -77,7 +77,7 @@ public class Wolves {
 
         registry.register(MobType.WOLF_GRAY_LIGHT_ALPHA_BASE_34.getId(), () -> new GenericCombatant(
                 "Alpha Light Gray Wolf", null,
-                getBaseSkills(34),
+                getBaseSkills(34, 0.5),
                 null,
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_gray_light_alpha",
@@ -87,7 +87,7 @@ public class Wolves {
 
         registry.register(MobType.WOLF_BLACK_ALPHA_BASE_36.getId(), () -> new GenericCombatant(
                 "Alpha Black Wolf", null,
-                getBaseSkills(36),
+                getBaseSkills(36, 0.5),
                 null,
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_black_alpha",
@@ -98,7 +98,7 @@ public class Wolves {
 
         registry.register(MobType.TUNDRA_WOLF_BASE_45.getId(), () -> new GenericCombatant(
                 "Tundra Wolf", null,
-                getBaseSkills(45),
+                getBaseSkills(45, 0.5),
                 null,
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_gray_dark_alpha",
@@ -108,7 +108,7 @@ public class Wolves {
 
         registry.register(MobType.TUNDRA_WOLF_BASE_48.getId(), () -> new GenericCombatant(
                 "Tundra Wolf", null,
-                getBaseSkills(48),
+                getBaseSkills(48, 0.5),
                 null,
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_gray_light_alpha",
@@ -118,7 +118,7 @@ public class Wolves {
 
         registry.register(MobType.TUNDRA_WOLF_BASE_47.getId(), () -> new GenericCombatant(
                 "Tundra Wolf", null,
-                getBaseSkills(47),
+                getBaseSkills(47, 0.5),
                 null,
                 MobBehaviors.WOLF.getBehavior(),
                 "yungwilder_isles_wolf_blonde_alpha",

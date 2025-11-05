@@ -17,7 +17,7 @@ public class Moles {
 
         registry.register(MobType.MOLE_BASE_50.getId(), () -> new GenericCombatant(
                 "Mole", null,
-                getBaseSkills(50),
+                getBaseSkills(50, 0.5),
                 null,
                 MobBehaviors.MOLE.getBehavior(),
                 "mole",
@@ -28,7 +28,7 @@ public class Moles {
 
         registry.register(MobType.MOLE_BASE_70.getId(), () -> new GenericCombatant(
                 "Mole", null,
-                getBaseSkills(70),
+                getBaseSkills(70, 0.5),
                 null,
                 MobBehaviors.MOLE.getBehavior(),
                 "mole",
@@ -39,7 +39,7 @@ public class Moles {
 
         registry.register(MobType.MOLE_BASE_30.getId(), () -> new GenericCombatant(
                 "Mole", null,
-                getBaseSkills(30),
+                getBaseSkills(30, 0.5),
                 null,
                 MobBehaviors.MOLE.getBehavior(),
                 "mole",

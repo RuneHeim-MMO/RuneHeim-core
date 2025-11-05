@@ -18,7 +18,7 @@ public class Common {
 
     public static void registerMobs(MobTypeRegistry registry) {
         registry.register(MobType.CHICKEN_BASE_2.getId(), () -> new GenericCombatant(
-                "Chicken", null, getBaseSkills(2),
+                "Chicken", null, getBaseSkills(2, 0.5),
                 null, MobBehaviors.CHICKEN.getBehavior(),
                 0.2, false, false, 3, null, null, DisguiseType.CHICKEN,
                 List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt(), DropTableId.CHICKEN_MEAT.asInt()),
@@ -26,35 +26,35 @@ public class Common {
 
 
         registry.register(MobType.HOGLIN_BASE_5.getId(), () -> new GenericCombatant(
-                "Hoglin", null, getBaseSkills(5),
+                "Hoglin", null, getBaseSkills(5, 0.5),
                 null, MobBehaviors.HOGLIN.getBehavior(),
                 0.24, false, false, 9, null, null, DisguiseType.HOGLIN,
                 List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
                 true));
 
         registry.register(MobType.INFERNAK_WARHOUND_BASE_80.getId(), () -> new GenericCombatant(
-                "Warhound", null, getBaseSkills(80),
+                "Warhound", null, getBaseSkills(80, 0.5),
                 null, MobBehaviors.LLAMA.getBehavior(),
                 0.35, false, true, 65, null, null, DisguiseType.RAVAGER,
                 List.of(DropTableId.BONES.asInt()),
                 false));
 
         registry.register(MobType.LLAMA_BASE_56.getId(), () -> new GenericCombatant(
-                "Llama", null, getBaseSkills(56),
+                "Llama", null, getBaseSkills(56, 0.5),
                 null, MobBehaviors.LLAMA.getBehavior(),
                 0.25, false, false, 48, null, null, DisguiseType.LLAMA,
                 List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
                 true));
 
         registry.register(MobType.STRIDER_BASE_60.getId(), () -> new GenericCombatant(
-                "Strider", null, getBaseSkills(60),
+                "Strider", null, getBaseSkills(60, 0.5),
                 null, MobBehaviors.STRIDER.getBehavior(),
                 0.35, false, false, 55, null, null, DisguiseType.STRIDER,
                 List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
                 true));
 
         registry.register(MobType.SNIFFER_BASE_65.getId(), () -> new GenericCombatant(
-                "Sniffer", null, getBaseSkills(65),
+                "Sniffer", null, getBaseSkills(65, 0.5),
                 null, MobBehaviors.RAVAGER.getBehavior(),
                 0.35, false, false, 59, null, null, DisguiseType.SNIFFER,
                 List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
@@ -97,7 +97,7 @@ public class Common {
                 true));
 
         registry.register(MobType.FOX.getId(), () -> new GenericCombatant(
-                "Fox", null, getBaseSkills(40),
+                "Fox", null, getBaseSkills(40, 0.5),
                 null, MobBehaviors.FOX.getBehavior(),
                 0.36, false, false, 60, null, null, DisguiseType.FOX,
                 List.of(DropTableId.BONES.asInt()),

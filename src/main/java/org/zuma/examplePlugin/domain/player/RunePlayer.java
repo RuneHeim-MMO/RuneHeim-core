@@ -40,6 +40,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class RunePlayer implements CombatEntity {
+    private static final double HP_SKILL_XP_PER_DMG_POINT_RECEIVED = 5;
     private final UUID uuid;
 
     private PlayerRole role;
@@ -195,14 +196,17 @@ public class RunePlayer implements CombatEntity {
     }
 
     public void registerHit(Hit hit) {
-        this.pendingXPHandler.calculatePendingXP(hit);
+        this.pendingXPHandler.registerHit(hit);
         this.combatData.registerHit(hit);
 
-        if (!this.hasPendingActions()) {
-            return;
+        if (hit.getDamage() > 0) {
+            this.addXp(SkillType.HITPOINTS, hit.getDamage() * HP_SKILL_XP_PER_DMG_POINT_RECEIVED, XpSource.PERSONAL);
         }
 
-        this.cancelActionTask(true);
+        if (this.hasPendingActions()) {
+            this.cancelActionTask(true);
+        }
+
     }
 
     // Busy state management
@@ -269,8 +273,8 @@ public class RunePlayer implements CombatEntity {
         this.pouchCoins = coins;
     }
 
-    public void onDeath(Hit lastHit) {
-        DeathHandler.handlePlayerDeath(this, lastHit);
+    public void killPlayer(@Nullable Hit lastHit) {
+        DeathHandler.killPlayer(this, lastHit);
 
         this.pendingXPHandler.distributePendingXP();
     }

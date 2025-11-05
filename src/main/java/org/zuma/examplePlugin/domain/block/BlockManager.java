@@ -10,7 +10,10 @@ import org.zuma.examplePlugin.core.interfaces.DespawnableBlock;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.base.ModelledInteractableBlock;
+import org.zuma.examplePlugin.domain.block.handlers.TriggeredBlocksHandler;
 import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerRegularBlock;
+import org.zuma.examplePlugin.domain.block.impl.door.DoorBlock;
+import org.zuma.examplePlugin.domain.block.impl.door.ItemCollectorTrigger;
 import org.zuma.examplePlugin.domain.gui.IDHolder;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -24,7 +27,10 @@ public class BlockManager {
     private final HashMap<Location, ModelledInteractableBlock> modelledBlocks = new HashMap<>();
     private final HashMap<DespawnableBlock, Long> despawnableQueue = new HashMap<>();
 
+    private final TriggeredBlocksHandler triggeredBlocksHandler;
+
     public BlockManager() {
+        triggeredBlocksHandler = new TriggeredBlocksHandler(this);
         startDespawnLoop();
     }
 
@@ -33,7 +39,6 @@ public class BlockManager {
 
             @Override
             public void run() {
-
                 blocks.values().forEach((block) -> {
                     if (!(block instanceof DespawnableBlock despawnable)) {
                         return;
@@ -95,6 +100,7 @@ public class BlockManager {
         }
     }
 
+
     public Map<Chunk, List<AbstractInteractableBlock>> getBlocksByChunk() {
         return this.blocksByChunk;
     }
@@ -125,7 +131,7 @@ public class BlockManager {
             modelledBlocks.put(block.getLocation(), modelledInteractableBlock);
         }
 
-        block.getInteractableBlocks().forEach(location -> {
+        block.getHitboxLocations().forEach(location -> {
             Location blockLocation = location.toBlockLocation();
             blockLocation.setYaw(0f);
             blockLocation.setPitch(0f);
@@ -158,6 +164,10 @@ public class BlockManager {
             list.remove(block);
             if (list.isEmpty()) blocksByChunk.remove(block.getLocation().getChunk());
         }
+    }
+
+    public TriggeredBlocksHandler getTriggeredBlocksHandler() {
+        return triggeredBlocksHandler;
     }
 
     public void onDisable() {

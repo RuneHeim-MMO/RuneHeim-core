@@ -76,4 +76,8 @@ public class MathUtils {
         }
         return best;
     }
+
+    public static int getRandomInt(int min, int max) {
+        return ThreadLocalRandom.current().nextInt(min, max + 1);
+    }
 }

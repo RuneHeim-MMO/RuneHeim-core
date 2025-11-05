@@ -81,6 +81,7 @@ public class TerritoryHandler {
 
             Territory insideOf = null;
             int lastInsideOfDistance = -1;
+            int playerY = player.getLocation().getBlockY();
 
             Territory lastTerritory = lastPlayerTerritory.get(uuid);
 
@@ -90,6 +91,10 @@ public class TerritoryHandler {
 
                 if (distance >= territory.getRadius()) {
                     continue;  // skip territories where player is outside radius
+                }
+
+                if(territory.getMaxHeight() < playerY) {
+                    continue; // skip territories where player is above max height
                 }
 
                 if (lastInsideOfDistance != -1 && lastInsideOfDistance <= distance) {

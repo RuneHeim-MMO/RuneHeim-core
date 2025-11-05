@@ -143,7 +143,7 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
 
     }
 
-    public List<Location> getInteractableBlocks() {
+    public List<Location> getHitboxLocations() {
         return List.of(this.location);
     }
 

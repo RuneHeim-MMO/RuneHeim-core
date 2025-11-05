@@ -11,6 +11,41 @@ import org.zuma.examplePlugin.domain.mob.meta.MobEquipmentMeta;
 import java.util.List;
 
 public enum EquipmentSet {
+    STEEL_FULL_SWORD(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.STEEL_FULLHELM), 100),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.STEEL_BODY), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.STEEL_PLATELEGS), 100),
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.STEEL_BOOTS), 100),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.STEEL_SWORD), 100)
+    ))),
+
+    MITHRIL_FULL_SWORD(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.MITHRIL_FULLHELM), 100),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.MITHRIL_BODY), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.MITHRIL_PLATELEGS), 100),
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.MITHRIL_BOOTS), 100),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.MITHRIL_SWORD), 100)
+    ))),
+
+
+    ADAMANT_FULL_SWORD(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.ADAMANT_FULLHELM), 100),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.ADAMANT_BODY), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.ADAMANT_PLATELEGS), 100),
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.ADAMANT_BOOTS), 100),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.ADAMANT_SWORD), 100)
+    ))),
+
+
+    RUNE_FULL_SWORD(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HEAD, getRuneItem(ItemId.RUNE_FULLHELM), 100),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNE_BODY), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNE_PLATELEGS), 100),
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.RUNE_BOOTS), 100),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNE_SWORD), 100)
+    ))),
+
+
     FUSION_MASTER(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.OBSIDIAN_BULWARK), 100)
     ))),
@@ -84,7 +119,7 @@ public enum EquipmentSet {
 
     ADAMANT_CHAIN_HALF_SET_SWORD(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.ADAMANT_CHAINBODY), 100),
-            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.ADAMANT_PLATELENG), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.ADAMANT_PLATELEGS), 100),
             new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.ADAMANT_BOOTS), 100),
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.ADAMANT_SWORD), 100)
     ))),
@@ -220,7 +255,7 @@ public enum EquipmentSet {
             // Legs - platelegs (Steel -> Mithril -> Adamant)
             new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.STEEL_PLATELEGS), 30),
             new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.MITHRIL_PLATELEGS), 30),
-            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.ADAMANT_PLATELENG), 30),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.ADAMANT_PLATELEGS), 30),
 
             // Feet - boots (Steel -> Mithril -> Adamant)
             new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.STEEL_BOOTS), 30),
@@ -262,7 +297,7 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNE_BODY), 10),
 
             // Legs - platelegs (Adamant -> Rune)
-            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.ADAMANT_PLATELENG), 30),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.ADAMANT_PLATELEGS), 30),
             new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNE_PLATELEGS), 30),
 
             // Feet - boots (Adamant -> Rune)

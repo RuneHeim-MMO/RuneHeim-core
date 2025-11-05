@@ -222,6 +222,56 @@ public class DropTableRepository {
                 new DropTableDBEntry(DropTableId.GOBLIN_LOW_LVL_ARMOR.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.IRON_BODY.asInt(), 1, 1, 20, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.BRONZE_BOOTS.asInt(), 1, 1, 10, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+
+                new DropTableDBEntry(DropTableId.DUNGEON_TURRET.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.IRON_BAR.asInt(), 1, 2, 10, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(DropTableId.COINS_SMALL.asInt(), 1, 1, 3, DropTableEntry.Type.NESTED_DROP_TABLE),
+                        new DropTableEntry(DropTableId.GEM_DROP_TABLE.asInt(), 1, 1, 50, DropTableEntry.Type.NESTED_DROP_TABLE)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.LAVA_DUNGEON_KEY_A.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.LAVA_DUNGEON_KEY_A.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+                new DropTableDBEntry(DropTableId.LAVA_DUNGEON_KEY_B.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.LAVA_DUNGEON_KEY_B.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+                new DropTableDBEntry(DropTableId.LAVA_DUNGEON_KEY_C.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.LAVA_DUNGEON_KEY_C.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+                new DropTableDBEntry(DropTableId.LAVA_DUNGEON_KEY_D.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.LAVA_DUNGEON_KEY_D.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+
+                new DropTableDBEntry(DropTableId.LAVA_DUNGEON_BOSS_BONES.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.BIG_BONES.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.LAVA_DUNGEON_BOSS_COINS.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.COINS.asInt(), 100, 250, 1, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.COINS.asInt(), 250, 1000, 30, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.LAVA_DUNGEON_BOSS_COMMON.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.COAL_ORE.asInt(), 1, 12, 4, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.MITHRIL_ORE.asInt(), 1, 4, 6, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.ADAMANT_ORE.asInt(), 1, 4, 6, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.REGULAR_FAIRY_RATION.asInt(), 1, 8, 32, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.ATTACK_POTION_I.asInt(), 1, 3, 8, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.DEFENCE_POTION_I.asInt(), 1, 3, 8, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.HEALTH_POTION_I.asInt(), 1, 3, 8, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.RANGED_POTION_I.asInt(), 1, 3, 8, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.LAVA_DUNGEON_BOSS_RARE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.MITHRIL_CROSSBOW.asInt(), 1, 1, 16, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.ADAMANT_CROSSBOW.asInt(), 1, 1, 32, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.FUSION_SCROLL.asInt(), 1, 1, 64, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.PLATINUM_TOKEN.asInt(), 1, 5, 64, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.AMULET_OF_THE_WARD.asInt(), 1, 1, 100, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.FAIRY_OF_DARKNESS.asInt(), 1, 1, 149, DropTableEntry.Type.ITEM)
                 ), null)), 1))
 
 

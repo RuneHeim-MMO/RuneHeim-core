@@ -68,4 +68,5 @@ public class Hit {
     public boolean isSplashHit() {
         return isSplashHit;
     }
+
 }

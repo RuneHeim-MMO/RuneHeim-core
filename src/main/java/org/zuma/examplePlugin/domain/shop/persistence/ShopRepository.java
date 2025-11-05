@@ -141,7 +141,7 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.MITHRIL_CHAINBODY.asInt(), 2, 30, ItemId.MITHRIL_CHAINBODY.getBuyPrice(), ItemId.MITHRIL_CHAINBODY.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.MITHRIL_MEDHELM.asInt(), 2, 30, ItemId.MITHRIL_MEDHELM.getBuyPrice(), ItemId.MITHRIL_MEDHELM.getSellPrice(), null, null),
 
-                        new ShopItemConfig(ItemId.ADAMANT_PLATELENG.asInt(), 1, 3600 * 2, ItemId.ADAMANT_PLATELENG.getBuyPrice(), ItemId.ADAMANT_PLATELENG.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.ADAMANT_PLATELEGS.asInt(), 1, 3600 * 2, ItemId.ADAMANT_PLATELEGS.getBuyPrice(), ItemId.ADAMANT_PLATELEGS.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.ADAMANT_CHAINBODY.asInt(), 1, 3600 * 2, ItemId.ADAMANT_CHAINBODY.getBuyPrice(), ItemId.ADAMANT_CHAINBODY.getSellPrice(), null, null)
                 ))), 1)),
 

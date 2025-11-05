@@ -1,9 +1,5 @@
 package org.zuma.examplePlugin.domain.party;
 
-import io.papermc.paper.chat.ChatRenderer;
-import io.papermc.paper.event.player.AsyncChatEvent;
-import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.chat.SignedMessage;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -11,13 +7,14 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.XpSource;
+import org.zuma.examplePlugin.domain.party.constants.ContributionMode;
+import org.zuma.examplePlugin.domain.party.constants.PartyRole;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.events.party.*;
 
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Party {
     private final UUID uuid;
@@ -26,6 +23,7 @@ public class Party {
     private String ownerUsername;
     private final Set<UUID> invites;
     private final int maxMembers;
+    private boolean xpSharing;
 
     public Party(UUID uuid, RunePlayer owner, int maxMembers) {
         this.uuid = uuid;
@@ -33,8 +31,9 @@ public class Party {
         this.ownerUsername = owner.asBukkitPlayer().getName();
         this.players = new ArrayList<>();
         this.invites = new HashSet<>();
-        this.players.add(new PartyMember(owner.getUUID(), PartyRole.OWNER));
+        this.players.add(new PartyMember(owner.getUUID(), PartyRole.LEADER));
         this.maxMembers = maxMembers;
+        this.xpSharing = true;
     }
 
     public UUID getUuid() {
@@ -172,6 +171,36 @@ public class Party {
         reloadMemberNametags();
     }
 
+    public void setXPSharing(RunePlayer setter, boolean enabled) {
+        if (!ownerUuid.equals(setter.getUUID())) {
+            throw new IllegalStateException("You are not a party owner.");
+        }
+
+        this.xpSharing = enabled;
+        Bukkit.getServer().getPluginManager().callEvent(new PartyUpdateEvent(this));
+
+        this.getOnlinePlayers().forEach(member -> {
+            member.asBukkitPlayer().sendMessage(
+                    Icon.PARTY.asComponent().append(Component.text("XP Sharing has been ", Color.INFO.asColor())
+                            .append(Component.text(enabled ? "enabled" : "disabled", enabled ? Color.SUCCESS.asColor() : Color.ERROR.asColor()))
+                            .append(Component.text(" by ", Color.INFO.asColor()))
+                            .append(Component.text(setter.asBukkitPlayer().getName(), Color.ACCENT.asColor())))
+            );
+        });
+    }
+
+    public void setContributionMode(RunePlayer setter, ContributionMode mode) {
+        PartyMember member = this.getPartyMember(setter.getUUID());
+
+        if (member == null) {
+            throw new IllegalArgumentException("The player is not in this party.");
+        }
+
+        Bukkit.getServer().getPluginManager().callEvent(new PartyUpdateEvent(this));
+        member.setContributionMode(mode);
+    }
+
+
     public void kickPlayer(RunePlayer whoKicked, UUID playerUUID) {
         if (!ownerUuid.equals(whoKicked.getUUID())) {
             throw new IllegalStateException("You are not a party owner.");
@@ -222,15 +251,44 @@ public class Party {
         this.getOnlinePlayers().forEach(RunePlayer::reloadNametags);
     }
 
+    public boolean isXpSharingEnabled() {
+        return xpSharing;
+    }
+
     public void splitXPBetweenMembers(RunePlayer contributor, SkillType type, double xp) {
         if (players.isEmpty()) return;
-        double equalXp = xp / this.getOnlinePlayers().size();
-        this.getOnlinePlayers().forEach(member -> member.addXp(type, equalXp, XpSource.PARTY));
 
-        PartyMember matchingMember = players.stream().filter(pm -> pm.getUuid().equals(contributor.getUUID())).findFirst().orElse(null);
-        if (matchingMember != null) {
-            matchingMember.addXpContribution(type, (int) xp);
-            Bukkit.getPluginManager().callEvent(new PartyUpdateEvent(this));
+        if (!isXpSharingEnabled()) {
+            contributor.addXp(type, xp, XpSource.PERSONAL);
+            return;
         }
+
+        PartyMember contributorMember = getPartyMember(contributor.getUUID());
+        if (contributorMember == null) return;
+
+        int contributionPercentage = contributorMember.getContributionMode().getPercent();
+        double contributedXp = xp * (contributionPercentage / 100.0); // XP to share
+        double personalXp = xp - contributedXp; // XP contributor keeps
+
+        // Give contributor their personal XP
+        contributor.addXp(type, personalXp, XpSource.PARTY);
+
+        // Track contribution
+        contributorMember.addXpContribution(type, Math.round(contributedXp));
+        Bukkit.getPluginManager().callEvent(new PartyUpdateEvent(this));
+
+        // Get other online members
+        List<RunePlayer> others = this.getOnlinePlayers().stream()
+                .filter(m -> !m.getUUID().equals(contributor.getUUID()))
+                .toList();
+
+        // Split contributed XP among others
+        if (!others.isEmpty()) {
+            double equalXp = contributedXp / others.size();
+            others.forEach(member -> member.addXp(type, equalXp, XpSource.PARTY));
+        }
+
+        Bukkit.getPluginManager().callEvent(new PartyUpdateEvent(this));
     }
+
 }

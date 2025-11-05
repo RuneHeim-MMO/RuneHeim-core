@@ -13,6 +13,12 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
+import org.zuma.examplePlugin.domain.block.meta.HologramSide;
+import org.zuma.examplePlugin.domain.block.meta.v1.DoorBlockMeta;
+import org.zuma.examplePlugin.domain.block.meta.v1.ItemCollectorTriggerMeta;
+import org.zuma.examplePlugin.domain.block.meta.v1.TeleportDoorMeta;
+import org.zuma.examplePlugin.domain.item.ItemRecord;
+import org.zuma.examplePlugin.domain.item.constants.ItemId;
 
 import javax.annotation.Nullable;
 import java.sql.Connection;
@@ -79,6 +85,34 @@ public class InteractableBlockRepository {
                 BlockEntity entity = deserializeBlockEntity(rs);
                 result.add(entity);
             }
+
+            /*   public AbstractInteractableBlockMeta(int id, BlockType type, BlockFace face, Location location, HologramSide hologramSide) {
+        this(id, type, face, location, computeHologramLocation(location, hologramSide));
+    }*/
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9999, BlockType.Door, BlockFace.EAST, new Location(Bukkit.getWorld("world"), 645, 40, -230), HologramSide.FRONT),
+                    new VersionedJson(new Gson().toJson(new DoorBlockMeta("lava-dungeon-door", 7, 5)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9998, BlockType.ItemTrigger, BlockFace.EAST, new Location(Bukkit.getWorld("world"), 640, 39, -242), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemCollectorTriggerMeta("lava-dungeon-door-group", "lava-dungeon-door", 15, List.of(new ItemRecord(ItemId.LAVA_DUNGEON_KEY_D, 1)))), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9997, BlockType.ItemTrigger, BlockFace.EAST, new Location(Bukkit.getWorld("world"), 640, 39, -239), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemCollectorTriggerMeta("lava-dungeon-door-group", "lava-dungeon-door", 15, List.of(new ItemRecord(ItemId.LAVA_DUNGEON_KEY_C, 1)))), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9996, BlockType.ItemTrigger, BlockFace.EAST, new Location(Bukkit.getWorld("world"), 640, 39, -236), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemCollectorTriggerMeta("lava-dungeon-door-group", "lava-dungeon-door", 15, List.of(new ItemRecord(ItemId.LAVA_DUNGEON_KEY_B, 1)))), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9995, BlockType.ItemTrigger, BlockFace.EAST, new Location(Bukkit.getWorld("world"), 640, 39, -233), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemCollectorTriggerMeta("lava-dungeon-door-group", "lava-dungeon-door", 15, List.of(new ItemRecord(ItemId.LAVA_DUNGEON_KEY_A, 1)))), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9994, BlockType.TeleportDoor, BlockFace.WEST, new Location(Bukkit.getWorld("world"), 796, 15, -221), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new TeleportDoorMeta("Exit", "world", 800, 86, -218, 127)), 1)));
 
 
         } catch (Exception e) {

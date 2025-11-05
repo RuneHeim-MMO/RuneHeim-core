@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.block.impl;
 
 import eu.decentsoftware.holograms.api.DHAPI;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -98,4 +99,6 @@ public class InventoryOpenerModelledBlock extends ModelledInteractableBlock impl
     public List<String> getRequiredCompletedQuests() {
         return List.of();
     }
+
+
 }

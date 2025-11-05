@@ -154,6 +154,12 @@ public class ItemRepository {
                                 , 1)
                 ),
 
+                // Dungeon
+                new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.LAVA_DUNGEON_KEY_A.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Dungeon Key A", List.of("A weird looking key."), null, true, 1.0), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.LAVA_DUNGEON_KEY_B.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Dungeon Key B", List.of("A weird looking key."), null, true, 1.0), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.LAVA_DUNGEON_KEY_C.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Dungeon Key C", List.of("A weird looking key."), null, true, 1.0), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.LAVA_DUNGEON_KEY_D.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Dungeon Key D", List.of("A weird looking key."), null, true, 1.0), null),
+
 
                 // Quest items
                 // The Sick Camels
@@ -1605,7 +1611,7 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANT_PLATELENG.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.UNCOMMON, "Adamantite Platelegs", List.of("Adamantite platelegs, thick and durable."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.ADAMANT_PLATELEGS.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.UNCOMMON, "Adamantite Platelegs", List.of("Adamantite platelegs, thick and durable."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableTypeMeta(EquipmentSlot.LEGS, "adamant_leggings", null,
                                         List.of(
