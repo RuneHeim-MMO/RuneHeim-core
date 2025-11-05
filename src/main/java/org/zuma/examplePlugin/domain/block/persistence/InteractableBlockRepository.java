@@ -16,6 +16,7 @@ import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.HologramSide;
 import org.zuma.examplePlugin.domain.block.meta.v1.DoorBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.v1.ItemCollectorTriggerMeta;
+import org.zuma.examplePlugin.domain.block.meta.v1.TeleportDoorMeta;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 
@@ -90,7 +91,7 @@ public class InteractableBlockRepository {
     }*/
 
             result.add(new BlockEntity(
-                    new AbstractInteractableBlockMeta(9999, BlockType.Door, BlockFace.EAST, new Location(Bukkit.getWorld("world"), 645, 40, -231), HologramSide.FRONT),
+                    new AbstractInteractableBlockMeta(9999, BlockType.Door, BlockFace.EAST, new Location(Bukkit.getWorld("world"), 645, 40, -230), HologramSide.FRONT),
                     new VersionedJson(new Gson().toJson(new DoorBlockMeta("lava-dungeon-door", 7, 5)), 1)));
 
             result.add(new BlockEntity(
@@ -108,6 +109,11 @@ public class InteractableBlockRepository {
             result.add(new BlockEntity(
                     new AbstractInteractableBlockMeta(9995, BlockType.ItemTrigger, BlockFace.EAST, new Location(Bukkit.getWorld("world"), 640, 39, -233), HologramSide.TOP),
                     new VersionedJson(new Gson().toJson(new ItemCollectorTriggerMeta("lava-dungeon-door-group", "lava-dungeon-door", 15, List.of(new ItemRecord(ItemId.LAVA_DUNGEON_KEY_A, 1)))), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9994, BlockType.TeleportDoor, BlockFace.WEST, new Location(Bukkit.getWorld("world"), 796, 15, -221), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new TeleportDoorMeta("Exit", "world", 800, 86, -218, 127)), 1)));
+
 
         } catch (Exception e) {
             throw new RuntimeException("Failed to fetch block entities", e);

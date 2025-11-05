@@ -66,6 +66,13 @@ public class DungeonMobs {
                 List.of(DropTableId.LAVA_DUNGEON_KEY_D.asInt()),
                 false).setMaxWalkDistance(20));
 
+        registry.register(MobType.LAVA_DUNGEON_GUARD_MINION.getId(), () -> new GenericCombatant(
+                "Dungeon Keeper", EquipmentSet.MITHRIL_FULL_SWORD, getBaseSkills(40, 0.5),
+                null, MobBehaviors.RAVAGER.getBehavior(),
+                0.35, true, false, 40, "dungeon_keeper_2", null, null,
+                List.of(),
+                false).setMaxWalkDistance(20));
+
         registry.register(MobType.LAVA_DUNGEON_BOSS_BASE_55.getId(), () -> new GenericCombatant(
                 "Dungeon Keeper", null, getBaseSkills(50, 1),
                 null, MobBehaviors.RAVAGER.getBehavior(),
@@ -82,7 +89,7 @@ public class DungeonMobs {
                                 new WeightedMechanic(1, 1, new VariableSpeedMechanic(4, 0.8), "Feel the heat of my wrath!", SoundType.WRATH_LAVA_STEP),
                                 new WeightedMechanic(10, 25, new SummonCreaturesMechanic(List.of(
                                         new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_TURRET_BASE_20, 2, 100),
-                                        new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_GUARD_1_BASE_35, 1, 50)
+                                        new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_GUARD_MINION, 1, 50)
                                 ), 10), "Minions, arise!", SoundType.SUMMON_MINIONS)), null,null),
                         new BossPhase(150, 150, List.of(
                                 new WeightedMechanic(5, 8, new RangedMobMechanic(

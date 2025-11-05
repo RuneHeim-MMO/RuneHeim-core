@@ -106,9 +106,6 @@ public class DoorBlock extends AbstractInteractableBlock implements MultiBlockHi
     }
 
     public void initializeBlock() {
-        super.spawn(Material.IRON_BARS);
-        this.hitboxLocations.forEach(location -> {
-            location.getBlock().setType(Material.IRON_BARS);
-        });
+        this.spawn(Material.IRON_BARS);
     }
 }

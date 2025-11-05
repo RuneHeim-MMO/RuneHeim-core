@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.domain.block.impl.Altar;
 import org.zuma.examplePlugin.domain.block.impl.ResourceNode;
 import org.zuma.examplePlugin.domain.block.impl.door.DoorBlock;
 import org.zuma.examplePlugin.domain.block.impl.door.ItemCollectorTrigger;
+import org.zuma.examplePlugin.domain.block.impl.door.TeleportDoor;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.v1.*;
 
@@ -25,13 +26,32 @@ public class BlockFactory {
             case Altar -> createAltar(meta, json);
             case Door -> createDoor(meta, json);
             case ItemTrigger -> createItemTrigger(meta, json);
+            case TeleportDoor -> createTeleportDoor(meta, json);
             default -> throw new IllegalArgumentException("Unknown interactable block type: " + meta.type());
         };
     }
 
+    private TeleportDoor createTeleportDoor(AbstractInteractableBlockMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create teleport door " + meta.type() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+
+                TeleportDoorMeta deserialized = new Gson().fromJson(json.meta(), TeleportDoorMeta.class);
+                TeleportDoor block = new TeleportDoor(meta, deserialized.label(), deserialized.world(), deserialized.x(), deserialized.y(), deserialized.z(), deserialized.yaw());
+                block.initializeBlock();
+                return block;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+    }
+
+
     private ItemCollectorTrigger createItemTrigger(AbstractInteractableBlockMeta meta, @Nullable VersionedJson json) {
         if (json == null) {
-            throw new UnsupportedOperationException("Cannot create door block " + meta.type() + " required json is null!");
+            throw new UnsupportedOperationException("Cannot create item collector trigger " + meta.type() + " required json is null!");
         }
 
         switch (json.version()) {
