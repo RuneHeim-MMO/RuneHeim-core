@@ -13,6 +13,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.interfaces.Restrictable;
+import org.zuma.examplePlugin.core.permissions.Permission;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -311,6 +312,16 @@ public class PlayerUtils {
                 player.showPlayer(RuneQuestPlugin.getInstance(), p);
             }
         }
+    }
+
+    public static boolean canPlayerManipulateWorld(Player player) {
+        RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
+
+        if (runePlayer != null && runePlayer.getRole().hasPermission(Permission.WORLD_MANIPULATION) && player.getGameMode() == GameMode.CREATIVE) {
+            return true;
+        }
+
+        return false;
     }
 
 }

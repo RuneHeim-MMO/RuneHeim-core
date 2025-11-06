@@ -8,15 +8,16 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.permissions.Permission;
+import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class BlockProtector implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
-        RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(event.getPlayer());
+        boolean isAllowed = PlayerUtils.canPlayerManipulateWorld(event.getPlayer());
 
-        if (player != null && player.getRole().hasPermission(Permission.WORLD_MANIPULATION) && event.getPlayer().getGameMode() == GameMode.CREATIVE) {
+        if (isAllowed) {
             return;
         }
 
@@ -25,9 +26,9 @@ public class BlockProtector implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onBlockPlace(BlockPlaceEvent event) {
-        RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(event.getPlayer());
+        boolean isAllowed = PlayerUtils.canPlayerManipulateWorld(event.getPlayer());
 
-        if (player != null && player.getRole().hasPermission(Permission.WORLD_MANIPULATION) && event.getPlayer().getGameMode() == GameMode.CREATIVE) {
+        if (isAllowed) {
             return;
         }
 

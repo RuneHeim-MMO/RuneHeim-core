@@ -20,7 +20,9 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
+import org.zuma.examplePlugin.core.permissions.Permission;
 import org.zuma.examplePlugin.core.utils.EntityUtils;
+import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.combat.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.combat.constants.ProjectileType;
 import org.zuma.examplePlugin.domain.mob.MobHandler;
@@ -90,7 +92,18 @@ public class HitListener implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityAttackEntityMelee(EntityDamageByEntityEvent event) {
         Entity defenderEntity = event.getEntity();
+        double initialDamage = event.getDamage();
         event.setDamage(0);
+
+
+        if (event.getDamager() instanceof Player attackerPlayer && (defenderEntity instanceof ArmorStand || !(defenderEntity instanceof LivingEntity))) {
+            boolean isAllowed = PlayerUtils.canPlayerManipulateWorld(attackerPlayer);
+            
+            if (isAllowed) {
+                event.setDamage(initialDamage); // Allow damage to non-living entities in creative mode for admins (e.g. armor stands)
+                return;
+            }
+        }
 
         if (defenderEntity instanceof AbstractHorse horse && !horse.getPassengers().isEmpty()) {
             defenderEntity = horse.getPassengers().getFirst();
@@ -132,6 +145,11 @@ public class HitListener implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityAttackEntityProjectile(EntityDamageByEntityEvent event) {
         Entity defenderEntity = event.getEntity();
+
+        if (!(event.getDamager() instanceof Projectile projectile)) {
+            return;
+        }
+
         event.setDamage(0);
 
         if (defenderEntity instanceof AbstractHorse horse && !horse.getPassengers().isEmpty()) {
@@ -139,10 +157,6 @@ public class HitListener implements Listener {
         }
 
         if (!(defenderEntity instanceof LivingEntity livingDefenderEntity)) {
-            return;
-        }
-
-        if (!(event.getDamager() instanceof Projectile projectile)) {
             return;
         }
 
