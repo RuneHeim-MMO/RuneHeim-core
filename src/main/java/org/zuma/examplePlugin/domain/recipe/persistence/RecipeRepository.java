@@ -228,7 +228,7 @@ public class RecipeRepository {
 
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAPLE_SHORTBOW.getId(), RecipeType.FLETCHING_TABLE_RECIPE, 3000,
-                        List.of(new SkillRequirement(SkillType.FLETCHING, 50)),
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 35)),
                         List.of(
                                 new IngredientRecord(ItemId.MAPLE_SHORTBOW_UNFINISHED, 1, true, false),
                                 new IngredientRecord(ItemId.BOW_STRING, 1, true, false)
@@ -238,7 +238,7 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.FLETCHING, 58.3)), null), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAPLE_LONGBOW.getId(), RecipeType.FLETCHING_TABLE_RECIPE, 3000,
-                        List.of(new SkillRequirement(SkillType.FLETCHING, 55)),
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 40)),
                         List.of(
                                 new IngredientRecord(ItemId.MAPLE_LONGBOW_UNFINISHED, 1, true, false),
                                 new IngredientRecord(ItemId.BOW_STRING, 1, true, false)
@@ -248,7 +248,7 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.FLETCHING, 58.3)), null), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.YEW_SHORTBOW.getId(), RecipeType.FLETCHING_TABLE_RECIPE, 3000,
-                        List.of(new SkillRequirement(SkillType.FLETCHING, 65)),
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 60)),
                         List.of(
                                 new IngredientRecord(ItemId.YEW_SHORTBOW_UNFINISHED, 1, true, false),
                                 new IngredientRecord(ItemId.BOW_STRING, 1, true, false)
@@ -258,7 +258,7 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.FLETCHING, 67.5)), null), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.YEW_LONGBOW.getId(), RecipeType.FLETCHING_TABLE_RECIPE, 3000,
-                        List.of(new SkillRequirement(SkillType.FLETCHING, 70)),
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 62)),
                         List.of(
                                 new IngredientRecord(ItemId.YEW_LONGBOW_UNFINISHED, 1, true, false),
                                 new IngredientRecord(ItemId.BOW_STRING, 1, true, false)
@@ -268,7 +268,7 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.FLETCHING, 75.0)), null), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAGIC_SHORTBOW.getId(), RecipeType.FLETCHING_TABLE_RECIPE, 3000,
-                        List.of(new SkillRequirement(SkillType.FLETCHING, 80)),
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 70)),
                         List.of(
                                 new IngredientRecord(ItemId.MAGIC_SHORTBOW_UNFINISHED, 1, true, false),
                                 new IngredientRecord(ItemId.MAGIC_BOW_STRING, 1, true, false)
@@ -278,7 +278,7 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.FLETCHING, 83.3)), null), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAGIC_LONGBOW.getId(), RecipeType.FLETCHING_TABLE_RECIPE, 3000,
-                        List.of(new SkillRequirement(SkillType.FLETCHING, 85)),
+                        List.of(new SkillRequirement(SkillType.FLETCHING, 72)),
                         List.of(
                                 new IngredientRecord(ItemId.MAGIC_LONGBOW_UNFINISHED, 1, true, false),
                                 new IngredientRecord(ItemId.MAGIC_BOW_STRING, 1, true, false)
