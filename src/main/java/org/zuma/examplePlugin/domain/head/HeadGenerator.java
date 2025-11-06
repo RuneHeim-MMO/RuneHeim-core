@@ -6,6 +6,7 @@ import com.destroystokyo.paper.profile.ProfileProperty;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -14,8 +15,7 @@ import java.util.UUID;
 
 public class HeadGenerator {
 
-
-    public static ItemStack getPlayerHead(OfflinePlayer player) {
+    public static ItemStack getPlayerHead(Player player) {
         ItemStack head = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta skullMeta = (SkullMeta) head.getItemMeta();
         skullMeta.setOwningPlayer(player);

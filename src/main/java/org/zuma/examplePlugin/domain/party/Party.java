@@ -2,7 +2,7 @@ package org.zuma.examplePlugin.domain.party;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
@@ -31,7 +31,7 @@ public class Party {
         this.ownerUsername = owner.asBukkitPlayer().getName();
         this.players = new ArrayList<>();
         this.invites = new HashSet<>();
-        this.players.add(new PartyMember(owner.getUUID(), PartyRole.LEADER));
+        this.players.add(new PartyMember(owner.getUUID(), owner.asBukkitPlayer().getName(), PartyRole.LEADER));
         this.maxMembers = maxMembers;
         this.xpSharing = true;
     }
@@ -123,7 +123,7 @@ public class Party {
         }
 
         invites.remove(player.getUUID());
-        players.add(new PartyMember(player.getUUID(), PartyRole.MEMBER));
+        players.add(new PartyMember(player.getUUID(), player.asBukkitPlayer().getName(), PartyRole.MEMBER));
         player.setParty(this);
         Bukkit.getServer().getPluginManager().callEvent(new PartyPlayerJoinedEvent(this, player));
         Bukkit.getServer().getPluginManager().callEvent(new PartyUpdateEvent(this));
@@ -200,40 +200,45 @@ public class Party {
         member.setContributionMode(mode);
     }
 
-
-    public void kickPlayer(RunePlayer whoKicked, UUID playerUUID) {
+    public void kickPlayer(RunePlayer whoKicked, String username) {
         if (!ownerUuid.equals(whoKicked.getUUID())) {
             throw new IllegalStateException("You are not a party owner.");
         }
 
-        if (!getMemberUUIDs().contains(playerUUID)) {
-            throw new IllegalArgumentException("The player is not in this party.");
+        PartyMember matchingMember = players.stream()
+                .filter(m -> m.getUsername().equalsIgnoreCase(username))
+                .findFirst()
+                .orElse(null);
+
+        if (matchingMember == null) {
+            throw new IllegalArgumentException("This player is not found in this party.");
         }
 
-        if (playerUUID.equals(ownerUuid)) {
+        if (matchingMember.getUuid().equals(ownerUuid)) {
             throw new IllegalStateException("Cannot kick party owner.");
         }
 
+        UUID playerUUID = matchingMember.getUuid();
         players.remove(players.stream().filter(pm -> pm.getUuid().equals(playerUUID)).findFirst().orElse(null));
-        OfflinePlayer bukkitPlayer = Bukkit.getOfflinePlayer(playerUUID);
-        RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(playerUUID);
+        Player bukkitPlayer = Bukkit.getPlayer(playerUUID);
 
-        if (player != null) {
-            player.setParty(null);
-            Bukkit.getServer().getPluginManager().callEvent(new PartyPlayerKickedEvent(this, player));
-            Bukkit.getServer().getPluginManager().callEvent(new PartyUpdateEvent(this));
+
+        if (bukkitPlayer != null && bukkitPlayer.isOnline()) {
+            RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(playerUUID);
+
+            if (player != null) {
+                player.setParty(null);
+                Bukkit.getServer().getPluginManager().callEvent(new PartyPlayerKickedEvent(this, player));
+                Bukkit.getServer().getPluginManager().callEvent(new PartyUpdateEvent(this));
+            }
         }
 
         this.getOnlinePlayers().forEach(member -> {
-            String name = bukkitPlayer.getName();
-
-            if (name != null) {
-                member.asBukkitPlayer().sendMessage(
-                        Icon.PARTY.asComponent().append(Component.text(bukkitPlayer.getName(), Color.ACCENT.asColor())
-                                .append(Component.text(" has been kicked from the party by ", Color.ERROR.asColor()))
-                                .append(Component.text(whoKicked.asBukkitPlayer().getName(), Color.ACCENT.asColor())))
-                );
-            }
+            member.asBukkitPlayer().sendMessage(
+                    Icon.PARTY.asComponent().append(Component.text(matchingMember.getUsername(), Color.ACCENT.asColor())
+                            .append(Component.text(" has been kicked from the party by ", Color.ERROR.asColor()))
+                            .append(Component.text(whoKicked.asBukkitPlayer().getName(), Color.ACCENT.asColor())))
+            );
         });
         reloadMemberNametags();
     }

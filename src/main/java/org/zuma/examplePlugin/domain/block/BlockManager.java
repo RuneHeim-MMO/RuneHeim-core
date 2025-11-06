@@ -12,8 +12,6 @@ import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.base.ModelledInteractableBlock;
 import org.zuma.examplePlugin.domain.block.handlers.TriggeredBlocksHandler;
 import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerRegularBlock;
-import org.zuma.examplePlugin.domain.block.impl.door.DoorBlock;
-import org.zuma.examplePlugin.domain.block.impl.door.ItemCollectorTrigger;
 import org.zuma.examplePlugin.domain.gui.IDHolder;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;

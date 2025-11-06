@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.block.impl.door;
+package org.zuma.examplePlugin.domain.block.impl.trigger;
 
 import eu.decentsoftware.holograms.api.DHAPI;
 import org.bukkit.Bukkit;
@@ -127,8 +127,6 @@ public class ItemCollectorTrigger extends AbstractInteractableBlock {
     }
 
     public void startStateResetCountdown() {
-        Random random = new Random();
-
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
             particleLoc.getWorld().spawnParticle(Particle.SMOKE, particleLoc, 3, 0.3, 0.3, 0.3, 0.01);
 

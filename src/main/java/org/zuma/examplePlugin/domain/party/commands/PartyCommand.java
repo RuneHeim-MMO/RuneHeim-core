@@ -156,23 +156,21 @@ public class PartyCommand implements BasicCommand {
                     throw new IllegalStateException("You are not in a party!");
                 }
 
-                OfflinePlayer candidate = Bukkit.getOfflinePlayer(args[1]);
+                Player candidate = Bukkit.getPlayer(args[1]);
 
-                if (!candidate.hasPlayedBefore()) {
-                    throw new IllegalStateException("Could not find player with name: " + args[1]);
-                }
+                if (candidate == null) {
+                    playersParty.kickPlayer(runePlayer, args[1]);
 
-                playersParty.kickPlayer(runePlayer, candidate.getUniqueId());
 
-                if (candidate.isOnline()) {
-                    Player onlinePlayer = (Player) candidate;
+                } else {
+                    playersParty.kickPlayer(runePlayer, candidate.getName());
 
-                    onlinePlayer.sendMessage(
+                    candidate.sendMessage(
                             Icon.PARTY.asComponent().append(Component.text("You have been kicked from ", Color.ERROR.asColor())
                                     .append(Component.text(playersParty.getOwnerUsername(), Color.ACCENT.asColor()))
-                                    .append(Component.text("'s party.", Color.ERROR.asColor())))
-                    );
+                                    .append(Component.text("'s party.", Color.ERROR.asColor()))));
                 }
+
             }
 
         } catch (Exception e) {

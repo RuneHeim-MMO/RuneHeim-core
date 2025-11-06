@@ -86,10 +86,6 @@ public class InteractableBlockRepository {
                 result.add(entity);
             }
 
-            /*   public AbstractInteractableBlockMeta(int id, BlockType type, BlockFace face, Location location, HologramSide hologramSide) {
-        this(id, type, face, location, computeHologramLocation(location, hologramSide));
-    }*/
-
             result.add(new BlockEntity(
                     new AbstractInteractableBlockMeta(9999, BlockType.Door, BlockFace.EAST, new Location(Bukkit.getWorld("world"), 645, 40, -230), HologramSide.FRONT),
                     new VersionedJson(new Gson().toJson(new DoorBlockMeta("lava-dungeon-door", 7, 5)), 1)));

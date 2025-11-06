@@ -13,12 +13,14 @@ import java.util.UUID;
 
 public class PartyMember {
     private final UUID uuid;
+    private final String username;
     private final PartyRole role;
     private final EnumMap<SkillType, Long> xpContributed;
     private ContributionMode contributionMode;
 
-    public PartyMember(UUID uuid, PartyRole role) {
+    public PartyMember(UUID uuid, String username, PartyRole role) {
         this.uuid = uuid;
+        this.username = username;
         this.role = role;
         this.xpContributed = new EnumMap<>(SkillType.class);
         this.contributionMode = ContributionMode.PERCENT_30;
@@ -55,5 +57,9 @@ public class PartyMember {
 
     public void setContributionMode(ContributionMode contributionMode) {
         this.contributionMode = contributionMode;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }
