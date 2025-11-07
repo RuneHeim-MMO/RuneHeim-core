@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.bank;
+package org.zuma.examplePlugin.domain.storage;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

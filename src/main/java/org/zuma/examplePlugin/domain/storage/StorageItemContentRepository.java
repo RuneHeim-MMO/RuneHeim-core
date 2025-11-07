@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.bank;
+package org.zuma.examplePlugin.domain.storage;
 
 import org.zuma.examplePlugin.core.database.HikariPool;
 
@@ -55,7 +55,7 @@ public class StorageItemContentRepository implements ItemStorageRepository {
             stmt.executeUpdate();
 
         } catch (Exception e) {
-            throw new RuntimeException("Failed to upsert bank content ", e);
+            throw new RuntimeException("Failed to upsert storage content ", e);
         }
     }
 }

@@ -18,8 +18,8 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public abstract class PaginatedBankGUI extends IndividualGUI implements SerializableItemContainer {
-    private static final ItemStack placeholder = GUIControl.TRANSPARENT.asItemstack(Component.text("Bank"));
+public abstract class PaginatedStorageGUI extends IndividualGUI implements SerializableItemContainer {
+    private static ItemStack placeholder;
     private static final int ITEMS_IN_ROW = 9;   // Always 9
     private final int usableRows = rows - 1;
     private final Inventory inventory;
@@ -31,8 +31,9 @@ public abstract class PaginatedBankGUI extends IndividualGUI implements Serializ
     private final HashMap<Integer, ItemStackSlotPair> items;
     private final Set<Integer> ignoredSlots;
 
-    public PaginatedBankGUI(String title, int id, int rows, @Nullable Set<Integer> ignoredSlots) {
+    public PaginatedStorageGUI(String title, int id, int rows, @Nullable Set<Integer> ignoredSlots) {
         super(title, id, rows);
+        placeholder = GUIControl.TRANSPARENT.asItemstack(Component.empty());
 
         this.inventory = super.getBaseInventory();
         this.items = new HashMap<>();

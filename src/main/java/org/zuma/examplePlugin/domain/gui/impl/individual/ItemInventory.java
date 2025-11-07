@@ -8,9 +8,9 @@ import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
-import org.zuma.examplePlugin.domain.bank.RepositoryQueryLockController;
+import org.zuma.examplePlugin.domain.storage.RepositoryQueryLockController;
 import org.zuma.examplePlugin.domain.gui.ItemStackSlotPair;
-import org.zuma.examplePlugin.domain.gui.base.PaginatedBankGUI;
+import org.zuma.examplePlugin.domain.gui.base.PaginatedStorageGUI;
 import org.zuma.examplePlugin.domain.gui.serializer.ItemContainerContentSerializer;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -24,7 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
-public class ItemInventory extends PaginatedBankGUI {
+public class ItemInventory extends PaginatedStorageGUI {
     private final RepositoryQueryLockController repositoryQueryLockController;
     private boolean isLoaded;
 
