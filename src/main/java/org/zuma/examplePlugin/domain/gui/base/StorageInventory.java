@@ -6,6 +6,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -30,8 +31,8 @@ public class StorageInventory extends PaginatedStorageGUI {
     @Nullable
     private UUID playerUUID, containerUUID;
 
-    public StorageInventory(String title, int id, int rows, StorageType type, RepositoryQueryLockController repositoryQueryLockController, Set<Integer> ignoredSlots) {
-        super(title, id, rows, ignoredSlots);
+    public StorageInventory(String title, int id, int rows, int maxPages, StorageType type, RepositoryQueryLockController repositoryQueryLockController, Set<Integer> ignoredSlots) {
+        super(title, id, rows, maxPages, ignoredSlots);
         this.repositoryQueryLockController = repositoryQueryLockController;
         this.type = type;
         this.isLoaded = false;
@@ -118,6 +119,7 @@ public class StorageInventory extends PaginatedStorageGUI {
                 setPairsContent(finalLoadedPairs, false);
                 this.isLoaded = true;
                 this.playerUUID = player.getUUID();
+                SoundType.STORAGE_OPEN.play(player, true);
                 player.asBukkitPlayer().openInventory(getBaseInventory());
             });
 
@@ -159,6 +161,10 @@ public class StorageInventory extends PaginatedStorageGUI {
         }
 
         updateMemoryMap();
+
+        if (player != null) {
+            SoundType.STORAGE_CLOSE.play(player, true);
+        }
 
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
             saveBankSync(false);

@@ -112,6 +112,8 @@ public class GUIHandler {
         this.registry.register(InventoryId.PRAYER_MENU.asInt(), () -> new PrayerMenu(GUIOverlay.PRAYER_MENU_OVERLAY.asGlyph() + "§f" + Icon.PRAYER.get() + "§b Prayer", InventoryId.PRAYER_MENU.asInt()));
         this.registry.register(InventoryId.PARTY_MENU.asInt(), () -> new PartyMenu(GUIOverlay.PARTY_MENU_OVERLAY.asGlyph() + "§f" + Icon.PARTY.get() + "§f Party", InventoryId.PARTY_MENU.asInt()));
 
+        this.registry.register(InventoryId.TOOL_BAG.asInt(), () -> new ToolBagInventory(GUIOverlay.TOOL_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Tool Bag", InventoryId.TOOL_BAG.asInt(), storageItemContentController));
+
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
     }

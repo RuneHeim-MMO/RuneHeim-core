@@ -5,6 +5,7 @@ import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
+import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
@@ -52,9 +53,7 @@ public class StorageItem extends AbstractItemType implements Stateful {
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player, StateManager itemStateManager) {
-        StorageItemState state = getState(event.getItem());
-
-        System.out.println("state: " + state);
+        RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.TOOL_BAG.asInt(), player, null);
     }
 
 

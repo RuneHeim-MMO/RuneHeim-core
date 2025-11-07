@@ -9,7 +9,7 @@ import java.util.HashSet;
 
 public class BankInventory extends StorageInventory {
     public BankInventory(String title, int id, RepositoryQueryLockController repositoryQueryLockController) {
-        super(title, id, 6, StorageType.BANK, repositoryQueryLockController, new HashSet<>(Arrays.asList(0, 1, 9, 10)));
+        super(title, id, 6, 3, StorageType.BANK, repositoryQueryLockController, new HashSet<>(Arrays.asList(0, 1, 9, 10)));
     }
 
     @Override

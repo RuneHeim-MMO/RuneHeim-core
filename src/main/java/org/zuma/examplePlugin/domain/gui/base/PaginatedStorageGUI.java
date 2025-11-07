@@ -21,23 +21,25 @@ import java.util.*;
 public abstract class PaginatedStorageGUI extends IndividualGUI implements SerializableItemContainer {
     private static ItemStack placeholder;
     private static final int ITEMS_IN_ROW = 9;   // Always 9
+    private final HashMap<Integer, ItemStackSlotPair> items;
+    private final Set<Integer> ignoredSlots;
     private final int usableRows = rows - 1;
     private final Inventory inventory;
 
+    private int maxPages;
     private int page = 1;
     private int indexStart = 0;
     private int indexEnd = 0;
-    private int maxPages = 3;
-    private final HashMap<Integer, ItemStackSlotPair> items;
-    private final Set<Integer> ignoredSlots;
+    private boolean hideGUIControls = false;
 
-    public PaginatedStorageGUI(String title, int id, int rows, @Nullable Set<Integer> ignoredSlots) {
+    public PaginatedStorageGUI(String title, int id, int rows, int maxPages, @Nullable Set<Integer> ignoredSlots) {
         super(title, id, rows);
         placeholder = GUIControl.TRANSPARENT.asItemstack(Component.empty());
 
         this.inventory = super.getBaseInventory();
         this.items = new HashMap<>();
         this.ignoredSlots = ignoredSlots == null ? new HashSet<>() : ignoredSlots;
+        this.maxPages = rows;
 
         if (rows < 2) {
             throw new IllegalStateException("PaginatedBankGUI can have minimum of 2 rows!");
@@ -172,6 +174,10 @@ public abstract class PaginatedStorageGUI extends IndividualGUI implements Seria
             inventory.setItem(i, placeholder.clone());
         }
 
+        if (this.hideGUIControls) {
+            return inventory;
+        }
+
         inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 6, previousPageIcon());
         inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 5, GUIControl.fromNumber(page).asItemstack(Component.text("Page: " + page)));
         inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 4, nextPageIcon());
@@ -213,4 +219,12 @@ public abstract class PaginatedStorageGUI extends IndividualGUI implements Seria
     public abstract void handleInventoryClick(InventoryClickEvent event, int slot, RunePlayer player);
 
     public abstract int getPaginationControlsOffset();
+
+    public boolean isHideGUIControls() {
+        return hideGUIControls;
+    }
+
+    public void setHideGUIControls(boolean hideGUIControls) {
+        this.hideGUIControls = hideGUIControls;
+    }
 }

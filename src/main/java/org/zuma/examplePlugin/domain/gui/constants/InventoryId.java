@@ -49,7 +49,8 @@ public enum InventoryId {
     FLETCHING_TABLE(39),
     DRAKKAR_TANNER_SHOP(40),
     PRAYER_MENU(41),
-    PARTY_MENU(42);
+    PARTY_MENU(42),
+    TOOL_BAG(43);
 
 
     private final int id;
