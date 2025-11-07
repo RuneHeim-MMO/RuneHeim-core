@@ -4,6 +4,8 @@ import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.module.ModuleContext;
+import org.zuma.examplePlugin.domain.bank.BankContentRepository;
+import org.zuma.examplePlugin.domain.bank.RepositoryQueryLockController;
 import org.zuma.examplePlugin.domain.item.ItemFactory;
 import org.zuma.examplePlugin.domain.item.ItemHandler;
 import org.zuma.examplePlugin.domain.item.ItemListener;

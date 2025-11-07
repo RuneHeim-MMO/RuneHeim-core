@@ -11,7 +11,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.InventoryOpenerBlock;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.domain.bank.BankQueryLockController;
+import org.zuma.examplePlugin.domain.bank.RepositoryQueryLockController;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
 import org.zuma.examplePlugin.domain.gui.base.AbstractGUI;
@@ -57,7 +57,7 @@ public class GUIHandler {
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Closing GUI's gracefully.");
     }
 
-    public void initializeInventories(BlockLoader blockLoader, BankQueryLockController bankQueryLockController) {
+    public void initializeInventories(BlockLoader blockLoader, RepositoryQueryLockController bankContentController, RepositoryQueryLockController storageItemContentController) {
 
         // Admin
         this.registry.register(InventoryId.ADMIN_NODE_CREATE.asInt(), () -> new NodeCreatorInventory("[A] Create Resource Node", InventoryId.ADMIN_NODE_CREATE.asInt(), blockLoader));
@@ -75,7 +75,7 @@ public class GUIHandler {
         this.registry.register(InventoryId.GENERAL_STORE.asInt(), () -> new ShopInventory(GUIOverlay.GENERAL_STORE_OVERLAY.asGlyph() + "§f" + Icon.CHEST.get() + "§f General Store", InventoryId.GENERAL_STORE.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.GENERAL_STORE.asInt())));
         this.registry.register(InventoryId.SPINNING_WHEEL.asInt(), () -> new SpinningWheelInventory(GUIOverlay.SPINNING_WHEEL_OVERLAY.asGlyph() + "§f" + Icon.MATERIAL.get() + "§f Spinning Wheel", InventoryId.SPINNING_WHEEL.asInt()));
         this.registry.register(InventoryId.DRAKKAR_BLACKSMITH.asInt(), () -> new ShopInventory(GUIOverlay.BLACKSMITH_SHOP_OVERLAY.asGlyph() + "§f" + Icon.HAMMER.get() + "§f Blacksmith", InventoryId.DRAKKAR_BLACKSMITH.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_BLACKSMITH.asInt())));
-        this.registry.register(InventoryId.BANK.asInt(), () -> new BankInventory(GUIOverlay.BANK_OVERLAY.asGlyph() + "§f" + Icon.DOLLAR.get() + "§f Bank", InventoryId.BANK.asInt(), bankQueryLockController));
+        this.registry.register(InventoryId.BANK.asInt(), () -> new BankInventory(GUIOverlay.BANK_OVERLAY.asGlyph() + "§f" + Icon.DOLLAR.get() + "§f Bank", InventoryId.BANK.asInt(), bankContentController));
         this.registry.register(InventoryId.INVESTMENT_BANKER.asInt(), () -> new ShopInventory(GUIOverlay.INVESTMENT_BANKER_OVERLAY.asGlyph() + "§f" + Icon.COIN_PILE.get() + "§f Investment Banker", InventoryId.INVESTMENT_BANKER.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.INVESTMENT_BANKER.asInt())));
         this.registry.register(InventoryId.JEWELER.asInt(), () -> new ShopInventory(GUIOverlay.JEWELER_SHOP_OVERLAY.asGlyph() + "§f" + Icon.GREEN_GEM.get() + "§f Jewellery Shop", InventoryId.JEWELER.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.JEWLER.asInt())));
         this.registry.register(InventoryId.XP_LAMP.asInt(), () -> new XPLampInventory(GUIOverlay.XP_INVENTORY_OVERLAY.asGlyph() + "§f" + Icon.EXPERIENCE.get() + "§f XP Lamp", InventoryId.XP_LAMP.asInt()));

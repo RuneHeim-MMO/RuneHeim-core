@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import java.sql.*;
 import java.util.*;
 
-public class BankContentRepository {
+public class BankContentRepository implements ItemStorageRepository {
     private final HikariPool pool;
 
     public BankContentRepository(HikariPool pool) {

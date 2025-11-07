@@ -6,7 +6,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.domain.bank.BankQueryLockController;
+import org.zuma.examplePlugin.domain.bank.RepositoryQueryLockController;
 import org.zuma.examplePlugin.domain.gui.ItemStackSlotPair;
 import org.zuma.examplePlugin.domain.gui.base.PaginatedBankGUI;
 import org.zuma.examplePlugin.domain.gui.serializer.ItemContainerContentSerializer;
@@ -17,15 +17,15 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class BankInventory extends PaginatedBankGUI {
-    private final BankQueryLockController bankQueryLockController;
+    private final RepositoryQueryLockController repositoryQueryLockController;
     private boolean isLoaded;
 
     @Nullable
     private UUID playerUUID;
 
-    public BankInventory(String title, int id, BankQueryLockController bankQueryLockController) {
+    public BankInventory(String title, int id, RepositoryQueryLockController repositoryQueryLockController) {
         super(title, id, 6, new HashSet<>(Arrays.asList(0, 1, 9, 10)));
-        this.bankQueryLockController = bankQueryLockController;
+        this.repositoryQueryLockController = repositoryQueryLockController;
         this.isLoaded = false;
         this.playerUUID = null;
     }
@@ -36,7 +36,7 @@ public class BankInventory extends PaginatedBankGUI {
 
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
             try {
-                bankContent[0] = bankQueryLockController.getByUUID(player.getUUID());
+                bankContent[0] = repositoryQueryLockController.getByUUID(player.getUUID());
             } catch (IllegalStateException e) {
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                     HudService.sendFailMessage(player, Component.text("Please wait! Save/load is in progress."));
@@ -98,7 +98,7 @@ public class BankInventory extends PaginatedBankGUI {
 
         try {
             String serialized = ItemContainerContentSerializer.serializeItemContainerContentSync(this, true);
-            this.bankQueryLockController.save(this.playerUUID, serialized);
+            this.repositoryQueryLockController.save(this.playerUUID, serialized);
         } catch (Exception e) {
             RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(this.playerUUID);
 

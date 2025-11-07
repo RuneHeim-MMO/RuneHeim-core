@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class BankQueryLockController {
-    private final BankContentRepository bankContentRepository;
+public class RepositoryQueryLockController {
+    private final ItemStorageRepository contentRepository;
     private final List<UUID> lockedPlayerUUIDs = new ArrayList<>();
 
-    public BankQueryLockController(BankContentRepository bankContentRepository) {
-        this.bankContentRepository = bankContentRepository;
+    public RepositoryQueryLockController(ItemStorageRepository contentRepository) {
+        this.contentRepository = contentRepository;
     }
 
     @Nullable
@@ -23,7 +23,7 @@ public class BankQueryLockController {
 
         lockedPlayerUUIDs.add(playerUUID);
         try {
-            return bankContentRepository.getByUUID(playerUUID);
+            return contentRepository.getByUUID(playerUUID);
         } finally {
             lockedPlayerUUIDs.remove(playerUUID);
         }
@@ -38,7 +38,7 @@ public class BankQueryLockController {
 
         lockedPlayerUUIDs.add(playerUUID);
         try {
-            bankContentRepository.save(playerUUID, content);
+            contentRepository.save(playerUUID, content);
         } finally {
             lockedPlayerUUIDs.remove(playerUUID);
         }

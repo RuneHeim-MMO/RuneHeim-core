@@ -154,6 +154,12 @@ public class ItemRepository {
                                 , 1)
                 ),
 
+
+                // Tools
+                new ItemEntity(new AbstractItemMeta(ItemType.STORAGE_ITEM, ItemId.TOOL_BAG.asInt(), Material.COAL, ItemRarity.RARE, "Tool Bag", List.of("Bag for all of your tools."), null, true, 1.0),
+                        toVersionedJson(new StorageItemMeta(List.of(ItemType.TOOL, ItemType.TOOL_WITH_GEM_SOCKETS)), 1)),
+
+
                 // Dungeon
                 new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.LAVA_DUNGEON_KEY_A.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Dungeon Key A", List.of("A weird looking key."), null, true, 1.0), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.LAVA_DUNGEON_KEY_B.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Dungeon Key B", List.of("A weird looking key."), null, true, 1.0), null),
