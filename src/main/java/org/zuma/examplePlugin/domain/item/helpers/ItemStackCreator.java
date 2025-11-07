@@ -32,8 +32,8 @@ public class ItemStackCreator {
         return new ItemStack(itemType.material);
     }
 
-    public void setItemStackMeta(ItemStack itemStack, int amount) {
-        itemType.getMetaGenerator().setItemStackProps(itemStack);
+    public void setItemStackMeta(ItemStack itemStack, int amount, boolean generateState) {
+        itemType.getMetaGenerator().setItemStackProps(itemStack, generateState);
 
         if (itemType.material == Material.PLAYER_HEAD && itemType.headTexture != null) {
             HeadGenerator.setHeadMeta(itemStack, itemType.headTexture);
