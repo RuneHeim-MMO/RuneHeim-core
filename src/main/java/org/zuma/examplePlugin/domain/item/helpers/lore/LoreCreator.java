@@ -5,5 +5,5 @@ import net.kyori.adventure.text.Component;
 import java.util.List;
 
 public interface LoreCreator {
-    public List<Component> getLore();
+    List<Component> getLore();
 }

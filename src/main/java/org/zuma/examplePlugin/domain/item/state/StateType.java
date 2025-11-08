@@ -5,4 +5,5 @@ public enum StateType {
     GEAR_GEM_SOCKETS,
     FAIRY_STATE,
     MOUNT_STATE,
+    STORAGE_ITEM_UUID_STATE,
 }

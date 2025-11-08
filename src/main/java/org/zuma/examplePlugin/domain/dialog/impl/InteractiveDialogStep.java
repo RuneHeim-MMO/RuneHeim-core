@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 public class InteractiveDialogStep extends DialogStep {
     private final List<InteractiveDialogOption> interactiveContent;
     private final List<DialogText> textContent;
-    private boolean loop;
+    private final boolean loop;
 
 
     public InteractiveDialogStep(List<DialogText> textContent, List<InteractiveDialogOption> interactiveOptions, boolean loop, String uniqueIdentifier) {

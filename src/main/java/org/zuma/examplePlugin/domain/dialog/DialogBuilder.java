@@ -208,7 +208,7 @@ public class DialogBuilder {
     // Inner builder for condition steps
     public static class ConditionStepBuilder {
         private final String parentId;
-        private List<String> rawConditions = new ArrayList<>();
+        private final List<String> rawConditions = new ArrayList<>();
         private List<DialogStep> truthyFollowUp = null;
         private List<DialogStep> falsyFollowUp = null;
         private ConditionStep.LogicalOperator logicalOperator = ConditionStep.LogicalOperator.AND;
@@ -271,7 +271,7 @@ public class DialogBuilder {
     public static class OptionBuilder {
         private final String label;
         private List<DialogStep> followupSteps = null;
-        private List<String> actions = new ArrayList<>();
+        private final List<String> actions = new ArrayList<>();
         private Runnable runnable = null;
         private final String parentId;
 

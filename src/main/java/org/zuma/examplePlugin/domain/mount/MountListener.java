@@ -110,7 +110,6 @@ public class MountListener implements Listener {
 
             // Restore speed attribute
             RuneQuestPlugin.getMountHandler().restoreMountAttributes(runePlayer, horse);
-            return;
         } else {
             HudService.sendFailMessage(runePlayer, Component.text("This mount belongs to someone else."));
         }

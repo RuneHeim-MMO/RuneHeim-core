@@ -30,6 +30,7 @@ import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.item.helpers.lore.*;
 import org.zuma.examplePlugin.domain.item.impl.EmptyContainer;
 import org.zuma.examplePlugin.domain.item.impl.Mount;
+import org.zuma.examplePlugin.domain.item.impl.StorageItem;
 import org.zuma.examplePlugin.domain.item.impl.consumable.Food;
 import org.zuma.examplePlugin.domain.item.impl.consumable.Potion;
 import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
@@ -144,6 +145,10 @@ public class MetaGenerator {
 
         if (itemType instanceof Mount mount) {
             lore.addAll(new MountLore(mount, item).getLore());
+        }
+
+        if (itemType instanceof StorageItem) {
+            lore.addAll(new StorageItemLore((StorageItem) itemType, item).getLore());
         }
 
         lore.add(Component.empty());

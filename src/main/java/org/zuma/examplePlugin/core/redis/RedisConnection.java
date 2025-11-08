@@ -86,7 +86,6 @@ public class RedisConnection {
 
                 if (targetServerIds.isEmpty()) {
                     asyncCommands.publish("global-events", data);
-                    return;
                 } else {
                     for (Integer serverId : targetServerIds) {
                         asyncCommands.publish("server-" + serverId, data);

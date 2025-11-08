@@ -81,6 +81,7 @@ public enum Icon {
     FISHING_HOOK("⢫"),
     ANCHOR("⏚"),
     PARTY("⾱"),
+    STORAGE("⾆"),
 
     SKULL_OPEN_MOUTH("₮"),
     SKULL_CLOSED_MOUTH("⺳"),

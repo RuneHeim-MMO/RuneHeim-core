@@ -341,7 +341,12 @@ public enum ItemId {
     LAVA_DUNGEON_KEY_A(3500),
     LAVA_DUNGEON_KEY_B(3501),
     LAVA_DUNGEON_KEY_C(3502),
-    LAVA_DUNGEON_KEY_D(3503);
+    LAVA_DUNGEON_KEY_D(3503),
+
+    TOOL_BAG(3600),
+    SMALL_ITEM_BAG(3601),
+    MEDIUM_ITEM_BAG(3602),
+    LARGE_ITEM_BAG(3603);
 
 
     private final int id;

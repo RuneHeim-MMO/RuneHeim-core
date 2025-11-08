@@ -195,7 +195,6 @@ public class PartyMenu extends PaginatedIndividualGUI {
                 HudService.sendFailMessage(player, Component.text(e.getMessage()));
             }
 
-            return;
         }
 
 

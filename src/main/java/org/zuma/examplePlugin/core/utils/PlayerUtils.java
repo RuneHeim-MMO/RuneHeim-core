@@ -317,11 +317,7 @@ public class PlayerUtils {
     public static boolean canPlayerManipulateWorld(Player player) {
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
 
-        if (runePlayer != null && runePlayer.getRole().hasPermission(Permission.WORLD_MANIPULATION) && player.getGameMode() == GameMode.CREATIVE) {
-            return true;
-        }
-
-        return false;
+        return runePlayer != null && runePlayer.getRole().hasPermission(Permission.WORLD_MANIPULATION) && player.getGameMode() == GameMode.CREATIVE;
     }
 
 }
