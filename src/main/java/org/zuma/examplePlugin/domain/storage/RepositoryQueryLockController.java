@@ -26,7 +26,7 @@ public class RepositoryQueryLockController {
         boolean opened = openedContainerUUIDs.contains(containerUUID);
 
         if (locked) {
-            throw new IllegalStateException(containerUUID + " Is currently locked! (Save in progress?)");
+            throw new IllegalStateException(containerUUID + " Is currently locked! (Save/loading in progress?)");
         }
 
         if (opened) {
@@ -44,18 +44,12 @@ public class RepositoryQueryLockController {
     }
 
     public void save(UUID containerUUID, String content) throws IllegalStateException {
-        boolean locked = loadingContainerUUIDs.contains(containerUUID);
-        boolean opened = openedContainerUUIDs.contains(containerUUID);
-
-        if (locked) {
-            throw new IllegalStateException(containerUUID + " is already locked! (Concurrent save?)");
+        if (!loadingContainerUUIDs.contains(containerUUID)) {
+            loadingContainerUUIDs.add(containerUUID);
+        } else {
+            throw new IllegalStateException(containerUUID + " Is currently locked! (Save in progress?)");
         }
 
-        if (opened) {
-            throw new IllegalStateException(containerUUID + " Is currently opened by another player!");
-        }
-
-        loadingContainerUUIDs.add(containerUUID);
         try {
             contentRepository.save(containerUUID, content);
             RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Saved storage content for container UUID: " + containerUUID);
@@ -65,9 +59,7 @@ public class RepositoryQueryLockController {
     }
 
     public void lockContainerUUID(UUID containerUUID) {
-        boolean opened = openedContainerUUIDs.contains(containerUUID);
-
-        if (opened) {
+        if (openedContainerUUIDs.contains(containerUUID)) {
             throw new IllegalStateException(containerUUID + " Is currently opened by another player!");
         }
 

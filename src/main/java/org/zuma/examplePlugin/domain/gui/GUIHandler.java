@@ -122,7 +122,7 @@ public class GUIHandler {
         this.registry.register(InventoryId.TOOL_BAG.asInt(), () -> new ToolBagInventory(GUIOverlay.TOOL_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Tool Bag", InventoryId.TOOL_BAG.asInt(), storageItemContentController));
         this.registry.register(InventoryId.SMALL_STORAGE_BAG.asInt(), () -> new SmallBagInventory(GUIOverlay.SMALL_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Small Bag", InventoryId.SMALL_STORAGE_BAG.asInt(), storageItemContentController));
         this.registry.register(InventoryId.MEDIUM_STORAGE_BAG.asInt(), () -> new MediumBagInventory(GUIOverlay.MEDIUM_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Medium Bag", InventoryId.MEDIUM_STORAGE_BAG.asInt(), storageItemContentController));
-        this.registry.register(InventoryId.LARGE_STORAGE_BAG.asInt(), () -> new LargeBagInventory(GUIOverlay.LARGE_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§fLarge Bag", InventoryId.LARGE_STORAGE_BAG.asInt(), storageItemContentController));
+        this.registry.register(InventoryId.LARGE_STORAGE_BAG.asInt(), () -> new LargeBagInventory(GUIOverlay.LARGE_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Large Bag", InventoryId.LARGE_STORAGE_BAG.asInt(), storageItemContentController));
 
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");

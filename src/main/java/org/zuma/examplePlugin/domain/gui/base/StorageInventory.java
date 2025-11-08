@@ -140,10 +140,6 @@ public class StorageInventory extends PaginatedStorageGUI {
             return;
         }
 
-        if (forceUnlock) {
-            this.repositoryQueryLockController.unlockContainerUUID(containerUUID);
-        }
-
         if (updateItemMap) {
             updateMemoryMap();
         }
@@ -151,6 +147,10 @@ public class StorageInventory extends PaginatedStorageGUI {
         try {
             String serialized = ItemContainerContentSerializer.serializeItemContainerContentSync(this, true);
             this.repositoryQueryLockController.save(this.containerUUID, serialized);
+
+            if (forceUnlock) {
+                this.repositoryQueryLockController.unlockContainerUUID(containerUUID);
+            }
         } catch (Exception e) {
             RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(this.playerUUID);
 
@@ -181,10 +181,6 @@ public class StorageInventory extends PaginatedStorageGUI {
 
     @Override
     public void onInventoryClose(@Nullable InventoryCloseEvent event, @Nullable RunePlayer player) {
-        if (this.containerUUID != null) {
-            this.repositoryQueryLockController.unlockContainerUUID(containerUUID);
-        }
-
         if (this.containerUUID == null || this.playerUUID == null || !this.isLoaded) {
             return;
         }
@@ -213,7 +209,7 @@ public class StorageInventory extends PaginatedStorageGUI {
         }
 
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
-            saveContainerSync(false, false);
+            saveContainerSync(false, true);
         });
     }
 
