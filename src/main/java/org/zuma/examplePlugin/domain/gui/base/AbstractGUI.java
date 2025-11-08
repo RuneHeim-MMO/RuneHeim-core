@@ -7,6 +7,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -125,6 +126,10 @@ public abstract class AbstractGUI implements Listener {
 
     // Returns true if inventory opening succeeded. (It might fail if trying to open anvil without hammer in hands for example)
     public abstract boolean attemptOpenInventory(RunePlayer player, Runnable onFail);
+
+    public void onPlayerDropItem(PlayerDropItemEvent event, RunePlayer player) {
+
+    }
 
     public void onInventoryClick(InventoryClickEvent event, int slot, RunePlayer player) {
 

@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
@@ -28,7 +29,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class StorageInventory extends PaginatedStorageGUI {
     private final RepositoryQueryLockController repositoryQueryLockController;
     private final StorageType type;
-    private boolean isLoaded, appendIdsToPDC;
+    private boolean isLoaded;
 
     @Nullable
     private UUID playerUUID, containerUUID;
@@ -38,7 +39,6 @@ public class StorageInventory extends PaginatedStorageGUI {
         this.repositoryQueryLockController = repositoryQueryLockController;
         this.type = type;
         this.isLoaded = false;
-        this.appendIdsToPDC = appendIdsToPDC;
         this.playerUUID = null;
         this.containerUUID = null;
     }
@@ -221,6 +221,26 @@ public class StorageInventory extends PaginatedStorageGUI {
     public void handleInventoryClick(InventoryClickEvent event, int slot, RunePlayer player) {
         if (!this.isLoaded) {
             player.asBukkitPlayer().closeInventory();
+        }
+    }
+
+    @Override
+    public void onPlayerDropItem(PlayerDropItemEvent event, RunePlayer player) {
+        AbstractItemType droppedType = RuneQuestPlugin.getItemRegistry().getType(event.getItemDrop().getItemStack());
+
+        if (droppedType instanceof StorageItem storageItem) {
+            StorageItemState state = storageItem.getState(event.getItemDrop().getItemStack());
+
+            // Prevent dropping if item state is invalid (just to be safe)
+            if (state == null) {
+                event.setCancelled(true);
+                return;
+            }
+
+            // Prevent dropping if the dropped storage is the one currently being accessed
+            if (state.getUUID().equals(this.containerUUID)) {
+                event.setCancelled(true);
+            }
         }
     }
 

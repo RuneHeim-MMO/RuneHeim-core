@@ -6,6 +6,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Icon;
@@ -251,6 +254,36 @@ public class GUIHandler {
         if (viewerUUIDs.isEmpty()) {
             inventoryViewers.remove(instanceUUID);
         }
+    }
+
+    public void onItemDrop(PlayerDropItemEvent event) {
+        Player bukkitPlayer = event.getPlayer();
+        Inventory topInventory = bukkitPlayer.getOpenInventory().getTopInventory();
+
+        if (topInventory.getType() == InventoryType.PLAYER) {
+            return;
+        }
+
+        InventoryHolder holder = topInventory.getHolder();
+
+        if (!(holder instanceof IDHolder idHolder)) {
+            return;
+        }
+
+        RunePlayer player = playerManager.getRunePlayer(bukkitPlayer);
+        int inventoryId = idHolder.id();
+
+        if (player == null) {
+            return;
+        }
+
+        AbstractGUI matchingGUI = this.registry.getInstance(bukkitPlayer.getUniqueId(), inventoryId);
+
+        if (matchingGUI == null) {
+            return;
+        }
+
+        matchingGUI.onPlayerDropItem(event, player);
     }
 
     public void onInventoryClick(InventoryClickEvent event) {
