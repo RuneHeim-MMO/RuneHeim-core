@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.gui.impl.individual;
+package org.zuma.examplePlugin.domain.gui.impl.individual.storage;
 
 import org.zuma.examplePlugin.domain.storage.RepositoryQueryLockController;
 import org.zuma.examplePlugin.domain.gui.base.StorageInventory;

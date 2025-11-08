@@ -9,6 +9,8 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
+import org.zuma.examplePlugin.core.utils.StorageUtils;
+import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.impl.StorageItem;
 import org.zuma.examplePlugin.domain.item.state.states.StorageItemState;
@@ -21,11 +23,12 @@ import org.zuma.examplePlugin.domain.storage.constants.StorageType;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class StorageInventory extends PaginatedStorageGUI {
     private final RepositoryQueryLockController repositoryQueryLockController;
     private final StorageType type;
-    private boolean isLoaded;
+    private boolean isLoaded, appendIdsToPDC;
 
     @Nullable
     private UUID playerUUID, containerUUID;
@@ -35,6 +38,7 @@ public class StorageInventory extends PaginatedStorageGUI {
         this.repositoryQueryLockController = repositoryQueryLockController;
         this.type = type;
         this.isLoaded = false;
+        this.appendIdsToPDC = appendIdsToPDC;
         this.playerUUID = null;
         this.containerUUID = null;
     }
@@ -42,15 +46,15 @@ public class StorageInventory extends PaginatedStorageGUI {
     @Override
     public boolean attemptOpenInventory(RunePlayer player, Runnable onFail) {
         final String[] storageContent = {null};
+        ItemStack inHand = PlayerUtils.getItemStackInHand(player.asBukkitPlayer());
+        AbstractItemType itemTypeInHand = RuneQuestPlugin.getItemRegistry().getType(inHand);
 
         // Determine container UUID based on storage type
         switch (type) {
             case BANK -> containerUUID = player.getUUID(); // Each player has their own bank
             case ITEM_STORAGE -> {
-                ItemStack inHand = PlayerUtils.getItemStackInHand(player.asBukkitPlayer());
-                AbstractItemType itemType = RuneQuestPlugin.getItemRegistry().getType(inHand);
 
-                if (!(itemType instanceof StorageItem storageItem)) {
+                if (!(itemTypeInHand instanceof StorageItem storageItem)) {
                     HudService.sendFailMessage(player, Component.text("Invalid item in hand."));
                     onFail.run();
                     return false;
@@ -161,6 +165,20 @@ public class StorageInventory extends PaginatedStorageGUI {
 
     }
 
+    private void writeToStoragePDC(ItemStack item, List<ItemStackSlotPair> items) {
+        List<ItemRecord> records = items.stream().map(i -> {
+            AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(i.itemStack());
+            if (type == null) return null;
+            return new ItemRecord(type.id, i.itemStack().getAmount());
+        }).toList();
+
+        StorageUtils.addDisplayItemIdsPDC(item, records);
+
+        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(item);
+        if (type == null) return;
+        type.getMetaGenerator().updatePresentationLayer(item);
+    }
+
     @Override
     public void onInventoryClose(@Nullable InventoryCloseEvent event, @Nullable RunePlayer player) {
         if (this.containerUUID != null) {
@@ -175,6 +193,23 @@ public class StorageInventory extends PaginatedStorageGUI {
 
         if (player != null) {
             SoundType.STORAGE_CLOSE.play(player, true);
+
+            AtomicReference<ItemStack> matchingContainer = new AtomicReference<>();
+            Arrays.stream(player.asBukkitPlayer().getInventory().getContents()).forEach(inInventory -> {
+                if (inInventory == null) return;
+                AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(inInventory);
+                if (!(type instanceof StorageItem)) return;
+                StorageItemState state = ((StorageItem) type).getState(inInventory);
+                if (state == null) return;
+                if (state.getUUID().equals(this.containerUUID)) {
+                    matchingContainer.set(inInventory);
+                }
+            });
+
+            if (matchingContainer.get() != null) {
+                writeToStoragePDC(matchingContainer.get(), getContent());
+            }
+
         }
 
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {

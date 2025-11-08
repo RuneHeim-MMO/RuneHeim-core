@@ -50,7 +50,10 @@ public enum InventoryId {
     DRAKKAR_TANNER_SHOP(40),
     PRAYER_MENU(41),
     PARTY_MENU(42),
-    TOOL_BAG(43);
+    TOOL_BAG(43),
+    SMALL_STORAGE_BAG(44),
+    MEDIUM_STORAGE_BAG(45),
+    LARGE_STORAGE_BAG(46);
 
 
     private final int id;

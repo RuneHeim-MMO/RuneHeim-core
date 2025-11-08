@@ -12,7 +12,10 @@ public enum PersistenceDataKey {
     UNTRADEABLE_OWNER_UUID("untradeable_owner_uuid", PersistentDataType.STRING),
 
     LOCKED_TO_OWNER_UUID("locked_to_owner", PersistentDataType.STRING),
-    LOCKED_TO_OWNER_UNTIL("locked_to_owner_until", PersistentDataType.LONG);
+    LOCKED_TO_OWNER_UNTIL("locked_to_owner_until", PersistentDataType.LONG),
+
+    STORAGE_ITEM_STORED_IDS("stored_ids", PersistentDataType.INTEGER_ARRAY),
+    STORAGE_ITEM_STORED_AMOUNTS("stored_amounts", PersistentDataType.INTEGER_ARRAY);
 
     private final String keyName;
     private final PersistentDataType<?, ?> type;

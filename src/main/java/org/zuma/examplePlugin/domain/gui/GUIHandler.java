@@ -11,7 +11,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.InventoryOpenerBlock;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.domain.gui.base.StorageInventory;
+import org.zuma.examplePlugin.domain.gui.impl.individual.storage.*;
 import org.zuma.examplePlugin.domain.storage.RepositoryQueryLockController;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
@@ -116,7 +116,10 @@ public class GUIHandler {
         this.registry.register(InventoryId.PRAYER_MENU.asInt(), () -> new PrayerMenu(GUIOverlay.PRAYER_MENU_OVERLAY.asGlyph() + "§f" + Icon.PRAYER.get() + "§b Prayer", InventoryId.PRAYER_MENU.asInt()));
         this.registry.register(InventoryId.PARTY_MENU.asInt(), () -> new PartyMenu(GUIOverlay.PARTY_MENU_OVERLAY.asGlyph() + "§f" + Icon.PARTY.get() + "§f Party", InventoryId.PARTY_MENU.asInt()));
 
-        this.registry.register(InventoryId.TOOL_BAG.asInt(), () -> new ToolBagInventory(GUIOverlay.TOOL_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Tool Bag", InventoryId.TOOL_BAG.asInt(), StorageCategory.TOOLS, storageItemContentController));
+        this.registry.register(InventoryId.TOOL_BAG.asInt(), () -> new ToolBagInventory(GUIOverlay.TOOL_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Tool Bag", InventoryId.TOOL_BAG.asInt(), storageItemContentController));
+        this.registry.register(InventoryId.SMALL_STORAGE_BAG.asInt(), () -> new SmallBagInventory(GUIOverlay.SMALL_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Small Bag", InventoryId.SMALL_STORAGE_BAG.asInt(), storageItemContentController));
+        this.registry.register(InventoryId.MEDIUM_STORAGE_BAG.asInt(), () -> new MediumBagInventory(GUIOverlay.MEDIUM_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Medium Bag", InventoryId.MEDIUM_STORAGE_BAG.asInt(), storageItemContentController));
+        this.registry.register(InventoryId.LARGE_STORAGE_BAG.asInt(), () -> new LargeBagInventory(GUIOverlay.LARGE_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§fLarge Bag", InventoryId.LARGE_STORAGE_BAG.asInt(), storageItemContentController));
 
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");

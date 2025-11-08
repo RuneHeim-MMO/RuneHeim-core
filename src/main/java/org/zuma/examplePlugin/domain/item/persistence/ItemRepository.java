@@ -8,6 +8,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.droptable.DropTableId;
+import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.item.StatsEffect;
 import org.zuma.examplePlugin.domain.item.constants.*;
 import org.zuma.examplePlugin.domain.item.impl.EmptyContainer;
@@ -154,10 +155,18 @@ public class ItemRepository {
                                 , 1)
                 ),
 
+                // Storage items
+                new ItemEntity(new AbstractItemMeta(ItemType.STORAGE_ITEM, ItemId.TOOL_BAG.asInt(), Material.COAL, ItemRarity.RARE, "Tool Bag (9 slots)", List.of("Bag for all of your tools."), null, true, 1.0),
+                        toVersionedJson(new StorageItemMeta(InventoryId.TOOL_BAG), 1)),
 
-                // Tools
-                new ItemEntity(new AbstractItemMeta(ItemType.STORAGE_ITEM, ItemId.TOOL_BAG.asInt(), Material.COAL, ItemRarity.RARE, "Tool Bag", List.of("Bag for all of your tools."), null, true, 1.0),
-                        toVersionedJson(new StorageItemMeta(), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.STORAGE_ITEM, ItemId.SMALL_ITEM_BAG.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Small Item Bag (6 slots)", List.of("A compact bag, perfect for carrying essentials on short quests."), null, true, 1.0),
+                        toVersionedJson(new StorageItemMeta(InventoryId.SMALL_STORAGE_BAG), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.STORAGE_ITEM, ItemId.MEDIUM_ITEM_BAG.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Medium Item Bag (9 slots)", List.of("A sturdy bag with ample space for adventurer's tools and trinkets."), null, true, 1.0),
+                        toVersionedJson(new StorageItemMeta(InventoryId.MEDIUM_STORAGE_BAG), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.STORAGE_ITEM, ItemId.LARGE_ITEM_BAG.asInt(), Material.COAL, ItemRarity.MYTHIC, "Large Item Bag (12 slots)", List.of("A massive bag capable of holding the spoils of even the longest journeys."), null, true, 1.0),
+                        toVersionedJson(new StorageItemMeta(InventoryId.LARGE_STORAGE_BAG), 1)),
 
 
                 // Dungeon

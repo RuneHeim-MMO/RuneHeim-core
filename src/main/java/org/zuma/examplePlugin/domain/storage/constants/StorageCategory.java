@@ -3,13 +3,20 @@ package org.zuma.examplePlugin.domain.storage.constants;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public enum StorageCategory {
     MISC("Misc items", List.of(ItemType.MISC, ItemType.REMAINS, ItemType.CURRENCY, ItemType.CHANCE_ITEM, ItemType.XP_LAMP)),
     EQUIPMENT("Equipment", List.of(ItemType.FAIRY, ItemType.EQUIPMENT, ItemType.EQUIPMENT_WITH_GEM_SOCKETS, ItemType.ACCESSORY_RING, ItemType.ACCESSORY_AMULET, ItemType.MOUNT, ItemType.MELEE_WEAPON, ItemType.MELEE_WEAPON_WITH_GEM_SOCKETS, ItemType.RANGED_WEAPON, ItemType.RANGED_WEAPON_WITH_SOCKETS, ItemType.ARROW)),
     MATERIAL("Materials", List.of(ItemType.EMPTY_CONTAINER, ItemType.MATERIAL, ItemType.MATERIAL_SCROLL, ItemType.GEM)),
     CONSUMABLES("Consumables", List.of(ItemType.FOOD, ItemType.POTION, ItemType.FAIRY_FOOD, ItemType.FAIRY_FRUIT)),
-    TOOLS("Tools", List.of(ItemType.TOOL, ItemType.TOOL_WITH_GEM_SOCKETS, ItemType.COMPASS));
+    TOOLS("Tools", List.of(ItemType.TOOL, ItemType.TOOL_WITH_GEM_SOCKETS, ItemType.COMPASS)),
+    ANY("Any Items", Stream.of(
+            StorageCategory.MISC.getAssociatedItemTypes(),
+            StorageCategory.EQUIPMENT.getAssociatedItemTypes(),
+            StorageCategory.MATERIAL.getAssociatedItemTypes(),
+            StorageCategory.CONSUMABLES.getAssociatedItemTypes(),
+            StorageCategory.TOOLS.getAssociatedItemTypes()).flatMap(List::stream).toList());
 
     private final String displayName;
     private final List<ItemType> associatedItemTypes;

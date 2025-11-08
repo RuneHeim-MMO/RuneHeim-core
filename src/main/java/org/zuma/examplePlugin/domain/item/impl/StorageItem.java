@@ -22,10 +22,13 @@ import java.util.List;
 import java.util.UUID;
 
 public class StorageItem extends AbstractItemType implements Stateful {
+    private final InventoryId inventoryId;
+
     public StorageItem(AbstractItemMeta meta, StorageItemMeta storageMeta) {
         super(meta);
-        super.setTypeLore("Bag", Icon.ROCK.get());
+        super.setTypeLore("Bag", Icon.STORAGE.get());
         this.setStateType(StateType.STORAGE_ITEM_UUID_STATE);
+        this.inventoryId = storageMeta.inventoryId();
     }
 
     @Override
@@ -50,7 +53,7 @@ public class StorageItem extends AbstractItemType implements Stateful {
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player, StateManager itemStateManager) {
-        RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.TOOL_BAG.asInt(), player, null);
+        RuneQuestPlugin.getGUIHandler().openInventory(inventoryId.asInt(), player, null);
     }
 
 
