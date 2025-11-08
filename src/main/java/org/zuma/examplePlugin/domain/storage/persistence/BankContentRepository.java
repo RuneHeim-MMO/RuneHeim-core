@@ -1,6 +1,7 @@
-package org.zuma.examplePlugin.domain.storage;
+package org.zuma.examplePlugin.domain.storage.persistence;
 
 import org.zuma.examplePlugin.core.database.HikariPool;
+import org.zuma.examplePlugin.domain.storage.ItemStorageRepository;
 
 import javax.annotation.Nullable;
 import java.sql.*;

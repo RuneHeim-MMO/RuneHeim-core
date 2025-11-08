@@ -11,14 +11,13 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.impl.StorageItem;
-import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.states.StorageItemState;
 import org.zuma.examplePlugin.domain.storage.RepositoryQueryLockController;
 import org.zuma.examplePlugin.domain.gui.ItemStackSlotPair;
 import org.zuma.examplePlugin.domain.gui.serializer.ItemContainerContentSerializer;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.storage.StorageType;
+import org.zuma.examplePlugin.domain.storage.constants.StorageType;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -74,12 +73,13 @@ public class StorageInventory extends PaginatedStorageGUI {
             }
         }
 
+
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
             try {
                 storageContent[0] = repositoryQueryLockController.getByUUID(containerUUID);
             } catch (IllegalStateException e) {
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                    HudService.sendFailMessage(player, Component.text("Please wait! Save/load is in progress."));
+                    HudService.sendFailMessage(player, Component.text(e.getMessage()));
                     onFail.run();
                 });
                 return;
@@ -120,6 +120,9 @@ public class StorageInventory extends PaginatedStorageGUI {
                 this.isLoaded = true;
                 this.playerUUID = player.getUUID();
                 SoundType.STORAGE_OPEN.play(player, true);
+
+                // Allow only 1 player to access the same storage at the same time
+                this.repositoryQueryLockController.lockContainerUUID(containerUUID);
                 player.asBukkitPlayer().openInventory(getBaseInventory());
             });
 
@@ -128,9 +131,13 @@ public class StorageInventory extends PaginatedStorageGUI {
         return true;
     }
 
-    public void saveBankSync(boolean updateItemMap) {
+    public void saveContainerSync(boolean updateItemMap, boolean forceUnlock) {
         if (this.containerUUID == null || this.playerUUID == null || !this.isLoaded) {
             return;
+        }
+
+        if (forceUnlock) {
+            this.repositoryQueryLockController.unlockContainerUUID(containerUUID);
         }
 
         if (updateItemMap) {
@@ -156,6 +163,10 @@ public class StorageInventory extends PaginatedStorageGUI {
 
     @Override
     public void onInventoryClose(@Nullable InventoryCloseEvent event, @Nullable RunePlayer player) {
+        if (this.containerUUID != null) {
+            this.repositoryQueryLockController.unlockContainerUUID(containerUUID);
+        }
+
         if (this.containerUUID == null || this.playerUUID == null || !this.isLoaded) {
             return;
         }
@@ -167,7 +178,7 @@ public class StorageInventory extends PaginatedStorageGUI {
         }
 
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
-            saveBankSync(false);
+            saveContainerSync(false, false);
         });
     }
 

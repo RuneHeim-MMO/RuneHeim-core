@@ -92,7 +92,7 @@ public class GUIRegistry {
 
             if (instance instanceof StorageInventory bankGUI) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Attempting to save " + uuid + "'s bank contents.");
-                bankGUI.saveBankSync(true);
+                bankGUI.saveContainerSync(true, true);
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, uuid + "'s bank contents saved successfully.");
             }
 

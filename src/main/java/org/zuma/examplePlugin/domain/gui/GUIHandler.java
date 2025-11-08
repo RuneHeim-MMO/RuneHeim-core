@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.InventoryOpenerBlock;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.domain.gui.base.StorageInventory;
 import org.zuma.examplePlugin.domain.storage.RepositoryQueryLockController;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
@@ -24,6 +25,7 @@ import org.zuma.examplePlugin.domain.mob.base.AbstractInventoryOpener;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.shop.constants.ShopId;
+import org.zuma.examplePlugin.domain.storage.constants.StorageCategory;
 import org.zuma.examplePlugin.events.inventory.RuneInventoryClick;
 import org.zuma.examplePlugin.events.inventory.RuneInventoryCloseEvent;
 import org.zuma.examplePlugin.events.inventory.RuneInventoryOpenEvent;
@@ -35,10 +37,12 @@ import java.util.List;
 import java.util.UUID;
 
 public class GUIHandler {
+    private final static long INVENTORY_OPEN_COOLDOWN_MS = 500L;
+    private final static long INVENTORY_CLICK_COOLDOWN_MS = 150L;
+
     private final GUIRegistry registry;
     private final RunePlayerManager playerManager;
-    // Inventory UUID : List<PlayerUUID>
-    private final HashMap<UUID, List<UUID>> inventoryViewers = new HashMap<>();
+    private final HashMap<UUID, List<UUID>> inventoryViewers = new HashMap<>();    // Inventory UUID : List<PlayerUUID>
     private final HashMap<UUID, Runnable> closeRunnables = new HashMap<>();
     private final CooldownHandler cooldownHandler = new CooldownHandler();
 
@@ -112,7 +116,7 @@ public class GUIHandler {
         this.registry.register(InventoryId.PRAYER_MENU.asInt(), () -> new PrayerMenu(GUIOverlay.PRAYER_MENU_OVERLAY.asGlyph() + "§f" + Icon.PRAYER.get() + "§b Prayer", InventoryId.PRAYER_MENU.asInt()));
         this.registry.register(InventoryId.PARTY_MENU.asInt(), () -> new PartyMenu(GUIOverlay.PARTY_MENU_OVERLAY.asGlyph() + "§f" + Icon.PARTY.get() + "§f Party", InventoryId.PARTY_MENU.asInt()));
 
-        this.registry.register(InventoryId.TOOL_BAG.asInt(), () -> new ToolBagInventory(GUIOverlay.TOOL_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Tool Bag", InventoryId.TOOL_BAG.asInt(), storageItemContentController));
+        this.registry.register(InventoryId.TOOL_BAG.asInt(), () -> new ToolBagInventory(GUIOverlay.TOOL_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Tool Bag", InventoryId.TOOL_BAG.asInt(), StorageCategory.TOOLS, storageItemContentController));
 
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
@@ -125,6 +129,12 @@ public class GUIHandler {
 
     @Nullable
     public UUID openInventory(int id, RunePlayer player, @Nullable Runnable onClose, @Nullable AbstractInventoryOpener mobHolder, @Nullable InventoryOpenerBlock blockHolder) {
+        if (cooldownHandler.isCooldownInProgress(player)) {
+            return null;
+        }
+
+        cooldownHandler.startCooldown(player, INVENTORY_OPEN_COOLDOWN_MS);
+
         AbstractGUI matchingGUI = this.registry.getInstance(player.getUUID(), id);
 
         if (matchingGUI == null) {
@@ -263,7 +273,7 @@ public class GUIHandler {
             return;
         }
 
-        cooldownHandler.startCooldown(player, 250L);
+        cooldownHandler.startCooldown(player, INVENTORY_CLICK_COOLDOWN_MS);
 
         AbstractGUI matchingGUI = this.registry.getInstance(bukkitPlayer.getUniqueId(), inventoryId);
 
