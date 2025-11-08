@@ -11,7 +11,6 @@ import org.zuma.examplePlugin.domain.gui.base.StorageInventory;
 import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.item.impl.equipable.Tool;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.storage.RepositoryQueryLockController;
 import org.zuma.examplePlugin.domain.storage.constants.StorageCategory;
@@ -69,16 +68,6 @@ public class ToolBagInventory extends StorageInventory {
             AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(cursor);
             if (type == null || !(storageCategory.isItemTypeInCategory(type.type))) {
                 handleCancellation(player, event);
-                return;
-            }
-        }
-
-        // Handle taking items *out* of the top inventory
-        if (clickedInv.equals(topInv) && action.name().startsWith("PICKUP")) {
-            AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(current);
-            if (type == null || !(storageCategory.isItemTypeInCategory(type.type))) {
-                handleCancellation(player, event);
-                return;
             }
         }
     }

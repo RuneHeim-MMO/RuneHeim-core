@@ -525,7 +525,6 @@ public abstract class AbstractMob {
             me.getModels().values().forEach(am -> {
                 am.getAnimationHandler().playAnimation(animationName, speed, blendIn, loopCount, true);
             });
-            return;
         }
 
 

@@ -251,7 +251,7 @@ public class AdminCommand implements BasicCommand {
                     value = Arrays.toString(pdc.get(key, PersistentDataType.TAG_CONTAINER_ARRAY));
                 }
 
-                sender.sendMessage(key.toString() + " = " + (value != null ? value : "<unknown type>"));
+                sender.sendMessage(key + " = " + (value != null ? value : "<unknown type>"));
             }
 
         }

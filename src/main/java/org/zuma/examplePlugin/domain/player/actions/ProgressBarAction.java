@@ -26,7 +26,9 @@ public class ProgressBarAction implements InteractiveActionStrategy {
 
     @Nullable
     private BukkitTask task;
-    private boolean isCancelled, swingHand, progressBarVisible;
+    private boolean isCancelled;
+    private final boolean swingHand;
+    private final boolean progressBarVisible;
 
     public ProgressBarAction(boolean swingHand, boolean progressBarVisible) {
         this.task = null;

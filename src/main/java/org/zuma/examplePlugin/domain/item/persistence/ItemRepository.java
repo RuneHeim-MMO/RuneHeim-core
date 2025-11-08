@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemRepository {
-    private static double CRAFTED_ITEM_MULTIPLIER = 0.95;
+    private static final double CRAFTED_ITEM_MULTIPLIER = 0.95;
 
     private List<AbstractItemMeta> cached = new ArrayList<>();
     private final Gson gson = new Gson();
@@ -157,7 +157,7 @@ public class ItemRepository {
 
                 // Tools
                 new ItemEntity(new AbstractItemMeta(ItemType.STORAGE_ITEM, ItemId.TOOL_BAG.asInt(), Material.COAL, ItemRarity.RARE, "Tool Bag", List.of("Bag for all of your tools."), null, true, 1.0),
-                        toVersionedJson(new StorageItemMeta(List.of(ItemType.TOOL, ItemType.TOOL_WITH_GEM_SOCKETS)), 1)),
+                        toVersionedJson(new StorageItemMeta(), 1)),
 
 
                 // Dungeon

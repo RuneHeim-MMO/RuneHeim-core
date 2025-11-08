@@ -42,7 +42,7 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
 
             if (step instanceof InteractiveDialogStep interactiveStep) {
                 Boolean loop = getLoop(interactiveStep);
-                if (loop != null && loop != false) {
+                if (loop != null && loop) {
                     out.name("loop").value(loop);
                 }
             }

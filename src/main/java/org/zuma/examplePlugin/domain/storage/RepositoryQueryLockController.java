@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class RepositoryQueryLockController {
     private final ItemStorageRepository contentRepository;
-    private final List<UUID> loadingContainerUUIDs = new ArrayList<>();
-    private final List<UUID> openedContainerUUIDs = new ArrayList<>();
+    private final List<UUID> loadingContainerUUIDs = new CopyOnWriteArrayList<>();
+    private final List<UUID> openedContainerUUIDs = new CopyOnWriteArrayList<>();
 
     public RepositoryQueryLockController(ItemStorageRepository contentRepository) {
         this.contentRepository = contentRepository;

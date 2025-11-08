@@ -107,7 +107,6 @@ public class FairyHandler {
 
         } catch (Exception e) {
             HudService.sendFailMessage(player, Component.text(e.getMessage()));
-            return;
         }
 
     }

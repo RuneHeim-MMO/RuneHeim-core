@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class MobBehavior {
     private final List<SoundType> idleSounds, interactionSuccessSounds, interactionFailSounds, damageSounds, deathSounds;
-    private float pitchModifier;
+    private final float pitchModifier;
     private final Random random = new Random();
 
     public enum MobSoundType {

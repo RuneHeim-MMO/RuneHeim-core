@@ -22,12 +22,9 @@ import java.util.List;
 import java.util.UUID;
 
 public class StorageItem extends AbstractItemType implements Stateful {
-    private final List<ItemType> allowedItemTypes;
-
     public StorageItem(AbstractItemMeta meta, StorageItemMeta storageMeta) {
         super(meta);
         super.setTypeLore("Bag", Icon.ROCK.get());
-        this.allowedItemTypes = storageMeta.allowedItemTypes();
         this.setStateType(StateType.STORAGE_ITEM_UUID_STATE);
     }
 

@@ -149,11 +149,7 @@ public class FusionMasterInventory extends IndividualGUI {
             return false;
         }
 
-        if (socketState.getAvailableGemSlots() < validGemsCount) {
-            return false;
-        }
-
-        return true;
+        return socketState.getAvailableGemSlots() >= validGemsCount;
 
     }
 

@@ -115,7 +115,6 @@ public class InteractionDisabler implements Listener {
     public void onPutIntoOffhandSlot(InventoryClickEvent event) {
         if (event.getSlotType() == InventoryType.SlotType.QUICKBAR && event.getSlot() == 40) {
             event.setCancelled(true);
-            return;
         }
     }
 
