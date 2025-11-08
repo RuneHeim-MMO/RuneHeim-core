@@ -205,31 +205,32 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
 
         scaledHealth = Math.max(0, Math.min(maxHealth, scaledHealth));
 
-
-        // Set killer metadata on last hit
-        if (scaledHealth == 0 && hit.getAttacker().getEntity() instanceof Player playerAttacker) {
-            living.setMetadata(MetadataKeys.KILLER_UUID.asString(), new FixedMetadataValue(RuneQuestPlugin.getInstance(), playerAttacker.getUniqueId().toString()));
-
-            if (this.xpHandler.getPlayerWithMostPendingXP() != null) {
-                living.setMetadata(MetadataKeys.MOST_DAMAGING_PLAYER_UUID.asString(), new FixedMetadataValue(RuneQuestPlugin.getInstance(), this.xpHandler.getPlayerWithMostPendingXP().toString()));
-            }
-
-            RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(playerAttacker);
-            if (runePlayer != null) {
-                this.getMobMechanics().values().forEach(m -> m.onDeath(runePlayer, hit));
-
-            }
-
-            RuneEntityDeathEvent event = new RuneEntityDeathEvent(hit.getAttacker(), hit.getDefender(), hit, hit.getAttackType());
-            Bukkit.getServer().getPluginManager().callEvent(event);
-        }
-
         // Apply the scaled health to the entity
         this.xpHandler.registerHit(hit);
         this.lastDamagedAt = System.currentTimeMillis();
 
+        // Set killer metadata on last hit
+        if (scaledHealth == 0) {
+            if (this.xpHandler.getPlayerWithMostPendingXP() != null) {
+                living.setMetadata(MetadataKeys.MOST_DAMAGING_PLAYER_UUID.asString(), new FixedMetadataValue(RuneQuestPlugin.getInstance(), this.xpHandler.getPlayerWithMostPendingXP().toString()));
+            }
+
+            if (hit.getAttacker().getEntity() instanceof Player playerAttacker) {
+                living.setMetadata(MetadataKeys.KILLER_UUID.asString(), new FixedMetadataValue(RuneQuestPlugin.getInstance(), playerAttacker.getUniqueId().toString()));
+
+                RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(playerAttacker);
+                if (runePlayer != null) {
+                    this.getMobMechanics().values().forEach(m -> m.onDeath(runePlayer, hit));
+
+                }
+                RuneEntityDeathEvent event = new RuneEntityDeathEvent(hit.getAttacker(), hit.getDefender(), hit, hit.getAttackType());
+                Bukkit.getServer().getPluginManager().callEvent(event);
+
+            }
+        }
 
         living.setHealth(scaledHealth);
+
     }
 
     @Override

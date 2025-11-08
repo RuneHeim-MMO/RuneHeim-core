@@ -5,8 +5,9 @@ import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.module.ModuleContext;
-import org.zuma.examplePlugin.domain.bank.BankContentRepository;
-import org.zuma.examplePlugin.domain.bank.BankQueryLockController;
+import org.zuma.examplePlugin.domain.storage.persistence.BankContentRepository;
+import org.zuma.examplePlugin.domain.storage.RepositoryQueryLockController;
+import org.zuma.examplePlugin.domain.storage.persistence.StorageItemContentRepository;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
 import org.zuma.examplePlugin.domain.gui.GUIListener;
@@ -28,7 +29,10 @@ public class GUIModule implements PluginModule {
         GUIListener guiListener = new GUIListener(guiHandler);
 
         guiHandler.closeAllInventories();
-        guiHandler.initializeInventories(context.get(BlockLoader.class), new BankQueryLockController(new BankContentRepository(context.get(HikariPool.class))));
+        guiHandler.initializeInventories(context.get(BlockLoader.class),
+                new RepositoryQueryLockController(new BankContentRepository(context.get(HikariPool.class))),
+                new RepositoryQueryLockController(new StorageItemContentRepository(context.get(HikariPool.class))));
+
         plugin.getServer().getPluginManager().registerEvents(guiListener, plugin);
 
         context.bind(GUIHandler.class, guiHandler);

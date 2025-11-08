@@ -3,13 +3,13 @@ package org.zuma.examplePlugin.core.handlers.game;
 import net.kyori.adventure.text.Component;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Sheep;
+import org.bukkit.entity.*;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -22,7 +22,9 @@ import org.bukkit.permissions.PermissionDefault;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 
 import java.util.Locale;
 
@@ -102,11 +104,9 @@ public class InteractionDisabler implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerInteract(PlayerInteractEvent event) {
-        RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(event.getPlayer());
+        boolean isAllowed = PlayerUtils.canPlayerManipulateWorld(event.getPlayer());
 
-        if (player != null && player.getRole().hasPermission(org.zuma.examplePlugin.core.permissions.Permission.WORLD_MANIPULATION) && event.getPlayer().getGameMode() == GameMode.CREATIVE) {
-            return;
-        }
+        if (isAllowed) return;
 
         event.setCancelled(true);
     }
@@ -115,7 +115,6 @@ public class InteractionDisabler implements Listener {
     public void onPutIntoOffhandSlot(InventoryClickEvent event) {
         if (event.getSlotType() == InventoryType.SlotType.QUICKBAR && event.getSlot() == 40) {
             event.setCancelled(true);
-            return;
         }
     }
 
@@ -150,6 +149,49 @@ public class InteractionDisabler implements Listener {
     public void onEntityRegainHealth(EntityRegainHealthEvent event) {
         if (!(event.getEntity() instanceof LivingEntity)) return;
         event.setCancelled(true);
+    }
+
+    // Handle right-click interactions for armor stands
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
+        handleArmorStandInteraction(event.getRightClicked(), event.getPlayer(), event);
+    }
+
+    // Handle armor stand specific equipment changes
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent event) {
+        handleArmorStandInteraction(event.getRightClicked(), event.getPlayer(), event);
+    }
+
+    private void handleArmorStandInteraction(Entity entity, Player player, Cancellable event) {
+        if (entity instanceof ArmorStand) {
+            boolean isAllowed = PlayerUtils.canPlayerManipulateWorld(player);
+
+            if (!isAllowed) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onItemFrameDamage(EntityDamageByEntityEvent event) {
+        Entity entity = event.getEntity();
+
+        // Check if the damaged entity is an item frame
+        if (entity instanceof ItemFrame) {
+            // If damaged by a player
+            if (event.getDamager() instanceof Player player) {
+                boolean isAllowed = PlayerUtils.canPlayerManipulateWorld(player);
+
+                // If NOT allowed, cancel the damage
+                if (!isAllowed) {
+                    event.setCancelled(true);
+                }
+            } else {
+                // Cancel damage from non-players (mobs, arrows, etc.)
+                event.setCancelled(true);
+            }
+        }
     }
 
     @EventHandler

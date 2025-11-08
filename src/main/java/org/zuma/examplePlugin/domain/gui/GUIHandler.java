@@ -6,12 +6,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.InventoryOpenerBlock;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.domain.bank.BankQueryLockController;
+import org.zuma.examplePlugin.domain.gui.impl.individual.storage.*;
+import org.zuma.examplePlugin.domain.storage.RepositoryQueryLockController;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
 import org.zuma.examplePlugin.domain.gui.base.AbstractGUI;
@@ -24,6 +28,7 @@ import org.zuma.examplePlugin.domain.mob.base.AbstractInventoryOpener;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.shop.constants.ShopId;
+import org.zuma.examplePlugin.domain.storage.constants.StorageCategory;
 import org.zuma.examplePlugin.events.inventory.RuneInventoryClick;
 import org.zuma.examplePlugin.events.inventory.RuneInventoryCloseEvent;
 import org.zuma.examplePlugin.events.inventory.RuneInventoryOpenEvent;
@@ -35,10 +40,12 @@ import java.util.List;
 import java.util.UUID;
 
 public class GUIHandler {
+    private final static long INVENTORY_OPEN_COOLDOWN_MS = 500L;
+    private final static long INVENTORY_CLICK_COOLDOWN_MS = 150L;
+
     private final GUIRegistry registry;
     private final RunePlayerManager playerManager;
-    // Inventory UUID : List<PlayerUUID>
-    private final HashMap<UUID, List<UUID>> inventoryViewers = new HashMap<>();
+    private final HashMap<UUID, List<UUID>> inventoryViewers = new HashMap<>();    // Inventory UUID : List<PlayerUUID>
     private final HashMap<UUID, Runnable> closeRunnables = new HashMap<>();
     private final CooldownHandler cooldownHandler = new CooldownHandler();
 
@@ -57,7 +64,7 @@ public class GUIHandler {
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Closing GUI's gracefully.");
     }
 
-    public void initializeInventories(BlockLoader blockLoader, BankQueryLockController bankQueryLockController) {
+    public void initializeInventories(BlockLoader blockLoader, RepositoryQueryLockController bankContentController, RepositoryQueryLockController storageItemContentController) {
 
         // Admin
         this.registry.register(InventoryId.ADMIN_NODE_CREATE.asInt(), () -> new NodeCreatorInventory("[A] Create Resource Node", InventoryId.ADMIN_NODE_CREATE.asInt(), blockLoader));
@@ -75,7 +82,7 @@ public class GUIHandler {
         this.registry.register(InventoryId.GENERAL_STORE.asInt(), () -> new ShopInventory(GUIOverlay.GENERAL_STORE_OVERLAY.asGlyph() + "§f" + Icon.CHEST.get() + "§f General Store", InventoryId.GENERAL_STORE.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.GENERAL_STORE.asInt())));
         this.registry.register(InventoryId.SPINNING_WHEEL.asInt(), () -> new SpinningWheelInventory(GUIOverlay.SPINNING_WHEEL_OVERLAY.asGlyph() + "§f" + Icon.MATERIAL.get() + "§f Spinning Wheel", InventoryId.SPINNING_WHEEL.asInt()));
         this.registry.register(InventoryId.DRAKKAR_BLACKSMITH.asInt(), () -> new ShopInventory(GUIOverlay.BLACKSMITH_SHOP_OVERLAY.asGlyph() + "§f" + Icon.HAMMER.get() + "§f Blacksmith", InventoryId.DRAKKAR_BLACKSMITH.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_BLACKSMITH.asInt())));
-        this.registry.register(InventoryId.BANK.asInt(), () -> new BankInventory(GUIOverlay.BANK_OVERLAY.asGlyph() + "§f" + Icon.DOLLAR.get() + "§f Bank", InventoryId.BANK.asInt(), bankQueryLockController));
+        this.registry.register(InventoryId.BANK.asInt(), () -> new BankInventory(GUIOverlay.BANK_OVERLAY.asGlyph() + "§f" + Icon.DOLLAR.get() + "§f Bank", InventoryId.BANK.asInt(), bankContentController));
         this.registry.register(InventoryId.INVESTMENT_BANKER.asInt(), () -> new ShopInventory(GUIOverlay.INVESTMENT_BANKER_OVERLAY.asGlyph() + "§f" + Icon.COIN_PILE.get() + "§f Investment Banker", InventoryId.INVESTMENT_BANKER.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.INVESTMENT_BANKER.asInt())));
         this.registry.register(InventoryId.JEWELER.asInt(), () -> new ShopInventory(GUIOverlay.JEWELER_SHOP_OVERLAY.asGlyph() + "§f" + Icon.GREEN_GEM.get() + "§f Jewellery Shop", InventoryId.JEWELER.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.JEWLER.asInt())));
         this.registry.register(InventoryId.XP_LAMP.asInt(), () -> new XPLampInventory(GUIOverlay.XP_INVENTORY_OVERLAY.asGlyph() + "§f" + Icon.EXPERIENCE.get() + "§f XP Lamp", InventoryId.XP_LAMP.asInt()));
@@ -112,6 +119,11 @@ public class GUIHandler {
         this.registry.register(InventoryId.PRAYER_MENU.asInt(), () -> new PrayerMenu(GUIOverlay.PRAYER_MENU_OVERLAY.asGlyph() + "§f" + Icon.PRAYER.get() + "§b Prayer", InventoryId.PRAYER_MENU.asInt()));
         this.registry.register(InventoryId.PARTY_MENU.asInt(), () -> new PartyMenu(GUIOverlay.PARTY_MENU_OVERLAY.asGlyph() + "§f" + Icon.PARTY.get() + "§f Party", InventoryId.PARTY_MENU.asInt()));
 
+        this.registry.register(InventoryId.TOOL_BAG.asInt(), () -> new ToolBagInventory(GUIOverlay.TOOL_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Tool Bag", InventoryId.TOOL_BAG.asInt(), storageItemContentController));
+        this.registry.register(InventoryId.SMALL_STORAGE_BAG.asInt(), () -> new SmallBagInventory(GUIOverlay.SMALL_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Small Bag", InventoryId.SMALL_STORAGE_BAG.asInt(), storageItemContentController));
+        this.registry.register(InventoryId.MEDIUM_STORAGE_BAG.asInt(), () -> new MediumBagInventory(GUIOverlay.MEDIUM_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Medium Bag", InventoryId.MEDIUM_STORAGE_BAG.asInt(), storageItemContentController));
+        this.registry.register(InventoryId.LARGE_STORAGE_BAG.asInt(), () -> new LargeBagInventory(GUIOverlay.LARGE_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Large Bag", InventoryId.LARGE_STORAGE_BAG.asInt(), storageItemContentController));
+
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
     }
@@ -123,6 +135,12 @@ public class GUIHandler {
 
     @Nullable
     public UUID openInventory(int id, RunePlayer player, @Nullable Runnable onClose, @Nullable AbstractInventoryOpener mobHolder, @Nullable InventoryOpenerBlock blockHolder) {
+        if (cooldownHandler.isCooldownInProgress(player)) {
+            return null;
+        }
+
+        cooldownHandler.startCooldown(player, INVENTORY_OPEN_COOLDOWN_MS);
+
         AbstractGUI matchingGUI = this.registry.getInstance(player.getUUID(), id);
 
         if (matchingGUI == null) {
@@ -238,6 +256,36 @@ public class GUIHandler {
         }
     }
 
+    public void onItemDrop(PlayerDropItemEvent event) {
+        Player bukkitPlayer = event.getPlayer();
+        Inventory topInventory = bukkitPlayer.getOpenInventory().getTopInventory();
+
+        if (topInventory.getType() == InventoryType.PLAYER) {
+            return;
+        }
+
+        InventoryHolder holder = topInventory.getHolder();
+
+        if (!(holder instanceof IDHolder idHolder)) {
+            return;
+        }
+
+        RunePlayer player = playerManager.getRunePlayer(bukkitPlayer);
+        int inventoryId = idHolder.id();
+
+        if (player == null) {
+            return;
+        }
+
+        AbstractGUI matchingGUI = this.registry.getInstance(bukkitPlayer.getUniqueId(), inventoryId);
+
+        if (matchingGUI == null) {
+            return;
+        }
+
+        matchingGUI.onPlayerDropItem(event, player);
+    }
+
     public void onInventoryClick(InventoryClickEvent event) {
         InventoryHolder holder = event.getInventory().getHolder();
 
@@ -261,7 +309,7 @@ public class GUIHandler {
             return;
         }
 
-        cooldownHandler.startCooldown(player, 250L);
+        cooldownHandler.startCooldown(player, INVENTORY_CLICK_COOLDOWN_MS);
 
         AbstractGUI matchingGUI = this.registry.getInstance(bukkitPlayer.getUniqueId(), inventoryId);
 

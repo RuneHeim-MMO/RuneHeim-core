@@ -132,11 +132,7 @@ public class WebHook {
     }
 
     private static String urlDecode(String s) {
-        try {
-            return URLDecoder.decode(s, StandardCharsets.UTF_8.name());
-        } catch (UnsupportedEncodingException e) {
-            return s;
-        }
+        return URLDecoder.decode(s, StandardCharsets.UTF_8);
     }
 
     public static void cleanUp() {

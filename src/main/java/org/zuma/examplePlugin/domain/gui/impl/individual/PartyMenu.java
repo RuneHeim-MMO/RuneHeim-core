@@ -51,17 +51,14 @@ public class PartyMenu extends PaginatedIndividualGUI {
     }
 
     private ItemStack getPlayerDisplayItem(PartyMember member) {
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(member.getUuid());
+        Player player = Bukkit.getPlayer(member.getUuid());
+        boolean isOnline = player != null && player.isOnline();
 
-        if (!offlinePlayer.hasPlayedBefore() || offlinePlayer.getName() == null) {
-            return new ItemStack(Material.BARRIER);
-        }
-
-        ItemStack icon = offlinePlayer.isOnline() ? HeadGenerator.getPlayerHead(offlinePlayer) : new ItemStack(Material.SKELETON_SKULL);
+        ItemStack icon = isOnline ? HeadGenerator.getPlayerHead(player) : new ItemStack(Material.SKELETON_SKULL);
         ItemMeta meta = icon.getItemMeta();
 
         List<Component> lore = new ArrayList<>();
-        Component name = offlinePlayer.isOnline() ? Component.text(offlinePlayer.getName(), Color.SUCCESS.asColor()) : Component.text(offlinePlayer.getName(), NamedTextColor.GRAY);
+        Component name = isOnline ? Component.text(member.getUsername(), Color.SUCCESS.asColor()) : Component.text(member.getUsername(), NamedTextColor.GRAY);
         meta.displayName(name.decoration(TextDecoration.ITALIC, false));
         lore.add(Icon.PARTY.asComponent().append(Component.text(member.getRole().getLabel(), Color.ACCENT.asColor())));
         List<Component> contributionsComponents = new ArrayList<>();
@@ -83,7 +80,7 @@ public class PartyMenu extends PaginatedIndividualGUI {
         }
 
         lore.add(Component.empty());
-        lore.add(Component.text("Contributing " + member.getContributionMode().getPercent() + "% of experience.", Color.ITEM_LORE_DESCRIPTION.asColor()));
+        lore.add(Component.text("§fContributing §b" + member.getContributionMode().getPercent() + "%§f of experience."));
         meta.lore(lore.stream().map(c -> c.decoration(TextDecoration.ITALIC, false)).toList());
         icon.setItemMeta(meta);
 
@@ -198,7 +195,6 @@ public class PartyMenu extends PaginatedIndividualGUI {
                 HudService.sendFailMessage(player, Component.text(e.getMessage()));
             }
 
-            return;
         }
 
 

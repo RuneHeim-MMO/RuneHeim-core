@@ -44,6 +44,7 @@ public class MobTypesLoader {
         Bandits.registerMobs(registry);
         Citizens.registerMobs(registry);
         DungeonMobs.registerMobs(registry);
+        Bugs.registerMobs(registry);
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Loaded " + registry.getAvailable().size() + " mob types.");
 

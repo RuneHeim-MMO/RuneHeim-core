@@ -30,6 +30,10 @@ public enum GUIOverlay {
     TANNER_SHOP_OVERLAY("❠"),
     PRAYER_MENU_OVERLAY("⦦"),
     PARTY_MENU_OVERLAY("⮉"),
+    TOOL_BAG_OVERLAY("⧉"),
+    SMALL_BAG_OVERLAY("ⱸ"),
+    MEDIUM_BAG_OVERLAY("⓴"),
+    LARGE_BAG_OVERLAY("ⵐ"),
 
     GENERIC_OVERLAY_1("⼮"),
     GENERIC_OVERLAY_2("⌱"),

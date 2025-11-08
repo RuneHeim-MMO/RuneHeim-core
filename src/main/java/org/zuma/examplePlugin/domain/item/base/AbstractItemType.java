@@ -97,14 +97,21 @@ public abstract class AbstractItemType {
         ItemStack item = creator.createItemStackOfType(amount);
 
         if (!deferMeta) {
-            creator.setItemStackMeta(item, amount);
+            creator.setItemStackMeta(item, amount, true);
         }
 
         return item;
     }
 
+    // skip state generation for mob equipment
+    public ItemStack createItemStackOfTypeIgnoreState(int amount) {
+        ItemStack item = creator.createItemStackOfType(amount);
+        creator.setItemStackMeta(item, amount, false);
+        return item;
+    }
+
     public void applyItemStackMeta(ItemStack stack, int amount) {
-        this.creator.setItemStackMeta(stack, amount);
+        this.creator.setItemStackMeta(stack, amount, true);
     }
 
     @Nullable

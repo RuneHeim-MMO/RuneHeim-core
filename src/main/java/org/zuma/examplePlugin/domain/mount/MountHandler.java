@@ -349,7 +349,6 @@ public class MountHandler {
 
             if (runePlayer == null || runePlayer.isDead()) {
                 clearMountInstances(uuid);
-                return;
             }
         });
 

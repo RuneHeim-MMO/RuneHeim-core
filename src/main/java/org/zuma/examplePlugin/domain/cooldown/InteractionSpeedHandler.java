@@ -49,6 +49,12 @@ public class InteractionSpeedHandler implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
+        RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(event.getPlayer());
+
+        if (player != null && player.getRole().hasPermission(Permission.COOLDOWN_BYPASS)) {
+            return;
+        }
+
         if (interactionSpeedHandler.isCooldownInProgress(event.getPlayer())) {
             event.setCancelled(true);
             return;
@@ -59,6 +65,12 @@ public class InteractionSpeedHandler implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInteractWithEntity(PlayerInteractAtEntityEvent event) {
+        RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(event.getPlayer());
+
+        if (player != null && player.getRole().hasPermission(Permission.COOLDOWN_BYPASS)) {
+            return;
+        }
+
         if (interactionSpeedHandler.isCooldownInProgress(event.getPlayer())) {
             event.setCancelled(true);
             return;

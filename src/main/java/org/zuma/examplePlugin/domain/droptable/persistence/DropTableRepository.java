@@ -176,6 +176,10 @@ public class DropTableRepository {
                         new DropTableEntry(ItemId.BONES.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
+                new DropTableDBEntry(DropTableId.BIG_BONES.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.BIG_BONES.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
                 new DropTableDBEntry(DropTableId.COINS_SMALL.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.COINS.asInt(), 1, 8, 3, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
@@ -196,8 +200,12 @@ public class DropTableRepository {
                         new DropTableEntry(ItemId.RAW_MEAT.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
-                new DropTableDBEntry(DropTableId.FEATHERS.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                new DropTableDBEntry(DropTableId.FEATHERS_1_TO_15.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.FEATHER.asInt(), 1, 15, 2, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.FEATHERS_3_TO_8.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.FEATHER.asInt(), 3, 8, 2, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
                 new DropTableDBEntry(DropTableId.COWHIDE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
@@ -278,5 +286,4 @@ public class DropTableRepository {
         );
     }
 
-    ;
 }

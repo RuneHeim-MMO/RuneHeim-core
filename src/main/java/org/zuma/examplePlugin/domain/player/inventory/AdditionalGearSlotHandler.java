@@ -73,7 +73,7 @@ public class AdditionalGearSlotHandler {
 
             AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(atSlot);
 
-            if (type == null || !def.isValidItem(type)) {
+            if (!def.isValidItem(type)) {
                 ItemStack cloned = atSlot.clone();
 
                 inventory.setItem(slot, getSlotPlaceholder(slot));
@@ -109,7 +109,6 @@ public class AdditionalGearSlotHandler {
         if (slot == MAP_SLOT) {
             RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.TERRITORY_INVENTORY.asInt(), player, null);
             SoundType.UI_CLICK.play(player, false);
-            return;
         }
 
     }

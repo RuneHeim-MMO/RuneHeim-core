@@ -8,7 +8,7 @@ import org.zuma.examplePlugin.domain.player.actions.ActionParams;
 import javax.annotation.Nullable;
 
 public interface InteractiveActionStrategy {
-    public InteractiveActionStrategy startAction(RunePlayer player, ActionParams params);
+    InteractiveActionStrategy startAction(RunePlayer player, ActionParams params);
 
-    public void cancelTask();
+    void cancelTask();
 }

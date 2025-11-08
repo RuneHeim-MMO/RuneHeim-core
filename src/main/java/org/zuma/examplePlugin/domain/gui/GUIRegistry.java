@@ -2,17 +2,14 @@ package org.zuma.examplePlugin.domain.gui;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.gui.base.AbstractGUI;
 import org.zuma.examplePlugin.domain.gui.base.IndividualGUI;
-import org.zuma.examplePlugin.domain.gui.base.PaginatedBankGUI;
 import org.zuma.examplePlugin.domain.gui.base.SharedGUI;
-import org.zuma.examplePlugin.domain.gui.impl.individual.BankInventory;
+import org.zuma.examplePlugin.domain.gui.base.StorageInventory;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -93,9 +90,9 @@ public class GUIRegistry {
         individualInstances.forEach((uuid, instance) -> {
             Player player = Bukkit.getPlayer(uuid);
 
-            if (instance instanceof BankInventory bankGUI) {
+            if (instance instanceof StorageInventory bankGUI) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Attempting to save " + uuid + "'s bank contents.");
-                bankGUI.saveBankSync(true);
+                bankGUI.saveContainerSync(true, true);
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, uuid + "'s bank contents saved successfully.");
             }
 

@@ -5,14 +5,8 @@ import org.zuma.examplePlugin.core.exception.UnsupportedJsonVersionException;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
-import org.zuma.examplePlugin.domain.item.state.meta.v1.FairyStateMeta;
-import org.zuma.examplePlugin.domain.item.state.meta.v1.GearGemSocketsStateMeta;
-import org.zuma.examplePlugin.domain.item.state.meta.v1.MountStateMeta;
-import org.zuma.examplePlugin.domain.item.state.meta.v1.MultiConsumableStateMeta;
-import org.zuma.examplePlugin.domain.item.state.states.FairyState;
-import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
-import org.zuma.examplePlugin.domain.item.state.states.MountState;
-import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
+import org.zuma.examplePlugin.domain.item.state.meta.v1.*;
+import org.zuma.examplePlugin.domain.item.state.states.*;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -30,12 +24,28 @@ public class StateFactory {
             case GEAR_GEM_SOCKETS -> newState = createGearGemSocketsState(abstractStateMeta, abstractStateMeta.json());
             case FAIRY_STATE -> newState = createFairyState(abstractStateMeta, abstractStateMeta.json());
             case MOUNT_STATE -> newState = createMountState(abstractStateMeta, abstractStateMeta.json());
+            case STORAGE_ITEM_UUID_STATE -> newState = createStorageItemState(abstractStateMeta, abstractStateMeta.json());
             default -> {
             }
         }
 
         newState.setCreatedAt(input.getKey());
         return newState;
+    }
+
+    private StorageItemState createStorageItemState(AbstractStateMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create " + meta.type() + " state required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                StorageItemStateMeta deserialized = gson.fromJson(json.meta(), StorageItemStateMeta.class);
+                return new StorageItemState(deserialized);
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
     }
 
     private MountState createMountState(AbstractStateMeta meta, @Nullable VersionedJson json) {

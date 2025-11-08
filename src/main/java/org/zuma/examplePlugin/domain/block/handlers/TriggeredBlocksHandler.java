@@ -5,7 +5,7 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.impl.door.DoorBlock;
-import org.zuma.examplePlugin.domain.block.impl.door.ItemCollectorTrigger;
+import org.zuma.examplePlugin.domain.block.impl.trigger.ItemCollectorTrigger;
 
 import java.util.ArrayList;
 import java.util.List;

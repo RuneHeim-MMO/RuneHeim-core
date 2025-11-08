@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class PassiveDialogStep extends DialogStep {
-    private boolean timerCancelled = false;
+    private final boolean timerCancelled = false;
     private final int contentLength;
     private final List<String> actions;
     private Runnable runnable = null;

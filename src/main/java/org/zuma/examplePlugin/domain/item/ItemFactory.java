@@ -13,14 +13,8 @@ import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFood;
 import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFruit;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.v1.*;
-import org.zuma.examplePlugin.domain.item.state.meta.v1.FairyStateMeta;
-import org.zuma.examplePlugin.domain.item.state.meta.v1.GearGemSocketsStateMeta;
-import org.zuma.examplePlugin.domain.item.state.meta.v1.MountStateMeta;
-import org.zuma.examplePlugin.domain.item.state.meta.v1.MultiConsumableStateMeta;
-import org.zuma.examplePlugin.domain.item.state.states.FairyState;
-import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
-import org.zuma.examplePlugin.domain.item.state.states.MountState;
-import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
+import org.zuma.examplePlugin.domain.item.state.meta.v1.*;
+import org.zuma.examplePlugin.domain.item.state.states.*;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -58,8 +52,24 @@ public class ItemFactory {
             case XP_LAMP -> createXPLampItem(meta, json);
             case REMAINS -> createRemainsItem(meta, json);
             case MOUNT -> createMountItem(meta, json);
+            case STORAGE_ITEM -> createStorageItem(meta, json);
             default -> throw new IllegalArgumentException("Unknown item type: " + meta.type());
         };
+    }
+
+    private StorageItem createStorageItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create " + meta.type() + " " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                StorageItemMeta deserialized = new Gson().fromJson(json.meta(), StorageItemMeta.class);
+                return new StorageItem(meta, deserialized);
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
     }
 
     private Mount createMountItem(AbstractItemMeta meta, @Nullable VersionedJson json) {

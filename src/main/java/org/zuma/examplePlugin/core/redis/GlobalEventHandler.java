@@ -75,11 +75,7 @@ public class GlobalEventHandler {
             return true;
         }
 
-        if (payload.targetServers.isEmpty() || payload.serverId == ConfigManager.getServerId() && payload.replayAtOrigin) {
-            return true;
-        }
-
-        return false;
+        return payload.targetServers.isEmpty() || payload.serverId == ConfigManager.getServerId() && payload.replayAtOrigin;
 
     }
 

@@ -20,6 +20,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
+import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.item.Weapon;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
@@ -29,6 +30,7 @@ import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.item.helpers.lore.*;
 import org.zuma.examplePlugin.domain.item.impl.EmptyContainer;
 import org.zuma.examplePlugin.domain.item.impl.Mount;
+import org.zuma.examplePlugin.domain.item.impl.StorageItem;
 import org.zuma.examplePlugin.domain.item.impl.consumable.Food;
 import org.zuma.examplePlugin.domain.item.impl.consumable.Potion;
 import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
@@ -145,6 +147,10 @@ public class MetaGenerator {
             lore.addAll(new MountLore(mount, item).getLore());
         }
 
+        if (itemType instanceof StorageItem) {
+            lore.addAll(new StorageItemLore((StorageItem) itemType, item).getLore());
+        }
+
         lore.add(Component.empty());
         lore.addAll(itemType.typeLore);
 
@@ -204,11 +210,11 @@ public class MetaGenerator {
         return item.displayName();
     }
 
-    public void setItemStackProps(ItemStack item) {
+    public void setItemStackProps(ItemStack item, boolean generateState) {
         ItemMeta meta = item.getItemMeta();
         meta.getPersistentDataContainer().set(PersistenceDataKey.ITEM_ID.key(RuneQuestPlugin.getInstance()), PersistentDataType.INTEGER, itemType.id);
 
-        if (itemType.stateType != null && itemType instanceof Stateful stateful) {
+        if (generateState && itemType.stateType != null && itemType instanceof Stateful stateful) {
             NamespacedKey stateUuid = PersistenceDataKey.STATE_UUID.key(RuneQuestPlugin.getInstance());
 
             if (!meta.getPersistentDataContainer().has(stateUuid)) {

@@ -202,7 +202,6 @@ public class ItemListener implements Listener {
 
             if (newEvent.isCancelled()) {
                 event.setCancelled(true);
-                return;
             }
         });
     }
@@ -248,7 +247,6 @@ public class ItemListener implements Listener {
 
             if (newEvent.isCancelled()) {
                 event.setCancelled(true);
-                return;
             }
         });
     }

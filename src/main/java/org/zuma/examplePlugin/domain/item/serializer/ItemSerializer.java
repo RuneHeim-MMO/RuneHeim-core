@@ -164,6 +164,8 @@ public class ItemSerializer {
             if (raw instanceof Number) return ((Number) raw).byteValue();
         } else if (type == PersistentDataType.BOOLEAN) {
             return Boolean.parseBoolean(raw.toString());
+        } else if (type == PersistentDataType.INTEGER_ARRAY) {
+            return gson.fromJson(gson.toJson(raw), int[].class);
         }
         // Add support or warnings for unsupported types:
         System.err.println("Unsupported PersistentDataType for parseValue: " + type);

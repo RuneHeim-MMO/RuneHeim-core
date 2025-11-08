@@ -6,4 +6,4 @@ import javax.annotation.Nullable;
 
 public record CampfireRecipeMeta(String initialName, String burningName, int burnTime, boolean isSoulCampfire,
                                  @Nullable ItemRecord despawnDrop) {
-};
+}

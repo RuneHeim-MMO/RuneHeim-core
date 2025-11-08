@@ -1,13 +1,13 @@
-package org.zuma.examplePlugin.domain.bank;
+package org.zuma.examplePlugin.domain.storage.persistence;
 
 import org.zuma.examplePlugin.core.database.HikariPool;
-import org.zuma.examplePlugin.domain.block.persistence.BlockEntity;
+import org.zuma.examplePlugin.domain.storage.ItemStorageRepository;
 
 import javax.annotation.Nullable;
 import java.sql.*;
 import java.util.*;
 
-public class BankContentRepository {
+public class BankContentRepository implements ItemStorageRepository {
     private final HikariPool pool;
 
     public BankContentRepository(HikariPool pool) {

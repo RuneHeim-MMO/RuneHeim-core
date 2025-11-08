@@ -55,11 +55,7 @@ public class ItemOwnershipHandler implements Listener {
             return true;
         }
 
-        if (Objects.equals(player.getUUID().toString(), ownerUUID)) {
-            return true;
-        }
-
-        return false;
+        return Objects.equals(player.getUUID().toString(), ownerUUID);
 
     }
 

@@ -325,7 +325,7 @@ public enum EquipmentSet {
         AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(id);
 
         if (type == null) return new ItemStack(Material.AIR);
-        return type.createItemStackOfType(amount);
+        return type.createItemStackOfTypeIgnoreState(amount); // skip state management for mob equipment
     }
 
     private final MobEquipmentMeta meta;
