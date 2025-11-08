@@ -21,7 +21,7 @@ public class Common {
                 "Chicken", null, getBaseSkills(2, 0.5),
                 null, MobBehaviors.CHICKEN.getBehavior(),
                 0.2, false, false, 3, null, null, DisguiseType.CHICKEN,
-                List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS.asInt(), DropTableId.CHICKEN_MEAT.asInt()),
+                List.of(DropTableId.BONES.asInt(), DropTableId.FEATHERS_1_TO_15.asInt(), DropTableId.CHICKEN_MEAT.asInt()),
                 true));
 
 
@@ -61,12 +61,96 @@ public class Common {
                 true));
 
 
-        registry.register(MobType.RAT.getId(), () -> new GenericCombatant(
-                "Rat", null, List.of(new SkillLevelRecord(SkillType.ATTACK, 1)),
-                null, MobBehaviors.RAT.getBehavior(),
-                0.23, false, false, 3, null, null, DisguiseType.SILVERFISH,
+        registry.register(MobType.LEOPARD_STANDARD_BASE_55.getId(), () -> new GenericCombatant(
+                "Leopard", null,
+                getBaseSkills(55, 0.5),
+                null,
+                MobBehaviors.LEOPARD.getBehavior(),
+                "nm_leopard",
+                0.55, true, false, 50,
+                List.of(DropTableId.BIG_BONES.asInt()),
+                true));
+
+        registry.register(MobType.LEOPARD_STANDARD_BABY_BASE_35.getId(), () -> new GenericCombatant(
+                "Baby Leopard", null,
+                getBaseSkills(60, 0.5),
+                null,
+                MobBehaviors.LEOPARD.getBehavior(-0.3F),
+                "nm_leopard_baby",
+                0.35, false, false, 30,
                 List.of(DropTableId.BONES.asInt()),
                 true));
+
+        registry.register(MobType.LEOPARD_SNOW_BASE_60.getId(), () -> new GenericCombatant(
+                "Snow Leopard", null,
+                getBaseSkills(60, 0.5),
+                null,
+                MobBehaviors.LEOPARD.getBehavior(-0.3F),
+                "nm_leopard_snow",
+                0.55, true, false, 55,
+                List.of(DropTableId.BIG_BONES.asInt()),
+                true));
+
+        registry.register(MobType.LEOPARD_SNOW_BABY_BASE_40.getId(), () -> new GenericCombatant(
+                "Baby Snow Leopard", null,
+                getBaseSkills(60, 0.5),
+                null,
+                MobBehaviors.LEOPARD.getBehavior(),
+                "nm_leopard_snow_baby",
+                0.35, false, false, 38,
+                List.of(DropTableId.BONES.asInt()),
+                true));
+
+        registry.register(MobType.RAT_BROWN_BASE_1.getId(), () -> new GenericCombatant(
+                "Rat", null,
+                List.of(new SkillLevelRecord(SkillType.ATTACK, 1)),
+                null,
+                MobBehaviors.RAT.getBehavior(),
+                "nm_rat_brown",
+                0.23, false, false, 3,
+                List.of(),
+                true));
+
+        registry.register(MobType.RAT_GRAY_BASE_1.getId(), () -> new GenericCombatant(
+                "Rat", null,
+                List.of(new SkillLevelRecord(SkillType.ATTACK, 1)),
+                null,
+                MobBehaviors.RAT.getBehavior(),
+                "nm_rat_gray",
+                0.23, false, false, 3,
+                List.of(),
+                true));
+
+        registry.register(MobType.RAT_ALBINO_BASE_1.getId(), () -> new GenericCombatant(
+                "Rat", null,
+                List.of(new SkillLevelRecord(SkillType.ATTACK, 1)),
+                null,
+                MobBehaviors.RAT.getBehavior(),
+                "nm_rat_albino",
+                0.23, false, false, 3,
+                List.of(),
+                true));
+
+        registry.register(MobType.PENGUIN_BASE_40.getId(), () -> new GenericCombatant(
+                "Penguin", null,
+                getBaseSkills(40, 0.5),
+                null,
+                MobBehaviors.PENGUIN.getBehavior(),
+                "nm_penguin",
+                0.3, false, false, 30,
+                List.of(DropTableId.FEATHERS_3_TO_8.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt(), DropTableId.BONES.asInt()),
+                true));
+
+        registry.register(MobType.PENGUIN_BABY_BASE_30.getId(), () -> new GenericCombatant(
+                "Baby Penguin", null,
+                getBaseSkills(30, 0.5),
+                null,
+                MobBehaviors.PENGUIN.getBehavior(),
+                "nm_penguin_baby",
+                0.3, false, false, 20,
+                List.of(DropTableId.FEATHERS_3_TO_8.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt(), DropTableId.BONES.asInt()),
+                true));
+
 
         registry.register(MobType.AXOLOTL.getId(), () -> new GenericCombatant(
                 "Axolotl", null, List.of(new SkillLevelRecord(SkillType.ATTACK, 1)),

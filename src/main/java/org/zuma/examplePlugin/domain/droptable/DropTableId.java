@@ -5,7 +5,7 @@ public enum DropTableId {
     COINS_SMALL(1),
     WOOL(2),
     CHICKEN_MEAT(3),
-    FEATHERS(4),
+    FEATHERS_1_TO_15(4),
     GEM_DROP_TABLE(5),
     RAW_ANIMAL_MEAT(6),
     COINS_MEDIUM(7),
@@ -13,6 +13,8 @@ public enum DropTableId {
     WOLF_COINS(9),
     GOBLIN_LOW_LVL_ARMOR(10),
     COWHIDE(11),
+    FEATHERS_3_TO_8(12),
+    BIG_BONES(13),
 
     WOODCUTTING_RARE_DROPTABLE(100),
     TREE_NODE(101),

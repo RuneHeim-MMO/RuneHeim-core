@@ -22,12 +22,8 @@ import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
 import org.zuma.examplePlugin.core.permissions.Permission;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
-import org.zuma.examplePlugin.domain.block.BlockManager;
-import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
-import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
 import org.zuma.examplePlugin.domain.combat.HitHandler;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
-import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.impl.Mount;
 import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
@@ -39,7 +35,6 @@ import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 import org.zuma.examplePlugin.domain.player.inventory.ReservedSlot;
 import org.zuma.examplePlugin.domain.quest.Quest;
 import org.zuma.examplePlugin.domain.quest.QuestSerializer;
-import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
@@ -279,7 +274,7 @@ public class AdminCommand implements BasicCommand {
 
 
         if (Objects.equals(args[0], "rat")) {
-            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.RAT.getId());
+            RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.RAT_BROWN_BASE_1.getId());
         }
 
 

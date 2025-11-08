@@ -7,6 +7,80 @@ import java.util.function.Function;
 
 public enum MobBehaviors {
 
+    LEOPARD((pitchModifier) -> new MobBehavior(
+            pitchModifier,
+            List.of(SoundType.LEOPARD_AMBIENT),
+            List.of(SoundType.LEOPARD_ATTACK, SoundType.LEOPARD_GROWL, SoundType.LEOPARD_GROWL_2),
+            List.of(SoundType.LEOPARD_ATTACK, SoundType.LEOPARD_GROWL, SoundType.LEOPARD_GROWL_2),
+            List.of(SoundType.LEOPARD_HURT),
+            List.of(SoundType.LEOPARD_DEATH)
+    )),
+
+    CENTIPEDE((pitchModifier) -> new MobBehavior(
+            pitchModifier,
+            List.of(SoundType.CENTIPEDE_AMBIENT),
+            List.of(SoundType.CENTIPEDE_ATTACK),
+            List.of(SoundType.CENTIPEDE_CALL),
+            List.of(SoundType.CENTIPEDE_HURT),
+            List.of(SoundType.CENTIPEDE_DEATH)
+    )),
+
+    ANT((pitchModifier) -> new MobBehavior(
+            pitchModifier,
+            List.of(SoundType.ANT_AMBIENT),
+            List.of(SoundType.ANT_ATTACK),
+            List.of(SoundType.ANT_CALL),
+            List.of(SoundType.ANT_HURT),
+            List.of(SoundType.ANT_DEATH)
+    )),
+
+    COCKROACH((pitchModifier) -> new MobBehavior(
+            pitchModifier,
+            List.of(SoundType.COCKROACH_AMBIENT),
+            List.of(SoundType.COCKROACH_ATTACK),
+            List.of(SoundType.COCKROACH_CALL),
+            List.of(SoundType.COCKROACH_HURT),
+            List.of(SoundType.COCKROACH_DEATH)
+    )),
+
+    CRICKET((pitchModifier) -> new MobBehavior(
+            pitchModifier,
+            List.of(SoundType.CRICKET_AMBIENT),
+            List.of(SoundType.CRICKET_ATTACK),
+            List.of(SoundType.CRICKET_CALL),
+            List.of(SoundType.CRICKET_HURT),
+            List.of(SoundType.CRICKET_DEATH)
+    )),
+
+    MANTIS((pitchModifier) -> new MobBehavior(
+            pitchModifier,
+            List.of(SoundType.MANTIS_AMBIENT),
+            List.of(SoundType.MANTIS_ATTACK),
+            List.of(SoundType.MANTIS_CALL),
+            List.of(SoundType.MANTIS_HURT),
+            List.of(SoundType.MANTIS_DEATH)
+    )),
+
+    SCORPION((pitchModifier) -> new MobBehavior(
+            pitchModifier,
+            List.of(SoundType.SCORPION_AMBIENT),
+            List.of(SoundType.SCORPION_ATTACK),
+            List.of(SoundType.SCORPION_CALL),
+            List.of(SoundType.SCORPION_HURT),
+            List.of(SoundType.SCORPION_DEATH)
+    )),
+
+
+    PENGUIN((pitchModifier) -> new MobBehavior(
+            pitchModifier,
+            List.of(SoundType.PENGUIN_AMBIENT),
+            List.of(SoundType.PENGUIN_ATTACK, SoundType.PENGUIN_CALL),
+            List.of(SoundType.PENGUIN_ATTACK, SoundType.PENGUIN_CALL),
+            List.of(SoundType.PENGUIN_HURT),
+            List.of(SoundType.PENGUIN_DEATH)
+    )),
+
+
     HELLFLESH_1((pitchModifier) -> new MobBehavior(
             pitchModifier,
             List.of(SoundType.HELLFLESH_AMBIENT),
