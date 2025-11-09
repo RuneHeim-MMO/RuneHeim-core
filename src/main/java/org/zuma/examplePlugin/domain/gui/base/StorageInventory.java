@@ -21,18 +21,19 @@ import org.zuma.examplePlugin.domain.gui.serializer.ItemContainerContentSerializ
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.storage.constants.StorageType;
+import org.zuma.examplePlugin.events.inventory.RuneStorageInventoryOpenEvent;
 
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class StorageInventory extends PaginatedStorageGUI {
+public abstract class StorageInventory extends PaginatedStorageGUI {
     private final RepositoryQueryLockController repositoryQueryLockController;
     private final StorageType type;
     private boolean isLoaded;
 
     @Nullable
-    private UUID playerUUID, containerUUID;
+    private UUID playerUUID, storageContainerUUID;
 
     public StorageInventory(String title, int id, int rows, int maxPages, StorageType type, RepositoryQueryLockController repositoryQueryLockController, Set<Integer> ignoredSlots) {
         super(title, id, rows, maxPages, ignoredSlots);
@@ -40,7 +41,7 @@ public class StorageInventory extends PaginatedStorageGUI {
         this.type = type;
         this.isLoaded = false;
         this.playerUUID = null;
-        this.containerUUID = null;
+        this.storageContainerUUID = null;
     }
 
     @Override
@@ -51,7 +52,7 @@ public class StorageInventory extends PaginatedStorageGUI {
 
         // Determine container UUID based on storage type
         switch (type) {
-            case BANK -> containerUUID = player.getUUID(); // Each player has their own bank
+            case BANK -> storageContainerUUID = player.getUUID(); // Each player has their own bank
             case ITEM_STORAGE -> {
 
                 if (!(itemTypeInHand instanceof StorageItem storageItem)) {
@@ -68,7 +69,7 @@ public class StorageInventory extends PaginatedStorageGUI {
                     return false;
                 }
 
-                containerUUID = state.getUUID();
+                storageContainerUUID = state.getUUID();
             }
             default -> {
                 HudService.sendFailMessage(player, Component.text("Invalid storage type."));
@@ -80,7 +81,7 @@ public class StorageInventory extends PaginatedStorageGUI {
 
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
             try {
-                storageContent[0] = repositoryQueryLockController.getByUUID(containerUUID);
+                storageContent[0] = repositoryQueryLockController.getByUUID(storageContainerUUID);
             } catch (IllegalStateException e) {
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                     HudService.sendFailMessage(player, Component.text(e.getMessage()));
@@ -91,7 +92,7 @@ public class StorageInventory extends PaginatedStorageGUI {
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                     long incidentId = System.currentTimeMillis();
                     HudService.sendFailMessage(player, Component.text("[Type: " + this.type + " ]" + " Storage content retrieval failed. Please submit a bug report. Incident #" + incidentId));
-                    RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[StorageRetrievalError #" + incidentId + "] " + "[Type: " + this.type + "]" + " Failed to retrieve serialized storage contents of " + containerUUID + "! " + e);
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[StorageRetrievalError #" + incidentId + "] " + "[Type: " + this.type + "]" + " Failed to retrieve serialized storage contents of " + storageContainerUUID + "! " + e);
                     onFail.run();
                 });
                 return;
@@ -106,7 +107,7 @@ public class StorageInventory extends PaginatedStorageGUI {
                     Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                         long incidentId = System.currentTimeMillis();
                         HudService.sendFailMessage(player, Component.text("[Type: " + this.type + "]" + " Storage content deserialization failed. Please submit a bug report. Incident #" + incidentId));
-                        RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[StorageDeserializationError #" + incidentId + "] [Type: " + this.type + "]" + " Failed to deserialize storage of " + containerUUID + "! " + e);
+                        RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[StorageDeserializationError #" + incidentId + "] [Type: " + this.type + "]" + " Failed to deserialize storage of " + storageContainerUUID + "! " + e);
                         onFail.run();
                     });
                     return;
@@ -126,7 +127,10 @@ public class StorageInventory extends PaginatedStorageGUI {
                 SoundType.STORAGE_OPEN.play(player, true);
 
                 // Allow only 1 player to access the same storage at the same time
-                this.repositoryQueryLockController.lockContainerUUID(containerUUID);
+                this.repositoryQueryLockController.lockContainerUUID(storageContainerUUID);
+
+                // Let other servers know about this storage being opened
+                Bukkit.getServer().getPluginManager().callEvent(new RuneStorageInventoryOpenEvent(new RuneStorageInventoryOpenEvent.Payload(player.asBukkitPlayer().getName(), player.getUUID(), storageContainerUUID)));
                 player.asBukkitPlayer().openInventory(getBaseInventory());
             });
 
@@ -135,8 +139,13 @@ public class StorageInventory extends PaginatedStorageGUI {
         return true;
     }
 
+    @Nullable
+    public UUID getStorageContainerUUID() {
+        return this.storageContainerUUID;
+    }
+
     public void saveContainerSync(boolean updateItemMap, boolean forceUnlock) {
-        if (this.containerUUID == null || this.playerUUID == null || !this.isLoaded) {
+        if (this.storageContainerUUID == null || this.playerUUID == null || !this.isLoaded) {
             return;
         }
 
@@ -146,16 +155,16 @@ public class StorageInventory extends PaginatedStorageGUI {
 
         try {
             String serialized = ItemContainerContentSerializer.serializeItemContainerContentSync(this, true);
-            this.repositoryQueryLockController.save(this.containerUUID, serialized);
+            this.repositoryQueryLockController.save(this.storageContainerUUID, serialized);
 
             if (forceUnlock) {
-                this.repositoryQueryLockController.unlockContainerUUID(containerUUID);
+                this.repositoryQueryLockController.unlockContainerUUID(storageContainerUUID);
             }
         } catch (Exception e) {
             RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(this.playerUUID);
 
             long incidentId = System.currentTimeMillis();
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[StorageSerializationError #" + incidentId + "] [Type: " + this.type + "]" + " Failed to serialize storage of " + this.containerUUID + "! ", e);
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[StorageSerializationError #" + incidentId + "] [Type: " + this.type + "]" + " Failed to serialize storage of " + this.storageContainerUUID + "! ", e);
 
             if (player != null) {
                 HudService.sendFailMessage(player, Component.text("[Type: " + this.type + "]" + " Storage content serialization failed. Please submit a bug report. Incident #" + incidentId));
@@ -181,7 +190,7 @@ public class StorageInventory extends PaginatedStorageGUI {
 
     @Override
     public void onInventoryClose(@Nullable InventoryCloseEvent event, @Nullable RunePlayer player) {
-        if (this.containerUUID == null || this.playerUUID == null || !this.isLoaded) {
+        if (this.storageContainerUUID == null || this.playerUUID == null || !this.isLoaded) {
             return;
         }
 
@@ -197,7 +206,7 @@ public class StorageInventory extends PaginatedStorageGUI {
                 if (!(type instanceof StorageItem)) return;
                 StorageItemState state = ((StorageItem) type).getState(inInventory);
                 if (state == null) return;
-                if (state.getUUID().equals(this.containerUUID)) {
+                if (state.getUUID().equals(this.storageContainerUUID)) {
                     matchingContainer.set(inInventory);
                 }
             });
@@ -234,7 +243,7 @@ public class StorageInventory extends PaginatedStorageGUI {
             }
 
             // Prevent dropping if the dropped storage is the one currently being accessed
-            if (state.getUUID().equals(this.containerUUID)) {
+            if (state.getUUID().equals(this.storageContainerUUID)) {
                 event.setCancelled(true);
             }
         }

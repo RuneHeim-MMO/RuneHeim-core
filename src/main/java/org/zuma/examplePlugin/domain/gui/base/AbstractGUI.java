@@ -140,7 +140,7 @@ public abstract class AbstractGUI implements Listener {
     }
 
 
-    public UUID getUuid() {
+    public UUID getUUID() {
         return uuid;
     }
 
