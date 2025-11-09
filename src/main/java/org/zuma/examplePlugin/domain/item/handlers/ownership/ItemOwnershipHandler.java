@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.item.ownership;
+package org.zuma.examplePlugin.domain.item.handlers.ownership;
 
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;

@@ -2,13 +2,18 @@ package org.zuma.examplePlugin.core.utils;
 
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.Weapon;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.item.constants.WeaponSpeed;
 
 import javax.annotation.Nullable;
@@ -16,6 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ItemUtils {
+
     public static ItemStack createColoredLeatherArmor(Material material, Color color) {
         if (!material.name().startsWith("LEATHER_")) {
             throw new IllegalArgumentException("Material must be a leather armor piece!");

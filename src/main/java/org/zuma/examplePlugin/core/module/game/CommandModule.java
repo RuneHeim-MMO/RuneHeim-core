@@ -40,9 +40,11 @@ public class CommandModule implements PluginModule {
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("stuck", new StuckCommand()));
 
-
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("actions", new ConsoleActionCommand()));
+
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("togglelock", new ToggleLockCommand()));
     }
 
     @Override
