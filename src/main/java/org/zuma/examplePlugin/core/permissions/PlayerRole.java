@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.core.permissions;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.permissions.PermissionAttachment;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.permissions.Permission;
 import org.zuma.examplePlugin.core.permissions.roles.BaseRole;
 import org.zuma.examplePlugin.core.permissions.roles.UpgradedRole;
@@ -44,9 +45,13 @@ public class PlayerRole {
         this.permissions = getPermissions();
     }
 
+    public String getSupporterRoleIcon() {
+        return Icon.SUPPORTER_LVL_3.get() + " ";
+    }
+
     public Component getPrefix() {
         Component basePrefix = baseRole.getPrefix();
-        Component upgradedPrefix = upgradedRole != null ? upgradedRole.getPrefix().append(Component.text(" ")) : Component.empty();
+        Component upgradedPrefix = upgradedRole != null ? upgradedRole.getPrefix() : Component.empty();
 
         if (baseRole.equals(BaseRole.PLAYER)) {
             return upgradedPrefix;
