@@ -1,142 +1,163 @@
 package org.zuma.examplePlugin.core.permissions;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.permissions.PermissionAttachment;
-import org.zuma.examplePlugin.core.constants.Icon;
+import org.zuma.examplePlugin.core.permissions.Permission;
+import org.zuma.examplePlugin.core.permissions.roles.BaseRole;
+import org.zuma.examplePlugin.core.permissions.roles.UpgradedRole;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public enum PlayerRole {
-    OWNER(0, true, Icon.RANK_BADGE_OWNER, List.of(Permission.INTERACTABLE_SPAWN)),
-    ADMIN(1, false, Icon.RANK_BADGE_ADMIN, List.of(Permission.STAFF_MOVEMENT, Permission.COOLDOWN_BYPASS, Permission.WORLD_MANIPULATION, Permission.ITEM_WATCHDOG_BYPASS, Permission.DEBUG_COMMAND, Permission.STAFF_ITEM_SPAWN, Permission.BLOCKED_CMD_BYPASS, Permission.CHAT_PROFANITY_BYPASS)),
-    MODERATOR(2, false, Icon.RANK_BADGE_MOD, List.of(Permission.CHAT_COOLDOWN_BYPASS, Permission.STAFF_MODERATION, Permission.STAFF_MESSAGING, Permission.CHAT_SPY)),
-    PLAYER(1000, false, null, List.of(Permission.PLAYER_DEFAULTS));
+public class PlayerRole {
+    private static final List<Permission> allPermissions = Stream.concat(
+            Arrays.stream(BaseRole.values()).flatMap(role -> Stream.of(role.getInheritablePermissions(), role.getNonInheritablePermissions())),
+            Arrays.stream(UpgradedRole.values()).flatMap(role -> Stream.of(role.getInheritablePermissions(), role.getNonInheritablePermissions()))
+    ).flatMap(List::stream).distinct().toList();
 
-    private final int priority;
+    private final BaseRole baseRole;
+    @Nullable
+    private final UpgradedRole upgradedRole;
+
+    // Separate inheritance chains
+    private final List<BaseRole> inheritedBaseRoles; // Base roles that this role inherits from
+    private final List<UpgradedRole> inheritedUpgradedRoles; // Upgraded roles that this role inherits from
+
     private final List<Permission> permissions;
-    private final boolean isOp;
-    private final Icon prefix;
 
-    PlayerRole(int priority, boolean isOp, @Nullable Icon prefix, List<Permission> permissions) {
-        this.priority = priority;
-        this.isOp = isOp;
-        this.permissions = permissions;
-        this.prefix = prefix;
+    public PlayerRole(BaseRole baseRole, @Nullable UpgradedRole upgradedRole) {
+        this.upgradedRole = upgradedRole;
+        this.baseRole = baseRole;
+
+        // Calculate base role inheritance (lower weight base roles inherit from higher weight base roles)
+        this.inheritedBaseRoles = getInheritedBaseRoles(baseRole);
+
+        // Calculate upgraded role inheritance (lower weight upgraded roles inherit from higher weight upgraded roles)
+        this.inheritedUpgradedRoles = upgradedRole != null ?
+                getInheritedUpgradedRoles(upgradedRole) : new ArrayList<>();
+
+        this.permissions = getPermissions();
     }
 
-    public int getPriority() {
-        return priority;
+    public Component getPrefix() {
+        Component basePrefix = baseRole.getPrefix();
+        Component upgradedPrefix = upgradedRole != null ? upgradedRole.getPrefix().append(Component.text(" ")) : Component.empty();
+
+        if (baseRole.equals(BaseRole.PLAYER)) {
+            return upgradedPrefix;
+        }
+
+        return upgradedPrefix.append(basePrefix).append(Component.text(" "));
+    }
+
+    public boolean hasPermission(Permission permission) {
+        return permissions.contains(permission);
     }
 
     public void reloadPermissions(RunePlayer player) {
         PermissionAttachment attachment = player.getPermissionAttachment();
-        player.asBukkitPlayer().setOp(false);
 
         // Clear all existing permissions
-        Arrays.stream(PlayerRole.values()).forEach(role -> {
-            role.permissions.forEach(permission -> {
-                permission.getNodes().forEach(attachment::unsetPermission);
-            });
+        allPermissions.forEach(permission -> {
+            permission.getNodes().forEach(attachment::unsetPermission);
         });
 
+        player.asBukkitPlayer().setOp(false);
 
-        if (isOp) {
-            player.asBukkitPlayer().setOp(true);
+        // Apply base role permissions (current + inherited)
+        applyBaseRolePermissions(attachment);
+
+        // Apply upgraded role permissions (current + inherited, if present)
+        if (upgradedRole != null) {
+            applyUpgradedRolePermissions(attachment);
         }
 
-        // Set this role's permissions
-        this.permissions.forEach(permission -> {
+        // Set OP status
+        if (baseRole.isOp() || (upgradedRole != null && upgradedRole.isOp())) {
+            player.asBukkitPlayer().setOp(true);
+        }
+    }
+
+    private List<BaseRole> getInheritedBaseRoles(BaseRole role) {
+        return Arrays.stream(BaseRole.values())
+                .filter(r -> r.getWeight() > role.getWeight()) // Inherit from higher weight base roles
+                .collect(Collectors.toList());
+    }
+
+    private List<UpgradedRole> getInheritedUpgradedRoles(UpgradedRole role) {
+        return Arrays.stream(UpgradedRole.values())
+                .filter(r -> r.getWeight() > role.getWeight()) // Inherit from higher weight upgraded roles
+                .collect(Collectors.toList());
+    }
+
+
+    private void applyBaseRolePermissions(PermissionAttachment attachment) {
+        // Apply current base role permissions
+        baseRole.getInheritablePermissions().forEach(permission -> {
             permission.getNodes().forEach(node -> attachment.setPermission(node, true));
         });
 
-        // Inherit permissions from lower priority roles
-        for (PlayerRole role : getLowerPriorityRoles(this)) {
-            role.permissions.forEach(permission -> {
+        baseRole.getNonInheritablePermissions().forEach(permission -> {
+            permission.getNodes().forEach(node -> attachment.setPermission(node, true));
+        });
+
+        // Apply inherited base role permissions (only inheritable ones)
+        for (BaseRole inheritedRole : inheritedBaseRoles) {
+            inheritedRole.getInheritablePermissions().forEach(permission -> {
+                permission.getNodes().forEach(node -> attachment.setPermission(node, true));
+            });
+        }
+    }
+
+    private void applyUpgradedRolePermissions(PermissionAttachment attachment) {
+        if (upgradedRole != null) {
+            // Apply current upgraded role permissions
+            upgradedRole.getInheritablePermissions().forEach(permission -> {
+                permission.getNodes().forEach(node -> attachment.setPermission(node, true));
+            });
+
+            upgradedRole.getNonInheritablePermissions().forEach(permission -> {
                 permission.getNodes().forEach(node -> attachment.setPermission(node, true));
             });
         }
 
-    }
-
-    private static List<PlayerRole> getLowerPriorityRoles(PlayerRole role) {
-        return Arrays.stream(PlayerRole.values())
-                .filter(r -> r.priority > role.priority) // roles with greater numeric priority are "lower"
-                .toList();
-    }
-
-    public boolean hasPermission(Permission permission) {
-        if (permissions != null && permissions.contains(permission)) {
-            return true;
+        // Apply inherited upgraded role permissions (only inheritable ones)
+        for (UpgradedRole inheritedRole : inheritedUpgradedRoles) {
+            inheritedRole.getInheritablePermissions().forEach(permission -> {
+                permission.getNodes().forEach(node -> attachment.setPermission(node, true));
+            });
         }
+    }
 
-        for (PlayerRole role : getLowerPriorityRoles(this)) {
-            if (role.permissions != null && role.permissions.contains(permission)) {
-                return true;
+    private List<Permission> getPermissions() {
+        List<Permission> permissions = new ArrayList<>();
+
+        permissions.addAll(baseRole.getInheritablePermissions());
+        permissions.addAll(baseRole.getNonInheritablePermissions());
+
+        if (upgradedRole != null) {
+            permissions.addAll(upgradedRole.getInheritablePermissions());
+            permissions.addAll(upgradedRole.getNonInheritablePermissions());
+
+            for (UpgradedRole inheritedRole : inheritedUpgradedRoles) {
+                permissions.addAll(inheritedRole.getInheritablePermissions());
             }
         }
 
-        return false;
+        return permissions;
     }
 
-    public Component getFormattedAllPermissionComponent() {
-        List<Component> lines = new ArrayList<>();
-        Set<Permission> seen = new HashSet<>();
-
-        // this role's permissions first (preserve as parent)
-        for (Permission permission : permissions) {
-            lines.add(formatPermissionComponent(permission));
-            seen.add(permission);
-        }
-
-        // then lower-priority roles' permissions that haven't been added yet
-        for (PlayerRole role : getLowerPriorityRoles(this)) {
-            for (Permission permission : role.permissions) {
-                if (seen.add(permission)) {
-                    lines.add(formatPermissionComponent(permission));
-                }
-            }
-        }
-
-        // join lines with newline
-        Component result = Component.empty();
-        for (int i = 0; i < lines.size(); i++) {
-            result = result.append(lines.get(i));
-            if (i < lines.size() - 1) {
-                result = result.append(Component.text("\n"));
-            }
-        }
-
-        return result;
+    public BaseRole getBaseRole() {
+        return baseRole;
     }
 
-    private static Component formatPermissionComponent(Permission permission) {
-        List<String> nodes = permission.getNodes();
-        Component parent = Component.text(permission.name()).color(NamedTextColor.LIGHT_PURPLE); // pink-ish
-
-        if (nodes == null || nodes.isEmpty()) {
-            return parent;
-        }
-
-        // build nodes array in gray, quoted and comma-separated
-        Component nodesComponent = Component.empty();
-        for (int i = 0; i < nodes.size(); i++) {
-            String node = nodes.get(i);
-            nodesComponent = nodesComponent.append(Component.text("'" + node + "'").color(NamedTextColor.GRAY));
-            if (i < nodes.size() - 1) {
-                nodesComponent = nodesComponent.append(Component.text(", ").color(NamedTextColor.GRAY));
-            }
-        }
-
-        return parent
-                .append(Component.text(" [").color(NamedTextColor.GRAY))
-                .append(nodesComponent)
-                .append(Component.text("]").color(NamedTextColor.GRAY));
-    }
-
-    public Component getPrefix() {
-        return prefix != null ? prefix.asComponent() : Component.empty();
+    @Nullable
+    public UpgradedRole getUpgradedRole() {
+        return upgradedRole;
     }
 }

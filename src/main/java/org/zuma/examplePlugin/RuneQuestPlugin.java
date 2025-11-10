@@ -9,10 +9,7 @@ import org.zuma.examplePlugin.core.logger.Logger;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.core.module.ModuleLoader;
-import org.zuma.examplePlugin.core.module.core.DatabaseModule;
-import org.zuma.examplePlugin.core.module.core.HTTPHookModule;
-import org.zuma.examplePlugin.core.module.core.InterCommunicationModule;
-import org.zuma.examplePlugin.core.module.core.MapModule;
+import org.zuma.examplePlugin.core.module.core.*;
 import org.zuma.examplePlugin.core.module.game.*;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
@@ -26,6 +23,7 @@ import org.zuma.examplePlugin.domain.modifier.GearModifierHandler;
 import org.zuma.examplePlugin.domain.modifier.GlobalModifierHandler;
 import org.zuma.examplePlugin.domain.mount.MountHandler;
 import org.zuma.examplePlugin.domain.party.PartyManager;
+import org.zuma.examplePlugin.domain.payments.PaymentHandler;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.prayer.PrayerManager;
 import org.zuma.examplePlugin.domain.quest.QuestHandler;
@@ -53,6 +51,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new HTTPHookModule(),
                         new InterCommunicationModule(),
                         new MapModule(),
+                        new PaymentModule(),
 
                         new PacketsModule(),
                         new QuestModule(),
@@ -220,5 +219,9 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static ModuleContext getModuleContext() {
         return pluginInstance.moduleContext;
+    }
+
+    public static PaymentHandler getPaymentHandler() {
+        return pluginInstance.moduleContext.get(PaymentHandler.class);
     }
 }

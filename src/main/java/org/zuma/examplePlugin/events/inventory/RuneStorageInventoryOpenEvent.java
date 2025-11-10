@@ -1,6 +1,5 @@
 package org.zuma.examplePlugin.events.inventory;
 
-import org.zuma.examplePlugin.core.permissions.PlayerRole;
 import org.zuma.examplePlugin.core.redis.RedisEvent;
 
 import java.util.UUID;

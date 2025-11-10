@@ -1,15 +1,20 @@
 package org.zuma.examplePlugin.domain.player.persistence;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.permissions.Role;
+import org.zuma.examplePlugin.core.permissions.roles.BaseRole;
+import org.zuma.examplePlugin.core.permissions.roles.UpgradedRole;
 
+import javax.annotation.Nullable;
 import javax.security.auth.login.AccountNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class RunePlayerRepository {
@@ -20,7 +25,7 @@ public class RunePlayerRepository {
     }
 
     public SerializedPlayerContainer getPlayerByUUID(UUID uuid) throws AccountNotFoundException, IllegalAccessException {
-        String sql = "SELECT p.uuid, p.last_username, p.role, p.online, p.location, p.json, pic.json AS inventory_json " +
+        String sql = "SELECT p.uuid, p.last_username, p.base_role, p.upgraded_role, p.online, p.location, p.json, pic.json AS inventory_json " +
                 "FROM players p " +
                 "INNER JOIN player_inventory_contents pic ON p.uuid = pic.uuid " +
                 "WHERE p.uuid = ?";
@@ -37,7 +42,8 @@ public class RunePlayerRepository {
 
                 String json = rs.getString("json");
                 String lastUsername = rs.getString("last_username");
-                String role = rs.getString("role");
+                String baseRole = rs.getString("base_role");
+                String upgradedRole = rs.getString("upgraded_role");
                 String inventoryData = rs.getString("inventory_json");
                 String location = rs.getString("location");
                 boolean isOnline = rs.getBoolean("online");
@@ -46,7 +52,7 @@ public class RunePlayerRepository {
                     throw new IllegalAccessException("Player is already online.");
                 }
 
-                return new SerializedPlayerContainer(uuid, lastUsername, role, location, json, inventoryData == null ? "{}" : inventoryData);
+                return new SerializedPlayerContainer(uuid, lastUsername, baseRole, upgradedRole, location, json, inventoryData == null ? "{}" : inventoryData);
             }
 
         } catch (IllegalAccessException | AccountNotFoundException e) {
@@ -58,11 +64,12 @@ public class RunePlayerRepository {
 
     public void upsertPlayer(SerializedPlayerContainer container) {
         String playerSql = """
-                INSERT INTO players (uuid, last_username, role, online, location, json, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+                INSERT INTO players (uuid, last_username, base_role, upgraded_role, online, location, json, updated_at)
+                VALUES (?, ?,?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
                 ON DUPLICATE KEY UPDATE
                     last_username = VALUES(last_username),
-                    role = VALUES(role),
+                    base_role = VALUES(base_role),
+                    upgraded_role = VALUES(upgraded_role),
                     online = VALUES(online),
                     location = VALUES(location),
                     json = VALUES(json),
@@ -88,10 +95,11 @@ public class RunePlayerRepository {
                 // Upsert player
                 playerStmt.setString(1, container.uuid().toString());
                 playerStmt.setString(2, container.username());
-                playerStmt.setString(3, container.role());
-                playerStmt.setBoolean(4, false);
-                playerStmt.setString(5, container.location());
-                playerStmt.setString(6, container.playerData());
+                playerStmt.setString(3, container.baseRole());
+                playerStmt.setString(4, container.upgradedRole());
+                playerStmt.setBoolean(5, false);
+                playerStmt.setString(6, container.location());
+                playerStmt.setString(7, container.playerData());
                 playerStmt.executeUpdate();
 
                 // Upsert inventory
@@ -143,5 +151,39 @@ public class RunePlayerRepository {
             throw new RuntimeException("Failed to update player online status", e);
         }
     }
+
+    public void setPlayerUpgradedRole(UUID uuid, UpgradedRole newRole) throws SQLException {
+        String sql = "UPDATE players SET upgraded_role = ? WHERE uuid = ?";
+
+        try (Connection conn = pool.getDataSource().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, newRole.toString());
+            stmt.setString(2, uuid.toString());
+
+            stmt.executeUpdate();
+        }
+    }
+
+    public List<Role> getPlayerRoles(UUID uuid) throws SQLException {
+        String sql = "SELECT base_role, upgraded_role FROM players WHERE uuid = ?";
+        List<Role> roles = new ArrayList<>();
+
+        try (Connection conn = pool.getDataSource().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, uuid.toString());
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    roles.add(BaseRole.valueOf(rs.getString("base_role")));
+                    roles.add(UpgradedRole.valueOf(rs.getString("upgraded_role")));
+                }
+            }
+
+            return roles;
+        }
+    }
+
 
 }

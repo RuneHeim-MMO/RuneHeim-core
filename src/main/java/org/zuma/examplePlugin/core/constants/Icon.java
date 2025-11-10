@@ -142,7 +142,12 @@ public enum Icon {
     RANK_BADGE_OWNER("⸋"),
     RANK_BADGE_ADMIN("⥿"),
     RANK_BADGE_MOD("⭋"),
-    RANK_BADGE_HELPER("⤳");
+    RANK_BADGE_HELPER("⤳"),
+
+    RANK_BADGE_VIP("⤳"),
+    RANK_BADGE_HERO("⥤"),
+    RANK_BADGE_LEGEND("⾎"),
+    RANK_BADGE_MYTHIC("↴");
 
 
     private final String icon;

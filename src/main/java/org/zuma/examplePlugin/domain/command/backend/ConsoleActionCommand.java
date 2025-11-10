@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.command;
+package org.zuma.examplePlugin.domain.command.backend;
 
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
