@@ -8,8 +8,8 @@ import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.domain.command.backend.ConsolePaymentCommand;
-import org.zuma.examplePlugin.domain.payments.PaymentHandler;
-import org.zuma.examplePlugin.domain.payments.PaymentsHistoryRepository;
+import org.zuma.examplePlugin.domain.payments.handlers.PaymentHandler;
+import org.zuma.examplePlugin.domain.payments.persistence.PaymentsHistoryRepository;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class PaymentModule implements PluginModule {
         PaymentHandler paymentHandler = new PaymentHandler(paymentsHistoryRepository);
 
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> event.registrar().register("add_payment", new ConsolePaymentCommand()));
+                event -> event.registrar().register("handle_payment", new ConsolePaymentCommand()));
 
         context.bind(PaymentHandler.class, paymentHandler);
         context.bind(PaymentsHistoryRepository.class, paymentsHistoryRepository);

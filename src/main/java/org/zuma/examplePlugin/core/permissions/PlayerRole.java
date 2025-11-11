@@ -6,6 +6,7 @@ import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.permissions.Permission;
 import org.zuma.examplePlugin.core.permissions.roles.BaseRole;
 import org.zuma.examplePlugin.core.permissions.roles.UpgradedRole;
+import org.zuma.examplePlugin.domain.payments.SupporterLevel;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
@@ -24,6 +25,7 @@ public class PlayerRole {
     private final BaseRole baseRole;
     @Nullable
     private final UpgradedRole upgradedRole;
+    private final SupporterLevel supporterLevel;
 
     // Separate inheritance chains
     private final List<BaseRole> inheritedBaseRoles; // Base roles that this role inherits from
@@ -31,9 +33,10 @@ public class PlayerRole {
 
     private final List<Permission> permissions;
 
-    public PlayerRole(BaseRole baseRole, @Nullable UpgradedRole upgradedRole) {
+    public PlayerRole(BaseRole baseRole, @Nullable UpgradedRole upgradedRole, SupporterLevel supporterLevel) {
         this.upgradedRole = upgradedRole;
         this.baseRole = baseRole;
+        this.supporterLevel = supporterLevel;
 
         // Calculate base role inheritance (lower weight base roles inherit from higher weight base roles)
         this.inheritedBaseRoles = getInheritedBaseRoles(baseRole);
@@ -46,7 +49,11 @@ public class PlayerRole {
     }
 
     public String getSupporterRoleIcon() {
-        return Icon.SUPPORTER_LVL_3.get() + " ";
+        return supporterLevel.equals(SupporterLevel.LVL_0) ? "" : supporterLevel.levelIcon.get().concat(" ");
+    }
+
+    public SupporterLevel getSupporterRoleLevel() {
+        return supporterLevel;
     }
 
     public Component getPrefix() {
@@ -145,6 +152,14 @@ public class PlayerRole {
         permissions.addAll(baseRole.getInheritablePermissions());
         permissions.addAll(baseRole.getNonInheritablePermissions());
 
+        for (BaseRole inheritedRole : inheritedBaseRoles) {
+            permissions.addAll(inheritedRole.getInheritablePermissions());
+        }
+
+        for (UpgradedRole inheritedRole : inheritedUpgradedRoles) {
+            permissions.addAll(inheritedRole.getInheritablePermissions());
+        }
+
         if (upgradedRole != null) {
             permissions.addAll(upgradedRole.getInheritablePermissions());
             permissions.addAll(upgradedRole.getNonInheritablePermissions());
@@ -164,5 +179,9 @@ public class PlayerRole {
     @Nullable
     public UpgradedRole getUpgradedRole() {
         return upgradedRole;
+    }
+
+    public SupporterLevel getSupporterLevel() {
+        return supporterLevel;
     }
 }

@@ -7,11 +7,6 @@ import org.zuma.examplePlugin.domain.effect.AnimatedEffect;
 
 public class SpecialAttackSmokeEffect implements AnimatedEffect {
     private final int durationTicks = 12;       // quick effect (~0.6s)
-    private final int points = 10;              // particles per ring
-    private final double baseRadius = 0.2;
-    private final double maxRadius = 5.0;
-    private final double maxHeight = 0.25;
-    private final double rotationSpeed = Math.PI * 2 / durationTicks; // one rotation over duration
     private final double phaseOffset = Math.random() * Math.PI * 2;  // vary between instances
     private final AttackType attackType;
 
@@ -27,11 +22,18 @@ public class SpecialAttackSmokeEffect implements AnimatedEffect {
         // ease-out cubic for smoother feel
         double eased = 1 - Math.pow(1 - progress, 3);
 
+        double maxRadius = 5.0;
+        double baseRadius = 0.2;
         double radius = baseRadius + (maxRadius - baseRadius) * eased;
+        double maxHeight = 0.25;
         double yOffset = maxHeight * Math.sin(progress * Math.PI); // rise then fall
+        // one rotation over duration
+        double rotationSpeed = Math.PI * 2 / durationTicks;
         double rot = phaseOffset + rotationSpeed * time;
 
         // ring of particles around current location
+        // particles per ring
+        int points = 10;
         for (int i = 0; i < points; i++) {
             double angle = rot + (2 * Math.PI * i) / points;
             double x = location.getX() + Math.cos(angle) * radius;

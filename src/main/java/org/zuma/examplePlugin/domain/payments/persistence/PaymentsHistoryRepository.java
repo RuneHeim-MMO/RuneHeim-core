@@ -1,14 +1,16 @@
-package org.zuma.examplePlugin.domain.payments;
+package org.zuma.examplePlugin.domain.payments.persistence;
 
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.domain.payments.Payment;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class PaymentsHistoryRepository {
     private final HikariPool pool;
@@ -35,13 +37,13 @@ public class PaymentsHistoryRepository {
         }
     }
 
-    public BigDecimal getTotalPayments(String uuid) {
+    public BigDecimal getTotalPayments(UUID UUID) {
         String sql = "SELECT SUM(amount) FROM payments_history WHERE uuid = ?";
 
         try (Connection conn = pool.getDataSource().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, uuid);
+            stmt.setString(1, UUID.toString());
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -52,7 +54,7 @@ public class PaymentsHistoryRepository {
 
         } catch (Exception e) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL,
-                    "Failed to calculate total payments for UUID " + uuid + "!", e);
+                    "Failed to calculate total payments for UUID " + UUID.toString() + "!", e);
         }
 
         return BigDecimal.ZERO;

@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.core.exception.PlayerDataLoadException;
+import org.zuma.examplePlugin.domain.payments.SupporterLevel;
 import org.zuma.examplePlugin.domain.player.persistence.DeserializedPlayerEntity;
 import org.zuma.examplePlugin.domain.player.persistence.RunePlayerRepository;
 import org.zuma.examplePlugin.domain.player.persistence.RunePlayerSerializer;
@@ -26,6 +27,7 @@ import org.zuma.examplePlugin.events.player.RunePlayerSavedEvent;
 
 import javax.annotation.Nullable;
 import javax.security.auth.login.AccountNotFoundException;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -109,6 +111,8 @@ public class RunePlayerManager {
         runAsync(() -> {
             try {
                 AbstractMap.SimpleEntry<RunePlayer, DeserializedPlayerEntity> data = fetchOrCreatePlayerData(player);
+                BigDecimal totalPayments = RuneQuestPlugin.getPaymentHandler().getTotalPayments(player.getUniqueId());
+                data.getKey().setSupporterLevel(SupporterLevel.getLevelByAmount(totalPayments.doubleValue()));
 
                 runSync(() -> {
                     if (!player.isOnline()) {
@@ -345,16 +349,21 @@ public class RunePlayerManager {
         }
     }
 
-    public void writeNewUpgradedRoleToDatabaseSync(UUID uuid, UpgradedRole newRole) throws SQLException {
+    public void writeNewUpgradedRoleToDatabaseSync(UUID uuid, UpgradedRole newRole) {
         repository.setPlayerUpgradedRole(uuid, newRole);
     }
 
-    public Map.Entry<BaseRole, UpgradedRole> getPlayerRolesFromDatabaseSync(UUID uuid) throws SQLException {
-        List<Role> roles = repository.getPlayerRoles(uuid);
+    public Map.Entry<BaseRole, UpgradedRole> getPlayerRolesFromDatabaseSync(UUID uuid) {
+        try {
+            List<Role> roles = repository.getPlayerRoles(uuid);
 
-        BaseRole baseRole = (BaseRole) roles.get(0);
-        UpgradedRole upgradedRole = roles.size() > 1 ? (UpgradedRole) roles.get(1) : null;
+            BaseRole baseRole = (BaseRole) roles.get(0);
+            UpgradedRole upgradedRole = roles.size() > 1 ? (UpgradedRole) roles.get(1) : null;
 
-        return new AbstractMap.SimpleEntry<>(baseRole, upgradedRole);
+            return new AbstractMap.SimpleEntry<>(baseRole, upgradedRole);
+        } catch (Exception e) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed extracting 2 roles from the database for " + uuid, e);
+            throw e;
+        }
     }
 }

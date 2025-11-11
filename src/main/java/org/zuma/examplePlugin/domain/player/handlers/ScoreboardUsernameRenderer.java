@@ -7,10 +7,10 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.Objects;
 
-public class UsernameRenderer {
+public class ScoreboardUsernameRenderer {
     private final RunePlayer player;
 
-    public UsernameRenderer(RunePlayer player) {
+    public ScoreboardUsernameRenderer(RunePlayer player) {
         this.player = player;
     }
 

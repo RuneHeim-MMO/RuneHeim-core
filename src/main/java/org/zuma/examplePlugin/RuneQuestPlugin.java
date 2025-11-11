@@ -23,7 +23,7 @@ import org.zuma.examplePlugin.domain.modifier.GearModifierHandler;
 import org.zuma.examplePlugin.domain.modifier.GlobalModifierHandler;
 import org.zuma.examplePlugin.domain.mount.MountHandler;
 import org.zuma.examplePlugin.domain.party.PartyManager;
-import org.zuma.examplePlugin.domain.payments.PaymentHandler;
+import org.zuma.examplePlugin.domain.payments.handlers.PaymentHandler;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.prayer.PrayerManager;
 import org.zuma.examplePlugin.domain.quest.QuestHandler;

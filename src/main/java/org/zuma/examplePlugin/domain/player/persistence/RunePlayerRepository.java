@@ -138,7 +138,7 @@ public class RunePlayerRepository {
     }
 
     public void setPlayerOnline(UUID uuid, boolean online) {
-        String sql = "UPDATE players SET online = ? WHERE uuid = ?";
+        String sql = "UPDATE players SET online = ?, updated_at = NOW() WHERE uuid = ?";
 
         try (Connection conn = pool.getDataSource().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -152,38 +152,46 @@ public class RunePlayerRepository {
         }
     }
 
-    public void setPlayerUpgradedRole(UUID uuid, UpgradedRole newRole) throws SQLException {
-        String sql = "UPDATE players SET upgraded_role = ? WHERE uuid = ?";
+    public void setPlayerUpgradedRole(UUID uuid, UpgradedRole newRole) {
+        try {
+            String sql = "UPDATE players SET upgraded_role = ?, updated_at = NOW() WHERE uuid = ?";
 
-        try (Connection conn = pool.getDataSource().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            try (Connection conn = pool.getDataSource().getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, newRole.toString());
-            stmt.setString(2, uuid.toString());
+                stmt.setString(1, newRole.toString());
+                stmt.setString(2, uuid.toString());
 
-            stmt.executeUpdate();
-        }
-    }
-
-    public List<Role> getPlayerRoles(UUID uuid) throws SQLException {
-        String sql = "SELECT base_role, upgraded_role FROM players WHERE uuid = ?";
-        List<Role> roles = new ArrayList<>();
-
-        try (Connection conn = pool.getDataSource().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, uuid.toString());
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    roles.add(BaseRole.valueOf(rs.getString("base_role")));
-                    roles.add(UpgradedRole.valueOf(rs.getString("upgraded_role")));
-                }
+                stmt.executeUpdate();
             }
-
-            return roles;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to update player upgraded role", e);
         }
     }
 
+    public List<Role> getPlayerRoles(UUID uuid) {
+        try {
+            String sql = "SELECT base_role, upgraded_role FROM players WHERE uuid = ?";
+            List<Role> roles = new ArrayList<>();
+
+            try (Connection conn = pool.getDataSource().getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+                stmt.setString(1, uuid.toString());
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        roles.add(BaseRole.valueOf(rs.getString("base_role")));
+                        String upgradedRoleStr = rs.getString("upgraded_role");
+                        roles.add(upgradedRoleStr != null ? UpgradedRole.valueOf(upgradedRoleStr) : null);
+                    }
+                }
+
+                return roles;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to retrieve player roles", e);
+        }
+    }
 
 }

@@ -4,10 +4,10 @@ import org.zuma.examplePlugin.core.redis.RedisEvent;
 
 import java.util.UUID;
 
-public class SupportLevelReloadEvent extends RedisEvent<SupportLevelReloadEvent.Payload> {
+public class SupportLevelQueryEvent extends RedisEvent<SupportLevelQueryEvent.Payload> {
     private final Payload payload;
 
-    public SupportLevelReloadEvent(Payload payload) {
+    public SupportLevelQueryEvent(Payload payload) {
         this.payload = payload;
     }
 
@@ -21,7 +21,6 @@ public class SupportLevelReloadEvent extends RedisEvent<SupportLevelReloadEvent.
 
     @Override
     public Payload composePayload() {
-        this.payload.replayAtOrigin = false;
         return payload;
     }
 }

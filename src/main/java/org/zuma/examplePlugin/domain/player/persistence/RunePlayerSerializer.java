@@ -13,6 +13,7 @@ import org.zuma.examplePlugin.core.permissions.PlayerRole;
 import org.zuma.examplePlugin.core.permissions.roles.UpgradedRole;
 import org.zuma.examplePlugin.domain.gui.ItemStackSlotPair;
 import org.zuma.examplePlugin.domain.gui.serializer.ItemContainerContentSerializer;
+import org.zuma.examplePlugin.domain.payments.SupporterLevel;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.player.persistence.meta.v1.PlayerDataDeserializedJsonContainer;
@@ -74,7 +75,7 @@ public class RunePlayerSerializer {
                 PlayerDataDeserializedJsonContainer playerDataDeserializedJsonContainer = gson.fromJson(playerData.meta(), PlayerDataDeserializedJsonContainer.class);
                 EnumMap<SkillType, Skill> mappedSkills = playerDataDeserializedJsonContainer.skills().stream().collect(Collectors.toMap(Skill::getType, Function.identity(), (a, b) -> b, () -> new EnumMap<>(SkillType.class)));
                 RunePlayer player = new RunePlayer(container.uuid(), RunePlayerManager.createDefaultSkills());
-                PlayerRole role = new PlayerRole(BaseRole.valueOf(container.baseRole()), container.upgradedRole() != null ? UpgradedRole.valueOf(container.upgradedRole()) : null);
+                PlayerRole role = new PlayerRole(BaseRole.valueOf(container.baseRole()), container.upgradedRole() != null ? UpgradedRole.valueOf(container.upgradedRole()) : null, SupporterLevel.LVL_0);
 
                 player.setDiscoveredTerritoryIds(playerDataDeserializedJsonContainer.discoveredTerritoryIds());
                 player.setPouchCoins(playerDataDeserializedJsonContainer.pouchCoins(), true);
