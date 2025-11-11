@@ -65,7 +65,7 @@ public class RunePlayerRepository {
     public void upsertPlayer(SerializedPlayerContainer container) {
         String playerSql = """
                 INSERT INTO players (uuid, last_username, base_role, upgraded_role, online, location, json, updated_at)
-                VALUES (?, ?,?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+                VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
                 ON DUPLICATE KEY UPDATE
                     last_username = VALUES(last_username),
                     base_role = VALUES(base_role),

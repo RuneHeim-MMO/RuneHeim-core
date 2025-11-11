@@ -23,7 +23,7 @@ public class DonationHandler {
         @Nullable UpgradedRole currentRole = RuneQuestPlugin.getPlayerManager().getPlayerRolesFromDatabaseSync(uuid).getValue();
 
         if (currentRole != null && role.getWeight() > currentRole.getWeight()) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[DONATE] New rank " + role + " has lower weight than current rank " + currentRole + " for player " + uuid);
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[DONATE] New rank " + role + " has higher weight than current rank " + currentRole + " for player " + uuid);
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[DONATE] Aborting rank update to prevent downgrade.");
             return;
         }

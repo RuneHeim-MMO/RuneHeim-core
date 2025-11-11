@@ -3,7 +3,7 @@ package org.zuma.examplePlugin.domain.payments;
 import org.zuma.examplePlugin.core.constants.Icon;
 
 public enum SupporterLevel {
-    LVL_0(-1, 0, Icon.EMPTY, "", ""),
+    LVL_0(0, 0, Icon.EMPTY, "", ""),
     LVL_1(1, 25, Icon.SUPPORTER_LVL_1, "I", "§9"),
     LVL_2(25, 50, Icon.SUPPORTER_LVL_2, "II", "§b"),
     LVL_3(50, 100, Icon.SUPPORTER_LVL_3, "III", "§a"),

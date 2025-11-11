@@ -14,11 +14,7 @@ import org.zuma.examplePlugin.domain.payments.persistence.PaymentsHistoryReposit
 import java.util.List;
 
 public class PaymentModule implements PluginModule {
-    private static final Plugin blueMap = Bukkit.getPluginManager().getPlugin("BlueMap");
-
-    public PaymentModule() {
-    }
-
+    
     @Override
     public List<Class<?>> dependencies() {
         return List.of(HikariPool.class);
