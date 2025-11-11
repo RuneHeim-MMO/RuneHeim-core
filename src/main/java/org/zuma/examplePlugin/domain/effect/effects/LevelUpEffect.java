@@ -54,6 +54,8 @@ public class LevelUpEffect implements AnimatedEffect {
         } else {
             // Maxed skill sound after delay
             Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+                if (!player.isOnline()) return;
+
                 SoundType.PLAYER_MAX_SKILL.play(player, true);
             }, 40);
 

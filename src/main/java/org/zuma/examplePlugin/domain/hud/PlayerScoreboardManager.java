@@ -165,7 +165,7 @@ public class PlayerScoreboardManager {
         if (team == null) return;
 
         Party targetParty = RuneQuestPlugin.getPartyManager().getPlayersParty(target);
-        Component base = target.getRole().getPrefix();
+        Component base = Component.text(target.getRole().getSupporterRoleIcon()).append(target.getRole().getPrefix());
 
         if (targetParty != null && targetParty.getMemberUUIDs().contains(player.getUUID())) {
             team.prefix(Icon.PARTY.asComponent().append(base));

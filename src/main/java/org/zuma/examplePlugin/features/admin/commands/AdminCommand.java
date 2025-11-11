@@ -114,10 +114,6 @@ public class AdminCommand implements BasicCommand {
 
         }
 
-        if (args[0].equalsIgnoreCase("perms")) {
-            player.sendMessage(runePlayer.getRole().getFormattedAllPermissionComponent());
-        }
-
         if (args[0].equalsIgnoreCase("level") && args[1].equalsIgnoreCase("mount")) {
             AdditionalGearSlotHandler slotHandler = RuneQuestPlugin.getModuleContext().get(AdditionalGearSlotHandler.class);
             ItemStack itemStack = slotHandler.getSlotItem(runePlayer, ReservedSlot.MOUNT_SLOT);
