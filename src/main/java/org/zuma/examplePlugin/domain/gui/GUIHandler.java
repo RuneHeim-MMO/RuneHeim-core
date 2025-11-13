@@ -126,6 +126,8 @@ public class GUIHandler {
         this.registry.register(InventoryId.MEDIUM_STORAGE_BAG.asInt(), () -> new MediumBagInventory(GUIOverlay.MEDIUM_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Medium Bag", InventoryId.MEDIUM_STORAGE_BAG.asInt(), storageItemContentController));
         this.registry.register(InventoryId.LARGE_STORAGE_BAG.asInt(), () -> new LargeBagInventory(GUIOverlay.LARGE_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Large Bag", InventoryId.LARGE_STORAGE_BAG.asInt(), storageItemContentController));
 
+        this.registry.register(InventoryId.BOMBS_MENU.asInt(), () -> new BombsMenu(GUIOverlay.BOMBS_MENU_OVERLAY.asGlyph() + "§f" + Icon.EXPLOSION.get() + "§f Bombs Menu", InventoryId.BOMBS_MENU.asInt()));
+
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
     }

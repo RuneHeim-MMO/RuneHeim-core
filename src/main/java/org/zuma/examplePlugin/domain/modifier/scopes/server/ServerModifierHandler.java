@@ -84,20 +84,20 @@ public class ServerModifierHandler implements Listener {
         return (int) (millisRemaining / 60000);
     }
 
-    public void activateXPBomb(RunePlayer activatedBy, ServerModifierType type, long durationMillis) {
+    public boolean activateXPBomb(RunePlayer activatedBy, ServerModifierType type, long durationMillis) {
         if (isModifierActive(type)) {
             HudService.sendFailMessage(activatedBy, Component.text("A " + type.getLabel() + " is already active on this server. Try again in " + getMinutesRemaining(type) + " minutes."));
-            return;
+            return false;
         }
 
         if (waitingForAnimationFinish.contains(type)) {
             HudService.sendFailMessage(activatedBy, Component.text("Someone is already throwing a " + type.getLabel() + "."));
-            return;
+            return false;
         }
 
         if (activatedBy.getBombsContainer().getBombsAmounts().getOrDefault(type, 0) <= 0) {
             HudService.sendFailMessage(activatedBy, Component.text("You do not have any " + type.getLabel() + "s to activate."));
-            return;
+            return false;
         }
 
         waitingForAnimationFinish.add(type);
@@ -118,7 +118,7 @@ public class ServerModifierHandler implements Listener {
             ServerModifier modifier = new ServerModifier(type, activeUntil);
             activeModifiers.put(type, modifier);
             waitingForAnimationFinish.remove(type);
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[Bomb Tracker]" + activatedBy.asBukkitPlayer().getName() + " has activated a " + type.getLabel() + " on the server for " + (durationMillis / 60000) + " minutes.");
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[Bomb Tracker] " + activatedBy.asBukkitPlayer().getName() + " has activated a " + type.getLabel() + " on the server for " + (durationMillis / 60000) + " minutes.");
 
             RuneQuestPlugin.getPlayerManager().getOnlinePlayers().forEach(p -> {
                 showActivationMessage(activatedBy.asBukkitPlayer().getName(), null, p, type);
@@ -126,11 +126,11 @@ public class ServerModifierHandler implements Listener {
             });
         }, 60L);
 
+        return true;
     }
 
     private void showExpirationMessage(RunePlayer player, ServerModifierType type) {
         HudService.sendInfoMessage(player, Component.text(type.getLabel(), Color.ACCENT.asColor()).append(Component.text(" has expired.", Color.INFO.asColor())));
-        ;
         SoundType.GLOBAL_EFFECT_EXPIRED.play(player, false);
     }
 

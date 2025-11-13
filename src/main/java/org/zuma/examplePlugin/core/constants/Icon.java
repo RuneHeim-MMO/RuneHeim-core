@@ -82,6 +82,7 @@ public enum Icon {
     ANCHOR("⏚"),
     PARTY("⾱"),
     STORAGE("⾆"),
+    EXPLOSION("ⵋ"),
 
     SKULL_OPEN_MOUTH("₮"),
     SKULL_CLOSED_MOUTH("⺳"),

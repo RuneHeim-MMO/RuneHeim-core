@@ -9,6 +9,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
+import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -38,6 +39,7 @@ public class BombsCommand implements BasicCommand {
             return;
         }
 
+        RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.BOMBS_MENU.asInt(), runePlayer, null);
 
     }
 
