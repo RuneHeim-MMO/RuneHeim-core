@@ -6,13 +6,12 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.permissions.Role;
 import org.zuma.examplePlugin.core.permissions.roles.BaseRole;
 import org.zuma.examplePlugin.core.permissions.roles.UpgradedRole;
+import org.zuma.examplePlugin.domain.player.PlayerBombsContainer;
 
-import javax.annotation.Nullable;
 import javax.security.auth.login.AccountNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -25,9 +24,12 @@ public class RunePlayerRepository {
     }
 
     public SerializedPlayerContainer getPlayerByUUID(UUID uuid) throws AccountNotFoundException, IllegalAccessException {
-        String sql = "SELECT p.uuid, p.last_username, p.base_role, p.upgraded_role, p.online, p.location, p.json, pic.json AS inventory_json " +
+        String sql = "SELECT p.uuid, p.last_username, p.base_role, p.upgraded_role, p.online, p.location, p.json, " +
+                "pic.json AS inventory_json, " +
+                "pb.double_combat_xp, pb.double_skill_xp, pb.mob_drops, pb.resource_drops, pb.perfect_strike, pb.megaphone_uses " +
                 "FROM players p " +
                 "INNER JOIN player_inventory_contents pic ON p.uuid = pic.uuid " +
+                "INNER JOIN player_bonus_bombs pb ON p.uuid = pb.uuid " +
                 "WHERE p.uuid = ?";
 
         try (Connection conn = pool.getDataSource().getConnection();
@@ -48,11 +50,20 @@ public class RunePlayerRepository {
                 String location = rs.getString("location");
                 boolean isOnline = rs.getBoolean("online");
 
+                // Bombs
+                int doubleCombatXP = rs.getInt("double_combat_xp");
+                int doubleSkillXP = rs.getInt("double_skill_xp");
+                int mobDrops = rs.getInt("mob_drops");
+                int resourceDrops = rs.getInt("resource_drops");
+                int perfectStrike = rs.getInt("perfect_strike");
+                int megaphoneUses = rs.getInt("megaphone_uses");
+                PlayerBombsContainer bombsContainer = new PlayerBombsContainer(doubleCombatXP, doubleSkillXP, mobDrops, resourceDrops, perfectStrike, megaphoneUses);
+
                 if (isOnline) {
                     throw new IllegalAccessException("Player is already online.");
                 }
 
-                return new SerializedPlayerContainer(uuid, lastUsername, baseRole, upgradedRole, location, json, inventoryData == null ? "{}" : inventoryData);
+                return new SerializedPlayerContainer(uuid, lastUsername, baseRole, upgradedRole, location, json, inventoryData == null ? "{}" : inventoryData, bombsContainer);
             }
 
         } catch (IllegalAccessException | AccountNotFoundException e) {
@@ -84,12 +95,26 @@ public class RunePlayerRepository {
                     updated_at = CURRENT_TIMESTAMP
                 """;
 
+        String bonusBombsSql = """
+                 INSERT INTO player_bonus_bombs (uuid, double_combat_xp, double_skill_xp, mob_drops, resource_drops, perfect_strike, megaphone_uses, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+                ON DUPLICATE KEY UPDATE
+                    double_combat_xp = VALUES(double_combat_xp),
+                    double_skill_xp = VALUES(double_skill_xp),
+                    mob_drops = VALUES(mob_drops),
+                    resource_drops = VALUES(resource_drops),
+                    perfect_strike = VALUES(perfect_strike),
+                    megaphone_uses = VALUES(megaphone_uses),
+                    updated_at = CURRENT_TIMESTAMP
+                """;
+
         Connection conn = null;
         try {
             conn = pool.getDataSource().getConnection();
             conn.setAutoCommit(false); // start transaction
 
             try (PreparedStatement playerStmt = conn.prepareStatement(playerSql);
+                 PreparedStatement bombsStmt = conn.prepareStatement(bonusBombsSql);
                  PreparedStatement inventoryStmt = conn.prepareStatement(inventorySql)) {
 
                 // Upsert player
@@ -107,8 +132,18 @@ public class RunePlayerRepository {
                 inventoryStmt.setString(2, container.inventoryData());
                 inventoryStmt.executeUpdate();
 
+                bombsStmt.setString(1, container.uuid().toString());
+                bombsStmt.setInt(2, container.bombsContainer().getDoubleCombatXPBombs());
+                bombsStmt.setInt(3, container.bombsContainer().getDoubleSkillXPBombs());
+                bombsStmt.setInt(4, container.bombsContainer().getIncreasedMobDropsBombs());
+                bombsStmt.setInt(5, container.bombsContainer().getIncreasedResourceDropsBombs());
+                bombsStmt.setInt(6, container.bombsContainer().getIncreasedPerfectStrikeBombs());
+                bombsStmt.setInt(7, container.bombsContainer().getMegaphoneUses());
+                bombsStmt.executeUpdate();
+
                 // Commit transaction
                 conn.commit();
+
             }
 
         } catch (Exception e) {
@@ -191,6 +226,54 @@ public class RunePlayerRepository {
             }
         } catch (Exception e) {
             throw new RuntimeException("Failed to retrieve player roles", e);
+        }
+    }
+
+    public PlayerBombsContainer getPlayerBombsContainer(UUID uuid) {
+        String sql = "SELECT double_combat_xp, double_skill_xp, mob_drops, resource_drops, perfect_strike, megaphone_uses FROM player_bonus_bombs WHERE uuid = ?";
+
+        try (Connection conn = pool.getDataSource().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, uuid.toString());
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int doubleCombatXP = rs.getInt("double_combat_xp");
+                    int doubleSkillXP = rs.getInt("double_skill_xp");
+                    int mobDrops = rs.getInt("mob_drops");
+                    int resourceDrops = rs.getInt("resource_drops");
+                    int perfectStrike = rs.getInt("perfect_strike");
+                    int megaphoneUses = rs.getInt("megaphone_uses");
+
+                    return new PlayerBombsContainer(doubleCombatXP, doubleSkillXP, mobDrops, resourceDrops, perfectStrike, megaphoneUses);
+                } else {
+                    throw new RuntimeException("Player bombs container not found for UUID: " + uuid);
+                }
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to retrieve player bombs container", e);
+        }
+    }
+
+    public void updatePlayerBombsContainer(UUID uuid, PlayerBombsContainer bombsContainer) {
+        String sql = "UPDATE player_bonus_bombs SET double_combat_xp = ?, double_skill_xp = ?, mob_drops = ?, resource_drops = ?, perfect_strike = ?, megaphone_uses = ?, updated_at = NOW() WHERE uuid = ?";
+
+        try (Connection conn = pool.getDataSource().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, bombsContainer.getDoubleCombatXPBombs());
+            stmt.setInt(2, bombsContainer.getDoubleSkillXPBombs());
+            stmt.setInt(3, bombsContainer.getIncreasedMobDropsBombs());
+            stmt.setInt(4, bombsContainer.getIncreasedResourceDropsBombs());
+            stmt.setInt(5, bombsContainer.getIncreasedPerfectStrikeBombs());
+            stmt.setInt(6, bombsContainer.getMegaphoneUses());
+            stmt.setString(7, uuid.toString());
+
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to update player bombs container", e);
         }
     }
 

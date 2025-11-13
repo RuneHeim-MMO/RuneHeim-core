@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public enum UpgradedRole implements Role {
-    MYTHIC(997, Icon.RANK_BADGE_MYTHIC, List.of(), List.of()),
+    MYTHIC(997, Icon.RANK_BADGE_MYTHIC, List.of(Permission.BONUS_BOMB_TRACKER), List.of()),
     LEGEND(998, Icon.RANK_BADGE_LEGEND, List.of(), List.of()),
     HERO(999, Icon.RANK_BADGE_HERO, List.of(), List.of()),
     VIP(1000, Icon.RANK_BADGE_VIP, List.of(), List.of());

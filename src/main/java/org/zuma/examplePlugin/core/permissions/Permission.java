@@ -15,6 +15,7 @@ public enum Permission {
     CHAT_SPY(List.of("runeheim.chat", "runeheim.chat.spy", "runeheim.chat.spy.server", "runeheim.chat.spy.network")),
     CHAT_PROFANITY_BYPASS(List.of("runeheim.chat.profanity")),
     CHAT_COOLDOWN_BYPASS(List.of("runeheim.chat.cooldown")),
+    BONUS_BOMB_TRACKER(List.of("runeheim.bonus.bomb.tracker")),
 
     STAFF_MOVEMENT(List.of(
             "essentials.fly", "essentials.back", "essentials.back.ondeath",

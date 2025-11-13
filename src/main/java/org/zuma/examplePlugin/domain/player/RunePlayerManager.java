@@ -366,4 +366,12 @@ public class RunePlayerManager {
             throw e;
         }
     }
+
+    public PlayerBombsContainer getPlayerBombsContainerFromDatabaseSync(UUID uuid) {
+        return repository.getPlayerBombsContainer(uuid);
+    }
+
+    public void writeNewPlayerBombsContainerToDatabaseSync(UUID uuid, PlayerBombsContainer container) {
+        repository.updatePlayerBombsContainer(uuid, container);
+    }
 }

@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.player;
 
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -50,6 +51,7 @@ public class RunePlayer implements CombatEntity {
     private PermissionAttachment permissionAttachment;
 
     private final PlayerCombatData combatData;
+    private PlayerBombsContainer bombsContainer;
 
     private final PendingXPHandler pendingXPHandler;
     private final EnumMap<ModifierType, Modifier> modifiers;
@@ -65,7 +67,7 @@ public class RunePlayer implements CombatEntity {
 
     private long pouchCoins;
     private List<String> discoveredTerritoryIds, completedQuestIds;
-    private boolean isInCutscene, isDead, isDialogOptionChoosing;
+    private boolean isInCutscene, isDead, isDialogOptionChoosing, isNextMessageMegaphone;
     private HashMap<String, AbstractQuestStep> activeQuestSteps; // Quest id : step
     private @Nullable Location safeLocation; // is set when player is in spectator/cutscene mode.
 
@@ -91,6 +93,7 @@ public class RunePlayer implements CombatEntity {
         this.completedQuestIds = new ArrayList<>();
         this.isDead = false;
         this.activeEffects = new ArrayList<>();
+        this.bombsContainer = new PlayerBombsContainer(0, 0, 0, 0, 0, 0);
 
         Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
             this.permissionAttachment = asBukkitPlayer().addAttachment(RuneQuestPlugin.getInstance());
@@ -448,5 +451,21 @@ public class RunePlayer implements CombatEntity {
 
     public void setSupporterLevel(SupporterLevel supporterLevel) {
         this.role = new PlayerRole(this.role.getBaseRole(), this.role.getUpgradedRole(), supporterLevel);
+    }
+
+    public PlayerBombsContainer getBombsContainer() {
+        return bombsContainer;
+    }
+
+    public void setBombsContainer(PlayerBombsContainer bombsContainer) {
+        this.bombsContainer = bombsContainer;
+    }
+
+    public boolean isNextMessageMegaphone() {
+        return isNextMessageMegaphone;
+    }
+
+    public void setNextMessageMegaphone(boolean nextMessageMegaphone) {
+        isNextMessageMegaphone = nextMessageMegaphone;
     }
 }

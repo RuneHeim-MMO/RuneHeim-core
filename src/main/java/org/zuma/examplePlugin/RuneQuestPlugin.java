@@ -19,8 +19,9 @@ import org.zuma.examplePlugin.domain.gui.GUIHandler;
 import org.zuma.examplePlugin.domain.item.*;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.mob.*;
-import org.zuma.examplePlugin.domain.modifier.GearModifierHandler;
-import org.zuma.examplePlugin.domain.modifier.GlobalModifierHandler;
+import org.zuma.examplePlugin.domain.modifier.scopes.equipment.GearModifierHandler;
+import org.zuma.examplePlugin.domain.modifier.scopes.global.GlobalModifierHandler;
+import org.zuma.examplePlugin.domain.modifier.scopes.server.ServerModifierHandler;
 import org.zuma.examplePlugin.domain.mount.MountHandler;
 import org.zuma.examplePlugin.domain.party.PartyManager;
 import org.zuma.examplePlugin.domain.payments.handlers.PaymentHandler;
@@ -79,7 +80,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new AmbienceModule(),
                         new GlobalModifierModule(),
                         new PrayerModule(),
-                        new PartyModule()
+                        new PartyModule(),
+                        new ServerModifierModule()
                 ), moduleContext);
     }
 
@@ -223,5 +225,9 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static PaymentHandler getPaymentHandler() {
         return pluginInstance.moduleContext.get(PaymentHandler.class);
+    }
+
+    public static ServerModifierHandler getServerModifierHandler() {
+        return pluginInstance.moduleContext.get(ServerModifierHandler.class);
     }
 }
