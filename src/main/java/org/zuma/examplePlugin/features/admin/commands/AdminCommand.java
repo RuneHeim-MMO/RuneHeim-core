@@ -30,6 +30,7 @@ import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
 import org.zuma.examplePlugin.domain.item.state.states.FairyState;
 import org.zuma.examplePlugin.domain.item.state.states.MountState;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
+import org.zuma.examplePlugin.domain.modifier.scopes.server.ServerModifierType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 import org.zuma.examplePlugin.domain.player.inventory.ReservedSlot;
@@ -152,6 +153,29 @@ public class AdminCommand implements BasicCommand {
             item.getMetaGenerator().updatePresentationLayer(itemStack);
         }
 
+
+        if (args.length == 2 && Objects.equals(args[0], "bomb") && TypeUtils.isInteger(args[1])) {
+            int index = Integer.parseInt(args[1]);
+
+            switch (index) {
+                case 1: {
+                    RuneQuestPlugin.getServerModifierHandler().activateXPBomb(runePlayer, ServerModifierType.DOUBLE_XP, 1000 * 10);
+                    break;
+                }
+                case 2: {
+                    RuneQuestPlugin.getServerModifierHandler().activateXPBomb(runePlayer, ServerModifierType.INCREASED_MOB_DROPS, 1000 * 10);
+                    break;
+                }
+                case 3: {
+                    RuneQuestPlugin.getServerModifierHandler().activateXPBomb(runePlayer, ServerModifierType.INCREASED_RESOURCE_DROPS, 1000 * 10);
+                    break;
+                }
+                case 4: {
+                    RuneQuestPlugin.getServerModifierHandler().activateXPBomb(runePlayer, ServerModifierType.INCREASED_PERFECT_STRIKE, 1000 * 10);
+                    break;
+                }
+            }
+        }
 
         if (args.length == 2 && Objects.equals(args[0], "pouch") & TypeUtils.isInteger(args[1])) {
             runePlayer.setPouchCoins(Long.parseLong(args[1]), false);

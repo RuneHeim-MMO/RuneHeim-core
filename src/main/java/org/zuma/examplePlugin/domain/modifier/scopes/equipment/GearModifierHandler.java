@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.modifier;
+package org.zuma.examplePlugin.domain.modifier.scopes.equipment;
 
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
@@ -15,6 +15,8 @@ import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFruit;
 import org.zuma.examplePlugin.domain.item.impl.Gem;
 import org.zuma.examplePlugin.domain.item.state.states.FairyState;
 import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
+import org.zuma.examplePlugin.domain.modifier.Modifier;
+import org.zuma.examplePlugin.domain.modifier.SkillModifier;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.TemporaryEffect;
 import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;

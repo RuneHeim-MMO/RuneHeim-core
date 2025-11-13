@@ -5,13 +5,8 @@ import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.core.module.PluginModule;
-import org.zuma.examplePlugin.domain.item.ItemRegistry;
-import org.zuma.examplePlugin.domain.modifier.GearModifierHandler;
-import org.zuma.examplePlugin.domain.modifier.GearModifierListener;
-import org.zuma.examplePlugin.domain.modifier.GlobalModifierHandler;
+import org.zuma.examplePlugin.domain.modifier.scopes.global.GlobalModifierHandler;
 import org.zuma.examplePlugin.domain.modifier.persistence.GlobalModifierRepository;
-import org.zuma.examplePlugin.domain.player.RunePlayerManager;
-import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 
 import java.util.List;
 

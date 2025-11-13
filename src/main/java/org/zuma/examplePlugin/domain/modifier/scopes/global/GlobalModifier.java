@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.modifier;
+package org.zuma.examplePlugin.domain.modifier.scopes.global;
 
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 

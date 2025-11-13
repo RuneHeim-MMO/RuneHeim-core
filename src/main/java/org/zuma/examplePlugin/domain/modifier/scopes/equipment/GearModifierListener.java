@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.modifier;
+package org.zuma.examplePlugin.domain.modifier.scopes.equipment;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

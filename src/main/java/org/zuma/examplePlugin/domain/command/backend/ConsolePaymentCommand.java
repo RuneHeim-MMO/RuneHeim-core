@@ -10,6 +10,7 @@ import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.permissions.roles.UpgradedRole;
+import org.zuma.examplePlugin.domain.modifier.scopes.server.ServerModifierType;
 import org.zuma.examplePlugin.domain.payments.handlers.DonationHandler;
 import org.zuma.examplePlugin.domain.payments.Payment;
 
@@ -66,6 +67,26 @@ public class ConsolePaymentCommand implements BasicCommand {
             } catch (Exception e) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL,
                         "Failed to update uuid " + args[1] + " role to " + args[2] + "!", e);
+            }
+            return;
+        }
+
+        if (args[0].equalsIgnoreCase("add_bombs")) {
+            if (args.length < 3) {
+                sender.sendMessage(Component.text("Usage: /handle_payment add_bombs {uuid} {type} {amount}").color(Color.ERROR.asColor()));
+                return;
+            }
+
+            try {
+                UUID uuid = UUID.fromString(args[1]);
+                ServerModifierType type = ServerModifierType.valueOf(args[2].toUpperCase());
+                int amount = Integer.parseInt(args[3]);
+
+                DonationHandler.addBonusBomb(uuid, type, amount);
+
+            } catch (Exception e) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL,
+                        "Failed to add bombs to uuid " + args[1] + "!", e);
             }
             return;
         }

@@ -26,7 +26,7 @@ import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.impl.FusionMaster;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.FusionThunderEffect;
-import org.zuma.examplePlugin.domain.modifier.GlobalModifier;
+import org.zuma.examplePlugin.domain.modifier.scopes.global.GlobalModifier;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.Quest;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;

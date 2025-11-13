@@ -62,7 +62,8 @@ public class RunePlayerSerializer {
                 upgradedRole,
                 serializedLocation,
                 serializedPlayerData,
-                inventoryData
+                inventoryData,
+                runePlayer.getBombsContainer()
         );
     }
 
@@ -86,6 +87,7 @@ public class RunePlayerSerializer {
                 player.setCompletedQuestIds(playerDataDeserializedJsonContainer.completedQuestIds());
                 player.setActiveEffects(playerDataDeserializedJsonContainer.effects());
                 player.setRole(role, false);
+                player.setBombsContainer(container.bombsContainer());
 
                 List<ItemStackSlotPair> inventory = ItemContainerContentSerializer.deserializeItemContainerContentSync(inventoryData);
                 Location location = gson.fromJson(container.location(), Location.class);

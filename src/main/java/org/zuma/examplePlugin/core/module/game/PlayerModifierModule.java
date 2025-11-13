@@ -5,8 +5,8 @@ import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
-import org.zuma.examplePlugin.domain.modifier.GearModifierHandler;
-import org.zuma.examplePlugin.domain.modifier.GearModifierListener;
+import org.zuma.examplePlugin.domain.modifier.scopes.equipment.GearModifierHandler;
+import org.zuma.examplePlugin.domain.modifier.scopes.equipment.GearModifierListener;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 

@@ -6,6 +6,7 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.permissions.Role;
 import org.zuma.examplePlugin.core.permissions.roles.BaseRole;
 import org.zuma.examplePlugin.core.permissions.roles.UpgradedRole;
+import org.zuma.examplePlugin.domain.player.PlayerBombsContainer;
 
 import javax.annotation.Nullable;
 import javax.security.auth.login.AccountNotFoundException;
@@ -25,9 +26,12 @@ public class RunePlayerRepository {
     }
 
     public SerializedPlayerContainer getPlayerByUUID(UUID uuid) throws AccountNotFoundException, IllegalAccessException {
-        String sql = "SELECT p.uuid, p.last_username, p.base_role, p.upgraded_role, p.online, p.location, p.json, pic.json AS inventory_json " +
+        String sql = "SELECT p.uuid, p.last_username, p.base_role, p.upgraded_role, p.online, p.location, p.json, " +
+                "pic.json AS inventory_json, " +
+                "pb.double_xp, pb.mob_drops, pb.resource_drops, pb.perfect_strike " +
                 "FROM players p " +
                 "INNER JOIN player_inventory_contents pic ON p.uuid = pic.uuid " +
+                "INNER JOIN player_bonus_bombs pb ON p.uuid = pb.uuid " +
                 "WHERE p.uuid = ?";
 
         try (Connection conn = pool.getDataSource().getConnection();
@@ -48,11 +52,18 @@ public class RunePlayerRepository {
                 String location = rs.getString("location");
                 boolean isOnline = rs.getBoolean("online");
 
+                // Bombs
+                int doubleXp = rs.getInt("double_xp");
+                int mobDrops = rs.getInt("mob_drops");
+                int resourceDrops = rs.getInt("resource_drops");
+                int perfectStrike = rs.getInt("perfect_strike");
+                PlayerBombsContainer bombsContainer = new PlayerBombsContainer(doubleXp, mobDrops, resourceDrops, perfectStrike);
+
                 if (isOnline) {
                     throw new IllegalAccessException("Player is already online.");
                 }
 
-                return new SerializedPlayerContainer(uuid, lastUsername, baseRole, upgradedRole, location, json, inventoryData == null ? "{}" : inventoryData);
+                return new SerializedPlayerContainer(uuid, lastUsername, baseRole, upgradedRole, location, json, inventoryData == null ? "{}" : inventoryData, bombsContainer);
             }
 
         } catch (IllegalAccessException | AccountNotFoundException e) {
@@ -84,12 +95,24 @@ public class RunePlayerRepository {
                     updated_at = CURRENT_TIMESTAMP
                 """;
 
+        String bonusBombsSql = """
+                 INSERT INTO player_bonus_bombs (uuid, double_xp, mob_drops, resource_drops, perfect_strike, updated_at)
+                VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+                ON DUPLICATE KEY UPDATE
+                    double_xp = VALUES(double_xp),
+                    mob_drops = VALUES(mob_drops),
+                    resource_drops = VALUES(resource_drops),
+                    perfect_strike = VALUES(perfect_strike),
+                    updated_at = CURRENT_TIMESTAMP
+                """;
+
         Connection conn = null;
         try {
             conn = pool.getDataSource().getConnection();
             conn.setAutoCommit(false); // start transaction
 
             try (PreparedStatement playerStmt = conn.prepareStatement(playerSql);
+                 PreparedStatement bombsStmt = conn.prepareStatement(bonusBombsSql);
                  PreparedStatement inventoryStmt = conn.prepareStatement(inventorySql)) {
 
                 // Upsert player
@@ -107,8 +130,16 @@ public class RunePlayerRepository {
                 inventoryStmt.setString(2, container.inventoryData());
                 inventoryStmt.executeUpdate();
 
+                bombsStmt.setString(1, container.uuid().toString());
+                bombsStmt.setInt(2, container.bombsContainer().getDoubleXpBombs());
+                bombsStmt.setInt(3, container.bombsContainer().getIncreasedMobDropsBombs());
+                bombsStmt.setInt(4, container.bombsContainer().getIncreasedResourceDropsBombs());
+                bombsStmt.setInt(5, container.bombsContainer().getIncreasedPerfectStrikeBombs());
+                bombsStmt.executeUpdate();
+
                 // Commit transaction
                 conn.commit();
+
             }
 
         } catch (Exception e) {
@@ -191,6 +222,50 @@ public class RunePlayerRepository {
             }
         } catch (Exception e) {
             throw new RuntimeException("Failed to retrieve player roles", e);
+        }
+    }
+
+    public PlayerBombsContainer getPlayerBombsContainer(UUID uuid) {
+        String sql = "SELECT double_xp, mob_drops, resource_drops, perfect_strike FROM player_bonus_bombs WHERE uuid = ?";
+
+        try (Connection conn = pool.getDataSource().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, uuid.toString());
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int doubleXp = rs.getInt("double_xp");
+                    int mobDrops = rs.getInt("mob_drops");
+                    int resourceDrops = rs.getInt("resource_drops");
+                    int perfectStrike = rs.getInt("perfect_strike");
+
+                    return new PlayerBombsContainer(doubleXp, mobDrops, resourceDrops, perfectStrike);
+                } else {
+                    return new PlayerBombsContainer(0, 0, 0, 0);
+                }
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to retrieve player bombs container", e);
+        }
+    }
+
+    public void updatePlayerBombsContainer(UUID uuid, PlayerBombsContainer bombsContainer) {
+        String sql = "UPDATE player_bonus_bombs SET double_xp = ?, mob_drops = ?, resource_drops = ?, perfect_strike = ?, updated_at = NOW() WHERE uuid = ?";
+
+        try (Connection conn = pool.getDataSource().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, bombsContainer.getDoubleXpBombs());
+            stmt.setInt(2, bombsContainer.getIncreasedMobDropsBombs());
+            stmt.setInt(3, bombsContainer.getIncreasedResourceDropsBombs());
+            stmt.setInt(4, bombsContainer.getIncreasedPerfectStrikeBombs());
+            stmt.setString(5, uuid.toString());
+
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to update player bombs container", e);
         }
     }
 
