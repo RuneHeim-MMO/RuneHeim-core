@@ -50,6 +50,12 @@ public class CommandModule implements PluginModule {
                 event -> event.registrar().register("togglelock", new ToggleLockCommand()));
 
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("megaphone", new MegaphoneCommand()));
+
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("bombs", new BombsCommand()));
+
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("store", new StoreCommand()));
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("donate", new StoreCommand()));

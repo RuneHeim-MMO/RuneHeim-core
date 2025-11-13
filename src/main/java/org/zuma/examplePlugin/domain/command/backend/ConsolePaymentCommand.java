@@ -91,6 +91,24 @@ public class ConsolePaymentCommand implements BasicCommand {
             return;
         }
 
+        if (args[0].equalsIgnoreCase("add_megaphone")) {
+            if (args.length < 2) {
+                sender.sendMessage(Component.text("Usage: /handle_payment add_megaphone {uuid} {amount}").color(Color.ERROR.asColor()));
+                return;
+            }
+
+            try {
+                UUID uuid = UUID.fromString(args[1]);
+                int amount = Integer.parseInt(args[2]);
+                DonationHandler.addMegaphoneUses(uuid, amount);
+
+            } catch (Exception e) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL,
+                        "Failed to add megaphone uses to uuid " + args[1] + "!", e);
+            }
+            return;
+        }
+
 
     }
 

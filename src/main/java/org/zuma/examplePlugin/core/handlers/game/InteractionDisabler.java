@@ -73,6 +73,7 @@ public class InteractionDisabler implements Listener {
             "/stuck",
             "/party",
             "/p",
+            "/megaphone",,
 
             // Social Media & Links
             "/store",

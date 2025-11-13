@@ -5,14 +5,23 @@ import org.zuma.examplePlugin.domain.modifier.scopes.server.ServerModifierType;
 import java.util.EnumMap;
 
 public class PlayerBombsContainer {
-    private int doubleCombatXPBombs, doubleSkillXPBombs, increasedMobDropsBombs, increasedResourceDropsBombs, increasedPerfectStrikeBombs;
+    private int doubleCombatXPBombs, doubleSkillXPBombs, increasedMobDropsBombs, increasedResourceDropsBombs, increasedPerfectStrikeBombs, megaphoneUses;
 
-    public PlayerBombsContainer(int doubleCombatXPBombs, int doubleSkillXPBombs, int increasedMobDropsBombs, int increasedResourceDropsBombs, int increasedPerfectStrikeBombs) {
+    public PlayerBombsContainer(int doubleCombatXPBombs, int doubleSkillXPBombs, int increasedMobDropsBombs, int increasedResourceDropsBombs, int increasedPerfectStrikeBombs, int megaphoneUses) {
         this.doubleCombatXPBombs = doubleCombatXPBombs;
         this.doubleSkillXPBombs = doubleSkillXPBombs;
         this.increasedMobDropsBombs = increasedMobDropsBombs;
         this.increasedResourceDropsBombs = increasedResourceDropsBombs;
         this.increasedPerfectStrikeBombs = increasedPerfectStrikeBombs;
+        this.megaphoneUses = megaphoneUses;
+    }
+
+    public int getMegaphoneUses() {
+        return megaphoneUses;
+    }
+
+    public void setMegaphoneUses(int megaphoneUses) {
+        this.megaphoneUses = megaphoneUses;
     }
 
     public int getDoubleCombatXPBombs() {

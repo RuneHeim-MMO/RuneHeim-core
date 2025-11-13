@@ -29,7 +29,7 @@ public class BombStorageUpdatedEffect implements AnimatedEffect {
             // Show level-up title
             player.asBukkitPlayer().showTitle(Title.title(
                     Component.text("Thank you for your support!", Color.SERVER_BRAND.asColor()),
-                    Component.text("Your bombs have been updated", Color.SUCCESS.asColor()),
+                    Component.text("Your bombs inventory has been updated", Color.SUCCESS.asColor()),
                     Title.Times.times(
                             Duration.ofSeconds(0),
                             Duration.ofSeconds(4, 0),

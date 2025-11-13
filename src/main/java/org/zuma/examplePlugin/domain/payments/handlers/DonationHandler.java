@@ -57,6 +57,20 @@ public class DonationHandler {
         });
     }
 
+    public static void addMegaphoneUses(UUID uuid, int amount) {
+        Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
+            PlayerBombsContainer container = RuneQuestPlugin.getPlayerManager().getPlayerBombsContainerFromDatabaseSync(uuid);
+            container.setMegaphoneUses(container.getMegaphoneUses() + amount);
+            RuneQuestPlugin.getPlayerManager().writeNewPlayerBombsContainerToDatabaseSync(uuid, container);
+
+            Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+                BombContainerReloadEvent reloadEvent = new BombContainerReloadEvent(new BombContainerReloadEvent.Payload(uuid, container));
+                Bukkit.getServer().getPluginManager().callEvent(reloadEvent);
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[DONATE] Added " + amount + " megaphone uses to player " + uuid);
+            });
+        });
+    }
+
     public static void handleBombContainerReloadEvent(UUID uuid, PlayerBombsContainer newContainer) {
         RunePlayer matchingPlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(uuid);
         if (matchingPlayer == null) return; // Not on server

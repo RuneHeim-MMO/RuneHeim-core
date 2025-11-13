@@ -26,7 +26,7 @@ public class RunePlayerRepository {
     public SerializedPlayerContainer getPlayerByUUID(UUID uuid) throws AccountNotFoundException, IllegalAccessException {
         String sql = "SELECT p.uuid, p.last_username, p.base_role, p.upgraded_role, p.online, p.location, p.json, " +
                 "pic.json AS inventory_json, " +
-                "pb.double_combat_xp, pb.double_skill_xp, pb.mob_drops, pb.resource_drops, pb.perfect_strike " +
+                "pb.double_combat_xp, pb.double_skill_xp, pb.mob_drops, pb.resource_drops, pb.perfect_strike, pb.megaphone_uses " +
                 "FROM players p " +
                 "INNER JOIN player_inventory_contents pic ON p.uuid = pic.uuid " +
                 "INNER JOIN player_bonus_bombs pb ON p.uuid = pb.uuid " +
@@ -56,7 +56,8 @@ public class RunePlayerRepository {
                 int mobDrops = rs.getInt("mob_drops");
                 int resourceDrops = rs.getInt("resource_drops");
                 int perfectStrike = rs.getInt("perfect_strike");
-                PlayerBombsContainer bombsContainer = new PlayerBombsContainer(doubleCombatXP, doubleSkillXP, mobDrops, resourceDrops, perfectStrike);
+                int megaphoneUses = rs.getInt("megaphone_uses");
+                PlayerBombsContainer bombsContainer = new PlayerBombsContainer(doubleCombatXP, doubleSkillXP, mobDrops, resourceDrops, perfectStrike, megaphoneUses);
 
                 if (isOnline) {
                     throw new IllegalAccessException("Player is already online.");
@@ -95,14 +96,15 @@ public class RunePlayerRepository {
                 """;
 
         String bonusBombsSql = """
-                 INSERT INTO player_bonus_bombs (uuid, double_combat_xp, double_skill_xp, mob_drops, resource_drops, perfect_strike, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+                 INSERT INTO player_bonus_bombs (uuid, double_combat_xp, double_skill_xp, mob_drops, resource_drops, perfect_strike, megaphone_uses, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
                 ON DUPLICATE KEY UPDATE
                     double_combat_xp = VALUES(double_combat_xp),
                     double_skill_xp = VALUES(double_skill_xp),
                     mob_drops = VALUES(mob_drops),
                     resource_drops = VALUES(resource_drops),
                     perfect_strike = VALUES(perfect_strike),
+                    megaphone_uses = VALUES(megaphone_uses),
                     updated_at = CURRENT_TIMESTAMP
                 """;
 
@@ -136,6 +138,7 @@ public class RunePlayerRepository {
                 bombsStmt.setInt(4, container.bombsContainer().getIncreasedMobDropsBombs());
                 bombsStmt.setInt(5, container.bombsContainer().getIncreasedResourceDropsBombs());
                 bombsStmt.setInt(6, container.bombsContainer().getIncreasedPerfectStrikeBombs());
+                bombsStmt.setInt(7, container.bombsContainer().getMegaphoneUses());
                 bombsStmt.executeUpdate();
 
                 // Commit transaction
@@ -227,7 +230,7 @@ public class RunePlayerRepository {
     }
 
     public PlayerBombsContainer getPlayerBombsContainer(UUID uuid) {
-        String sql = "SELECT double_combat_xp, double_skill_xp, mob_drops, resource_drops, perfect_strike FROM player_bonus_bombs WHERE uuid = ?";
+        String sql = "SELECT double_combat_xp, double_skill_xp, mob_drops, resource_drops, perfect_strike, megaphone_uses FROM player_bonus_bombs WHERE uuid = ?";
 
         try (Connection conn = pool.getDataSource().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -241,10 +244,11 @@ public class RunePlayerRepository {
                     int mobDrops = rs.getInt("mob_drops");
                     int resourceDrops = rs.getInt("resource_drops");
                     int perfectStrike = rs.getInt("perfect_strike");
+                    int megaphoneUses = rs.getInt("megaphone_uses");
 
-                    return new PlayerBombsContainer(doubleCombatXP, doubleSkillXP, mobDrops, resourceDrops, perfectStrike);
+                    return new PlayerBombsContainer(doubleCombatXP, doubleSkillXP, mobDrops, resourceDrops, perfectStrike, megaphoneUses);
                 } else {
-                    return new PlayerBombsContainer(0, 0, 0, 0, 0);
+                    throw new RuntimeException("Player bombs container not found for UUID: " + uuid);
                 }
             }
 
@@ -254,7 +258,7 @@ public class RunePlayerRepository {
     }
 
     public void updatePlayerBombsContainer(UUID uuid, PlayerBombsContainer bombsContainer) {
-        String sql = "UPDATE player_bonus_bombs SET double_combat_xp = ?, double_skill_xp = ?, mob_drops = ?, resource_drops = ?, perfect_strike = ?, updated_at = NOW() WHERE uuid = ?";
+        String sql = "UPDATE player_bonus_bombs SET double_combat_xp = ?, double_skill_xp = ?, mob_drops = ?, resource_drops = ?, perfect_strike = ?, megaphone_uses = ?, updated_at = NOW() WHERE uuid = ?";
 
         try (Connection conn = pool.getDataSource().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -264,7 +268,8 @@ public class RunePlayerRepository {
             stmt.setInt(3, bombsContainer.getIncreasedMobDropsBombs());
             stmt.setInt(4, bombsContainer.getIncreasedResourceDropsBombs());
             stmt.setInt(5, bombsContainer.getIncreasedPerfectStrikeBombs());
-            stmt.setString(6, uuid.toString());
+            stmt.setInt(6, bombsContainer.getMegaphoneUses());
+            stmt.setString(7, uuid.toString());
 
             stmt.executeUpdate();
         } catch (Exception e) {
