@@ -72,7 +72,22 @@ public class InteractionDisabler implements Listener {
             "/skills",
             "/stuck",
             "/party",
-            "/p"
+            "/p",
+
+            // Social Media & Links
+            "/store",
+            "/shop",
+            "/donate",
+            "/discord",
+            "/website",
+            "/site",
+            "/rules",
+            "/help",
+            "/twitter",
+            "/x",
+            "/youtube",
+            "/support",
+            "/map",
     };
 
     public void disableTourViewPermission() {
