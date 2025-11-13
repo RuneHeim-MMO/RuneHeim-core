@@ -92,7 +92,7 @@ public class RunePlayer implements CombatEntity {
         this.completedQuestIds = new ArrayList<>();
         this.isDead = false;
         this.activeEffects = new ArrayList<>();
-        this.bombsContainer = new PlayerBombsContainer(0, 0, 0, 0);
+        this.bombsContainer = new PlayerBombsContainer(0, 0, 0, 0, 0);
 
         Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
             this.permissionAttachment = asBukkitPlayer().addAttachment(RuneQuestPlugin.getInstance());

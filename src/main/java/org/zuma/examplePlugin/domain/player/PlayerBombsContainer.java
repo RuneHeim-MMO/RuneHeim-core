@@ -5,21 +5,30 @@ import org.zuma.examplePlugin.domain.modifier.scopes.server.ServerModifierType;
 import java.util.EnumMap;
 
 public class PlayerBombsContainer {
-    private int doubleXpBombs, increasedMobDropsBombs, increasedResourceDropsBombs, increasedPerfectStrikeBombs;
+    private int doubleCombatXPBombs, doubleSkillXPBombs, increasedMobDropsBombs, increasedResourceDropsBombs, increasedPerfectStrikeBombs;
 
-    public PlayerBombsContainer(int doubleXpBombs, int increasedMobDropsBombs, int increasedResourceDropsBombs, int increasedPerfectStrikeBombs) {
-        this.doubleXpBombs = doubleXpBombs;
+    public PlayerBombsContainer(int doubleCombatXPBombs, int doubleSkillXPBombs, int increasedMobDropsBombs, int increasedResourceDropsBombs, int increasedPerfectStrikeBombs) {
+        this.doubleCombatXPBombs = doubleCombatXPBombs;
+        this.doubleSkillXPBombs = doubleSkillXPBombs;
         this.increasedMobDropsBombs = increasedMobDropsBombs;
         this.increasedResourceDropsBombs = increasedResourceDropsBombs;
         this.increasedPerfectStrikeBombs = increasedPerfectStrikeBombs;
     }
 
-    public int getDoubleXpBombs() {
-        return doubleXpBombs;
+    public int getDoubleCombatXPBombs() {
+        return doubleCombatXPBombs;
     }
 
-    public void setDoubleXpBombs(int doubleXpBombs) {
-        this.doubleXpBombs = doubleXpBombs;
+    public void setDoubleSkillXPBombs(int doubleSkillXPBombs) {
+        this.doubleSkillXPBombs = doubleSkillXPBombs;
+    }
+
+    public int getDoubleSkillXPBombs() {
+        return doubleSkillXPBombs;
+    }
+
+    public void setDoubleCombatXPBombs(int doubleCombatXPBombs) {
+        this.doubleCombatXPBombs = doubleCombatXPBombs;
     }
 
     public int getIncreasedMobDropsBombs() {
@@ -49,10 +58,11 @@ public class PlayerBombsContainer {
     public EnumMap<ServerModifierType, Integer> getBombsAmounts() {
         EnumMap<ServerModifierType, Integer> amounts = new EnumMap<>(ServerModifierType.class);
 
-        amounts.put(ServerModifierType.DOUBLE_XP, this.getDoubleXpBombs());
-        amounts.put(ServerModifierType.INCREASED_MOB_DROPS, this.getIncreasedMobDropsBombs());
-        amounts.put(ServerModifierType.INCREASED_RESOURCE_DROPS, this.getIncreasedResourceDropsBombs());
-        amounts.put(ServerModifierType.INCREASED_PERFECT_STRIKE, this.getIncreasedPerfectStrikeBombs());
+        amounts.put(ServerModifierType.DOUBLE_COMBAT_XP, doubleCombatXPBombs);
+        amounts.put(ServerModifierType.DOUBLE_SKILL_XP, doubleSkillXPBombs);
+        amounts.put(ServerModifierType.INCREASED_MOB_DROPS, increasedMobDropsBombs);
+        amounts.put(ServerModifierType.INCREASED_RESOURCE_DROPS, increasedResourceDropsBombs);
+        amounts.put(ServerModifierType.INCREASED_PERFECT_STRIKE, increasedPerfectStrikeBombs);
 
         return amounts;
     }
@@ -68,8 +78,12 @@ public class PlayerBombsContainer {
         }
 
         switch (type) {
-            case DOUBLE_XP -> {
-                container.setDoubleXpBombs(container.getDoubleXpBombs() - 1);
+            case DOUBLE_COMBAT_XP -> {
+                container.setDoubleCombatXPBombs(container.getDoubleCombatXPBombs() - 1);
+                return true;
+            }
+            case DOUBLE_SKILL_XP -> {
+                container.setDoubleSkillXPBombs(container.getDoubleSkillXPBombs() - 1);
                 return true;
             }
             case INCREASED_MOB_DROPS -> {
@@ -92,7 +106,8 @@ public class PlayerBombsContainer {
 
     public void addBomb(ServerModifierType type, int amount) {
         switch (type) {
-            case DOUBLE_XP -> this.doubleXpBombs += amount;
+            case DOUBLE_COMBAT_XP -> this.doubleCombatXPBombs += amount;
+            case DOUBLE_SKILL_XP -> this.doubleSkillXPBombs += amount;
             case INCREASED_MOB_DROPS -> this.increasedMobDropsBombs += amount;
             case INCREASED_RESOURCE_DROPS -> this.increasedResourceDropsBombs += amount;
             case INCREASED_PERFECT_STRIKE -> this.increasedPerfectStrikeBombs += amount;

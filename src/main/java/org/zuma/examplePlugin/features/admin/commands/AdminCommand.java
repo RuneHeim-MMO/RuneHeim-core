@@ -159,18 +159,22 @@ public class AdminCommand implements BasicCommand {
 
             switch (index) {
                 case 1: {
-                    RuneQuestPlugin.getServerModifierHandler().activateXPBomb(runePlayer, ServerModifierType.DOUBLE_XP, 1000 * 10);
+                    RuneQuestPlugin.getServerModifierHandler().activateXPBomb(runePlayer, ServerModifierType.DOUBLE_COMBAT_XP, 1000 * 10);
                     break;
                 }
                 case 2: {
-                    RuneQuestPlugin.getServerModifierHandler().activateXPBomb(runePlayer, ServerModifierType.INCREASED_MOB_DROPS, 1000 * 10);
+                    RuneQuestPlugin.getServerModifierHandler().activateXPBomb(runePlayer, ServerModifierType.DOUBLE_SKILL_XP, 1000 * 10);
                     break;
                 }
                 case 3: {
-                    RuneQuestPlugin.getServerModifierHandler().activateXPBomb(runePlayer, ServerModifierType.INCREASED_RESOURCE_DROPS, 1000 * 10);
+                    RuneQuestPlugin.getServerModifierHandler().activateXPBomb(runePlayer, ServerModifierType.INCREASED_MOB_DROPS, 1000 * 10);
                     break;
                 }
                 case 4: {
+                    RuneQuestPlugin.getServerModifierHandler().activateXPBomb(runePlayer, ServerModifierType.INCREASED_RESOURCE_DROPS, 1000 * 10);
+                    break;
+                }
+                case 5: {
                     RuneQuestPlugin.getServerModifierHandler().activateXPBomb(runePlayer, ServerModifierType.INCREASED_PERFECT_STRIKE, 1000 * 10);
                     break;
                 }

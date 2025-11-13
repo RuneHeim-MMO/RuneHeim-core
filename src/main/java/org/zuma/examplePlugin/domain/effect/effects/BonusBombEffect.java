@@ -7,7 +7,6 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
-import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.FireworkEffect;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.zuma.examplePlugin.core.constants.Color;
@@ -91,9 +90,13 @@ public class BonusBombEffect implements AnimatedEffect {
             org.bukkit.Color fade;
 
             switch (bombType) {
-                case DOUBLE_XP -> {
+                case DOUBLE_COMBAT_XP -> {
                     color = org.bukkit.Color.LIME;
                     fade = org.bukkit.Color.GREEN;
+                }
+                case DOUBLE_SKILL_XP -> {
+                    color = org.bukkit.Color.PURPLE;
+                    fade = org.bukkit.Color.AQUA;
                 }
                 case INCREASED_MOB_DROPS -> {
                     color = org.bukkit.Color.RED;
