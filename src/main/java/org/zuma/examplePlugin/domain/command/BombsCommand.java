@@ -21,10 +21,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class BombsCommand implements BasicCommand {
-    private static final AbstractItemType coinsType = RuneQuestPlugin.getItemRegistry().getType(ItemId.COINS.asInt());
-    private static final HashMap<UUID, Long> dropTimes = new HashMap<>(); // Prevent coins spamming.
-    private static final int DROP_COOLDOWN_SECONDS = 5;
-
 
     @Override
     public void execute(CommandSourceStack commandSourceStack, String[] args) {
@@ -47,7 +43,7 @@ public class BombsCommand implements BasicCommand {
 
     @Override
     public Collection<String> suggest(CommandSourceStack commandSourceStack, String[] args) {
-        return List.of("drop");
+        return List.of();
     }
 
 

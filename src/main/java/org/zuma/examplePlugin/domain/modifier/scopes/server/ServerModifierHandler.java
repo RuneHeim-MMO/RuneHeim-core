@@ -17,6 +17,7 @@ import org.zuma.examplePlugin.domain.effect.effects.BonusBombEffect;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.player.PlayerBombsContainer;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.events.payment.BombActivatedEvent;
 import org.zuma.examplePlugin.events.player.RunePlayerLoadedEvent;
 
 import java.time.Duration;
@@ -117,17 +118,19 @@ public class ServerModifierHandler implements Listener {
             ServerModifier modifier = new ServerModifier(type, activeUntil);
             activeModifiers.put(type, modifier);
             waitingForAnimationFinish.remove(type);
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, activatedBy.asBukkitPlayer().getName() + " has activated a " + type.getLabel() + " on the server for " + (durationMillis / 60000) + " minutes.");
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[Bomb Tracker]" + activatedBy.asBukkitPlayer().getName() + " has activated a " + type.getLabel() + " on the server for " + (durationMillis / 60000) + " minutes.");
 
             RuneQuestPlugin.getPlayerManager().getOnlinePlayers().forEach(p -> {
                 showActivationMessage(activatedBy.asBukkitPlayer().getName(), null, p, type);
+                Bukkit.getPluginManager().callEvent(new BombActivatedEvent(new BombActivatedEvent.Payload(activatedBy.asBukkitPlayer().getName(), type)));
             });
         }, 60L);
 
     }
 
     private void showExpirationMessage(RunePlayer player, ServerModifierType type) {
-        HudService.sendInfoMessage(player, Component.text(type.getLabel() + " has expired."));
+        HudService.sendInfoMessage(player, Component.text(type.getLabel(), Color.ACCENT.asColor()).append(Component.text(" has expired.", Color.INFO.asColor())));
+        ;
         SoundType.GLOBAL_EFFECT_EXPIRED.play(player, false);
     }
 
@@ -136,15 +139,27 @@ public class ServerModifierHandler implements Listener {
             if (!player.getRole().hasPermission(Permission.BONUS_BOMB_TRACKER)) {
                 return; // Don't show message if player doesn't have a tracker permission
             }
-            player.asBukkitPlayer().sendMessage(Component.text(type.getLabel() + " has been activated by " + activatedBy + " on server #" + activatedOnServerID + " for " + getMinutesRemaining(type) + "minutes."));
-            HudService.sendInfoMessage(player, Component.text(type.getLabel() + " is active " + activatedBy + " on server #" + activatedOnServerID + " for " + getMinutesRemaining(type) + "minutes."));
+            HudService.sendInfoMessage(
+                    player,
+                    Component.text(type.getLabel() + " has been activated by ")
+                            .color(Color.SERVER_BRAND.asColor())
+                            .append(Component.text(activatedBy).color(Color.ACCENT.asColor()))
+                            .append(Component.text(" on server ").color(Color.INFO.asColor()))
+                            .append(Component.text("#" + activatedOnServerID).color(Color.ACCENT.asColor()))
+                            .append(Component.text(" for ").color(Color.INFO.asColor()))
+                            .append(Component.text(getMinutesRemaining(type) + " minutes").color(Color.ACCENT.asColor()))
+            );
             SoundType.GLOBAL_EFFECT_TRACKER_BEEP.play(player, false);
             return;
         }
 
         player.asBukkitPlayer().showTitle(Title.title(
                 Component.text(type.getLabel(), Color.SUCCESS.asColor()),
-                Component.text("Activated by " + activatedBy + " for " + getMinutesRemaining(type) + " minutes").color(Color.SERVER_BRAND.asColor()),
+                Component.text("Activated by ")
+                        .color(Color.SERVER_BRAND.asColor())
+                        .append(Component.text(activatedBy).color(Color.ACCENT.asColor()))
+                        .append(Component.text(" for ").color(Color.SERVER_BRAND.asColor()))
+                        .append(Component.text(getMinutesRemaining(type) + " minutes").color(Color.ACCENT.asColor())),
                 Title.Times.times(
                         Duration.ZERO,
                         Duration.ofSeconds(6, 5),
@@ -160,7 +175,7 @@ public class ServerModifierHandler implements Listener {
                 activeModifiers.values().stream().map(s -> s.type().getLabel()).toList()
         );
 
-        HudService.sendInfoMessage(player, Component.text("This server has " + combinedNames + " currently active."));
+        HudService.sendInfoMessage(player, Component.text("This server has ").append(Component.text(combinedNames, Color.ACCENT.asColor())).append(Component.text(" currently active.", Color.INFO.asColor())));
         SoundType.GLOBAL_EFFECT_ACTIVATED.play(player, false);
     }
 
