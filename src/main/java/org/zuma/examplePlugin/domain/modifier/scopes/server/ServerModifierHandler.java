@@ -66,11 +66,7 @@ public class ServerModifierHandler implements Listener {
         }
 
         // Check if modifier is expired
-        if (modifier.activeUntilMillis() < System.currentTimeMillis()) {
-            return false;
-        }
-
-        return true;
+        return modifier.activeUntilMillis() >= System.currentTimeMillis();
     }
 
     public int getMinutesRemaining(ServerModifierType type) {

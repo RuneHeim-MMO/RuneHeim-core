@@ -10,6 +10,7 @@ import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.LevelUpEffect;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
+import org.zuma.examplePlugin.domain.modifier.scopes.server.ServerModifierType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -33,10 +34,12 @@ public class PlayerXpHandler {
     private final java.util.Set<SkillType> skillsToBeCombined = java.util.EnumSet.of(
             SkillType.ATTACK, SkillType.STRENGTH, SkillType.DEFENCE);
 
+    public record DeferredXP(double xp, double multiplier) {
+    }
 
     @Nullable
     private SkillType lastXPGainedSkillType;
-    private final EnumMap<SkillType, Double> deferredXPHolograms = new EnumMap<>(SkillType.class);
+    private final EnumMap<SkillType, DeferredXP> deferredXPHolograms = new EnumMap<>(SkillType.class);
     private BukkitTask debouncedXPBubbleTask;
 
 
@@ -45,17 +48,22 @@ public class PlayerXpHandler {
         this.lastXPGainedSkillType = null;
     }
 
-    private void scheduleXPBubble(SkillType type, double xp, XpSource source) {
+    private void scheduleXPBubble(SkillType type, double xp, XpSource source, double multiplier) {
         final double EPSILON = 1e-6;
 
-        if (deferredXPHolograms.containsKey(type)) {
-            deferredXPHolograms.put(type, deferredXPHolograms.get(type) + xp);
-        } else {
-            deferredXPHolograms.put(type, xp);
-        }
+        // Merge the XP + multiplier into the map
+        deferredXPHolograms.merge(
+                type,
+                new DeferredXP(xp, multiplier),
+                (oldVal, newVal) -> new DeferredXP(
+                        oldVal.xp() + newVal.xp(),
+                        Math.min(3.0, oldVal.multiplier() * newVal.multiplier())
+                )
+        );
 
+        // Reset the debounce timer
         if (debouncedXPBubbleTask != null) {
-            debouncedXPBubbleTask.cancel(); // Cancel the previous task to reschedule
+            debouncedXPBubbleTask.cancel();
         }
 
         debouncedXPBubbleTask = Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
@@ -64,8 +72,9 @@ public class PlayerXpHandler {
             boolean shouldCombine = true;
             Double firstValue = null;
 
+            // Check if all skillsToBeCombined have equal XP
             for (SkillType skill : skillsToBeCombined) {
-                double value = deferredXPHolograms.getOrDefault(skill, 0.0);
+                double value = deferredXPHolograms.getOrDefault(skill, new DeferredXP(0.0, 1.0)).xp();
                 if (firstValue == null) {
                     firstValue = value;
                 } else if (Math.abs(firstValue - value) > EPSILON) {
@@ -75,62 +84,96 @@ public class PlayerXpHandler {
             }
 
             if (!shouldCombine) {
-                for (Map.Entry<SkillType, Double> entry : deferredXPHolograms.entrySet()) {
+                // Show each hologram independently
+                for (Map.Entry<SkillType, DeferredXP> entry : deferredXPHolograms.entrySet()) {
                     final SkillType skillType = entry.getKey();
-                    final double amount = entry.getValue(); // capture value safely
+                    final DeferredXP pack = entry.getValue();
+
                     Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
                         if (player.asBukkitPlayer() == null) return;
-                        HudService.showXpGainMessage(player, skillType, amount, source);
+                        HudService.showXpGainMessage(player, skillType, pack.xp(), source, pack.multiplier());
                     }, skillType.ordinal() * 5L);
                 }
+
             } else {
-                deferredXPHolograms.forEach((skillType, amount) -> {
+                // Show non-combined skills normally
+                deferredXPHolograms.forEach((skillType, pack) -> {
                     if (skillsToBeCombined.contains(skillType)) return;
+
                     Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
                         if (player.asBukkitPlayer() == null) return;
-
-                        HudService.showXpGainMessage(player, skillType, amount, source);
+                        HudService.showXpGainMessage(player, skillType, pack.xp(), source, pack.multiplier());
                     }, skillType.ordinal() * 5L);
                 });
 
+                // Combine combat-type skills
                 double firstXP = firstValue != null ? firstValue : 0.0;
 
                 if (firstXP != 0.0) {
-                    HudService.showCombinedCombatXPGainMessage(player, firstXP, source);
+                    // Assuming all combined skills use the same multiplier; grab one.
+                    double combinedMultiplier = deferredXPHolograms
+                            .get(skillsToBeCombined.iterator().next())
+                            .multiplier();
+
+                    HudService.showCombinedCombatXPGainMessage(player, firstXP, source, combinedMultiplier);
                 }
             }
 
             deferredXPHolograms.clear();
 
         }, 40L);
+    }
 
 
+    @Nullable
+    private ServerModifierType getServerModifierForSkill(SkillType type) {
+        @Nullable ServerModifierType bombModifier = null;
+
+        if (skillingSkills.contains(type)) {
+            bombModifier = ServerModifierType.DOUBLE_SKILL_XP;
+        } else if (combatSkills.contains(type)) {
+            bombModifier = ServerModifierType.DOUBLE_COMBAT_XP;
+        }
+
+        return bombModifier;
     }
 
     public void addXp(SkillType type, double xp, XpSource source) {
         Skill skill = player.getSkills().get(type);
 
-        // Apply modifiers only if not quest XP
-        if (source != XpSource.QUEST) {
-            double combined = 1.0;
+        double baseMultiplier = 1.0;      // server-wide stuff
+        double bonusAdditive = 0.0;       // player boosts that stack additively
 
-            if (player.getModifiers().containsKey(ModifierType.XP_BOOST)) {
-                double multiplier = player.getModifiers().get(ModifierType.XP_BOOST).amount();
-                combined *= 1.0 + multiplier;
-            }
-
-            if (player.getModifiers().containsKey(ModifierType.COMBAT_XP_BOOST) && combatSkills.contains(type)) {
-                double multiplier = player.getModifiers().get(ModifierType.COMBAT_XP_BOOST).amount();
-                combined *= 1.0 + multiplier;
-            }
-
-            if (player.getModifiers().containsKey(ModifierType.SKILLING_XP_BOOST) && skillingSkills.contains(type)) {
-                double multiplier = player.getModifiers().get(ModifierType.SKILLING_XP_BOOST).amount();
-                combined *= 1.0 + multiplier;
-            }
-
-            xp *= combined;
+        // Server bomb
+        @Nullable ServerModifierType bombModifier = getServerModifierForSkill(type);
+        if (bombModifier != null && RuneQuestPlugin.getServerModifierHandler().isModifierActive(bombModifier)) {
+            baseMultiplier *= 2.0;
         }
+
+        // Player modifiers (additive, not multiplicative)
+        if (source != XpSource.QUEST) {
+            if (player.getModifiers().containsKey(ModifierType.XP_BONUS_ADDITIVE)) {
+                double mult = player.getModifiers().get(ModifierType.XP_BONUS_ADDITIVE).amount();
+                bonusAdditive += mult;
+            }
+
+            if (player.getModifiers().containsKey(ModifierType.COMBAT_XP_BONUS_ADDITIVE) && combatSkills.contains(type)) {
+                double mult = player.getModifiers().get(ModifierType.COMBAT_XP_BONUS_ADDITIVE).amount();
+                bonusAdditive += mult;
+            }
+
+            if (player.getModifiers().containsKey(ModifierType.SKILLING_XP_BONUS_ADDITIVE) && skillingSkills.contains(type)) {
+                double mult = player.getModifiers().get(ModifierType.SKILLING_XP_BONUS_ADDITIVE).amount();
+                bonusAdditive += mult;
+            }
+        }
+
+        // Total multiplier
+        double totalMultiplier = baseMultiplier * (1.0 + bonusAdditive);
+
+        // Cap at 3x
+        if (totalMultiplier > 3.0) totalMultiplier = 3.0;
+        xp *= totalMultiplier;
 
         RunePlayerGainedXPEvent event = new RunePlayerGainedXPEvent(player, type, xp, source);
         Bukkit.getServer().getPluginManager().callEvent(event);
@@ -169,7 +212,7 @@ public class PlayerXpHandler {
         }
 
 
-        scheduleXPBubble(type, xp, source);
+        scheduleXPBubble(type, xp, source, totalMultiplier);
         skill.addXp(xp);
 
         if (leveledUp) {
