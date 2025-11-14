@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.command.socials;
+package org.zuma.examplePlugin.domain.command.help;
 
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
@@ -9,15 +9,17 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.Collection;
 import java.util.List;
 
-public class StoreCommand implements BasicCommand {
+public class HelpCommand implements BasicCommand {
 
+    public static void sendCommand(int index, CommandSender sender, String command, String description) {
+        sender.sendMessage(Component.text(index + ") ").decoration(TextDecoration.BOLD, false).color(Color.SERVER_BRAND.asColor()).append(
+                Component.text(command).color(Color.SUCCESS.asColor())).append(Component.text(" - " + description, Color.ITEM_LORE_DESCRIPTION.asColor())));
+    }
 
     @Override
     public void execute(CommandSourceStack commandSourceStack, String[] args) {
@@ -27,21 +29,29 @@ public class StoreCommand implements BasicCommand {
             sender.sendMessage(Component.text("This command can be only used by players.").color(Color.ERROR.asColor()));
             return;
         }
-        
+
         Component line = Component.text("───────────────────────────────────")
                 .color(NamedTextColor.DARK_GRAY);
 
         sender.sendMessage(Component.empty()); // top spacing
         sender.sendMessage(line);
         sender.sendMessage(
-                Component.text("RuneHeim Links")
+                Component.text("Commands")
                         .color(Color.SERVER_BRAND.asColor())
                         .decorate(TextDecoration.BOLD)
         );
         sender.sendMessage(line);
 
+        sendCommand(1, sender, "/skills", "View your skill levels and progress.");
+        sendCommand(2, sender, "/pouch drop <amount>", "Drop coins from your pouch.");
+        sendCommand(3, sender, "/stuck", "Teleport to the nearest safe location.");
+        sendCommand(4, sender, "/actions", "View available console actions.");
+        sendCommand(5, sender, "/togglelock", "Lock/unlock item in hand to prevent accidental drops.");
+        sendCommand(6, sender, "/bombs", "View your available bombs and their effects.");
+        sendCommand(7, sender, "/megaphone", "Send a message to all players on the server.");
+        sendCommand(8, sender, "/social", "View links to our social media pages.");
+        sendCommand(9, sender, "/map", "View the server map online.");
 
-        SocialsCommand.sendLink(1, sender, "Store", "https://store.runeheim.org");
 
         sender.sendMessage(line);
         sender.sendMessage(Component.empty());
@@ -51,4 +61,6 @@ public class StoreCommand implements BasicCommand {
     public Collection<String> suggest(CommandSourceStack commandSourceStack, String[] args) {
         return List.of();
     }
+
+
 }

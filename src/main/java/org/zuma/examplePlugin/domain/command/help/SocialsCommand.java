@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.command.socials;
+package org.zuma.examplePlugin.domain.command.help;
 
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
@@ -9,9 +9,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.Collection;
 import java.util.List;
@@ -22,11 +20,10 @@ public class SocialsCommand implements BasicCommand {
         sender.sendMessage(Component.text(index + ") ").decoration(TextDecoration.BOLD, false).color(Color.SERVER_BRAND.asColor()).append(
                 Component.text("[CLICK] ")
                         .color(Color.SUCCESS.asColor())
-                        .decorate(TextDecoration.BOLD)
                         .clickEvent(ClickEvent.openUrl(url))
                         .hoverEvent(HoverEvent.showText(
-                                Component.text("Click to open: ").append(Component.text(url)))).append(Component.text(label).decoration(TextDecoration.BOLD, false)
-                                .color(Color.SERVER_BRAND.asColor())))
+                                Component.text("Click to open: ").append(Component.text(url)))).append(Component.text("- " + label).decoration(TextDecoration.BOLD, false)
+                                .color(Color.ITEM_LORE_DESCRIPTION.asColor())))
 
         );
     }

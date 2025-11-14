@@ -10,9 +10,10 @@ import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockReposito
 import org.zuma.examplePlugin.domain.combat.HitHandler;
 import org.zuma.examplePlugin.domain.command.*;
 import org.zuma.examplePlugin.domain.command.backend.ConsoleActionCommand;
-import org.zuma.examplePlugin.domain.command.socials.MapCommand;
-import org.zuma.examplePlugin.domain.command.socials.SocialsCommand;
-import org.zuma.examplePlugin.domain.command.socials.StoreCommand;
+import org.zuma.examplePlugin.domain.command.help.HelpCommand;
+import org.zuma.examplePlugin.domain.command.help.MapCommand;
+import org.zuma.examplePlugin.domain.command.help.SocialsCommand;
+import org.zuma.examplePlugin.domain.command.help.StoreCommand;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
 import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
@@ -30,9 +31,16 @@ public class CommandModule implements PluginModule {
     @SuppressWarnings("UnstableApiUsage")
     public void start(Plugin plugin, ModuleContext context) {
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("actions", new ConsoleActionCommand()));
+
+
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("admin", new AdminCommand(
                         context.get(HitHandler.class)))
         );
+
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("help", new HelpCommand()));
 
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("skills", new SkillsCommand()));
@@ -42,9 +50,6 @@ public class CommandModule implements PluginModule {
 
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("stuck", new StuckCommand()));
-
-        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> event.registrar().register("actions", new ConsoleActionCommand()));
 
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("togglelock", new ToggleLockCommand()));
@@ -71,7 +76,7 @@ public class CommandModule implements PluginModule {
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("rules", new SocialsCommand()));
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> event.registrar().register("help", new SocialsCommand()));
+                event -> event.registrar().register("social", new SocialsCommand()));
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("twitter", new SocialsCommand()));
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,

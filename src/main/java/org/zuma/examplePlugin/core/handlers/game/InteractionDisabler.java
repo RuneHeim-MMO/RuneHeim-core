@@ -85,6 +85,7 @@ public class InteractionDisabler implements Listener {
             "/site",
             "/rules",
             "/help",
+            "/social",
             "/twitter",
             "/x",
             "/youtube",

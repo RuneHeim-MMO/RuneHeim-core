@@ -1,22 +1,18 @@
-package org.zuma.examplePlugin.domain.command.socials;
+package org.zuma.examplePlugin.domain.command.help;
 
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.Collection;
 import java.util.List;
 
-public class MapCommand implements BasicCommand {
+public class StoreCommand implements BasicCommand {
 
 
     @Override
@@ -27,7 +23,7 @@ public class MapCommand implements BasicCommand {
             sender.sendMessage(Component.text("This command can be only used by players.").color(Color.ERROR.asColor()));
             return;
         }
-
+        
         Component line = Component.text("───────────────────────────────────")
                 .color(NamedTextColor.DARK_GRAY);
 
@@ -41,7 +37,7 @@ public class MapCommand implements BasicCommand {
         sender.sendMessage(line);
 
 
-        SocialsCommand.sendLink(1, sender, "Map", "https://database.runeheim.org/map");
+        SocialsCommand.sendLink(1, sender, "Store", "https://store.runeheim.org");
 
         sender.sendMessage(line);
         sender.sendMessage(Component.empty());
@@ -51,6 +47,4 @@ public class MapCommand implements BasicCommand {
     public Collection<String> suggest(CommandSourceStack commandSourceStack, String[] args) {
         return List.of();
     }
-
-
 }
