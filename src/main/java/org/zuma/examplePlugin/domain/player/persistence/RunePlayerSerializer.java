@@ -22,12 +22,9 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.events.player.RunePlayerHealthChangedEvent;
 
 import javax.annotation.Nullable;
-import java.util.AbstractMap;
-import java.util.EnumMap;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.ArrayList;
 
 public class RunePlayerSerializer {
     private static final Gson gson = new GsonBuilder()
@@ -36,7 +33,6 @@ public class RunePlayerSerializer {
 
     public static SerializedPlayerContainer serializePlayerSync(RunePlayer runePlayer, Player player, boolean clearStateCache) {
         PlayerDataDeserializedJsonContainer container = new PlayerDataDeserializedJsonContainer(
-                runePlayer.getSkills().values().stream().map(s -> new Skill(s.getType(), s.getXp())).toList(),
                 runePlayer.getPouchCoins(),
                 runePlayer.getDiscoveredTerritoryIds(),
                 runePlayer.getHealth(),
@@ -51,6 +47,7 @@ public class RunePlayerSerializer {
         String serializedPlayerData = gson.toJson(versionedPlayerData);
         String serializedLocation = gson.toJson(runePlayer.getSafeLocation() != null ? runePlayer.getSafeLocation() : player.getLocation());
         String inventoryData = ItemContainerContentSerializer.serializeItemSlotPairsSync(getPlayerInventoryContent(player), clearStateCache);
+        List<Skill> skills = runePlayer.getSkills().values().stream().map(s -> new Skill(s.getType(), s.getXp())).toList();
 
         String baseRole = runePlayer.getRole().getBaseRole().toString();
         @Nullable String upgradedRole = runePlayer.getRole().getUpgradedRole() != null ? runePlayer.getRole().getUpgradedRole().toString() : null;
@@ -58,6 +55,7 @@ public class RunePlayerSerializer {
         return new SerializedPlayerContainer(
                 runePlayer.getUUID(),
                 player.getName(),
+                skills,
                 baseRole,
                 upgradedRole,
                 serializedLocation,
@@ -74,9 +72,20 @@ public class RunePlayerSerializer {
         switch (playerData.version()) {
             case 1 -> {
                 PlayerDataDeserializedJsonContainer playerDataDeserializedJsonContainer = gson.fromJson(playerData.meta(), PlayerDataDeserializedJsonContainer.class);
-                EnumMap<SkillType, Skill> mappedSkills = playerDataDeserializedJsonContainer.skills().stream().collect(Collectors.toMap(Skill::getType, Function.identity(), (a, b) -> b, () -> new EnumMap<>(SkillType.class)));
                 RunePlayer player = new RunePlayer(container.uuid(), RunePlayerManager.createDefaultSkills());
                 PlayerRole role = new PlayerRole(BaseRole.valueOf(container.baseRole()), container.upgradedRole() != null ? UpgradedRole.valueOf(container.upgradedRole()) : null, SupporterLevel.LVL_0);
+
+                // Map skills from container to EnumMap<SkillType, Skill>, filling missing skills with xp 0
+                EnumMap<SkillType, Skill> mappedSkills = Arrays.stream(SkillType.values())
+                        .collect(Collectors.toMap(
+                                Function.identity(),
+                                type -> container.skills().stream()
+                                        .filter(s -> s.getType() == type)
+                                        .findFirst()
+                                        .orElse(new Skill(type, 0)),
+                                (a, b) -> b,
+                                () -> new EnumMap<>(SkillType.class)
+                        ));
 
                 player.setDiscoveredTerritoryIds(playerDataDeserializedJsonContainer.discoveredTerritoryIds());
                 player.setPouchCoins(playerDataDeserializedJsonContainer.pouchCoins(), true);

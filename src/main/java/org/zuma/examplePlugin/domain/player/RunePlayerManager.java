@@ -201,7 +201,7 @@ public class RunePlayerManager {
             runePlayer.reloadNametags();
         }, 1L);
 
-        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.getName() + " (" + runePlayer.getCombatLvl() + "cmb) loaded successfully [" + runePlayer.getRole().toString() + "].");
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.getName() + " (" + runePlayer.getCombatLvl() + "cmb) loaded successfully [" + runePlayer.getRole().getBaseRole().toString() + "].");
         RuneQuestPlugin.getGearModifierHandler().recalculatePlayerModifiers(runePlayer, player.getInventory().getItemInMainHand());
 
         Bukkit.getServer().getPluginManager().callEvent(new RunePlayerLoadedEvent(runePlayer, playerData.isFirstJoin()));

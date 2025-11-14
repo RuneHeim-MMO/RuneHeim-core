@@ -7,14 +7,14 @@ import org.zuma.examplePlugin.core.permissions.Role;
 import org.zuma.examplePlugin.core.permissions.roles.BaseRole;
 import org.zuma.examplePlugin.core.permissions.roles.UpgradedRole;
 import org.zuma.examplePlugin.domain.player.PlayerBombsContainer;
+import org.zuma.examplePlugin.domain.skill.Skill;
+import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import javax.security.auth.login.AccountNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class RunePlayerRepository {
     private final HikariPool pool;
@@ -23,53 +23,96 @@ public class RunePlayerRepository {
         this.pool = pool;
     }
 
-    public SerializedPlayerContainer getPlayerByUUID(UUID uuid) throws AccountNotFoundException, IllegalAccessException {
-        String sql = "SELECT p.uuid, p.last_username, p.base_role, p.upgraded_role, p.online, p.location, p.json, " +
-                "pic.json AS inventory_json, " +
-                "pb.double_combat_xp, pb.double_skill_xp, pb.mob_drops, pb.resource_drops, pb.perfect_strike, pb.megaphone_uses " +
-                "FROM players p " +
-                "INNER JOIN player_inventory_contents pic ON p.uuid = pic.uuid " +
-                "INNER JOIN player_bonus_bombs pb ON p.uuid = pb.uuid " +
-                "WHERE p.uuid = ?";
+    public SerializedPlayerContainer getPlayerByUUID(UUID uuid)
+            throws AccountNotFoundException, IllegalAccessException {
 
-        try (Connection conn = pool.getDataSource().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        String playerSQL =
+                "SELECT p.uuid, p.last_username, p.base_role, p.upgraded_role, p.online, p.location, p.json, " +
+                        "pic.json AS inventory_json, " +
+                        "pb.double_combat_xp, pb.double_skill_xp, pb.mob_drops, pb.resource_drops, pb.perfect_strike, pb.megaphone_uses " +
+                        "FROM players p " +
+                        "INNER JOIN player_inventory_contents pic ON p.uuid = pic.uuid " +
+                        "INNER JOIN player_bonus_bombs pb ON p.uuid = pb.uuid " +
+                        "WHERE p.uuid = ?";
 
-            stmt.setString(1, uuid.toString());
+        String skillsSQL =
+                "SELECT skill, xp FROM player_skills WHERE uuid = ?";
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (!rs.next()) {
-                    throw new AccountNotFoundException("Player not found with UUID: " + uuid);
+        try (Connection conn = pool.getDataSource().getConnection()) {
+
+            String json;
+            String lastUsername;
+            String baseRole;
+            String upgradedRole;
+            String inventoryData;
+            String location;
+            boolean isOnline;
+            PlayerBombsContainer bombsContainer;
+
+            // Fetch main player record
+            try (PreparedStatement stmt = conn.prepareStatement(playerSQL)) {
+                stmt.setString(1, uuid.toString());
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (!rs.next()) {
+                        throw new AccountNotFoundException("Player not found with UUID: " + uuid);
+                    }
+
+                    json = rs.getString("json");
+                    lastUsername = rs.getString("last_username");
+                    baseRole = rs.getString("base_role");
+                    upgradedRole = rs.getString("upgraded_role");
+                    inventoryData = rs.getString("inventory_json");
+                    location = rs.getString("location");
+                    isOnline = rs.getBoolean("online");
+
+                    if (isOnline) {
+                        throw new IllegalAccessException("Player is already online.");
+                    }
+
+                    // Bombs
+                    int doubleCombatXP = rs.getInt("double_combat_xp");
+                    int doubleSkillXP = rs.getInt("double_skill_xp");
+                    int mobDrops = rs.getInt("mob_drops");
+                    int resourceDrops = rs.getInt("resource_drops");
+                    int perfectStrike = rs.getInt("perfect_strike");
+                    int megaphoneUses = rs.getInt("megaphone_uses");
+
+                    bombsContainer = new PlayerBombsContainer(
+                            doubleCombatXP, doubleSkillXP, mobDrops,
+                            resourceDrops, perfectStrike, megaphoneUses
+                    );
                 }
-
-                String json = rs.getString("json");
-                String lastUsername = rs.getString("last_username");
-                String baseRole = rs.getString("base_role");
-                String upgradedRole = rs.getString("upgraded_role");
-                String inventoryData = rs.getString("inventory_json");
-                String location = rs.getString("location");
-                boolean isOnline = rs.getBoolean("online");
-
-                // Bombs
-                int doubleCombatXP = rs.getInt("double_combat_xp");
-                int doubleSkillXP = rs.getInt("double_skill_xp");
-                int mobDrops = rs.getInt("mob_drops");
-                int resourceDrops = rs.getInt("resource_drops");
-                int perfectStrike = rs.getInt("perfect_strike");
-                int megaphoneUses = rs.getInt("megaphone_uses");
-                PlayerBombsContainer bombsContainer = new PlayerBombsContainer(doubleCombatXP, doubleSkillXP, mobDrops, resourceDrops, perfectStrike, megaphoneUses);
-
-                if (isOnline) {
-                    throw new IllegalAccessException("Player is already online.");
-                }
-
-                return new SerializedPlayerContainer(uuid, lastUsername, baseRole, upgradedRole, location, json, inventoryData == null ? "{}" : inventoryData, bombsContainer);
             }
+
+            List<Skill> skills = new ArrayList<>();
+
+            try (PreparedStatement stmt = conn.prepareStatement(skillsSQL)) {
+                stmt.setString(1, uuid.toString());
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        skills.add(new Skill(SkillType.valueOf(rs.getString("skill")), rs.getInt("xp")));
+                    }
+                }
+            }
+
+            return new SerializedPlayerContainer(
+                    uuid,
+                    lastUsername,
+                    skills,
+                    baseRole,
+                    upgradedRole,
+                    location,
+                    json,
+                    inventoryData == null ? "{}" : inventoryData,
+                    bombsContainer
+            );
 
         } catch (IllegalAccessException | AccountNotFoundException e) {
             throw e;
         } catch (Exception e) {
-            throw new RuntimeException("Failed to retrieve player." + System.currentTimeMillis(), e);
+            throw new RuntimeException("Failed to retrieve player. " + System.currentTimeMillis(), e);
         }
     }
 
@@ -84,6 +127,15 @@ public class RunePlayerRepository {
                     online = VALUES(online),
                     location = VALUES(location),
                     json = VALUES(json),
+                    updated_at = CURRENT_TIMESTAMP
+                """;
+
+        String skillUpsertSql = """
+                INSERT INTO player_skills (uuid, skill, xp, level)
+                VALUES (?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE
+                    xp = VALUES(xp),
+                    level = VALUES(level),
                     updated_at = CURRENT_TIMESTAMP
                 """;
 
@@ -115,7 +167,8 @@ public class RunePlayerRepository {
 
             try (PreparedStatement playerStmt = conn.prepareStatement(playerSql);
                  PreparedStatement bombsStmt = conn.prepareStatement(bonusBombsSql);
-                 PreparedStatement inventoryStmt = conn.prepareStatement(inventorySql)) {
+                 PreparedStatement inventoryStmt = conn.prepareStatement(inventorySql);
+                 PreparedStatement skillStmt = conn.prepareStatement(skillUpsertSql)) {
 
                 // Upsert player
                 playerStmt.setString(1, container.uuid().toString());
@@ -126,6 +179,17 @@ public class RunePlayerRepository {
                 playerStmt.setString(6, container.location());
                 playerStmt.setString(7, container.playerData());
                 playerStmt.executeUpdate();
+
+                // Skills
+                for (Skill skill : container.skills()) {
+                    skillStmt.setString(1, container.uuid().toString());
+                    skillStmt.setString(2, skill.getType().toString());
+                    skillStmt.setDouble(3, skill.getXp());
+                    skillStmt.setInt(4, skill.getBaseLevel());
+                    skillStmt.addBatch();
+                }
+
+                skillStmt.executeBatch();
 
                 // Upsert inventory
                 inventoryStmt.setString(1, container.uuid().toString());
