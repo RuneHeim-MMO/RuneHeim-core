@@ -128,7 +128,7 @@ public class MobHandler {
         RunePlayer killer = killedByPlayer ? RuneQuestPlugin.getPlayerManager().getRunePlayer(UUID.fromString(event.getEntity().getMetadata(MetadataKeys.MOST_DAMAGING_PLAYER_UUID.asString()).getFirst().asString())) : null;
 
         // Roll drops only if killed by a player.
-        List<ItemStack> drops = killedByPlayer ? mob.rollDropTables(killer) : List.of();
+        List<ItemStack> drops = killedByPlayer ? mob.rollDropTables(killer, false) : List.of();
         Location dropLocation = event.getEntity().getLocation();
 
         drops.forEach(drop -> {
