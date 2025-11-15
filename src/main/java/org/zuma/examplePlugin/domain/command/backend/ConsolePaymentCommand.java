@@ -45,7 +45,7 @@ public class ConsolePaymentCommand implements BasicCommand {
             try {
                 // uuid, username, amount, email
                 BigDecimal amount = new BigDecimal(args[4]);
-                Payment payment = new Payment(UUID.fromString(args[1]), args[2], args[3], amount, args[5]);
+                Payment payment = new Payment(getIdFromSquishedStr(args[1]), args[2], args[3], amount, args[5]);
                 RuneQuestPlugin.getPaymentHandler().addPayment(payment, true);
             } catch (Exception e) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL,
@@ -61,7 +61,7 @@ public class ConsolePaymentCommand implements BasicCommand {
             }
 
             try {
-                UUID uuid = UUID.fromString(args[1]);
+                UUID uuid = getIdFromSquishedStr(args[1]);
                 UpgradedRole newRole = UpgradedRole.valueOf(args[2].toUpperCase());
                 DonationHandler.updatePlayerRole(uuid, newRole);
             } catch (Exception e) {
