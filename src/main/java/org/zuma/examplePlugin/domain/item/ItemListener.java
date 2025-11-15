@@ -20,12 +20,15 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.interfaces.Restrictable;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.entity.EntitySessionManager;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.constants.EquipableType;
+import org.zuma.examplePlugin.domain.item.handlers.LockedItemHandler;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
@@ -119,6 +122,15 @@ public class ItemListener implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerItemDrop(PlayerDropItemEvent event) {
         withItemAndPlayer(event.getPlayer(), event.getItemDrop().getItemStack(), (item, player) -> {
+
+            // Check for locked item
+            if (LockedItemHandler.isItemStackLocked(event.getItemDrop().getItemStack())) {
+                HudService.sendFailMessage(player, Component.text("This item is locked. You cannot drop it. Type /togglelock while holding it to unlock it."));
+                SoundType.LOCKED_ITEM_DROP_ATTEMPT.play(player, false);
+                event.setCancelled(true);
+                return;
+            }
+
             itemHandler.onPlayerItemDrop(event, item, player, itemStateManager);
         });
     }

@@ -73,7 +73,7 @@ public class Common {
 
         registry.register(MobType.LEOPARD_STANDARD_BABY_BASE_35.getId(), () -> new GenericCombatant(
                 "Baby Leopard", null,
-                getBaseSkills(60, 0.5),
+                getBaseSkills(35, 0.5),
                 null,
                 MobBehaviors.LEOPARD.getBehavior(-0.3F),
                 "nm_leopard_baby",
@@ -93,7 +93,7 @@ public class Common {
 
         registry.register(MobType.LEOPARD_SNOW_BABY_BASE_40.getId(), () -> new GenericCombatant(
                 "Baby Snow Leopard", null,
-                getBaseSkills(60, 0.5),
+                getBaseSkills(40, 0.5),
                 null,
                 MobBehaviors.LEOPARD.getBehavior(),
                 "nm_leopard_snow_baby",

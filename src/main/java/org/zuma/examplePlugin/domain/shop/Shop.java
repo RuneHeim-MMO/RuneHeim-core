@@ -7,6 +7,7 @@ import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.Throttler;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.handlers.LockedItemHandler;
 import org.zuma.examplePlugin.domain.item.impl.QuestItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.shop.persistence.ShopItemConfig;
@@ -89,6 +90,10 @@ public class Shop {
 
         if (type == null || item == null) {
             throw new IllegalStateException("Invalid item");
+        }
+
+        if (LockedItemHandler.isItemStackLocked(item)) {
+            throw new IllegalStateException("This item is locked and cannot be sold. Type /togglelock while holding it to unlock it.");
         }
 
         if (!type.isTradeable || type instanceof QuestItem) {

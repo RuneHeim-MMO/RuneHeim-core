@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.domain.gui;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -14,7 +15,9 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.InventoryOpenerBlock;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.domain.gui.base.StorageInventory;
 import org.zuma.examplePlugin.domain.gui.impl.individual.storage.*;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.storage.RepositoryQueryLockController;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
@@ -28,7 +31,6 @@ import org.zuma.examplePlugin.domain.mob.base.AbstractInventoryOpener;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.shop.constants.ShopId;
-import org.zuma.examplePlugin.domain.storage.constants.StorageCategory;
 import org.zuma.examplePlugin.events.inventory.RuneInventoryClick;
 import org.zuma.examplePlugin.events.inventory.RuneInventoryCloseEvent;
 import org.zuma.examplePlugin.events.inventory.RuneInventoryOpenEvent;
@@ -124,6 +126,8 @@ public class GUIHandler {
         this.registry.register(InventoryId.MEDIUM_STORAGE_BAG.asInt(), () -> new MediumBagInventory(GUIOverlay.MEDIUM_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Medium Bag", InventoryId.MEDIUM_STORAGE_BAG.asInt(), storageItemContentController));
         this.registry.register(InventoryId.LARGE_STORAGE_BAG.asInt(), () -> new LargeBagInventory(GUIOverlay.LARGE_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Large Bag", InventoryId.LARGE_STORAGE_BAG.asInt(), storageItemContentController));
 
+        this.registry.register(InventoryId.BOMBS_MENU.asInt(), () -> new BombsMenu(GUIOverlay.BOMBS_MENU_OVERLAY.asGlyph() + "§f" + Icon.EXPLOSION.get() + "§f Bombs Menu", InventoryId.BOMBS_MENU.asInt()));
+
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
     }
@@ -153,7 +157,7 @@ public class GUIHandler {
             return null;
         }
 
-        UUID instanceUUID = matchingGUI.getUuid();
+        UUID instanceUUID = matchingGUI.getUUID();
         matchingGUI.setMobHolder(mobHolder);
         matchingGUI.setBlockHolder(blockHolder);
 
@@ -186,7 +190,7 @@ public class GUIHandler {
             closeRunnables.put(instanceUUID, onClose);
         }
 
-        return matchingGUI.getUuid();
+        return matchingGUI.getUUID();
     }
 
     public void forceCloseOpenedInventories(UUID inventoryUUID) {
@@ -326,6 +330,29 @@ public class GUIHandler {
         }
 
         matchingGUI.onInventoryClick(event, event.getRawSlot(), player);
+    }
+
+    public void onStorageContainerOpenGlobalEvent(UUID containerUUID) {
+        List<UUID> playersToClose = new ArrayList<>();
+
+        this.registry.getIndividualInstances().forEach((playerUUID, guiInstance) -> {
+            if (!(guiInstance instanceof StorageInventory storageGUI) || storageGUI.getStorageContainerUUID() == null)
+                return;
+
+            // Some storage inventory accessing same container uuid has been opened on this/different server.
+            if (storageGUI.getStorageContainerUUID().equals(containerUUID)) {
+                playersToClose.add(playerUUID);
+            }
+        });
+
+        playersToClose.forEach(playerUUID -> {
+            RunePlayer runePlayer = playerManager.getRunePlayer(playerUUID);
+
+            if (runePlayer == null) return;
+
+            runePlayer.asBukkitPlayer().closeInventory(InventoryCloseEvent.Reason.UNLOADED);
+            HudService.sendFailMessage(runePlayer, Component.text("Your storage container was opened from another location. This inventory has been closed to prevent data loss."));
+        });
     }
 
 

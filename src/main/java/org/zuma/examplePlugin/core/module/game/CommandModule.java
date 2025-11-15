@@ -7,9 +7,13 @@ import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
-import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
 import org.zuma.examplePlugin.domain.combat.HitHandler;
 import org.zuma.examplePlugin.domain.command.*;
+import org.zuma.examplePlugin.domain.command.backend.ConsoleActionCommand;
+import org.zuma.examplePlugin.domain.command.help.HelpCommand;
+import org.zuma.examplePlugin.domain.command.help.MapCommand;
+import org.zuma.examplePlugin.domain.command.help.SocialsCommand;
+import org.zuma.examplePlugin.domain.command.help.StoreCommand;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
 import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
@@ -27,9 +31,16 @@ public class CommandModule implements PluginModule {
     @SuppressWarnings("UnstableApiUsage")
     public void start(Plugin plugin, ModuleContext context) {
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("actions", new ConsoleActionCommand()));
+
+
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("admin", new AdminCommand(
                         context.get(HitHandler.class)))
         );
+
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("help", new HelpCommand()));
 
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("skills", new SkillsCommand()));
@@ -40,9 +51,46 @@ public class CommandModule implements PluginModule {
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("stuck", new StuckCommand()));
 
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("togglelock", new ToggleLockCommand()));
 
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> event.registrar().register("actions", new ConsoleActionCommand()));
+                event -> event.registrar().register("megaphone", new MegaphoneCommand()));
+
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("bombs", new BombsCommand()));
+
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("store", new StoreCommand()));
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("donate", new StoreCommand()));
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("shop", new StoreCommand()));
+
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("discord", new SocialsCommand()));
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("website", new SocialsCommand()));
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("site", new SocialsCommand()));
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("rules", new SocialsCommand()));
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("social", new SocialsCommand()));
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("twitter", new SocialsCommand()));
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("x", new SocialsCommand()));
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("youtube", new SocialsCommand()));
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("support", new SocialsCommand()));
+
+
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("map", new MapCommand()));
+
+
     }
 
     @Override

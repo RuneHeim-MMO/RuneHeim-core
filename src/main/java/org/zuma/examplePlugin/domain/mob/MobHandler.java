@@ -1,9 +1,5 @@
 package org.zuma.examplePlugin.domain.mob;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.PacketAdapter;
-import com.comphenix.protocol.events.PacketEvent;
 import io.papermc.paper.event.entity.EntityKnockbackEvent;
 import me.libraryaddict.disguise.DisguiseAPI;
 import org.bukkit.Bukkit;
@@ -20,7 +16,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.MathUtils;
-import org.zuma.examplePlugin.domain.item.ownership.ItemOwnershipHandler;
+import org.zuma.examplePlugin.domain.item.handlers.ownership.ItemOwnershipHandler;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
@@ -132,7 +128,7 @@ public class MobHandler {
         RunePlayer killer = killedByPlayer ? RuneQuestPlugin.getPlayerManager().getRunePlayer(UUID.fromString(event.getEntity().getMetadata(MetadataKeys.MOST_DAMAGING_PLAYER_UUID.asString()).getFirst().asString())) : null;
 
         // Roll drops only if killed by a player.
-        List<ItemStack> drops = killedByPlayer ? mob.rollDropTables(killer) : List.of();
+        List<ItemStack> drops = killedByPlayer ? mob.rollDropTables(killer, false) : List.of();
         Location dropLocation = event.getEntity().getLocation();
 
         drops.forEach(drop -> {

@@ -82,6 +82,7 @@ public enum Icon {
     ANCHOR("⏚"),
     PARTY("⾱"),
     STORAGE("⾆"),
+    EXPLOSION("ⵋ"),
 
     SKULL_OPEN_MOUTH("₮"),
     SKULL_CLOSED_MOUTH("⺳"),
@@ -142,7 +143,19 @@ public enum Icon {
     RANK_BADGE_OWNER("⸋"),
     RANK_BADGE_ADMIN("⥿"),
     RANK_BADGE_MOD("⭋"),
-    RANK_BADGE_HELPER("⤳");
+    RANK_BADGE_HELPER("⤳"),
+
+    RANK_BADGE_VIP("⊹"),
+    RANK_BADGE_HERO("⥤"),
+    RANK_BADGE_LEGEND("⾎"),
+    RANK_BADGE_MYTHIC("↴"),
+
+    SUPPORTER_LVL_1("⇀"),
+    SUPPORTER_LVL_2("ⳬ"),
+    SUPPORTER_LVL_3("ⴌ"),
+    SUPPORTER_LVL_4("⺕"),
+    SUPPORTER_LVL_5("⾮"),
+    SUPPORTER_LVL_6("◚");
 
 
     private final String icon;

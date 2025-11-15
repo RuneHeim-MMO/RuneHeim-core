@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.modifier;
+package org.zuma.examplePlugin.domain.modifier.scopes.global;
 
 import org.bukkit.Bukkit;
 import org.zuma.examplePlugin.RuneQuestPlugin;

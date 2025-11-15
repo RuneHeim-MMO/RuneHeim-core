@@ -14,7 +14,7 @@ import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.TextUtils;
-import org.zuma.examplePlugin.domain.item.ownership.ItemOwnershipHandler;
+import org.zuma.examplePlugin.domain.item.handlers.ownership.ItemOwnershipHandler;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.impl.CoinsItem;

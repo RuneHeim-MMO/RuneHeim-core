@@ -40,6 +40,7 @@ import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
 import org.zuma.examplePlugin.domain.mob.mechanics.base.MobMechanic;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
 import org.zuma.examplePlugin.domain.mob.meta.MobEquipmentMeta;
+import org.zuma.examplePlugin.domain.modifier.scopes.server.ServerModifierType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
@@ -47,6 +48,8 @@ import java.util.*;
 import java.util.function.Function;
 
 public abstract class AbstractMob {
+    private final static Random random = new Random();
+
     private UUID uuid;
     private Component displayName;
     private EntityType baseMob;
@@ -412,8 +415,19 @@ public abstract class AbstractMob {
         return entityAttr.getBaseValue();
     }
 
-    public List<ItemStack> rollDropTables(RunePlayer activator) {
+    // secondRoll is used to prevent infinite recursion when rolling extra drops.
+    public List<ItemStack> rollDropTables(RunePlayer activator, boolean secondRoll) {
         List<ItemStack> drops = new ArrayList<>();
+
+        if (!secondRoll) {
+            boolean isMobDropsBombActive = RuneQuestPlugin.getServerModifierHandler().isModifierActive(ServerModifierType.INCREASED_MOB_DROPS);
+
+            if (isMobDropsBombActive) {
+                if (random.nextDouble() * 100 < 50) { // 50% chance to roll an extra drop if bomb is active
+                    drops.addAll(rollDropTables(activator, true));
+                }
+            }
+        }
 
         this.dropTableIds.forEach(id -> {
             DropTable table = RuneQuestPlugin.getDropTableHandler().getByID(id);
@@ -429,6 +443,7 @@ public abstract class AbstractMob {
             if (drop == null) {
                 return;
             }
+
             AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(drop.getItemId());
 
             if (type == null) {

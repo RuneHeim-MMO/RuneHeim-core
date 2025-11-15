@@ -29,6 +29,7 @@ import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.constants.EquipableType;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
+import org.zuma.examplePlugin.domain.modifier.scopes.server.ServerModifierType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.actions.ActionParams;
 import org.zuma.examplePlugin.domain.player.actions.ProgressBarAction;
@@ -139,7 +140,8 @@ public class ResourceNode extends AbstractInteractableBlock {
 
         // Perfect strike roll
         double randomDouble = Math.random() * 100;
-        boolean isPerfectStrike = randomDouble < PERFECT_STRIKE_CHANCE;
+        boolean isPerfectStrikeBombActive = RuneQuestPlugin.getServerModifierHandler().isModifierActive(ServerModifierType.INCREASED_PERFECT_STRIKE);
+        boolean isPerfectStrike = randomDouble < (isPerfectStrikeBombActive ? PERFECT_STRIKE_CHANCE * 6 : PERFECT_STRIKE_CHANCE); // 6x chance if bomb is active
 
         if (isPerfectStrike) {
             SoundType stepSound = blockType.getStepSound();
@@ -216,7 +218,12 @@ public class ResourceNode extends AbstractInteractableBlock {
 
     private void rollDropTableLoot(RunePlayer player, double baseGatheringLuckPercentage) {
         Modifier gatheringLuck = player.getModifiers().get(ModifierType.GATHERING_LUCK);
+        boolean isResourceNodeBombActive = RuneQuestPlugin.getServerModifierHandler().isModifierActive(ServerModifierType.INCREASED_RESOURCE_DROPS);
         double gatheringLuckPercentage = baseGatheringLuckPercentage + (gatheringLuck != null ? gatheringLuck.amount() : 0);
+
+        if (isResourceNodeBombActive) {
+            gatheringLuckPercentage += 50; // Flat 50% increase if bomb is active
+        }
 
         List<ItemRecord> gatheringDrops = blockType.rollGatheringDrops(player);
 

@@ -6,7 +6,7 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.item.ownership.ItemPickupHandler;
+import org.zuma.examplePlugin.domain.item.handlers.ownership.ItemPickupHandler;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.item.PlayerArmorEquipEvent;

@@ -5,20 +5,16 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
-import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
-import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.gui.base.PaginatedIndividualGUI;
 import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
 import org.zuma.examplePlugin.domain.head.HeadGenerator;
@@ -27,15 +23,11 @@ import org.zuma.examplePlugin.domain.party.Party;
 import org.zuma.examplePlugin.domain.party.PartyMember;
 import org.zuma.examplePlugin.domain.party.constants.ContributionMode;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.territory.Territory;
 import org.zuma.examplePlugin.events.party.PartyDisbandedEvent;
-import org.zuma.examplePlugin.events.party.PartyPlayerJoinedEvent;
 import org.zuma.examplePlugin.events.party.PartyUpdateEvent;
 
 import java.text.NumberFormat;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 
 public class PartyMenu extends PaginatedIndividualGUI {
@@ -211,7 +203,7 @@ public class PartyMenu extends PaginatedIndividualGUI {
         Party party = RuneQuestPlugin.getPartyManager().getPartyByUUID(this.partyUUID);
 
         if (owner == null || party == null || !party.getMemberUUIDs().contains(this.getOwner())) {
-            RuneQuestPlugin.getGUIHandler().forceCloseOpenedInventories(this.getUuid());
+            RuneQuestPlugin.getGUIHandler().forceCloseOpenedInventories(this.getUUID());
             HandlerList.unregisterAll(this);
             return;
         }
@@ -236,12 +228,12 @@ public class PartyMenu extends PaginatedIndividualGUI {
         Party party = RuneQuestPlugin.getPartyManager().getPartyByUUID(this.partyUUID);
 
         if (owner == null || party == null || !party.getMemberUUIDs().contains(this.getOwner())) {
-            RuneQuestPlugin.getGUIHandler().forceCloseOpenedInventories(this.getUuid());
+            RuneQuestPlugin.getGUIHandler().forceCloseOpenedInventories(this.getUUID());
             HandlerList.unregisterAll(this);
             return;
         }
 
-        RuneQuestPlugin.getGUIHandler().forceCloseOpenedInventories(this.getUuid());
+        RuneQuestPlugin.getGUIHandler().forceCloseOpenedInventories(this.getUUID());
         HandlerList.unregisterAll(this);
     }
 

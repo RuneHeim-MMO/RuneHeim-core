@@ -20,6 +20,7 @@ import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
+import org.zuma.examplePlugin.domain.payments.handlers.EffectQueueManager;
 import org.zuma.examplePlugin.events.player.RunePlayerLoadedEvent;
 
 public class RunePlayerListener implements Listener {
@@ -64,6 +65,7 @@ public class RunePlayerListener implements Listener {
     public void onPlayerDisconnect(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         playerHandler.handlePlayerDisconnect(player);
+        EffectQueueManager.cleanupPlayer(player.getUniqueId());
     }
 
     @EventHandler

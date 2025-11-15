@@ -28,9 +28,9 @@ public enum ModifierType {
     CLEAVE_DISTANCE("Cleave Distance", "Extends the range of melee cleave attacks, allowing you to hit additional enemies in front of you.", Icon.CLEAVE.get(), null, null, false),
     FLYING_SPEED("Flying Speed", "", Icon.FLIGHT.get(), "%", null, true),
 
-    XP_BOOST("XP Boost", "Increases experience gain rate by a multiplier.", Icon.EPIC.get(), "x", null, true),
-    COMBAT_XP_BOOST("Combat XP Boost", "Increases experience gain rate by a multiplier.", Icon.EPIC.get(), "x", null, true),
-    SKILLING_XP_BOOST("Skilling XP Boost", "Increases experience gain rate by a multiplier.", Icon.EPIC.get(), "x", null, true),
+    XP_BONUS_ADDITIVE("XP Bonus", "Increases experience gain rate. (Additive)", Icon.EPIC.get(), "x", null, true),
+    COMBAT_XP_BONUS_ADDITIVE("Combat XP Bonus", "Increases combat experience gain rate. (Additive)", Icon.EPIC.get(), "x", null, true),
+    SKILLING_XP_BONUS_ADDITIVE("Skilling XP Bonus", "Increases skilling experience gain rate. (Additive)", Icon.EPIC.get(), "x", null, true),
 
     ATTACK_BOOST_PERCENT("Attack Bonus", "", Icon.PRAYER.get(), null, null, false),
     STRENGTH_BOOST_PERCENT("Strength Bonus", "", Icon.PRAYER.get(), null, null, false),

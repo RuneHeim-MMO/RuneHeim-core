@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.player;
 
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -12,6 +13,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.permissions.roles.BaseRole;
 import org.zuma.examplePlugin.core.permissions.PlayerRole;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
@@ -27,6 +29,7 @@ import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.SkillModifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.party.Party;
+import org.zuma.examplePlugin.domain.payments.SupporterLevel;
 import org.zuma.examplePlugin.domain.player.actions.ActionParams;
 import org.zuma.examplePlugin.domain.player.handlers.*;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
@@ -41,13 +44,14 @@ import java.util.stream.Collectors;
 
 public class RunePlayer implements CombatEntity {
     private static final double HP_SKILL_XP_PER_DMG_POINT_RECEIVED = 5;
+    private @Nullable UUID partyUUID;
     private final UUID uuid;
 
     private PlayerRole role;
     private PermissionAttachment permissionAttachment;
 
     private final PlayerCombatData combatData;
-    private @Nullable UUID partyUUID;
+    private PlayerBombsContainer bombsContainer;
 
     private final PendingXPHandler pendingXPHandler;
     private final EnumMap<ModifierType, Modifier> modifiers;
@@ -59,22 +63,17 @@ public class RunePlayer implements CombatEntity {
     private final ActionBarManager actionBarManager;
     private final BusyStateHandler busyStateHandler;
     private final PlayerScoreboardManager scoreboardManager;
-    private final UsernameRenderer usernameRenderer;
+    private final ScoreboardUsernameRenderer scoreboardUsernameRenderer;
 
     private long pouchCoins;
-    private List<String> discoveredTerritoryIds;
-    private List<String> completedQuestIds;
-    private boolean isDead;
-    private boolean isInCutscene;
-    private boolean isDialogOptionChoosing;
+    private List<String> discoveredTerritoryIds, completedQuestIds;
+    private boolean isInCutscene, isDead, isDialogOptionChoosing, isNextMessageMegaphone;
     private HashMap<String, AbstractQuestStep> activeQuestSteps; // Quest id : step
-    @Nullable
-    private Location safeLocation; // is set when player is in spectator/cutscene mode.
+    private @Nullable Location safeLocation; // is set when player is in spectator/cutscene mode.
 
     public RunePlayer(UUID uuid, EnumMap<SkillType, Skill> skills) {
         this.uuid = uuid;
-        this.role = PlayerRole.PLAYER;
-
+        this.role = new PlayerRole(BaseRole.PLAYER, null, SupporterLevel.LVL_0);
         this.skills = skills;
         this.combatData = new PlayerCombatData(this, skills.get(SkillType.HITPOINTS).getBaseLevel(), Math.min(3, XpUtils.getCombatLevelFromSkills(skills)), 1, 1);
 
@@ -87,17 +86,18 @@ public class RunePlayer implements CombatEntity {
         this.itemHandler = new PlayerItemDistributor(this);
         this.xpHandler = new PlayerXpHandler(this);
         this.pendingXPHandler = new PendingXPHandler();
-        this.usernameRenderer = new UsernameRenderer(this);
+        this.scoreboardUsernameRenderer = new ScoreboardUsernameRenderer(this);
 
         this.pouchCoins = 0;
         this.discoveredTerritoryIds = new ArrayList<>();
         this.completedQuestIds = new ArrayList<>();
         this.isDead = false;
         this.activeEffects = new ArrayList<>();
+        this.bombsContainer = new PlayerBombsContainer(0, 0, 0, 0, 0, 0);
 
         Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
             this.permissionAttachment = asBukkitPlayer().addAttachment(RuneQuestPlugin.getInstance());
-            this.usernameRenderer.updateTabUsername();
+            this.scoreboardUsernameRenderer.updateTabUsername();
             HudService.updateVanillaGUI(this);
         });
     }
@@ -192,7 +192,7 @@ public class RunePlayer implements CombatEntity {
 
     public void setCombatLvl(int combatLvl) {
         combatData.setCombatLvl(combatLvl);
-        this.usernameRenderer.updateTabUsername();
+        this.scoreboardUsernameRenderer.updateTabUsername();
     }
 
     public void registerHit(Hit hit) {
@@ -441,7 +441,31 @@ public class RunePlayer implements CombatEntity {
         this.scoreboardManager.reloadNametags();
     }
 
-    public UsernameRenderer getUsernameRenderer() {
-        return usernameRenderer;
+    public ScoreboardUsernameRenderer getScoreboardUsernameRenderer() {
+        return scoreboardUsernameRenderer;
+    }
+
+    public void setPermissionAttachment(PermissionAttachment permissionAttachment) {
+        this.permissionAttachment = permissionAttachment;
+    }
+
+    public void setSupporterLevel(SupporterLevel supporterLevel) {
+        this.role = new PlayerRole(this.role.getBaseRole(), this.role.getUpgradedRole(), supporterLevel);
+    }
+
+    public PlayerBombsContainer getBombsContainer() {
+        return bombsContainer;
+    }
+
+    public void setBombsContainer(PlayerBombsContainer bombsContainer) {
+        this.bombsContainer = bombsContainer;
+    }
+
+    public boolean isNextMessageMegaphone() {
+        return isNextMessageMegaphone;
+    }
+
+    public void setNextMessageMegaphone(boolean nextMessageMegaphone) {
+        isNextMessageMegaphone = nextMessageMegaphone;
     }
 }

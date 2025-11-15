@@ -32,7 +32,7 @@ public class IllegalItemWatchdog implements Listener {
 
     public static ItemMeta tagIllegalItem(ItemMeta meta) {
         PersistentDataContainer container = meta.getPersistentDataContainer();
-        container.set(PersistenceDataKey.ILLEGAL_ITEM.key(RuneQuestPlugin.getInstance()), PersistentDataType.INTEGER, 1);
+        container.set(PersistenceDataKey.ILLEGAL_ITEM.key(RuneQuestPlugin.getInstance()), PersistentDataType.BYTE, (byte) 1);
         return meta;
     }
 
@@ -45,7 +45,7 @@ public class IllegalItemWatchdog implements Listener {
         ItemMeta meta = item.getItemMeta();
         PersistentDataContainer container = meta.getPersistentDataContainer();
 
-        boolean isIllegalItem = container.get(PersistenceDataKey.ILLEGAL_ITEM.key(RuneQuestPlugin.getInstance()), PersistentDataType.INTEGER) != null;
+        boolean isIllegalItem = container.get(PersistenceDataKey.ILLEGAL_ITEM.key(RuneQuestPlugin.getInstance()), PersistentDataType.BYTE) != null;
         if (isIllegalItem) return LegalityType.ILLEGAL;
 
         boolean isVanillaItem = container.get(PersistenceDataKey.ITEM_ID.key(RuneQuestPlugin.getInstance()), PersistentDataType.INTEGER) == null;

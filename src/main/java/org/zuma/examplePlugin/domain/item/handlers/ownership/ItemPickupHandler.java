@@ -1,10 +1,8 @@
-package org.zuma.examplePlugin.domain.item.ownership;
+package org.zuma.examplePlugin.domain.item.handlers.ownership;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.player.PlayerAttemptPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;

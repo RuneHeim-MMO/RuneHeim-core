@@ -34,6 +34,7 @@ public enum GUIOverlay {
     SMALL_BAG_OVERLAY("ⱸ"),
     MEDIUM_BAG_OVERLAY("⓴"),
     LARGE_BAG_OVERLAY("ⵐ"),
+    BOMBS_MENU_OVERLAY("▫"),
 
     GENERIC_OVERLAY_1("⼮"),
     GENERIC_OVERLAY_2("⌱"),

@@ -3,14 +3,15 @@ package org.zuma.examplePlugin.domain.player;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.permissions.PlayerRole;
+import org.zuma.examplePlugin.core.permissions.Role;
+import org.zuma.examplePlugin.core.permissions.roles.BaseRole;
+import org.zuma.examplePlugin.core.permissions.roles.UpgradedRole;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.core.exception.PlayerDataLoadException;
+import org.zuma.examplePlugin.domain.payments.SupporterLevel;
 import org.zuma.examplePlugin.domain.player.persistence.DeserializedPlayerEntity;
 import org.zuma.examplePlugin.domain.player.persistence.RunePlayerRepository;
 import org.zuma.examplePlugin.domain.player.persistence.RunePlayerSerializer;
@@ -26,11 +27,11 @@ import org.zuma.examplePlugin.events.player.RunePlayerSavedEvent;
 
 import javax.annotation.Nullable;
 import javax.security.auth.login.AccountNotFoundException;
+import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class RunePlayerManager {
 
@@ -59,7 +60,7 @@ public class RunePlayerManager {
     // -------------------- Getters --------------------
 
     public @Nullable RunePlayer getRunePlayer(Player player) {
-        if(player == null) return null;
+        if (player == null) return null;
         return getRunePlayer(player.getUniqueId());
     }
 
@@ -110,6 +111,8 @@ public class RunePlayerManager {
         runAsync(() -> {
             try {
                 AbstractMap.SimpleEntry<RunePlayer, DeserializedPlayerEntity> data = fetchOrCreatePlayerData(player);
+                BigDecimal totalPayments = RuneQuestPlugin.getPaymentHandler().getTotalPayments(player.getUniqueId());
+                data.getKey().setSupporterLevel(SupporterLevel.getLevelByAmount(totalPayments.doubleValue()));
 
                 runSync(() -> {
                     if (!player.isOnline()) {
@@ -198,7 +201,7 @@ public class RunePlayerManager {
             runePlayer.reloadNametags();
         }, 1L);
 
-        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.getName() + " (" + runePlayer.getCombatLvl() + "cmb) loaded successfully [" + runePlayer.getRole().toString() + "].");
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.getName() + " (" + runePlayer.getCombatLvl() + "cmb) loaded successfully [" + runePlayer.getRole().getBaseRole().toString() + "].");
         RuneQuestPlugin.getGearModifierHandler().recalculatePlayerModifiers(runePlayer, player.getInventory().getItemInMainHand());
 
         Bukkit.getServer().getPluginManager().callEvent(new RunePlayerLoadedEvent(runePlayer, playerData.isFirstJoin()));
@@ -258,17 +261,17 @@ public class RunePlayerManager {
             return;
         }
 
-        if (uuidsAccessingDB.contains(uuid)) {
-            if (!waitForPlayerFree(uuid, 60000)) {
-                return;
-            }
-        }
-
-        uuidsAccessingDB.add(uuid);
-
         SerializedPlayerContainer serializedContainer = RunePlayerSerializer.serializePlayerSync(runePlayer, player, clearStateCache);
 
         runAsync(() -> {
+            if (uuidsAccessingDB.contains(uuid)) {
+                if (!waitForPlayerFree(uuid, 60000)) {
+                    return;
+                }
+            }
+
+            uuidsAccessingDB.add(uuid);
+
             try {
                 repository.upsertPlayer(serializedContainer);
                 questHandler.savePlayerQuestData(runePlayer, false);
@@ -344,5 +347,31 @@ public class RunePlayerManager {
         } catch (Exception e) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to save player " + player.getName() + "!", e);
         }
+    }
+
+    public void writeNewUpgradedRoleToDatabaseSync(UUID uuid, UpgradedRole newRole) {
+        repository.setPlayerUpgradedRole(uuid, newRole);
+    }
+
+    public Map.Entry<BaseRole, UpgradedRole> getPlayerRolesFromDatabaseSync(UUID uuid) {
+        try {
+            List<Role> roles = repository.getPlayerRoles(uuid);
+
+            BaseRole baseRole = (BaseRole) roles.get(0);
+            UpgradedRole upgradedRole = roles.size() > 1 ? (UpgradedRole) roles.get(1) : null;
+
+            return new AbstractMap.SimpleEntry<>(baseRole, upgradedRole);
+        } catch (Exception e) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed extracting 2 roles from the database for " + uuid, e);
+            throw e;
+        }
+    }
+
+    public PlayerBombsContainer getPlayerBombsContainerFromDatabaseSync(UUID uuid) {
+        return repository.getPlayerBombsContainer(uuid);
+    }
+
+    public void writeNewPlayerBombsContainerToDatabaseSync(UUID uuid, PlayerBombsContainer container) {
+        repository.updatePlayerBombsContainer(uuid, container);
     }
 }

@@ -5,10 +5,12 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
-public class UsernameRenderer {
+import java.util.Objects;
+
+public class ScoreboardUsernameRenderer {
     private final RunePlayer player;
 
-    public UsernameRenderer(RunePlayer player) {
+    public ScoreboardUsernameRenderer(RunePlayer player) {
         this.player = player;
     }
 
@@ -21,13 +23,15 @@ public class UsernameRenderer {
         int spacesNeeded = width - numStr.length();
         String spaces = " ".repeat(Math.max(0, spacesNeeded));
 
+        Component supporterPrefix = !Objects.equals(player.getRole().getSupporterRoleIcon(), "") ? Component.text(player.getRole().getSupporterRoleIcon()) : Component.empty();
         Component levelPrefix = Component.text("[Lv.", levelComponent.color()).append(levelComponent).append(Component.text("]"));
         Component username = Component.text(player.asBukkitPlayer().getName(), NamedTextColor.WHITE);
 
         player.asBukkitPlayer().playerListName(
                 Component.text(" ")
+                        .append(supporterPrefix)
                         .append(levelPrefix)
-                        .append(Component.text(spaces + " • "))
+                        .append(Component.text( " • "))
                         .append(username)
                         .append(Component.text(" "))
                         .append(player.getRole().getPrefix())

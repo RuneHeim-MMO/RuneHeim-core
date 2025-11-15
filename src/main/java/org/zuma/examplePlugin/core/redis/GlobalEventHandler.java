@@ -71,12 +71,24 @@ public class GlobalEventHandler {
 
 
     public static boolean shouldHandleEvent(RedisEvent.RedisPayload payload) {
-        if (payload.targetServers.contains(ConfigManager.getServerId())) {
-            return true;
+        /*
+            If target servers are specified, only handle if this server is included.
+            If no target servers are specified, handle unless the event originated from this server
+            and is not marked for replay at origin.
+         */
+
+        // if the event has specific target servers and this server is not one of them, skip it
+        if (!payload.targetServers.isEmpty()) {
+            return payload.targetServers.contains(ConfigManager.getServerId());
         }
 
-        return payload.targetServers.isEmpty() || payload.serverId == ConfigManager.getServerId() && payload.replayAtOrigin;
 
+        // if the event originated from this server and is not marked for replay at origin, skip it
+        if (payload.serverId == ConfigManager.getServerId() && !payload.replayAtOrigin) {
+            return false;
+        }
+
+        return true;
     }
 
 }
