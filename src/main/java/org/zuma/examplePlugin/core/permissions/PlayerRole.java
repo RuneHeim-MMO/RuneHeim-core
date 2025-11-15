@@ -61,7 +61,7 @@ public class PlayerRole {
         Component upgradedPrefix = upgradedRole != null ? upgradedRole.getPrefix() : Component.empty();
 
         if (baseRole.equals(BaseRole.PLAYER)) {
-            return upgradedPrefix;
+            return upgradedPrefix.append(Component.text(" "));
         }
 
         return upgradedPrefix.append(basePrefix).append(Component.text(" "));

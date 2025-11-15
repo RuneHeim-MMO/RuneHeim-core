@@ -156,7 +156,7 @@ public class RunePlayerManager {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Creating new profile for " + player.getName());
             RunePlayer newPlayer = new RunePlayer(uuid, new EnumMap<>(createDefaultSkills()));
             SerializedPlayerContainer serialized = RunePlayerSerializer.serializePlayerSync(newPlayer, player, false);
-            repository.upsertPlayer(serialized);
+            repository.upsertPlayer(serialized, false);
             return new AbstractMap.SimpleEntry<>(newPlayer, new DeserializedPlayerEntity(new ArrayList<>(), player.getLocation(), true));
         } catch (Exception e) {
             kickPlayer(player, "Failed creating new profile.", true);
@@ -273,9 +273,8 @@ public class RunePlayerManager {
             uuidsAccessingDB.add(uuid);
 
             try {
-                repository.upsertPlayer(serializedContainer);
+                repository.upsertPlayer(serializedContainer, unmount);
                 questHandler.savePlayerQuestData(runePlayer, false);
-                if (unmount) repository.setPlayerOnline(player.getUniqueId(), false);
 
                 runSync(() -> {
                     if (unmount) players.remove(player.getUniqueId());
@@ -305,13 +304,15 @@ public class RunePlayerManager {
             }
 
             uuidsAccessingDB.add(uuid);
-            repository.upsertPlayer(RunePlayerSerializer.serializePlayerSync(player, player.asBukkitPlayer(), unmount));
-            questHandler.savePlayerQuestData(player, false);
-            wipeInventory(player.asBukkitPlayer());
+            try {
+                repository.upsertPlayer(RunePlayerSerializer.serializePlayerSync(player, player.asBukkitPlayer(), unmount), unmount);
+                questHandler.savePlayerQuestData(player, false);
+                wipeInventory(player.asBukkitPlayer());
 
-            if (unmount) repository.setPlayerOnline(player.getUUID(), false);
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.asBukkitPlayer().getName() + " data has been saved. Unmounted: true");
-            uuidsAccessingDB.remove(uuid);
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.asBukkitPlayer().getName() + " data has been saved. Unmounted: true");
+            } finally {
+                uuidsAccessingDB.remove(uuid);
+            }
         } catch (Exception e) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to save player " + player.asBukkitPlayer().getName(), e);
         }

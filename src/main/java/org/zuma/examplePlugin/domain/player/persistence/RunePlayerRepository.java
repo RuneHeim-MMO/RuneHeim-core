@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.player.persistence;
 
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.permissions.Role;
@@ -147,7 +148,7 @@ public class RunePlayerRepository {
         }
     }
 
-    public void upsertPlayer(SerializedPlayerContainer container) {
+    public void upsertPlayer(SerializedPlayerContainer container, boolean unmount) {
         String playerSql = """
                 INSERT INTO players (uuid, last_username, base_role, upgraded_role, online, location, json, updated_at)
                 VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
@@ -155,7 +156,7 @@ public class RunePlayerRepository {
                     last_username = VALUES(last_username),
                     base_role = VALUES(base_role),
                     upgraded_role = VALUES(upgraded_role),
-                    online = VALUES(online),
+                    online = CASE WHEN ? THEN NULL ELSE online END,
                     location = VALUES(location),
                     json = VALUES(json),
                     updated_at = CURRENT_TIMESTAMP
@@ -203,9 +204,10 @@ public class RunePlayerRepository {
             playerStmt.setString(2, container.username());
             playerStmt.setString(3, container.baseRole());
             playerStmt.setString(4, container.upgradedRole());
-            playerStmt.setBoolean(5, false);
+            playerStmt.setBoolean(5, false); // for INSERT (default to false)
             playerStmt.setString(6, container.location());
             playerStmt.setString(7, container.playerData());
+            playerStmt.setBoolean(8, unmount); // for the CASE statement in UPDATE
             playerStmt.executeUpdate();
 
             // Skills - sort by skill name to ensure consistent ordering across transactions
@@ -249,7 +251,7 @@ public class RunePlayerRepository {
         try (Connection conn = pool.getDataSource().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setBoolean(1, online);
+            stmt.setInt(1, online ? ConfigManager.serverId : null);
             stmt.setString(2, uuid.toString());
 
             stmt.executeUpdate();
