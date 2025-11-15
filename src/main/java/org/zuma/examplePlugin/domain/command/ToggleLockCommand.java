@@ -28,11 +28,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class ToggleLockCommand implements BasicCommand {
-    private static final AbstractItemType coinsType = RuneQuestPlugin.getItemRegistry().getType(ItemId.COINS.asInt());
-    private static final HashMap<UUID, Long> dropTimes = new HashMap<>(); // Prevent coins spamming.
-    private static final int DROP_COOLDOWN_SECONDS = 5;
-
-
     @Override
     public void execute(CommandSourceStack commandSourceStack, String[] args) {
         CommandSender sender = commandSourceStack.getSender();

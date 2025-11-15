@@ -118,8 +118,8 @@ public class ServerModifierHandler implements Listener {
 
             RuneQuestPlugin.getPlayerManager().getOnlinePlayers().forEach(p -> {
                 showActivationMessage(activatedBy.asBukkitPlayer().getName(), null, p, type);
-                Bukkit.getPluginManager().callEvent(new BombActivatedEvent(new BombActivatedEvent.Payload(activatedBy.asBukkitPlayer().getName(), type)));
             });
+            Bukkit.getPluginManager().callEvent(new BombActivatedEvent(new BombActivatedEvent.Payload(activatedBy.asBukkitPlayer().getName(), type)));
         }, 60L);
 
         return true;
