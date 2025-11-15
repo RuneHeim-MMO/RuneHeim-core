@@ -24,6 +24,12 @@ public class RunePlayerRepository {
         this.pool = pool;
     }
 
+    private void checkMissingSkills(UUID uuid) {
+        String skillsSQL =
+                "SELECT skill, xp FROM player_skills WHERE uuid = ?";
+
+    }
+
     public SerializedPlayerContainer getPlayerByUUID(UUID uuid)
             throws AccountNotFoundException, IllegalAccessException {
 
@@ -156,9 +162,13 @@ public class RunePlayerRepository {
                 """;
 
         String skillUpsertSql = """
-                UPDATE player_skills 
-                SET xp = ?, level = ?, updated_at = CURRENT_TIMESTAMP 
-                WHERE uuid = ? AND skill = ?
+                INSERT INTO player_skills (uuid, skill, xp, level)
+                VALUES (?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE
+                    uuid = VALUES(uuid),
+                    xp = VALUES(xp),
+                    level = VALUES(level),
+                    updated_at = CURRENT_TIMESTAMP
                 """;
 
         String inventorySql = """
@@ -198,19 +208,19 @@ public class RunePlayerRepository {
             playerStmt.setString(7, container.playerData());
             playerStmt.executeUpdate();
 
-                // Skills - sort by skill name to ensure consistent ordering across transactions
-                List<Skill> sortedSkills = new ArrayList<>(container.skills());
-                sortedSkills.sort(Comparator.comparing(a -> a.getType().toString()));
-                
-                for (Skill skill : sortedSkills) {
-                    skillStmt.setDouble(1, skill.getXp());
-                    skillStmt.setInt(2, skill.getBaseLevel());
-                    skillStmt.setString(3, container.uuid().toString());
-                    skillStmt.setString(4, skill.getType().toString());
-                    skillStmt.addBatch();
-                }
+            // Skills - sort by skill name to ensure consistent ordering across transactions
+            List<Skill> sortedSkills = new ArrayList<>(container.skills());
+            sortedSkills.sort(Comparator.comparing(a -> a.getType().toString()));
 
-                skillStmt.executeBatch();
+            for (Skill skill : sortedSkills) {
+                skillStmt.setString(1, container.uuid().toString());
+                skillStmt.setString(2, skill.getType().toString());
+                skillStmt.setDouble(3, skill.getXp());
+                skillStmt.setInt(4, skill.getBaseLevel());
+                skillStmt.addBatch();
+            }
+
+            skillStmt.executeBatch();
 
             // 3. Upsert inventory
             inventoryStmt.setString(1, container.uuid().toString());
