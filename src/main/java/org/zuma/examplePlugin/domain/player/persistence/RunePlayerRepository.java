@@ -6,6 +6,7 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.permissions.Role;
 import org.zuma.examplePlugin.core.permissions.roles.BaseRole;
 import org.zuma.examplePlugin.core.permissions.roles.UpgradedRole;
+import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.player.PlayerBombsContainer;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -97,6 +98,30 @@ public class RunePlayerRepository {
                 }
             }
 
+            // Ensure all skills are present in the database
+            Set<SkillType> missingSkills = new HashSet<>();
+            for (SkillType type : SkillType.values()) {
+                if (skills.stream().noneMatch(s -> s.getType() == type)) {
+                    missingSkills.add(type);
+                }
+            }
+
+            if (!missingSkills.isEmpty()) {
+                String insertSkillSQL =
+                        "INSERT INTO player_skills (uuid, skill, xp, level, updated_at) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)";
+
+                try (PreparedStatement insertStmt = conn.prepareStatement(insertSkillSQL)) {
+                    for (SkillType type : missingSkills) {
+                        insertStmt.setString(1, uuid.toString());
+                        insertStmt.setString(2, type.toString());
+                        insertStmt.setInt(3, type.getDefaultXp());
+                        insertStmt.setInt(4, XpUtils.getLevelFromXp(type.getDefaultXp()));
+                        insertStmt.addBatch();
+                    }
+                    insertStmt.executeBatch();
+                }
+            }
+
             return new SerializedPlayerContainer(
                     uuid,
                     lastUsername,
@@ -131,12 +156,9 @@ public class RunePlayerRepository {
                 """;
 
         String skillUpsertSql = """
-                INSERT INTO player_skills (uuid, skill, xp, level)
-                VALUES (?, ?, ?, ?)
-                ON DUPLICATE KEY UPDATE
-                    xp = VALUES(xp),
-                    level = VALUES(level),
-                    updated_at = CURRENT_TIMESTAMP
+                UPDATE player_skills 
+                SET xp = ?, level = ?, updated_at = CURRENT_TIMESTAMP 
+                WHERE uuid = ? AND skill = ?
                 """;
 
         String inventorySql = """
@@ -148,7 +170,7 @@ public class RunePlayerRepository {
                 """;
 
         String bonusBombsSql = """
-                 INSERT INTO player_bonus_bombs (uuid, double_combat_xp, double_skill_xp, mob_drops, resource_drops, perfect_strike, megaphone_uses, updated_at)
+                INSERT INTO player_bonus_bombs (uuid, double_combat_xp, double_skill_xp, mob_drops, resource_drops, perfect_strike, megaphone_uses, updated_at)
                 VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
                 ON DUPLICATE KEY UPDATE
                     double_combat_xp = VALUES(double_combat_xp),
@@ -160,79 +182,50 @@ public class RunePlayerRepository {
                     updated_at = CURRENT_TIMESTAMP
                 """;
 
-        Connection conn = null;
-        try {
-            conn = pool.getDataSource().getConnection();
-            conn.setAutoCommit(false); // start transaction
+        try (Connection conn = pool.getDataSource().getConnection();
+             PreparedStatement playerStmt = conn.prepareStatement(playerSql);
+             PreparedStatement bombsStmt = conn.prepareStatement(bonusBombsSql);
+             PreparedStatement inventoryStmt = conn.prepareStatement(inventorySql);
+             PreparedStatement skillStmt = conn.prepareStatement(skillUpsertSql)) {
 
-            try (PreparedStatement playerStmt = conn.prepareStatement(playerSql);
-                 PreparedStatement bombsStmt = conn.prepareStatement(bonusBombsSql);
-                 PreparedStatement inventoryStmt = conn.prepareStatement(inventorySql);
-                 PreparedStatement skillStmt = conn.prepareStatement(skillUpsertSql)) {
+            // 1. Upsert player
+            playerStmt.setString(1, container.uuid().toString());
+            playerStmt.setString(2, container.username());
+            playerStmt.setString(3, container.baseRole());
+            playerStmt.setString(4, container.upgradedRole());
+            playerStmt.setBoolean(5, false);
+            playerStmt.setString(6, container.location());
+            playerStmt.setString(7, container.playerData());
+            playerStmt.executeUpdate();
 
-                // Upsert player
-                playerStmt.setString(1, container.uuid().toString());
-                playerStmt.setString(2, container.username());
-                playerStmt.setString(3, container.baseRole());
-                playerStmt.setString(4, container.upgradedRole());
-                playerStmt.setBoolean(5, false);
-                playerStmt.setString(6, container.location());
-                playerStmt.setString(7, container.playerData());
-                playerStmt.executeUpdate();
-
-                // Skills
-                for (Skill skill : container.skills()) {
-                    skillStmt.setString(1, container.uuid().toString());
-                    skillStmt.setString(2, skill.getType().toString());
-                    skillStmt.setDouble(3, skill.getXp());
-                    skillStmt.setInt(4, skill.getBaseLevel());
-                    skillStmt.addBatch();
-                }
-
-                skillStmt.executeBatch();
-
-                // Upsert inventory
-                inventoryStmt.setString(1, container.uuid().toString());
-                inventoryStmt.setString(2, container.inventoryData());
-                inventoryStmt.executeUpdate();
-
-                bombsStmt.setString(1, container.uuid().toString());
-                bombsStmt.setInt(2, container.bombsContainer().getDoubleCombatXPBombs());
-                bombsStmt.setInt(3, container.bombsContainer().getDoubleSkillXPBombs());
-                bombsStmt.setInt(4, container.bombsContainer().getIncreasedMobDropsBombs());
-                bombsStmt.setInt(5, container.bombsContainer().getIncreasedResourceDropsBombs());
-                bombsStmt.setInt(6, container.bombsContainer().getIncreasedPerfectStrikeBombs());
-                bombsStmt.setInt(7, container.bombsContainer().getMegaphoneUses());
-                bombsStmt.executeUpdate();
-
-                // Commit transaction
-                conn.commit();
-
+            // 2. Update skills - pure UPDATE since all skills exist from getPlayerByUUID()
+            for (Skill skill : container.skills()) {
+                skillStmt.setDouble(1, skill.getXp());
+                skillStmt.setInt(2, skill.getBaseLevel());
+                skillStmt.setString(3, container.uuid().toString());
+                skillStmt.setString(4, skill.getType().toString());
+                skillStmt.addBatch();
             }
+            skillStmt.executeBatch();
+
+            // 3. Upsert inventory
+            inventoryStmt.setString(1, container.uuid().toString());
+            inventoryStmt.setString(2, container.inventoryData());
+            inventoryStmt.executeUpdate();
+
+            // 4. Upsert bombs
+            bombsStmt.setString(1, container.uuid().toString());
+            bombsStmt.setInt(2, container.bombsContainer().getDoubleCombatXPBombs());
+            bombsStmt.setInt(3, container.bombsContainer().getDoubleSkillXPBombs());
+            bombsStmt.setInt(4, container.bombsContainer().getIncreasedMobDropsBombs());
+            bombsStmt.setInt(5, container.bombsContainer().getIncreasedResourceDropsBombs());
+            bombsStmt.setInt(6, container.bombsContainer().getIncreasedPerfectStrikeBombs());
+            bombsStmt.setInt(7, container.bombsContainer().getMegaphoneUses());
+            bombsStmt.executeUpdate();
 
         } catch (Exception e) {
-            // Rollback transaction if something failed
-            if (conn != null) {
-                try {
-                    conn.rollback();
-                } catch (Exception rollbackEx) {
-                    RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL,
-                            "Rollback failed for player " + container.username() + "!", rollbackEx);
-                }
-            }
             RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL,
                     "Failed to upsert player " + container.username() + " data!", e);
-        } finally {
-            // Close connection safely
-            if (conn != null) {
-                try {
-                    conn.setAutoCommit(true); // reset autocommit
-                    conn.close();
-                } catch (Exception closeEx) {
-                    RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL,
-                            "Failed to close connection for player " + container.username() + "!", closeEx);
-                }
-            }
         }
     }
 
