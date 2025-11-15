@@ -37,6 +37,20 @@ public class PaymentsHistoryRepository {
         }
     }
 
+    public boolean checkExistingTransactionID(String txId) throws SQLException {
+        String sql = "SELECT 1 FROM payments_history WHERE transaction_id = ? LIMIT 1";
+
+        try (Connection conn = pool.getDataSource().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, txId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
     public BigDecimal getTotalPayments(UUID UUID) {
         String sql = "SELECT SUM(amount) FROM payments_history WHERE uuid = ?";
 

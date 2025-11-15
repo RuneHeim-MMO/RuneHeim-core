@@ -47,7 +47,7 @@ public class RunePlayerSerializer {
         String serializedPlayerData = gson.toJson(versionedPlayerData);
         String serializedLocation = gson.toJson(runePlayer.getSafeLocation() != null ? runePlayer.getSafeLocation() : player.getLocation());
         String inventoryData = ItemContainerContentSerializer.serializeItemSlotPairsSync(getPlayerInventoryContent(player), clearStateCache);
-        List<Skill> skills = runePlayer.getSkills().values().stream().map(s -> new Skill(s.getType(), s.getXp())).toList();
+        List<Skill> skills = runePlayer.getSkills().values().stream().toList();
 
         String baseRole = runePlayer.getRole().getBaseRole().toString();
         @Nullable String upgradedRole = runePlayer.getRole().getUpgradedRole() != null ? runePlayer.getRole().getUpgradedRole().toString() : null;
@@ -82,7 +82,7 @@ public class RunePlayerSerializer {
                                 type -> container.skills().stream()
                                         .filter(s -> s.getType() == type)
                                         .findFirst()
-                                        .orElse(new Skill(type, 0)),
+                                        .orElse(new Skill(type, type.getDefaultXp())),
                                 (a, b) -> b,
                                 () -> new EnumMap<>(SkillType.class)
                         ));

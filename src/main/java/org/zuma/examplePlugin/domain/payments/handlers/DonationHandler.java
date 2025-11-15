@@ -23,51 +23,59 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public class DonationHandler {
+    private static final Object CONCURRENT_LOCK = new Object();
+
     public static void updatePlayerRole(UUID uuid, UpgradedRole role) {
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
-            @Nullable UpgradedRole currentRole = RuneQuestPlugin.getPlayerManager().getPlayerRolesFromDatabaseSync(uuid).getValue();
+            synchronized (CONCURRENT_LOCK) {
+                @Nullable UpgradedRole currentRole = RuneQuestPlugin.getPlayerManager().getPlayerRolesFromDatabaseSync(uuid).getValue();
 
-            if (currentRole != null && role.getWeight() > currentRole.getWeight()) {
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[DONATE] New rank " + role + " has higher weight than current rank " + currentRole + " for player " + uuid);
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[DONATE] Aborting rank update to prevent downgrade.");
-                return;
+                if (currentRole != null && role.getWeight() > currentRole.getWeight()) {
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[DONATE] New rank " + role + " has higher weight than current rank " + currentRole + " for player " + uuid);
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[DONATE] Aborting rank update to prevent downgrade.");
+                    return;
+                }
+
+                RuneQuestPlugin.getPlayerManager().writeNewUpgradedRoleToDatabaseSync(uuid, role);
+
+                Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+                    RankReloadEvent rankReloadEvent = new RankReloadEvent(new RankReloadEvent.Payload(uuid, role));
+                    Bukkit.getServer().getPluginManager().callEvent(rankReloadEvent);
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[DONATE] Updated player " + uuid + " to new role " + role);
+                });
             }
-
-            RuneQuestPlugin.getPlayerManager().writeNewUpgradedRoleToDatabaseSync(uuid, role);
-
-            Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                RankReloadEvent rankReloadEvent = new RankReloadEvent(new RankReloadEvent.Payload(uuid, role));
-                Bukkit.getServer().getPluginManager().callEvent(rankReloadEvent);
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[DONATE] Updated player " + uuid + " to new role " + role);
-            });
         });
     }
 
     public static void addBonusBomb(UUID uuid, ServerModifierType type, int amount) {
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
-            PlayerBombsContainer container = RuneQuestPlugin.getPlayerManager().getPlayerBombsContainerFromDatabaseSync(uuid);
-            container.addBomb(type, amount);
-            RuneQuestPlugin.getPlayerManager().writeNewPlayerBombsContainerToDatabaseSync(uuid, container);
+            synchronized (CONCURRENT_LOCK) {
+                PlayerBombsContainer container = RuneQuestPlugin.getPlayerManager().getPlayerBombsContainerFromDatabaseSync(uuid);
+                container.addBomb(type, amount);
+                RuneQuestPlugin.getPlayerManager().writeNewPlayerBombsContainerToDatabaseSync(uuid, container);
 
-            Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                BombContainerReloadEvent reloadEvent = new BombContainerReloadEvent(new BombContainerReloadEvent.Payload(uuid, container));
-                Bukkit.getServer().getPluginManager().callEvent(reloadEvent);
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[DONATE] Added " + amount + " " + type.getLabel() + " bomb(s) to player " + uuid);
-            });
+                Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+                    BombContainerReloadEvent reloadEvent = new BombContainerReloadEvent(new BombContainerReloadEvent.Payload(uuid, container));
+                    Bukkit.getServer().getPluginManager().callEvent(reloadEvent);
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[DONATE] Added " + amount + " " + type.getLabel() + " bomb(s) to player " + uuid);
+                });
+            }
         });
     }
 
     public static void addMegaphoneUses(UUID uuid, int amount) {
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
-            PlayerBombsContainer container = RuneQuestPlugin.getPlayerManager().getPlayerBombsContainerFromDatabaseSync(uuid);
-            container.setMegaphoneUses(container.getMegaphoneUses() + amount);
-            RuneQuestPlugin.getPlayerManager().writeNewPlayerBombsContainerToDatabaseSync(uuid, container);
+            synchronized (CONCURRENT_LOCK) {
+                PlayerBombsContainer container = RuneQuestPlugin.getPlayerManager().getPlayerBombsContainerFromDatabaseSync(uuid);
+                container.setMegaphoneUses(container.getMegaphoneUses() + amount);
+                RuneQuestPlugin.getPlayerManager().writeNewPlayerBombsContainerToDatabaseSync(uuid, container);
 
-            Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                BombContainerReloadEvent reloadEvent = new BombContainerReloadEvent(new BombContainerReloadEvent.Payload(uuid, container));
-                Bukkit.getServer().getPluginManager().callEvent(reloadEvent);
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[DONATE] Added " + amount + " megaphone uses to player " + uuid);
-            });
+                Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+                    BombContainerReloadEvent reloadEvent = new BombContainerReloadEvent(new BombContainerReloadEvent.Payload(uuid, container));
+                    Bukkit.getServer().getPluginManager().callEvent(reloadEvent);
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[DONATE] Added " + amount + " megaphone uses to player " + uuid);
+                });
+            }
         });
     }
 
