@@ -78,7 +78,7 @@ public class ConsolePaymentCommand implements BasicCommand {
             }
 
             try {
-                UUID uuid = UUID.fromString(args[1]);
+                UUID uuid = getIdFromSquishedStr(args[1]);
                 ServerModifierType type = ServerModifierType.valueOf(args[2].toUpperCase());
                 int amount = Integer.parseInt(args[3]);
 
@@ -98,7 +98,7 @@ public class ConsolePaymentCommand implements BasicCommand {
             }
 
             try {
-                UUID uuid = UUID.fromString(args[1]);
+                UUID uuid = getIdFromSquishedStr(args[1]);
                 int amount = Integer.parseInt(args[2]);
                 DonationHandler.addMegaphoneUses(uuid, amount);
 
@@ -116,6 +116,14 @@ public class ConsolePaymentCommand implements BasicCommand {
     public Collection<String> suggest(CommandSourceStack commandSourceStack, String[] args) {
         return List.of();
     }
-}
 
+    private UUID getIdFromSquishedStr(String s) {
+        String dashed = s.substring(0, 8) + "-" +
+                s.substring(8, 12) + "-" +
+                s.substring(12, 16) + "-" +
+                s.substring(16, 20) + "-" +
+                s.substring(20);
+        return UUID.fromString(dashed);
+    }
+}
 
