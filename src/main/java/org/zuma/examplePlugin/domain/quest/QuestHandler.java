@@ -9,6 +9,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
 import org.zuma.examplePlugin.domain.quest.persistence.QuestProgressRepository;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.UUID;
@@ -69,7 +70,7 @@ public class QuestHandler {
     private void savePlayerQuestDataSync(RunePlayer player) {
         try {
             String json = this.gson.toJson(convertPlayerStepsToState(player));
-            this.repository.save(player.getUUID(), json);
+            this.repository.save(player.getUUID(), player.getTrackedQuestId(), json);
         } catch (Exception e) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed loading players " + player.getUUID() + " quest data.", e);
             throw e;

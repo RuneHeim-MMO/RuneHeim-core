@@ -60,10 +60,12 @@ public class RunePlayerRepository {
         String playerSQL =
                 "SELECT p.uuid, p.last_username, p.base_role, p.upgraded_role, p.online, p.location, p.json, " +
                         "pic.json AS inventory_json, " +
-                        "pb.double_combat_xp, pb.double_skill_xp, pb.mob_drops, pb.resource_drops, pb.perfect_strike, pb.megaphone_uses " +
+                        "pb.double_combat_xp, pb.double_skill_xp, pb.mob_drops, pb.resource_drops, pb.perfect_strike, pb.megaphone_uses, " +
+                        "pqd.tracking_quest_id " +
                         "FROM players p " +
                         "INNER JOIN player_inventory_contents pic ON p.uuid = pic.uuid " +
                         "INNER JOIN player_bonus_bombs pb ON p.uuid = pb.uuid " +
+                        "INNER JOIN player_quest_data pqd ON p.uuid = pqd.uuid " +
                         "WHERE p.uuid = ?";
 
         String skillsSQL =
@@ -74,12 +76,7 @@ public class RunePlayerRepository {
 
         try (Connection conn = pool.getDataSource().getConnection()) {
 
-            String json;
-            String lastUsername;
-            String baseRole;
-            String upgradedRole;
-            String inventoryData;
-            String location;
+            String json, lastUsername, baseRole, upgradedRole, inventoryData, location, trackedQuestId;
             boolean isOnline;
             PlayerBombsContainer bombsContainer;
 
@@ -99,6 +96,7 @@ public class RunePlayerRepository {
                     inventoryData = rs.getString("inventory_json");
                     location = rs.getString("location");
                     isOnline = rs.getBoolean("online");
+                    trackedQuestId = rs.getString("tracking_quest_id");
 
                     if (isOnline) {
                         throw new IllegalAccessException("Player is already online.");
@@ -155,7 +153,8 @@ public class RunePlayerRepository {
                     json,
                     inventoryData == null ? "{}" : inventoryData,
                     bombsContainer,
-                    settings
+                    settings,
+                    trackedQuestId
             );
 
         } catch (IllegalAccessException | AccountNotFoundException e) {

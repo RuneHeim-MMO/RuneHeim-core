@@ -71,7 +71,8 @@ public class RunePlayerSerializer {
                 serializedPlayerData,
                 inventoryData,
                 runePlayer.getBombsContainer(),
-                runePlayer.getSettings()
+                runePlayer.getSettings(),
+                runePlayer.getTrackedQuestId()
         );
     }
 
@@ -108,6 +109,7 @@ public class RunePlayerSerializer {
                 player.setRole(role, false);
                 player.setBombsContainer(container.bombsContainer());
                 player.setSettings(container.settings());
+                player.setTrackedQuestId(container.trackedQuestId());
 
                 List<ItemStackSlotPair> inventory = ItemContainerContentSerializer.deserializeItemContainerContentSync(inventoryData);
                 Location location = gson.fromJson(container.location(), Location.class);

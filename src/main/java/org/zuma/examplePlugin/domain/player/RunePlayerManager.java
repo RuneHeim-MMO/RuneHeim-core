@@ -80,7 +80,11 @@ public class RunePlayerManager {
     }
 
     public void handleOnDisable() {
-        players.values().forEach(player -> savePlayerSync(player, true));
+        players.values().forEach(player -> {
+            savePlayerSync(player, true);
+            player.getBossBarManager().removeBar();
+        });
+
         players.clear();
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "All players saved and unmounted.");

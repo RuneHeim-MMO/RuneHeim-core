@@ -9,7 +9,7 @@ public class PlayerQuestState {
     private final String questId;
     private final int stepId;
     private final StepType type;
-    private Map<String, Object> stepProgressData = new HashMap<>();
+    private final Map<String, Object> stepProgressData;
 
     public PlayerQuestState(String questId, int stepId, StepType type) {
         this.questId = questId;

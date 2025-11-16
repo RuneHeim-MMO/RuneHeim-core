@@ -210,7 +210,10 @@ public class Quest implements Restrictable {
             HudService.sendQuestStepTaskMessage(player, steps.getFirst());
         }
 
-        player.getActiveQuestSteps().put(id, steps.getFirst().cloneForPlayer(player.getUUID()));
+        player.setTrackedQuestId(this.id);
+        AbstractQuestStep firstStep = steps.getFirst().cloneForPlayer(player.getUUID());
+        player.getActiveQuestSteps().put(id, firstStep);
+        player.getBossBarManager().setText(firstStep.getDescription());
     }
 
     public void handleCompletion(RunePlayer player) {
@@ -221,6 +224,11 @@ public class Quest implements Restrictable {
 
         player.getCompletedQuestIds().add(id);
         player.getActiveQuestSteps().remove(id);
+
+        if (player.getTrackedQuestId() != null && player.getTrackedQuestId().equals(this.id)) {
+            String firstQuestFromActive = player.getActiveQuestSteps().keySet().stream().findFirst().orElse(null);
+            player.setTrackedQuestId(firstQuestFromActive); // Track another active quest or null
+        }
 
         // Delay reward application and effects/messages to ensure any clear inventory from quests like tutorial island run first.
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
