@@ -6,11 +6,13 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.adapters.LocationAdapter;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.core.permissions.roles.BaseRole;
 import org.zuma.examplePlugin.core.permissions.PlayerRole;
 import org.zuma.examplePlugin.core.permissions.roles.UpgradedRole;
+import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.gui.ItemStackSlotPair;
 import org.zuma.examplePlugin.domain.gui.serializer.ItemContainerContentSerializer;
 import org.zuma.examplePlugin.domain.payments.SupporterLevel;
@@ -19,6 +21,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.player.persistence.meta.v1.PlayerDataDeserializedJsonContainer;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
+import org.zuma.examplePlugin.domain.territory.Territory;
 import org.zuma.examplePlugin.events.player.RunePlayerHealthChangedEvent;
 
 import javax.annotation.Nullable;
@@ -44,9 +47,12 @@ public class RunePlayerSerializer {
 
         VersionedJson versionedPlayerData = new VersionedJson(gson.toJson(container), 1);
 
+        @Nullable Territory lastTerritory = RuneQuestPlugin.getTerritoryHandler().getPlayersTerritory(runePlayer);
+
         String serializedPlayerData = gson.toJson(versionedPlayerData);
         String serializedLocation = gson.toJson(runePlayer.getSafeLocation() != null ? runePlayer.getSafeLocation() : player.getLocation());
         String inventoryData = ItemContainerContentSerializer.serializeItemSlotPairsSync(getPlayerInventoryContent(player), clearStateCache);
+        @Nullable String lastTerritoryId = lastTerritory != null ? lastTerritory.getId() : null;
         List<Skill> skills = runePlayer.getSkills().values().stream().toList();
 
         String baseRole = runePlayer.getRole().getBaseRole().toString();
@@ -59,6 +65,7 @@ public class RunePlayerSerializer {
                 baseRole,
                 upgradedRole,
                 serializedLocation,
+                lastTerritoryId,
                 serializedPlayerData,
                 inventoryData,
                 runePlayer.getBombsContainer()

@@ -9,6 +9,6 @@ import java.util.UUID;
 
 public record SerializedPlayerContainer(UUID uuid, String username, List<Skill> skills, String baseRole,
                                         @Nullable String upgradedRole,
-                                        String location, String playerData,
+                                        String location, @Nullable String lastTerritory, String playerData,
                                         String inventoryData, PlayerBombsContainer bombsContainer) {
 }

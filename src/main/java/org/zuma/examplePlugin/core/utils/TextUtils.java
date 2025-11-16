@@ -262,4 +262,8 @@ public class TextUtils {
 
         return Component.text(String.valueOf(level), TextColor.color(r, g, b));
     }
+
+    public static String replaceColorCodes(String input) {
+        return input.replaceAll("§.", "");
+    }
 }

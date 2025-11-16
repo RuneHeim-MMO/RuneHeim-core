@@ -16,6 +16,7 @@ import javax.security.auth.login.AccountNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 public class RunePlayerRepository {
@@ -25,10 +26,30 @@ public class RunePlayerRepository {
         this.pool = pool;
     }
 
-    private void checkMissingSkills(UUID uuid) {
-        String skillsSQL =
-                "SELECT skill, xp FROM player_skills WHERE uuid = ?";
+    private void checkMissingSkills(Connection conn, UUID uuid, List<Skill> currentSkills) throws SQLException {
+        // Ensure all skills are present in the database
+        Set<SkillType> missingSkills = new HashSet<>();
+        for (SkillType type : SkillType.values()) {
+            if (currentSkills.stream().noneMatch(s -> s.getType() == type)) {
+                missingSkills.add(type);
+            }
+        }
 
+        if (!missingSkills.isEmpty()) {
+            String insertSkillSQL =
+                    "INSERT INTO player_skills (uuid, skill, xp, level, updated_at) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)";
+
+            try (PreparedStatement insertStmt = conn.prepareStatement(insertSkillSQL)) {
+                for (SkillType type : missingSkills) {
+                    insertStmt.setString(1, uuid.toString());
+                    insertStmt.setString(2, type.toString());
+                    insertStmt.setInt(3, type.getDefaultXp());
+                    insertStmt.setInt(4, XpUtils.getLevelFromXp(type.getDefaultXp()));
+                    insertStmt.addBatch();
+                }
+                insertStmt.executeBatch();
+            }
+        }
     }
 
     public SerializedPlayerContainer getPlayerByUUID(UUID uuid)
@@ -105,29 +126,7 @@ public class RunePlayerRepository {
                 }
             }
 
-            // Ensure all skills are present in the database
-            Set<SkillType> missingSkills = new HashSet<>();
-            for (SkillType type : SkillType.values()) {
-                if (skills.stream().noneMatch(s -> s.getType() == type)) {
-                    missingSkills.add(type);
-                }
-            }
-
-            if (!missingSkills.isEmpty()) {
-                String insertSkillSQL =
-                        "INSERT INTO player_skills (uuid, skill, xp, level, updated_at) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)";
-
-                try (PreparedStatement insertStmt = conn.prepareStatement(insertSkillSQL)) {
-                    for (SkillType type : missingSkills) {
-                        insertStmt.setString(1, uuid.toString());
-                        insertStmt.setString(2, type.toString());
-                        insertStmt.setInt(3, type.getDefaultXp());
-                        insertStmt.setInt(4, XpUtils.getLevelFromXp(type.getDefaultXp()));
-                        insertStmt.addBatch();
-                    }
-                    insertStmt.executeBatch();
-                }
-            }
+            checkMissingSkills(conn, uuid, skills);
 
             return new SerializedPlayerContainer(
                     uuid,
@@ -136,6 +135,7 @@ public class RunePlayerRepository {
                     baseRole,
                     upgradedRole,
                     location,
+                    null,
                     json,
                     inventoryData == null ? "{}" : inventoryData,
                     bombsContainer
@@ -150,14 +150,15 @@ public class RunePlayerRepository {
 
     public void upsertPlayer(SerializedPlayerContainer container, boolean unmount) {
         String playerSql = """
-                INSERT INTO players (uuid, last_username, base_role, upgraded_role, online, location, json, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+                INSERT INTO players (uuid, last_username, base_role, upgraded_role, online, location, last_territory, json, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
                 ON DUPLICATE KEY UPDATE
                     last_username = VALUES(last_username),
                     base_role = VALUES(base_role),
                     upgraded_role = VALUES(upgraded_role),
                     online = CASE WHEN ? THEN NULL ELSE online END,
                     location = VALUES(location),
+                    last_territory = VALUES(last_territory),
                     json = VALUES(json),
                     updated_at = CURRENT_TIMESTAMP
                 """;
@@ -206,8 +207,9 @@ public class RunePlayerRepository {
             playerStmt.setString(4, container.upgradedRole());
             playerStmt.setBoolean(5, false); // for INSERT (default to false)
             playerStmt.setString(6, container.location());
-            playerStmt.setString(7, container.playerData());
-            playerStmt.setBoolean(8, unmount); // for the CASE statement in UPDATE
+            playerStmt.setString(7, container.lastTerritory());
+            playerStmt.setString(8, container.playerData());
+            playerStmt.setBoolean(9, unmount); // for the CASE statement in UPDATE
             playerStmt.executeUpdate();
 
             // Skills - sort by skill name to ensure consistent ordering across transactions
