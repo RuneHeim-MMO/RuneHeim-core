@@ -17,13 +17,7 @@ public class ScoreboardUsernameRenderer {
     public void updateTabUsername() {
         int cmb = player.getCombatLvl();
         Component levelComponent = TextUtils.getLevelGradientComponent(cmb);
-
-        int width = 3;
-        String numStr = String.valueOf(cmb);
-        int spacesNeeded = width - numStr.length();
-        String spaces = " ".repeat(Math.max(0, spacesNeeded));
-
-        Component supporterPrefix = !Objects.equals(player.getRole().getSupporterRoleIcon(), "") ? Component.text(player.getRole().getSupporterRoleIcon()) : Component.empty();
+        Component supporterPrefix = !Objects.equals(player.getRole().getSupporterRoleIcon(player), "") ? Component.text(player.getRole().getSupporterRoleIcon(player)) : Component.empty();
         Component levelPrefix = Component.text("[Lv.", levelComponent.color()).append(levelComponent).append(Component.text("]"));
         Component username = Component.text(player.asBukkitPlayer().getName(), NamedTextColor.WHITE);
 
@@ -31,10 +25,10 @@ public class ScoreboardUsernameRenderer {
                 Component.text(" ")
                         .append(supporterPrefix)
                         .append(levelPrefix)
-                        .append(Component.text( " • "))
+                        .append(Component.text(" • "))
                         .append(username)
                         .append(Component.text(" "))
-                        .append(player.getRole().getPrefix())
+                        .append(player.getRole().getPrefix(player))
         );
     }
 }

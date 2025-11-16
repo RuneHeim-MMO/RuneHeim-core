@@ -1,0 +1,73 @@
+package org.zuma.examplePlugin.domain.player.settings;
+
+import org.zuma.examplePlugin.core.permissions.Permission;
+import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
+
+public enum PlayerSetting {
+    SHOW_BASE_PREFIX("Show Base Prefix", "Visibility of your staff rank in tab/chat", true, "Show", "Hide", GUIControl.MEGAPHONE_ICON, null),
+    SHOW_UPGRADED_PREFIX("Show Upgraded Prefix", "Visibility of your donator rank in tab/chat", true, "Show", "Hide", GUIControl.MEGAPHONE_ICON, null),
+    SHOW_SUPPORTER_PREFIX("Show Supporter Level Prefix", "Visibility of your supporter gem rank in tab/chat", true, "Show", "Hide", GUIControl.MEGAPHONE_ICON, null),
+    SHOW_MEGAPHONE_MESSAGES("Show Megaphone Messages", "Visibility of global messages sent by players", true, "Show", "Hide", GUIControl.MEGAPHONE_ICON, null),
+    SHOW_DIALOG_HOLOGRAMS("Dialog Mode", "Dialog display mode", true, "Holograms", "Chat", GUIControl.MEGAPHONE_ICON, null),
+    SHOW_LOCATION("Show Location In Hiscores", "Whether to hide your location in hiscores", true, "Show", "Hide", GUIControl.MEGAPHONE_ICON, null),
+    ENABLE_BOMB_TRACKER("Bomb Tracker Notifications", "Disable/enable other server bomb notifications", true, "Enabled", "Disabled", GUIControl.MEGAPHONE_ICON, Permission.BONUS_BOMB_TRACKER);
+
+    private final String displayName, description;
+    private final boolean defaultValue;
+    private final String trueDisplay;
+    private final String falseDisplay;
+    private final GUIControl icon;
+    private final Permission visibilityPermission;
+
+    PlayerSetting(String displayName, String description, boolean defaultValue, String trueDisplay, String falseDisplay, GUIControl icon, Permission visibilityPermission) {
+        this.displayName = displayName;
+        this.description = description;
+        this.defaultValue = defaultValue;
+        this.trueDisplay = trueDisplay;
+        this.falseDisplay = falseDisplay;
+        this.icon = icon;
+        this.visibilityPermission = visibilityPermission;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public boolean getDefaultValue() {
+        return defaultValue;
+    }
+
+    public String getTrueDisplay() {
+        return trueDisplay;
+    }
+
+    public String getFalseDisplay() {
+        return falseDisplay;
+    }
+
+    public GUIControl getIcon() {
+        return icon;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean isVisibleTo(RunePlayer player) {
+        if (visibilityPermission == null) {
+            return true;
+        }
+
+
+        for (String permissionNode : visibilityPermission.getNodes()) {
+            boolean has = player.asBukkitPlayer().hasPermission(permissionNode);
+            if (has == true) {
+                return true;
+            }
+        }
+
+
+        return false;
+    }
+}

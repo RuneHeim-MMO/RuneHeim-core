@@ -128,7 +128,7 @@ public class AdditionalGearSlotHandler {
             }
 
             if (slot == SETTINGS_SLOT) {
-                player.asBukkitPlayer().sendMessage("Settings");
+                RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.PLAYER_SETTINGS_MENU.asInt(), player, null);
             }
 
 

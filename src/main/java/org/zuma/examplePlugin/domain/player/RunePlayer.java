@@ -32,6 +32,7 @@ import org.zuma.examplePlugin.domain.party.Party;
 import org.zuma.examplePlugin.domain.payments.SupporterLevel;
 import org.zuma.examplePlugin.domain.player.actions.ActionParams;
 import org.zuma.examplePlugin.domain.player.handlers.*;
+import org.zuma.examplePlugin.domain.player.settings.PlayerSettings;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -51,6 +52,7 @@ public class RunePlayer implements CombatEntity {
     private PermissionAttachment permissionAttachment;
 
     private final PlayerCombatData combatData;
+    private PlayerSettings settings;
     private PlayerBombsContainer bombsContainer;
 
     private final PendingXPHandler pendingXPHandler;
@@ -87,6 +89,7 @@ public class RunePlayer implements CombatEntity {
         this.xpHandler = new PlayerXpHandler(this);
         this.pendingXPHandler = new PendingXPHandler();
         this.scoreboardUsernameRenderer = new ScoreboardUsernameRenderer(this);
+        this.settings = new PlayerSettings();
 
         this.pouchCoins = 0;
         this.discoveredTerritoryIds = new ArrayList<>();
@@ -467,5 +470,13 @@ public class RunePlayer implements CombatEntity {
 
     public void setNextMessageMegaphone(boolean nextMessageMegaphone) {
         isNextMessageMegaphone = nextMessageMegaphone;
+    }
+
+    public PlayerSettings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(PlayerSettings settings) {
+        this.settings = settings;
     }
 }

@@ -9,6 +9,8 @@ import org.zuma.examplePlugin.core.permissions.roles.BaseRole;
 import org.zuma.examplePlugin.core.permissions.roles.UpgradedRole;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.player.PlayerBombsContainer;
+import org.zuma.examplePlugin.domain.player.settings.PlayerSetting;
+import org.zuma.examplePlugin.domain.player.settings.PlayerSettings;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
@@ -66,6 +68,9 @@ public class RunePlayerRepository {
 
         String skillsSQL =
                 "SELECT skill, xp FROM player_skills WHERE uuid = ?";
+
+        String settingsSQL =
+                "SELECT setting, value FROM player_settings WHERE uuid = ?";
 
         try (Connection conn = pool.getDataSource().getConnection()) {
 
@@ -128,6 +133,17 @@ public class RunePlayerRepository {
 
             checkMissingSkills(conn, uuid, skills);
 
+            PlayerSettings settings = new PlayerSettings();
+            try (PreparedStatement stmt = conn.prepareStatement(settingsSQL)) {
+                stmt.setString(1, uuid.toString());
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        settings.setSetting(PlayerSetting.valueOf(rs.getString("setting")), rs.getBoolean("value"));
+                    }
+                }
+            }
+
             return new SerializedPlayerContainer(
                     uuid,
                     lastUsername,
@@ -138,7 +154,8 @@ public class RunePlayerRepository {
                     null,
                     json,
                     inventoryData == null ? "{}" : inventoryData,
-                    bombsContainer
+                    bombsContainer,
+                    settings
             );
 
         } catch (IllegalAccessException | AccountNotFoundException e) {
@@ -167,7 +184,6 @@ public class RunePlayerRepository {
                 INSERT INTO player_skills (uuid, skill, xp, level)
                 VALUES (?, ?, ?, ?)
                 ON DUPLICATE KEY UPDATE
-                    uuid = VALUES(uuid),
                     xp = VALUES(xp),
                     level = VALUES(level),
                     updated_at = CURRENT_TIMESTAMP
@@ -194,11 +210,21 @@ public class RunePlayerRepository {
                     updated_at = CURRENT_TIMESTAMP
                 """;
 
+        String settingsSql = """
+                INSERT INTO player_settings (uuid, setting, value, updated_At)
+                VALUES (?, ?, ?, CURRENT_TIMESTAMP)
+                ON DUPLICATE KEY UPDATE
+                    setting = VALUES(setting),
+                    value = VALUES(value),
+                    updated_at = CURRENT_TIMESTAMP
+                """;
+
         try (Connection conn = pool.getDataSource().getConnection();
              PreparedStatement playerStmt = conn.prepareStatement(playerSql);
              PreparedStatement bombsStmt = conn.prepareStatement(bonusBombsSql);
              PreparedStatement inventoryStmt = conn.prepareStatement(inventorySql);
-             PreparedStatement skillStmt = conn.prepareStatement(skillUpsertSql)) {
+             PreparedStatement skillStmt = conn.prepareStatement(skillUpsertSql);
+             PreparedStatement settingsStmt = conn.prepareStatement(settingsSql)) {
 
             // 1. Upsert player
             playerStmt.setString(1, container.uuid().toString());
@@ -240,6 +266,16 @@ public class RunePlayerRepository {
             bombsStmt.setInt(6, container.bombsContainer().getIncreasedPerfectStrikeBombs());
             bombsStmt.setInt(7, container.bombsContainer().getMegaphoneUses());
             bombsStmt.executeUpdate();
+
+            Map<String, Boolean> sortedSettings = new TreeMap<>(container.settings().toMap());
+            for (Map.Entry<String, Boolean> entry : sortedSettings.entrySet()) {
+                settingsStmt.setString(1, container.uuid().toString());
+                settingsStmt.setString(2, entry.getKey());
+                settingsStmt.setBoolean(3, entry.getValue());
+                settingsStmt.addBatch();
+            }
+
+            settingsStmt.executeBatch();
 
         } catch (Exception e) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL,

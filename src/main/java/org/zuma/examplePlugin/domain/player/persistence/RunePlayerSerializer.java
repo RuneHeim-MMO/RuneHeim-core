@@ -19,6 +19,7 @@ import org.zuma.examplePlugin.domain.payments.SupporterLevel;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.player.persistence.meta.v1.PlayerDataDeserializedJsonContainer;
+import org.zuma.examplePlugin.domain.player.settings.PlayerSetting;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.domain.territory.Territory;
@@ -47,7 +48,8 @@ public class RunePlayerSerializer {
 
         VersionedJson versionedPlayerData = new VersionedJson(gson.toJson(container), 1);
 
-        @Nullable Territory lastTerritory = RuneQuestPlugin.getTerritoryHandler().getPlayersTerritory(runePlayer);
+        boolean locationVisibility = runePlayer.getSettings().getSetting(PlayerSetting.SHOW_LOCATION);
+        @Nullable Territory lastTerritory = locationVisibility ? RuneQuestPlugin.getTerritoryHandler().getPlayersTerritory(runePlayer) : null;
 
         String serializedPlayerData = gson.toJson(versionedPlayerData);
         String serializedLocation = gson.toJson(runePlayer.getSafeLocation() != null ? runePlayer.getSafeLocation() : player.getLocation());
@@ -68,7 +70,8 @@ public class RunePlayerSerializer {
                 lastTerritoryId,
                 serializedPlayerData,
                 inventoryData,
-                runePlayer.getBombsContainer()
+                runePlayer.getBombsContainer(),
+                runePlayer.getSettings()
         );
     }
 
@@ -104,6 +107,7 @@ public class RunePlayerSerializer {
                 player.setActiveEffects(playerDataDeserializedJsonContainer.effects());
                 player.setRole(role, false);
                 player.setBombsContainer(container.bombsContainer());
+                player.setSettings(container.settings());
 
                 List<ItemStackSlotPair> inventory = ItemContainerContentSerializer.deserializeItemContainerContentSync(inventoryData);
                 Location location = gson.fromJson(container.location(), Location.class);

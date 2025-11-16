@@ -8,6 +8,7 @@ import org.zuma.examplePlugin.core.permissions.roles.BaseRole;
 import org.zuma.examplePlugin.core.permissions.roles.UpgradedRole;
 import org.zuma.examplePlugin.domain.payments.SupporterLevel;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.player.settings.PlayerSetting;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -48,7 +49,13 @@ public class PlayerRole {
         this.permissions = getPermissions();
     }
 
-    public String getSupporterRoleIcon() {
+    public String getSupporterRoleIcon(RunePlayer player) {
+        boolean showIcon = player.getSettings().getSetting(PlayerSetting.SHOW_SUPPORTER_PREFIX);
+
+        if (!showIcon) {
+            return "";
+        }
+
         return supporterLevel.equals(SupporterLevel.LVL_0) ? "" : supporterLevel.levelIcon.get().concat(" ");
     }
 
@@ -56,15 +63,26 @@ public class PlayerRole {
         return supporterLevel;
     }
 
-    public Component getPrefix() {
+    public Component getPrefix(RunePlayer player) {
         Component basePrefix = baseRole.getPrefix();
         Component upgradedPrefix = upgradedRole != null ? upgradedRole.getPrefix() : Component.empty();
 
+        boolean baseVisible = player.getSettings().getSetting(PlayerSetting.SHOW_BASE_PREFIX);
+        boolean upgradedVisible = player.getSettings().getSetting(PlayerSetting.SHOW_UPGRADED_PREFIX);
+
         if (baseRole.equals(BaseRole.PLAYER)) {
+            return upgradedVisible ? upgradedPrefix.append(Component.text(" ")) : Component.empty();
+        }
+
+        if (baseVisible && upgradedVisible) {
+            return upgradedPrefix.append(basePrefix).append(Component.text(" "));
+        } else if (baseVisible) {
+            return basePrefix.append(Component.text(" "));
+        } else if (upgradedVisible) {
             return upgradedPrefix.append(Component.text(" "));
         }
 
-        return upgradedPrefix.append(basePrefix).append(Component.text(" "));
+        return Component.empty();
     }
 
     public boolean hasPermission(Permission permission) {
