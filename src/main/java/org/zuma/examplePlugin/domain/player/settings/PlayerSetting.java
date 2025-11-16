@@ -5,13 +5,13 @@ import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public enum PlayerSetting {
-    SHOW_BASE_PREFIX("Show Base Prefix", "Visibility of your staff rank in tab/chat", true, "Show", "Hide", GUIControl.MEGAPHONE_ICON, null),
-    SHOW_UPGRADED_PREFIX("Show Upgraded Prefix", "Visibility of your donator rank in tab/chat", true, "Show", "Hide", GUIControl.MEGAPHONE_ICON, null),
-    SHOW_SUPPORTER_PREFIX("Show Supporter Level Prefix", "Visibility of your supporter gem rank in tab/chat", true, "Show", "Hide", GUIControl.MEGAPHONE_ICON, null),
-    SHOW_MEGAPHONE_MESSAGES("Show Megaphone Messages", "Visibility of global messages sent by players", true, "Show", "Hide", GUIControl.MEGAPHONE_ICON, null),
-    SHOW_DIALOG_HOLOGRAMS("Dialog Mode", "Dialog display mode", true, "Holograms", "Chat", GUIControl.MEGAPHONE_ICON, null),
-    SHOW_LOCATION("Show Location In Hiscores", "Whether to hide your location in hiscores", true, "Show", "Hide", GUIControl.MEGAPHONE_ICON, null),
-    ENABLE_BOMB_TRACKER("Bomb Tracker Notifications", "Disable/enable other server bomb notifications", true, "Enabled", "Disabled", GUIControl.MEGAPHONE_ICON, Permission.BONUS_BOMB_TRACKER);
+    SHOW_BASE_PREFIX("Show Base Prefix", "Visibility of your staff rank in tab/chat", true, "Show", "Hide", GUIControl.SETTINGS_BASE_PREFIX, Permission.TOGGLE_STAFF_PREFIX),
+    SHOW_UPGRADED_PREFIX("Show Upgraded Prefix", "Visibility of your donator rank in tab/chat", true, "Show", "Hide", GUIControl.SETTINGS_UPGRADED_PREFIX, null),
+    SHOW_SUPPORTER_PREFIX("Show Supporter Level Prefix", "Visibility of your supporter gem rank in tab/chat", true, "Show", "Hide", GUIControl.SETTINGS_SUPPORTER_PREFIX, null),
+    SHOW_MEGAPHONE_MESSAGES("Show Megaphone Messages", "Visibility of global messages sent by players", true, "Show", "Hide", GUIControl.SETTINGS_MEGAPHONE_MESSAGES, null),
+    SHOW_DIALOG_HOLOGRAMS("Dialog Mode", "Dialog display mode", true, "Holograms", "Chat", GUIControl.SETTINGS_DIALOG_HOLOGRAMS, null),
+    SHOW_LOCATION("Show Location In Hiscores", "Whether to hide your location in hiscores", true, "Show", "Hide", GUIControl.SETTINGS_LOCATION_HISCORES, null),
+    ENABLE_BOMB_TRACKER("Bomb Tracker Notifications", "Disable/enable other server bomb notifications", true, "Enabled", "Disabled", GUIControl.SETTINGS_BOMB_TRACKER, Permission.BONUS_BOMB_TRACKER);
 
     private final String displayName, description;
     private final boolean defaultValue;

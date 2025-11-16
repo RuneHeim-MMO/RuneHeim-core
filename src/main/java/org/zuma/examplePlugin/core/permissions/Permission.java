@@ -16,6 +16,8 @@ public enum Permission {
     CHAT_PROFANITY_BYPASS(List.of("runeheim.chat.profanity")),
     CHAT_COOLDOWN_BYPASS(List.of("runeheim.chat.cooldown")),
     BONUS_BOMB_TRACKER(List.of("runeheim.bonus.bomb.tracker")),
+    TOGGLE_STAFF_PREFIX(List.of("runeheim.staffprefix.toggle")),
+    TOGGLE_UPGRADED_PREFIX(List.of("runeheim.upgradedprefix.toggle")),
 
     STAFF_MOVEMENT(List.of(
             "essentials.fly", "essentials.back", "essentials.back.ondeath",
