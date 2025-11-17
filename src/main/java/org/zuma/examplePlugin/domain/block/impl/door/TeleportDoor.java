@@ -16,23 +16,28 @@ import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.base.MultiBlockHitbox;
+import org.zuma.examplePlugin.domain.block.base.QuestLockedInteractable;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class TeleportDoor extends AbstractInteractableBlock implements MultiBlockHitbox {
+public class TeleportDoor extends QuestLockedInteractable implements MultiBlockHitbox {
     private final Location teleportLocation;
     private final String label;
+    private final Door.Hinge hinge;
+    private final List<UUID> inUseBy = new ArrayList<>();
 
-    public TeleportDoor(AbstractInteractableBlockMeta meta, String label, String world, int x, int y, int z, int yaw) {
-        super(meta, null, null);
+    public TeleportDoor(AbstractInteractableBlockMeta meta, Door.Hinge hinge, String label, String world, int x, int y, int z, int yaw, @Nullable String lockedMessage, @Nullable List<String> requiredQuestIds, @Nullable List<String> requiredStartedQuestIds) {
+        super(meta, lockedMessage, requiredQuestIds, requiredStartedQuestIds);
         this.teleportLocation = new Location(Bukkit.getWorld(world), x, y, z, yaw, 0);
         this.label = label;
+        this.hinge = hinge;
     }
 
     private void initializeHologram() {
@@ -41,15 +46,20 @@ public class TeleportDoor extends AbstractInteractableBlock implements MultiBloc
     }
 
     @Override
-    public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItemType itemInHand) {
-        event.setCancelled(true);
+    public void onInteractSuccess(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItemType itemInHand) {
+        if (inUseBy.contains(player.getUUID())) {
+            return;
+        }
+
         getLocation().getWorld().playSound(getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1f, 1f);
         setDoorOpen(true);
+        inUseBy.add(player.getUUID());
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
             Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
                 player.asBukkitPlayer().teleport(teleportLocation);
                 setDoorOpen(false);
+                inUseBy.remove(player.getUUID());
             }, 1L);
 
             getLocation().getWorld().playSound(getLocation(), Sound.BLOCK_IRON_DOOR_CLOSE, 1f, 1f);
@@ -75,13 +85,13 @@ public class TeleportDoor extends AbstractInteractableBlock implements MultiBloc
         Door bottomData = (Door) Bukkit.createBlockData(Material.IRON_DOOR);
         bottomData.setHalf(Bisected.Half.BOTTOM);
         bottomData.setFacing(face);
-        bottomData.setHinge(Door.Hinge.RIGHT);
+        bottomData.setHinge(hinge);
         bottomData.setOpen(false);
 
         Door topData = (Door) Bukkit.createBlockData(Material.IRON_DOOR);
         topData.setHalf(Bisected.Half.TOP);
         topData.setFacing(face);
-        topData.setHinge(Door.Hinge.RIGHT);
+        topData.setHinge(hinge);
         topData.setOpen(false);
 
         // Set both blocks with the complete data

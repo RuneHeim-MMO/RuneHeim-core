@@ -1,4 +1,13 @@
 package org.zuma.examplePlugin.domain.block.meta.v1;
 
-public record TeleportDoorMeta(String label, String world, int x, int y, int z, int yaw) {
+import org.bukkit.block.data.type.Door;
+
+import javax.annotation.Nullable;
+import java.util.List;
+
+public record TeleportDoorMeta(String label, String world, int x, int y, int z, int yaw,
+                               Door.Hinge hinge,
+                               @Nullable String lockedMessage,
+                               @Nullable List<String> requiredQuestIds,
+                               @Nullable List<String> requiredStartedQuestIds) {
 }
