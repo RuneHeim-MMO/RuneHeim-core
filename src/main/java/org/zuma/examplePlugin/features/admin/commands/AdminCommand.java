@@ -18,6 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
 import org.zuma.examplePlugin.core.permissions.Permission;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
@@ -85,12 +86,12 @@ public class AdminCommand implements BasicCommand {
             return;
         }
 
-        if (Objects.equals(args[0], "skills")) {
-            runePlayer.asBukkitPlayer().sendMessage(
-                    runePlayer.getSkills().values().stream()
-                            .map(skill -> skill.getType().getLabel() + ": " + skill.getBaseLevel() + " BONUS: +" + skill.getBonus())
-                            .collect(Collectors.joining(", "))
-            );
+        if (Objects.equals(args[0], "test")) {
+            SoundType.PLAYER_QUEST_START.play(runePlayer,false);
+
+            Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+                SoundType.PLAYER_QUEST_COMPLETE.play(runePlayer,false);
+            }, 40L);
         }
 
         if (args.length == 2 && Objects.equals(args[0], "base")) {

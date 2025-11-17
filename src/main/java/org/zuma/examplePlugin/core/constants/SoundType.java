@@ -17,8 +17,8 @@ public enum SoundType {
     PLAYER_FIRST_JOIN("BLOCK_NOTE_BLOCK_BANJO", false, 1.0f, 1f),
     PLAYER_LEVEL_UP("UI_TOAST_CHALLENGE_COMPLETE", false, 1.0f, 0.9f),
     SUPPORTER_LEVEL_APPEAR("ENTITY_EVOKER_CAST_SPELL", false, 1.0f, 0.9f),
-    PLAYER_QUEST_COMPLETE("UI_TOAST_CHALLENGE_COMPLETE", false, 1.0f, 0.7f),
-    PLAYER_QUEST_START("BLOCK_NOTE_BLOCK_BANJO", false, 1.0f, 1f),
+    PLAYER_QUEST_COMPLETE("runequest.quest.finish", true, 1.0f, 1f),
+    PLAYER_QUEST_START("runequest.quest.start", true, 1.0f, 1f),
     PLAYER_QUEST_PROGRESS("ENTITY_VILLAGER_WORK_CARTOGRAPHER", false, 1f, 1f),
     PLAYER_MAX_SKILL("ENTITY_ENDER_DRAGON_GROWL", false, 1.0f, 0.5f),
     UI_FAIL("ENTITY_VILLAGER_NO", false, 1.0f, 1.0f),
@@ -86,7 +86,7 @@ public enum SoundType {
     ALTAR_PRAYING_LAYER_1("BLOCK_AMETHYST_BLOCK_CHIME", false, 1f, 1f),
     ALTAR_PRAYING_LAYER_2("BLOCK_AMETHYST_BLOCK_RESONATE", false, 1f, 1f),
 
-    BONES_BURY_DIG("BLOCK_BONE_BLOCK_BREAK", false, 1f, 1f),
+    BONES_BURY_DIG("runequest.bury.bones", true, 0.35f, 1f),
     BONES_BURY_FINISH("ENTITY_ENDER_EYE_DEATH", false, 1f, 0.9f),
 
     COMBAT_DUMMY_HURT("ENTITY_GENERIC_HURT", false, 1f, 1f),
