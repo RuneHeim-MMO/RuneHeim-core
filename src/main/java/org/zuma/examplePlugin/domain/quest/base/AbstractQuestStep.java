@@ -48,6 +48,8 @@ public abstract class AbstractQuestStep implements Listener {
         }
     }
 
+    public abstract float getProgressPercentage();
+
     @EventHandler
     public void onPlayerDisconnect(PlayerQuitEvent event) {
         if (owner == null || !event.getPlayer().getUniqueId().equals(owner))
@@ -102,6 +104,7 @@ public abstract class AbstractQuestStep implements Listener {
 
         if (runePlayer.getTrackedQuestId() != null && runePlayer.getTrackedQuestId().equals(parentQuest.getId())) {
             runePlayer.getBossBarManager().setText(nextStepInstance.getDescription());
+            runePlayer.getBossBarManager().setProgress(0f);
         }
 
         if (!this.parentQuest.isSilent()) {
@@ -169,5 +172,23 @@ public abstract class AbstractQuestStep implements Listener {
     @Nullable
     public String getDescription() {
         return description;
+    }
+
+    protected void handleProgressUpdate() {
+        if (this.owner == null) return;
+
+        RunePlayer owner = RuneQuestPlugin.getPlayerManager().getRunePlayer(this.owner);
+
+        if (owner == null) return;
+
+        if (owner.getTrackedQuestId() == null) {
+            return;
+        }
+
+        if (!owner.getTrackedQuestId().equals(this.parentQuest.getId())) {
+            return;
+        }
+
+        owner.getBossBarManager().setProgress(this.getProgressPercentage());
     }
 }

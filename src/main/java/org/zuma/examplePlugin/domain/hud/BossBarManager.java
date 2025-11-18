@@ -26,8 +26,32 @@ public class BossBarManager {
         this.bar = bar;
     }
 
+    public void setDefault() {
+        this.bar.setTitle("RuneHeim");
+        this.setProgress(1.0f);
+    }
+
     public void setText(String text) {
         this.bar.setTitle(text);
+    }
+
+    public void setProgress(float progress) {
+        if (progress == 0f) {
+            progress = 0.01f;
+        }
+
+        if (!bar.getTitle().equals("RuneHeim")) {
+            if (progress < 0.7f) {
+                this.bar.setColor(BarColor.RED);
+            } else if (progress < 0.9f) {
+                this.bar.setColor(BarColor.YELLOW);
+            } else {
+                this.bar.setColor(BarColor.GREEN);
+            }
+        }
+
+
+        this.bar.setProgress(progress);
     }
 
     public void removeBar() {

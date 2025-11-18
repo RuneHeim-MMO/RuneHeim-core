@@ -9,6 +9,7 @@ import org.zuma.examplePlugin.domain.quest.constants.QuestDifficulty;
 import org.zuma.examplePlugin.domain.quest.constants.QuestId;
 import org.zuma.examplePlugin.domain.quest.impl.CollectionStep;
 import org.zuma.examplePlugin.domain.quest.impl.DialogStep;
+import org.zuma.examplePlugin.domain.quest.impl.CampfireStep;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
@@ -26,6 +27,11 @@ public class QuestRegistry {
 
         Quest sheepShearer = new Quest(QuestId.SHEEP_SHEARER.getId(), "Sheep Shearer", QuestDifficulty.EASY, false, new Quest.Coordinates(45, 68, -162));
         registerQuest(sheepShearer.addSteps(List.of(
+                new CampfireStep(RuneQuestPlugin.getInstance(), sheepShearer, "Light 10 fires", "sheep-shearer.sheep-kill", List.of(
+                        new CampfireStep.CampfireStepEntry("sheep-shearer-fire-1", new Location(RuneQuestPlugin.getInstance().getServer().getWorld("world"), 65, 68, -160), 10, 2),
+                        new CampfireStep.CampfireStepEntry("sheep-shearer-fire-2", new Location(RuneQuestPlugin.getInstance().getServer().getWorld("world"), 113, 66, -82), 10, 2)
+
+                ), null),
                 new CollectionStep(RuneQuestPlugin.getInstance(), sheepShearer, "Collect §620 wool§f and spin them into balls of wool.", "sheep-shearer.wool-collect", List.of(new ItemRecord(ItemId.BALL_OF_WOOL, 20)), null),
                 new DialogStep(RuneQuestPlugin.getInstance(), sheepShearer, "Bring §620 balls of wool§f to §6Shepherd.", "sheep-shearer.wool-collected", null)
         )));

@@ -387,8 +387,10 @@ public class RunePlayer implements CombatEntity {
 
             if (trackedStep != null) {
                 this.bossBarManager.setText(trackedStep.getDescription());
+                this.bossBarManager.setProgress(trackedStep.getProgressPercentage());
             } else {
                 this.trackedQuestId = null; // No longer tracking a valid quest
+                this.bossBarManager.setDefault();
             }
         }
     }
@@ -510,10 +512,11 @@ public class RunePlayer implements CombatEntity {
 
             if (matchingStep != null) {
                 this.bossBarManager.setText(matchingStep.getDescription());
+                this.bossBarManager.setProgress(matchingStep.getProgressPercentage());
             }
             return;
         }
 
-        this.bossBarManager.setText("RuneHeim");
+        this.bossBarManager.setDefault();
     }
 }

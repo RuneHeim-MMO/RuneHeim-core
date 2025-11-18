@@ -25,6 +25,8 @@ import org.zuma.examplePlugin.domain.quest.constants.QuestDuration;
 import org.zuma.examplePlugin.domain.quest.constants.QuestStartFailReason;
 import org.zuma.examplePlugin.domain.quest.constants.QuestStatus;
 import org.zuma.examplePlugin.domain.quest.impl.CollectionStep;
+import org.zuma.examplePlugin.domain.quest.impl.KillMobStep;
+import org.zuma.examplePlugin.domain.quest.impl.CampfireStep;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 
 import javax.annotation.Nullable;
@@ -165,6 +167,53 @@ public class Quest implements Restrictable {
                     });
 
                 }
+
+
+                if (step instanceof KillMobStep killMobStep) {
+                    if (!killMobStep.getRequiredKills().isEmpty()) lore.add(Component.empty());
+
+                    killMobStep.getRequiredKills().forEach((req) -> {
+                        Integer killsDone = killMobStep.getKillsDone().get(killMobStep.getKillsDone().keySet().stream()
+                                .filter(list -> list.contains(req.mobTypeIds().getFirst()))
+                                .findFirst()
+                                .orElse(null));
+
+
+                        boolean killed = killsDone >= req.requiredAmount();
+
+                        lore.add(Component.text(req.displayName() + ": ", Color.ACCENT.asColor())
+                                .append(Component.text(killsDone + "/" + req.requiredAmount(), killed ? Color.SUCCESS.asColor() : Color.ERROR_LIGHT.asColor())));
+                    });
+                }
+
+                if (step instanceof CampfireStep campfireStep) {
+                    if (!campfireStep.getRequiredFires().isEmpty()) {
+                        lore.add(Component.empty());
+                    }
+
+                    campfireStep.getRequiredFires().forEach(req -> {
+                        int lit = campfireStep.getLitFires().getOrDefault(req.zoneId(), 0);
+                        int required = req.amount();
+                        boolean done = lit >= required;
+
+                        Location loc = req.location();
+                        String coordString = "("
+                                + loc.getBlockX() + ", "
+                                + loc.getBlockY() + ", "
+                                + loc.getBlockZ() + ")";
+
+                        lore.add(
+                                Component.text("Campfire at ", Color.ITEM_LORE_DESCRIPTION.asColor())
+                                        .append(Component.text(coordString + ": ", Color.ACCENT.asColor()))
+                                        .append(Component.text(
+                                                lit + "/" + required,
+                                                done ? Color.SUCCESS.asColor() : Color.ERROR_LIGHT.asColor()
+                                        ))
+                        );
+                    });
+                }
+
+
             }
             case NOT_STARTED -> lore.add(Component.text("Not started", Color.ERROR_LIGHT.asColor()));
             case NOT_MEETING_REQUIREMENTS -> lore.add(Component.text("Requirements not met", Color.ERROR.asColor()));
@@ -229,13 +278,14 @@ public class Quest implements Restrictable {
             HudService.sendQuestStepTaskMessage(player, steps.getFirst());
         }
 
-        if (player.getSettings().getSetting(PlayerSetting.AUTOMATICALLY_TRACK_QUESTS)) {
-            player.setTrackedQuestId(this.id);
-        }
-
         AbstractQuestStep firstStep = steps.getFirst().cloneForPlayer(player.getUUID());
         player.getActiveQuestSteps().put(id, firstStep);
-        player.getBossBarManager().setText(firstStep.getDescription());
+
+        if (player.getSettings().getSetting(PlayerSetting.AUTOMATICALLY_TRACK_QUESTS)) {
+            player.setTrackedQuestId(this.id);
+            player.getBossBarManager().setText(firstStep.getDescription());
+            player.getBossBarManager().setProgress(0f);
+        }
     }
 
     public void handleCompletion(RunePlayer player) {
@@ -294,4 +344,5 @@ public class Quest implements Restrictable {
     public boolean isSilent() {
         return silent;
     }
+
 }
