@@ -7,7 +7,5 @@ import java.util.List;
 
 public record TeleportDoorMeta(String label, String world, int x, int y, int z, int yaw,
                                Door.Hinge hinge,
-                               @Nullable String lockedMessage,
-                               @Nullable List<String> requiredQuestIds,
-                               @Nullable List<String> requiredStartedQuestIds) {
+                               @Nullable QuestLockedMeta questLockedMeta) {
 }

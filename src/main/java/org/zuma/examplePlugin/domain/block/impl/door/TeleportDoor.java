@@ -18,6 +18,7 @@ import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.base.MultiBlockHitbox;
 import org.zuma.examplePlugin.domain.block.base.QuestLockedInteractable;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
+import org.zuma.examplePlugin.domain.block.meta.v1.QuestLockedMeta;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -33,8 +34,8 @@ public class TeleportDoor extends QuestLockedInteractable implements MultiBlockH
     private final Door.Hinge hinge;
     private final List<UUID> inUseBy = new ArrayList<>();
 
-    public TeleportDoor(AbstractInteractableBlockMeta meta, Door.Hinge hinge, String label, String world, int x, int y, int z, int yaw, @Nullable String lockedMessage, @Nullable List<String> requiredQuestIds, @Nullable List<String> requiredStartedQuestIds) {
-        super(meta, lockedMessage, requiredQuestIds, requiredStartedQuestIds);
+    public TeleportDoor(AbstractInteractableBlockMeta meta, Door.Hinge hinge, String label, String world, int x, int y, int z, int yaw, QuestLockedMeta questLockedMeta) {
+        super(meta, questLockedMeta);
         this.teleportLocation = new Location(Bukkit.getWorld(world), x, y, z, yaw, 0);
         this.label = label;
         this.hinge = hinge;
