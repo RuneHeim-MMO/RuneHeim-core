@@ -163,15 +163,6 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
             itemIndex++;
         }
 
-        for (Map.Entry<Integer, ItemStack> entry : overrideItems.entrySet()) {
-            int slot = entry.getKey();
-            ItemStack item = entry.getValue();
-
-            if (slot >= 0 && slot < inventory.getSize()) {
-                inventory.setItem(slot, item);
-            }
-        }
-
         // Place pagination icons in the last row (full row assumed)
         int lastRowStart = (rows - 1) * ITEMS_IN_ROW;
 
@@ -181,6 +172,15 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
         inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 6, previousPageIcon());
         inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 5, pageCountIcon);
         inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 4, nextPageIcon());
+
+        for (Map.Entry<Integer, ItemStack> entry : overrideItems.entrySet()) {
+            int slot = entry.getKey();
+            ItemStack item = entry.getValue();
+
+            if (slot >= 0 && slot < inventory.getSize()) {
+                inventory.setItem(slot, item);
+            }
+        }
 
         return inventory;
     }

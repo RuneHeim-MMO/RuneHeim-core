@@ -112,7 +112,7 @@ public enum SoundType {
 
     HIT_MELEE_REGULAR("ENTITY_PLAYER_ATTACK_STRONG", false, 1.0f, 1.0f),
     HIT_MAGIC_REGULAR("ENTITY_EVOKER_CAST_SPELL", false, 1.0f, 1.0f),
-    HIT_RANGED_REGULAR("ENTITY_ARROW_HIT", false, 1.0f, 1.0f),
+    HIT_RANGED_REGULAR("runequest.ranged.impact", true, 0.5f, 1.0f),
 
     HIT_MELEE_MISS("runequest.attack.sweep", true, 1f, 1f),
     HIT_MAGIC_MISS("ENTITY_BLAZE_SHOOT", false, 0.5f, 0.8f),

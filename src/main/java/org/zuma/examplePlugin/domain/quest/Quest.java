@@ -17,6 +17,7 @@ import org.zuma.examplePlugin.domain.effect.effects.QuestStartEffect;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.player.settings.PlayerSetting;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
 import org.zuma.examplePlugin.domain.quest.constants.QuestDifficulty;
 import org.zuma.examplePlugin.domain.quest.constants.QuestDuration;
@@ -210,7 +211,10 @@ public class Quest implements Restrictable {
             HudService.sendQuestStepTaskMessage(player, steps.getFirst());
         }
 
-        player.setTrackedQuestId(this.id);
+        if (player.getSettings().getSetting(PlayerSetting.AUTOMATICALLY_TRACK_QUESTS)) {
+            player.setTrackedQuestId(this.id);
+        }
+
         AbstractQuestStep firstStep = steps.getFirst().cloneForPlayer(player.getUUID());
         player.getActiveQuestSteps().put(id, firstStep);
         player.getBossBarManager().setText(firstStep.getDescription());
@@ -226,7 +230,9 @@ public class Quest implements Restrictable {
         player.getActiveQuestSteps().remove(id);
 
         if (player.getTrackedQuestId() != null && player.getTrackedQuestId().equals(this.id)) {
-            String firstQuestFromActive = player.getActiveQuestSteps().keySet().stream().findFirst().orElse(null);
+            boolean automaticallyTrackNewQuest = player.getSettings().getSetting(PlayerSetting.AUTOMATICALLY_TRACK_QUESTS);
+
+            String firstQuestFromActive = automaticallyTrackNewQuest ? player.getActiveQuestSteps().keySet().stream().findFirst().orElse(null) : null;
             player.setTrackedQuestId(firstQuestFromActive); // Track another active quest or null
         }
 
