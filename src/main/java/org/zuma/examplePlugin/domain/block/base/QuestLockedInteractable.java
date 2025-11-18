@@ -2,10 +2,7 @@ package org.zuma.examplePlugin.domain.block.base;
 
 import eu.decentsoftware.holograms.api.DHAPI;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
@@ -13,6 +10,7 @@ import org.bukkit.block.data.type.Door;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -41,7 +39,8 @@ public abstract class QuestLockedInteractable extends AbstractInteractableBlock 
         boolean allowed = new HashSet<>(player.getCompletedQuestIds()).containsAll(requiredQuestIds) && player.getActiveQuestSteps().keySet().containsAll(requiredStartedQuestIds);
 
         if (!allowed) {
-            HudService.sendFailMessage(player, Component.text(lockedMessage));
+            player.asBukkitPlayer().playSound(getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1f, 1f);
+            player.asBukkitPlayer().sendMessage(Component.text(lockedMessage, Color.ERROR.asColor()));
             return;
         }
 

@@ -113,7 +113,7 @@ public class InteractableBlockRepository {
 
             result.add(new BlockEntity(
                     new AbstractInteractableBlockMeta(9993, BlockType.TeleportDoor, BlockFace.WEST, new Location(Bukkit.getWorld("world"), 255, 73, -54), HologramSide.TOP),
-                    new VersionedJson(new Gson().toJson(new TeleportDoorMeta("Back office", "world", 258, 73, -56, -170, Door.Hinge.LEFT, null, null, null)), 1)));
+                    new VersionedJson(new Gson().toJson(new TeleportDoorMeta("Back office", "world", 258, 73, -56, -170, Door.Hinge.LEFT, "This door appears to be locked.", null, List.of("welcome"))), 1)));
 
             result.add(new BlockEntity(
                     new AbstractInteractableBlockMeta(9992, BlockType.TeleportDoor, BlockFace.NORTH, new Location(Bukkit.getWorld("world"), 257, 73, -56), HologramSide.TOP),
