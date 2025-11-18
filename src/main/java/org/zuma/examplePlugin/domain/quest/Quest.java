@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -37,14 +38,18 @@ public class Quest implements Restrictable {
     private final List<AbstractQuestStep> steps;
     private final QuestDifficulty difficulty;
     private final boolean silent; // If true, no start/completion effects or messages - used for internal tracking of player state.
+    private final @Nullable Coordinates startLocation;
     private QuestDuration duration;
     private QuestReward reward;
+
+    public record Coordinates(int x, int y, int z) {
+    }
 
     // Starting conditions
     private List<SkillRequirement> requirements;
     private List<String> requiredCompletedQuests;
 
-    public Quest(String id, String name, QuestDifficulty difficulty, boolean silent) {
+    public Quest(String id, String name, QuestDifficulty difficulty, boolean silent, @Nullable Coordinates startLocation) {
         this.id = id;
         this.name = name;
         this.steps = new ArrayList<>();
@@ -54,6 +59,7 @@ public class Quest implements Restrictable {
         this.requirements = new ArrayList<>();
         this.requiredCompletedQuests = new ArrayList<>();
         this.reward = new QuestReward(null, null, null);
+        this.startLocation = startLocation;
     }
 
     public Quest setRewards(QuestReward reward) {
@@ -168,6 +174,18 @@ public class Quest implements Restrictable {
         lore.add(Component.empty());
         lore.add(Icon.CONTRACT_SKULL.asComponent().append(Component.text("Difficulty: ", Color.ITEM_LORE_DESCRIPTION.asColor()).append(Component.text(this.difficulty.getLabel()))));
         lore.add(Icon.CLOCK.asComponent().append(Component.text("Duration: ", Color.ITEM_LORE_DESCRIPTION.asColor()).append(Component.text(this.duration.getLabel()))));
+
+        if (this.startLocation != null) {
+            lore.add(Component.empty());
+            lore.add(Icon.MAP.asComponent()
+                    .append(Component.text("X: ", Color.ITEM_LORE_DESCRIPTION.asColor()))
+                    .append(Component.text(this.startLocation.x(), Color.ACCENT.asColor()))
+                    .append(Component.text(" Y: ", Color.ITEM_LORE_DESCRIPTION.asColor()))
+                    .append(Component.text(this.startLocation.y(), Color.ACCENT.asColor()))
+                    .append(Component.text(" Z: ", Color.ITEM_LORE_DESCRIPTION.asColor()))
+                    .append(Component.text(this.startLocation.z(), Color.ACCENT.asColor()))
+            );
+        }
 
         meta.lore(lore.stream().map(c -> c.decoration(TextDecoration.ITALIC, false)).toList());
 

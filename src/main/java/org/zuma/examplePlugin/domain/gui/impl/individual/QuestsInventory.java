@@ -18,7 +18,7 @@ import java.util.*;
 
 public class QuestsInventory extends PaginatedIndividualGUI {
     private static final Set<Integer> IGNORED_SLOTS = new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
-    private static final int STOP_TRACKING_BTN_SLOT = 52;
+    private static final int STOP_TRACKING_BTN_SLOT = 53;
 
     private final HashMap<Integer, String> questIdToValueMap = new HashMap<>();
 
@@ -96,7 +96,7 @@ public class QuestsInventory extends PaginatedIndividualGUI {
             if (matchingQuest == null) {
                 return;
             }
-            
+
             player.setTrackedQuestId(null);
             SoundType.UI_CLICK.play(player, false);
             HudService.sendInfoMessage(player, Component.text("Stopped tracking " + matchingQuest.getName() + "."));
