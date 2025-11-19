@@ -23,12 +23,17 @@ import org.zuma.examplePlugin.domain.player.actions.ActionParams;
 import org.zuma.examplePlugin.domain.player.actions.ProgressBarAction;
 import org.zuma.examplePlugin.domain.territory.Territory;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 public class StuckCommand implements BasicCommand {
+    private final static List<String> disabledTerritoryIds = List.of(
+            "tutorial-island"
+    );
+
     @Override
     public void execute(CommandSourceStack commandSourceStack, String[] args) {
         CommandSender sender = commandSourceStack.getSender();
@@ -46,6 +51,17 @@ public class StuckCommand implements BasicCommand {
         }
 
         if (runePlayer.hasPendingActions()) return;
+        if (runePlayer.isInDialog()) return;
+        if (runePlayer.isInCutscene()) return;
+        if (runePlayer.isDead()) return;
+        if (runePlayer.isInCombat()) return;
+
+        @Nullable Territory currentTerritory = RuneQuestPlugin.getTerritoryHandler().getPlayersTerritory(runePlayer);
+
+        if (currentTerritory != null && disabledTerritoryIds.contains(currentTerritory.getId())) {
+            HudService.sendFailMessage(runePlayer, Component.text("You cannot do this in this area!").color(Color.ERROR.asColor()));
+            return;
+        }
 
         ActionParams params = new ActionParams.Builder()
                 .durationMs(30000)
