@@ -7,12 +7,15 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
+import org.zuma.examplePlugin.domain.quest.base.Tickable;
 import org.zuma.examplePlugin.domain.quest.persistence.QuestProgressRepository;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 public class QuestHandler {
     private final QuestProgressRepository repository;
@@ -23,8 +26,28 @@ public class QuestHandler {
         this.repository = repository;
         this.registry = registry;
         this.gson = new Gson();
+
+        startTicker();
     }
 
+    private void startTicker() {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(RuneQuestPlugin.getInstance(), this::tickTickables, 0L, 20L * 5); // Runs every 5 seconds
+    }
+
+    private void tickTickables() {
+        List<Tickable> tickableList =
+                RuneQuestPlugin.getPlayerManager()
+                        .getOnlinePlayers()
+                        .stream()
+                        .flatMap(p -> p.getActiveQuestSteps().values().stream())
+                        .flatMap(step -> step instanceof Tickable t ? Stream.of(t) : Stream.empty())
+                        .toList();
+
+
+        for (Tickable tickable : tickableList) {
+            tickable.tick();
+        }
+    }
 
     private HashMap<String, PlayerQuestState> convertPlayerStepsToState(RunePlayer player) {
         HashMap<String, PlayerQuestState> map = new HashMap<>();
