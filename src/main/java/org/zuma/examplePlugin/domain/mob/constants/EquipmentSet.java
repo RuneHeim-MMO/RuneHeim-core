@@ -58,7 +58,7 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNE_BATTLEAXE), 100)
     ))),
 
-    SHOPKEEPER_1(new MobEquipmentMeta(List.of(
+    PAPER_IN_HAND(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.PAPER), 100)
     ))),
 

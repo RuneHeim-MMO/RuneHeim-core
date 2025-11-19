@@ -58,6 +58,7 @@ public class Dialog {
         nextStepIndex = 0;
         participantUUID = player.getUUID();
         initialHeldSlot = player.asBukkitPlayer().getInventory().getHeldItemSlot();
+        player.setInDialog(true);
 
         System.out.println("Starting dialog " + id + " with participant " + player.asBukkitPlayer().getName()
                 + " (Chat mode: " + isChatMode + ")");
@@ -68,11 +69,17 @@ public class Dialog {
         if (aborted) {
             return;
         }
+        RunePlayer participant = getPlayerParticipant();
 
         aborted = true;
         slotLocked = false;
         scenario.forEach(DialogStep::cleanUp);
         this.restoreInitialSlot();
+
+        if (participant != null) {
+            participant.setInDialog(false);
+            participant.setDialogOptionChoosing(false);
+        }
 
         if (onDialogFinish != null) {
             onDialogFinish.run();

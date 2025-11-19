@@ -63,7 +63,7 @@ public class CampfireStep extends AbstractQuestStep {
     public void onCampfireStateChanged(CampfireStateChanged event) {
         CampfireBlock campfire = event.getCampfire();
 
-        if (!event.getToBeLit()) {
+        if (!event.getToBeLit() || !campfire.getOwner().equals(this.getOwner())) {
             return;
         }
 

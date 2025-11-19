@@ -24,7 +24,6 @@ public class DialogStep extends AbstractQuestStep {
     public AbstractQuestStep cloneForPlayer(UUID ownerUUID) {
         DialogStep step = new DialogStep(super.getPlugin(), super.getParentQuest(), super.getDescription(), super.getStableId(), ownerUUID);
         step.setId(this.getId());
-
         return step;
     }
 

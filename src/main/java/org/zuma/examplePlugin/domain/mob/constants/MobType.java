@@ -1,6 +1,8 @@
 package org.zuma.examplePlugin.domain.mob.constants;
 
 public enum MobType {
+    DRAKKAR_MAYOR,
+    
     // The sick camels quest
     RAFIQ_CAMEL_TRADER,
     SHAMIRA_SHAMAN,
@@ -42,6 +44,9 @@ public enum MobType {
     GOBLIN_4_BASE_4,
     GOBLIN_5_BASE_4,
 
+    DRAKKAR_BANK_TELLER_1,
+    DRAKKAR_BANK_TELLER_2,
+    DRAKKAR_BANK_TELLER_3,
     BANK_TELLER_1,
     BANK_TELLER_2,
     BANK_TELLER_3,
@@ -228,6 +233,7 @@ public enum MobType {
     LAVA_DUNGEON_BOSS_BASE_55,
     LAVA_DUNGEON_GUARD_MINION,
 
+    RAT_WELCOME_TO_DRAKKAR_BASE_1,
     RAT_BROWN_BASE_1,
     RAT_GRAY_BASE_1,
     RAT_ALBINO_BASE_1,

@@ -39,9 +39,10 @@ public abstract class QuestLockedInteractable extends AbstractInteractableBlock 
     public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItemType itemInHand) {
         event.setCancelled(true);
 
+
         boolean allowed = new HashSet<>(player.getCompletedQuestIds()).containsAll(requiredCompletedQuestIds) // Completed quests check
                 && player.getActiveQuestSteps().keySet().containsAll(requiredStartedQuestIds) // Started quests check
-                && player.getActiveQuestSteps().values().stream().anyMatch(step -> requiredQuestStepActive.contains(step.getStableId())); // Active quest steps check
+                && requiredQuestStepActive.isEmpty() || player.getActiveQuestSteps().values().stream().anyMatch(step -> requiredQuestStepActive.contains(step.getStableId())); // Active quest steps check
 
         if (!allowed) {
             player.asBukkitPlayer().playSound(getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1f, 1f);

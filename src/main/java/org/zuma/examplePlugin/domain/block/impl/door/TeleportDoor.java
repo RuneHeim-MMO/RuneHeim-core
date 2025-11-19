@@ -22,6 +22,7 @@ import org.zuma.examplePlugin.domain.block.meta.v1.QuestLockedMeta;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.events.block.TeleportDoorEnteredEvent;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -30,13 +31,14 @@ import java.util.UUID;
 
 public class TeleportDoor extends QuestLockedInteractable implements MultiBlockHitbox {
     private final Location teleportLocation;
-    private final String label;
+    private final String id, label;
     private final Door.Hinge hinge;
     private final List<UUID> inUseBy = new ArrayList<>();
 
-    public TeleportDoor(AbstractInteractableBlockMeta meta, Door.Hinge hinge, String label, String world, int x, int y, int z, int yaw, QuestLockedMeta questLockedMeta) {
+    public TeleportDoor(AbstractInteractableBlockMeta meta, Door.Hinge hinge, String id, String label, String world, int x, int y, int z, int yaw, QuestLockedMeta questLockedMeta) {
         super(meta, questLockedMeta);
         this.teleportLocation = new Location(Bukkit.getWorld(world), x, y, z, yaw, 0);
+        this.id = id;
         this.label = label;
         this.hinge = hinge;
     }
@@ -61,6 +63,8 @@ public class TeleportDoor extends QuestLockedInteractable implements MultiBlockH
                 player.asBukkitPlayer().teleport(teleportLocation);
                 setDoorOpen(false);
                 inUseBy.remove(player.getUUID());
+
+                Bukkit.getPluginManager().callEvent(new TeleportDoorEnteredEvent(this, player));
             }, 1L);
 
             getLocation().getWorld().playSound(getLocation(), Sound.BLOCK_IRON_DOOR_CLOSE, 1f, 1f);
@@ -120,4 +124,9 @@ public class TeleportDoor extends QuestLockedInteractable implements MultiBlockH
     public int getHeight() {
         return 1;
     }
+
+    public String getDoorId() {
+        return this.id;
+    }
+
 }

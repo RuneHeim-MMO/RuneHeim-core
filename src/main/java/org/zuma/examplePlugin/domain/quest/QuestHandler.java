@@ -99,8 +99,12 @@ public class QuestHandler {
                 return;
             }
 
-            AbstractQuestStep step = initializeStepFromState(ownerUUID, matchingQuest, value);
-            result.put(key, step);
+            try {
+                AbstractQuestStep step = initializeStepFromState(ownerUUID, matchingQuest, value);
+                result.put(key, step);
+            } catch (Exception err) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to initialize quest step for player. Quest id: " + key + ", step id: " + value.getStepId() + ". Skipping.", err);
+            }
         });
 
         return result;

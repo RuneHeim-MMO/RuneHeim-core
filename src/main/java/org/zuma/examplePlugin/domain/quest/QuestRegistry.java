@@ -5,11 +5,10 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
+import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.quest.constants.QuestDifficulty;
 import org.zuma.examplePlugin.domain.quest.constants.QuestId;
-import org.zuma.examplePlugin.domain.quest.impl.CollectionStep;
-import org.zuma.examplePlugin.domain.quest.impl.DialogStep;
-import org.zuma.examplePlugin.domain.quest.impl.CampfireStep;
+import org.zuma.examplePlugin.domain.quest.impl.*;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
@@ -27,11 +26,6 @@ public class QuestRegistry {
 
         Quest sheepShearer = new Quest(QuestId.SHEEP_SHEARER.getId(), "Sheep Shearer", QuestDifficulty.EASY, false, new Quest.Coordinates(45, 68, -162));
         registerQuest(sheepShearer.addSteps(List.of(
-                new CampfireStep(RuneQuestPlugin.getInstance(), sheepShearer, "Light 10 fires", "sheep-shearer.sheep-kill", List.of(
-                        new CampfireStep.CampfireStepEntry("sheep-shearer-fire-1", new Location(RuneQuestPlugin.getInstance().getServer().getWorld("world"), 65, 68, -160), 10, 2),
-                        new CampfireStep.CampfireStepEntry("sheep-shearer-fire-2", new Location(RuneQuestPlugin.getInstance().getServer().getWorld("world"), 113, 66, -82), 10, 2)
-
-                ), null),
                 new CollectionStep(RuneQuestPlugin.getInstance(), sheepShearer, "Collect §620 wool§f and spin them into balls of wool.", "sheep-shearer.wool-collect", List.of(new ItemRecord(ItemId.BALL_OF_WOOL, 20)), null),
                 new DialogStep(RuneQuestPlugin.getInstance(), sheepShearer, "Bring §620 balls of wool§f to §6Shepherd.", "sheep-shearer.wool-collected", null)
         )));
@@ -48,7 +42,8 @@ public class QuestRegistry {
                         new ItemRecord(ItemId.FISHING_NET, 1),
                         new ItemRecord(ItemId.COOKED_HERRING, 20),
                         new ItemRecord(ItemId.GENIE_XP_LAMP, 1)
-                ), null, 500));
+                ), null, 500))
+                .setCountinationQuestId(QuestId.WELCOME_TO_DRAKKAR_I.getId());
 
         registerQuest(tutorialQuest.addSteps(List.of(
                 new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Talk to the §6Blacksmith.", "tutorial.blacksmith-talk-to", null),
@@ -106,6 +101,30 @@ public class QuestRegistry {
         registerQuest(promiseInABox.addSteps(List.of(
                 new DialogStep(RuneQuestPlugin.getInstance(), promiseInABox, "Deliver §61x Engagement Ring§f to the §6Fishing Merchant§f in §6Brineport.", "promise-in-a-box.deliver", null)
         )));
+
+        /* Talk to the town major, welcome the player
+            Tell him to talk to shopkeeper, he will explain that player can sell stuff to him or buy
+            Tell him to talk to the blacksmith, explain that he can make weapons and armor
+            Tell him to go to the bank, explain how bank works, but also tell him to go to the back office to help with a rat problem
+            Kill rats, report back to the banker, then report back to the mayor
+         */
+
+        Quest welcomeToDrakkarI = new Quest(QuestId.WELCOME_TO_DRAKKAR_I.getId(), "Welcome to Drakkar", QuestDifficulty.EASY, false, null)
+                .setRewards(new QuestReward(List.of(new ItemRecord(ItemId.IRON_BATTLEAXE, 1)), null, 200));
+
+        registerQuest(welcomeToDrakkarI.addSteps(List.of(
+                new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarI, "Talk to the §6Town Mayor §fin §6Drakkar.", "welcome-to-drakkar.talk.to.mayor", null),
+                new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarI, "Talk to the §6Shopkeeper §fin §6Drakkar.", "welcome-to-drakkar.talk.to.shopkeeper", null),
+                new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarI, "Talk to the §6Blacksmith §fin §6Drakkar.", "welcome-to-drakkar.talk.to.blacksmith", null),
+                new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarI, "Talk to the §6Banker §fin §6Drakkar.", "welcome-to-drakkar.talk.to.banker", null),
+                new EnterTeleportDoorStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarI, "Enter §6Back Office§f in the §6Drakkar's Bank.", "welcome-to-drakkar.enter.back-office",
+                        "drakkar-bank-back-office", null),
+                new KillMobStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarI, "Kill §615x Rats§f in the §6Drakkar's Bank Vault.", "welcome-to-drakkar.kill.rats",
+                        List.of(new KillMobStep.KillMobStepEntry(List.of(MobType.RAT_WELCOME_TO_DRAKKAR_BASE_1.getId()), 15, "Drakkar Vault Rats")), null),
+                new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarI, "Report back to the §6Banker §fin §6Drakkar.", "welcome-to-drakkar.report.to.banker", null),
+                new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarI, "Talk to the §6Town Mayor §fin §6Drakkar.", "welcome-to-drakkar.talk.to.mayor.finish", null)
+        )));
+
 
     }
 

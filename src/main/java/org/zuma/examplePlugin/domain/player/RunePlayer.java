@@ -70,7 +70,7 @@ public class RunePlayer implements CombatEntity {
 
     private long pouchCoins;
     private List<String> discoveredTerritoryIds, completedQuestIds;
-    private boolean isInCutscene, isDead, isDialogOptionChoosing, isNextMessageMegaphone;
+    private boolean isInCutscene, isDead, isInDialog, isDialogOptionChoosing, isNextMessageMegaphone;
     private HashMap<String, AbstractQuestStep> activeQuestSteps; // Quest id : step
     private @Nullable Location safeLocation; // is set when player is in spectator/cutscene mode.
     private @Nullable String trackedQuestId;
@@ -98,6 +98,7 @@ public class RunePlayer implements CombatEntity {
         this.discoveredTerritoryIds = new ArrayList<>();
         this.completedQuestIds = new ArrayList<>();
         this.isDead = false;
+        this.isInDialog = false;
         this.activeEffects = new ArrayList<>();
         this.bombsContainer = new PlayerBombsContainer(0, 0, 0, 0, 0, 0);
         this.trackedQuestId = null;
@@ -518,5 +519,13 @@ public class RunePlayer implements CombatEntity {
         }
 
         this.bossBarManager.setDefault();
+    }
+
+    public boolean isInDialog() {
+        return isInDialog;
+    }
+
+    public void setInDialog(boolean inDialog) {
+        isInDialog = inDialog;
     }
 }

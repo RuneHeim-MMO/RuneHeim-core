@@ -11,8 +11,6 @@ public class QuestMobs {
 
 
     public static void registerMobs(MobTypeRegistry registry) {
-
-
         // Tutorial island
         registry.register(MobType.PEASANT_MINER.getId(), () -> new DialogMob("Peasant Miner", EquipmentSet.BRONZE_PICKAXE,
                 MobBehaviors.VILLAGER_MAN_2.getBehavior(), "peasant", null, 0, Dialogs.tutorial_peasantMinerDialog));
@@ -28,6 +26,17 @@ public class QuestMobs {
 
         registry.register(MobType.SHEPHERD.getId(), () -> new DialogMob("Shepherd", EquipmentSet.SHEPHERD,
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "shepherd", null, 0, Dialogs.sheepShearerDialog));
+
+        // The sick camels quest
+        registry.register(MobType.RAFIQ_CAMEL_TRADER.getId(), () -> new DialogMob("Rafiq", null,
+                MobBehaviors.VILLAGER_MAN_5.getBehavior(), "rafiq_camel_trader", null, 50, Dialogs.rafiqCamelTrader));
+
+        registry.register(MobType.SHAMIRA_SHAMAN.getId(), () -> new DialogMob("Shamira", null,
+                MobBehaviors.VILLAGER_WOMAN_5.getBehavior(), "shamira_shaman", null, 50, Dialogs.shamiraShaman));
+
+        // Drakkar mayor
+        registry.register(MobType.DRAKKAR_MAYOR.getId(), () -> new DialogMob("Drakkar Mayor", EquipmentSet.PAPER_IN_HAND,
+                MobBehaviors.VILLAGER_MAN_2.getBehavior(), "drakkar_mayor", null, 0, Dialogs.drakkarMayorDialog));
 
     }
 }

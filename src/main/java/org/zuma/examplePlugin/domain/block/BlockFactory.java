@@ -39,7 +39,7 @@ public class BlockFactory {
             case 1 -> {
 
                 TeleportDoorMeta deserialized = new Gson().fromJson(json.meta(), TeleportDoorMeta.class);
-                TeleportDoor block = new TeleportDoor(meta, deserialized.hinge(), deserialized.label(),
+                TeleportDoor block = new TeleportDoor(meta, deserialized.hinge(), deserialized.id(), deserialized.label(),
                         deserialized.world(), deserialized.x(), deserialized.y(), deserialized.z(), deserialized.yaw(),
                         deserialized.questLockedMeta());
 

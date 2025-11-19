@@ -45,6 +45,11 @@ public abstract class AbstractInventoryOpener extends FriendlyImmortalMob {
         }
 
         event.setCancelled(true);
+
+        if (player.isInDialog()) {
+            return;
+        }
+
         super.playSound(MobBehavior.MobSoundType.IDLE);
         freezeMob();
 

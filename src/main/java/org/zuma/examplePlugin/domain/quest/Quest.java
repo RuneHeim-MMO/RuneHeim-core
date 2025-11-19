@@ -41,6 +41,7 @@ public class Quest implements Restrictable {
     private final QuestDifficulty difficulty;
     private final boolean silent; // If true, no start/completion effects or messages - used for internal tracking of player state.
     private final @Nullable Coordinates startLocation;
+    private @Nullable String countinationQuestId;
     private QuestDuration duration;
     private QuestReward reward;
 
@@ -62,6 +63,12 @@ public class Quest implements Restrictable {
         this.requiredCompletedQuests = new ArrayList<>();
         this.reward = new QuestReward(null, null, null);
         this.startLocation = startLocation;
+        this.countinationQuestId = null;
+    }
+
+    public Quest setCountinationQuestId(@Nullable String questId) {
+        this.countinationQuestId = questId;
+        return this;
     }
 
     public Quest setRewards(QuestReward reward) {
@@ -260,7 +267,7 @@ public class Quest implements Restrictable {
         return null;
     }
 
-    public void startForPlayer(RunePlayer player) throws IllegalStateException {
+    public void startForPlayer(RunePlayer player, boolean deferEffect) throws IllegalStateException {
         QuestStartFailReason failReason = getQuestStartFailReason(player);
 
         if (failReason != null) {
@@ -272,17 +279,32 @@ public class Quest implements Restrictable {
             return;
         }
 
-        if (!this.silent) {
-            EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new QuestStartEffect(player, this));
-            HudService.sendQuestStartMessage(player, this);
-            HudService.sendQuestStepTaskMessage(player, steps.getFirst());
-        }
 
         AbstractQuestStep firstStep = steps.getFirst().cloneForPlayer(player.getUUID());
         player.getActiveQuestSteps().put(id, firstStep);
 
         if (player.getSettings().getSetting(PlayerSetting.AUTOMATICALLY_TRACK_QUESTS)) {
             player.setTrackedQuestId(this.id);
+        }
+
+        if (deferEffect) {
+            Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> playQuestStartEffect(player, firstStep), 100L);
+        } else {
+            playQuestStartEffect(player, firstStep);
+        }
+    }
+
+    private void playQuestStartEffect(RunePlayer player, AbstractQuestStep firstStep) {
+        if (this.silent) {
+            return;
+        }
+
+        EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new QuestStartEffect(player, this));
+        HudService.sendQuestStartMessage(player, this);
+        HudService.sendQuestStepTaskMessage(player, steps.getFirst());
+
+
+        if (player.getSettings().getSetting(PlayerSetting.AUTOMATICALLY_TRACK_QUESTS)) {
             player.getBossBarManager().setText(firstStep.getDescription());
             player.getBossBarManager().setProgress(0f);
         }
@@ -302,6 +324,17 @@ public class Quest implements Restrictable {
 
             String firstQuestFromActive = automaticallyTrackNewQuest ? player.getActiveQuestSteps().keySet().stream().findFirst().orElse(null) : null;
             player.setTrackedQuestId(firstQuestFromActive); // Track another active quest or null
+        }
+
+        if (this.countinationQuestId != null) {
+            Quest continuationQuest = RuneQuestPlugin.getQuestHandler().getRegistry().getQuestById(this.countinationQuestId);
+            if (continuationQuest != null) {
+                try {
+                    continuationQuest.startForPlayer(player, true);
+                } catch (Error e) {
+                    // Ignore - probably means the player can't start it yet.
+                }
+            }
         }
 
         // Delay reward application and effects/messages to ensure any clear inventory from quests like tutorial island run first.
