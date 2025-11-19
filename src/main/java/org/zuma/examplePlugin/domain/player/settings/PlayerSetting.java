@@ -11,6 +11,7 @@ public enum PlayerSetting {
     SHOW_SUPPORTER_PREFIX("Show Supporter Level Prefix", "Visibility of your supporter gem rank in tab/chat", true, "Show", "Hide", GUIControl.SETTINGS_SUPPORTER_PREFIX, null),
     SHOW_MEGAPHONE_MESSAGES("Show Megaphone Messages", "Visibility of global messages sent by players", true, "Show", "Hide", GUIControl.SETTINGS_MEGAPHONE_MESSAGES, null),
     SHOW_DIALOG_HOLOGRAMS("Dialog Mode", "Dialog display mode", true, "Holograms", "Chat", GUIControl.SETTINGS_DIALOG_HOLOGRAMS, null),
+    FAST_DIALOG("Dialog Text Speed", "Whether pauses between dialog texts are faster or slower", true, "Faster", "Slower", GUIControl.SETTINGS_DIALOG_SPEED, null),
     SHOW_LOCATION("Show Location In Hiscores", "Whether to hide your location in hiscores", true, "Show", "Hide", GUIControl.SETTINGS_LOCATION_HISCORES, null),
     ENABLE_BOMB_TRACKER("Bomb Tracker Notifications", "Disable/enable other server bomb notifications", true, "Enabled", "Disabled", GUIControl.SETTINGS_BOMB_TRACKER, Permission.BONUS_BOMB_TRACKER);
 

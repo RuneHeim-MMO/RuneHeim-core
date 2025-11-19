@@ -8,6 +8,7 @@ import org.zuma.examplePlugin.domain.heimscript.action.ScriptedActionHandler;
 import org.zuma.examplePlugin.domain.dialog.DialogText;
 import org.zuma.examplePlugin.domain.dialog.base.DialogStep;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.player.settings.PlayerSetting;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -29,6 +30,8 @@ public class PassiveDialogStep extends DialogStep {
 
     @Override
     public void onDialogFinishRendering(RunePlayer player) {
+        boolean isSlowMode = !player.getSettings().getSetting(PlayerSetting.FAST_DIALOG);
+
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
             if (timerCancelled) {
                 return;
@@ -49,7 +52,7 @@ public class PassiveDialogStep extends DialogStep {
             }
 
             parent.advanceDialogStep();
-        }, Math.min(20, contentLength));
+        }, Math.min(isSlowMode ? 50 : 20, isSlowMode ? contentLength * 3 : contentLength));
     }
 
 }

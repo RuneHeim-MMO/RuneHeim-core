@@ -24,7 +24,7 @@ public class Dialog {
     private UUID participantUUID;
     private boolean aborted = false;
     private boolean slotLocked = false;
-    private boolean isChatMode = false;
+    private boolean isChatMode, isSlowMode;
 
     @Nullable
     private Runnable onDialogFinish;
@@ -40,6 +40,7 @@ public class Dialog {
         this.initialHeldSlot = 0;
         this.currentStep = null;
         this.isChatMode = false;
+        this.isSlowMode = false;
 
         this.scenario.forEach(step -> step.setParent(this));
     }
@@ -55,6 +56,7 @@ public class Dialog {
 
     protected void startDialog(RunePlayer player) {
         isChatMode = !player.getSettings().getSetting(PlayerSetting.SHOW_DIALOG_HOLOGRAMS);
+        isSlowMode = !player.getSettings().getSetting(PlayerSetting.FAST_DIALOG);
         nextStepIndex = 0;
         participantUUID = player.getUUID();
         initialHeldSlot = player.asBukkitPlayer().getInventory().getHeldItemSlot();
@@ -178,5 +180,9 @@ public class Dialog {
 
     public boolean isChatMode() {
         return isChatMode;
+    }
+
+    public boolean isSlowMode() {
+        return isSlowMode;
     }
 }
