@@ -11,6 +11,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import org.checkerframework.checker.units.qual.K;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.InventoryOpenerBlock;
@@ -36,10 +37,8 @@ import org.zuma.examplePlugin.events.inventory.RuneInventoryCloseEvent;
 import org.zuma.examplePlugin.events.inventory.RuneInventoryOpenEvent;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class GUIHandler {
     private final static long INVENTORY_OPEN_COOLDOWN_MS = 500L;
@@ -127,6 +126,7 @@ public class GUIHandler {
         this.registry.register(InventoryId.LARGE_STORAGE_BAG.asInt(), () -> new LargeBagInventory(GUIOverlay.LARGE_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Large Bag", InventoryId.LARGE_STORAGE_BAG.asInt(), storageItemContentController));
 
         this.registry.register(InventoryId.BOMBS_MENU.asInt(), () -> new BombsMenu(GUIOverlay.BOMBS_MENU_OVERLAY.asGlyph() + "§f" + Icon.EXPLOSION.get() + "§f Bombs Menu", InventoryId.BOMBS_MENU.asInt()));
+        this.registry.register(InventoryId.PLAYER_SETTINGS_MENU.asInt(), () -> new PlayerSettingsInventory(GUIOverlay.PLAYER_SETTINGS_MENU_OVERLAY.asGlyph() + "§f" + Icon.TOOL.get() + "§f Settings", InventoryId.PLAYER_SETTINGS_MENU.asInt()));
 
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
@@ -141,6 +141,16 @@ public class GUIHandler {
     public UUID openInventory(int id, RunePlayer player, @Nullable Runnable onClose, @Nullable AbstractInventoryOpener mobHolder, @Nullable InventoryOpenerBlock blockHolder) {
         if (cooldownHandler.isCooldownInProgress(player)) {
             return null;
+        }
+
+        // If player has other inventory open, close it first
+        List<UUID> playerAlreadyViewingInstances = inventoryViewers.entrySet().stream()
+                .filter(e -> e.getValue().contains(player.getUUID()))
+                .map(Map.Entry::getKey)
+                .toList();
+
+        if (!playerAlreadyViewingInstances.isEmpty()) {
+            player.asBukkitPlayer().closeInventory();
         }
 
         cooldownHandler.startCooldown(player, INVENTORY_OPEN_COOLDOWN_MS);
@@ -213,6 +223,34 @@ public class GUIHandler {
         Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> inventoryViewers.put(inventoryUUID, new ArrayList<>()));
     }
 
+    private void handleCloseInventoryCleanup(RunePlayer player, int typeId, UUID instanceUUID, boolean isForcedGlobally, @Nullable InventoryCloseEvent event) {
+        if (closeRunnables.get(instanceUUID) != null) {
+            closeRunnables.get(instanceUUID).run();
+            closeRunnables.remove(instanceUUID);
+        }
+
+        List<UUID> viewerUUIDs = inventoryViewers.get(instanceUUID);
+        AbstractGUI matchingGUI = this.registry.getInstance(player.getUUID(), typeId);
+
+        if (matchingGUI != null) {
+            matchingGUI.onInventoryClose(event, player);
+            HandlerList.unregisterAll(matchingGUI);
+        }
+
+        registry.removePlayersActiveInstance(player.getUUID());
+        Bukkit.getServer().getPluginManager().callEvent(new RuneInventoryCloseEvent(player, typeId, instanceUUID, viewerUUIDs, isForcedGlobally));
+
+        if (isForcedGlobally) {
+            inventoryViewers.remove(instanceUUID); // If unloaded, remove instance:viewers k:v
+            return;
+        }
+
+        viewerUUIDs.remove(player.getUUID());
+
+        if (viewerUUIDs.isEmpty()) {
+            inventoryViewers.remove(instanceUUID);
+        }
+    }
 
     public void onInventoryClose(InventoryCloseEvent event) {
         InventoryHolder holder = event.getInventory().getHolder();
@@ -232,32 +270,7 @@ public class GUIHandler {
             return;
         }
 
-        if (closeRunnables.get(instanceUUID) != null) {
-            closeRunnables.get(instanceUUID).run();
-            closeRunnables.remove(instanceUUID);
-        }
-
-        List<UUID> viewerUUIDs = inventoryViewers.get(instanceUUID);
-        AbstractGUI matchingGUI = this.registry.getInstance(bukkitPlayer.getUniqueId(), id);
-
-        if (matchingGUI != null) {
-            matchingGUI.onInventoryClose(event, player);
-            HandlerList.unregisterAll(matchingGUI);
-        }
-
-        registry.removePlayersActiveInstance(bukkitPlayer.getUniqueId());
-        Bukkit.getServer().getPluginManager().callEvent(new RuneInventoryCloseEvent(player, id, instanceUUID, viewerUUIDs, isForced));
-
-        if (isForced) {
-            inventoryViewers.remove(instanceUUID); // If unloaded, remove instance:viewers k:v
-            return;
-        }
-
-        viewerUUIDs.remove(player.getUUID());
-
-        if (viewerUUIDs.isEmpty()) {
-            inventoryViewers.remove(instanceUUID);
-        }
+        handleCloseInventoryCleanup(player, id, instanceUUID, isForced, event);
     }
 
     public void onItemDrop(PlayerDropItemEvent event) {

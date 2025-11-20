@@ -7,11 +7,15 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
+import org.zuma.examplePlugin.domain.quest.base.Tickable;
 import org.zuma.examplePlugin.domain.quest.persistence.QuestProgressRepository;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 public class QuestHandler {
     private final QuestProgressRepository repository;
@@ -22,8 +26,28 @@ public class QuestHandler {
         this.repository = repository;
         this.registry = registry;
         this.gson = new Gson();
+
+        startTicker();
     }
 
+    private void startTicker() {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(RuneQuestPlugin.getInstance(), this::tickTickables, 0L, 20L * 5); // Runs every 5 seconds
+    }
+
+    private void tickTickables() {
+        List<Tickable> tickableList =
+                RuneQuestPlugin.getPlayerManager()
+                        .getOnlinePlayers()
+                        .stream()
+                        .flatMap(p -> p.getActiveQuestSteps().values().stream())
+                        .flatMap(step -> step instanceof Tickable t ? Stream.of(t) : Stream.empty())
+                        .toList();
+
+
+        for (Tickable tickable : tickableList) {
+            tickable.tick();
+        }
+    }
 
     private HashMap<String, PlayerQuestState> convertPlayerStepsToState(RunePlayer player) {
         HashMap<String, PlayerQuestState> map = new HashMap<>();
@@ -69,7 +93,7 @@ public class QuestHandler {
     private void savePlayerQuestDataSync(RunePlayer player) {
         try {
             String json = this.gson.toJson(convertPlayerStepsToState(player));
-            this.repository.save(player.getUUID(), json);
+            this.repository.save(player.getUUID(), player.getTrackedQuestId(), json);
         } catch (Exception e) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed loading players " + player.getUUID() + " quest data.", e);
             throw e;
@@ -98,8 +122,12 @@ public class QuestHandler {
                 return;
             }
 
-            AbstractQuestStep step = initializeStepFromState(ownerUUID, matchingQuest, value);
-            result.put(key, step);
+            try {
+                AbstractQuestStep step = initializeStepFromState(ownerUUID, matchingQuest, value);
+                result.put(key, step);
+            } catch (Exception err) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to initialize quest step for player. Quest id: " + key + ", step id: " + value.getStepId() + ". Skipping.", err);
+            }
         });
 
         return result;

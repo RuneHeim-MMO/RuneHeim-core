@@ -17,6 +17,7 @@ import org.zuma.examplePlugin.domain.effect.effects.BonusBombEffect;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.player.PlayerBombsContainer;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.player.settings.PlayerSetting;
 import org.zuma.examplePlugin.events.payment.BombActivatedEvent;
 import org.zuma.examplePlugin.events.player.RunePlayerLoadedEvent;
 
@@ -135,6 +136,11 @@ public class ServerModifierHandler implements Listener {
             if (!player.getRole().hasPermission(Permission.BONUS_BOMB_TRACKER)) {
                 return; // Don't show message if player doesn't have a tracker permission
             }
+
+            if (!player.getSettings().getSetting(PlayerSetting.ENABLE_BOMB_TRACKER)) {
+                return; // Don't show message if player has disabled bomb tracker notifications
+            }
+
             HudService.sendInfoMessage(
                     player,
                     Component.text(type.getLabel() + " has been activated by ")

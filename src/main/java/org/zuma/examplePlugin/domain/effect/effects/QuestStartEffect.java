@@ -35,14 +35,9 @@ public class QuestStartEffect implements AnimatedEffect {
                     )
             ));
 
-            SoundType.PLAYER_QUEST_START.play(player.asBukkitPlayer().getLocation(), player.asBukkitPlayer(), -0.3f);
+            SoundType.PLAYER_QUEST_START.play(player, false);
         }
 
-        if (time == 5.0 && player.asBukkitPlayer() != null && player.asBukkitPlayer().isOnline())
-            SoundType.PLAYER_QUEST_START.play(player.asBukkitPlayer().getLocation(), player.asBukkitPlayer(), -0.2f);
-
-        if (time == 9.0 && player.asBukkitPlayer() != null && player.asBukkitPlayer().isOnline())
-            SoundType.PLAYER_QUEST_START.play(player.asBukkitPlayer().getLocation(), player.asBukkitPlayer(), -0.4f);
     }
 
     @Override

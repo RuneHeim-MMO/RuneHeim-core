@@ -28,6 +28,7 @@ import org.zuma.examplePlugin.domain.combat.constants.ProjectileType;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.mob.constants.MetadataKeys;
+import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.mob.mechanics.traits.AntiSafeSpotPullMechanic;
 import org.zuma.examplePlugin.domain.mob.mechanics.traits.RangedMobMechanic;
 import org.zuma.examplePlugin.domain.mob.projectiles.RuneProjectile;
@@ -48,9 +49,8 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     private final EnumMap<ModifierType, Modifier> modifiers = new EnumMap<>(ModifierType.class);
     private final EnumMap<SkillType, Skill> skills = new EnumMap<>(SkillType.class);
     private RuneProjectile projectileType = new RuneProjectile(ProjectileType.RANGED, EntityType.ARROW, 2);
-    private int maxHealth;
     private final int combatLvl;
-    private int health;
+    private int health, maxHealth;
     private long lastDamagedAt;
     private boolean isSpecialAttacking;
 
@@ -309,4 +309,5 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     public void setSpecialAttacking(boolean specialAttacking) {
         isSpecialAttacking = specialAttacking;
     }
+
 }

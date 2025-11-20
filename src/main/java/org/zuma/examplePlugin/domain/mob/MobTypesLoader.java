@@ -28,7 +28,6 @@ public class MobTypesLoader {
         Boars.registerMobs(registry);
         Wolves.registerMobs(registry);
         Goblin.registerMobs(registry);
-        BankTellers.registerMobs(registry);
         Deers.registerMobs(registry);
         Bunnies.registerMobs(registry);
         Eagles.registerMobs(registry);
@@ -45,6 +44,8 @@ public class MobTypesLoader {
         Citizens.registerMobs(registry);
         DungeonMobs.registerMobs(registry);
         Bugs.registerMobs(registry);
+        Rats.registerMobs(registry);
+        Leopards.registerMobs(registry);
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Loaded " + registry.getAvailable().size() + " mob types.");
 

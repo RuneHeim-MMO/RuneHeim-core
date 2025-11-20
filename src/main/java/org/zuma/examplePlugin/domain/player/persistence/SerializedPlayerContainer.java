@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.player.persistence;
 
 import org.zuma.examplePlugin.domain.player.PlayerBombsContainer;
+import org.zuma.examplePlugin.domain.player.settings.PlayerSettings;
 import org.zuma.examplePlugin.domain.skill.Skill;
 
 import javax.annotation.Nullable;
@@ -9,6 +10,7 @@ import java.util.UUID;
 
 public record SerializedPlayerContainer(UUID uuid, String username, List<Skill> skills, String baseRole,
                                         @Nullable String upgradedRole,
-                                        String location, String playerData,
-                                        String inventoryData, PlayerBombsContainer bombsContainer) {
+                                        String location, @Nullable String lastTerritory, String playerData,
+                                        String inventoryData, PlayerBombsContainer bombsContainer,
+                                        PlayerSettings settings, @Nullable String trackedQuestId) {
 }

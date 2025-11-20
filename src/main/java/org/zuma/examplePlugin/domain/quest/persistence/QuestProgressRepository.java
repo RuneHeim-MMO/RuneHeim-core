@@ -38,11 +38,12 @@ public class QuestProgressRepository {
         }
     }
 
-    public void save(UUID playerUUID, String content) {
+    public void save(UUID playerUUID, @Nullable String trackedQuestId, String content) {
         String sql = """
-                INSERT INTO player_quest_data (uuid, json)
-                VALUES (?, ?)
+                INSERT INTO player_quest_data (uuid, tracking_quest_id, json)
+                VALUES (?, ?, ?)
                 ON DUPLICATE KEY UPDATE
+                tracking_quest_id = VALUES(tracking_quest_id),
                 json = VALUES(json),
                 updated_at = CURRENT_TIMESTAMP
                 """;
@@ -51,7 +52,8 @@ public class QuestProgressRepository {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, playerUUID.toString());
-            stmt.setString(2, content);
+            stmt.setString(2, trackedQuestId);
+            stmt.setString(3, content);
             stmt.executeUpdate();
 
         } catch (Exception e) {

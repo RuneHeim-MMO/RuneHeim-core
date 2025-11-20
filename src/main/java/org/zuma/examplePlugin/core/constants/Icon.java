@@ -23,6 +23,7 @@ public enum Icon {
     LEATHER("ⱦ"),
     CAMPFIRE("ⷚ"),
     CHAT_BUBBLE("┬"),
+    DIALOG_BORDER("⹀"),
     DOLLAR("⋗"),
     FLIGHT("⊙"),
     HERBLORE("⪩"),

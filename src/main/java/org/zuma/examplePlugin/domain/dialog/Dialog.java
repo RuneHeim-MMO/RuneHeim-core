@@ -7,6 +7,7 @@ import org.zuma.examplePlugin.domain.dialog.base.DialogStep;
 import org.zuma.examplePlugin.domain.dialog.impl.InteractiveDialogStep;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.player.settings.PlayerSetting;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class Dialog {
     private UUID participantUUID;
     private boolean aborted = false;
     private boolean slotLocked = false;
+    private boolean isChatMode, isSlowMode;
 
     @Nullable
     private Runnable onDialogFinish;
@@ -37,6 +39,8 @@ public class Dialog {
         this.nextStepIndex = 0;
         this.initialHeldSlot = 0;
         this.currentStep = null;
+        this.isChatMode = false;
+        this.isSlowMode = false;
 
         this.scenario.forEach(step -> step.setParent(this));
     }
@@ -51,9 +55,15 @@ public class Dialog {
     }
 
     protected void startDialog(RunePlayer player) {
+        isChatMode = !player.getSettings().getSetting(PlayerSetting.SHOW_DIALOG_HOLOGRAMS);
+        isSlowMode = !player.getSettings().getSetting(PlayerSetting.FAST_DIALOG);
         nextStepIndex = 0;
         participantUUID = player.getUUID();
         initialHeldSlot = player.asBukkitPlayer().getInventory().getHeldItemSlot();
+        player.setInDialog(true);
+
+        System.out.println("Starting dialog " + id + " with participant " + player.asBukkitPlayer().getName()
+                + " (Chat mode: " + isChatMode + ")");
         advanceDialogStep();
     }
 
@@ -61,11 +71,17 @@ public class Dialog {
         if (aborted) {
             return;
         }
+        RunePlayer participant = getPlayerParticipant();
 
         aborted = true;
         slotLocked = false;
         scenario.forEach(DialogStep::cleanUp);
         this.restoreInitialSlot();
+
+        if (participant != null) {
+            participant.setInDialog(false);
+            participant.setDialogOptionChoosing(false);
+        }
 
         if (onDialogFinish != null) {
             onDialogFinish.run();
@@ -160,5 +176,13 @@ public class Dialog {
         }
 
         this.slotLocked = slotLocked;
+    }
+
+    public boolean isChatMode() {
+        return isChatMode;
+    }
+
+    public boolean isSlowMode() {
+        return isSlowMode;
     }
 }

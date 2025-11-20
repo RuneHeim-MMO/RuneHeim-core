@@ -21,19 +21,23 @@ public class InteractiveDialogStep extends DialogStep {
     private final List<InteractiveDialogOption> interactiveContent;
     private final List<DialogText> textContent;
     private final boolean loop;
+    private boolean selected;
 
 
     public InteractiveDialogStep(List<DialogText> textContent, List<InteractiveDialogOption> interactiveOptions, boolean loop, String uniqueIdentifier) {
-        super(Stream.concat(
-                textContent.stream(),
-                IntStream.range(0, interactiveOptions.size())
-                        .mapToObj(i -> new DialogText((i + 1) + ") " + interactiveOptions.get(i).content(), false))
-        ).collect(Collectors.toList()), uniqueIdentifier);
-
+        super(
+                Stream.concat(
+                        textContent.stream()
+                                .filter(t -> t != null && t.line() != null && !t.line().trim().isEmpty()),
+                        IntStream.range(0, interactiveOptions.size())
+                                .mapToObj(i -> new DialogText((i + 1) + ") " + interactiveOptions.get(i).content(), false))
+                ).collect(Collectors.toList()),
+                uniqueIdentifier
+        );
         this.textContent = textContent;
         this.interactiveContent = interactiveOptions;
         this.loop = loop;
-
+        this.selected = false;
     }
 
     @Override
@@ -51,11 +55,12 @@ public class InteractiveDialogStep extends DialogStep {
 
         InteractiveDialogOption clickedOption = interactiveContent.get(newSlot);
 
-        if (clickedOption == null) {
+        if (clickedOption == null || this.selected) {
             return;
         }
 
         SoundType.DIALOG_CHOICE_SELECT.play(player, false);
+        this.selected = true;
         super.replaceDialogLine(newSlot + textContent.size(), (prevContent) -> "§a" + Icon.ARROW_RIGHT.get() + " §f§n" + prevContent + " §r§a" + Icon.ARROW_LEFT.get());
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {

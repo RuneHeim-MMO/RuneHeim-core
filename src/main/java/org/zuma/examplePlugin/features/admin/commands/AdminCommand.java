@@ -18,6 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
 import org.zuma.examplePlugin.core.permissions.Permission;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
@@ -36,6 +37,7 @@ import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 import org.zuma.examplePlugin.domain.player.inventory.ReservedSlot;
 import org.zuma.examplePlugin.domain.quest.Quest;
 import org.zuma.examplePlugin.domain.quest.QuestSerializer;
+import org.zuma.examplePlugin.domain.quest.constants.QuestId;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
@@ -85,12 +87,12 @@ public class AdminCommand implements BasicCommand {
             return;
         }
 
-        if (Objects.equals(args[0], "skills")) {
-            runePlayer.asBukkitPlayer().sendMessage(
-                    runePlayer.getSkills().values().stream()
-                            .map(skill -> skill.getType().getLabel() + ": " + skill.getBaseLevel() + " BONUS: +" + skill.getBonus())
-                            .collect(Collectors.joining(", "))
-            );
+        if (Objects.equals(args[0], "test")) {
+            SoundType.PLAYER_QUEST_START.play(runePlayer, false);
+
+            Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+                SoundType.PLAYER_QUEST_COMPLETE.play(runePlayer, false);
+            }, 40L);
         }
 
         if (args.length == 2 && Objects.equals(args[0], "base")) {
@@ -374,13 +376,13 @@ public class AdminCommand implements BasicCommand {
         }
 
         if (Objects.equals(args[0], "quest")) {
-            Quest q = RuneQuestPlugin.getQuestHandler().getRegistry().getQuestById("sheep-shearer");
-            System.out.println(new Gson().toJson(q));
+            Quest q = RuneQuestPlugin.getQuestHandler().getRegistry().getQuestById(QuestId.WELCOME_TO_DRAKKAR_I.getId());
+            q.startForPlayer(runePlayer, false);
         }
 
         if (Objects.equals(args[0], "des")) {
             Quest q = QuestSerializer.deserializeQuest("{\"id\":\"sheep-shearer\",\"name\":\"Sheep Shearer\",\"steps\":[{\"requiredItems\":[{\"itemId\":101,\"amount\":5}],\"id\":0,\"type\":\"COLLECTION\"},{\"requiredItems\":[{\"itemId\":100,\"amount\":5}],\"id\":1,\"type\":\"COLLECTION\"},{\"requiredItems\":[{\"itemId\":1600,\"amount\":5}],\"id\":2,\"type\":\"COLLECTION\"}],\"difficulty\":\"HARD\",\"requirements\":[{\"type\":\"PRAYER\",\"minimumLevel\":5}],\"requiredCompletedQuests\":[\"invalid-quest\"]}");
-            q.startForPlayer(runePlayer);
+            q.startForPlayer(runePlayer, false);
         }
 
 

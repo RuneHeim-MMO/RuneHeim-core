@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.type.Door;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.adapters.LocationAdapter;
 import org.zuma.examplePlugin.core.database.HikariPool;
@@ -16,6 +17,7 @@ import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.HologramSide;
 import org.zuma.examplePlugin.domain.block.meta.v1.DoorBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.v1.ItemCollectorTriggerMeta;
+import org.zuma.examplePlugin.domain.block.meta.v1.QuestLockedMeta;
 import org.zuma.examplePlugin.domain.block.meta.v1.TeleportDoorMeta;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
@@ -108,7 +110,16 @@ public class InteractableBlockRepository {
 
             result.add(new BlockEntity(
                     new AbstractInteractableBlockMeta(9994, BlockType.TeleportDoor, BlockFace.WEST, new Location(Bukkit.getWorld("world"), 796, 15, -221), HologramSide.TOP),
-                    new VersionedJson(new Gson().toJson(new TeleportDoorMeta("Exit", "world", 800, 86, -218, 127)), 1)));
+                    new VersionedJson(new Gson().toJson(new TeleportDoorMeta("lava-dungeon-exit", "Exit", "world", 800, 86, -218, 127, Door.Hinge.RIGHT, null)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9993, BlockType.TeleportDoor, BlockFace.WEST, new Location(Bukkit.getWorld("world"), 255, 73, -54), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new TeleportDoorMeta("drakkar-bank-back-office", "Back office", "world", 258, 73, -56, -170, Door.Hinge.LEFT,
+                            new QuestLockedMeta("This door appears to be locked.", null, null, List.of("welcome-to-drakkar.kill.rats", "welcome-to-drakkar.enter.back-office")))), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9992, BlockType.TeleportDoor, BlockFace.NORTH, new Location(Bukkit.getWorld("world"), 257, 73, -56), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new TeleportDoorMeta("drakkar-bank-hall", "Hall", "world", 254, 73, -54, 90, Door.Hinge.RIGHT, null)), 1)));
 
 
         } catch (Exception e) {

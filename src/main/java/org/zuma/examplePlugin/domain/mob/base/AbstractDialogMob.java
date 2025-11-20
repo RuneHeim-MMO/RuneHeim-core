@@ -33,6 +33,11 @@ public abstract class AbstractDialogMob extends FriendlyImmortalMob {
     @Override
     public void onPlayerInteractWithEntity(PlayerInteractAtEntityEvent event, RunePlayer player) {
         event.setCancelled(true);
+
+        if (player.isInDialog()) {
+            return;
+        }
+
         super.playSound(MobBehavior.MobSoundType.IDLE);
 
         if (dialogTemplate != null) {

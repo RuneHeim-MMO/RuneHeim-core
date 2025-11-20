@@ -1,7 +1,6 @@
 package org.zuma.examplePlugin.domain.player;
 
 
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -22,6 +21,7 @@ import org.zuma.examplePlugin.core.interfaces.InteractiveActionStrategy;
 import org.zuma.examplePlugin.core.utils.*;
 import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.hud.ActionBarManager;
+import org.zuma.examplePlugin.domain.hud.BossBarManager;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.hud.PlayerScoreboardManager;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
@@ -32,6 +32,7 @@ import org.zuma.examplePlugin.domain.party.Party;
 import org.zuma.examplePlugin.domain.payments.SupporterLevel;
 import org.zuma.examplePlugin.domain.player.actions.ActionParams;
 import org.zuma.examplePlugin.domain.player.handlers.*;
+import org.zuma.examplePlugin.domain.player.settings.PlayerSettings;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -43,7 +44,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class RunePlayer implements CombatEntity {
-    private static final double HP_SKILL_XP_PER_DMG_POINT_RECEIVED = 5;
+    private static final double HP_SKILL_XP_PER_DMG_POINT_RECEIVED = 10;
     private @Nullable UUID partyUUID;
     private final UUID uuid;
 
@@ -51,6 +52,7 @@ public class RunePlayer implements CombatEntity {
     private PermissionAttachment permissionAttachment;
 
     private final PlayerCombatData combatData;
+    private PlayerSettings settings;
     private PlayerBombsContainer bombsContainer;
 
     private final PendingXPHandler pendingXPHandler;
@@ -61,15 +63,17 @@ public class RunePlayer implements CombatEntity {
     private final PlayerXpHandler xpHandler;
     private final PlayerItemDistributor itemHandler;
     private final ActionBarManager actionBarManager;
+    private final BossBarManager bossBarManager;
     private final BusyStateHandler busyStateHandler;
     private final PlayerScoreboardManager scoreboardManager;
     private final ScoreboardUsernameRenderer scoreboardUsernameRenderer;
 
     private long pouchCoins;
     private List<String> discoveredTerritoryIds, completedQuestIds;
-    private boolean isInCutscene, isDead, isDialogOptionChoosing, isNextMessageMegaphone;
+    private boolean isInCutscene, isDead, isInDialog, isDialogOptionChoosing, isNextMessageMegaphone;
     private HashMap<String, AbstractQuestStep> activeQuestSteps; // Quest id : step
     private @Nullable Location safeLocation; // is set when player is in spectator/cutscene mode.
+    private @Nullable String trackedQuestId;
 
     public RunePlayer(UUID uuid, EnumMap<SkillType, Skill> skills) {
         this.uuid = uuid;
@@ -77,6 +81,7 @@ public class RunePlayer implements CombatEntity {
         this.skills = skills;
         this.combatData = new PlayerCombatData(this, skills.get(SkillType.HITPOINTS).getBaseLevel(), Math.min(3, XpUtils.getCombatLevelFromSkills(skills)), 1, 1);
 
+        this.bossBarManager = new BossBarManager(this);
         this.activeQuestSteps = new HashMap<>();
         this.modifiers = new EnumMap<>(ModifierType.class);
         this.skillModifiers = new EnumMap<>(SkillType.class);
@@ -87,13 +92,16 @@ public class RunePlayer implements CombatEntity {
         this.xpHandler = new PlayerXpHandler(this);
         this.pendingXPHandler = new PendingXPHandler();
         this.scoreboardUsernameRenderer = new ScoreboardUsernameRenderer(this);
+        this.settings = new PlayerSettings();
 
         this.pouchCoins = 0;
         this.discoveredTerritoryIds = new ArrayList<>();
         this.completedQuestIds = new ArrayList<>();
         this.isDead = false;
+        this.isInDialog = false;
         this.activeEffects = new ArrayList<>();
         this.bombsContainer = new PlayerBombsContainer(0, 0, 0, 0, 0, 0);
+        this.trackedQuestId = null;
 
         Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
             this.permissionAttachment = asBukkitPlayer().addAttachment(RuneQuestPlugin.getInstance());
@@ -374,6 +382,18 @@ public class RunePlayer implements CombatEntity {
 
     public void setActiveQuestSteps(HashMap<String, AbstractQuestStep> activeQuestSteps) {
         this.activeQuestSteps = activeQuestSteps;
+
+        if (this.trackedQuestId != null) {
+            AbstractQuestStep trackedStep = activeQuestSteps.get(this.trackedQuestId);
+
+            if (trackedStep != null) {
+                this.bossBarManager.setText(trackedStep.getDescription());
+                this.bossBarManager.setProgress(trackedStep.getProgressPercentage());
+            } else {
+                this.trackedQuestId = null; // No longer tracking a valid quest
+                this.bossBarManager.setDefault();
+            }
+        }
     }
 
     public List<String> getCompletedQuestIds() {
@@ -467,5 +487,45 @@ public class RunePlayer implements CombatEntity {
 
     public void setNextMessageMegaphone(boolean nextMessageMegaphone) {
         isNextMessageMegaphone = nextMessageMegaphone;
+    }
+
+    public PlayerSettings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(PlayerSettings settings) {
+        this.settings = settings;
+    }
+
+    public BossBarManager getBossBarManager() {
+        return bossBarManager;
+    }
+
+    public @Nullable String getTrackedQuestId() {
+        return trackedQuestId;
+    }
+
+    public void setTrackedQuestId(@Nullable String trackedQuestId) {
+        this.trackedQuestId = trackedQuestId;
+
+        if (trackedQuestId != null) {
+            AbstractQuestStep matchingStep = this.activeQuestSteps.get(trackedQuestId);
+
+            if (matchingStep != null) {
+                this.bossBarManager.setText(matchingStep.getDescription());
+                this.bossBarManager.setProgress(matchingStep.getProgressPercentage());
+            }
+            return;
+        }
+
+        this.bossBarManager.setDefault();
+    }
+
+    public boolean isInDialog() {
+        return isInDialog;
+    }
+
+    public void setInDialog(boolean inDialog) {
+        isInDialog = inDialog;
     }
 }

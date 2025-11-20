@@ -37,6 +37,7 @@ import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSlot;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
+import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.mob.mechanics.base.MobMechanic;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
 import org.zuma.examplePlugin.domain.mob.meta.MobEquipmentMeta;
@@ -53,6 +54,7 @@ public abstract class AbstractMob {
     private UUID uuid;
     private Component displayName;
     private EntityType baseMob;
+    private String type;
     private boolean ai, silent, isBaby, isInvulnerable, clearDefaultHandsEquipment, pausedMechanics;
 
     private int maxWalkDistance, yaw, secondsAlive;
@@ -71,6 +73,7 @@ public abstract class AbstractMob {
     private final HashMap<Class<? extends MobMechanic>, MobMechanic> mobMechanics;
 
     public AbstractMob(AbstractMobMeta meta) {
+        this.type = null; // Set dynamically later.
         this.ai = meta.ai();
         this.displayName = meta.displayName();
         this.baseMob = meta.baseEntity();
@@ -600,4 +603,11 @@ public abstract class AbstractMob {
         return this.secondsAlive;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

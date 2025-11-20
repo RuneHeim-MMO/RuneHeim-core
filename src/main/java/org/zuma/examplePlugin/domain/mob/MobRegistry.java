@@ -50,6 +50,7 @@ public class MobRegistry {
         }
 
         AbstractMob mob = typeRegistry.create(id);
+        mob.setType(id);
 
         try {
             Entity spawnedEntity = mob.spawn(uuid, location);

@@ -16,8 +16,8 @@ public class TerritoryRepository {
                         new Location(Bukkit.getWorld("world"), 192, 73, -71),
                         150,
                         "§3Drakkar",
-                        "The starting point for all adventurers.",
-                        "An ancient city built on the ruins of a forgotten kingdom.",
+                        "The main starting city. A safe hub for new adventurers.",
+                        "An ancient city built upon the ruins of a kingdom lost to the Sundering.",
                         1, 10, false, true, false, 255)
                         .setAmbientMusic(MusicType.DRAKKAR_THEME),
 
@@ -37,7 +37,7 @@ public class TerritoryRepository {
                         100,
                         "§aOakshade",
                         "A quiet village located near Drakkar.",
-                        "Surrounded by dense forests rumored to be inhabited by spirits.",
+                        "The woods here are said to be home to spirits from the old world.",
                         3, 10, false, true, false, 255)
                         .setAmbientMusic(MusicType.DRAKKAR_THEME),
 
@@ -58,7 +58,7 @@ public class TerritoryRepository {
                         100,
                         "§8Ashwale",
                         "Small village neighboring Drakkar.",
-                        "Built at the edge of a forest long rumored to conceal ancient relics.",
+                        "Scavengers often search the forest for relics of the past.",
                         3, 10, false, true, false, 255)
                         .setAmbientMusic(MusicType.DRAKKAR_THEME),
 
@@ -80,7 +80,7 @@ public class TerritoryRepository {
                         250,
                         "§dSakurmeer",
                         "A mystical land of eternal cherry blossoms.",
-                        "Legends speak of a hidden shrine where the first blossom fell.",
+                        "The cherry trees here never lose their petals.",
                         20, 40, false, true, false, 255)
                         .setAmbientMusic(MusicType.SAKURMEER_THEME),
 
@@ -100,7 +100,7 @@ public class TerritoryRepository {
                         70,
                         "§2Fenshade",
                         "An abandoned mine where the air hangs thick with a murky mist.",
-                        "Miners vanished decades ago; some say the mist carries their whispers.",
+                        "Miners vanished here long ago - their tools still lie where they fell.",
                         25, 30, false, true, false, 255)
                         .setAmbientMusic(MusicType.SWAMP_THEME),
 
@@ -110,7 +110,7 @@ public class TerritoryRepository {
                         300,
                         "§2Swamp Island",
                         "An island in the swamp, full of hidden dangers.",
-                        "The marsh conceals ruins of an old cult long forgotten by time.",
+                        "Strange lights dance in the fog on moonless nights.",
                         25, 30, false, false, false, 255)
                         .setAmbientMusic(MusicType.SWAMP_THEME),
 
@@ -171,7 +171,7 @@ public class TerritoryRepository {
                         100,
                         "§2Zarali",
                         "A hidden village nestled deep within the jungle canopy.",
-                        "Ancient murals speak of a civilization swallowed by the jungle.",
+                        "Guardians of the ancient Heartroots Chamber.",
                         40, 50, false, true, false, 255)
                         .setAmbientMusic(MusicType.ZARALI_THEME),
 
@@ -234,7 +234,7 @@ public class TerritoryRepository {
                         180,
                         "§5Sporefell",
                         "A forest of colossal, glowing mushrooms.",
-                        "The spores shine with an otherworldly glow, hinting at ancient magic.",
+                        "The spores here can show you visions of the past.",
                         60, 70, false, true, false, 255)
                         .setAmbientMusic(MusicType.SPOREFELL_THEME),
 
@@ -244,7 +244,7 @@ public class TerritoryRepository {
                         110,
                         "§5The Ethereal Nexus",
                         "A swirling vortex of pure magical energy.",
-                        "Energy crackles here, a remnant of a forgotten arcane war.",
+                        "The air crackles with raw power here.",
                         70, 80, false, true, false, 255),
 
                 new Territory("aetheris",
@@ -253,7 +253,7 @@ public class TerritoryRepository {
                         150,
                         "§dAetheris",
                         "An ethereal forest where celestial magic courses through the trees.",
-                        "Trees hum with celestial energy, older than any mortal memory.",
+                        "The ruins of those who broke the world.",
                         70, 90, false, true, false, 255)
                         .setAmbientMusic(MusicType.AETHERIS_THEME),
 
@@ -263,7 +263,7 @@ public class TerritoryRepository {
                         160,
                         "§cInfernak",
                         "A volcanic land forged in fire and brimstone.",
-                        "Rivers of lava carve paths through the scorched land, ever restless.",
+                        "Rivers of lava carve through the scorched earth.",
                         80, 90, false, true, false, 255)
                         .setAmbientMusic(MusicType.INFERNAK_THEME),
 

@@ -91,17 +91,17 @@ public class SpawnZoneRepository {
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(11, SpawnZoneType.POINT, 30, 1,
                         new Location(Bukkit.getWorld("world"), 257.5, 73, -58.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.BANK_TELLER_1, 1, 100)
+                        new SpawnZoneMobRecord(MobType.DRAKKAR_BANK_TELLER_1, 1, 100)
                 ), false, MarkerType.BANK_TELLER, "Bank"), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(12, SpawnZoneType.POINT, 30, 1,
                         new Location(Bukkit.getWorld("world"), 257.5, 73, -63.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.BANK_TELLER_2, 1, 100)
+                        new SpawnZoneMobRecord(MobType.DRAKKAR_BANK_TELLER_2, 1, 100)
                 ), false, MarkerType.BANK_TELLER, "Bank"), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(13, SpawnZoneType.POINT, 30, 1,
                         new Location(Bukkit.getWorld("world"), 257.5, 73, -68.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.BANK_TELLER_3, 1, 100)
+                        new SpawnZoneMobRecord(MobType.DRAKKAR_BANK_TELLER_3, 1, 100)
                 ), false, MarkerType.BANK_TELLER, "Bank"), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(14, SpawnZoneType.POINT, 30, 1,
@@ -240,7 +240,7 @@ public class SpawnZoneRepository {
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(30, SpawnZoneType.AREA, 30, 50,
                         new Location(Bukkit.getWorld("world"), 257, 69, -291)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.CHICKEN_BASE_2, 20, 100)
+                        new SpawnZoneMobRecord(MobType.CHICKEN_BASE_2, 10, 100)
                 ), 10, false, false), 1)),
 
                 // Between eldarwyn and brineport
@@ -2133,10 +2133,21 @@ public class SpawnZoneRepository {
                         new Location(Bukkit.getWorld("world"), 105, 34, -435)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.COCKROACH_BASE_8, 3, 100),
                         new SpawnZoneMobRecord(MobType.SCORPION_BASE_30, 1, 100)
-                ), 5, false, false), 1))
+                ), 5, false, false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(309, SpawnZoneType.POINT, 60, 100,
+                        new Location(Bukkit.getWorld("world"), 194.5, 72, -53.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.DRAKKAR_MAYOR, 1, 100)
+                ), false, null, null), 1)),
+
+                // Drakkar bank vault rats
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(310, SpawnZoneType.AREA, 10, 30,
+                        new Location(Bukkit.getWorld("world"), 276, 50, -77)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.RAT_WELCOME_TO_DRAKKAR_BASE_1, 20, 100)
+                ), 10, false, false), 1))
 
 
-                // last 293
+                // last 309
 
 
         );

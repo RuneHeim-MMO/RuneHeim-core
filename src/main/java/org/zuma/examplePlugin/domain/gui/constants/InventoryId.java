@@ -54,7 +54,8 @@ public enum InventoryId {
     SMALL_STORAGE_BAG(44),
     MEDIUM_STORAGE_BAG(45),
     LARGE_STORAGE_BAG(46),
-    BOMBS_MENU(47);
+    BOMBS_MENU(47),
+    PLAYER_SETTINGS_MENU(48);
 
 
     private final int id;

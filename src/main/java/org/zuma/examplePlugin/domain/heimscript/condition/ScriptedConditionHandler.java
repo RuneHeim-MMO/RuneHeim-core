@@ -115,7 +115,7 @@ public class ScriptedConditionHandler {
                         QuestStartFailReason failReason = q.getQuestStartFailReason(player);
 
                         if (failReason == null) {
-                            q.startForPlayer(player);
+                            q.startForPlayer(player, false);
                             result = true;
                         } else {
                             RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Couldn't start quest " + questId + " because: " + failReason);

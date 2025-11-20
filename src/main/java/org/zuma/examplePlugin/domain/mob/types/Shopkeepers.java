@@ -37,9 +37,9 @@ public class Shopkeepers {
 
     public static void registerMobs(MobTypeRegistry registry) {
 
-        registry.register(MobType.DRAKKAR_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1,
+        registry.register(MobType.DRAKKAR_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.PAPER_IN_HAND,
                 MobBehaviors.VILLAGER_MAN_1.getBehavior(), "shopkeeper_1", null, InventoryId.GENERAL_STORE.asInt(), 40)
-                .attachDialog(genericShopDialog));
+                .attachDialog(Dialogs.drakkarGeneralStore));
 
         registry.register(MobType.DRAKKAR_BLACKSMITH.getId(), () -> new InventoryOpenerMob(Icon.HAMMER.get() + " Blacksmith", EquipmentSet.BLACKSMITH,
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "blacksmith", null, InventoryId.DRAKKAR_BLACKSMITH.asInt(), 40)
@@ -107,31 +107,31 @@ public class Shopkeepers {
                 MobBehaviors.HELLFLESH_1.getBehavior(), "infernak_blacksmith", null, InventoryId.INFERNAK_BLACKSMITH.asInt(), 30)
                 .attachDialog(genericShopDialog)); //  shop
 
-        registry.register(MobType.MURKWATCH_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1,
+        registry.register(MobType.MURKWATCH_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.PAPER_IN_HAND,
                 MobBehaviors.VILLAGER_MAN_1.getBehavior(), "shopkeeper_2", null, InventoryId.MURKWATCH_GENERAL_STORE.asInt(), 40)
                 .attachDialog(genericShopDialog));
 
-        registry.register(MobType.ELDARWYN_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1,
+        registry.register(MobType.ELDARWYN_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.PAPER_IN_HAND,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "shopkeeper_3", null, InventoryId.ELDARWYN_GENERAL_STORE.asInt(), 40)
                 .attachDialog(genericShopDialog));
 
-        registry.register(MobType.BRINEPORT_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1,
+        registry.register(MobType.BRINEPORT_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.PAPER_IN_HAND,
                 MobBehaviors.VILLAGER_MAN_2.getBehavior(), "shopkeeper_4", null, InventoryId.BRINEPORT_GENERAL_STORE.asInt(), 40)
                 .attachDialog(genericShopDialog));
 
-        registry.register(MobType.SAKURMEER_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1,
+        registry.register(MobType.SAKURMEER_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.PAPER_IN_HAND,
                 MobBehaviors.VILLAGER_MAN_4.getBehavior(), "shopkeeper_5", null, InventoryId.SAKURMEER_GENERAL_STORE.asInt(), 40)
                 .attachDialog(genericShopDialog));
 
-        registry.register(MobType.AETHERIS_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1,
+        registry.register(MobType.AETHERIS_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.PAPER_IN_HAND,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "shopkeeper_6", null, InventoryId.AETHERIS_GENERAL_STORE.asInt(), 40)
                 .attachDialog(genericShopDialog));
 
-        registry.register(MobType.THORNBARK_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1,
+        registry.register(MobType.THORNBARK_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.PAPER_IN_HAND,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "shopkeeper_2", null, InventoryId.THORNBARK_GENERAL_STORE.asInt(), 40)
                 .attachDialog(genericShopDialog));
 
-        registry.register(MobType.ISLENOR_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.SHOPKEEPER_1,
+        registry.register(MobType.ISLENOR_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.PAPER_IN_HAND,
                 MobBehaviors.VILLAGER_MAN_2.getBehavior(), "shopkeeper_7", null, InventoryId.ISLENOR_GENERAL_STORE.asInt(), 40)
                 .attachDialog(genericShopDialog));
 

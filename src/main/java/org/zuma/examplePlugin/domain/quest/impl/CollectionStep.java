@@ -24,17 +24,34 @@ import java.util.*;
  */
 public class CollectionStep extends AbstractQuestStep {
     private final List<ItemRecord> requiredItems;
-
-    public void setAcquiredItems(HashMap<Integer, Integer> acquiredItems) {
-        this.acquiredItems = acquiredItems;
-    }
-
     private transient HashMap<Integer, Integer> acquiredItems; // id:amount
 
     public CollectionStep(RuneQuestPlugin plugin, Quest parentQuest, String description, String stableId, List<ItemRecord> requiredItems, @Nullable UUID owner) {
         super(plugin, parentQuest, StepType.COLLECTION, description, stableId, owner);
         this.requiredItems = requiredItems;
         this.acquiredItems = new HashMap<>();
+    }
+
+    public float getProgressPercentage() {
+        int totalRequired = requiredItems.stream()
+                .mapToInt(ItemRecord::getAmount)
+                .sum();
+
+        if (totalRequired == 0) return 1.0f;
+
+        int totalAcquired = requiredItems.stream()
+                .mapToInt(req -> {
+                    int id = req.getItemId();
+                    int got = acquiredItems.getOrDefault(id, 0);
+                    return Math.min(got, req.getAmount());
+                })
+                .sum();
+
+        return (float) totalAcquired / totalRequired;
+    }
+
+    public void setAcquiredItems(HashMap<Integer, Integer> acquiredItems) {
+        this.acquiredItems = acquiredItems;
     }
 
     public List<ItemRecord> getRequiredItems() {
@@ -91,7 +108,7 @@ public class CollectionStep extends AbstractQuestStep {
             if (type == null || !acquiredItems.containsKey(type.id)) {
                 return;
             }
-            
+
             addItemsToAcquired(itemStack, type);
         });
     }
@@ -111,9 +128,12 @@ public class CollectionStep extends AbstractQuestStep {
                     .orElse(false);
         });
 
+        super.handleProgressUpdate();
+
         if (requirementsFulfilled) {
             this.handleStepCompletion();
         }
+
     }
 
     @Override

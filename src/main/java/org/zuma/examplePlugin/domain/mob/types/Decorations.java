@@ -9,6 +9,5 @@ public class Decorations {
     public static void registerMobs(MobTypeRegistry registry) {
         registry.register(MobType.STATIC_HORSE.getId(), () -> new StaticMob(EntityType.HORSE, false));
         registry.register(MobType.STATIC_CAMEL.getId(), () -> new StaticMob(EntityType.CAMEL, false));
-
     }
 }

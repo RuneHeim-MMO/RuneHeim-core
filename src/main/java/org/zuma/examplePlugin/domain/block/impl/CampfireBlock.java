@@ -174,4 +174,8 @@ public class CampfireBlock extends InventoryOpenerRegularBlock implements Despaw
     public ItemRecord dropOnDespawn() {
         return despawnDrop;
     }
+
+    public UUID getOwner() {
+        return owner;
+    }
 }

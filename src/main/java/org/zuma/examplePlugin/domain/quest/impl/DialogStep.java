@@ -14,12 +14,16 @@ public class DialogStep extends AbstractQuestStep {
     public DialogStep(RuneQuestPlugin plugin, Quest parentQuest, String description, String stableId, @Nullable UUID owner) {
         super(plugin, parentQuest, StepType.DIALOG, description, stableId, owner);
     }
-    
+
+
+    public float getProgressPercentage() {
+        return 0.0f;
+    }
+
     @Override
     public AbstractQuestStep cloneForPlayer(UUID ownerUUID) {
         DialogStep step = new DialogStep(super.getPlugin(), super.getParentQuest(), super.getDescription(), super.getStableId(), ownerUUID);
         step.setId(this.getId());
-
         return step;
     }
 
