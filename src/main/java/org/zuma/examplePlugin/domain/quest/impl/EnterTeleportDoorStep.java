@@ -22,7 +22,7 @@ public class EnterTeleportDoorStep extends AbstractQuestStep {
     private final String doorId;
 
     public EnterTeleportDoorStep(RuneQuestPlugin plugin, Quest parentQuest, String description, String stableId, String doorId, @Nullable UUID owner) {
-        super(plugin, parentQuest, StepType.LIGHT_CAMPFIRE, description, stableId, owner);
+        super(plugin, parentQuest, StepType.ENTER_TELEPORT_DOOR, description, stableId, owner);
         this.doorId = doorId;
     }
 
