@@ -44,7 +44,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class RunePlayer implements CombatEntity {
-    private static final double HP_SKILL_XP_PER_DMG_POINT_RECEIVED = 5;
+    private static final double HP_SKILL_XP_PER_DMG_POINT_RECEIVED = 10;
     private @Nullable UUID partyUUID;
     private final UUID uuid;
 
