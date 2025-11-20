@@ -240,7 +240,7 @@ public class SpawnZoneRepository {
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(30, SpawnZoneType.AREA, 30, 50,
                         new Location(Bukkit.getWorld("world"), 257, 69, -291)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.CHICKEN_BASE_2, 20, 100)
+                        new SpawnZoneMobRecord(MobType.CHICKEN_BASE_2, 10, 100)
                 ), 10, false, false), 1)),
 
                 // Between eldarwyn and brineport
@@ -2136,7 +2136,7 @@ public class SpawnZoneRepository {
                 ), 5, false, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(309, SpawnZoneType.POINT, 60, 100,
-                        new Location(Bukkit.getWorld("world"), 200.5, 73, -79.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new Location(Bukkit.getWorld("world"), 194.5, 72, -53.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.DRAKKAR_MAYOR, 1, 100)
                 ), false, null, null), 1)),
 

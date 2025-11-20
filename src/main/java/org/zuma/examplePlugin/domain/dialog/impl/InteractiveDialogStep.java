@@ -25,12 +25,15 @@ public class InteractiveDialogStep extends DialogStep {
 
 
     public InteractiveDialogStep(List<DialogText> textContent, List<InteractiveDialogOption> interactiveOptions, boolean loop, String uniqueIdentifier) {
-        super(Stream.concat(
-                textContent.stream(),
-                IntStream.range(0, interactiveOptions.size())
-                        .mapToObj(i -> new DialogText((i + 1) + ") " + interactiveOptions.get(i).content(), false))
-        ).collect(Collectors.toList()), uniqueIdentifier);
-
+        super(
+                Stream.concat(
+                        textContent.stream()
+                                .filter(t -> t != null && t.line() != null && !t.line().trim().isEmpty()),
+                        IntStream.range(0, interactiveOptions.size())
+                                .mapToObj(i -> new DialogText((i + 1) + ") " + interactiveOptions.get(i).content(), false))
+                ).collect(Collectors.toList()),
+                uniqueIdentifier
+        );
         this.textContent = textContent;
         this.interactiveContent = interactiveOptions;
         this.loop = loop;

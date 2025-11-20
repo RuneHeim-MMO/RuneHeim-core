@@ -83,7 +83,7 @@ public class QuestRegistry {
 
 
         Quest theSickCamels = new Quest(QuestId.THE_SICK_CAMELS.getId(), "The Sick Camels", QuestDifficulty.MEDIUM, false, new Quest.Coordinates(-1000, 73, -560))
-                .setRewards(new QuestReward(null, null, 500))
+                .setRewards(new QuestReward(null, null, 2500))
                 .setRequirements(List.of(new SkillRequirement(SkillType.ATTACK, 50), new SkillRequirement(SkillType.STRENGTH, 50), new SkillRequirement(SkillType.DEFENCE, 50)));
 
         registerQuest(theSickCamels.addSteps(List.of(
@@ -96,7 +96,7 @@ public class QuestRegistry {
 
 
         Quest promiseInABox = new Quest(QuestId.PROMISE_IN_A_BOX.getId(), "Promise in a box", QuestDifficulty.EASY, false, new Quest.Coordinates(155, 73, -50))
-                .setRewards(new QuestReward(null, null, 500));
+                .setRewards(new QuestReward(null, null, 750));
 
         registerQuest(promiseInABox.addSteps(List.of(
                 new DialogStep(RuneQuestPlugin.getInstance(), promiseInABox, "Deliver §61x Engagement Ring§f to the §6Fishing Merchant§f in §6Brineport.", "promise-in-a-box.deliver", null)
@@ -109,8 +109,9 @@ public class QuestRegistry {
             Kill rats, report back to the banker, then report back to the mayor
          */
 
-        Quest welcomeToDrakkarI = new Quest(QuestId.WELCOME_TO_DRAKKAR_I.getId(), "Welcome to Drakkar", QuestDifficulty.EASY, false, null)
-                .setRewards(new QuestReward(List.of(new ItemRecord(ItemId.IRON_BATTLEAXE, 1)), null, 200));
+        Quest welcomeToDrakkarI = new Quest(QuestId.WELCOME_TO_DRAKKAR_I.getId(), "Welcome to Drakkar I", QuestDifficulty.EASY, false, null)
+                .setRewards(new QuestReward(List.of(new ItemRecord(ItemId.IRON_BATTLEAXE, 1), new ItemRecord(ItemId.BRONZE_CHAINBODY, 1)), null, 500))
+                .setCountinationQuestId(QuestId.WELCOME_TO_DRAKKAR_II.getId());
 
         registerQuest(welcomeToDrakkarI.addSteps(List.of(
                 new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarI, "Talk to the §6Town Mayor §fin §6Drakkar.", "welcome-to-drakkar.talk.to.mayor", null),
@@ -123,6 +124,20 @@ public class QuestRegistry {
                         List.of(new KillMobStep.KillMobStepEntry(List.of(MobType.RAT_WELCOME_TO_DRAKKAR_BASE_1.getId()), 15, "Drakkar Vault Rats")), null),
                 new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarI, "Report back to the §6Banker §fin §6Drakkar.", "welcome-to-drakkar.report.to.banker", null),
                 new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarI, "Talk to the §6Town Mayor §fin §6Drakkar.", "welcome-to-drakkar.talk.to.mayor.finish", null)
+        )));
+
+        Quest welcomeToDrakkarII = new Quest(QuestId.WELCOME_TO_DRAKKAR_II.getId(), "Welcome to Drakkar II", QuestDifficulty.EASY, false, null)
+                .setRewards(new QuestReward(List.of(new ItemRecord(ItemId.COOKED_CHICKEN, 20), new ItemRecord(ItemId.GENIE_XP_LAMP, 1)), null, 500));
+
+        registerQuest(welcomeToDrakkarII.addSteps(List.of(
+                new VisitStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarII, "Visit §6Amber Farm§f at §6(X:244, Z:-270).", "welcome-to-drakkarii.visit.amber_farm", new VisitStep.VisitStepEntry(new Quest.Coordinates(244, 70, -270), 50), null),
+                new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarII, "Talk to the §6Farm Horse Trader.", "welcome-to-drakkarii.talk.to.farmer", null),
+                new KillMobStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarII, "Kill §610x Goblins§f.", "welcome-to-drakkarii.kill.goblins",
+                        List.of(new KillMobStep.KillMobStepEntry(List.of(MobType.GOBLIN_1_BASE_1.getId(), MobType.GOBLIN_2_BASE_1.getId(), MobType.GOBLIN_3_BASE_1.getId(), MobType.GOBLIN_4_BASE_1.getId(),
+                                MobType.GOBLIN_5_BASE_1.getId(), MobType.GOBLIN_1_BASE_4.getId(), MobType.GOBLIN_2_BASE_4.getId(), MobType.GOBLIN_3_BASE_4.getId(), MobType.GOBLIN_4_BASE_4.getId(), MobType.GOBLIN_5_BASE_4.getId()), 10, "Goblins")), null),
+                new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarII, "Report back to the §6Farm Horse Trader.", "welcome-to-drakkarii.report.to.farmer", null),
+                new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarII, "Buy a §6Brown Farm Horse§f from §6Farm Horse Trader.", "welcome-to-drakkarii.buy.horse", null),
+                new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarII, "Talk to the §6Town Mayor §fin §6Drakkar.", "welcome-to-drakkarii.talk.to.mayor.finish", null)
         )));
 
 
