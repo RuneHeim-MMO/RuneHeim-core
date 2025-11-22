@@ -56,7 +56,7 @@ public class RecipeRepository {
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.HARD_LEATHER.getId(), RecipeType.TANNER_RECIPE, 2000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 20)),
-                        List.of(new IngredientRecord(ItemId.COWHIDE, 1, true, false)),
+                        List.of(new IngredientRecord(ItemId.THICK_HIDE, 1, true, false)),
                         new ItemRecord(ItemId.HARD_LEATHER, 1),
                         null, List.of(), 35L), null),
 

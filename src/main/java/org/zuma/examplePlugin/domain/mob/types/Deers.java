@@ -31,7 +31,7 @@ public class Deers {
                 MobBehaviors.DEER.getBehavior(0.5F),
                 "femaledeer",
                 0.36, false, true, 20,
-                List.of(DropTableId.BONES.asInt(),  DropTableId.RAW_ANIMAL_MEAT.asInt()),
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
                 true));
 
         registry.register(MobType.DEER_BASE_34.getId(), () -> new GenericCombatant(
@@ -41,7 +41,7 @@ public class Deers {
                 MobBehaviors.DEER.getBehavior(1F),
                 "deer",
                 0.36, false, true, 25,
-                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt(), DropTableId.DEER_ANTLER.asInt()),
                 true));
 
 

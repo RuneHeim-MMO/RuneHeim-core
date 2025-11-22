@@ -23,7 +23,7 @@ public class Rats {
                 MobBehaviors.RAT.getBehavior(),
                 "nm_rat_brown",
                 0.23, false, false, 3,
-                List.of(),
+                List.of(DropTableId.RAT.asInt()),
                 true));
 
         registry.register(MobType.RAT_GRAY_BASE_1.getId(), () -> new GenericCombatant(
@@ -33,7 +33,7 @@ public class Rats {
                 MobBehaviors.RAT.getBehavior(),
                 "nm_rat_gray",
                 0.23, false, false, 3,
-                List.of(),
+                List.of(DropTableId.RAT.asInt()),
                 true));
 
         registry.register(MobType.RAT_ALBINO_BASE_1.getId(), () -> new GenericCombatant(
@@ -43,7 +43,7 @@ public class Rats {
                 MobBehaviors.RAT.getBehavior(),
                 "nm_rat_albino",
                 0.23, false, false, 3,
-                List.of(),
+                List.of(DropTableId.RAT.asInt()),
                 true));
 
         registry.register(MobType.RAT_WELCOME_TO_DRAKKAR_BASE_1.getId(), () -> new GenericCombatant(
@@ -53,7 +53,7 @@ public class Rats {
                 MobBehaviors.RAT.getBehavior(),
                 "nm_rat_albino",
                 0.23, false, false, 3,
-                List.of(),
+                List.of(DropTableId.RAT.asInt()),
                 true));
 
     }

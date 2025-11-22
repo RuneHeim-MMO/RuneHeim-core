@@ -42,35 +42,35 @@ public class DungeonMobs {
                 "Dungeon Keeper", EquipmentSet.STEEL_FULL_SWORD, getBaseSkills(35, 0.5),
                 null, MobBehaviors.RAVAGER.getBehavior(),
                 0.35, true, false, 35, "dungeon_keeper_1", null, null,
-                List.of(DropTableId.LAVA_DUNGEON_KEY_A.asInt()),
+                List.of(DropTableId.LAVA_DUNGEON_KEY_A.asInt(), DropTableId.LAVA_DUNGEON_RINGS.asInt()),
                 false).setMaxWalkDistance(20));
 
         registry.register(MobType.LAVA_DUNGEON_GUARD_2_BASE_40.getId(), () -> new GenericCombatant(
                 "Dungeon Keeper", EquipmentSet.MITHRIL_FULL_SWORD, getBaseSkills(40, 0.5),
                 null, MobBehaviors.RAVAGER.getBehavior(),
                 0.35, true, false, 40, "dungeon_keeper_2", null, null,
-                List.of(DropTableId.LAVA_DUNGEON_KEY_B.asInt()),
+                List.of(DropTableId.LAVA_DUNGEON_KEY_B.asInt(), DropTableId.LAVA_DUNGEON_RINGS.asInt()),
                 false).setMaxWalkDistance(20));
 
         registry.register(MobType.LAVA_DUNGEON_GUARD_3_BASE_45.getId(), () -> new GenericCombatant(
                 "Dungeon Keeper", EquipmentSet.ADAMANT_FULL_SWORD, getBaseSkills(45, 0.5),
                 null, MobBehaviors.RAVAGER.getBehavior(),
                 0.35, true, false, 45, "dungeon_keeper_3", null, null,
-                List.of(DropTableId.LAVA_DUNGEON_KEY_C.asInt()),
+                List.of(DropTableId.LAVA_DUNGEON_KEY_C.asInt(), DropTableId.LAVA_DUNGEON_RINGS.asInt()),
                 false).setMaxWalkDistance(20));
 
         registry.register(MobType.LAVA_DUNGEON_GUARD_4_BASE_50.getId(), () -> new GenericCombatant(
                 "Dungeon Keeper", EquipmentSet.RUNE_FULL_SWORD, getBaseSkills(50, 0.5),
                 null, MobBehaviors.RAVAGER.getBehavior(),
                 0.35, true, false, 50, "dungeon_keeper_4", null, null,
-                List.of(DropTableId.LAVA_DUNGEON_KEY_D.asInt()),
+                List.of(DropTableId.LAVA_DUNGEON_KEY_D.asInt(), DropTableId.LAVA_DUNGEON_RINGS.asInt()),
                 false).setMaxWalkDistance(20));
 
         registry.register(MobType.LAVA_DUNGEON_GUARD_MINION.getId(), () -> new GenericCombatant(
                 "Dungeon Keeper", EquipmentSet.MITHRIL_FULL_SWORD, getBaseSkills(40, 0.5),
                 null, MobBehaviors.RAVAGER.getBehavior(),
                 0.35, true, false, 40, "dungeon_keeper_2", null, null,
-                List.of(),
+                List.of(DropTableId.LAVA_DUNGEON_RINGS.asInt()),
                 false).setMaxWalkDistance(20));
 
         registry.register(MobType.LAVA_DUNGEON_BOSS_BASE_55.getId(), () -> new GenericCombatant(

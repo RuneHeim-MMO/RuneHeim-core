@@ -34,121 +34,116 @@ public class Bandits {
                 "Bandit", EquipmentSet.LOW_LEVEL_RANDOM_GEAR, getBaseSkills(20, 0.5),
                 null, MobBehaviors.BANDIT.getBehavior(),
                 0.3, 18, List.of(banditLines), "bandit_1", null, null,
-                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt(), DropTableId.BANDIT_LOW_LEVEL_ARMOR.asInt())
         ));
 
         registry.register(MobType.BANDIT_BASE_20_2.getId(), () -> new TalkingCombatant(
                 "Bandit", EquipmentSet.LOW_LEVEL_RANDOM_GEAR, getBaseSkills(20, 0.5),
                 null, MobBehaviors.BANDIT.getBehavior(),
                 0.3, 18, List.of(banditLines), "bandit_2", null, null,
-                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt(), DropTableId.BANDIT_LOW_LEVEL_ARMOR.asInt())
         ));
 
         registry.register(MobType.BANDIT_BASE_20_3.getId(), () -> new TalkingCombatant(
                 "Bandit", EquipmentSet.LOW_LEVEL_RANDOM_GEAR, getBaseSkills(20, 0.5),
                 null, MobBehaviors.BANDIT.getBehavior(),
                 0.3, 18, List.of(banditLines), "bandit_3", null, null,
-                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt(), DropTableId.BANDIT_LOW_LEVEL_WEAPONS.asInt())
         ));
 
         registry.register(MobType.BANDIT_BASE_20_4.getId(), () -> new TalkingCombatant(
                 "Bandit", EquipmentSet.LOW_LEVEL_RANDOM_GEAR, getBaseSkills(20, 0.5),
                 null, MobBehaviors.BANDIT.getBehavior(),
                 0.3, 18, List.of(banditLines), "bandit_4", null, null,
-                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt(), DropTableId.BANDIT_LOW_LEVEL_WEAPONS.asInt())
         ));
-
 
 
         registry.register(MobType.BANDIT_BASE_40_1.getId(), () -> new TalkingCombatant(
                 "Bandit", EquipmentSet.MEDIUM_LEVEL_RANDOM_GEAR, getBaseSkills(40, 0.5),
                 null, MobBehaviors.BANDIT.getBehavior(),
                 0.3, 32, List.of(banditLines), "bandit_1", null, null,
-                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt(), DropTableId.BANDIT_MEDIUM_LEVEL_ARMOR.asInt())
         ));
 
         registry.register(MobType.BANDIT_BASE_40_2.getId(), () -> new TalkingCombatant(
                 "Bandit", EquipmentSet.MEDIUM_LEVEL_RANDOM_GEAR, getBaseSkills(40, 0.5),
                 null, MobBehaviors.BANDIT.getBehavior(),
                 0.3, 32, List.of(banditLines), "bandit_2", null, null,
-                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt(), DropTableId.BANDIT_MEDIUM_LEVEL_ARMOR.asInt())
         ));
 
         registry.register(MobType.BANDIT_BASE_40_3.getId(), () -> new TalkingCombatant(
                 "Bandit", EquipmentSet.MEDIUM_LEVEL_RANDOM_GEAR, getBaseSkills(40, 0.5),
                 null, MobBehaviors.BANDIT.getBehavior(),
                 0.3, 32, List.of(banditLines), "bandit_3", null, null,
-                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt(), DropTableId.BANDIT_MEDIUM_LEVEL_WEAPONS.asInt())
         ));
 
         registry.register(MobType.BANDIT_BASE_40_4.getId(), () -> new TalkingCombatant(
                 "Bandit", EquipmentSet.MEDIUM_LEVEL_RANDOM_GEAR, getBaseSkills(40, 0.5),
                 null, MobBehaviors.BANDIT.getBehavior(),
                 0.3, 32, List.of(banditLines), "bandit_4", null, null,
-                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt(), DropTableId.BANDIT_MEDIUM_LEVEL_WEAPONS.asInt())
         ));
-
 
 
         registry.register(MobType.BANDIT_BASE_60_1.getId(), () -> new TalkingCombatant(
                 "Bandit", EquipmentSet.HIGH_LEVEL_RANDOM_GEAR, getBaseSkills(60, 0.5),
                 null, MobBehaviors.BANDIT.getBehavior(),
                 0.3, 50, List.of(banditLines), "bandit_1", null, null,
-                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt(), DropTableId.BANDIT_HIGH_LEVEL_WEAPONS.asInt())
         ));
 
         registry.register(MobType.BANDIT_BASE_60_2.getId(), () -> new TalkingCombatant(
                 "Bandit", EquipmentSet.HIGH_LEVEL_RANDOM_GEAR, getBaseSkills(60, 0.5),
                 null, MobBehaviors.BANDIT.getBehavior(),
                 0.3, 50, List.of(banditLines), "bandit_2", null, null,
-                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt(), DropTableId.BANDIT_HIGH_LEVEL_WEAPONS.asInt())
         ));
 
         registry.register(MobType.BANDIT_BASE_60_3.getId(), () -> new TalkingCombatant(
                 "Bandit", EquipmentSet.HIGH_LEVEL_RANDOM_GEAR, getBaseSkills(60, 0.5),
                 null, MobBehaviors.BANDIT.getBehavior(),
                 0.3, 50, List.of(banditLines), "bandit_3", null, null,
-                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt(), DropTableId.BANDIT_HIGH_LEVEL_ARMOR.asInt())
         ));
 
         registry.register(MobType.BANDIT_BASE_60_4.getId(), () -> new TalkingCombatant(
                 "Bandit", EquipmentSet.HIGH_LEVEL_RANDOM_GEAR, getBaseSkills(60, 0.5),
                 null, MobBehaviors.BANDIT.getBehavior(),
                 0.3, 50, List.of(banditLines), "bandit_4", null, null,
-                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt(), DropTableId.BANDIT_HIGH_LEVEL_ARMOR.asInt())
         ));
-
 
 
         registry.register(MobType.BANDIT_BASE_80_1.getId(), () -> new TalkingCombatant(
                 "Bandit", EquipmentSet.HIGH_LEVEL_RANDOM_GEAR, getBaseSkills(80, 0.5),
                 null, MobBehaviors.BANDIT.getBehavior(),
                 0.3, 65, List.of(banditLines), "bandit_1", null, null,
-                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt(), DropTableId.BANDIT_HIGH_LEVEL_ARMOR.asInt())
         ));
 
         registry.register(MobType.BANDIT_BASE_80_2.getId(), () -> new TalkingCombatant(
                 "Bandit", EquipmentSet.HIGH_LEVEL_RANDOM_GEAR, getBaseSkills(80, 0.5),
                 null, MobBehaviors.BANDIT.getBehavior(),
                 0.3, 65, List.of(banditLines), "bandit_2", null, null,
-                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt(), DropTableId.BANDIT_HIGH_LEVEL_ARMOR.asInt())
         ));
 
         registry.register(MobType.BANDIT_BASE_80_3.getId(), () -> new TalkingCombatant(
                 "Bandit", EquipmentSet.HIGH_LEVEL_RANDOM_GEAR, getBaseSkills(80, 0.5),
                 null, MobBehaviors.BANDIT.getBehavior(),
                 0.3, 65, List.of(banditLines), "bandit_3", null, null,
-                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt(), DropTableId.BANDIT_HIGH_LEVEL_WEAPONS.asInt())
         ));
 
         registry.register(MobType.BANDIT_BASE_80_4.getId(), () -> new TalkingCombatant(
                 "Bandit", EquipmentSet.HIGH_LEVEL_RANDOM_GEAR, getBaseSkills(80, 0.5),
                 null, MobBehaviors.BANDIT.getBehavior(),
                 0.3, 65, List.of(banditLines), "bandit_4", null, null,
-                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt())
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_MEDIUM.asInt(), DropTableId.BANDIT_HIGH_LEVEL_WEAPONS.asInt())
         ));
-
-
 
 
     }
