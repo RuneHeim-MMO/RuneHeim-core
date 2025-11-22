@@ -11,7 +11,6 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.checkerframework.checker.units.qual.K;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.InventoryOpenerBlock;
@@ -38,7 +37,6 @@ import org.zuma.examplePlugin.events.inventory.RuneInventoryOpenEvent;
 
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class GUIHandler {
     private final static long INVENTORY_OPEN_COOLDOWN_MS = 500L;
@@ -80,17 +78,17 @@ public class GUIHandler {
         this.registry.register(InventoryId.ANVIL.asInt(), () -> new AnvilInventory(GUIOverlay.ANVIL_OVERLAY.asGlyph() + "§f" + Icon.ANVIL.get() + "§f Anvil", InventoryId.ANVIL.asInt()));
         this.registry.register(InventoryId.CRAFTING_TABLE.asInt(), () -> new CraftingTableInventory(GUIOverlay.CRAFTING_TABLE_OVERLAY.asGlyph() + "§f" + Icon.CRAFTING.get() + "§f Crafting Table", InventoryId.CRAFTING_TABLE.asInt()));
         this.registry.register(InventoryId.FUSION_MASTER.asInt(), () -> new FusionMasterInventory(GUIOverlay.FUSION_MASTER_OVERLAY.asGlyph() + "§f" + Icon.SCROLL_RED.get() + "§f Fusion Master", InventoryId.FUSION_MASTER.asInt()));
-        this.registry.register(InventoryId.GENERAL_STORE.asInt(), () -> new ShopInventory(GUIOverlay.GENERAL_STORE_OVERLAY.asGlyph() + "§f" + Icon.CHEST.get() + "§f General Store", InventoryId.GENERAL_STORE.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.GENERAL_STORE.asInt())));
+        this.registry.register(InventoryId.DRAKKAR_GENERAL_STORE.asInt(), () -> new ShopInventory(GUIOverlay.GENERAL_STORE_OVERLAY.asGlyph() + "§f" + Icon.CHEST.get() + "§f General Store", InventoryId.DRAKKAR_GENERAL_STORE.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_GENERAL_STORE.asInt())));
         this.registry.register(InventoryId.SPINNING_WHEEL.asInt(), () -> new SpinningWheelInventory(GUIOverlay.SPINNING_WHEEL_OVERLAY.asGlyph() + "§f" + Icon.MATERIAL.get() + "§f Spinning Wheel", InventoryId.SPINNING_WHEEL.asInt()));
         this.registry.register(InventoryId.DRAKKAR_BLACKSMITH.asInt(), () -> new ShopInventory(GUIOverlay.BLACKSMITH_SHOP_OVERLAY.asGlyph() + "§f" + Icon.HAMMER.get() + "§f Blacksmith", InventoryId.DRAKKAR_BLACKSMITH.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_BLACKSMITH.asInt())));
         this.registry.register(InventoryId.BANK.asInt(), () -> new BankInventory(GUIOverlay.BANK_OVERLAY.asGlyph() + "§f" + Icon.DOLLAR.get() + "§f Bank", InventoryId.BANK.asInt(), bankContentController));
         this.registry.register(InventoryId.INVESTMENT_BANKER.asInt(), () -> new ShopInventory(GUIOverlay.INVESTMENT_BANKER_OVERLAY.asGlyph() + "§f" + Icon.COIN_PILE.get() + "§f Investment Banker", InventoryId.INVESTMENT_BANKER.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.INVESTMENT_BANKER.asInt())));
-        this.registry.register(InventoryId.JEWELER.asInt(), () -> new ShopInventory(GUIOverlay.JEWELER_SHOP_OVERLAY.asGlyph() + "§f" + Icon.GREEN_GEM.get() + "§f Jewellery Shop", InventoryId.JEWELER.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.JEWLER.asInt())));
+        this.registry.register(InventoryId.JEWELER.asInt(), () -> new ShopInventory(GUIOverlay.JEWELER_SHOP_OVERLAY.asGlyph() + "§f" + Icon.GREEN_GEM.get() + "§f Jewellery Shop", InventoryId.JEWELER.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_JEWLER.asInt())));
         this.registry.register(InventoryId.XP_LAMP.asInt(), () -> new XPLampInventory(GUIOverlay.XP_INVENTORY_OVERLAY.asGlyph() + "§f" + Icon.EXPERIENCE.get() + "§f XP Lamp", InventoryId.XP_LAMP.asInt()));
         this.registry.register(InventoryId.TERRITORY_INVENTORY.asInt(), () -> new TerritoriesInventory(GUIOverlay.LOCATION_DISCOVERY_OVERLAY.asGlyph() + "§f" + Icon.MAP.get() + "§f Discovered Locations", InventoryId.TERRITORY_INVENTORY.asInt()));
         this.registry.register(InventoryId.CONTRACT_BOARD.asInt(), () -> new ContractBoard(GUIOverlay.CONTRACTS_BOARD_OVERLAY.asGlyph() + "§f" + Icon.CONTRACT_SKULL.get() + "§f Contract Board", InventoryId.CONTRACT_BOARD.asInt()));
         this.registry.register(InventoryId.DRAKKAR_ARMOR_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.ARMOR_SHOP_OVERLAY.asGlyph() + "§f" + Icon.ARMOR.get() + "§f Armor Shop", InventoryId.DRAKKAR_BLACKSMITH.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_ARMOR_SHOP.asInt())));
-        this.registry.register(InventoryId.BASIC_FOOD_STALL.asInt(), () -> new ShopInventory(GUIOverlay.FOOD_SHOP_OVERLAY.asGlyph() + "§f" + Icon.FRUIT.get() + "§f Food Stall", InventoryId.BASIC_FOOD_STALL.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.BASIC_FOOD_STALL.asInt())));
+        this.registry.register(InventoryId.DRAKKAR_FOOD_STALL.asInt(), () -> new ShopInventory(GUIOverlay.FOOD_SHOP_OVERLAY.asGlyph() + "§f" + Icon.FRUIT.get() + "§f Food Stall", InventoryId.DRAKKAR_FOOD_STALL.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_BASIC_FOOD_STALL.asInt())));
         this.registry.register(InventoryId.DRAKKAR_GUARD_ARCHERY_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.ARCHERY_SHOP_OVERLAY.asGlyph() + "§f" + Icon.FRUIT.get() + "§f Town Archer", InventoryId.DRAKKAR_GUARD_ARCHERY_SHOP.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_GUARD_ARCHER_MERCHANT.asInt())));
         this.registry.register(InventoryId.QUESTS_LIST.asInt(), () -> new QuestsInventory(GUIOverlay.QUESTS_INVENTORY_OVERLAY.asGlyph() + "§f" + Icon.BOOK.get() + "§f Quests", InventoryId.QUESTS_LIST.asInt()));
 

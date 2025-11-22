@@ -38,7 +38,7 @@ public class Shopkeepers {
     public static void registerMobs(MobTypeRegistry registry) {
 
         registry.register(MobType.DRAKKAR_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.PAPER_IN_HAND,
-                MobBehaviors.VILLAGER_MAN_1.getBehavior(), "shopkeeper_1", null, InventoryId.GENERAL_STORE.asInt(), 40)
+                MobBehaviors.VILLAGER_MAN_1.getBehavior(), "shopkeeper_1", null, InventoryId.DRAKKAR_GENERAL_STORE.asInt(), 40)
                 .attachDialog(Dialogs.drakkarGeneralStore));
 
         registry.register(MobType.DRAKKAR_BLACKSMITH.getId(), () -> new InventoryOpenerMob(Icon.HAMMER.get() + " Blacksmith", EquipmentSet.BLACKSMITH,
@@ -58,7 +58,7 @@ public class Shopkeepers {
                 .attachDialog(genericShopDialog));
 
         registry.register(MobType.BASIC_FOOD_STALL_SHOP.getId(), () -> new InventoryOpenerMob(Icon.FRUIT.get() + " Food Stall", null,
-                MobBehaviors.VILLAGER_WOMAN_3.getBehavior(), "food_stall_merchant", null, InventoryId.BASIC_FOOD_STALL.asInt(), 0)
+                MobBehaviors.VILLAGER_WOMAN_3.getBehavior(), "food_stall_merchant", null, InventoryId.DRAKKAR_FOOD_STALL.asInt(), 0)
                 .attachDialog(foodShopDialog));
 
         registry.register(MobType.DRAKKAR_GUARD_ARCHER_SHOP.getId(), () -> new InventoryOpenerMob(Icon.BOW.get() + " Town Archer", EquipmentSet.RUNE_FULL_IRON_CROSSBOW,
