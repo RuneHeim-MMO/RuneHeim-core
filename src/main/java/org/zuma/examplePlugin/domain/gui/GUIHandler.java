@@ -115,6 +115,8 @@ public class GUIHandler {
         this.registry.register(InventoryId.TANNER.asInt(), () -> new TannerInventory(GUIOverlay.TANNER_OVERLAY.asGlyph() + "§f" + Icon.LEATHER.get() + "§f Tanner", InventoryId.TANNER.asInt()));
         this.registry.register(InventoryId.FLETCHING_TABLE.asInt(), () -> new FletchingTableInventory(GUIOverlay.FLETCHING_TABLE_OVERLAY.asGlyph() + "§f" + Icon.ARROW.get() + "§f Fletching Table", InventoryId.FLETCHING_TABLE.asInt()));
         this.registry.register(InventoryId.DRAKKAR_TANNER_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.TANNER_SHOP_OVERLAY.asGlyph() + "§f" + Icon.LEATHER.get() + "§f Tanner Shop", InventoryId.DRAKKAR_TANNER_SHOP.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_TANNER_SHOP.asInt())));
+        this.registry.register(InventoryId.ZARALI_HERBLORE_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.HERBLORE_SHOP_OVERLAY.asGlyph() + "§f" + Icon.HERBLORE.get() + "§f Herblore Shop", InventoryId.ZARALI_HERBLORE_SHOP.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.ZARALI_HERBLORE_SHOP.asInt())));
+
         this.registry.register(InventoryId.PRAYER_MENU.asInt(), () -> new PrayerMenu(GUIOverlay.PRAYER_MENU_OVERLAY.asGlyph() + "§f" + Icon.PRAYER.get() + "§b Prayer", InventoryId.PRAYER_MENU.asInt()));
         this.registry.register(InventoryId.PARTY_MENU.asInt(), () -> new PartyMenu(GUIOverlay.PARTY_MENU_OVERLAY.asGlyph() + "§f" + Icon.PARTY.get() + "§f Party", InventoryId.PARTY_MENU.asInt()));
 

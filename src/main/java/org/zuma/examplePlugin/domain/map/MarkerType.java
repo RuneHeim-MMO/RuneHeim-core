@@ -54,14 +54,11 @@ public enum MarkerType {
     CONTRACT_BOARD("contract-boards", "Contract Boards", "./assets/markers/contract_board.png"),
     QUICK_TRAVEL("quick-travels", "Quick Travel", "./assets/markers/quick_travel.png"),
     TANNER("tanners", "Tanner", "./assets/markers/tanner.png"),
-
-    // TODO:
     FLETCHING_TABLE("fletching-tables", "Fletching Table", "./assets/markers/fletching_table.png"),
-
-    // Dev
+    HERBLORE_SHOP("herblore-shops", "Herblore Shop", "./assets/markers/herblore_shop.png"),
     TERRITORY("territories", "Territories", ""),
 
-
+    // Dev
     BIOME_SPAWN_ZONE("biome_spawn_zone", "Biome Spawn Zones", ""),
     MOB_SPAWN_ZONE("mob_spawn_zone", "Mob Spawn Zones", "");
 

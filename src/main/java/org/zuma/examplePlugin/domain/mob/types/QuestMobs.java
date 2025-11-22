@@ -1,11 +1,14 @@
 package org.zuma.examplePlugin.domain.mob.types;
 
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.domain.dialog.Dialogs;
+import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.mob.MobTypeRegistry;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehaviors;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.mob.impl.DialogMob;
+import org.zuma.examplePlugin.domain.mob.impl.InventoryOpenerMob;
 
 public class QuestMobs {
 
@@ -31,8 +34,9 @@ public class QuestMobs {
         registry.register(MobType.RAFIQ_CAMEL_TRADER.getId(), () -> new DialogMob("Rafiq", null,
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "rafiq_camel_trader", null, 50, Dialogs.rafiqCamelTrader));
 
-        registry.register(MobType.SHAMIRA_SHAMAN.getId(), () -> new DialogMob("Shamira", null,
-                MobBehaviors.VILLAGER_WOMAN_5.getBehavior(), "shamira_shaman", null, 50, Dialogs.shamiraShaman));
+        registry.register(MobType.SHAMIRA_SHAMAN.getId(), () -> new InventoryOpenerMob(Icon.HERBLORE.get() + " Shamira", null,
+                MobBehaviors.VILLAGER_WOMAN_5.getBehavior(), "shamira_shaman", null, InventoryId.ZARALI_HERBLORE_SHOP.asInt(), 50)
+                .attachDialog(Dialogs.shamiraShaman));
 
         // Drakkar mayor
         registry.register(MobType.DRAKKAR_MAYOR.getId(), () -> new DialogMob("Drakkar Mayor", EquipmentSet.PAPER_IN_HAND,

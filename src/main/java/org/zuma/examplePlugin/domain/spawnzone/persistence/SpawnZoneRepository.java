@@ -1550,7 +1550,7 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(217, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 490, 80, 497)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.SHAMIRA_SHAMAN, 1, 100)
-                ), false, null, null), 1)),
+                ), false, MarkerType.HERBLORE_SHOP, "Herblore Shop"), 1)),
 
 
                 // Saharijin guards

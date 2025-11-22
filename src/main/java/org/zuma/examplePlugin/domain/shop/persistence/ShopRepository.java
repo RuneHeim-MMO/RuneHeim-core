@@ -50,7 +50,7 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.AMULET_OF_GUARDING.asInt(), 1, 300, 1000L, 360L, null, null),
                         new ShopItemConfig(ItemId.AMULET_OF_THE_NOVICE_BLADE.asInt(), 1, 300, 1000L, 360L, null, null),
                         new ShopItemConfig(ItemId.AMULET_OF_THE_ARCHER.asInt(), 1, 300, 1000L, 360L, null, null)
-                        ))), 1)),
+                ))), 1)),
 
                 new ShopConfig(ShopId.INVESTMENT_BANKER.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.PLATINUM_TOKEN.asInt(), 1000, 30, 1000L, 950L, null, null),
@@ -231,8 +231,15 @@ public class ShopRepository {
                 new ShopConfig(ShopId.AETHERIS_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(true, GENERAL_STORE_ITEMS)), 1)),
                 new ShopConfig(ShopId.ISLENOR_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(true, GENERAL_STORE_ITEMS)), 1)),
                 new ShopConfig(ShopId.THORNBARK_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(true, GENERAL_STORE_ITEMS)), 1)),
+                new ShopConfig(ShopId.DRAKKAR_TANNER_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, TANNER_SHOP)), 1)),
 
-                new ShopConfig(ShopId.DRAKKAR_TANNER_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, TANNER_SHOP)), 1))
+                new ShopConfig(ShopId.ZARALI_HERBLORE_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
+                        new ShopItemConfig(ItemId.ATTACK_POTION_I.asInt(), 5, 120, 500L, null, null, null),
+                        new ShopItemConfig(ItemId.STRENGTH_POTION_I.asInt(), 5, 120, 500L, null, null, null),
+                        new ShopItemConfig(ItemId.RANGED_POTION_I.asInt(), 5, 120, 500L, null, null, null),
+                        new ShopItemConfig(ItemId.HEALTH_POTION_I.asInt(), 5, 120, 400L, null, null, null),
+                        new ShopItemConfig(ItemId.DEFENCE_POTION_I.asInt(), 5, 120, 400L, null, null, null)
+                ))), 1))
 
         );
 

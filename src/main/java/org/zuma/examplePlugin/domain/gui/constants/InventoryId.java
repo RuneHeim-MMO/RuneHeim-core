@@ -55,7 +55,8 @@ public enum InventoryId {
     MEDIUM_STORAGE_BAG(45),
     LARGE_STORAGE_BAG(46),
     BOMBS_MENU(47),
-    PLAYER_SETTINGS_MENU(48);
+    PLAYER_SETTINGS_MENU(48),
+    ZARALI_HERBLORE_SHOP(49);
 
 
     private final int id;
