@@ -32,6 +32,9 @@ public enum MobType {
     CITY_CITIZEN_SAHARIJIN,
     CITY_CITIZEN_JUNGLE,
 
+    // Herblore shops
+    SWAMP_ISLAND_HERBLORE_SHOP,
+
     // Goblins
     GOBLIN_1_BASE_1,
     GOBLIN_2_BASE_1,

@@ -28,7 +28,8 @@ public enum ShopId {
     THORNBARK_GENERAL_STORE(25),
     SAKURMEER_FOOD_SHOP(26),
     DRAKKAR_TANNER_SHOP(27),
-    ZARALI_HERBLORE_SHOP(28);
+    ZARALI_HERBLORE_SHOP(28),
+    SWAMP_ISLAND_HERBLORE_SHOP(29);
 
 
     private final int id;
@@ -42,4 +43,4 @@ public enum ShopId {
     }
 
 
-    }
+}

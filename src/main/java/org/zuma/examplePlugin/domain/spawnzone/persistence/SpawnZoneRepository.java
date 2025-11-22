@@ -2235,7 +2235,12 @@ public class SpawnZoneRepository {
                         new SpawnZoneMobRecord(MobType.BANDIT_BASE_40_2, 1, 100),
                         new SpawnZoneMobRecord(MobType.BANDIT_BASE_40_3, 1, 100),
                         new SpawnZoneMobRecord(MobType.BANDIT_BASE_40_4, 1, 100)
-                ), 15, false, false), 1))
+                ), 15, false, false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(323, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -746, 71, 372)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SWAMP_ISLAND_HERBLORE_SHOP, 1, 100)
+                ), false, MarkerType.HERBLORE_SHOP, "Herblore Shop"), 1))
 
 
                 // last 321
