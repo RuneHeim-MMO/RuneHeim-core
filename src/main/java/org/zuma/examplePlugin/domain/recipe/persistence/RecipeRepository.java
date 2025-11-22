@@ -21,6 +21,32 @@ public class RecipeRepository {
     public List<RecipeEntity> getAll() {
         return List.of(
 
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.TOOL_STORAGE_BAG.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 10000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 45)),
+                        List.of(
+                                new IngredientRecord(ItemId.NEEDLE, 1, false, false),
+                                new IngredientRecord(ItemId.THREAD, 6, true, false),
+                                new IngredientRecord(ItemId.LINEN_FABRIC, 18, true, false),
+                                new IngredientRecord(ItemId.STEEL_BUCKLE, 2, true, false),
+                                new IngredientRecord(ItemId.HARD_LEATHER, 4, true, false)
+                        ),
+                        new ItemRecord(ItemId.TOOL_BAG, 1),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 120)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.SMALL_STORAGE_BAG.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 10000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 55)),
+                        List.of(
+                                new IngredientRecord(ItemId.NEEDLE, 1, false, false),
+                                new IngredientRecord(ItemId.THREAD, 12, true, false),
+                                new IngredientRecord(ItemId.LINEN_FABRIC, 20, true, false),
+                                new IngredientRecord(ItemId.STEEL_BUCKLE, 2, true, false),
+                                new IngredientRecord(ItemId.BALL_OF_WOOL, 4, true, false),
+                                new IngredientRecord(ItemId.HARD_LEATHER, 4, true, false)
+                        ),
+                        new ItemRecord(ItemId.SMALL_ITEM_BAG, 1),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 175)), null), null),
+
+
                 // Tanner
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.LEATHER.getId(), RecipeType.TANNER_RECIPE, 2000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 1)),
@@ -525,7 +551,7 @@ public class RecipeRepository {
                         List.of(new IngredientRecord(ItemId.WOOL, 1, true, true)),
                         new ItemRecord(ItemId.BALL_OF_WOOL, 1),
                         null,
-                        List.of(new SkillXpRecord(SkillType.CRAFTING, 2.5)), null
+                        List.of(new SkillXpRecord(SkillType.CRAFTING, 5)), null
                 ), null),
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.BOW_STRING_RECIPE.getId(), RecipeType.SPINNING_WHEEL_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 8)),
@@ -541,13 +567,20 @@ public class RecipeRepository {
                         null,
                         List.of(new SkillXpRecord(SkillType.CRAFTING, 30)), null
                 ), null),
-                new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAGIC_BOW_STRING_RECIPE.getId(), RecipeType.SPINNING_WHEEL_RECIPE, 5000,
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.LINEN_FABRIC.getId(), RecipeType.SPINNING_WHEEL_RECIPE, 5000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 30)),
+                        List.of(new IngredientRecord(ItemId.FLAX, 10, true, true)),
+                        new ItemRecord(ItemId.LINEN_FABRIC, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.CRAFTING, 50)), null
+                ), null),
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAGIC_BOW_STRING_RECIPE.getId(), RecipeType.SPINNING_WHEEL_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 40)),
                         List.of(new IngredientRecord(ItemId.BOW_STRING, 1, true, true),
                                 new IngredientRecord(ItemId.MAGIC_ASHES, 3, true, true)),
                         new ItemRecord(ItemId.MAGIC_BOW_STRING, 1),
                         null,
-                        List.of(new SkillXpRecord(SkillType.CRAFTING, 40)), null
+                        List.of(new SkillXpRecord(SkillType.CRAFTING, 80)), null
                 ), null),
 
                 // Tools
@@ -588,7 +621,7 @@ public class RecipeRepository {
                         new CampfireRecipeMeta("Log", "Campfire", 180, false, new ItemRecord(ItemId.ASHES, 1))), 1)),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.BIRCH_CAMPFIRE.getId(), RecipeType.CAMPFIRE_RECIPE, 3000,
-                        List.of(new SkillRequirement(SkillType.FIREMAKING, 1)),
+                        List.of(new SkillRequirement(SkillType.FIREMAKING, 10)),
                         List.of(
                                 new IngredientRecord(ItemId.BIRCH_LOG, 1, true, false),
                                 new IngredientRecord(ItemId.FLINT_AND_STEEL, 1, false, false)
@@ -600,7 +633,7 @@ public class RecipeRepository {
                         new CampfireRecipeMeta("Birch Log", "Campfire", 120, false, new ItemRecord(ItemId.ASHES, 1))), 1)),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAPLE_CAMPFIRE.getId(), RecipeType.CAMPFIRE_RECIPE, 3000,
-                        List.of(new SkillRequirement(SkillType.FIREMAKING, 1)),
+                        List.of(new SkillRequirement(SkillType.FIREMAKING, 15)),
                         List.of(
                                 new IngredientRecord(ItemId.MAPLE_LOG, 1, true, false),
                                 new IngredientRecord(ItemId.FLINT_AND_STEEL, 1, false, false)
@@ -612,7 +645,7 @@ public class RecipeRepository {
                         new CampfireRecipeMeta("Maple Log", "Campfire", 240, false, new ItemRecord(ItemId.ASHES, 1))), 1)),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.YEW_CAMPFIRE.getId(), RecipeType.CAMPFIRE_RECIPE, 3000,
-                        List.of(new SkillRequirement(SkillType.FIREMAKING, 1)),
+                        List.of(new SkillRequirement(SkillType.FIREMAKING, 20)),
                         List.of(
                                 new IngredientRecord(ItemId.YEW_LOG, 1, true, false),
                                 new IngredientRecord(ItemId.FLINT_AND_STEEL, 1, false, false)
@@ -624,7 +657,7 @@ public class RecipeRepository {
                         new CampfireRecipeMeta("Yew Log", "Campfire", 300, false, new ItemRecord(ItemId.ASHES, 1))), 1)),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAHOGANY_CAMPFIRE.getId(), RecipeType.CAMPFIRE_RECIPE, 3000,
-                        List.of(new SkillRequirement(SkillType.FIREMAKING, 1)),
+                        List.of(new SkillRequirement(SkillType.FIREMAKING, 30)),
                         List.of(
                                 new IngredientRecord(ItemId.MAHOGANY_LOG, 1, true, false),
                                 new IngredientRecord(ItemId.FLINT_AND_STEEL, 1, false, false)
@@ -637,7 +670,7 @@ public class RecipeRepository {
 
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.MAGIC_LOG_CAMPFIRE.getId(), RecipeType.CAMPFIRE_RECIPE, 3000,
-                        List.of(new SkillRequirement(SkillType.FIREMAKING, 1)),
+                        List.of(new SkillRequirement(SkillType.FIREMAKING, 50)),
                         List.of(
                                 new IngredientRecord(ItemId.MAGIC_LOG, 1, true, false),
                                 new IngredientRecord(ItemId.FLINT_AND_STEEL, 1, false, false)
@@ -865,6 +898,18 @@ public class RecipeRepository {
                         List.of(new SkillXpRecord(SkillType.COOKING, 300)), null
                 ), null),
 
+
+                // Smithing materials
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.STEEL_BUCKLE.getId(), RecipeType.SMITHING_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 30)),
+                        List.of(
+                                new IngredientRecord(ItemId.STEEL_BAR, 1, true, false),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.STEEL_BUCKLE, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 18.5)), null
+                ), null),
 
                 // Helmets
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.BRONZE_MEDHELM.getId(), RecipeType.SMITHING_RECIPE, 3000,
