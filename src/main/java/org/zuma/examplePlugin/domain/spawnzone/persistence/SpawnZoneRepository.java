@@ -2165,10 +2165,80 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(314, SpawnZoneType.AREA, 30, 30,
                         new Location(Bukkit.getWorld("world"), 912, 107, 45)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.PANDA_BASE_35, 10, 100)
-                ), 30, false, true), 1))
+                ), 30, false, true), 1)),
 
 
-                // last 309
+                // Jungle bugs
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(315, SpawnZoneType.AREA, 30, 30,
+                        new Location(Bukkit.getWorld("world"), 471, 110, 544)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CRICKET_GREEN_BASE_7, 30, 100),
+                        new SpawnZoneMobRecord(MobType.ANT_BLACK_BASE_5, 30, 100),
+                        new SpawnZoneMobRecord(MobType.MANTIS_BASE_25, 20, 100),
+                        new SpawnZoneMobRecord(MobType.SCORPION_BASE_30, 10, 100)
+                ), 100, false, true), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(316, SpawnZoneType.AREA, 30, 30,
+                        new Location(Bukkit.getWorld("world"), 331, 110, 461)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CRICKET_GREEN_BASE_7, 30, 100),
+                        new SpawnZoneMobRecord(MobType.ANT_BLACK_BASE_5, 30, 100),
+                        new SpawnZoneMobRecord(MobType.MANTIS_BASE_25, 20, 100),
+                        new SpawnZoneMobRecord(MobType.SCORPION_BASE_30, 10, 100)
+                ), 100, false, true), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(317, SpawnZoneType.AREA, 30, 30,
+                        new Location(Bukkit.getWorld("world"), 143, 110, 503)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CRICKET_GREEN_BASE_7, 30, 100),
+                        new SpawnZoneMobRecord(MobType.ANT_BLACK_BASE_5, 30, 100),
+                        new SpawnZoneMobRecord(MobType.MANTIS_BASE_25, 20, 100),
+                        new SpawnZoneMobRecord(MobType.SCORPION_BASE_30, 10, 100)
+                ), 100, false, true), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(318, SpawnZoneType.AREA, 30, 30,
+                        new Location(Bukkit.getWorld("world"), 516, 110, 408)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CRICKET_GREEN_BASE_7, 8, 100),
+                        new SpawnZoneMobRecord(MobType.ANT_BLACK_BASE_5, 8, 100),
+                        new SpawnZoneMobRecord(MobType.MANTIS_BASE_25, 4, 100),
+                        new SpawnZoneMobRecord(MobType.SCORPION_BASE_30, 3, 100)
+                ), 50, false, true), 1)),
+
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(319, SpawnZoneType.AREA, 30, 30,
+                        new Location(Bukkit.getWorld("world"), 577, 110, 456)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CRICKET_GREEN_BASE_7, 8, 100),
+                        new SpawnZoneMobRecord(MobType.ANT_BLACK_BASE_5, 8, 100),
+                        new SpawnZoneMobRecord(MobType.MANTIS_BASE_25, 4, 100),
+                        new SpawnZoneMobRecord(MobType.SCORPION_BASE_30, 3, 100)
+                ), 50, false, true), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(320, SpawnZoneType.AREA, 30, 30,
+                        new Location(Bukkit.getWorld("world"), 409, 110, 700)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CRICKET_GREEN_BASE_7, 8, 100),
+                        new SpawnZoneMobRecord(MobType.ANT_BLACK_BASE_5, 8, 100),
+                        new SpawnZoneMobRecord(MobType.MANTIS_BASE_25, 4, 100),
+                        new SpawnZoneMobRecord(MobType.SCORPION_BASE_30, 3, 100)
+                ), 50, false, true), 1)),
+
+
+                // Near jungle bandits camp
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(321, SpawnZoneType.AREA, 120, 15,
+                        new Location(Bukkit.getWorld("world"), -66, 80, 457)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_20_1, 2, 100),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_20_2, 2, 100),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_20_3, 2, 100),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_20_4, 2, 100)
+                ), 30, false, false), 1)),
+
+                // Heartroot bandits (for now)
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(322, SpawnZoneType.AREA, 120, 15,
+                        new Location(Bukkit.getWorld("world"), 247, 104, 508)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_40_1, 1, 100),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_40_2, 1, 100),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_40_3, 1, 100),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_40_4, 1, 100)
+                ), 15, false, false), 1))
+
+
+                // last 321
 
 
         );
