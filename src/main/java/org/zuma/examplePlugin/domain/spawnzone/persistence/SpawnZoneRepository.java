@@ -2144,7 +2144,28 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(310, SpawnZoneType.AREA, 10, 30,
                         new Location(Bukkit.getWorld("world"), 276, 50, -77)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.RAT_WELCOME_TO_DRAKKAR_BASE_1, 20, 100)
-                ), 10, false, false), 1))
+                ), 10, false, false), 1)),
+
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(311, SpawnZoneType.AREA, 30, 30,
+                        new Location(Bukkit.getWorld("world"), 672, 76, 243)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.PANDA_BASE_35, 10, 100)
+                ), 50, false, true), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(312, SpawnZoneType.AREA, 30, 30,
+                        new Location(Bukkit.getWorld("world"), 735, 98, 111)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.PANDA_BASE_35, 10, 100)
+                ), 50, false, true), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(313, SpawnZoneType.AREA, 30, 30,
+                        new Location(Bukkit.getWorld("world"), 842, 120, 80)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.PANDA_BASE_35, 10, 100)
+                ), 30, false, true), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(314, SpawnZoneType.AREA, 30, 30,
+                        new Location(Bukkit.getWorld("world"), 912, 107, 45)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.PANDA_BASE_35, 10, 100)
+                ), 30, false, true), 1))
 
 
                 // last 309

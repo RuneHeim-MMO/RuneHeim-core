@@ -36,7 +36,7 @@ public class Common {
                 "Warhound", null, getBaseSkills(80, 0.5),
                 null, MobBehaviors.LLAMA.getBehavior(),
                 0.35, false, true, 65, null, null, DisguiseType.RAVAGER,
-                List.of(DropTableId.BONES.asInt()),
+                List.of(DropTableId.BIG_BONES.asInt()),
                 false));
 
         registry.register(MobType.LLAMA_BASE_56.getId(), () -> new GenericCombatant(
@@ -50,7 +50,7 @@ public class Common {
                 "Strider", null, getBaseSkills(60, 0.5),
                 null, MobBehaviors.STRIDER.getBehavior(),
                 0.35, false, false, 55, null, null, DisguiseType.STRIDER,
-                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
+                List.of(DropTableId.BIG_BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
                 true));
 
         registry.register(MobType.SNIFFER_BASE_65.getId(), () -> new GenericCombatant(
@@ -66,7 +66,7 @@ public class Common {
                 null,
                 MobBehaviors.PENGUIN.getBehavior(),
                 "nm_penguin",
-                0.3, false, false, 30,
+                0.32, false, false, 30,
                 List.of(DropTableId.FEATHERS_3_TO_8.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt(), DropTableId.BONES.asInt()),
                 true));
 
@@ -78,6 +78,13 @@ public class Common {
                 "nm_penguin_baby",
                 0.3, false, false, 20,
                 List.of(DropTableId.FEATHERS_3_TO_8.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt(), DropTableId.BONES.asInt()),
+                true));
+
+        registry.register(MobType.PANDA_BASE_35.getId(), () -> new GenericCombatant(
+                "Panda", null, getBaseSkills(35, 0.6),
+                null, MobBehaviors.PANDA.getBehavior(),
+                0.35, false, false, 30, null, null, DisguiseType.PANDA,
+                List.of(DropTableId.BONES.asInt()),
                 true));
 
 
@@ -141,13 +148,6 @@ public class Common {
                 "Llama", null, List.of(new SkillLevelRecord(SkillType.ATTACK, 1)),
                 null, MobBehaviors.LLAMA.getBehavior(),
                 0.23, false, false, 3, null, null, DisguiseType.LLAMA,
-                List.of(DropTableId.BONES.asInt()),
-                true));
-
-        registry.register(MobType.PANDA.getId(), () -> new GenericCombatant(
-                "Panda", null, List.of(new SkillLevelRecord(SkillType.ATTACK, 1)),
-                null, MobBehaviors.PANDA.getBehavior(),
-                0.18, false, false, 3, null, null, DisguiseType.PANDA,
                 List.of(DropTableId.BONES.asInt()),
                 true));
 

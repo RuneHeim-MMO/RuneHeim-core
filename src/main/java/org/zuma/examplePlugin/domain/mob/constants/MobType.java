@@ -247,7 +247,7 @@ public enum MobType {
     GOAT,
     HUSK,
     LLAMA,
-    PANDA,
+    PANDA_BASE_35,
     PIG,
     POLAR_BEAR,
     RABBIT,
