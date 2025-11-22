@@ -22,7 +22,7 @@ public class Leopards {
                 MobBehaviors.LEOPARD.getBehavior(),
                 "nm_leopard",
                 0.55, true, false, 50,
-                List.of(DropTableId.BIG_BONES.asInt()),
+                List.of(DropTableId.BIG_BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
                 true));
 
         registry.register(MobType.LEOPARD_STANDARD_BABY_BASE_35.getId(), () -> new GenericCombatant(
@@ -32,7 +32,7 @@ public class Leopards {
                 MobBehaviors.LEOPARD.getBehavior(-0.3F),
                 "nm_leopard_baby",
                 0.35, false, false, 30,
-                List.of(DropTableId.BONES.asInt()),
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
                 true));
 
         registry.register(MobType.LEOPARD_SNOW_BASE_60.getId(), () -> new GenericCombatant(
@@ -42,7 +42,7 @@ public class Leopards {
                 MobBehaviors.LEOPARD.getBehavior(-0.3F),
                 "nm_leopard_snow",
                 0.55, true, false, 55,
-                List.of(DropTableId.BIG_BONES.asInt()),
+                List.of(DropTableId.BIG_BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
                 true));
 
         registry.register(MobType.LEOPARD_SNOW_BABY_BASE_40.getId(), () -> new GenericCombatant(
@@ -52,7 +52,7 @@ public class Leopards {
                 MobBehaviors.LEOPARD.getBehavior(),
                 "nm_leopard_snow_baby",
                 0.35, false, false, 38,
-                List.of(DropTableId.BONES.asInt()),
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
                 true));
 
     }
