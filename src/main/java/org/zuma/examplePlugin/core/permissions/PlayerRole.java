@@ -202,4 +202,11 @@ public class PlayerRole {
     public SupporterLevel getSupporterLevel() {
         return supporterLevel;
     }
+
+    public int getMaxQueueSize() {
+        int baseMax = baseRole.maxQueueSize();
+        int upgradedMax = upgradedRole != null ? upgradedRole.maxQueueSize() : 0;
+
+        return Math.max(baseMax, upgradedMax);
+    }
 }

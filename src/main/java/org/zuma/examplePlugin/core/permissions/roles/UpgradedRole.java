@@ -9,18 +9,19 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public enum UpgradedRole implements Role {
-    MYTHIC(997, Icon.RANK_BADGE_MYTHIC, List.of(Permission.BONUS_BOMB_TRACKER), List.of()),
-    LEGEND(998, Icon.RANK_BADGE_LEGEND, List.of(), List.of()),
-    HERO(999, Icon.RANK_BADGE_HERO, List.of(), List.of()),
-    VIP(1000, Icon.RANK_BADGE_VIP, List.of(Permission.TOGGLE_UPGRADED_PREFIX), List.of());
+    MYTHIC(997, 50, Icon.RANK_BADGE_MYTHIC, List.of(Permission.BONUS_BOMB_TRACKER), List.of()),
+    LEGEND(998, 25, Icon.RANK_BADGE_LEGEND, List.of(), List.of()),
+    HERO(999, 20, Icon.RANK_BADGE_HERO, List.of(), List.of()),
+    VIP(1000, 15, Icon.RANK_BADGE_VIP, List.of(Permission.TOGGLE_UPGRADED_PREFIX), List.of());
 
-    private final int weight;
+    private final int weight, maxQueueSize;
     private final List<Permission> inheritablePermissions;
     private final List<Permission> nonInheritedPermissions; // Permissions that are not inherited by other roles
     private final Icon prefix;
 
-    UpgradedRole(int weight, @Nullable Icon prefix, List<Permission> inheritablePermissions, List<Permission> nonInheritedPermissions) {
+    UpgradedRole(int weight, int maxQueueSize, @Nullable Icon prefix, List<Permission> inheritablePermissions, List<Permission> nonInheritedPermissions) {
         this.weight = weight;
+        this.maxQueueSize = maxQueueSize;
         this.inheritablePermissions = inheritablePermissions;
         this.nonInheritedPermissions = nonInheritedPermissions;
         this.prefix = prefix;
@@ -29,6 +30,11 @@ public enum UpgradedRole implements Role {
     @Override
     public int getWeight() {
         return weight;
+    }
+
+    @Override
+    public int maxQueueSize() {
+        return maxQueueSize;
     }
 
     @Override

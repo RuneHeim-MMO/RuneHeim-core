@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BusyStateHandler {
-    private final static int MAX_QUEUED_ACTIONS = 99;
     private final RunePlayer player;
     private final List<QueuedAction> pendingActions;
 
@@ -31,7 +30,7 @@ public class BusyStateHandler {
             return false;
         }
 
-        if (pendingActions.size() >= MAX_QUEUED_ACTIONS) {
+        if (pendingActions.size() >= this.player.getRole().getMaxQueueSize()) {
             SoundType.ACTION_QUEUE_FAIL_SOUND.play(player, false);
             return false;
         }
