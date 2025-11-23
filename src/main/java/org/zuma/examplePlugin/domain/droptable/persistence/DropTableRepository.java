@@ -358,18 +358,18 @@ public class DropTableRepository {
                 ), null)), 1)),
 
                 new DropTableDBEntry(DropTableId.ARMADILLO_HIGH_LEVEL.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
-                        new DropTableEntry(ItemId.ARMADILLO_SCALE.asInt(), 1, 1, 8, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.ARMADILLO_SCALE.asInt(), 1, 1, 6, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.ARMADILLO_CLAW.asInt(), 1, 1, 15, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.SHARP_ARMADILLO_CLAW.asInt(), 1, 1, 70, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
                 new DropTableDBEntry(DropTableId.BOAR.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.BOAR_TUSK.asInt(), 1, 1, 8, DropTableEntry.Type.ITEM),
-                        new DropTableEntry(ItemId.THICK_HIDE.asInt(), 1, 1, 4, DropTableEntry.Type.ITEM)
+                        new DropTableEntry(ItemId.THICK_HIDE.asInt(), 1, 1, 2, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
                 new DropTableDBEntry(DropTableId.HOGLIN.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
-                        new DropTableEntry(ItemId.THICK_HIDE.asInt(), 1, 1, 5, DropTableEntry.Type.ITEM)
+                        new DropTableEntry(ItemId.THICK_HIDE.asInt(), 1, 1, 3, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
 
@@ -380,26 +380,26 @@ public class DropTableRepository {
 
                 new DropTableDBEntry(DropTableId.COCKROACH.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.COCKROACH_LEG.asInt(), 1, 1, 4, DropTableEntry.Type.ITEM),
-                        new DropTableEntry(ItemId.SURVIVAL_GLAND.asInt(), 1, 1, 80, DropTableEntry.Type.ITEM)
+                        new DropTableEntry(ItemId.SURVIVAL_GLAND.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
                 new DropTableDBEntry(DropTableId.ANT.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
-                        new DropTableEntry(ItemId.ANT_EGGS.asInt(), 1, 3, 4, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.ANT_EGGS.asInt(), 1, 3, 6, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.ANT_MANDIBLES.asInt(), 1, 1, 40, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
                 new DropTableDBEntry(DropTableId.CHITIN_PLATES.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
-                        new DropTableEntry(ItemId.CHITIN_PLATES.asInt(), 1, 2, 8, DropTableEntry.Type.ITEM)
+                        new DropTableEntry(ItemId.CHITIN_PLATES.asInt(), 1, 2, 5, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
                 new DropTableDBEntry(DropTableId.SCORPION.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.SCORPION_STINGER.asInt(), 1, 1, 8, DropTableEntry.Type.ITEM),
-                        new DropTableEntry(ItemId.CHITIN_PLATES.asInt(), 1, 1, 5, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.CHITIN_PLATES.asInt(), 1, 2, 5, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.VENOM_SAC.asInt(), 1, 1, 80, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
                 new DropTableDBEntry(DropTableId.BUNNY.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
-                        new DropTableEntry(ItemId.SOFT_FUR.asInt(), 1, 1, 5, DropTableEntry.Type.ITEM)
+                        new DropTableEntry(ItemId.SOFT_FUR.asInt(), 1, 1, 4, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
                 new DropTableDBEntry(DropTableId.WARHOUND.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
@@ -416,11 +416,11 @@ public class DropTableRepository {
                 ), null)), 1)),
 
                 new DropTableDBEntry(DropTableId.LEOPARD.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
-                        new DropTableEntry(ItemId.PREDATOR_CLAW.asInt(), 1, 1, 15, DropTableEntry.Type.ITEM)
+                        new DropTableEntry(ItemId.PREDATOR_CLAW.asInt(), 1, 1, 12, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
                 new DropTableDBEntry(DropTableId.LEOPARD_BABY.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
-                        new DropTableEntry(ItemId.SOFT_CUB_FUR.asInt(), 1, 1, 4, DropTableEntry.Type.ITEM)
+                        new DropTableEntry(ItemId.SOFT_CUB_FUR.asInt(), 1, 1, 3, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
                 new DropTableDBEntry(DropTableId.MOLE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(

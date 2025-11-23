@@ -33,14 +33,14 @@ public class Common {
                 "Hoglin", null, getBaseSkills(5, 0.5),
                 null, MobBehaviors.HOGLIN.getBehavior(),
                 0.24, false, false, 9, null, null, DisguiseType.HOGLIN,
-                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt(),DropTableId.HOGLIN.asInt()),
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt(), DropTableId.HOGLIN.asInt()),
                 true));
 
         registry.register(MobType.INFERNAK_WARHOUND_BASE_80.getId(), () -> new GenericCombatant(
                 "Warhound", null, getBaseSkills(80, 0.5),
                 null, MobBehaviors.LLAMA.getBehavior(),
                 0.35, false, true, 65, null, null, DisguiseType.RAVAGER,
-                List.of(DropTableId.BIG_BONES.asInt()),
+                List.of(DropTableId.BIG_BONES.asInt(), DropTableId.WARHOUND.asInt()),
                 false));
 
         registry.register(MobType.LLAMA_BASE_56.getId(), () -> new GenericCombatant(

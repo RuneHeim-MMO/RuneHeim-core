@@ -137,7 +137,7 @@ public class MobUtils {
         // Normalize (so it's just direction, not distance)
         direction.normalize();
         Vector velocity = direction.multiply(strength);
-        velocity.setY(upwardLift);
+        velocity.setY(velocity.getY() + upwardLift);
 
         if (Double.isFinite(velocity.getX()) && Double.isFinite(velocity.getY()) && Double.isFinite(velocity.getZ())) {
             entity.setVelocity(velocity);
