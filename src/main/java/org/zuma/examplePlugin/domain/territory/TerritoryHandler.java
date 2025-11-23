@@ -7,6 +7,7 @@ import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
@@ -41,8 +42,11 @@ public class TerritoryHandler {
     }
 
     public void initialize() {
+        Plugin plugin = RuneQuestPlugin.getInstance();
+
         loadTerritories();
         startLoop();
+        plugin.getServer().getPluginManager().registerEvents(this.ambientMusicHandler, plugin);
     }
 
     @Nullable
@@ -93,7 +97,7 @@ public class TerritoryHandler {
                     continue;  // skip territories where player is outside radius
                 }
 
-                if(territory.getMaxHeight() < playerY) {
+                if (territory.getMaxHeight() < playerY) {
                     continue; // skip territories where player is above max height
                 }
 

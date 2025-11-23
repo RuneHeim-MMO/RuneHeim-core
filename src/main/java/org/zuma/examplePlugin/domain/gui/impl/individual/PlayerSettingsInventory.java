@@ -76,7 +76,7 @@ public class PlayerSettingsInventory extends PaginatedIndividualGUI {
         PlayerSetting matchingSetting = settingMap.get(itemValue);
         if (matchingSetting == null) return;
 
-        player.getSettings().toggleSetting(matchingSetting);
+        player.getSettings().toggleSetting(player, matchingSetting);
         SoundType.UI_CLICK.play(player, false);
         updateInventory(player);
 
