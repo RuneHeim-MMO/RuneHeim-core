@@ -38,8 +38,8 @@ public enum ModifierType {
     RANGED_STR_BOOST_PERCENT("Ranged Strength Bonus", "", Icon.PRAYER.get(), null, null, false),
     RANGED_ACC_BOOST_PERCENT("Ranged Bonus", "", Icon.PRAYER.get(), null, null, false),
     RANGED_BOOST_PERCENT("Ranged Bonus", "", Icon.PRAYER.get(), null, null, false),
-    HP_RECOVERY_BOOST_PERCENT("HP Recovery Bonus", "", Icon.PRAYER.get(), null, null, false);
-
+    HP_RECOVERY_BOOST_PERCENT("HP Recovery Bonus", "", Icon.PRAYER.get(), null, null, false),
+    ARROW_RECOVERY_PERCENT("Arrow Recovery", "Increases the chance to not consume arrow.", Icon.PRAYER.get(), "%", null, false);
 
     private final String label, description, symbol, numSuffix, numPrefix;
     private final boolean special;
