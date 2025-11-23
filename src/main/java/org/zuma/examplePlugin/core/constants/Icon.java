@@ -145,6 +145,7 @@ public enum Icon {
     RANK_BADGE_ADMIN("⥿"),
     RANK_BADGE_MOD("⭋"),
     RANK_BADGE_HELPER("⤳"),
+    RANK_BADGE_PILOT("⇦"),
 
     RANK_BADGE_VIP("⊹"),
     RANK_BADGE_HERO("⥤"),
