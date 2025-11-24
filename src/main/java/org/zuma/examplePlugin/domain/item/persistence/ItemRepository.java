@@ -592,7 +592,8 @@ public class ItemRepository {
                         toVersionedJson(new EquipableTypeMeta(null, null, null,
                                 List.of(
                                         new Modifier(ModifierType.RANGED_ACCURACY, 12),
-                                        new Modifier(ModifierType.RANGED_STRENGTH, 12)
+                                        new Modifier(ModifierType.RANGED_STRENGTH, 12),
+                                        new Modifier(ModifierType.ARROW_RECOVERY_PERCENT, 10)
                                 ), List.of(new SkillRequirement(SkillType.RANGED, 60)),
                                 null), 1)),
 

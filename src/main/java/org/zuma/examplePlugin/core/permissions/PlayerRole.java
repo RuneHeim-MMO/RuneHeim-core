@@ -75,7 +75,7 @@ public class PlayerRole {
         }
 
         if (baseVisible && upgradedVisible) {
-            return upgradedPrefix.append(basePrefix).append(Component.text(" "));
+            return upgradedPrefix.append(Component.text(" ").append(basePrefix).append(Component.text(" ")));
         } else if (baseVisible) {
             return basePrefix.append(Component.text(" "));
         } else if (upgradedVisible) {
