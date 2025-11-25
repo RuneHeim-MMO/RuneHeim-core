@@ -38,7 +38,7 @@ public class RecipeRepository {
                         List.of(
                                 new IngredientRecord(ItemId.THREAD, 4, true, false),
                                 new IngredientRecord(ItemId.LINEN_FABRIC, 3, true, false),
-                                new IngredientRecord(ItemId.COOKED_PIKE, 2, true, false),
+                                new IngredientRecord(ItemId.COOKED_PIKE, 5, true, false),
                                 new IngredientRecord(ItemId.INSECT_WINGS, 4, true, false),
                                 new IngredientRecord(ItemId.COCKROACH_LEG, 4, true, false)
                         ),
