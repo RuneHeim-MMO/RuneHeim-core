@@ -91,6 +91,14 @@ public class HitCalculator {
             int damage = Math.min(defender.getHealth(), baseDamage);
 
             return new Hit(attacker, defender, type, damage, getHitType(defender, damage), (int) maxHit, hitChance, isSpecialAttack, isSplashHit);
+        } else if (Math.random() < 0.25) {
+            // Glancing blow
+            int baseDamage = (int) (Math.random() * (maxHit / 3.0));
+            int damage = Math.min(defender.getHealth(), baseDamage);
+
+            if (damage == 0 && maxHit > 3) damage = 1; // Ensure at least 1 damage on glancing blow
+
+            return new Hit(attacker, defender, type, damage, getHitType(defender, damage), (int) maxHit, hitChance, isSpecialAttack, isSplashHit);
         }
 
 
@@ -102,6 +110,7 @@ public class HitCalculator {
     public static int getMaxHit(CombatEntity attacker, AttackType type) {
         double attackerStrBonus = getEntityModifierAmount(attacker, ModifierType.STRENGTH_BONUS);
         double attackerRangeStr = getEntityModifierAmount(attacker, ModifierType.RANGED_STRENGTH);
+        double attackerMaxHitPenaltyPercent = Math.abs(getEntityModifierAmount(attacker, ModifierType.MAX_HIT_PENALTY));
 
         attackerRangeStr *= 1 + (getEntityModifierAmount(attacker, ModifierType.RANGED_STR_BOOST_PERCENT) / 100.0);
 
@@ -109,14 +118,14 @@ public class HitCalculator {
             double attackerStrength = getEntitySkillLevel(attacker, SkillType.STRENGTH);
 
             // Melee max hit = floor(0.5 + StrengthLevel * (StrengthBonus + 64) / 640)
-            double maxHit = MAX_HIT_FLOOR_OFFSET + attackerStrength * (attackerStrBonus + BASE_BONUS) / MAX_HIT_DIVISOR;
+            double maxHit = (MAX_HIT_FLOOR_OFFSET + attackerStrength * (attackerStrBonus + BASE_BONUS) / MAX_HIT_DIVISOR) * (1 - attackerMaxHitPenaltyPercent / 100.0);
 
             return Math.max(2, (int) Math.ceil(maxHit));
         }
 
         if (type == AttackType.RANGED) {
             double attackerRanged = getEntitySkillLevel(attacker, SkillType.RANGED);
-            double maxHit = MAX_HIT_FLOOR_OFFSET + attackerRanged * (attackerRangeStr + BASE_BONUS) / MAX_HIT_DIVISOR;
+            double maxHit = (MAX_HIT_FLOOR_OFFSET + attackerRanged * (attackerRangeStr + BASE_BONUS) / MAX_HIT_DIVISOR) * (1 - attackerMaxHitPenaltyPercent / 100.0);
 
             return Math.max(2, (int) Math.ceil(maxHit));
         }
@@ -192,7 +201,7 @@ public class HitCalculator {
         double slash = getEntityModifierAmount(entity, ModifierType.ATTACK_SLASH);
         double crush = getEntityModifierAmount(entity, ModifierType.ATTACK_CRUSH);
 
-        return (stab + slash + crush) / 3.0;
+        return ((stab + slash + crush) / 3.0) * 1.35;
     }
 
     private static double getCombinedDefenceBonus(CombatEntity entity) {

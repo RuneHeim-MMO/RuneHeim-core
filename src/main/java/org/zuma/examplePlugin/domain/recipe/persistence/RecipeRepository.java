@@ -58,6 +58,16 @@ public class RecipeRepository {
                         new ItemRecord(ItemId.SMALL_ITEM_BAG, 1),
                         null, List.of(new SkillXpRecord(SkillType.CRAFTING, 175)), null), null),
 
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ARMADILLO_HOOKBLADE.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 10000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 50)),
+                        List.of(
+                                new IngredientRecord(ItemId.ARMADILLO_SCALE, 10, true, false),
+                                new IngredientRecord(ItemId.ARMADILLO_CLAW, 4, true, false),
+                                new IngredientRecord(ItemId.SHARP_ARMADILLO_CLAW, 2, true, false)
+                        ),
+                        new ItemRecord(ItemId.ARMADILLO_HOOKBLADE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 175)), null), null),
+
 
                 // Tanner
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.LEATHER.getId(), RecipeType.TANNER_RECIPE, 2000,

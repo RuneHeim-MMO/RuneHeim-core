@@ -39,7 +39,9 @@ public enum ModifierType {
     RANGED_ACC_BOOST_PERCENT("Ranged Bonus", "", Icon.PRAYER.get(), null, null, false),
     RANGED_BOOST_PERCENT("Ranged Bonus", "", Icon.PRAYER.get(), null, null, false),
     HP_RECOVERY_BOOST_PERCENT("HP Recovery Bonus", "", Icon.PRAYER.get(), null, null, false),
-    ARROW_RECOVERY_PERCENT("Arrow Recovery", "Increases the chance to not consume arrow.", Icon.ARROW.get(), "%", null, false);
+    ARROW_RECOVERY_PERCENT("Arrow Recovery", "Increases the chance to not consume arrow.", Icon.ARROW.get(), "%", null, false),
+
+    MAX_HIT_PENALTY("Max Hit Reduction", "Reduces the maximum possible hit you can deal.", Icon.SPECIAL_ATTACK.get(), "%", null, false);
 
     private final String label, description, symbol, numSuffix, numPrefix;
     private final boolean special;

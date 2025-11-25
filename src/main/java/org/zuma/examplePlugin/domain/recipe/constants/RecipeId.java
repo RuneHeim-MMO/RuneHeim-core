@@ -159,7 +159,8 @@ public enum RecipeId {
     TOOL_STORAGE_BAG(1816),
     STEEL_BUCKLE(1817),
     SMALL_STORAGE_BAG(1818),
-    REGULAR_FAIRY_RATION(1819);
+    REGULAR_FAIRY_RATION(1819),
+    ARMADILLO_HOOKBLADE(1820);
 
 
     private final int id;

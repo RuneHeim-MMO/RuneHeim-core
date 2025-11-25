@@ -1873,6 +1873,7 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 3),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 2),
+                                                new Modifier(ModifierType.MAX_HIT_PENALTY, -15),
                                                 new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 1)),
@@ -1884,6 +1885,7 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 5),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 3),
+                                                new Modifier(ModifierType.MAX_HIT_PENALTY, -15),
                                                 new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 1)),
@@ -1896,6 +1898,7 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 8),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 6),
+                                                new Modifier(ModifierType.MAX_HIT_PENALTY, -15),
                                                 new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 5)),
@@ -1908,6 +1911,7 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 14),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 10),
+                                                new Modifier(ModifierType.MAX_HIT_PENALTY, -15),
                                                 new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 20)),
@@ -1920,6 +1924,7 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 18),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 14),
+                                                new Modifier(ModifierType.MAX_HIT_PENALTY, -15),
                                                 new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 30)),
@@ -1932,10 +1937,24 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 24),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 19),
+                                                new Modifier(ModifierType.MAX_HIT_PENALTY, -15),
                                                 new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 40)),
                                         null), null, 1), 1)
+                ),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.ARMADILLO_HOOKBLADE.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Armadillo Hookblade", List.of("A wicked curved blade that trades raw force for blistering speed."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new EquipableWeaponTypeMeta(WeaponSpeed.VERY_FAST, null,
+                                        List.of(
+                                                new Modifier(ModifierType.ATTACK_SLASH, 10),
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 8),
+                                                new Modifier(ModifierType.MAX_HIT_PENALTY, -30),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, -2)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 50)),
+                                        null)
+                                , 1)
                 ),
 
                 // Weapons - Battleaxes
