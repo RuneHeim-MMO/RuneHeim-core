@@ -22,15 +22,17 @@ public class ItemPriceCalculator {
         priceCache.clear();
 
         List<AbstractItemType> items = new ArrayList<>(RuneQuestPlugin.getItemRegistry().getAllItems());
-        items.sort(Comparator.comparing(item -> item.displayName));
+        items.sort(
+                Comparator
+                        .comparing((AbstractItemType item) -> !(item instanceof Material)) // Materials first
+                        .thenComparing(item -> item.displayName) // Alphabetical inside each group
+        );
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Algorithmic item price calculation started for " + items.size() + " items...");
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "----------------------------------------------------------------------");
 
         for (AbstractItemType item : items) {
             PriceRecord priceRecord = getPrice(item);
-
-
             if (priceRecord == null) continue;
 
             priceCache.put(item.id, Math.toIntExact(priceRecord.buyPrice()));
@@ -108,10 +110,10 @@ public class ItemPriceCalculator {
         for (IngredientRecord ingredient : matchingRecipe.getIngredients()) {
             AbstractItemType ingredientItem = RuneQuestPlugin.getItemRegistry().getType(ingredient.itemId());
 
-            if (!(ingredientItem instanceof Material material)) continue;
+            if (ingredientItem == null) continue;
             if ((!ingredient.isConsumedOnSuccess() || !ingredientItem.isTradeable)) continue;
 
-            PriceRecord priceRecord = getPrice(material);
+            PriceRecord priceRecord = getPrice(ingredientItem);
 
             if (priceRecord == null || priceRecord.buyPrice() == null) {
                 basePrice = null;
