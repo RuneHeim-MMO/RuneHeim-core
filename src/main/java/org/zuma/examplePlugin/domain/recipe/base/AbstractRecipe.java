@@ -408,7 +408,7 @@ public abstract class AbstractRecipe implements Restrictable {
         onCraftFinish(player, successCrafts);
         handleRecipeCraftingSuccess(player);
 
-        player.asBukkitPlayer().sendMessage(
+        HudService.sendSuccessMessage(player,
                 Component.text("Successfully " + type.getPastTenseVerb().toLowerCase() + " " + successCrafts + "x ")
                         .append(resultComponent)
                         .color(Color.SUCCESS.asColor())

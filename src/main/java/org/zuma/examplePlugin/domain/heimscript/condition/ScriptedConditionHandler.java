@@ -130,6 +130,9 @@ public class ScriptedConditionHandler {
                     int n = (int) (Math.random() * 101);
                     result = (n < Integer.parseInt(args.get("percent")));
                 }
+                case CAN_CLAIM_DAILY_REWARD -> {
+                    result = player.getDailyRewards().canClaimToday();
+                }
                 default ->
                         RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Unknown condition " + action + " in " + input + "!");
             }

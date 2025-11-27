@@ -11,6 +11,8 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.core.exception.PlayerDataLoadException;
+import org.zuma.examplePlugin.domain.daily.DailyRewardHandler;
+import org.zuma.examplePlugin.domain.daily.DailyRewards;
 import org.zuma.examplePlugin.domain.payments.SupporterLevel;
 import org.zuma.examplePlugin.domain.player.persistence.DeserializedPlayerEntity;
 import org.zuma.examplePlugin.domain.player.persistence.RunePlayerRepository;
@@ -41,11 +43,13 @@ public class RunePlayerManager {
     private final PlayerLoadingStateHandler loadingStateHandler;
     private final RunePlayerRepository repository;
     private final QuestHandler questHandler;
+    private final DailyRewardHandler dailyRewardHandler;
 
-    public RunePlayerManager(RunePlayerRepository repository, QuestHandler questHandler) {
+    public RunePlayerManager(RunePlayerRepository repository, QuestHandler questHandler, DailyRewardHandler dailyRewardHandler) {
         this.loadingStateHandler = new PlayerLoadingStateHandler(RuneQuestPlugin.getInstance());
         this.repository = repository;
         this.questHandler = questHandler;
+        this.dailyRewardHandler = dailyRewardHandler;
     }
 
     public static EnumMap<SkillType, Skill> createDefaultSkills() {
@@ -126,7 +130,9 @@ public class RunePlayerManager {
 
                     HashMap<String, PlayerQuestState> questState = questHandler.getPlayerQuestDataSync(uuid);
                     HashMap<String, AbstractQuestStep> questSteps = questHandler.initQuestStepInstances(uuid, questState);
+                    DailyRewards dailyRewards = dailyRewardHandler.getPlayerDailyRewardDataSync(uuid);
 
+                    data.getKey().setDailyRewards(dailyRewards);
                     data.getKey().setActiveQuestSteps(questSteps);
                     setPlayerOnlineAndFinalize(player, data);
                 });
@@ -199,6 +205,7 @@ public class RunePlayerManager {
         player.teleport(playerData.location());
         loadingStateHandler.setPlayerLoaded(player);
         runePlayer.setSurvivalMode();
+        runePlayer.getDailyRewards().updateIfNeeded(runePlayer);
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
             runePlayer.getRole().reloadPermissions(runePlayer);
@@ -279,6 +286,7 @@ public class RunePlayerManager {
             try {
                 repository.upsertPlayer(serializedContainer, unmount);
                 questHandler.savePlayerQuestData(runePlayer, false);
+                dailyRewardHandler.savePlayerDailyRewardData(runePlayer, false);
 
                 runSync(() -> {
                     if (unmount) players.remove(player.getUniqueId());
@@ -311,6 +319,7 @@ public class RunePlayerManager {
             try {
                 repository.upsertPlayer(RunePlayerSerializer.serializePlayerSync(player, player.asBukkitPlayer(), unmount), unmount);
                 questHandler.savePlayerQuestData(player, false);
+                dailyRewardHandler.savePlayerDailyRewardData(player, false);
                 wipeInventory(player.asBukkitPlayer());
 
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.asBukkitPlayer().getName() + " data has been saved. Unmounted: true");

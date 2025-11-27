@@ -37,6 +37,7 @@ public enum GUIOverlay {
     LARGE_BAG_OVERLAY("ⵐ"),
     BOMBS_MENU_OVERLAY("▫"),
     PLAYER_SETTINGS_MENU_OVERLAY("⠧"),
+    DAILY_REWARDS_OVERLAY("┆"),
 
     GENERIC_OVERLAY_1("⼮"),
     GENERIC_OVERLAY_2("⌱"),

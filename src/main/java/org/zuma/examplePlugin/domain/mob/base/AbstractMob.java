@@ -55,7 +55,7 @@ public abstract class AbstractMob {
     private Component displayName;
     private EntityType baseMob;
     private String type;
-    private boolean ai, silent, isBaby, isInvulnerable, clearDefaultHandsEquipment, pausedMechanics;
+    private boolean ai, silent, isBaby, isInvulnerable, clearDefaultHandsEquipment, frozen;
 
     private int maxWalkDistance, yaw, secondsAlive;
     private HashMap<Attribute, Double> customAttributes;
@@ -329,6 +329,7 @@ public abstract class AbstractMob {
 
         if (!canWalk()) {
             entity.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, Integer.MAX_VALUE, 255, false, false, false));
+            this.frozen = true;
         }
 
         clearMobEquipment(entity);
@@ -493,15 +494,17 @@ public abstract class AbstractMob {
     public void freezeMob() {
         // Prevent mob from walking/jumping when player clicks it.
         if (this.getEntity() instanceof LivingEntity living) {
-            living.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, Integer.MAX_VALUE, 254, false, false, false)); // 255 is reserved for mobs that NEVER walk.
+            living.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, Integer.MAX_VALUE, 254, false, false, false)); // 255 was reserved for mobs that NEVER walk.
+            this.frozen = true;
         }
     }
 
     public void unfreezeMob() {
         if (this.getEntity() instanceof LivingEntity living) {
             var effect = living.getPotionEffect(PotionEffectType.SLOWNESS);
-            if (effect != null && effect.getAmplifier() == 254) {
+            if (effect != null && (effect.getAmplifier() == 254 || effect.getAmplifier() == 255)) {
                 living.removePotionEffect(PotionEffectType.SLOWNESS);
+                this.frozen = false;
             }
         }
     }
@@ -609,5 +612,9 @@ public abstract class AbstractMob {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public boolean isFrozen() {
+        return frozen;
     }
 }

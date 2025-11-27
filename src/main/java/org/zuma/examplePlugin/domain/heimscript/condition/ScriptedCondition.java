@@ -36,7 +36,8 @@ public enum ScriptedCondition implements ScriptedStatement {
     QUEST_FINISHED("quest_finished", "id"),
     QUEST_STEP_ACTIVE("quest_step_active", "stable_id"),
     NEVER_TRUE("never_true"),
-    RANDOM_CHANCE("random_chance", "percent");
+    RANDOM_CHANCE("random_chance", "percent"),
+    CAN_CLAIM_DAILY_REWARD("can_claim_daily_reward");
 
     public final String trigger;
     public final List<String> argsTemplates;

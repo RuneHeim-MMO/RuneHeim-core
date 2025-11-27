@@ -57,6 +57,7 @@ public enum MarkerType {
     FLETCHING_TABLE("fletching-tables", "Fletching Table", "./assets/markers/fletching_table.png"),
     HERBLORE_SHOP("herblore-shops", "Herblore Shop", "./assets/markers/herblore_shop.png"),
     TERRITORY("territories", "Territories", ""),
+    DAILY_REWARD("daily_reward", "Collector of Days", "./assets/markers/daily_rewards.png"),
 
     // Dev
     BIOME_SPAWN_ZONE("biome_spawn_zone", "Biome Spawn Zones", ""),

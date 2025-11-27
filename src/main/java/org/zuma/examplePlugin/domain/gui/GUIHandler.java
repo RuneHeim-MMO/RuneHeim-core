@@ -126,8 +126,9 @@ public class GUIHandler {
         this.registry.register(InventoryId.MEDIUM_STORAGE_BAG.asInt(), () -> new MediumBagInventory(GUIOverlay.MEDIUM_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Medium Bag", InventoryId.MEDIUM_STORAGE_BAG.asInt(), storageItemContentController));
         this.registry.register(InventoryId.LARGE_STORAGE_BAG.asInt(), () -> new LargeBagInventory(GUIOverlay.LARGE_BAG_OVERLAY.asGlyph() + "§f" + Icon.STORAGE.get() + "§f Large Bag", InventoryId.LARGE_STORAGE_BAG.asInt(), storageItemContentController));
 
-        this.registry.register(InventoryId.BOMBS_MENU.asInt(), () -> new BombsMenu(GUIOverlay.BOMBS_MENU_OVERLAY.asGlyph() + "§f" + Icon.EXPLOSION.get() + "§f Bombs Menu", InventoryId.BOMBS_MENU.asInt()));
+        this.registry.register(InventoryId.BOMBS_MENU.asInt(), () -> new DonatorBombsInventory(GUIOverlay.BOMBS_MENU_OVERLAY.asGlyph() + "§f" + Icon.EXPLOSION.get() + "§f Bombs Menu", InventoryId.BOMBS_MENU.asInt()));
         this.registry.register(InventoryId.PLAYER_SETTINGS_MENU.asInt(), () -> new PlayerSettingsInventory(GUIOverlay.PLAYER_SETTINGS_MENU_OVERLAY.asGlyph() + "§f" + Icon.TOOL.get() + "§f Settings", InventoryId.PLAYER_SETTINGS_MENU.asInt()));
+        this.registry.register(InventoryId.DAILY_REWARDS.asInt(), () -> new DailyRewardsInventory(GUIOverlay.DAILY_REWARDS_OVERLAY.asGlyph() + "§f" + Icon.TREASURE_CHEST.get() + "§f Daily Rewards", InventoryId.DAILY_REWARDS.asInt()));
 
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");

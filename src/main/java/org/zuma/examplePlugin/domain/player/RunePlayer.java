@@ -20,6 +20,7 @@ import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.core.interfaces.InteractiveActionStrategy;
 import org.zuma.examplePlugin.core.utils.*;
 import org.zuma.examplePlugin.domain.combat.Hit;
+import org.zuma.examplePlugin.domain.daily.DailyRewards;
 import org.zuma.examplePlugin.domain.hud.ActionBarManager;
 import org.zuma.examplePlugin.domain.hud.BossBarManager;
 import org.zuma.examplePlugin.domain.hud.HudService;
@@ -54,6 +55,7 @@ public class RunePlayer implements CombatEntity {
     private final PlayerCombatData combatData;
     private PlayerSettings settings;
     private PlayerBombsContainer bombsContainer;
+    private DailyRewards dailyRewards;
 
     private final PendingXPHandler pendingXPHandler;
     private final EnumMap<ModifierType, Modifier> modifiers;
@@ -93,6 +95,7 @@ public class RunePlayer implements CombatEntity {
         this.pendingXPHandler = new PendingXPHandler();
         this.scoreboardUsernameRenderer = new ScoreboardUsernameRenderer(this);
         this.settings = new PlayerSettings();
+        this.dailyRewards = new DailyRewards(1, System.currentTimeMillis(), false, new HashMap<>());
 
         this.pouchCoins = 0;
         this.discoveredTerritoryIds = new ArrayList<>();
@@ -120,6 +123,14 @@ public class RunePlayer implements CombatEntity {
 
     public Entity getEntity() {
         return this.asBukkitPlayer();
+    }
+
+    public void setDailyRewards(DailyRewards dailyRewards) {
+        this.dailyRewards = dailyRewards;
+    }
+
+    public DailyRewards getDailyRewards() {
+        return dailyRewards;
     }
 
     // Modifiers
