@@ -11,9 +11,11 @@ import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.core.redis.CatchAllListener;
 import org.zuma.examplePlugin.core.redis.GlobalEventHandler;
 import org.zuma.examplePlugin.core.redis.RedisConnection;
+import org.zuma.examplePlugin.domain.daily.DailyRewardHandler;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
 import org.zuma.examplePlugin.domain.modifier.scopes.server.ServerModifierHandler;
 import org.zuma.examplePlugin.domain.payments.handlers.DonationHandler;
+import org.zuma.examplePlugin.events.DailyMegaRareClaimEvent;
 import org.zuma.examplePlugin.events.core.NetworkRestartEvent;
 import org.zuma.examplePlugin.events.inventory.RuneStorageInventoryOpenEvent;
 import org.zuma.examplePlugin.events.payment.*;
@@ -44,6 +46,7 @@ public class InterCommunicationModule implements PluginModule {
             GlobalEventHandler.registerEvent(BombContainerReloadEvent.class, BombContainerReloadEvent.Payload.class);
             GlobalEventHandler.registerEvent(BombActivatedEvent.class, BombActivatedEvent.Payload.class);
             GlobalEventHandler.registerEvent(SupportLevelUpgradeEvent.class, SupportLevelUpgradeEvent.Payload.class);
+            GlobalEventHandler.registerEvent(DailyMegaRareClaimEvent.class, DailyMegaRareClaimEvent.Payload.class);
 
             GlobalEventHandler.addListener(NetworkRestartEvent.class, e -> ScheduledRestartHandler.scheduleRestart(e.restartAt, e.reason));
             GlobalEventHandler.addListener(RuneStorageInventoryOpenEvent.class, e -> context.get(GUIHandler.class).onStorageContainerOpenGlobalEvent(e.containerUUID));
@@ -56,6 +59,10 @@ public class InterCommunicationModule implements PluginModule {
                     context.get(ServerModifierHandler.class).showActivationMessage(p.activatedBy, p.serverId, player, p.type);
                 });
             });
+            GlobalEventHandler.addListener(DailyMegaRareClaimEvent.class, p -> {
+                context.get(DailyRewardHandler.class).handleMegaRareClaim(p);
+            });
+
 
         } catch (Throwable t) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Redis init failed, continuing anyway.", t);

@@ -8,6 +8,7 @@ public enum Icon {
     INFO("§bⓤ"),
     SUCCESS("ⓤ"),
     ERROR("§cⵅ"),
+    ANNOUNCEMENT("ⅎ"),
 
     COMMON("▜"),
     UNCOMMON("⏤"),

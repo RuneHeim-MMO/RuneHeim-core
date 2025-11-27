@@ -136,6 +136,10 @@ public class AdminCommand implements BasicCommand {
             item.getMetaGenerator().updatePresentationLayer(itemStack);
         }
 
+        if (args[0].equalsIgnoreCase("reset_daily")) {
+            RuneQuestPlugin.getDailyRewardHandler().assignNewDailyRewards(runePlayer.getDailyRewards());
+        }
+
         if (args[0].equalsIgnoreCase("level") && args[1].equalsIgnoreCase("fairy")) {
             AdditionalGearSlotHandler slotHandler = RuneQuestPlugin.getModuleContext().get(AdditionalGearSlotHandler.class);
             ItemStack itemStack = slotHandler.getSlotItem(runePlayer, ReservedSlot.FAIRY_SLOT);

@@ -8,6 +8,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
@@ -55,7 +56,9 @@ public class CoinsItem extends MiscItem {
     @Override
     public void onPlayerPickupItem(PlayerAttemptPickupItemEvent event, RunePlayer player, StateManager itemStateManager) {
         event.setCancelled(true);
-        ItemStack item = event.getItem().getItemStack().clone();
+        ItemStack stack = event.getItem().getItemStack();
+
+        ItemStack item = stack.clone();
         event.getItem().setItemStack(new ItemStack(Material.AIR));
 
         creditPlayer(item, player);
@@ -64,6 +67,10 @@ public class CoinsItem extends MiscItem {
     public void creditPlayer(ItemStack item, RunePlayer player) {
         ItemMeta meta = item.getItemMeta();
         PersistentDataContainer container = meta.getPersistentDataContainer();
+
+        if (IllegalItemWatchdog.getItemStackStatus(item).equals(IllegalItemWatchdog.LegalityType.ILLEGAL)) {
+            return;
+        }
 
         Integer storedAmount = container.get(COINS_AMOUNT_KEY, PersistentDataType.INTEGER);
         int amount = ((storedAmount != null) ? storedAmount : 1) * item.getAmount(); // In case 2 same item stacks with same amounts stack together.;

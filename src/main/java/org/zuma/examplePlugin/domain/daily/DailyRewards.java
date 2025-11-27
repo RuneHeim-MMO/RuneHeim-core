@@ -6,18 +6,25 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
+import org.zuma.examplePlugin.domain.effect.EffectHandler;
+import org.zuma.examplePlugin.domain.effect.effects.dailies.DailyGrandPrizeClaim;
+import org.zuma.examplePlugin.domain.effect.effects.dailies.DailyRarePrizeClaim;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.events.DailyMegaRareClaimEvent;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DailyRewards {
@@ -63,11 +70,26 @@ public class DailyRewards {
 
         DailyRewardEntry entry = rewardEntries.get(currentStreak);
         if (entry == null) return;
+        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(entry.itemId());
+        if (type == null) return;
 
         int amount = PlayerUtils.getRandom().nextInt(entry.max() - entry.min() + 1) + entry.min();
         ItemRecord result = new ItemRecord(entry.itemId(), amount);
         player.giveItemOrDrop(result);
         SoundType.DAILY_REWARD_CLAIM.play(player, false);
+
+        if (List.of(ItemRarity.LEGENDARY, ItemRarity.MYTHIC, ItemRarity.DIVINE).contains(type.rarity)) {
+            EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new DailyRarePrizeClaim(player));
+            Bukkit.getPluginManager().callEvent(new DailyMegaRareClaimEvent(new DailyMegaRareClaimEvent.Payload(player.asBukkitPlayer().getName(), type.displayName, type.rarity, amount)));
+        }
+
+        if (currentStreak >= rewardEntries.size()) {
+            EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new DailyGrandPrizeClaim(player));
+        }
+
+        HudService.sendSuccessMessage(player, Component.text("You have claimed your daily reward: ", Color.SUCCESS.asColor()).append(Component.text(amount + "x " + type.displayName, Color.ACCENT.asColor()).append(Component.text("!", Color.SUCCESS.asColor()))));
+        HudService.sendSuccessMessage(player, Component.text("Come back tomorrow to claim your next reward!", Color.SUCCESS.asColor()));
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.asBukkitPlayer().getName() + " claimed daily reward: " + amount + "x " + type.displayName + " for streak day " + currentStreak + ".");
     }
 
     public void updateIfNeeded(RunePlayer player) {
@@ -86,10 +108,10 @@ public class DailyRewards {
                 .toLocalDate();
 
         long daysBetween = java.time.temporal.ChronoUnit.DAYS.between(last, current);
-        boolean isOverRewardsBoundary = currentStreak >= rewardEntries.size();
+        boolean isNextOverRewardsBoundary = currentStreak + 1 > rewardEntries.size();
 
-        if (isOverRewardsBoundary || daysBetween > 1) {
-            String serverMessage = isOverRewardsBoundary
+        if ((isNextOverRewardsBoundary && daysBetween == 1) || daysBetween > 1) {
+            String serverMessage = isNextOverRewardsBoundary && daysBetween == 1
                     ? "exceeding the maximum reward boundary."
                     : "inactivity of " + daysBetween + " days.";
 
@@ -102,7 +124,6 @@ public class DailyRewards {
             currentStreak = 1;
             todayClaimed = false;
             lastUpdateTimestamp = now;
-            RuneQuestPlugin.getDailyRewardHandler().assignNewDailyRewards(this);
             RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Reset daily reward streak for player " + player.getUUID() + " due to " + serverMessage);
 
             Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
@@ -112,9 +133,10 @@ public class DailyRewards {
                     return;
                 }
 
-                if (isOverRewardsBoundary) {
+                if (isNextOverRewardsBoundary && daysBetween == 1) {
                     HudService.sendInfoMessage(player, Component.text("Your daily reward streak has been reset because you have exceeded the maximum streak."));
                     SoundType.DAILY_REWARD_RESET_STREAK.play(player, false);
+                    RuneQuestPlugin.getDailyRewardHandler().assignNewDailyRewards(this);
                 } else {
                     HudService.sendInfoMessage(player, Component.text("Your daily reward streak has been reset due to inactivity. Login daily to maintain your streak!"));
                     SoundType.DAILY_REWARD_LOSE_STREAK.play(player, false);

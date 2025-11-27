@@ -170,6 +170,10 @@ public class HudService {
         player.asBukkitPlayer().sendMessage(Icon.INFO.asComponent().append(text.color(Color.INFO.asColor())));
     }
 
+    public static void sendAnnouncementMessage(RunePlayer player, Component text) {
+        player.asBukkitPlayer().sendMessage(Icon.ANNOUNCEMENT.asComponent().color(Color.SERVER_BRAND.asColor()).append(text.color(Color.SERVER_BRAND.asColor())));
+    }
+
     public static void showFailTitle(RunePlayer player, String text) {
         player.asBukkitPlayer().showTitle(Title.title(
                 Component.empty(),

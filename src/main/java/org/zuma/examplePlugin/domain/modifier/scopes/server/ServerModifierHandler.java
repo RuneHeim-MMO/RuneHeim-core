@@ -141,16 +141,14 @@ public class ServerModifierHandler implements Listener {
                 return; // Don't show message if player has disabled bomb tracker notifications
             }
 
-            HudService.sendInfoMessage(
-                    player,
-                    Component.text(type.getLabel() + " has been activated by ")
-                            .color(Color.SERVER_BRAND.asColor())
-                            .append(Component.text(activatedBy).color(Color.ACCENT.asColor()))
-                            .append(Component.text(" on server ").color(Color.INFO.asColor()))
-                            .append(Component.text("#" + activatedOnServerID).color(Color.ACCENT.asColor()))
-                            .append(Component.text(" for ").color(Color.INFO.asColor()))
-                            .append(Component.text(getMinutesRemaining(type) + " minutes").color(Color.ACCENT.asColor()))
-            );
+            HudService.sendAnnouncementMessage(player, Component.text(type.getLabel() + " has been activated by ")
+                    .color(Color.SERVER_BRAND.asColor())
+                    .append(Component.text(activatedBy).color(Color.ACCENT.asColor()))
+                    .append(Component.text(" on server ").color(Color.INFO.asColor()))
+                    .append(Component.text("#" + activatedOnServerID).color(Color.ACCENT.asColor()))
+                    .append(Component.text(" for ").color(Color.INFO.asColor()))
+                    .append(Component.text(getMinutesRemaining(type) + " minutes").color(Color.ACCENT.asColor())));
+
             SoundType.GLOBAL_EFFECT_TRACKER_BEEP.play(player, false);
             return;
         }
