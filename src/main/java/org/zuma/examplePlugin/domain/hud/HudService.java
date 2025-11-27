@@ -162,8 +162,16 @@ public class HudService {
         SoundType.FAIL_ACTION.play(player.asBukkitPlayer(), false);
     }
 
+    public static void sendSuccessMessage(RunePlayer player, Component text) {
+        player.asBukkitPlayer().sendMessage(Icon.SUCCESS.asComponent().color(Color.SUCCESS.asColor()).append(text.color(Color.SUCCESS.asColor())));
+    }
+
     public static void sendInfoMessage(RunePlayer player, Component text) {
         player.asBukkitPlayer().sendMessage(Icon.INFO.asComponent().append(text.color(Color.INFO.asColor())));
+    }
+
+    public static void sendAnnouncementMessage(RunePlayer player, Component text) {
+        player.asBukkitPlayer().sendMessage(Icon.ANNOUNCEMENT.asComponent().color(Color.SERVER_BRAND.asColor()).append(text.color(Color.SERVER_BRAND.asColor())));
     }
 
     public static void showFailTitle(RunePlayer player, String text) {

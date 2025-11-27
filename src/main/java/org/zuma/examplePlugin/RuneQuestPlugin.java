@@ -13,6 +13,7 @@ import org.zuma.examplePlugin.core.module.core.*;
 import org.zuma.examplePlugin.core.module.game.*;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
+import org.zuma.examplePlugin.domain.daily.DailyRewardHandler;
 import org.zuma.examplePlugin.domain.dialog.DialogHandler;
 import org.zuma.examplePlugin.domain.droptable.DropTableHandler;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
@@ -81,7 +82,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new GlobalModifierModule(),
                         new PrayerModule(),
                         new PartyModule(),
-                        new ServerModifierModule()
+                        new ServerModifierModule(),
+                        new DailyRewardModule()
                 ), moduleContext);
     }
 
@@ -229,5 +231,9 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static ServerModifierHandler getServerModifierHandler() {
         return pluginInstance.moduleContext.get(ServerModifierHandler.class);
+    }
+
+    public static DailyRewardHandler getDailyRewardHandler() {
+        return pluginInstance.moduleContext.get(DailyRewardHandler.class);
     }
 }

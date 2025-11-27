@@ -24,6 +24,10 @@ public class DropTable {
         this.activeForQuest = activeForQuest;
     }
 
+    public List<DropTableEntry> getDrops() {
+        return drops;
+    }
+
     @Nullable
     public ItemRecord roll(RunePlayer player) {
         // If this drop table is only active for a specific quest, check if the player has that quest active.

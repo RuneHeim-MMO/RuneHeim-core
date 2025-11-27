@@ -68,6 +68,7 @@ public class MobUtils {
                     walkingMobs.remove(uuid);
                     if (onFail != null)
                         onFail.run();
+
                     cancel();
                 }
             }

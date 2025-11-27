@@ -22,11 +22,7 @@ public class ItemPriceCalculator {
         priceCache.clear();
 
         List<AbstractItemType> items = new ArrayList<>(RuneQuestPlugin.getItemRegistry().getAllItems());
-        items.sort(
-                Comparator
-                        .comparing((AbstractItemType item) -> !(item instanceof Material)) // Materials first
-                        .thenComparing(item -> item.displayName) // Alphabetical inside each group
-        );
+        items.sort(Comparator.comparing((AbstractItemType item) ->  item.displayName));
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Algorithmic item price calculation started for " + items.size() + " items...");
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "----------------------------------------------------------------------");

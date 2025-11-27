@@ -145,6 +145,11 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.COINS, 1), 30)
     ))),
 
+    COLLECTOR_OF_DAYS(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.ARMADILLO_HOOKBLADE, 1), 100),
+            new EquipmentSetRecord(EquipmentSlot.OFFHAND, new ItemStack(Material.SHIELD), 100)
+    ))),
+
     AUCTIONEER(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.COINS, 10000), 1),
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.COINS, 1000), 5),

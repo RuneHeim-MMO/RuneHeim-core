@@ -608,7 +608,7 @@ public class ItemRepository {
 
 
                 // Currency
-                new ItemEntity(new AbstractItemMeta(ItemType.COINS, ItemId.COINS.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Coins", List.of("If you have this item in your inventory, please submit a bug report."), null, true, 1.0), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.COINS, ItemId.COINS.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Coins", List.of("Shiny gold!"), null, true, 1.0), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.CURRENCY, ItemId.PLATINUM_TOKEN.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Platinum Token", List.of("A Platinum token that is worth approximately 1k gold pieces."), null, true, 1.0), null),
 
                 // Arrows

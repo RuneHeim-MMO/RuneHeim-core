@@ -2240,8 +2240,32 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(323, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), -746, 71, 372)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.SWAMP_ISLAND_HERBLORE_SHOP, 1, 100)
-                ), false, MarkerType.HERBLORE_SHOP, "Herblore Shop"), 1))
+                ), false, MarkerType.HERBLORE_SHOP, "Herblore Shop"), 1)),
 
+                // Drakkar daily rewards
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(324, SpawnZoneType.POINT, 30, 100,
+                        new Location(Bukkit.getWorld("world"), 230.5, 73, -76)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.COLLECTOR_OF_DAYS, 1, 100)
+                ), false, MarkerType.DAILY_REWARD, "Collector of Days"), 1)),
+
+
+                // Saharijin daily rewards
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(325, SpawnZoneType.POINT, 30, 100,
+                        new Location(Bukkit.getWorld("world"), -1236, 67, -743)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.COLLECTOR_OF_DAYS, 1, 100)
+                ), false, MarkerType.DAILY_REWARD, "Collector of Days"), 1)),
+
+                // Murkwatch daily rewards
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(326, SpawnZoneType.POINT, 30, 100,
+                        new Location(Bukkit.getWorld("world"), -1039, 68, 435)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.COLLECTOR_OF_DAYS, 1, 100)
+                ), false, MarkerType.DAILY_REWARD, "Collector of Days"), 1)),
+
+                // Sakurmeer daily rewards
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(327, SpawnZoneType.POINT, 30, 100,
+                        new Location(Bukkit.getWorld("world"), 831.5, 120, 129)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.COLLECTOR_OF_DAYS, 1, 100)
+                ), false, MarkerType.DAILY_REWARD, "Collector of Days"), 1))
 
                 // last 321
 

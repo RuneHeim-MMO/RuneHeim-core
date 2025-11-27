@@ -57,7 +57,8 @@ public enum InventoryId {
     BOMBS_MENU(47),
     PLAYER_SETTINGS_MENU(48),
     ZARALI_HERBLORE_SHOP(49),
-    SWAMP_ISLAND_HERBLORE_SHOP(50);
+    SWAMP_ISLAND_HERBLORE_SHOP(50),
+    DAILY_REWARDS(51);
 
 
     private final int id;

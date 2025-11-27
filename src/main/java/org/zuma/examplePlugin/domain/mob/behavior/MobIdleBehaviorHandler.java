@@ -37,11 +37,18 @@ public class MobIdleBehaviorHandler {
 
     private void walkMobHome(Mob entity, AbstractMob mobInstance) {
         Location homeLocation = mobInstance.getSpawnLocation();
+        boolean isFrozen = mobInstance.isFrozen();
+
+        if (isFrozen) {
+            mobInstance.unfreezeMob();
+        }
 
         MobUtils.moveToWithCallback(entity, homeLocation, 10 * 20L,
+                mobInstance::freezeMob,
                 () -> {
-                },
-                () -> teleportMobHome(entity, mobInstance));
+                    mobInstance.unfreezeMob();
+                    teleportMobHome(entity, mobInstance);
+                });
 
 
     }
