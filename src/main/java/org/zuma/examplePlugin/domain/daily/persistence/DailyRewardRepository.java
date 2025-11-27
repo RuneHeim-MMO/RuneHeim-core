@@ -4,6 +4,7 @@ import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.domain.daily.DailyRewards;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -34,10 +35,8 @@ public class DailyRewardRepository {
                 created_at = CURRENT_TIMESTAMP;
                 """;
 
-        Connection conn = null;
-
-        try {
-            conn = pool.getDataSource().getConnection();
+        // Use try-with-resources for automatic connection management
+        try (Connection conn = pool.getDataSource().getConnection()) {
             conn.setAutoCommit(false);
 
             try (var streakStmt = conn.prepareStatement(streakSql)) {
@@ -69,33 +68,16 @@ public class DailyRewardRepository {
 
             conn.commit();
 
-        } catch (Exception e) {
-            if (conn != null) {
-                try {
-                    conn.rollback();
-                } catch (Exception ignored) {
-                }
-            }
+        } catch (SQLException e) {
             throw new RuntimeException("Failed to upsert daily reward data for UUID: " + uuid, e);
-
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (Exception ignored) {
-                }
-            }
         }
-
-
     }
 
     public DailyRewards getByUUID(UUID playerUUID) {
         String rewardsSql = "SELECT streak, today_claimed, updated_at FROM player_daily_streaks WHERE uuid = ?";
         String streaksSql = "SELECT streak_day, item_id, min, max FROM player_daily_rewards WHERE uuid = ?";
 
-        try {
-            Connection conn = pool.getDataSource().getConnection();
+        try (Connection conn = pool.getDataSource().getConnection()) {
 
             int currentStreak = 1;
             boolean todayClaimed = false;
@@ -129,8 +111,6 @@ public class DailyRewardRepository {
                     }
                 }
             }
-
-            conn.close();
 
             return new DailyRewards(currentStreak, updatedAt, todayClaimed, rewardEntries);
 

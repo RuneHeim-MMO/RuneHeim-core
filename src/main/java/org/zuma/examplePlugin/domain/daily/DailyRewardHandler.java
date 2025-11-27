@@ -67,9 +67,10 @@ public class DailyRewardHandler {
                     player.getDailyRewards().updateIfNeeded(player);
                 }
 
-                notifiedTimes++;
             });
-        }, 0L, NOTIFY_PERIOD_MS);
+
+            notifiedTimes++;
+        }, 0L, NOTIFY_PERIOD_MS / 50 /* Convert ms to ticks */);
     }
 
     public void handleMegaRareClaim(DailyMegaRareClaimEvent.Payload payload) {
@@ -85,6 +86,12 @@ public class DailyRewardHandler {
 
     public void sendReminder(RunePlayer player) {
         DailyRewardEntry todayReward = player.getDailyRewards().getRewardEntries().get(player.getDailyRewards().getCurrentStreak());
+
+        if (todayReward == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Daily reward entry not found for streak day: " + player.getDailyRewards().getCurrentStreak() + " for player: " + player.asBukkitPlayer().getName());
+            return;
+        }
+
         AbstractItemType itemType = RuneQuestPlugin.getItemRegistry().getType(todayReward.itemId());
 
         if (itemType == null) {
@@ -92,7 +99,7 @@ public class DailyRewardHandler {
             return;
         }
 
-        HudService.sendSuccessMessage(player, Component.text("You your daily reward (", Color.SUCCESS.asColor())
+        HudService.sendSuccessMessage(player, Component.text("Your daily reward (", Color.SUCCESS.asColor())
                 .append(Component.text(todayReward.min() + "x - " + todayReward.max() + "x " + itemType.displayName, Color.ACCENT.asColor())
                         .append(Component.text(") is waiting to be claimed!", Color.SUCCESS.asColor()))));
         SoundType.NOTIFICATION.play(player, false);
