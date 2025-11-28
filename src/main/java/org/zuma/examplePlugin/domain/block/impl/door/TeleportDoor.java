@@ -12,7 +12,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.base.MultiBlockHitbox;
@@ -65,6 +67,7 @@ public class TeleportDoor extends QuestLockedInteractable implements MultiBlockH
                 inUseBy.remove(player.getUUID());
 
                 Bukkit.getPluginManager().callEvent(new TeleportDoorEnteredEvent(this, player));
+                AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.DOORS_USED, 1);
             }, 1L);
 
             getLocation().getWorld().playSound(getLocation(), Sound.BLOCK_IRON_DOOR_CLOSE, 1f, 1f);

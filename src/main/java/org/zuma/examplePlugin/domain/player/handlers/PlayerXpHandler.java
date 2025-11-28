@@ -3,8 +3,10 @@ package org.zuma.examplePlugin.domain.player.handlers;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
@@ -176,6 +178,7 @@ public class PlayerXpHandler {
         xp *= totalMultiplier;
 
         RunePlayerGainedXPEvent event = new RunePlayerGainedXPEvent(player, type, xp, source);
+        AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.XP_GAINED, xp);
         Bukkit.getServer().getPluginManager().callEvent(event);
 
         if (event.isCancelled()) {

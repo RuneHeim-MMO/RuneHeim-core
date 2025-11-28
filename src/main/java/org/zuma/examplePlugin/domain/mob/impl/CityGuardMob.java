@@ -7,6 +7,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.MobUtils;
 import org.zuma.examplePlugin.domain.dialog.Dialog;
@@ -143,6 +144,7 @@ public class CityGuardMob extends GenericCombatant {
             return;
         }
 
+        RuneQuestPlugin.getAnalytics().increment(AnalyticsKey.GUARDS_ENGAGED, 1);
         this.engage(attacker);
     }
 

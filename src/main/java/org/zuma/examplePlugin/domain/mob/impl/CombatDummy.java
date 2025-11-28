@@ -8,13 +8,16 @@ import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.combat.constants.AttackType;
 import org.zuma.examplePlugin.domain.combat.constants.HitType;
 import org.zuma.examplePlugin.domain.hud.HudService;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.SkillLevelRecord;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
@@ -86,6 +89,7 @@ public class CombatDummy extends GenericCombatant {
                     HudService.showDamageBubble(attacker, combatDummyHit);
                     SoundType.HIT_MELEE_REGULAR.play(attackerLocation);
                     attacker.getEntity().setVelocity(attacker.getEntity().getVelocity().add(new Vector(0, 0.2, 0)));
+                    AnalyticsUtils.incrementServerAndPlayer((RunePlayer) attacker, AnalyticsKey.COMBAT_DUMMY_HITS, 1);
                 }
 
             }, 6);

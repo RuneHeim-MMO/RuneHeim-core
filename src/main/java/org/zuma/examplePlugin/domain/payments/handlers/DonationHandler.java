@@ -4,10 +4,12 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.permissions.PlayerRole;
 import org.zuma.examplePlugin.core.permissions.roles.UpgradedRole;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.effect.effects.BombStorageUpdatedEffect;
 import org.zuma.examplePlugin.domain.effect.effects.RankUpgradeEffect;
 import org.zuma.examplePlugin.domain.effect.effects.SupporterLevelUpEffect;
@@ -114,6 +116,7 @@ public class DonationHandler {
                 matchingPlayer.getScoreboardUsernameRenderer().updateTabUsername();
                 Bukkit.getPluginManager().callEvent(new SupportLevelUpgradeEvent(new SupportLevelUpgradeEvent.Payload(matchingPlayer.asBukkitPlayer().getName(), newLevel)));
                 EffectQueueManager.startEffect(matchingPlayer, new SupporterLevelUpEffect(matchingPlayer));
+                AnalyticsUtils.incrementServerAndPlayer(matchingPlayer, AnalyticsKey.SUPPORTER_LEVEL_UPGRADES, 1);
             });
         });
     }

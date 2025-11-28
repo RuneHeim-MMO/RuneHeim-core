@@ -7,15 +7,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.permissions.Permission;
-import org.zuma.examplePlugin.core.utils.TextUtils;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.BonusBombEffect;
 import org.zuma.examplePlugin.domain.hud.HudService;
-import org.zuma.examplePlugin.domain.player.PlayerBombsContainer;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.settings.PlayerSetting;
 import org.zuma.examplePlugin.events.payment.BombActivatedEvent;
@@ -24,7 +24,6 @@ import org.zuma.examplePlugin.events.player.RunePlayerLoadedEvent;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
 
 public class ServerModifierHandler implements Listener {
@@ -81,7 +80,7 @@ public class ServerModifierHandler implements Listener {
         return (int) (millisRemaining / 60000);
     }
 
-    public boolean activateXPBomb(RunePlayer activatedBy, ServerModifierType type, long durationMillis) {
+    public boolean activateBomb(RunePlayer activatedBy, ServerModifierType type, long durationMillis) {
         if (isModifierActive(type)) {
             HudService.sendFailMessage(activatedBy, Component.text("A " + type.getLabel() + " is already active on this server. Try again in " + getMinutesRemaining(type) + " minutes."));
             return false;
@@ -121,6 +120,7 @@ public class ServerModifierHandler implements Listener {
                 showActivationMessage(activatedBy.asBukkitPlayer().getName(), null, p, type);
             });
             Bukkit.getPluginManager().callEvent(new BombActivatedEvent(new BombActivatedEvent.Payload(activatedBy.asBukkitPlayer().getName(), type)));
+            AnalyticsUtils.incrementServerAndPlayer(activatedBy, AnalyticsKey.BOMBS_USED, 1);
         }, 60L);
 
         return true;

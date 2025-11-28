@@ -6,9 +6,11 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.dailies.DailyGrandPrizeClaim;
@@ -81,6 +83,7 @@ public class DailyRewards {
         if (List.of(ItemRarity.LEGENDARY, ItemRarity.MYTHIC, ItemRarity.DIVINE).contains(type.rarity)) {
             EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new DailyRarePrizeClaim(player));
             Bukkit.getPluginManager().callEvent(new DailyMegaRareClaimEvent(new DailyMegaRareClaimEvent.Payload(player.asBukkitPlayer().getName(), type.displayName, type.rarity, amount)));
+            AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.DAILY_MEGA_RARES_CLAIMED, 1);
         }
 
         if (currentStreak >= rewardEntries.size()) {
@@ -90,6 +93,7 @@ public class DailyRewards {
         HudService.sendSuccessMessage(player, Component.text("You have claimed your daily reward: ", Color.SUCCESS.asColor()).append(Component.text(amount + "x " + type.displayName, Color.ACCENT.asColor()).append(Component.text("!", Color.SUCCESS.asColor()))));
         HudService.sendSuccessMessage(player, Component.text("Come back tomorrow to claim your next reward!", Color.SUCCESS.asColor()));
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.asBukkitPlayer().getName() + " claimed daily reward: " + amount + "x " + type.displayName + " for streak day " + currentStreak + ".");
+        AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.DAILY_REWARDS_CLAIMED, 1);
     }
 
     public void updateIfNeeded(RunePlayer player) {

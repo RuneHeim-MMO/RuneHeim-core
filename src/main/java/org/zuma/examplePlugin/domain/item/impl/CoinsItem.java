@@ -8,7 +8,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
@@ -77,6 +79,7 @@ public class CoinsItem extends MiscItem {
 
         HudService.showCoinsChangeBubble(player, amount);
         player.setPouchCoins(player.getPouchCoins() + amount, false);
+        AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.COINS_PICKED_UP, 1);
     }
 
 }

@@ -3,8 +3,10 @@ package org.zuma.examplePlugin.domain.party;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.party.PartyCreatedEvent;
 import org.zuma.examplePlugin.events.party.PartyDisbandedEvent;
@@ -36,6 +38,7 @@ public class PartyManager {
                         .append(Component.text("/party invite <player>", Color.ACCENT.asColor()))
                         .append(Component.text(" to invite members.", Color.SUCCESS.asColor())))
         );
+        AnalyticsUtils.incrementServerAndPlayer(creator, AnalyticsKey.PARTIES_CREATED, 1);
     }
 
     public void disbandParty(RunePlayer disbander) {

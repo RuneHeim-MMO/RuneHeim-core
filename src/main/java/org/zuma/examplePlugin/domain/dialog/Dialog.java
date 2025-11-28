@@ -3,6 +3,8 @@ package org.zuma.examplePlugin.domain.dialog;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.dialog.base.DialogStep;
 import org.zuma.examplePlugin.domain.dialog.impl.InteractiveDialogStep;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
@@ -64,6 +66,7 @@ public class Dialog {
 
         System.out.println("Starting dialog " + id + " with participant " + player.asBukkitPlayer().getName()
                 + " (Chat mode: " + isChatMode + ")");
+        AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.DIALOGS_STARTED, 1);
         advanceDialogStep();
     }
 

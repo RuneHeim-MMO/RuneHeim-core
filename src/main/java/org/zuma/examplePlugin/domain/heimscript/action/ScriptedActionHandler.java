@@ -5,8 +5,10 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.dialog.Dialog;
 import org.zuma.examplePlugin.domain.droptable.DropTable;
@@ -82,7 +84,9 @@ public class ScriptedActionHandler {
                     player.asBukkitPlayer().teleport(loc);
                 }
                 case TAKE_POUCH_COINS -> {
-                    player.setPouchCoins(player.getPouchCoins() - Long.parseLong(args.get("amount")), false);
+                    long coins = Long.parseLong(args.get("amount"));
+                    player.setPouchCoins(player.getPouchCoins() - coins, false);
+                    AnalyticsUtils.incrementServerAndPlayer(player, coins < 0 ? AnalyticsKey.COINS_EARNED : AnalyticsKey.COINS_SPENT, coins);
                 }
                 case TAKE_INVENTORY_ITEM -> {
                     PlayerUtils.removeItems(player, List.of(new ItemRecord(Integer.parseInt(args.get("item_id")), Integer.parseInt(args.get("amount")))));

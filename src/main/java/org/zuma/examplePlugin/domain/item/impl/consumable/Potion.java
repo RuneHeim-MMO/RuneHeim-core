@@ -5,10 +5,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
@@ -102,6 +104,7 @@ public class Potion extends AbstractItemType implements Stateful {
                 PlayerUtils.subtractOneFromMainHand(player);
                 player.giveItemOrDrop(new ItemRecord(ItemId.EMPTY_VIAL, 1));
                 itemStateManager.destroyStateIfExists(itemStack);
+                AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.POTIONS_CONSUMED, 1);
             }
         }
     }

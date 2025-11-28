@@ -2,9 +2,11 @@ package org.zuma.examplePlugin.domain.item.impl;
 
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.droptable.DropTable;
 import org.zuma.examplePlugin.domain.droptable.DropTableId;
@@ -61,6 +63,7 @@ public class ChanceItem extends AbstractItemType {
             }
         });
 
+        AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.CHANCE_ITEMS_USED, 1);
 
         if (rewards.isEmpty()) {
             HudService.showFailTitle(player, "Bad luck today!");

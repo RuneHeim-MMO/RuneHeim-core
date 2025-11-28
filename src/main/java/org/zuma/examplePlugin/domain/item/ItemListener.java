@@ -18,10 +18,12 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.interfaces.Restrictable;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.entity.EntitySessionManager;
 import org.zuma.examplePlugin.domain.hud.HudService;
@@ -171,12 +173,15 @@ public class ItemListener implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerWearItem(PlayerArmorEquipEvent event) {
         itemHandler.onPlayerWearItem(event, event.getPlayer(), itemStateManager);
+        AnalyticsUtils.incrementServerAndPlayer(event.getPlayer(), AnalyticsKey.ARMORS_EQUIPPED, 1);
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerPickupItem(PlayerAttemptPickupItemEvent event) {
+
         withItemAndPlayer(event.getPlayer(), event.getItem().getItemStack(), (item, player) -> {
             if (event.isCancelled()) return;
+            AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.ITEMS_PICKED_UP, event.getItem().getItemStack().getAmount());
             itemHandler.onPlayerPickupItem(event, item, player, itemStateManager);
         });
     }

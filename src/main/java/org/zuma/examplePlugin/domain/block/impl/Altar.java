@@ -8,9 +8,11 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.hud.HudService;
@@ -109,7 +111,7 @@ public class Altar extends AbstractInteractableBlock implements POIMarkerable {
                 .successSound(SoundType.ALTAR_PRAYING_LAYER_2)
                 .onSuccess(() -> {
                     player.setPrayerEnergy(maxPrayerLevel);
-
+                    AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.ALTAR_PRAY_AMOUNTS, 1);
                     SoundType.ALTAR_PRAYING_LAYER_2.play(player.asBukkitPlayer().getLocation(), null, 0.05f);
                     SoundType.ALTAR_PRAYING_LAYER_2.play(player.asBukkitPlayer().getLocation(), null, 0.10f);
                     SoundType.ALTAR_PRAYING_LAYER_2.play(player.asBukkitPlayer().getLocation(), null, 0.15f);

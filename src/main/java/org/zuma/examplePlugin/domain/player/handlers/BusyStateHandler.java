@@ -2,9 +2,11 @@ package org.zuma.examplePlugin.domain.player.handlers;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.interfaces.InteractiveActionStrategy;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -64,6 +66,7 @@ public class BusyStateHandler {
             this.player.getScoreboardManager().setPlayerCollision(true);
             this.pendingActions.forEach(action -> action.strategy().cancelTask());
             this.pendingActions.clear();
+            AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.ACTIONS_INTERRUPTED, 1);
             return;
         }
 

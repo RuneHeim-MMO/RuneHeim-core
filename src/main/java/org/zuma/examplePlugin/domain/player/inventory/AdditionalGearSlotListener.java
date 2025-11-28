@@ -16,7 +16,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
 import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
@@ -103,6 +105,8 @@ public class AdditionalGearSlotListener implements Listener {
             ItemStack refund = deductedArrow.clone();
             refund.setAmount(1);
             runePlayer.giveItemOrDrop(refund);
+        } else {
+            AnalyticsUtils.incrementServerAndPlayer(runePlayer, AnalyticsKey.ARROWS_CONSUMED, 1);
         }
 
 

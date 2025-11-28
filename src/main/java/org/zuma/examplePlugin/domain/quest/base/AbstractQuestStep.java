@@ -8,8 +8,10 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.PlayerQuestState;
@@ -110,6 +112,8 @@ public abstract class AbstractQuestStep implements Listener {
         if (!this.parentQuest.isSilent()) {
             HudService.sendQuestStepTaskMessage(runePlayer, nextQuestStep);
         }
+
+        AnalyticsUtils.incrementServerAndPlayer(runePlayer, AnalyticsKey.QUEST_STEPS_COMPLETED, 1);
     }
 
     public abstract AbstractQuestStep cloneForPlayer(UUID ownerUUID);

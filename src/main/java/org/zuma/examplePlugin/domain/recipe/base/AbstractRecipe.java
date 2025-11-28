@@ -10,11 +10,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
 import org.zuma.examplePlugin.core.interfaces.Restrictable;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
@@ -327,7 +329,7 @@ public abstract class AbstractRecipe implements Restrictable {
     private void executeCraft(RunePlayer player, int times, long totalCost, Component resultComponent) {
         Optional<Component> blockReason = getCraftBlockReason(player, times);
         if (blockReason.isPresent()) {
-            if(player.hasPendingActions()) player.cancelActionTask(true);
+            if (player.hasPendingActions()) player.cancelActionTask(true);
             HudService.sendFailMessage(player, blockReason.get());
             return;
         }
@@ -346,6 +348,7 @@ public abstract class AbstractRecipe implements Restrictable {
 
         if (totalCost > 0) {
             player.setPouchCoins(player.getPouchCoins() - totalCost, false);
+            AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.COINS_SPENT, totalCost);
             HudService.showCoinsChangeBubble(player, -totalCost);
         }
 
@@ -358,6 +361,12 @@ public abstract class AbstractRecipe implements Restrictable {
         if (failedCrafts > 0) {
             applyFailure(player, failedCrafts, resultComponent);
         }
+
+        if (failedCrafts > 0)
+            AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.FAILED_RECIPE_CRAFTS, failedCrafts);
+
+        if (successCrafts > 0)
+            AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.SUCCESSFUL_RECIPES_CRAFTED, successCrafts);
     }
 
     private boolean removeCraftingIngredients(RunePlayer player, int successCrafts, int failedCrafts) {

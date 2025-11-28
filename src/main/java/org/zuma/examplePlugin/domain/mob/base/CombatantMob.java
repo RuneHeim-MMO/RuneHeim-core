@@ -18,11 +18,9 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
-import org.zuma.examplePlugin.core.utils.MobUtils;
-import org.zuma.examplePlugin.core.utils.ModifierUtils;
-import org.zuma.examplePlugin.core.utils.TextUtils;
-import org.zuma.examplePlugin.core.utils.XpUtils;
+import org.zuma.examplePlugin.core.utils.*;
 import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.combat.constants.ProjectileType;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -186,6 +184,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         if (hit.getAttacker().getEntity() instanceof Player playerAttacker) {
             RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(playerAttacker);
             if (runePlayer != null) {
+                AnalyticsUtils.incrementServerAndPlayer(runePlayer, AnalyticsKey.TOTAL_DAMAGE_DEALT, hit.getDamage());
                 this.getMobMechanics().values().forEach(m -> m.onDamagedByPlayer(runePlayer, hit));
             }
         }
@@ -220,6 +219,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
 
                 RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(playerAttacker);
                 if (runePlayer != null) {
+                    AnalyticsUtils.incrementServerAndPlayer(runePlayer, AnalyticsKey.MOBS_KILLED, 1);
                     this.getMobMechanics().values().forEach(m -> m.onDeath(runePlayer, hit));
 
                 }

@@ -2,7 +2,9 @@ package org.zuma.examplePlugin.domain.droptable;
 
 import org.bukkit.Bukkit;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.constants.QuestId;
@@ -34,6 +36,8 @@ public class DropTable {
         if (this.activeForQuest != null && !player.getActiveQuestSteps().containsKey(this.activeForQuest.getId())) {
             return null;
         }
+
+        AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.DROP_TABLES_ROLLED, 1);
 
         for (DropTableEntry drop : drops) {
             boolean isMatch = rand.nextInt(drop.oneInNChance) == 0;

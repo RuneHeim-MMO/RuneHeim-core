@@ -9,9 +9,11 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.ambience.sound.AmbientMusicHandler;
@@ -215,6 +217,7 @@ public class TerritoryHandler {
 
         if (!isFirstDiscovery) {
             SoundType.TERRITORY_ENTER.play(player, false);
+            AnalyticsUtils.incrementServerAndPlayer(runePlayer, AnalyticsKey.TERRITORIES_ENTERED, 1);
         } else {
             runePlayer.getDiscoveredTerritoryIds().add(territory.getId());
             SoundType.TERRITORY_DISCOVERY.play(player, false);
@@ -241,6 +244,9 @@ public class TerritoryHandler {
                 }, 120);
 
             }
+
+            AnalyticsUtils.incrementServerAndPlayer(runePlayer, AnalyticsKey.TERRITORIES_DISCOVERED, 1);
+            AnalyticsUtils.incrementServerAndPlayer(runePlayer, AnalyticsKey.TERRITORIES_ENTERED, 1);
         }
 
         String titleIcon = territory.isPvpZone() ? territory.isDropItemsOnDeath() ? "§c" + Icon.SKULL_CLOSED_MOUTH.get() : " §f" + Icon.SKULL_CLOSED_MOUTH.get() : "";

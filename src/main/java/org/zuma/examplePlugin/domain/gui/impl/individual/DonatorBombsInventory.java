@@ -168,7 +168,7 @@ public class DonatorBombsInventory extends PaginatedIndividualGUI {
         }
 
 
-        boolean result = RuneQuestPlugin.getServerModifierHandler().activateXPBomb(player, type, type.getDefaultDurationMinutes() * 60 * 1000L + 100); // +100ms to account for scheduling delays
+        boolean result = RuneQuestPlugin.getServerModifierHandler().activateBomb(player, type, type.getDefaultDurationMinutes() * 60 * 1000L + 100); // +100ms to account for scheduling delays
 
         if (result) {
             player.asBukkitPlayer().closeInventory();

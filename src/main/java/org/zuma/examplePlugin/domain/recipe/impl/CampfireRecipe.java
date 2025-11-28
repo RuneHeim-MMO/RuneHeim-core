@@ -9,6 +9,8 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.block.impl.CampfireBlock;
 import org.zuma.examplePlugin.domain.hud.HudService;
@@ -23,9 +25,7 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class CampfireRecipe extends AbstractRecipe {
     private final SkillRequirement mainRequirement;
@@ -104,6 +104,7 @@ public class CampfireRecipe extends AbstractRecipe {
 
         if (progressBlock != null) {
             progressBlock.startFire();
+            AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.CAMPFIRES_STARTED, 1);
         }
     }
 

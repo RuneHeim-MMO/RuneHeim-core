@@ -1,6 +1,8 @@
 package org.zuma.examplePlugin.domain.quest;
 
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.XpSource;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -55,6 +57,7 @@ public class QuestReward {
 
         if (coins != null) {
             player.setPouchCoins(player.getPouchCoins() + coins, false);
+            AnalyticsUtils.incrementServerAndPlayer(player, coins > 0 ? AnalyticsKey.COINS_EARNED : AnalyticsKey.COINS_SPENT, coins);
         }
     }
 }
