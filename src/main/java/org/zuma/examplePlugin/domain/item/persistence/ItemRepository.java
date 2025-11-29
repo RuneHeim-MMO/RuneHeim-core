@@ -155,11 +155,67 @@ public class ItemRepository {
                                 , 1)
                 ),
 
+                // New materials
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.CHICKEN_EGG.asInt(), Material.COAL, ItemRarity.COMMON, "Chicken Egg", List.of("A fresh egg laid by a chicken."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(45), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.HOGLIN_TUSK.asInt(), Material.COAL, ItemRarity.COMMON, "Hoglin Tusk", List.of("A sharp tusk from a wild hoglin."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(90), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BAMBOO.asInt(), Material.COAL, ItemRarity.COMMON, "Bamboo", List.of("A sturdy bamboo stalk from the jungle."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(135), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.DEER_ANTLER.asInt(), Material.COAL, ItemRarity.COMMON, "Deer Antler", List.of("A branching antler shed by a deer."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(180), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.EAGLE_CLAW.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Eagle Claw", List.of("A sharp talon from a mighty eagle."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(2250), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.SLIMY_SAC.asInt(), Material.COAL, ItemRarity.COMMON, "Slimy Sac", List.of("A mucus-filled sac from a swamp creature."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(225), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.PREDATOR_CLAW.asInt(), Material.COAL, ItemRarity.COMMON, "Predator Claw", List.of("A sharp claw from a jungle hunter."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(225), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.SOFT_CUB_FUR.asInt(), Material.COAL, ItemRarity.COMMON, "Soft Cub Fur", List.of("The fluffy fur of a young leopard."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(270), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNDERGROUND_FUNGUS.asInt(), Material.COAL, ItemRarity.COMMON, "Underground Fungus", List.of("A pale mushroom grown in dark tunnels."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(1125), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.MOLDY_CHEESE.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Moldy Cheese",
+                        List.of("A piece of cheese nibbled by rodents."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(1), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.SOFT_FUR.asInt(), Material.COAL, ItemRarity.COMMON, "Soft Fur", List.of("Fine fur from a gentle creature."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(180), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.INSECT_WINGS.asInt(), Material.COAL, ItemRarity.COMMON, "Insect Wings", List.of("Delicate wings from various bugs."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(45), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.COCKROACH_LEG.asInt(), Material.COAL, ItemRarity.COMMON, "Cockroach Leg", List.of("A spiny leg from a resilient insect."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(67), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.SURVIVAL_GLAND.asInt(), Material.COAL, ItemRarity.RARE, "Survival Gland", List.of("A special organ that grants resilience."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(1350), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ANT_EGGS.asInt(), Material.COAL, ItemRarity.COMMON, "Ant Eggs", List.of("Tiny eggs from an ant colony."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(200), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ANT_MANDIBLES.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Ant Mandibles", List.of("Sharp pincers from a worker ant."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(450), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.VENOM_SAC.asInt(), Material.COAL, ItemRarity.RARE, "Venom Sac", List.of("A sac filled with potent toxin."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(1800), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.SCORPION_STINGER.asInt(), Material.COAL, ItemRarity.COMMON, "Scorpion Stinger", List.of("A barbed stinger from a desert scorpion."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(675), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.CHITIN_PLATES.asInt(), Material.COAL, ItemRarity.COMMON, "Chitin Plates", List.of("Hard protective plates from insects."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(225), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BOAR_TUSK.asInt(), Material.COAL, ItemRarity.COMMON, "Boar Tusk", List.of("A curved tusk from a wild boar."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(180), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.THICK_HIDE.asInt(), Material.COAL, ItemRarity.COMMON, "Thick Hide", List.of("Durable hide from a tough animal."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(270), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ARMADILLO_CLAW.asInt(), Material.COAL, ItemRarity.COMMON, "Armadillo Claw", List.of("A digging claw from an armadillo."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(360), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.SHARP_ARMADILLO_CLAW.asInt(), Material.COAL, ItemRarity.RARE, "Sharp Armadillo Claw", List.of("An exceptionally sharp digging claw."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(2250), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ARMADILLO_SCALE.asInt(), Material.COAL, ItemRarity.COMMON, "Armadillo Scale", List.of("A protective scale from an armadillo's shell."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(450), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.LINEN_FABRIC.asInt(), Material.COAL, ItemRarity.COMMON, "Linen Fabric", List.of("A sheet of woven flax fibers.", "Durable, breathable, and used in mid-tier tailoring."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.STEEL_BUCKLE.asInt(), Material.COAL, ItemRarity.COMMON, "Steel Buckle", List.of("A sturdy clasp forged from refined steel.", "Used to fasten straps on armor, bags, and other gear."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+
                 // Storage items
                 new ItemEntity(new AbstractItemMeta(ItemType.STORAGE_ITEM, ItemId.TOOL_BAG.asInt(), Material.COAL, ItemRarity.RARE, "Tool Bag (9 slots)", List.of("Bag for all of your tools."), null, true, 1.0),
                         toVersionedJson(new StorageItemMeta(InventoryId.TOOL_BAG), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.STORAGE_ITEM, ItemId.SMALL_ITEM_BAG.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Small Item Bag (6 slots)", List.of("A compact bag, perfect for carrying essentials on short quests."), null, true, 1.0),
+                new ItemEntity(new AbstractItemMeta(ItemType.STORAGE_ITEM, ItemId.SMALL_ITEM_BAG.asInt(), Material.COAL, ItemRarity.RARE, "Small Item Bag (6 slots)", List.of("A compact bag, perfect for carrying essentials on short quests."), null, true, 1.0),
                         toVersionedJson(new StorageItemMeta(InventoryId.SMALL_STORAGE_BAG), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.STORAGE_ITEM, ItemId.MEDIUM_ITEM_BAG.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Medium Item Bag (9 slots)", List.of("A sturdy bag with ample space for adventurer's tools and trinkets."), null, true, 1.0),
@@ -536,7 +592,8 @@ public class ItemRepository {
                         toVersionedJson(new EquipableTypeMeta(null, null, null,
                                 List.of(
                                         new Modifier(ModifierType.RANGED_ACCURACY, 12),
-                                        new Modifier(ModifierType.RANGED_STRENGTH, 12)
+                                        new Modifier(ModifierType.RANGED_STRENGTH, 12),
+                                        new Modifier(ModifierType.ARROW_RECOVERY_PERCENT, 10)
                                 ), List.of(new SkillRequirement(SkillType.RANGED, 60)),
                                 null), 1)),
 
@@ -551,7 +608,7 @@ public class ItemRepository {
 
 
                 // Currency
-                new ItemEntity(new AbstractItemMeta(ItemType.COINS, ItemId.COINS.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Coins", List.of("If you have this item in your inventory, please submit a bug report."), null, true, 1.0), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.COINS, ItemId.COINS.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Coins", List.of("Shiny gold!"), null, true, 1.0), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.CURRENCY, ItemId.PLATINUM_TOKEN.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Platinum Token", List.of("A Platinum token that is worth approximately 1k gold pieces."), null, true, 1.0), null),
 
                 // Arrows
@@ -828,7 +885,7 @@ public class ItemRepository {
                         "Huge Bones",
                         List.of("Colossal bones that whisper of a beast towering above mortals."),
                         null, true, 1.0),
-                        toVersionedJson(new RemainsItemMeta(500, 120, 300), 1)),
+                        toVersionedJson(new RemainsItemMeta(500, 120, 3000), 1)),
 
 
                 new ItemEntity(new AbstractItemMeta(ItemType.EMPTY_CONTAINER, ItemId.EMPTY_POT.asInt(), Material.COAL, ItemRarity.COMMON, "Empty Pot", List.of("A regular pot, made of clay."), null, true, 1.0),
@@ -1816,6 +1873,7 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 3),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 2),
+                                                new Modifier(ModifierType.MAX_HIT_PENALTY, -15),
                                                 new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 1)),
@@ -1827,6 +1885,7 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 5),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 3),
+                                                new Modifier(ModifierType.MAX_HIT_PENALTY, -15),
                                                 new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 1)),
@@ -1839,6 +1898,7 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 8),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 6),
+                                                new Modifier(ModifierType.MAX_HIT_PENALTY, -15),
                                                 new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 5)),
@@ -1851,6 +1911,7 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 14),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 10),
+                                                new Modifier(ModifierType.MAX_HIT_PENALTY, -15),
                                                 new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 20)),
@@ -1863,6 +1924,7 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 18),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 14),
+                                                new Modifier(ModifierType.MAX_HIT_PENALTY, -15),
                                                 new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 30)),
@@ -1875,10 +1937,24 @@ public class ItemRepository {
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 24),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 19),
+                                                new Modifier(ModifierType.MAX_HIT_PENALTY, -15),
                                                 new Modifier(ModifierType.CLEAVE_DISTANCE, -1.5)
                                         ),
                                         List.of(new SkillRequirement(SkillType.ATTACK, 40)),
                                         null), null, 1), 1)
+                ),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.ARMADILLO_HOOKBLADE.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Armadillo Hookblade", List.of("A wicked curved blade that trades raw force for blistering speed."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new EquipableWeaponTypeMeta(WeaponSpeed.VERY_FAST, null,
+                                        List.of(
+                                                new Modifier(ModifierType.ATTACK_SLASH, 10),
+                                                new Modifier(ModifierType.STRENGTH_BONUS, 8),
+                                                new Modifier(ModifierType.MAX_HIT_PENALTY, -30),
+                                                new Modifier(ModifierType.CLEAVE_DISTANCE, -2)
+                                        ),
+                                        List.of(new SkillRequirement(SkillType.ATTACK, 50)),
+                                        null)
+                                , 1)
                 ),
 
                 // Weapons - Battleaxes

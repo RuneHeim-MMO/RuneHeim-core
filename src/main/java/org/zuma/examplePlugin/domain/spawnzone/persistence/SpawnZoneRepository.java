@@ -1550,7 +1550,7 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(217, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 490, 80, 497)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.SHAMIRA_SHAMAN, 1, 100)
-                ), false, null, null), 1)),
+                ), false, MarkerType.HERBLORE_SHOP, "Herblore Shop"), 1)),
 
 
                 // Saharijin guards
@@ -2144,10 +2144,130 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(310, SpawnZoneType.AREA, 10, 30,
                         new Location(Bukkit.getWorld("world"), 276, 50, -77)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.RAT_WELCOME_TO_DRAKKAR_BASE_1, 20, 100)
-                ), 10, false, false), 1))
+                ), 10, false, false), 1)),
 
 
-                // last 309
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(311, SpawnZoneType.AREA, 30, 30,
+                        new Location(Bukkit.getWorld("world"), 672, 76, 243)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.PANDA_BASE_35, 10, 100)
+                ), 50, false, true), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(312, SpawnZoneType.AREA, 30, 30,
+                        new Location(Bukkit.getWorld("world"), 735, 98, 111)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.PANDA_BASE_35, 10, 100)
+                ), 50, false, true), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(313, SpawnZoneType.AREA, 30, 30,
+                        new Location(Bukkit.getWorld("world"), 842, 120, 80)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.PANDA_BASE_35, 10, 100)
+                ), 30, false, true), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(314, SpawnZoneType.AREA, 30, 30,
+                        new Location(Bukkit.getWorld("world"), 912, 107, 45)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.PANDA_BASE_35, 10, 100)
+                ), 30, false, true), 1)),
+
+
+                // Jungle bugs
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(315, SpawnZoneType.AREA, 30, 30,
+                        new Location(Bukkit.getWorld("world"), 471, 110, 544)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CRICKET_GREEN_BASE_7, 30, 100),
+                        new SpawnZoneMobRecord(MobType.ANT_BLACK_BASE_5, 30, 100),
+                        new SpawnZoneMobRecord(MobType.MANTIS_BASE_25, 20, 100),
+                        new SpawnZoneMobRecord(MobType.SCORPION_BASE_30, 10, 100)
+                ), 100, false, true), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(316, SpawnZoneType.AREA, 30, 30,
+                        new Location(Bukkit.getWorld("world"), 331, 110, 461)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CRICKET_GREEN_BASE_7, 30, 100),
+                        new SpawnZoneMobRecord(MobType.ANT_BLACK_BASE_5, 30, 100),
+                        new SpawnZoneMobRecord(MobType.MANTIS_BASE_25, 20, 100),
+                        new SpawnZoneMobRecord(MobType.SCORPION_BASE_30, 10, 100)
+                ), 100, false, true), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(317, SpawnZoneType.AREA, 30, 30,
+                        new Location(Bukkit.getWorld("world"), 143, 110, 503)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CRICKET_GREEN_BASE_7, 30, 100),
+                        new SpawnZoneMobRecord(MobType.ANT_BLACK_BASE_5, 30, 100),
+                        new SpawnZoneMobRecord(MobType.MANTIS_BASE_25, 20, 100),
+                        new SpawnZoneMobRecord(MobType.SCORPION_BASE_30, 10, 100)
+                ), 100, false, true), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(318, SpawnZoneType.AREA, 30, 30,
+                        new Location(Bukkit.getWorld("world"), 516, 110, 408)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CRICKET_GREEN_BASE_7, 8, 100),
+                        new SpawnZoneMobRecord(MobType.ANT_BLACK_BASE_5, 8, 100),
+                        new SpawnZoneMobRecord(MobType.MANTIS_BASE_25, 4, 100),
+                        new SpawnZoneMobRecord(MobType.SCORPION_BASE_30, 3, 100)
+                ), 50, false, true), 1)),
+
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(319, SpawnZoneType.AREA, 30, 30,
+                        new Location(Bukkit.getWorld("world"), 577, 110, 456)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CRICKET_GREEN_BASE_7, 8, 100),
+                        new SpawnZoneMobRecord(MobType.ANT_BLACK_BASE_5, 8, 100),
+                        new SpawnZoneMobRecord(MobType.MANTIS_BASE_25, 4, 100),
+                        new SpawnZoneMobRecord(MobType.SCORPION_BASE_30, 3, 100)
+                ), 50, false, true), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(320, SpawnZoneType.AREA, 30, 30,
+                        new Location(Bukkit.getWorld("world"), 409, 110, 700)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.CRICKET_GREEN_BASE_7, 8, 100),
+                        new SpawnZoneMobRecord(MobType.ANT_BLACK_BASE_5, 8, 100),
+                        new SpawnZoneMobRecord(MobType.MANTIS_BASE_25, 4, 100),
+                        new SpawnZoneMobRecord(MobType.SCORPION_BASE_30, 3, 100)
+                ), 50, false, true), 1)),
+
+
+                // Near jungle bandits camp
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(321, SpawnZoneType.AREA, 120, 15,
+                        new Location(Bukkit.getWorld("world"), -66, 80, 457)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_20_1, 2, 100),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_20_2, 2, 100),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_20_3, 2, 100),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_20_4, 2, 100)
+                ), 30, false, false), 1)),
+
+                // Heartroot bandits (for now)
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(322, SpawnZoneType.AREA, 120, 15,
+                        new Location(Bukkit.getWorld("world"), 247, 104, 508)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_40_1, 1, 100),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_40_2, 1, 100),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_40_3, 1, 100),
+                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_40_4, 1, 100)
+                ), 15, false, false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(323, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -746, 71, 372)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SWAMP_ISLAND_HERBLORE_SHOP, 1, 100)
+                ), false, MarkerType.HERBLORE_SHOP, "Herblore Shop"), 1)),
+
+                // Drakkar daily rewards
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(324, SpawnZoneType.POINT, 30, 100,
+                        new Location(Bukkit.getWorld("world"), 230.5, 73, -76)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.COLLECTOR_OF_DAYS, 1, 100)
+                ), false, MarkerType.DAILY_REWARD, "Collector of Days"), 1)),
+
+
+                // Saharijin daily rewards
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(325, SpawnZoneType.POINT, 30, 100,
+                        new Location(Bukkit.getWorld("world"), -1236, 67, -743)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.COLLECTOR_OF_DAYS, 1, 100)
+                ), false, MarkerType.DAILY_REWARD, "Collector of Days"), 1)),
+
+                // Murkwatch daily rewards
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(326, SpawnZoneType.POINT, 30, 100,
+                        new Location(Bukkit.getWorld("world"), -1039, 68, 435)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.COLLECTOR_OF_DAYS, 1, 100)
+                ), false, MarkerType.DAILY_REWARD, "Collector of Days"), 1)),
+
+                // Sakurmeer daily rewards
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(327, SpawnZoneType.POINT, 30, 100,
+                        new Location(Bukkit.getWorld("world"), 831.5, 120, 129)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.COLLECTOR_OF_DAYS, 1, 100)
+                ), false, MarkerType.DAILY_REWARD, "Collector of Days"), 1))
+
+                // last 321
 
 
         );

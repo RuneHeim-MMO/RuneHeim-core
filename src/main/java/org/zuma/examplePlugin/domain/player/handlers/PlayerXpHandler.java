@@ -1,10 +1,14 @@
 package org.zuma.examplePlugin.domain.player.handlers;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
@@ -141,6 +145,15 @@ public class PlayerXpHandler {
     public void addXp(SkillType type, double xp, XpSource source) {
         Skill skill = player.getSkills().get(type);
 
+        if (skill == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Tried adding XP for skill " + type.getLabel() + " which does not exist in players instance.");
+            return;
+        }
+
+        if (skill.getType().getMaxLevelCap() != null && (skill.getBaseLevel() >= skill.getType().getMaxLevelCap())) {
+            return;
+        }
+
         double baseMultiplier = 1.0;      // server-wide stuff
         double bonusAdditive = 0.0;       // player boosts that stack additively
 
@@ -176,14 +189,10 @@ public class PlayerXpHandler {
         xp *= totalMultiplier;
 
         RunePlayerGainedXPEvent event = new RunePlayerGainedXPEvent(player, type, xp, source);
+        AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.XP_GAINED, xp);
         Bukkit.getServer().getPluginManager().callEvent(event);
 
         if (event.isCancelled()) {
-            return;
-        }
-
-        if (skill == null) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Tried adding XP for skill " + type.getLabel() + " which does not exist in players instance.");
             return;
         }
 
@@ -217,6 +226,19 @@ public class PlayerXpHandler {
 
         if (leveledUp) {
             int availableRecipesAfterLevelUp = RuneQuestPlugin.getRecipeHandler().getAvailableRecipesNumber(player);
+            int level = skill.getBaseLevel();
+
+            if (skill.getType().getMaxLevelCap() != null && level >= skill.getType().getMaxLevelCap()) {
+                HudService.sendInfoMessage(player, Component.text("You've mastered ")
+                        .append(Component.text(skill.getType().getLabel(), Color.SERVER_BRAND.asColor()))
+                        .append(Component.text(" up to the current limit of ", Color.INFO.asColor()))
+                        .append(Component.text(skill.getType().getMaxLevelCap() + "!", Color.ACCENT.asColor()))
+                        .append(Component.text("!")));
+
+                HudService.sendInfoMessage(player, Component.text(
+                        "More challenges are on the way. Future content is in development - stay tuned!", Color.SERVER_BRAND.asColor()));
+            }
+
 
             EffectHandler.playAt(() -> player.asBukkitPlayer().getLocation(), new LevelUpEffect(player.asBukkitPlayer(), skill));
             player.setCombatLvl(XpUtils.getCombatLevelFromSkills(player.getSkills()));

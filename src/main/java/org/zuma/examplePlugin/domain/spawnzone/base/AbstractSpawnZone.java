@@ -6,6 +6,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.core.utils.MobUtils;
@@ -153,6 +154,7 @@ public abstract class AbstractSpawnZone {
                 }
 
                 Entity spawnedEntity = RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), MobUtils.getGroundLocation(mobLocation), record.mobId().getId());
+                RuneQuestPlugin.getAnalytics().increment(AnalyticsKey.MOBS_SPAWNED, 1);
 
                 if (spawnedEntity == null) {
                     RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Unable to spawn entity. Entity not found. Drop Zone ID: " + id + " Entity ID: " + record.mobId() + " (numeric: " + record.mobId().getId() + ")");

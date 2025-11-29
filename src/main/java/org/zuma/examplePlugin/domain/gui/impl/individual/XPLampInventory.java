@@ -13,11 +13,13 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.gui.base.IndividualGUI;
@@ -179,6 +181,7 @@ public class XPLampInventory extends IndividualGUI {
         player.addXp(selectedSkill, inHandLamp.getXpReward(), XpSource.PERSONAL);
         player.asBukkitPlayer().closeInventory();
         SoundType.XP_LAMP_SKILL_SELECT.play(player, true);
+        AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.XP_LAMPS_USED, 1);
     }
 
 }

@@ -33,7 +33,7 @@ public class ShopRepository {
     public List<ShopConfig> getAll() {
         return List.of(
 
-                new ShopConfig(ShopId.JEWLER.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
+                new ShopConfig(ShopId.DRAKKAR_JEWLER.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.UNCUT_SAPPHIRE.asInt(), 4, 30, ItemId.UNCUT_SAPPHIRE.getBuyPrice(), ItemId.UNCUT_SAPPHIRE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.UNCUT_EMERALD.asInt(), 3, 30, ItemId.UNCUT_EMERALD.getBuyPrice(), ItemId.UNCUT_EMERALD.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.UNCUT_RUBY.asInt(), 2, 30, ItemId.UNCUT_RUBY.getBuyPrice(), ItemId.UNCUT_RUBY.getSellPrice(), null, null),
@@ -44,8 +44,12 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.RUBY.asInt(), 0, 300, ItemId.RUBY.getBuyPrice(), ItemId.RUBY.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.DIAMOND.asInt(), 0, 300, ItemId.DIAMOND.getBuyPrice(), ItemId.DIAMOND.getSellPrice(), null, null),
 
-                        new ShopItemConfig(ItemId.BRONZE_RING.asInt(), 2, 300, 400L, 360L, null, null),
-                        new ShopItemConfig(ItemId.AMULET_OF_GUARDING.asInt(), 1, 300, 1000L, 360L, null, null)
+                        new ShopItemConfig(ItemId.BRONZE_RING.asInt(), 2, 300, 300L, 100L, null, null),
+                        new ShopItemConfig(ItemId.IRON_RING.asInt(), 2, 300, 400L, 150L, null, null),
+
+                        new ShopItemConfig(ItemId.AMULET_OF_GUARDING.asInt(), 1, 300, 1000L, 360L, null, null),
+                        new ShopItemConfig(ItemId.AMULET_OF_THE_NOVICE_BLADE.asInt(), 1, 300, 1000L, 360L, null, null),
+                        new ShopItemConfig(ItemId.AMULET_OF_THE_ARCHER.asInt(), 1, 300, 1000L, 360L, null, null)
                 ))), 1)),
 
                 new ShopConfig(ShopId.INVESTMENT_BANKER.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
@@ -53,7 +57,7 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.SCRATCH_CARD.asInt(), 10, 30, 1000L, 500L, null, null)
                 ))), 1)),
 
-                new ShopConfig(ShopId.GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(true, GENERAL_STORE_ITEMS)), 1)),
+                new ShopConfig(ShopId.DRAKKAR_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(true, GENERAL_STORE_ITEMS)), 1)),
 
                 new ShopConfig(ShopId.DRAKKAR_BLACKSMITH.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.SMITHING_HAMMER.asInt(), 8, 30, 90L, 20L, null, null),
@@ -96,7 +100,7 @@ public class ShopRepository {
 
                 ))), 1)),
 
-                new ShopConfig(ShopId.BASIC_FOOD_STALL.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
+                new ShopConfig(ShopId.DRAKKAR_BASIC_FOOD_STALL.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.COOKED_MEAT.asInt(), 32, 30, ItemId.COOKED_MEAT.getBuyPrice(), null, null, null),
                         new ShopItemConfig(ItemId.COOKED_CHICKEN.asInt(), 32, 30, ItemId.COOKED_CHICKEN.getBuyPrice(), null, null, null)
                 ))), 1)),
@@ -187,7 +191,8 @@ public class ShopRepository {
 
                         new ShopItemConfig(ItemId.BRONZE_ARROW.asInt(), 512, 10, ItemId.BRONZE_ARROW.getBuyPrice(), ItemId.BRONZE_ARROW.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.IRON_ARROW.asInt(), 512, 10, ItemId.IRON_ARROW.getBuyPrice(), ItemId.IRON_ARROW.getSellPrice(), null, null),
-                        new ShopItemConfig(ItemId.STEEL_ARROW.asInt(), 512, 10, ItemId.STEEL_ARROW.getBuyPrice(), ItemId.STEEL_ARROW.getSellPrice(), null, null)
+                        new ShopItemConfig(ItemId.STEEL_ARROW.asInt(), 512, 10, ItemId.STEEL_ARROW.getBuyPrice(), ItemId.STEEL_ARROW.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.AMULET_OF_THE_ARCHER.asInt(), 1, 300, 5000L, 720L, null, null)
 
                 ))), 1)),
 
@@ -226,8 +231,23 @@ public class ShopRepository {
                 new ShopConfig(ShopId.AETHERIS_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(true, GENERAL_STORE_ITEMS)), 1)),
                 new ShopConfig(ShopId.ISLENOR_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(true, GENERAL_STORE_ITEMS)), 1)),
                 new ShopConfig(ShopId.THORNBARK_GENERAL_STORE.asInt(), new VersionedJson(gson.toJson(new ShopMeta(true, GENERAL_STORE_ITEMS)), 1)),
+                new ShopConfig(ShopId.DRAKKAR_TANNER_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, TANNER_SHOP)), 1)),
 
-                new ShopConfig(ShopId.DRAKKAR_TANNER_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, TANNER_SHOP)), 1))
+                new ShopConfig(ShopId.ZARALI_HERBLORE_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
+                        new ShopItemConfig(ItemId.ATTACK_POTION_I.asInt(), 5, 120, 500L, null, null, null),
+                        new ShopItemConfig(ItemId.STRENGTH_POTION_I.asInt(), 5, 120, 500L, null, null, null),
+                        new ShopItemConfig(ItemId.RANGED_POTION_I.asInt(), 5, 120, 500L, null, null, null),
+                        new ShopItemConfig(ItemId.HEALTH_POTION_I.asInt(), 5, 120, 400L, null, null, null),
+                        new ShopItemConfig(ItemId.DEFENCE_POTION_I.asInt(), 5, 120, 400L, null, null, null)
+                ))), 1)),
+
+                new ShopConfig(ShopId.SWAMP_ISLAND_HERBLORE_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
+                        new ShopItemConfig(ItemId.ATTACK_POTION_I.asInt(), 5, 120, 500L, null, null, null),
+                        new ShopItemConfig(ItemId.STRENGTH_POTION_I.asInt(), 5, 120, 500L, null, null, null),
+                        new ShopItemConfig(ItemId.RANGED_POTION_I.asInt(), 5, 120, 500L, null, null, null),
+                        new ShopItemConfig(ItemId.HEALTH_POTION_I.asInt(), 5, 120, 400L, null, null, null),
+                        new ShopItemConfig(ItemId.DEFENCE_POTION_I.asInt(), 5, 120, 400L, null, null, null)
+                ))), 1))
 
         );
 

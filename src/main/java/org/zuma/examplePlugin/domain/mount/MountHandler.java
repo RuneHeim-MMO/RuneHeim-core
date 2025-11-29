@@ -9,7 +9,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -162,6 +164,7 @@ public class MountHandler {
 
             data.setLastPosition(horse.getLocation());
             state.tick(mount, distanceSinceLastTick);
+            AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.BLOCKS_TRAVELED_WITH_MOUNT, distanceSinceLastTick);
             item.getMetaGenerator().updatePresentationLayer(itemStack);
         });
     }
@@ -198,12 +201,14 @@ public class MountHandler {
 
         state.setOnLevelUp((newLevel) -> {
             mount.onLevelChange(player, newLevel, newMountUUID, true);
+            AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.MOUNT_LEVELS_GAINED, 1);
             return null;
         });
 
         playerMount.setActiveEntityUUID(newMountUUID);
         SoundType.MOUNT_SPAWN.play(player, true);
         SoundType.MOUNT_SADDLE.play(player, true);
+        AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.MOUNTS_CALLED, 1);
 
     }
 

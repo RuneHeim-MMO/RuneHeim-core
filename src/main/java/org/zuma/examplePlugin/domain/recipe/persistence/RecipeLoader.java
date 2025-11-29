@@ -55,6 +55,12 @@ public class RecipeLoader {
             itemStack.setItemMeta(displayItemMeta);
 
             AbstractRecipe newRecipe = factory.createRecipe(itemStack, meta, json);
+
+            if (recipeRegistry.getRecipeById(newRecipe.getId()) != null) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot register recipe with id " + newRecipe.getId() + "! Recipe with this id already exists.");
+                return;
+            }
+
             recipeRegistry.registerRecipe(newRecipe.getId(), newRecipe);
         } catch (Exception e) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to recipe " + meta.id() + "! Error: ", e);

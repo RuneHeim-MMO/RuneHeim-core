@@ -12,9 +12,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
@@ -78,6 +80,7 @@ public class DeathHandler {
             if (coinType != null) {
                 ItemStack newCoinStack = coinType.createItemStackOfType((int) droppedCoinsAmount);
                 runePlayer.setPouchCoins(pouchCoins - droppedCoinsAmount, false);
+                AnalyticsUtils.incrementServerAndPlayer(runePlayer, AnalyticsKey.COINS_SPENT, droppedCoinsAmount);
                 playerLocation.getWorld().dropItemNaturally(playerLocation, newCoinStack);
                 HudService.sendInfoMessage(runePlayer, Component.text("You have dropped ").append(CurrencyUtils.getCoinsCurrencyComponent(droppedCoinsAmount)).append(Component.text(" coins.")));
             }
@@ -95,6 +98,7 @@ public class DeathHandler {
         runePlayer.setHealth(runePlayer.getSkill(SkillType.HITPOINTS).getLevelWithBonuses(), RunePlayerHealthChangedEvent.Cause.RESPAWN);
         runePlayer.setPrayerEnergy(runePlayer.getSkill(SkillType.PRAYER).getBaseLevel());
         runePlayer.setDead(true);
+        AnalyticsUtils.incrementServerAndPlayer(runePlayer, AnalyticsKey.PLAYER_DEATHS, 1);
 
         SoundType.DEATH_SCREEN.play(player, false);
         SoundType.DEATH_SCREEN_1.play(player, false);

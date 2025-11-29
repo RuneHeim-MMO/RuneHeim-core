@@ -32,6 +32,9 @@ public enum MobType {
     CITY_CITIZEN_SAHARIJIN,
     CITY_CITIZEN_JUNGLE,
 
+    // Herblore shops
+    SWAMP_ISLAND_HERBLORE_SHOP,
+
     // Goblins
     GOBLIN_1_BASE_1,
     GOBLIN_2_BASE_1,
@@ -58,6 +61,7 @@ public enum MobType {
     BANK_TELLER_9,
     INVESTMENT_BANKER,
 
+    COLLECTOR_OF_DAYS,
     AUCTIONEER,
     DRAKKAR_JEWLER,
     DRAKKAR_BLACKSMITH,
@@ -247,7 +251,7 @@ public enum MobType {
     GOAT,
     HUSK,
     LLAMA,
-    PANDA,
+    PANDA_BASE_35,
     PIG,
     POLAR_BEAR,
     RABBIT,

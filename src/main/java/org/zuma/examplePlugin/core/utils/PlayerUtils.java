@@ -23,12 +23,10 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.domain.territory.Territory;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PlayerUtils {
+    private static final Random random = new Random();
 
     public static void teleportToClosestCity(Player player) {
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
@@ -320,4 +318,7 @@ public class PlayerUtils {
         return runePlayer != null && runePlayer.getRole().hasPermission(Permission.WORLD_MANIPULATION) && player.getGameMode() == GameMode.CREATIVE;
     }
 
+    public static Random getRandom() {
+        return random;
+    }
 }

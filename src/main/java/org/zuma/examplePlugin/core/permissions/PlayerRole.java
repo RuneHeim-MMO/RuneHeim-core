@@ -75,7 +75,7 @@ public class PlayerRole {
         }
 
         if (baseVisible && upgradedVisible) {
-            return upgradedPrefix.append(basePrefix).append(Component.text(" "));
+            return upgradedPrefix.append(Component.text(" ").append(basePrefix).append(Component.text(" ")));
         } else if (baseVisible) {
             return basePrefix.append(Component.text(" "));
         } else if (upgradedVisible) {
@@ -201,5 +201,12 @@ public class PlayerRole {
 
     public SupporterLevel getSupporterLevel() {
         return supporterLevel;
+    }
+
+    public int getMaxQueueSize() {
+        int baseMax = baseRole.maxQueueSize();
+        int upgradedMax = upgradedRole != null ? upgradedRole.maxQueueSize() : 0;
+
+        return Math.max(baseMax, upgradedMax);
     }
 }

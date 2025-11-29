@@ -10,9 +10,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.ResourceNodeSchematicHandler;
@@ -146,6 +148,7 @@ public class ResourceNode extends AbstractInteractableBlock {
         if (isPerfectStrike) {
             SoundType stepSound = blockType.getStepSound();
             EffectHandler.playAt(this.getLocation().clone().add(0.5, 0, 0.5), new PerfectStrikeEffect(player));
+            AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.PERFECT_STRIKES, 1);
 
             new BukkitRunnable() {
                 int iterations = 0;
@@ -204,6 +207,7 @@ public class ResourceNode extends AbstractInteractableBlock {
         }
 
         ResourceNodeGatheredEvent event = new ResourceNodeGatheredEvent(player, this);
+        AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.NODES_GATHERED, 1);
         Bukkit.getServer().getPluginManager().callEvent(event);
 
         if (event.isCancelled()) {

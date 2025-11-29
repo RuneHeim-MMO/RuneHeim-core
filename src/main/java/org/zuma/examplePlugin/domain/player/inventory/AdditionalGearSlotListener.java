@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -15,12 +16,19 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
+import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
 import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
 import org.zuma.examplePlugin.domain.hud.HudService;
+import org.zuma.examplePlugin.domain.modifier.Modifier;
+import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
+import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class AdditionalGearSlotListener implements Listener {
@@ -31,7 +39,7 @@ public class AdditionalGearSlotListener implements Listener {
         this.slotHandler = slotHandler;
     }
 
-    @EventHandler // Handle arrow usage only from reserved slot
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true) // Handle arrow usage only from reserved slot
     public void onBowShoot(EntityShootBowEvent event) {
         if (!(event.getEntity() instanceof Player player)) return;
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
@@ -45,16 +53,16 @@ public class AdditionalGearSlotListener implements Listener {
         PlayerInventory inv = player.getInventory();
         int reservedSlot = ReservedSlot.ARROW_SLOT.getSlot();
         ItemStack reservedArrow = inv.getItem(reservedSlot);
+        ItemStack deductedArrow = consumedArrow;
+
+        if (consumedArrow == null) {
+            // Something weird happened
+            event.setCancelled(true);
+            return;
+        }
 
         // If engine took arrow not in reserved slot
         if (reservedArrow == null || !reservedArrow.isSimilar(consumedArrow)) {
-
-            if (consumedArrow == null) {
-                // Something weird happened
-                event.setCancelled(true);
-                return;
-            }
-
             // Refund the consumed arrow
             ItemStack refund = consumedArrow.clone();
             refund.setAmount(1);
@@ -66,15 +74,42 @@ public class AdditionalGearSlotListener implements Listener {
                 return;
             }
 
+
+            deductedArrow = reservedArrow.clone();
+
             // Deduct 1 arrow from arrow slot
             int newAmount = reservedArrow.getAmount() - 1;
             if (newAmount <= 0) {
                 inv.setItem(reservedSlot, null);
+                slotHandler.fillReservedSlots(runePlayer);
             } else {
                 reservedArrow.setAmount(newAmount);
                 inv.setItem(reservedSlot, reservedArrow);
             }
+
         }
+
+        boolean isArrowConsumed = true;
+
+        Modifier arrowRecoveryModifier = runePlayer.getModifiers().get(ModifierType.ARROW_RECOVERY_PERCENT);
+        if (arrowRecoveryModifier != null) {
+            double randomRoll = PlayerUtils.getRandom().nextDouble() * 100.0;
+            if (randomRoll < arrowRecoveryModifier.amount()) {
+                isArrowConsumed = false;
+            }
+
+        }
+
+        if (!isArrowConsumed) {
+            SoundType.ARROW_RECOVERED.play(runePlayer, false);
+            ItemStack refund = deductedArrow.clone();
+            refund.setAmount(1);
+            runePlayer.giveItemOrDrop(refund);
+        } else {
+            AnalyticsUtils.incrementServerAndPlayer(runePlayer, AnalyticsKey.ARROWS_CONSUMED, 1);
+        }
+
+
     }
 
     @EventHandler

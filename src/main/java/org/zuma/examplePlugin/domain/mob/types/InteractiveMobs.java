@@ -17,6 +17,10 @@ public class InteractiveMobs {
 
 
     public static void registerMobs(MobTypeRegistry registry) {
+        registry.register(MobType.COLLECTOR_OF_DAYS.getId(), () -> new InventoryOpenerMob(Icon.TREASURE_CHEST.get() + " Collector of Days", EquipmentSet.COLLECTOR_OF_DAYS,
+                MobBehaviors.VILLAGER_MAN_5.getBehavior(), "collector_of_days", null, InventoryId.DAILY_REWARDS.asInt(), 0)
+                .attachDialog(Dialogs.collectorOfDaysDialog));
+
         registry.register(MobType.INVESTMENT_BANKER.getId(), () -> new InventoryOpenerMob(Icon.COIN_PILE.get() + " Investment Banker", EquipmentSet.INVESTMENT_BANKER,
                 MobBehaviors.VILLAGER_MAN_4.getBehavior(), "investment_banker", null, InventoryId.INVESTMENT_BANKER.asInt(), 25)
                 .attachDialog(Dialogs.investmentBankerDialog));

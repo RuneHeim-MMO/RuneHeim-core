@@ -9,9 +9,11 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.Restrictable;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.QuestCompletedEffect;
 import org.zuma.examplePlugin.domain.effect.effects.QuestStartEffect;
@@ -287,6 +289,8 @@ public class Quest implements Restrictable {
             player.setTrackedQuestId(this.id);
         }
 
+        AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.QUESTS_STARTED, 1);
+
         if (deferEffect) {
             Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> playQuestStartEffect(player, firstStep), 100L);
         } else {
@@ -353,6 +357,8 @@ public class Quest implements Restrictable {
                 HudService.sendQuestRewards(player, this);
             }
         }, 60L);
+
+        AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.QUESTS_COMPLETED, 1);
     }
 
 

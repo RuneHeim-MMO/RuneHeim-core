@@ -13,6 +13,8 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.droptable.DropTableId;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -47,6 +49,10 @@ public class ShearableSheep extends GenericCombatant {
     }
 
     private void setWoolState(Entity entity, boolean hasWool) {
+        if (entity == null || !entity.isValid() || entity.isDead()) {
+            return;
+        }
+
         if (!DisguiseAPI.isDisguised(entity)) {
             return;
         }
@@ -82,6 +88,7 @@ public class ShearableSheep extends GenericCombatant {
         player.giveItemOrDrop(new ItemRecord(ItemId.WOOL, 1));
         player.asBukkitPlayer().swingMainHand();
         hasWool = false;
+        AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.SHEEP_SHEARED, 1);
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
             setWoolState(entity, true);

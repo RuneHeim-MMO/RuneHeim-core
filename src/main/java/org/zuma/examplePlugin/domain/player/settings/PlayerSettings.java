@@ -1,5 +1,11 @@
 package org.zuma.examplePlugin.domain.player.settings;
 
+import org.bukkit.Bukkit;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.events.player.PlayerSettingUpdateEvent;
+
 import java.util.EnumMap;
 import java.util.HashMap;
 
@@ -21,8 +27,11 @@ public class PlayerSettings {
         settings.put(setting, value);
     }
 
-    public void toggleSetting(PlayerSetting setting) {
-        settings.put(setting, !getSetting(setting));
+    public void toggleSetting(RunePlayer player, PlayerSetting setting) {
+        boolean newValue = !getSetting(setting);
+        settings.put(setting, newValue);
+        Bukkit.getPluginManager().callEvent(new PlayerSettingUpdateEvent(player, setting, newValue));
+        AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.SETTINGS_TOGGLED, 1);
     }
 
     public HashMap<String, Boolean> toMap() {

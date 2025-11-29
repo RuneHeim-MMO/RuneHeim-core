@@ -9,9 +9,11 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.core.utils.InventoryUtils;
 import org.zuma.examplePlugin.core.utils.ItemUtils;
@@ -356,6 +358,7 @@ public class FusionMasterInventory extends IndividualGUI {
                 state.insertGem(gem);
                 inventory.setItem(gemSlot, null);
                 player.setPouchCoins(player.getPouchCoins() - COST_PER_GEM, false);
+                AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.COINS_SPENT, COST_PER_GEM);
                 insertedGems++;
             } catch (IllegalStateException e) {
                 HudService.sendFailMessage(player, Component.text(e.getMessage()));
@@ -374,6 +377,7 @@ public class FusionMasterInventory extends IndividualGUI {
             SoundType.FUSION_SUCCESS_1.play(player, true);
             HudService.showCoinsChangeBubble(player, -((long) insertedGems * COST_PER_GEM));
             HudService.showFusionSuccessEffect(player, insertedGems);
+            AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.GEMS_INFUSED, insertedGems);
             player.asBukkitPlayer().closeInventory();
         }
     }

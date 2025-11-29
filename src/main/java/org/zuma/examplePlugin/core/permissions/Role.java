@@ -16,4 +16,6 @@ public interface Role {
     Component getPrefix();
 
     boolean isOp();
+
+    int maxQueueSize();
 }

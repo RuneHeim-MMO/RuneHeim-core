@@ -19,28 +19,28 @@ public class Frogs {
                 "Swamp Frog", null, getBaseSkills(25, 0.5),
                 null, MobBehaviors.FROG.getBehavior(),
                 0.3, true, false, 14, null, null, DisguiseType.FROG,
-                List.of(DropTableId.BONES.asInt(), DropTableId.SWAMP_FROG_THE_SICK_CAMELS.asInt()),
+                List.of(DropTableId.BONES.asInt(), DropTableId.SWAMP_FROG_THE_SICK_CAMELS.asInt(), DropTableId.FROG.asInt()),
                 true));
 
         registry.register(MobType.FROG_BASE_26.getId(), () -> new GenericCombatant(
                 "Swamp Frog", null, getBaseSkills(26, 0.5),
                 null, MobBehaviors.FROG.getBehavior(),
                 0.25, true, false, 15, null, null, DisguiseType.FROG,
-                List.of(DropTableId.BONES.asInt(), DropTableId.SWAMP_FROG_THE_SICK_CAMELS.asInt()),
+                List.of(DropTableId.BONES.asInt(), DropTableId.SWAMP_FROG_THE_SICK_CAMELS.asInt(), DropTableId.FROG.asInt()),
                 true));
 
         registry.register(MobType.FROG_BASE_25_NO_AGGRO.getId(), () -> new GenericCombatant(
                 "Swamp Frog", null, getBaseSkills(25, 0.5),
                 null, MobBehaviors.FROG.getBehavior(),
                 0.3, false, false, 14, null, null, DisguiseType.FROG,
-                List.of(DropTableId.BONES.asInt(), DropTableId.SWAMP_FROG_THE_SICK_CAMELS.asInt()),
+                List.of(DropTableId.BONES.asInt(), DropTableId.SWAMP_FROG_THE_SICK_CAMELS.asInt(), DropTableId.FROG.asInt()),
                 true));
 
         registry.register(MobType.FROG_BASE_26_NO_AGGRO.getId(), () -> new GenericCombatant(
                 "Swamp Frog", null, getBaseSkills(26, 0.5),
                 null, MobBehaviors.FROG.getBehavior(),
                 0.25, false, false, 15, null, null, DisguiseType.FROG,
-                List.of(DropTableId.BONES.asInt(), DropTableId.SWAMP_FROG_THE_SICK_CAMELS.asInt()),
+                List.of(DropTableId.BONES.asInt(), DropTableId.SWAMP_FROG_THE_SICK_CAMELS.asInt(), DropTableId.FROG.asInt()),
                 true));
 
 

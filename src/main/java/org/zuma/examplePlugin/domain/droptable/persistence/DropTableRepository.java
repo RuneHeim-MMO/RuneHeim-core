@@ -216,7 +216,7 @@ public class DropTableRepository {
                 new DropTableDBEntry(DropTableId.WOLF_LOW_LVL_ARMOR.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.IRON_MEDHELM.asInt(), 1, 1, 30, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.IRON_BOOTS.asInt(), 1, 1, 30, DropTableEntry.Type.ITEM),
-                        new DropTableEntry(ItemId.STEEL_MEDHELM.asInt(), 1, 1, 100, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.STEEL_MEDHELM.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.HARD_LEATHER_LEGGINGS.asInt(), 1, 1, 70, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.LEATHER_LEGGINGS.asInt(), 1, 1, 20, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
@@ -262,11 +262,17 @@ public class DropTableRepository {
                         new DropTableEntry(ItemId.COINS.asInt(), 250, 1000, 30, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
+                new DropTableDBEntry(DropTableId.LAVA_DUNGEON_RINGS.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.MITHRIL_RING.asInt(), 1, 1, 70, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.ADAMANT_RING.asInt(), 1, 1, 150, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+
                 new DropTableDBEntry(DropTableId.LAVA_DUNGEON_BOSS_COMMON.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.REGULAR_FAIRY_RATION.asInt(), 1, 16, 32, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.COAL_ORE.asInt(), 1, 12, 4, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.MITHRIL_ORE.asInt(), 1, 4, 6, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.ADAMANT_ORE.asInt(), 1, 4, 6, DropTableEntry.Type.ITEM),
-                        new DropTableEntry(ItemId.REGULAR_FAIRY_RATION.asInt(), 1, 8, 32, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.ATTACK_POTION_I.asInt(), 1, 3, 8, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.DEFENCE_POTION_I.asInt(), 1, 3, 8, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.HEALTH_POTION_I.asInt(), 1, 3, 8, DropTableEntry.Type.ITEM),
@@ -278,10 +284,160 @@ public class DropTableRepository {
                         new DropTableEntry(ItemId.ADAMANT_CROSSBOW.asInt(), 1, 1, 32, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.FUSION_SCROLL.asInt(), 1, 1, 64, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.PLATINUM_TOKEN.asInt(), 1, 5, 64, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.DRAGON_LEATHER.asInt(), 4, 8, 60, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.GREEN_DHIDE_BODY.asInt(), 1, 1, 80, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.GREEN_DHIDE_LEGGINGS.asInt(), 1, 1, 80, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.AMULET_OF_THE_WARD.asInt(), 1, 1, 100, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.FAIRY_OF_DARKNESS.asInt(), 1, 1, 149, DropTableEntry.Type.ITEM)
-                ), null)), 1))
+                ), null)), 1)),
 
+
+                new DropTableDBEntry(DropTableId.BANDIT_LOW_LEVEL_ARMOR.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.BRONZE_MEDHELM.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.IRON_MEDHELM.asInt(), 1, 1, 60, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.STEEL_MEDHELM.asInt(), 1, 1, 70, DropTableEntry.Type.ITEM),
+
+                        new DropTableEntry(ItemId.BRONZE_CHAINBODY.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.IRON_CHAINBODY.asInt(), 1, 1, 60, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.STEEL_CHAINBODY.asInt(), 1, 1, 70, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.BANDIT_LOW_LEVEL_WEAPONS.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.BRONZE_SWORD.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.IRON_SWORD.asInt(), 1, 1, 60, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.STEEL_SWORD.asInt(), 1, 1, 70, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.BRONZE_DAGGER.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.IRON_DAGGER.asInt(), 1, 1, 60, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.BANDIT_MEDIUM_LEVEL_ARMOR.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.STEEL_MEDHELM.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.MITHRIL_MEDHELM.asInt(), 1, 1, 60, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.ADAMANT_MEDHELM.asInt(), 1, 1, 150, DropTableEntry.Type.ITEM),
+
+                        new DropTableEntry(ItemId.STEEL_CHAINBODY.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.MITHRIL_CHAINBODY.asInt(), 1, 1, 60, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.ADAMANT_CHAINBODY.asInt(), 1, 1, 150, DropTableEntry.Type.ITEM),
+
+                        new DropTableEntry(ItemId.STEEL_BODY.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.MITHRIL_BODY.asInt(), 1, 1, 60, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.ADAMANT_BODY.asInt(), 1, 1, 100, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.BANDIT_MEDIUM_LEVEL_WEAPONS.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.STEEL_SWORD.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.MITHRIL_SWORD.asInt(), 1, 1, 60, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.STEEL_DAGGER.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.MITHRIL_DAGGER.asInt(), 1, 1, 60, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.BANDIT_HIGH_LEVEL_ARMOR.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.ADAMANT_MEDHELM.asInt(), 1, 1, 90, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.MITHRIL_MEDHELM.asInt(), 1, 1, 60, DropTableEntry.Type.ITEM),
+
+                        new DropTableEntry(ItemId.ADAMANT_CHAINBODY.asInt(), 1, 1, 90, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.MITHRIL_CHAINBODY.asInt(), 1, 1, 60, DropTableEntry.Type.ITEM),
+
+                        new DropTableEntry(ItemId.ADAMANT_BODY.asInt(), 1, 1, 90, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.MITHRIL_BODY.asInt(), 1, 1, 60, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.BANDIT_HIGH_LEVEL_WEAPONS.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.MITHRIL_SWORD.asInt(), 1, 1, 70, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.ADAMANT_SWORD.asInt(), 1, 1, 150, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.RUNE_SWORD.asInt(), 1, 1, 500, DropTableEntry.Type.ITEM),
+
+                        new DropTableEntry(ItemId.ADAMANT_DAGGER.asInt(), 1, 1, 70, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.MITHRIL_DAGGER.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                // New
+                new DropTableDBEntry(DropTableId.ARMADILLO_LOW_LEVEL.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.ARMADILLO_SCALE.asInt(), 1, 1, 8, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.ARMADILLO_CLAW.asInt(), 1, 1, 15, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.ARMADILLO_HIGH_LEVEL.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.ARMADILLO_SCALE.asInt(), 1, 1, 6, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.ARMADILLO_CLAW.asInt(), 1, 1, 15, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.SHARP_ARMADILLO_CLAW.asInt(), 1, 1, 70, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.BOAR.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.BOAR_TUSK.asInt(), 1, 1, 8, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.THICK_HIDE.asInt(), 1, 1, 2, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.HOGLIN.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.THICK_HIDE.asInt(), 1, 1, 3, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+
+                // Shared bug materials
+                new DropTableDBEntry(DropTableId.INSECT_WINGS.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.INSECT_WINGS.asInt(), 1, 2, 4, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.COCKROACH.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.COCKROACH_LEG.asInt(), 1, 1, 4, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.SURVIVAL_GLAND.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.ANT.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.ANT_EGGS.asInt(), 1, 3, 6, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.ANT_MANDIBLES.asInt(), 1, 1, 40, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.CHITIN_PLATES.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.CHITIN_PLATES.asInt(), 1, 2, 5, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.SCORPION.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.SCORPION_STINGER.asInt(), 1, 1, 8, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.CHITIN_PLATES.asInt(), 1, 2, 5, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.VENOM_SAC.asInt(), 1, 1, 80, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.BUNNY.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.SOFT_FUR.asInt(), 1, 1, 4, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.WARHOUND.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.STEEL_BAR.asInt(), 1, 2, 4, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.COAL_ORE.asInt(), 1, 2, 4, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.DEER_ANTLER.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.DEER_ANTLER.asInt(), 1, 1, 6, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.EAGLE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.EAGLE_CLAW.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.LEOPARD.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.PREDATOR_CLAW.asInt(), 1, 1, 12, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.LEOPARD_BABY.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.SOFT_CUB_FUR.asInt(), 1, 1, 3, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.MOLE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.UNDERGROUND_FUNGUS.asInt(), 1, 1, 16, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.OCELOT.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.PREDATOR_CLAW.asInt(), 1, 1, 8, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.RAT.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.MOLDY_CHEESE.asInt(), 1, 1, 16, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.FROG.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.SLIMY_SAC.asInt(), 1, 1, 8, DropTableEntry.Type.ITEM)
+                ), null)), 1))
 
         );
     }

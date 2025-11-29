@@ -2,9 +2,11 @@ package org.zuma.examplePlugin.domain.player.handlers;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.interfaces.InteractiveActionStrategy;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -15,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BusyStateHandler {
-    private final static int MAX_QUEUED_ACTIONS = 99;
     private final RunePlayer player;
     private final List<QueuedAction> pendingActions;
 
@@ -31,7 +32,7 @@ public class BusyStateHandler {
             return false;
         }
 
-        if (pendingActions.size() >= MAX_QUEUED_ACTIONS) {
+        if (pendingActions.size() >= this.player.getRole().getMaxQueueSize()) {
             SoundType.ACTION_QUEUE_FAIL_SOUND.play(player, false);
             return false;
         }
@@ -65,6 +66,7 @@ public class BusyStateHandler {
             this.player.getScoreboardManager().setPlayerCollision(true);
             this.pendingActions.forEach(action -> action.strategy().cancelTask());
             this.pendingActions.clear();
+            AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.ACTIONS_INTERRUPTED, 1);
             return;
         }
 

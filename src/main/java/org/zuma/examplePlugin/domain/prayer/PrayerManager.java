@@ -9,8 +9,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
@@ -46,6 +48,7 @@ public class PrayerManager implements Listener {
                     .sum();
 
             player.setPrayerEnergy(player.getPrayerEnergy() - drainAmount);
+            AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.PRAYER_POINTS_WASTED, drainAmount);
 
             if (player.getPrayerEnergy() <= 0) {
                 prayers.clear();

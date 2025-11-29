@@ -6,7 +6,9 @@ import net.kyori.adventure.text.format.NamedTextColor;
 public enum Icon {
     EMPTY(""),
     INFO("§bⓤ"),
+    SUCCESS("ⓤ"),
     ERROR("§cⵅ"),
+    ANNOUNCEMENT("ⅎ"),
 
     COMMON("▜"),
     UNCOMMON("⏤"),
@@ -98,6 +100,7 @@ public enum Icon {
     SCROLL_BROWN("⑬"),
 
     CHEST("Ⳃ"),
+    TREASURE_CHEST("⹆"),
     SPECIAL_ATTACK("Ⱍ"),
 
     FAIRY("ⰱ"),
@@ -145,6 +148,7 @@ public enum Icon {
     RANK_BADGE_ADMIN("⥿"),
     RANK_BADGE_MOD("⭋"),
     RANK_BADGE_HELPER("⤳"),
+    RANK_BADGE_PILOT("⇦"),
 
     RANK_BADGE_VIP("⊹"),
     RANK_BADGE_HERO("⥤"),

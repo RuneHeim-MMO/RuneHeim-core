@@ -7,8 +7,10 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.StorageUtils;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
@@ -131,6 +133,7 @@ public abstract class StorageInventory extends PaginatedStorageGUI {
 
                 // Let other servers know about this storage being opened
                 Bukkit.getServer().getPluginManager().callEvent(new RuneStorageInventoryOpenEvent(new RuneStorageInventoryOpenEvent.Payload(player.asBukkitPlayer().getName(), player.getUUID(), storageContainerUUID)));
+                AnalyticsUtils.incrementServerAndPlayer(player, type.equals(StorageType.BANK) ? AnalyticsKey.BANK_OPENED_TIMES : AnalyticsKey.STORAGE_OPENED_TIMES, 1);
                 player.asBukkitPlayer().openInventory(getBaseInventory());
             });
 

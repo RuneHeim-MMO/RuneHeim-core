@@ -2,7 +2,9 @@ package org.zuma.examplePlugin.domain.shop;
 
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.Throttler;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
@@ -184,6 +186,7 @@ public class Shop {
             SoundType.SHOP_BUY_WITH_CUSTOM_CURRENCY.play(player, true);
         } else {
             player.setPouchCoins(player.getPouchCoins() + totalOrderPrice, false);
+            AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.COINS_EARNED, totalOrderPrice);
         }
 
         notifyStockSubscribers();
@@ -232,6 +235,7 @@ public class Shop {
             }
 
             player.setPouchCoins(player.getPouchCoins() - totalOrderPrice, false);
+            AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.COINS_SPENT, totalOrderPrice);
         }
 
         player.giveItemOrDrop(type.createItemStackOfType(amount));

@@ -1,8 +1,10 @@
 package org.zuma.examplePlugin.domain.item.impl;
 
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -56,6 +58,7 @@ public class Remains extends Material {
         SoundType.BONES_BURY_FINISH.play(player, false);
         SoundType.BONES_BURY_DIG.play(player, true);
         player.distributeXp(SkillType.PRAYER, buryXPReward);
+        AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.BONES_BURIED, 1);
     }
 
 }

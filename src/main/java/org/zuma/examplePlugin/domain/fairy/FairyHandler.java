@@ -12,9 +12,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
@@ -104,7 +106,7 @@ public class FairyHandler {
                 });
             }
 
-
+            AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.FAIRIES_UPGRADED, 1);
         } catch (Exception e) {
             HudService.sendFailMessage(player, Component.text(e.getMessage()));
         }
@@ -349,6 +351,7 @@ public class FairyHandler {
             slotHandler.fillReservedSlots(runePlayer);
             state.feedFairy(fairyFood.getEnergyRestoreAmount());
             fairyItem.getMetaGenerator().updatePresentationLayer(item);
+            AnalyticsUtils.incrementServerAndPlayer(runePlayer, AnalyticsKey.FAIRY_RATIONS_CONSUMED, 1);
 
             HudService.sendInfoMessage(runePlayer, Component.text("Your fairy has consumed 1x ", Color.INFO.asColor()).append(food.displayName()).append(Component.text(".", Color.INFO.asColor())));
             SoundType.FAIRY_FEED_SOUND.play(player, true);

@@ -3,7 +3,9 @@ package org.zuma.examplePlugin.domain.item.impl.consumable;
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Icon;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -47,6 +49,7 @@ public class Food extends AbstractItemType {
         PlayerUtils.subtractOneFromMainHand(player);
         player.setHealth(healthAfterEating, RunePlayerHealthChangedEvent.Cause.HEALING);
         HudService.showHealBubble(player, healedAmount);
+        AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.FOOD_CONSUMED, 1);
     }
 
 

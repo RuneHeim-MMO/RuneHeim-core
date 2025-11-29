@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.domain.mob.types;
 
+import org.zuma.examplePlugin.domain.droptable.DropTableId;
 import org.zuma.examplePlugin.domain.mob.MobTypeRegistry;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehaviors;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
@@ -19,7 +20,7 @@ public class Bugs {
                 MobBehaviors.CENTIPEDE.getBehavior(),
                 "nm_centipede",
                 0.30, false, false, 17,
-                List.of(),
+                List.of(DropTableId.CHITIN_PLATES.asInt()),
                 true));
 
         registry.register(MobType.CRICKET_BROWN_BASE_5.getId(), () -> new GenericCombatant(
@@ -29,7 +30,7 @@ public class Bugs {
                 MobBehaviors.CRICKET.getBehavior(),
                 "nm_cricket_brown",
                 0.30, false, false, 5,
-                List.of(),
+                List.of(DropTableId.CHITIN_PLATES.asInt(), DropTableId.INSECT_WINGS.asInt()),
                 true));
 
 
@@ -40,7 +41,7 @@ public class Bugs {
                 MobBehaviors.CRICKET.getBehavior(),
                 "nm_cricket_green",
                 0.30, false, false, 7,
-                List.of(),
+                List.of(DropTableId.CHITIN_PLATES.asInt(), DropTableId.INSECT_WINGS.asInt()),
                 true));
 
         registry.register(MobType.COCKROACH_BASE_8.getId(), () -> new GenericCombatant(
@@ -50,7 +51,7 @@ public class Bugs {
                 MobBehaviors.COCKROACH.getBehavior(),
                 "nm_cockroach",
                 0.30, false, false, 8,
-                List.of(),
+                List.of(DropTableId.COCKROACH.asInt()),
                 true));
 
         registry.register(MobType.ANT_BLACK_BASE_5.getId(), () -> new GenericCombatant(
@@ -60,7 +61,7 @@ public class Bugs {
                 MobBehaviors.ANT.getBehavior(),
                 "nm_ant_black",
                 0.30, false, true, 2,
-                List.of(),
+                List.of(DropTableId.ANT.asInt()),
                 true));
 
 
@@ -71,7 +72,7 @@ public class Bugs {
                 MobBehaviors.MANTIS.getBehavior(),
                 "nm_mantis",
                 0.30, false, false, 20,
-                List.of(),
+                List.of(DropTableId.CHITIN_PLATES.asInt()),
                 true));
 
 
@@ -82,7 +83,7 @@ public class Bugs {
                 MobBehaviors.SCORPION.getBehavior(),
                 "nm_scorpion_desert",
                 0.30, true, false, 25,
-                List.of(),
+                List.of(DropTableId.SCORPION.asInt()),
                 true));
 
         registry.register(MobType.SCORPION_BASE_30.getId(), () -> new GenericCombatant(
@@ -92,7 +93,7 @@ public class Bugs {
                 MobBehaviors.SCORPION.getBehavior(),
                 "nm_scorpion_black",
                 0.30, true, false, 22,
-                List.of(),
+                List.of(DropTableId.SCORPION.asInt()),
                 true));
 
 

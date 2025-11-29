@@ -9,8 +9,10 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.combat.constants.AttackType;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.SpecialAttackSmokeEffect;
@@ -98,6 +100,8 @@ public class HitHandler {
 
             Hit splashHit = HitCalculator.getNewHit(attacker, combatMob, type, isSpecialAttack, true);
             applyHit(attacker, combatMob, splashHit);
+            AnalyticsUtils.incrementServerAndPlayer(attacker, AnalyticsKey.MELEE_DAMAGE, splashHit.getDamage());
+            AnalyticsUtils.incrementServerAndPlayer(attacker, AnalyticsKey.MELEE_HITS, 1);
         }
     }
 
@@ -119,6 +123,11 @@ public class HitHandler {
         }
 
         applyHit(attacker, defender, hit);
+
+        if (attacker.getEntity() instanceof Player) {
+            AnalyticsUtils.incrementServerAndPlayer((RunePlayer) attacker, AnalyticsKey.MELEE_DAMAGE, hit.getDamage());
+            AnalyticsUtils.incrementServerAndPlayer((RunePlayer) attacker, AnalyticsKey.MELEE_HITS, 1);
+        }
         return hit;
     }
 
@@ -136,6 +145,11 @@ public class HitHandler {
         }
 
         applyHit(attacker, defender, hit);
+
+        if (attacker.getEntity() instanceof Player) {
+            AnalyticsUtils.incrementServerAndPlayer((RunePlayer) attacker, AnalyticsKey.RANGED_DAMAGE, hit.getDamage());
+            AnalyticsUtils.incrementServerAndPlayer((RunePlayer) attacker, AnalyticsKey.RANGED_HITS, 1);
+        }
         return hit;
     }
 

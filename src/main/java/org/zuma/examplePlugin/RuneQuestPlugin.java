@@ -3,6 +3,8 @@ package org.zuma.examplePlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsContainer;
+import org.zuma.examplePlugin.core.analytics.AnalyticsHandler;
 import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.handlers.core.ModelEngineWaiter;
 import org.zuma.examplePlugin.core.logger.Logger;
@@ -13,6 +15,7 @@ import org.zuma.examplePlugin.core.module.core.*;
 import org.zuma.examplePlugin.core.module.game.*;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
+import org.zuma.examplePlugin.domain.daily.DailyRewardHandler;
 import org.zuma.examplePlugin.domain.dialog.DialogHandler;
 import org.zuma.examplePlugin.domain.droptable.DropTableHandler;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
@@ -53,6 +56,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new InterCommunicationModule(),
                         new MapModule(),
                         new PaymentModule(),
+                        new AnalyticsModule(),
 
                         new PacketsModule(),
                         new QuestModule(),
@@ -81,7 +85,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new GlobalModifierModule(),
                         new PrayerModule(),
                         new PartyModule(),
-                        new ServerModifierModule()
+                        new ServerModifierModule(),
+                        new DailyRewardModule()
                 ), moduleContext);
     }
 
@@ -229,5 +234,17 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static ServerModifierHandler getServerModifierHandler() {
         return pluginInstance.moduleContext.get(ServerModifierHandler.class);
+    }
+
+    public static DailyRewardHandler getDailyRewardHandler() {
+        return pluginInstance.moduleContext.get(DailyRewardHandler.class);
+    }
+
+    public static AnalyticsHandler getAnalyticsHandler() {
+        return pluginInstance.moduleContext.get(AnalyticsHandler.class);
+    }
+
+    public static AnalyticsContainer getAnalytics() {
+        return getAnalyticsHandler().getAnalytics();
     }
 }

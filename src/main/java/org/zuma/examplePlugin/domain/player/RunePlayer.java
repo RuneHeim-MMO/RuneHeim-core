@@ -12,6 +12,9 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsContainer;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
+import org.zuma.examplePlugin.core.analytics.AnalyticsType;
 import org.zuma.examplePlugin.core.permissions.roles.BaseRole;
 import org.zuma.examplePlugin.core.permissions.PlayerRole;
 import org.zuma.examplePlugin.core.constants.SoundType;
@@ -20,6 +23,7 @@ import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.core.interfaces.InteractiveActionStrategy;
 import org.zuma.examplePlugin.core.utils.*;
 import org.zuma.examplePlugin.domain.combat.Hit;
+import org.zuma.examplePlugin.domain.daily.DailyRewards;
 import org.zuma.examplePlugin.domain.hud.ActionBarManager;
 import org.zuma.examplePlugin.domain.hud.BossBarManager;
 import org.zuma.examplePlugin.domain.hud.HudService;
@@ -54,6 +58,8 @@ public class RunePlayer implements CombatEntity {
     private final PlayerCombatData combatData;
     private PlayerSettings settings;
     private PlayerBombsContainer bombsContainer;
+    private DailyRewards dailyRewards;
+    private AnalyticsContainer analyticsContainer;
 
     private final PendingXPHandler pendingXPHandler;
     private final EnumMap<ModifierType, Modifier> modifiers;
@@ -80,7 +86,7 @@ public class RunePlayer implements CombatEntity {
         this.role = new PlayerRole(BaseRole.PLAYER, null, SupporterLevel.LVL_0);
         this.skills = skills;
         this.combatData = new PlayerCombatData(this, skills.get(SkillType.HITPOINTS).getBaseLevel(), Math.min(3, XpUtils.getCombatLevelFromSkills(skills)), 1, 1);
-
+        this.analyticsContainer = AnalyticsType.PLAYER.createContainer(uuid.toString(), null);
         this.bossBarManager = new BossBarManager(this);
         this.activeQuestSteps = new HashMap<>();
         this.modifiers = new EnumMap<>(ModifierType.class);
@@ -93,6 +99,7 @@ public class RunePlayer implements CombatEntity {
         this.pendingXPHandler = new PendingXPHandler();
         this.scoreboardUsernameRenderer = new ScoreboardUsernameRenderer(this);
         this.settings = new PlayerSettings();
+        this.dailyRewards = new DailyRewards(1, System.currentTimeMillis(), false, new HashMap<>());
 
         this.pouchCoins = 0;
         this.discoveredTerritoryIds = new ArrayList<>();
@@ -120,6 +127,14 @@ public class RunePlayer implements CombatEntity {
 
     public Entity getEntity() {
         return this.asBukkitPlayer();
+    }
+
+    public void setDailyRewards(DailyRewards dailyRewards) {
+        this.dailyRewards = dailyRewards;
+    }
+
+    public DailyRewards getDailyRewards() {
+        return dailyRewards;
     }
 
     // Modifiers
@@ -215,6 +230,7 @@ public class RunePlayer implements CombatEntity {
             this.cancelActionTask(true);
         }
 
+        AnalyticsUtils.incrementServerAndPlayer(this, AnalyticsKey.TOTAL_DAMAGE_TAKEN, hit.getDamage());
     }
 
     // Busy state management
@@ -275,8 +291,9 @@ public class RunePlayer implements CombatEntity {
     }
 
     public void setPouchCoins(long coins, boolean silent) {
-        if (!silent)
+        if (!silent) {
             SoundType.COINS_DROP.play(this.asBukkitPlayer(), true);
+        }
 
         this.pouchCoins = coins;
     }
@@ -527,5 +544,13 @@ public class RunePlayer implements CombatEntity {
 
     public void setInDialog(boolean inDialog) {
         isInDialog = inDialog;
+    }
+
+    public AnalyticsContainer getAnalyticsContainer() {
+        return analyticsContainer;
+    }
+
+    public void setAnalyticsContainer(AnalyticsContainer analyticsContainer) {
+        this.analyticsContainer = analyticsContainer;
     }
 }

@@ -1,12 +1,12 @@
 package org.zuma.examplePlugin.domain.shop.constants;
 
 public enum ShopId {
-    GENERAL_STORE(1),
+    DRAKKAR_GENERAL_STORE(1),
     DRAKKAR_BLACKSMITH(2),
     INVESTMENT_BANKER(3),
-    JEWLER(4),
+    DRAKKAR_JEWLER(4),
     DRAKKAR_ARMOR_SHOP(5),
-    BASIC_FOOD_STALL(6),
+    DRAKKAR_BASIC_FOOD_STALL(6),
     DRAKKAR_GUARD_ARCHER_MERCHANT(7),
     MURKWATCH_BLACKSMITH(8),
     MURKWATCH_ARCHERY_MERCHANT(9),
@@ -27,7 +27,9 @@ public enum ShopId {
     ISLENOR_GENERAL_STORE(24),
     THORNBARK_GENERAL_STORE(25),
     SAKURMEER_FOOD_SHOP(26),
-    DRAKKAR_TANNER_SHOP(27);
+    DRAKKAR_TANNER_SHOP(27),
+    ZARALI_HERBLORE_SHOP(28),
+    SWAMP_ISLAND_HERBLORE_SHOP(29);
 
 
     private final int id;
@@ -41,4 +43,4 @@ public enum ShopId {
     }
 
 
-    }
+}

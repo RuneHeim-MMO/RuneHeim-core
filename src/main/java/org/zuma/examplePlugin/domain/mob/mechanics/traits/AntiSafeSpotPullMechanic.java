@@ -52,14 +52,14 @@ public class AntiSafeSpotPullMechanic implements MobMechanic {
             recentAttackers.put(uuid, timestamps);
         } else {
             List<Long> timestamps = recentAttackers.get(uuid);
-            // Clean up old timestamps (older than 10 seconds)
+            // Clean up old timestamps (older than 15 seconds)
             timestamps.removeIf(timestamp -> now - timestamp > 15000);
 
             // Add current hit
             timestamps.add(now);
 
             if (timestamps.size() >= HIT_THRESHOLD && mob.getEntity() != null) {
-                execute((LivingEntity) entity);
+                execute(attacker.asBukkitPlayer());
                 recentAttackers.remove(uuid);
             }
         }

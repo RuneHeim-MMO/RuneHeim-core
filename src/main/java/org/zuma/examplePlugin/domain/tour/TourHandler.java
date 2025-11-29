@@ -6,7 +6,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.ArrayList;
@@ -46,6 +48,7 @@ public class TourHandler {
 
             ServerToursAPI.getPlaybackManager().showTour(player.asBukkitPlayer(), route);
             viewingPlayers.put(player.getUUID(), onFinish);
+            AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.TOURS_STARTED, 1);
         } catch (Exception e) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to start tour for player " + player.getUUID() + ": " + e.getMessage());
         }
@@ -87,6 +90,10 @@ public class TourHandler {
         }
 
         viewingPlayers.remove(playerUUID);
+    }
+
+    public boolean isViewingTour(UUID playerUUID) {
+        return viewingPlayers.containsKey(playerUUID);
     }
 
 }

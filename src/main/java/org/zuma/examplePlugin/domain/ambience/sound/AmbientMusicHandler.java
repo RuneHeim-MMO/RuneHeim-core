@@ -1,15 +1,18 @@
 package org.zuma.examplePlugin.domain.ambience.sound;
 
 import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.MusicType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.player.settings.PlayerSetting;
 
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class AmbientMusicHandler {
+public class AmbientMusicHandler implements Listener {
     private final HashMap<UUID, Integer> ambientMusicLoopTasks;
     private final HashMap<UUID, String> currentPlayingMusic;
     private final List<UUID> exitLoop; // Players who currently have track playing, but will exit the loop on next iteration
@@ -20,7 +23,27 @@ public class AmbientMusicHandler {
         this.exitLoop = new ArrayList<>();
     }
 
+    @EventHandler
+    private void onPlayerSettingUpdate(org.zuma.examplePlugin.events.player.PlayerSettingUpdateEvent event) {
+        if (event.getSetting() == PlayerSetting.PLAY_RUNEHEIM_MUSIC) {
+            RunePlayer player = event.getPlayer();
+
+            if (!event.getNewValue()) {
+                stopMusic(player);
+                return;
+            }
+
+
+        }
+    }
+
     public void startPlayerMusicLoop(MusicType type, RunePlayer player) {
+        boolean musicEnabled = player.getSettings().getSetting(PlayerSetting.PLAY_RUNEHEIM_MUSIC);
+
+        if (!musicEnabled) {
+            return;
+        }
+
         // If the same music is already playing, do nothing
         if (currentPlayingMusic.containsKey(player.getUUID()) && Objects.equals(currentPlayingMusic.get(player.getUUID()), type.name())) {
             return;

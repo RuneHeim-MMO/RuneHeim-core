@@ -6,6 +6,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public enum PlayerSetting {
     AUTOMATICALLY_TRACK_QUESTS("Track quests automatically", "Whether to track new quests", true, "Track", "Do not track", GUIControl.SETTINGS_TRACK_QUESTS, null),
+    PLAY_RUNEHEIM_MUSIC("RuneHeim Music", "It is recommended to mute minecraft music if this is enabled.", true, "Player", "Mute", GUIControl.SETTINGS_MUSIC, null),
     SHOW_BASE_PREFIX("Show Base Prefix", "Visibility of your staff rank in tab/chat", true, "Show", "Hide", GUIControl.SETTINGS_BASE_PREFIX, Permission.TOGGLE_STAFF_PREFIX),
     SHOW_UPGRADED_PREFIX("Show Upgraded Prefix", "Visibility of your donator rank in tab/chat", true, "Show", "Hide", GUIControl.SETTINGS_UPGRADED_PREFIX, null),
     SHOW_SUPPORTER_PREFIX("Show Supporter Level Prefix", "Visibility of your supporter gem rank in tab/chat", true, "Show", "Hide", GUIControl.SETTINGS_SUPPORTER_PREFIX, null),

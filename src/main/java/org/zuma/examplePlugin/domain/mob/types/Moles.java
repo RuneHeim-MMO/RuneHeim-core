@@ -21,8 +21,8 @@ public class Moles {
                 null,
                 MobBehaviors.MOLE.getBehavior(),
                 "mole",
-                0.2, false, false, 25,
-                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
+                0.2, false, false, 35,
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt(), DropTableId.MOLE.asInt()),
                 true));
 
 
@@ -32,8 +32,8 @@ public class Moles {
                 null,
                 MobBehaviors.MOLE.getBehavior(),
                 "mole",
-                0.2, false, false, 35,
-                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
+                0.2, false, false, 45,
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt(), DropTableId.MOLE.asInt()),
                 true));
 
 
@@ -44,7 +44,7 @@ public class Moles {
                 MobBehaviors.MOLE.getBehavior(),
                 "mole",
                 0.2, false, false, 15,
-                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),
+                List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt(), DropTableId.MOLE.asInt()),
                 true));
 
 
