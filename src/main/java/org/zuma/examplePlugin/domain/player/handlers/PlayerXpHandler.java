@@ -236,7 +236,7 @@ public class PlayerXpHandler {
                         .append(Component.text("!")));
 
                 HudService.sendInfoMessage(player, Component.text(
-                        "More challenges are on the way. Future content is in development - stay tuned!"));
+                        "More challenges are on the way. Future content is in development - stay tuned!", Color.SERVER_BRAND.asColor()));
             }
 
 
