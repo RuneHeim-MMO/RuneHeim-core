@@ -92,4 +92,8 @@ public class TourHandler {
         viewingPlayers.remove(playerUUID);
     }
 
+    public boolean isViewingTour(UUID playerUUID) {
+        return viewingPlayers.containsKey(playerUUID);
+    }
+
 }
