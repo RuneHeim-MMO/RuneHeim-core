@@ -83,9 +83,7 @@ public class PlayerScoreboardManager {
             o.getScore("§2" + TextUtils.centerText("Wilderness", PlayerScoreboardManager.CENTERING_PADDING)).setScore(5);
         }
 
-        // DEMO
         o.getScore("           ").setScore(4);
-        o.getScore("     §r⠲").setScore(3);
 
         ticks += 1;
     }
