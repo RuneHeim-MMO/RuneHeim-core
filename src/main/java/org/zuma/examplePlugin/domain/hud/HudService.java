@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.hud;
 import eu.decentsoftware.holograms.api.DHAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -171,7 +172,7 @@ public class HudService {
     }
 
     public static void sendAnnouncementMessage(RunePlayer player, Component text) {
-        player.asBukkitPlayer().sendMessage(Icon.ANNOUNCEMENT.asComponent().color(Color.SERVER_BRAND.asColor()).append(text.color(Color.SERVER_BRAND.asColor())));
+        player.asBukkitPlayer().sendMessage(Icon.ANNOUNCEMENT.asComponent().append(Component.text(" [Announcement]",NamedTextColor.WHITE)).append(Component.text(" » ", TextColor.color(150, 150, 150)).append(text.color(Color.SERVER_BRAND.asColor()))));
     }
 
     public static void showFailTitle(RunePlayer player, String text) {
