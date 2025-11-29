@@ -43,9 +43,7 @@ public class AnalyticsRepository {
             return type.createContainer(key, values);
 
         } catch (Exception e) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL,
-                    "Failed to retrieve analytics type: " + type + " key: " + key + " data!", e);
-            return type.createContainer(key, new java.util.HashMap<>());
+            throw new RuntimeException("Failed to retrieve analytics container. Type: " + type + " key: " + key + " data!", e);
         }
     }
 
@@ -75,8 +73,7 @@ public class AnalyticsRepository {
 
 
         } catch (Exception e) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL,
-                    "Failed to upsert analytics type: " + container.type() + " key: " + key + " data!", e);
+            throw new RuntimeException("Failed to upsert analytics container. Type: " + container.type() + " key: " + key + " data!", e);
         }
 
 
