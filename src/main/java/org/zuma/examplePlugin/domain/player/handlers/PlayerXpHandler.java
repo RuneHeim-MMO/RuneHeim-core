@@ -145,6 +145,11 @@ public class PlayerXpHandler {
     public void addXp(SkillType type, double xp, XpSource source) {
         Skill skill = player.getSkills().get(type);
 
+        if (skill == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Tried adding XP for skill " + type.getLabel() + " which does not exist in players instance.");
+            return;
+        }
+
         if (skill.getType().getMaxLevelCap() != null && (skill.getBaseLevel() >= skill.getType().getMaxLevelCap())) {
             return;
         }
@@ -188,11 +193,6 @@ public class PlayerXpHandler {
         Bukkit.getServer().getPluginManager().callEvent(event);
 
         if (event.isCancelled()) {
-            return;
-        }
-
-        if (skill == null) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Tried adding XP for skill " + type.getLabel() + " which does not exist in players instance.");
             return;
         }
 
