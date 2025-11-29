@@ -209,4 +209,11 @@ public class PlayerRole {
 
         return Math.max(baseMax, upgradedMax);
     }
+
+    public int getMaxPartySize() {
+        int baseMax = baseRole.maxPartySize();
+        int upgradedMax = upgradedRole != null ? upgradedRole.maxPartySize() : 0;
+
+        return Math.max(baseMax, upgradedMax);
+    }
 }

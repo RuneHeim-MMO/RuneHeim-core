@@ -28,7 +28,7 @@ public class PartyManager {
         }
 
         UUID partyUuid = UUID.randomUUID();
-        Party party = new Party(partyUuid, creator, PartyManager.MAX_MEMBERS);
+        Party party = new Party(partyUuid, creator);
         parties.put(partyUuid, party);
         creator.setParty(party);
 
