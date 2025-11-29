@@ -23,7 +23,7 @@ public class AnnouncementsRepository {
     }
 
     public List<Announcement> getAll() {
-        String sql = "SELECT id, message FROM announcements";
+        String sql = "SELECT id, message FROM announcements WHERE enabled = TRUE";
         List<Announcement> result = new ArrayList<>();
 
         try (Connection conn = pool.getDataSource().getConnection();
