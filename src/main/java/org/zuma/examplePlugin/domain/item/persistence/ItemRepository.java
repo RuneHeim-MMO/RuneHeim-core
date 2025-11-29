@@ -885,7 +885,7 @@ public class ItemRepository {
                         "Huge Bones",
                         List.of("Colossal bones that whisper of a beast towering above mortals."),
                         null, true, 1.0),
-                        toVersionedJson(new RemainsItemMeta(500, 120, 300), 1)),
+                        toVersionedJson(new RemainsItemMeta(500, 120, 3000), 1)),
 
 
                 new ItemEntity(new AbstractItemMeta(ItemType.EMPTY_CONTAINER, ItemId.EMPTY_POT.asInt(), Material.COAL, ItemRarity.COMMON, "Empty Pot", List.of("A regular pot, made of clay."), null, true, 1.0),

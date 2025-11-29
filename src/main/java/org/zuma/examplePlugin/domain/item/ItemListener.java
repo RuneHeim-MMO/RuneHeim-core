@@ -31,6 +31,7 @@ import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.constants.EquipableType;
 import org.zuma.examplePlugin.domain.item.handlers.LockedItemHandler;
+import org.zuma.examplePlugin.domain.item.impl.CoinsItem;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
@@ -181,8 +182,11 @@ public class ItemListener implements Listener {
 
         withItemAndPlayer(event.getPlayer(), event.getItem().getItemStack(), (item, player) -> {
             if (event.isCancelled()) return;
-            AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.ITEMS_PICKED_UP, event.getItem().getItemStack().getAmount());
             itemHandler.onPlayerPickupItem(event, item, player, itemStateManager);
+
+            if (!(item instanceof CoinsItem)) {
+                AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.ITEMS_PICKED_UP, event.getItem().getItemStack().getAmount());
+            }
         });
     }
 
