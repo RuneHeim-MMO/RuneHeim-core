@@ -27,8 +27,8 @@ public class AnnouncementModule implements PluginModule {
         AnnouncementsRepository repository = new AnnouncementsRepository(context.get(HikariPool.class));
         AnnouncementsHandler announcementsHandler = new AnnouncementsHandler(repository);
 
-        announcementsHandler.startAnnouncementBroadcastInterval(1);
-        announcementsHandler.startRefetchInterval(1);
+        announcementsHandler.startAnnouncementBroadcastInterval(3);
+        announcementsHandler.startRefetchInterval(10);
 
         context.bind(AnnouncementsRepository.class, repository);
         context.bind(AnnouncementsHandler.class, announcementsHandler);

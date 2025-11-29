@@ -18,7 +18,7 @@ public class Announcement {
     public void broadcast() {
         this.lastSentAt = System.currentTimeMillis();
         RuneQuestPlugin.getPlayerManager().getOnlinePlayers().forEach(p -> {
-            HudService.sendAnnouncementMessage(p, Component.text(message));
+            HudService.sendAnnouncementMessage(p, Component.text(message.replaceAll("&", "§")));
         });
     }
 

@@ -172,7 +172,9 @@ public class HudService {
     }
 
     public static void sendAnnouncementMessage(RunePlayer player, Component text) {
-        player.asBukkitPlayer().sendMessage(Icon.ANNOUNCEMENT.asComponent().append(Component.text(" [Announcement]",NamedTextColor.WHITE)).append(Component.text(" » ", TextColor.color(150, 150, 150)).append(text.color(Color.SERVER_BRAND.asColor()))));
+        player.asBukkitPlayer().sendMessage(Icon.ANNOUNCEMENT.asComponent()
+                .append(Component.text("» ", TextColor.color(150, 150, 150)).append(text.color(Color.SERVER_BRAND.asColor()))))
+        ;
     }
 
     public static void showFailTitle(RunePlayer player, String text) {
