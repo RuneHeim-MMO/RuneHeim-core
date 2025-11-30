@@ -295,12 +295,9 @@ public abstract class AbstractMob {
         }
     }
 
-    protected void setLivingEntityMeta(LivingEntity entity) {
+    protected void setClientSideMeta(LivingEntity entity) {
         entity.customName(Component.text(healthBarSafeName));
         entity.setCustomNameVisible(true);
-        entity.setAI(ai);
-        entity.setSilent(silent);
-        entity.setInvulnerable(isInvulnerable);
 
         if (this.model != null) {
             ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(entity);
@@ -309,6 +306,14 @@ public abstract class AbstractMob {
             modeledEntity.addModel(activeModel, true);
             entity.setInvisible(true);
         }
+    }
+
+    protected void setLivingEntityMeta(LivingEntity entity) {
+        setClientSideMeta(entity);
+
+        entity.setAI(ai);
+        entity.setSilent(silent);
+        entity.setInvulnerable(isInvulnerable);
 
         customAttributes.forEach((attr, val) -> {
             AttributeInstance entityAttr = entity.getAttribute(attr);
@@ -375,13 +380,9 @@ public abstract class AbstractMob {
     }
 
 
-    public void reapplyMetaToEntity(ChunkLoadEvent event) {
+    public void reapplyClientMetaToEntity(ChunkLoadEvent event) {
         if (entity instanceof LivingEntity livingEntity) {
-            this.setLivingEntityMeta(livingEntity);
-
-            if (this.disguise != null) {
-                DisguiseAPI.disguiseToAll(entity, disguise.clone());
-            }
+            this.setClientSideMeta(livingEntity);
         }
     }
 

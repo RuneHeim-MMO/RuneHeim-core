@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.mob;
 
 import io.papermc.paper.event.entity.EntityKnockbackEvent;
 import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.disguisetypes.Disguise;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -27,13 +28,16 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 public class MobHandler {
-    private final MobRegistry registry;
     private static final long TARGET_SWITCH_SWEEP_TICK_INTERVAL = 30L;
     private static final double SEARCH_RADIUS = 12.0;
+
+    private final MobRegistry registry;
+
 
     public MobHandler(MobRegistry registry) {
         this.registry = registry;
@@ -69,6 +73,7 @@ public class MobHandler {
                     }
 
                     registry.removeMob(UUID.fromString(value));
+                    registry.getDisguisedMobs().remove(mob);
                     entity.remove();
                 }
 
@@ -153,6 +158,7 @@ public class MobHandler {
 
         if (mob.getUUID() != null) {
             registry.removeMob(mob.getUUID());
+            registry.getDisguisedMobs().remove(mob);
         }
 
     }
@@ -178,15 +184,28 @@ public class MobHandler {
         Player player = event.getPlayer();
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-            for (Entity entity : player.getWorld().getEntities()) {
-                AbstractMob mob = registry.getMob(entity);
-                if (mob != null && mob.getDisguise() != null) {
-                    DisguiseAPI.disguiseToAll(entity, mob.getDisguise().clone());
-                    mob.reapplyMetaToEntity(null);
+            World world = player.getWorld();
+
+            for (AbstractMob mob : registry.getDisguisedMobs()) {
+                Entity entity = mob.getEntity();
+                if (entity == null || !entity.isValid()) {
+                    continue;
+                }
+
+                // Skip entities in other worlds
+                if (!entity.getWorld().equals(world)) {
+                    continue;
+                }
+
+                if (mob.getDisguise() != null && mob.getEntity() != null) {
+                    Disguise disguise = mob.getDisguise().clone();
+                    DisguiseAPI.disguiseToPlayers(mob.getEntity(), disguise, player);
+                    mob.reapplyClientMetaToEntity(null);
                 }
             }
         }, 20L);
     }
+
 
     // Keep target on player, regardless if hes on a mount or dismounts it.
     private void maintainTargetsForMountedPlayers() {
