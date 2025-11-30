@@ -54,6 +54,10 @@ public class PrayerManager implements Listener {
                 prayers.clear();
                 handlePrayerDepletion(player);
             }
+
+            if (player.isDead()) {
+                prayers.clear();
+            }
         });
 
         activePrayers.forEach(((uuid, prayers) -> {
