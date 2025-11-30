@@ -102,7 +102,7 @@ public class ShearableSheep extends GenericCombatant {
             this.setLivingEntityMeta(livingEntity);
 
             if (this.getDisguise() != null) {
-                DisguiseAPI.disguiseToAll(this.getEntity(), this.getDisguise().clone());
+                DisguiseAPI.disguiseToAll(this.getEntity(), this.getDisguise());
                 setWoolState(this.getEntity(), hasWool);
             }
         }

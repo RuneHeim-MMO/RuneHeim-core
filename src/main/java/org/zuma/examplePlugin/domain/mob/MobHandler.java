@@ -31,13 +31,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MobHandler {
     private static final long TARGET_SWITCH_SWEEP_TICK_INTERVAL = 30L;
     private static final double SEARCH_RADIUS = 12.0;
-
     private final MobRegistry registry;
-
 
     public MobHandler(MobRegistry registry) {
         this.registry = registry;
@@ -55,6 +54,28 @@ public class MobHandler {
                 m.tick();
             });
         }, 0L, 20L);
+
+        // Redisguising mobs ticking loop (less frequent). (Might be not needed at all)
+        Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), () -> {
+            new ArrayList<>(registry.getAll()).forEach(m -> {
+                for (AbstractMob mob : registry.getDisguisedMobs()) {
+                    Entity entity = mob.getEntity();
+                    Disguise disguise = mob.getDisguise();
+
+                    if (disguise == null || entity == null || !entity.isValid()) {
+                        continue;
+                    }
+
+                    if (DisguiseAPI.isDisguised(entity)) return;
+
+                    System.out.println("Detected missing disguise for mob " + mob.getDisplayName() + ", reapplying...");
+                    mob.reapplyClientMetaToEntity(null);
+                    DisguiseAPI.disguiseToAll(mob.getEntity(), disguise);
+
+                }
+            });
+        }, 0L, 10 * 20L);
+
 
     }
 
@@ -163,7 +184,6 @@ public class MobHandler {
 
     }
 
-
     public void onEntityDamaged(EntityDamageEvent event, AbstractMob mob) {
         if (mob.getBehavior() != null && !event.isCancelled()) {
             mob.getBehavior().playSound(event.getEntity(), MobBehavior.MobSoundType.HURT);
@@ -181,29 +201,55 @@ public class MobHandler {
     }
 
     public void handleRedisguisingOnPlayerJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
+        /* LibsDisguises handles redisguising now? */
+       /* Player player = event.getPlayer();
 
-        Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+        List<AbstractMob> list = new ArrayList<>(registry.getDisguisedMobs());
+        AtomicInteger index = new AtomicInteger();
+
+        Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), task -> {
+            if (index.get() >= list.size()) {
+                task.cancel();
+                return;
+            }
+
+            AbstractMob mob = list.get(index.getAndIncrement());
+            Entity entity = mob.getEntity();
+
+            mob.reapplyClientMetaToEntity(null);
+
+            if (mob.getDisguise() != null && entity != null && entity.isValid()) {
+                DisguiseAPI.disguiseToAll(entity, mob.getDisguise());
+                System.out.println("Reapplying disguise for mob " + mob.getDisplayName() + " to player " + player.getName());
+            }
+        }, 40L, 5L);*/
+
+       /* Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
             World world = player.getWorld();
 
             for (AbstractMob mob : registry.getDisguisedMobs()) {
                 Entity entity = mob.getEntity();
-                if (entity == null || !entity.isValid()) {
+
+                if (mob.getDisguise() == null || entity == null || !entity.isValid()) {
                     continue;
                 }
 
-                // Skip entities in other worlds
                 if (!entity.getWorld().equals(world)) {
                     continue;
                 }
 
-                if (mob.getDisguise() != null && mob.getEntity() != null) {
-                    Disguise disguise = mob.getDisguise().clone();
-                    DisguiseAPI.disguiseToPlayers(mob.getEntity(), disguise, player);
-                    mob.reapplyClientMetaToEntity(null);
+                mob.reapplyClientMetaToEntity(null);
+
+                if (entity.getLocation().distanceSquared(player.getLocation()) > 128 * 128) {
+                    continue;
                 }
+
+                System.out.println("Reapplying disguise for mob " + mob.getDisplayName() + " to player " + player.getName());
+                Disguise disguise = mob.getDisguise();
+                DisguiseAPI.disguiseToPlayers(mob.getEntity(), disguise, player);
+
             }
-        }, 20L);
+        }, 20L);*/
     }
 
 

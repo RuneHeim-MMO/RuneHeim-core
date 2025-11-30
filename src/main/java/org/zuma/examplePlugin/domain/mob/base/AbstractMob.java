@@ -296,9 +296,6 @@ public abstract class AbstractMob {
     }
 
     protected void setClientSideMeta(LivingEntity entity) {
-        entity.customName(Component.text(healthBarSafeName));
-        entity.setCustomNameVisible(true);
-
         if (this.model != null) {
             ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(entity);
             ActiveModel activeModel = ModelEngineAPI.createActiveModel(model);
@@ -310,7 +307,8 @@ public abstract class AbstractMob {
 
     protected void setLivingEntityMeta(LivingEntity entity) {
         setClientSideMeta(entity);
-
+        entity.customName(Component.text(healthBarSafeName));
+        entity.setCustomNameVisible(true);
         entity.setAI(ai);
         entity.setSilent(silent);
         entity.setInvulnerable(isInvulnerable);
