@@ -115,8 +115,10 @@ public class HudService {
     public static void showHealBubble(RunePlayer player, int healedHp) {
         if (healedHp == 0) return;
 
-        String icon = "§f" + Icon.HEART_BIG.get() + Color.SUCCESS.asSpigotHex();
-        spawnVerticalHologramBubble(player, Color.SUCCESS.asSpigotHex() + "+ " + healedHp + " " + icon + " HP");
+        String color = healedHp > 0 ? Color.SUCCESS.asSpigotHex() : Color.ERROR.asSpigotHex();
+        String icon = "§f" + Icon.HEART_BIG.get() + color;
+        String suffix = healedHp > 0 ? "+ " : "";
+        spawnVerticalHologramBubble(player, color + suffix + healedHp + " " + icon + " HP");
     }
 
     public static void showCoinsChangeBubble(RunePlayer player, long change) {

@@ -12,6 +12,7 @@ import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.player.handlers.DeathHandler;
 import org.zuma.examplePlugin.events.item.PlayerConsumableConsumeEvent;
 import org.zuma.examplePlugin.events.player.RunePlayerHealthChangedEvent;
 
@@ -45,6 +46,11 @@ public class Food extends AbstractItemType {
 
         int healthAfterEating = Math.min(player.getMaxHealth(), player.getHealth() + healAmount);
         int healedAmount = healthAfterEating - player.getHealth();
+
+        if (healthAfterEating <= 0) {
+            player.killPlayer(null);
+            return;
+        }
 
         PlayerUtils.subtractOneFromMainHand(player);
         player.setHealth(healthAfterEating, RunePlayerHealthChangedEvent.Cause.HEALING);

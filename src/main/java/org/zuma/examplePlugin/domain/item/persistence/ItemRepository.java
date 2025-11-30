@@ -175,7 +175,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNDERGROUND_FUNGUS.asInt(), Material.COAL, ItemRarity.COMMON, "Underground Fungus", List.of("A pale mushroom grown in dark tunnels."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(1125), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.MOLDY_CHEESE.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Moldy Cheese",
-                        List.of("A piece of cheese nibbled by rodents."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(1), 1)),
+                        List.of("A piece of cheese nibbled by rodents."), null, true, 1), toVersionedJson(new FoodTypeMeta(-2), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.SOFT_FUR.asInt(), Material.COAL, ItemRarity.COMMON, "Soft Fur", List.of("Fine fur from a gentle creature."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(180), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.INSECT_WINGS.asInt(), Material.COAL, ItemRarity.COMMON, "Insect Wings", List.of("Delicate wings from various bugs."), null, true, 1.0),
