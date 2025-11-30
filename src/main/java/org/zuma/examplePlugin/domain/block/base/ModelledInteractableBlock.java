@@ -23,15 +23,16 @@ import java.util.UUID;
 public abstract class ModelledInteractableBlock extends AbstractInteractableBlock implements MultiBlockHitbox {
     private UUID armorStandUUID = null;
     private final String model;
-    private final int height, width;
+    private final int height, width, depth;
     private final double scale;
     private final List<Location> interactableBlockLocations;
 
-    public ModelledInteractableBlock(AbstractInteractableBlockMeta meta, int height, int width, double scale, String model) {
+    public ModelledInteractableBlock(AbstractInteractableBlockMeta meta, int height, int width, int depth, double scale, String model) {
         super(meta, null, null);
         this.model = model;
         this.height = height;
         this.width = width;
+        this.depth = depth;
         this.scale = scale;
         this.interactableBlockLocations = new ArrayList<>();
 
@@ -133,5 +134,9 @@ public abstract class ModelledInteractableBlock extends AbstractInteractableBloc
 
     public int getWidth() {
         return width;
+    }
+
+    public int getDepth() {
+        return depth;
     }
 }

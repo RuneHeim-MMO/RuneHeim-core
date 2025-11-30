@@ -9,7 +9,7 @@ import java.util.List;
 
 public record InventoryOpenerModelledMeta(int inventoryId, Material blockType,
                                           @Nullable List<SkillRequirement> requirements,
-                                          String model, int height, int width, double scale,
+                                          String model, int height, int width, int depth, double scale,
                                           MarkerType marker, String markerLabel,
                                           String label, String icon) {
 }

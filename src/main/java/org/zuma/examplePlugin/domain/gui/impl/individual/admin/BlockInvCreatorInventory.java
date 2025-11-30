@@ -49,7 +49,6 @@ public class BlockInvCreatorInventory extends IndividualGUI {
         put(InventoryId.CRAFTING_TABLE.asInt(), new InventoryOpenerMeta(InventoryId.CRAFTING_TABLE.asInt(), Material.CRAFTING_TABLE, null, MarkerType.CRAFTING_TABLE, "Crafting Table", "Crafting Table", Icon.CRAFTING.get()));
         put(InventoryId.BASIC_FURNACE.asInt(), new InventoryOpenerMeta(InventoryId.BASIC_FURNACE.asInt(), Material.BLAST_FURNACE, null, MarkerType.SMELTING_FURNACE, "Smelting Furnace", "Smelting Furnace", Icon.FURNACE.get()));
         put(InventoryId.FUSION_MASTER.asInt(), new InventoryOpenerMeta(InventoryId.FUSION_MASTER.asInt(), Material.BARRIER, null, null, "Fusion Master", "Fusion Master", Icon.SCROLL_RED.get()));
-        put(InventoryId.SPINNING_WHEEL.asInt(), new InventoryOpenerMeta(InventoryId.SPINNING_WHEEL.asInt(), Material.BARRIER, null, MarkerType.SPINNING_WHEEL, "Spinning Wheel", "Spinning Wheel", Icon.MATERIAL.get()));
         put(InventoryId.FLETCHING_TABLE.asInt(), new InventoryOpenerMeta(InventoryId.FLETCHING_TABLE.asInt(), Material.FLETCHING_TABLE, null, MarkerType.FLETCHING_TABLE, "Fletching Table", "Fletching Table", Icon.ARROW.get()));
 
     }};

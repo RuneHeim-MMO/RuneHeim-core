@@ -132,7 +132,7 @@ public class BlockFactory {
         switch (json.version()) {
             case 1 -> {
                 InventoryOpenerModelledMeta deserialized = new Gson().fromJson(json.meta(), InventoryOpenerModelledMeta.class);
-                InventoryOpenerModelledBlock block = new InventoryOpenerModelledBlock(meta, deserialized.model(), deserialized.height(), deserialized.width(), deserialized.scale());
+                InventoryOpenerModelledBlock block = new InventoryOpenerModelledBlock(meta, deserialized.model(), deserialized.height(), deserialized.width(), deserialized.depth(), deserialized.scale());
                 block.initializeBlock(deserialized.inventoryId(), deserialized.requirements(), deserialized.label(), deserialized.icon(), deserialized.blockType(), deserialized.marker(), deserialized.markerLabel());
                 return block;
             }

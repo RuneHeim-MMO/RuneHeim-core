@@ -2,7 +2,6 @@ package org.zuma.examplePlugin.domain.block.impl;
 
 import eu.decentsoftware.holograms.api.DHAPI;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -28,8 +27,8 @@ public class InventoryOpenerModelledBlock extends ModelledInteractableBlock impl
     private List<SkillRequirement> requirements;
     private String label, icon;
 
-    public InventoryOpenerModelledBlock(AbstractInteractableBlockMeta meta, String model, int height, int width, double scale) {
-        super(meta, height, width, scale, model);
+    public InventoryOpenerModelledBlock(AbstractInteractableBlockMeta meta, String model, int height, int width, int depth, double scale) {
+        super(meta, height, width, depth, scale, model);
         createdInventoryInstances = new ArrayList<>();
     }
 

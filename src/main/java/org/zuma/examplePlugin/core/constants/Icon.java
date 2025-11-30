@@ -29,6 +29,7 @@ public enum Icon {
     DOLLAR("⋗"),
     FLIGHT("⊙"),
     HERBLORE("⪩"),
+    SPINNING_WHEEL("╇"),
     CLEAVE("⣯"),
     BUCKET("⽻"),
     ANVIL("⮯"),

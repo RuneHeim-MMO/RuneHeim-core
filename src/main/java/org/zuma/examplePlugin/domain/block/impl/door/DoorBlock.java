@@ -105,6 +105,11 @@ public class DoorBlock extends AbstractInteractableBlock implements MultiBlockHi
         return height;
     }
 
+    @Override
+    public int getDepth() {
+        return 1;
+    }
+
     public void initializeBlock() {
         this.spawn(Material.IRON_BARS);
     }
