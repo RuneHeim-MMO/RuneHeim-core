@@ -92,7 +92,11 @@ public enum DropTableId {
     MOLE(915),
     OCELOT(916),
     RAT(917),
-    ARMADILLO_HIGH_LEVEL(918);
+    ARMADILLO_HIGH_LEVEL(918),
+
+    DAILY_REWARD_FIRST_DAY(1000),
+    DAILY_REWARD_DAY_FILLER(1001),
+    DAILY_REWARD_GRAND_PRIZE(1002);
 
 
     private final int id;
