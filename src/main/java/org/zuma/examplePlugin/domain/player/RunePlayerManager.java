@@ -240,6 +240,8 @@ public class RunePlayerManager {
     // -------------------- Player Saving --------------------
 
     public void saveAllPlayersAsync() {
+        if (players.isEmpty()) return;
+
         AtomicInteger remaining = new AtomicInteger(players.size());
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Auto-saving " + players.size() + " players.");
 

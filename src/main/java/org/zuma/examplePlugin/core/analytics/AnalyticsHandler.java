@@ -24,8 +24,12 @@ public class AnalyticsHandler {
 
         Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), () -> {
             Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
-                saveAnalyticsSync(analytics);
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Server analytics have been saved.");
+                try {
+                    saveAnalyticsSync(analytics);
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Server analytics have been saved.");
+                } catch (Exception e) {
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to save analytics!", e);
+                }
             });
         }, intervalTicks, intervalTicks);
 
