@@ -51,6 +51,10 @@ public class RunePlayerSerializer {
         boolean locationVisibility = runePlayer.getSettings().getSetting(PlayerSetting.SHOW_LOCATION);
         @Nullable Territory lastTerritory = locationVisibility ? RuneQuestPlugin.getTerritoryHandler().getPlayersTerritory(runePlayer) : null;
 
+        if (lastTerritory != null && lastTerritory.isSilent()) {
+            lastTerritory = null;
+        }
+
         String serializedPlayerData = gson.toJson(versionedPlayerData);
         String serializedLocation = gson.toJson(runePlayer.getSafeLocation() != null ? runePlayer.getSafeLocation() : player.getLocation());
         String inventoryData = ItemContainerContentSerializer.serializeItemSlotPairsSync(getPlayerInventoryContent(player), clearStateCache);

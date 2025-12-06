@@ -30,9 +30,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class StuckCommand implements BasicCommand {
-    private final static List<String> disabledTerritoryIds = List.of(
-            "tutorial-island"
-    );
 
     @Override
     public void execute(CommandSourceStack commandSourceStack, String[] args) {
@@ -58,10 +55,12 @@ public class StuckCommand implements BasicCommand {
 
         @Nullable Territory currentTerritory = RuneQuestPlugin.getTerritoryHandler().getPlayersTerritory(runePlayer);
 
-        if (currentTerritory != null && disabledTerritoryIds.contains(currentTerritory.getId())) {
+        if (currentTerritory != null && currentTerritory.isDisableStuckCmd()) {
             HudService.sendFailMessage(runePlayer, Component.text("You cannot do this in this area!").color(Color.ERROR.asColor()));
             return;
         }
+
+        System.out.println("4");
 
         ActionParams params = new ActionParams.Builder()
                 .durationMs(30000)
@@ -70,7 +69,7 @@ public class StuckCommand implements BasicCommand {
                 .stepSound(SoundType.UNSTUCK_COMMAND_PROGRESS)
                 .stepSoundEveryNth(3)
                 .onSuccess(() -> {
-                    PlayerUtils.teleportToClosestCity(bukkitPlayer);
+                    PlayerUtils.teleportToClosestCity(bukkitPlayer, true);
                     runePlayer.cancelActionTask(true);
                 })
                 .build();

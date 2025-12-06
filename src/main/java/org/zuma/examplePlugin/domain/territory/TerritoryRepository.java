@@ -18,7 +18,7 @@ public class TerritoryRepository {
                         "§3Drakkar",
                         "The main starting city. A safe hub for new adventurers.",
                         "An ancient city built upon the ruins of a kingdom lost to the Sundering.",
-                        1, 10, false, true, false, 255)
+                        1, 10, false, true, false, 255, false)
                         .setAmbientMusic(MusicType.DRAKKAR_THEME),
 
                 new Territory("drakkar-outskirts",
@@ -28,7 +28,7 @@ public class TerritoryRepository {
                         "§bDrakkar outskirts",
                         "The training grounds just outside the city walls.",
                         "Fields and pathways worn by generations of warriors-in-training.",
-                        3, 10, false, true, false, 255)
+                        3, 10, false, true, false, 255, false)
                         .setAmbientMusic(MusicType.DRAKKAR_THEME),
 
                 new Territory("oakshade",
@@ -38,7 +38,7 @@ public class TerritoryRepository {
                         "§aOakshade",
                         "A quiet village located near Drakkar.",
                         "The woods here are said to be home to spirits from the old world.",
-                        3, 10, false, true, false, 255)
+                        3, 10, false, true, false, 255, false)
                         .setAmbientMusic(MusicType.DRAKKAR_THEME),
 
 
@@ -49,7 +49,7 @@ public class TerritoryRepository {
                         "§6Amber farm",
                         "A tranquil farm where crops grow.",
                         "Once the estate of a minor noble, now overgrown with golden fields.",
-                        3, 10, false, true, false, 255)
+                        3, 10, false, true, false, 255, false)
                         .setAmbientMusic(MusicType.DRAKKAR_THEME),
 
                 new Territory("ashwale",
@@ -59,7 +59,7 @@ public class TerritoryRepository {
                         "§8Ashwale",
                         "Small village neighboring Drakkar.",
                         "Scavengers often search the forest for relics of the past.",
-                        3, 10, false, true, false, 255)
+                        3, 10, false, true, false, 255, false)
                         .setAmbientMusic(MusicType.DRAKKAR_THEME),
 
 
@@ -70,7 +70,7 @@ public class TerritoryRepository {
                         "§3Brineport",
                         "A coastal town overlooking the sea.",
                         "Founded by merchants who braved storms to establish trade routes.",
-                        20, 30, false, true, false, 255)
+                        20, 30, false, true, false, 255, false)
                         .setAmbientMusic(MusicType.BRINEPORT_THEME),
 
 
@@ -81,7 +81,7 @@ public class TerritoryRepository {
                         "§dSakurmeer",
                         "A mystical land of eternal cherry blossoms.",
                         "The cherry trees here never lose their petals.",
-                        20, 40, false, true, false, 255)
+                        20, 40, false, true, false, 255, false)
                         .setAmbientMusic(MusicType.SAKURMEER_THEME),
 
                 new Territory("murkwatch",
@@ -91,7 +91,7 @@ public class TerritoryRepository {
                         "§2Murkwatch",
                         "A city built on stilts, rising above the treacherous swamp.",
                         "Once a refuge for exiles, its streets echo with old grudges.",
-                        25, 30, false, true, false, 255)
+                        25, 30, false, true, false, 255, false)
                         .setAmbientMusic(MusicType.SWAMP_THEME),
 
                 new Territory("fenshade",
@@ -101,7 +101,7 @@ public class TerritoryRepository {
                         "§2Fenshade",
                         "An abandoned mine where the air hangs thick with a murky mist.",
                         "Miners vanished here long ago - their tools still lie where they fell.",
-                        25, 30, false, true, false, 255)
+                        25, 30, false, true, false, 255, false)
                         .setAmbientMusic(MusicType.SWAMP_THEME),
 
                 new Territory("swamp-island",
@@ -111,7 +111,7 @@ public class TerritoryRepository {
                         "§2Swamp Island",
                         "An island in the swamp, full of hidden dangers.",
                         "Strange lights dance in the fog on moonless nights.",
-                        25, 30, false, false, false, 255)
+                        25, 30, false, false, false, 255, false)
                         .setAmbientMusic(MusicType.SWAMP_THEME),
 
                 new Territory("swamp-island",
@@ -121,7 +121,7 @@ public class TerritoryRepository {
                         "§2Swamp Island",
                         "An island in the swamp, full of hidden dangers.",
                         "Legends say strange lights move through the fog on moonless nights.",
-                        25, 30, false, false, false, 255)
+                        25, 30, false, false, false, 255, false)
                         .setAmbientMusic(MusicType.SWAMP_THEME),
 
                 new Territory("branleaft",
@@ -131,7 +131,7 @@ public class TerritoryRepository {
                         "§aBranleaft",
                         "A secluded village nestled deep within the whispering woods.",
                         "Trees here are said to remember the names of those who pass.",
-                        30, 45, false, true, false, 255)
+                        30, 45, false, true, false, 255, false)
                         .setAmbientMusic(MusicType.ELDARWYN_THEME),
 
 
@@ -142,7 +142,7 @@ public class TerritoryRepository {
                         "§bEldarwyn",
                         "A grand castle overlooking the western seas.",
                         "Once the seat of a legendary family whose heirs vanished mysteriously.",
-                        30, 45, false, true, false, 255)
+                        30, 45, false, true, false, 255, false)
                         .setAmbientMusic(MusicType.ELDARWYN_THEME),
 
                 new Territory("valdrin",
@@ -152,7 +152,7 @@ public class TerritoryRepository {
                         "§fValdrin",
                         "A peaceful village nestled on a cliff.",
                         "Cliffside tombs tell of warriors who defended these lands long ago.",
-                        30, 50, false, true, false, 255)
+                        30, 50, false, true, false, 255, false)
                         .setAmbientMusic(MusicType.VALDRIN_THEME),
 
                 new Territory("islenor",
@@ -162,7 +162,7 @@ public class TerritoryRepository {
                         "§9Islenor",
                         "A quiet port town where the waves lap gently.",
                         "Shipwrecks along the coast hint at a forgotten maritime empire.",
-                        45, 50, false, true, false, 255)
+                        45, 50, false, true, false, 255, false)
                         .setAmbientMusic(MusicType.ISLENOR_THEME),
 
                 new Territory("zarali",
@@ -172,7 +172,7 @@ public class TerritoryRepository {
                         "§2Zarali",
                         "A hidden village nestled deep within the jungle canopy.",
                         "Guardians of the ancient Heartroots Chamber.",
-                        40, 50, false, true, false, 255)
+                        40, 50, false, true, false, 255, false)
                         .setAmbientMusic(MusicType.ZARALI_THEME),
 
                 new Territory("heartroots-chamber",
@@ -182,7 +182,7 @@ public class TerritoryRepository {
                         "§2Heartroots Chamber",
                         "The hidden source of the ancient forest's life.",
                         "The roots pulse with magic that predates written history.",
-                        40, 50, false, true, false, 255),
+                        40, 50, false, true, false, 255, false),
 
                 new Territory("glaciem",
                         new Location(Bukkit.getWorld("world"), 950, 0, 500),
@@ -191,7 +191,7 @@ public class TerritoryRepository {
                         "§bGlaciem",
                         "A frozen tundra where blizzards rage endlessly.",
                         "Ice winds carry tales of explorers lost to the frost.",
-                        40, 55, false, true, false, 255)
+                        40, 55, false, true, false, 255, false)
                         .setAmbientMusic(MusicType.GLACIEM_THEME),
 
                 new Territory("thornbark",
@@ -201,7 +201,7 @@ public class TerritoryRepository {
                         "§3Thornbark",
                         "A dark and twisted forest of gnarled trees.",
                         "Thorns and shadows hide secrets few dare to seek.",
-                        40, 60, false, true, false, 255)
+                        40, 60, false, true, false, 255, false)
                         .setAmbientMusic(MusicType.THORNBARK_THEME),
 
                 new Territory("saharijin-pvp-arena",
@@ -211,7 +211,7 @@ public class TerritoryRepository {
                         "§cSaharijin Arena",
                         "An unforgiving desert arena where only the strongest survive.",
                         null,
-                        50, 60, true, true, false, 255)
+                        50, 60, true, true, false, 255, false)
                         .addRequiredQuestId("saharijin-pvp-arena-intro")
                         .setEntryDenyMessage("§4You must speak to the §6Arena Overseer§4 to enter the arena.")
                         .setDropItemsOnDeath(true)
@@ -224,7 +224,7 @@ public class TerritoryRepository {
                         "§eSaharijin",
                         "A vast desert where the sun shows no mercy.",
                         "Bones and relics surface after relentless sandstorms.",
-                        50, 60, false, true, false, 255)
+                        50, 60, false, true, false, 255, false)
                         .setAmbientMusic(MusicType.SAHARIJIN_THEME),
 
 
@@ -235,7 +235,7 @@ public class TerritoryRepository {
                         "§5Sporefell",
                         "A forest of colossal, glowing mushrooms.",
                         "The spores here can show you visions of the past.",
-                        60, 70, false, true, false, 255)
+                        60, 70, false, true, false, 255, false)
                         .setAmbientMusic(MusicType.SPOREFELL_THEME),
 
                 new Territory("ethereal-nexus",
@@ -245,7 +245,7 @@ public class TerritoryRepository {
                         "§5Ethereal Nexus",
                         "A swirling vortex of pure magical energy.",
                         "The air crackles with raw power here.",
-                        70, 80, false, true, false, 255),
+                        70, 80, false, true, false, 255, false),
 
                 new Territory("aetheris",
                         new Location(Bukkit.getWorld("world"), -135, 0, 780),
@@ -254,7 +254,7 @@ public class TerritoryRepository {
                         "§dAetheris",
                         "An ethereal forest where celestial magic courses through the trees.",
                         "The ruins of those who broke the world.",
-                        70, 90, false, true, false, 255)
+                        70, 90, false, true, false, 255, false)
                         .setAmbientMusic(MusicType.AETHERIS_THEME),
 
                 new Territory("infernak",
@@ -264,7 +264,7 @@ public class TerritoryRepository {
                         "§cInfernak",
                         "A volcanic land forged in fire and brimstone.",
                         "Rivers of lava carve through the scorched earth.",
-                        80, 90, false, true, false, 255)
+                        80, 90, false, true, false, 255, false)
                         .setAmbientMusic(MusicType.INFERNAK_THEME),
 
                 new Territory("tutorial-island",
@@ -274,7 +274,7 @@ public class TerritoryRepository {
                         "§bTutorial Island",
                         "The first step of every hero.",
                         "Once a training ground for fledgling heroes, untouched by time.",
-                        1, 1, false, true, false, 255)
+                        1, 1, false, true, false, 255, true)
                         .setAmbientMusic(MusicType.TUTORIAL_ISLAND_THEME),
 
 
@@ -285,7 +285,7 @@ public class TerritoryRepository {
                         "§cRogue's Haven",
                         "A lawless island brimming with untapped riches, abandoned by all who once lived here.",
                         "Once a sanctuary for traders and exiles alike, now only the bold dare claim its treasures.",
-                        70, 90, true, true, false, 255)
+                        70, 90, true, true, false, 255, false)
                         .setDropItemsOnDeath(true)
                         .setAmbientSounds(List.of(SoundType.ROGUE_HAVEN_AMBIENT_1, SoundType.ROGUE_HAVEN_AMBIENT_2))
                         .setAmbientMusic(MusicType.ROGUES_HAVEN_THEME),
@@ -297,7 +297,7 @@ public class TerritoryRepository {
                         "§cRogue's Haven",
                         "A lawless island brimming with untapped riches, abandoned by all who once lived here.",
                         "Once a sanctuary for traders and exiles alike, now only the bold dare claim its treasures.",
-                        70, 90, true, true, false, 255)
+                        70, 90, true, true, false, 255, false)
                         .setDropItemsOnDeath(true).setAmbientSounds(List.of(SoundType.ROGUE_HAVEN_AMBIENT_1, SoundType.ROGUE_HAVEN_AMBIENT_2))
                         .setAmbientMusic(MusicType.ROGUES_HAVEN_THEME),
 
@@ -308,7 +308,7 @@ public class TerritoryRepository {
                         "§bOcean",
                         "",
                         null,
-                        1, 1, false, false, true, 255)
+                        1, 1, false, false, true, 255, true)
                         .setAmbientMusic(MusicType.SHIP_BUFFER_THEME).setVisibleInCutscene(true),
 
                 new Territory("lava-dungeon",
@@ -318,8 +318,18 @@ public class TerritoryRepository {
                         "§6Obsidian Depths",
                         "A dark labyrinth of magma and terror.",
                         "§4The roar of fire echoes through the cavern, and your heart skips a beat.",
-                        50, 60, false, false, false, 35)
-                        .setAmbientMusic(MusicType.SAHARIJIN_ARENA_THEME)
+                        50, 60, false, false, false, 35, false)
+                        .setAmbientMusic(MusicType.SAHARIJIN_ARENA_THEME),
+
+
+                new Territory("technical-zone",
+                        new Location(Bukkit.getWorld("world"), 3245, 0, 3226),
+                        null,
+                        300,
+                        "§2Wilderness",
+                        "",
+                        null,
+                        1, 1, false, false, true, 255, true)
 
 
         );
