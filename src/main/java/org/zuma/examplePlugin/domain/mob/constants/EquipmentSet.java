@@ -82,7 +82,10 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.IRON_PICKAXE), 80),
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.STEEL_PICKAXE), 30),
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.MITHRIL_PICKAXE), 20)
+    ))),
 
+    COAL(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.COAL_ORE), 100)
     ))),
 
     AXES(new MobEquipmentMeta(List.of(

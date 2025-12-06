@@ -715,6 +715,8 @@ public class ItemRepository {
                         toVersionedJson(new MaterialMeta(60), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.COAL_ORE.asInt(), Material.COAL, ItemRarity.COMMON, "Coal Ore", List.of("Unrefined coal ore, useful as a fuel source."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(150), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.PURE_COAL_ORE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Purified Coal Ore", List.of("Refined coal ore without impurities."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(700), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.IRON_ORE.asInt(), Material.COAL, ItemRarity.COMMON, "Iron Ore", List.of("Heavy iron ore, a basic material for crafting."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(175), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MITHRIL_ORE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Mithril Ore", List.of("Rare mithril ore, prized for its lightweight strength."), null, true, 1.0),

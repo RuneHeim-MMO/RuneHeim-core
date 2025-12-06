@@ -37,6 +37,10 @@ public class Shopkeepers {
 
     public static void registerMobs(MobTypeRegistry registry) {
 
+        registry.register(MobType.DRAKKAR_SMELTERY_WORKER.getId(), () -> new InventoryOpenerMob(Icon.PICKAXE.get() + " Smeltery Worker", EquipmentSet.COAL,
+                MobBehaviors.VILLAGER_MAN_1.getBehavior(-2), "drakkar_smeltery_worker", null, InventoryId.DRAKKAR_SMELTERY_SHOP.asInt(), 100)
+                .attachDialog(Dialogs.drakkarSmelteryWorkerDialog));
+
         registry.register(MobType.DRAKKAR_GENERAL_STORE.getId(), () -> new InventoryOpenerMob(Icon.CHEST.get() + " General Store", EquipmentSet.PAPER_IN_HAND,
                 MobBehaviors.VILLAGER_MAN_1.getBehavior(), "shopkeeper_1", null, InventoryId.DRAKKAR_GENERAL_STORE.asInt(), 40)
                 .attachDialog(Dialogs.drakkarGeneralStore));

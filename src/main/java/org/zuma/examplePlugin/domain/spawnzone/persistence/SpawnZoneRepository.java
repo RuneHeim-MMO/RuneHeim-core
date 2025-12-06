@@ -2265,9 +2265,16 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(327, SpawnZoneType.POINT, 30, 100,
                         new Location(Bukkit.getWorld("world"), 831.5, 120, 129)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.COLLECTOR_OF_DAYS, 1, 100)
-                ), false, MarkerType.DAILY_REWARD, "Collector of Days"), 1))
+                ), false, MarkerType.DAILY_REWARD, "Collector of Days"), 1)),
 
-                // last 321
+                // Drakkar smeltery shop
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(328, SpawnZoneType.POINT, 10, 100,
+                        new Location(Bukkit.getWorld("world"), 3239, 4, 3216)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.DRAKKAR_SMELTERY_WORKER, 1, 100)
+                ), false, null, null), 1))
+
+
+                // last 328
 
 
         );

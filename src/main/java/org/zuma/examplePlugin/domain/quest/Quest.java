@@ -90,6 +90,10 @@ public class Quest implements Restrictable {
 
     public Quest addSteps(List<AbstractQuestStep> steps) {
         for (AbstractQuestStep step : steps) {
+            if(!step.getParentQuest().equals(this)){
+                throw new IllegalArgumentException(step.getStableId() + " Step's parent quest does not match the quest it is being added to.");
+            }
+
             int stepIndex = this.steps.size();
             step.setId(stepIndex);
             this.steps.add(step);

@@ -247,6 +247,14 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.RANGED_POTION_I.asInt(), 5, 120, 500L, null, null, null),
                         new ShopItemConfig(ItemId.HEALTH_POTION_I.asInt(), 5, 120, 400L, null, null, null),
                         new ShopItemConfig(ItemId.DEFENCE_POTION_I.asInt(), 5, 120, 400L, null, null, null)
+                ))), 1)),
+
+                new ShopConfig(ShopId.DRAKKAR_SMELTERY_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
+                        new ShopItemConfig(ItemId.STEEL_PICKAXE.asInt(), 3, 300, ItemId.STEEL_PICKAXE.getBuyPrice(), ItemId.STEEL_PICKAXE.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.STEEL_AXE.asInt(), 3, 300, ItemId.STEEL_AXE.getBuyPrice(), ItemId.STEEL_AXE.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.MITHRIL_PICKAXE.asInt(), 1, 1800, ItemId.MITHRIL_PICKAXE.getBuyPrice(), ItemId.MITHRIL_PICKAXE.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.MITHRIL_AXE.asInt(), 1, 1800, ItemId.MITHRIL_AXE.getBuyPrice(), ItemId.MITHRIL_AXE.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.MITHRIL_RING.asInt(), 1, 1800, 2500L, 250L, null, null)
                 ))), 1))
 
         );

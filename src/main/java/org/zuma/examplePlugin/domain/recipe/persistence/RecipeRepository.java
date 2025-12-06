@@ -787,7 +787,7 @@ public class RecipeRepository {
                         List.of(new SkillRequirement(SkillType.SMITHING, 50)),
                         List.of(
                                 new IngredientRecord(ItemId.MITHRIL_ORE, 1, true, false),
-                                new IngredientRecord(ItemId.COAL_ORE, 4, true, false)
+                                new IngredientRecord(ItemId.PURE_COAL_ORE, 1, true, false)
                         ),
                         new ItemRecord(ItemId.MITHRIL_BAR, 1),
                         null,
@@ -798,7 +798,7 @@ public class RecipeRepository {
                         List.of(new SkillRequirement(SkillType.SMITHING, 70)),
                         List.of(
                                 new IngredientRecord(ItemId.ADAMANT_ORE, 1, true, false),
-                                new IngredientRecord(ItemId.COAL_ORE, 6, true, false)
+                                new IngredientRecord(ItemId.PURE_COAL_ORE, 2, true, false)
                         ),
                         new ItemRecord(ItemId.ADAMANT_BAR, 1),
                         null,
@@ -809,7 +809,7 @@ public class RecipeRepository {
                         List.of(new SkillRequirement(SkillType.SMITHING, 85)),
                         List.of(
                                 new IngredientRecord(ItemId.RUNE_ORE, 1, true, false),
-                                new IngredientRecord(ItemId.COAL_ORE, 8, true, false)
+                                new IngredientRecord(ItemId.PURE_COAL_ORE, 4, true, false)
                         ),
                         new ItemRecord(ItemId.RUNE_BAR, 1),
                         null,

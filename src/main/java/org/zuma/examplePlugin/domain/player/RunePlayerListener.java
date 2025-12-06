@@ -57,7 +57,7 @@ public class RunePlayerListener implements Listener {
         double finalHealth = player.getHealth() - event.getFinalDamage();
         if (finalHealth <= 0) {
             event.setCancelled(true);
-            PlayerUtils.teleportToClosestCity(player);
+            PlayerUtils.teleportToClosestCity(player, false);
         }
     }
 
