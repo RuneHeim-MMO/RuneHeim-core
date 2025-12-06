@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
+import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.hud.LoadingBarBuilder;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -82,9 +83,15 @@ public class SkillsCommand implements BasicCommand {
                 return;
             }
 
+            int totalLevel = runePlayer.getSkills().values().stream().mapToInt(Skill::getBaseLevel).sum();
+            int cmbLevel = runePlayer.getCombatLvl();
+
             runePlayer.asBukkitPlayer().sendMessage(getSkillStats(runePlayer)
-                    .append(Component.text("\n" + runePlayer.asBukkitPlayer().getName() + " Combat level: ", NamedTextColor.GRAY))
-                    .append(Component.text(runePlayer.getCombatLvl(), Color.ACCENT.asColor())));
+                    .append(Component.text("\n"))
+                    .append(Component.text("Total Level: ", NamedTextColor.GRAY))
+                    .append(Component.text(totalLevel, Color.ACCENT.asColor())).append(Component.text(" || Combat level: ", NamedTextColor.GRAY))
+                    .append(TextUtils.getLevelGradientComponent(cmbLevel)));
+
         }
 
         // With Player
@@ -103,9 +110,14 @@ public class SkillsCommand implements BasicCommand {
                 return;
             }
 
-            sender.sendMessage(Component.text(args[0] + " skills are: ", Color.ACCENT.asColor()).append(getSkillStats(runePlayer))
-                    .append(Component.text("\n" + runePlayer.asBukkitPlayer().getName() + " Combat level: ", NamedTextColor.GRAY))
-                    .append(Component.text(runePlayer.getCombatLvl(), Color.ACCENT.asColor())));
+            int totalLevel = runePlayer.getSkills().values().stream().mapToInt(Skill::getBaseLevel).sum();
+            int cmbLevel = runePlayer.getCombatLvl();
+
+            sender.sendMessage(getSkillStats(runePlayer)
+                    .append(Component.text("\n"))
+                    .append(Component.text(runePlayer.asBukkitPlayer().getName() + " Total Level: ", NamedTextColor.GRAY))
+                    .append(Component.text(totalLevel, Color.ACCENT.asColor())).append(Component.text(" || Combat level: ", NamedTextColor.GRAY))
+                    .append(TextUtils.getLevelGradientComponent(cmbLevel)));
 
 
         }
