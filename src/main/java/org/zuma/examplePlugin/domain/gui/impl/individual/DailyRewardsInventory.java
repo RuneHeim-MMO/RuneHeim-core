@@ -3,10 +3,12 @@ package org.zuma.examplePlugin.domain.gui.impl.individual;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
@@ -142,11 +144,46 @@ public class DailyRewardsInventory extends IndividualGUI {
         }
 
 
-        if (menuValue == -1) {
-            // Claim today's reward
-            player.getDailyRewards().claimToday(player);
-            RuneQuestPlugin.getDailyRewardHandler().savePlayerDailyRewardData(player, true);
-            player.asBukkitPlayer().closeInventory();
+        if (menuValue == -1 && player.getDailyRewards().canClaimToday()) {
+            SoundType.CASINO_START_ANTICIPATION.play(player, false);
+            event.getClickedInventory().setItem(slot, GUIControl.LOADING_1.asItemstack());
+
+            new BukkitRunnable() {
+                int i = 0;
+
+                public void run() {
+                    if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) {
+                        cancel();
+                        return;
+                    }
+
+                    if (i >= 0 && i < 10) {
+                        event.getClickedInventory().setItem(slot, GUIControl.LOADING_2.asItemstack());
+                    }
+                    if (i >= 10 && i < 20) {
+                        event.getClickedInventory().setItem(slot, GUIControl.LOADING_3.asItemstack());
+                    }
+                    if (i >= 20 && i < 30) {
+                        event.getClickedInventory().setItem(slot, GUIControl.LOADING_4.asItemstack());
+                    }
+                    if (i >= 30 && i < 50) {
+                        event.getClickedInventory().setItem(slot, GUIControl.LOADING_5.asItemstack());
+                    }
+
+                    if (i >= 40) {
+                        SoundType.CASINO_WIN.play(player, false);
+                        player.getDailyRewards().claimToday(player);
+                        RuneQuestPlugin.getDailyRewardHandler().savePlayerDailyRewardData(player, true);
+                        player.asBukkitPlayer().closeInventory();
+                        cancel();
+                        return;
+                    }
+
+
+                    SoundType.CASINO_ROLL_TICK.play(player.asBukkitPlayer().getLocation(), player.asBukkitPlayer(), i * 0.02f);
+                    i += 2;
+                }
+            }.runTaskTimer(RuneQuestPlugin.getInstance(), 0L, 2L);
         }
 
         if (menuValue == -2) {
