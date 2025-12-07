@@ -774,9 +774,9 @@ public class ItemRepository {
                         toVersionedJson(new MaterialMeta(400), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.YEW_LOG.asInt(), Material.DARK_OAK_LOG, ItemRarity.UNCOMMON, "Yew Log", List.of("A dense and durable wood prized in crafting."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(850), 1)),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAHOGANY_LOG.asInt(), Material.MANGROVE_LOG, ItemRarity.RARE, "Mahogany Log", List.of("A rich, dark wood valued for fine construction."), null, true, 1.0),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAHOGANY_LOG.asInt(), Material.MANGROVE_LOG, ItemRarity.UNCOMMON, "Mahogany Log", List.of("A rich, dark wood valued for fine construction."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(1250), 1)),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_LOG.asInt(), Material.CHERRY_LOG, ItemRarity.LEGENDARY, "Magic Log", List.of("Glows faintly with arcane energy, rare and powerful."), null, true, 1.0),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_LOG.asInt(), Material.CHERRY_LOG, ItemRarity.RARE, "Magic Log", List.of("Glows faintly with arcane energy, rare and powerful."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(1800), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ASHES.asInt(), Material.COAL, ItemRarity.COMMON, "Ashes", List.of("Fine powder left after fire consumes wood."), null, true, 1.0),
