@@ -82,7 +82,10 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.IRON_PICKAXE), 80),
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.STEEL_PICKAXE), 30),
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.MITHRIL_PICKAXE), 20)
+    ))),
 
+    COAL(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.COAL_ORE), 100)
     ))),
 
     AXES(new MobEquipmentMeta(List.of(
@@ -146,7 +149,7 @@ public enum EquipmentSet {
     ))),
 
     COLLECTOR_OF_DAYS(new MobEquipmentMeta(List.of(
-            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.ARMADILLO_HOOKBLADE, 1), 100),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.ARMADILLO_HOOKBLADE), 100),
             new EquipmentSetRecord(EquipmentSlot.OFFHAND, new ItemStack(Material.SHIELD), 100)
     ))),
 
@@ -158,27 +161,27 @@ public enum EquipmentSet {
     ))),
 
     SHEPHERD(new MobEquipmentMeta(List.of(
-            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.SHEARS, 1), 100)
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.SHEARS), 100)
     ))),
 
     RUNE_FULL_CROSSBOW(new MobEquipmentMeta(List.of(
-            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNE_CROSSBOW, 1), 100),
-            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNE_BODY, 1), 100),
-            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNE_PLATELEGS, 1), 100)
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNE_CROSSBOW), 100),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNE_BODY), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNE_PLATELEGS), 100)
     ))),
 
     RUNE_FULL_IRON_CROSSBOW(new MobEquipmentMeta(List.of(
-            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.IRON_CROSSBOW, 1), 100),
-            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNE_BODY, 1), 100),
-            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNE_PLATELEGS, 1), 100)
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.IRON_CROSSBOW ), 100),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNE_BODY), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNE_PLATELEGS), 100)
     ))),
 
     BRONZE_PICKAXE(new MobEquipmentMeta(List.of(
-            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.BRONZE_PICKAXE, 1), 100)
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.BRONZE_PICKAXE), 100)
     ))),
 
     BRONZE_AXE(new MobEquipmentMeta(List.of(
-            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.BRONZE_AXE, 1), 100)
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.BRONZE_AXE), 100)
     ))),
 
     CARROT(new MobEquipmentMeta(List.of(

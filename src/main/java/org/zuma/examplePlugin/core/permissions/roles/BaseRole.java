@@ -9,21 +9,22 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public enum BaseRole implements Role {
-    OWNER(0, 10, true, Icon.RANK_BADGE_OWNER, List.of(Permission.INTERACTABLE_SPAWN), List.of()),
-    ADMIN(1, 10, false, Icon.RANK_BADGE_ADMIN, List.of(Permission.STAFF_MOVEMENT, Permission.COOLDOWN_BYPASS, Permission.WORLD_MANIPULATION, Permission.ITEM_WATCHDOG_BYPASS, Permission.DEBUG_COMMAND, Permission.STAFF_ITEM_SPAWN, Permission.BLOCKED_CMD_BYPASS, Permission.CHAT_PROFANITY_BYPASS), List.of()),
-    MODERATOR(2, 10, false, Icon.RANK_BADGE_MOD, List.of(Permission.CHAT_COOLDOWN_BYPASS, Permission.STAFF_MODERATION, Permission.STAFF_MESSAGING, Permission.CHAT_SPY), List.of()),
-    PILOT(999, 15, false, Icon.RANK_BADGE_PILOT, List.of(Permission.TOGGLE_STAFF_PREFIX), List.of()),
-    PLAYER(1000, 10, false, null, List.of(Permission.PLAYER_DEFAULTS), List.of());
+    OWNER(0, 5, 5, true, Icon.RANK_BADGE_OWNER, List.of(Permission.INTERACTABLE_SPAWN), List.of()),
+    ADMIN(1, 5, 5, false, Icon.RANK_BADGE_ADMIN, List.of(Permission.STAFF_MOVEMENT, Permission.COOLDOWN_BYPASS, Permission.WORLD_MANIPULATION, Permission.ITEM_WATCHDOG_BYPASS, Permission.DEBUG_COMMAND, Permission.STAFF_ITEM_SPAWN, Permission.BLOCKED_CMD_BYPASS, Permission.CHAT_PROFANITY_BYPASS), List.of()),
+    MODERATOR(2, 5, 5, false, Icon.RANK_BADGE_MOD, List.of(Permission.CHAT_COOLDOWN_BYPASS, Permission.STAFF_MODERATION, Permission.STAFF_MESSAGING, Permission.CHAT_SPY), List.of()),
+    PILOT(999, 10, 7, false, Icon.RANK_BADGE_PILOT, List.of(Permission.TOGGLE_STAFF_PREFIX), List.of()),
+    PLAYER(1000, 5, 5, false, null, List.of(Permission.PLAYER_DEFAULTS), List.of());
 
-    private final int weight, maxQueueSize;
+    private final int weight, maxQueueSize, maxPartySize;
     private final List<Permission> inheritablePermissions;
     private final List<Permission> nonInheritedPermissions; // Permissions that are not inherited by other roles
     private final boolean isOp;
     private final Icon prefix;
 
-    BaseRole(int weight, int maxQueueSize, boolean isOp, @Nullable Icon prefix, List<Permission> inheritablePermissions, List<Permission> nonInheritedPermissions) {
+    BaseRole(int weight, int maxQueueSize, int maxPartySize, boolean isOp, @Nullable Icon prefix, List<Permission> inheritablePermissions, List<Permission> nonInheritedPermissions) {
         this.weight = weight;
         this.maxQueueSize = maxQueueSize;
+        this.maxPartySize = maxPartySize;
         this.isOp = isOp;
         this.inheritablePermissions = inheritablePermissions;
         this.nonInheritedPermissions = nonInheritedPermissions;
@@ -38,11 +39,6 @@ public enum BaseRole implements Role {
     @Override
     public boolean isOp() {
         return isOp;
-    }
-
-    @Override
-    public int maxQueueSize() {
-        return maxQueueSize;
     }
 
     @Override
@@ -63,7 +59,13 @@ public enum BaseRole implements Role {
         return prefix != null ? Component.text(prefix.get()) : Component.empty();
     }
 
-    public int getMaxQueueSize() {
+    @Override
+    public int maxQueueSize() {
         return maxQueueSize;
+    }
+
+    @Override
+    public int maxPartySize() {
+        return maxPartySize;
     }
 }

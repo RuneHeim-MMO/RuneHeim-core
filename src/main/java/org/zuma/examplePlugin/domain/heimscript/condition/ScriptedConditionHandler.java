@@ -107,6 +107,18 @@ public class ScriptedConditionHandler {
                     }
 
                 }
+
+                case PLAYER_MEETS_QUEST_REQUIREMENTS -> {
+                    String questId = args.get("id");
+                    Quest q = RuneQuestPlugin.getQuestHandler().getRegistry().getQuestById(questId);
+
+                    if (q != null) {
+                        QuestStartFailReason failReason = q.getQuestStartFailReason(player);
+                        if (failReason == null) result = true;
+                    }
+
+
+                }
                 case QUEST_START_IF_REQUIREMENTS_MET -> {
                     String questId = args.get("id");
                     Quest q = RuneQuestPlugin.getQuestHandler().getRegistry().getQuestById(questId);

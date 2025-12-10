@@ -10,6 +10,7 @@ import org.zuma.examplePlugin.domain.quest.constants.QuestDifficulty;
 import org.zuma.examplePlugin.domain.quest.constants.QuestId;
 import org.zuma.examplePlugin.domain.quest.impl.*;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
+import org.zuma.examplePlugin.domain.skill.SkillXpRecord;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import javax.annotation.Nullable;
@@ -138,6 +139,15 @@ public class QuestRegistry {
                 new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarII, "Report back to the §6Farm Horse Trader.", "welcome-to-drakkarii.report.to.farmer", null),
                 new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarII, "Buy a §6Brown Farm Horse§f from §6Farm Horse Trader.", "welcome-to-drakkarii.buy.horse", null),
                 new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarII, "Talk to the §6Town Mayor §fin §6Drakkar.", "welcome-to-drakkarii.talk.to.mayor.finish", null)
+        )));
+
+        Quest smeltersAssistant = new Quest(QuestId.HOT_MESS_AT_THE_SMELTERY.getId(), "Hot Mess At The Smeltery", QuestDifficulty.MEDIUM, false, null)
+                .setRequirements(List.of(new SkillRequirement(SkillType.MINING, 30)))
+                .setRewards(new QuestReward(null, Map.of(SkillType.SMITHING, 840.0, SkillType.MINING, 1500.0), 1000));
+
+        registerQuest(smeltersAssistant.addSteps(List.of(
+                new CollectionStep(RuneQuestPlugin.getInstance(), smeltersAssistant, "Obtain §620x Purified Coal Ore.", "smeltery-assistant.obtain-coal", List.of(new ItemRecord(ItemId.PURE_COAL_ORE, 20)), null),
+                new DialogStep(RuneQuestPlugin.getInstance(), smeltersAssistant, "Bring §620x Purified Coal Ore §fto §6Smeltery Worker §fin §6Drakkar.", "smeltery-assistant.bring-coal", null)
         )));
 
 

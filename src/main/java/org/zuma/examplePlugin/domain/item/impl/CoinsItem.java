@@ -50,9 +50,12 @@ public class CoinsItem extends MiscItem {
 
         meta.setCustomModelData(customModelId);
         item.setItemMeta(meta);
-
-
         return item;
+    }
+
+    @Override
+    public ItemStack createItemStackOfTypeIgnoreState(int amount) {
+        return this.createItemStackOfType(amount);
     }
 
     @Override

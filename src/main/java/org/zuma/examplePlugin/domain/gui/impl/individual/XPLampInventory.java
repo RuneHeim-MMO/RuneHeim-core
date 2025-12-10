@@ -37,7 +37,7 @@ import java.util.*;
 
 
 public class XPLampInventory extends IndividualGUI {
-    private final Set<Integer> ignoredSlots = new HashSet<>(Set.of(0, 1, 9, 10));
+    private final Set<Integer> ignoredSlots = new HashSet<>(Set.of(0, 8, 9, 17, 18));
 
     public XPLampInventory(String title, int id) {
         super(title, id, 3);

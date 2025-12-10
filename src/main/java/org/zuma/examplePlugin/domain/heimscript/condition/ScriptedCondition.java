@@ -32,6 +32,7 @@ public enum ScriptedCondition implements ScriptedStatement {
     REMOVE_POUCH_COINS_SUCCESSFUL("remove_pouch_coins_successful", "amount"),
 
     QUEST_START_IF_REQUIREMENTS_MET("start_quest_if_requirements_met", "id"),
+    PLAYER_MEETS_QUEST_REQUIREMENTS("player_meets_quest_requirements", "id"),
     QUEST_STARTED("quest_started", "id"),
     QUEST_FINISHED("quest_finished", "id"),
     QUEST_STEP_ACTIVE("quest_step_active", "stable_id"),

@@ -47,7 +47,7 @@ public class DeathHandler {
         runePlayer.cancelActionTask(true);
 
         Player player = runePlayer.asBukkitPlayer();
-        Territory closestTerritory = PlayerUtils.getClosestDiscoveredTerritory(runePlayer);
+        Territory closestTerritory = PlayerUtils.getClosestDiscoveredTerritory(runePlayer, false);
         @Nullable Territory currentTerritory = RuneQuestPlugin.getTerritoryHandler().getPlayersTerritory(runePlayer);
         Location playerLocation = player.getLocation();
         long pouchCoins = runePlayer.getPouchCoins();

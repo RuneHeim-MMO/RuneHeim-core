@@ -28,7 +28,7 @@ import java.util.*;
 public class PlayerUtils {
     private static final Random random = new Random();
 
-    public static void teleportToClosestCity(Player player) {
+    public static void teleportToClosestCity(Player player, boolean skipTutorialIsland) {
         RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
         Location spawnPoint = player.getWorld().getSpawnLocation();
 
@@ -37,7 +37,7 @@ public class PlayerUtils {
             return;
         }
 
-        Territory closestTerritory = PlayerUtils.getClosestDiscoveredTerritory(runePlayer);
+        Territory closestTerritory = PlayerUtils.getClosestDiscoveredTerritory(runePlayer, skipTutorialIsland);
 
         if (closestTerritory != null && closestTerritory.getSpawnPoint() != null) {
             spawnPoint = closestTerritory.getSpawnPoint();
@@ -47,13 +47,15 @@ public class PlayerUtils {
     }
 
     @Nullable
-    public static Territory getClosestDiscoveredTerritory(RunePlayer player) {
+    public static Territory getClosestDiscoveredTerritory(RunePlayer player, boolean skipTutorialIsland) {
         Territory closestTerritory = null;
         double closestDistance = Double.MAX_VALUE;
 
         for (Territory territory : RuneQuestPlugin.getTerritoryHandler().getTerritoryList()) {
             // skip undiscovered territories
             if (!player.getDiscoveredTerritoryIds().contains(territory.getId())) continue;
+
+            if (skipTutorialIsland && territory.getId().equals("tutorial-island")) continue;
 
             // skip territories with no spawn point
             if (territory.getSpawnPoint() == null) continue;

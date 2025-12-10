@@ -44,7 +44,10 @@ public class ModelledBlockInvCreatorInventory extends IndividualGUI {
 
     private static final HashMap<Integer, InventoryOpenerModelledMeta> META_MAP = new HashMap<>() {{
         put(InventoryId.CONTRACT_BOARD.asInt(), new InventoryOpenerModelledMeta(InventoryId.CONTRACT_BOARD.asInt(), Material.BARRIER, null,
-                "quest_board", 3, 3, 2, MarkerType.CONTRACT_BOARD, "Contract Board", "Contract Board", Icon.CONTRACT_SKULL.get()));
+                "quest_board", 3, 3, 1, 2, MarkerType.CONTRACT_BOARD, "Contract Board", "Contract Board", Icon.CONTRACT_SKULL.get()));
+
+        put(InventoryId.SPINNING_WHEEL.asInt(), new InventoryOpenerModelledMeta(InventoryId.SPINNING_WHEEL.asInt(), Material.BARRIER, null,
+                "wooden_spinning_wheel", 2, 1, 2, 1, MarkerType.SPINNING_WHEEL, "Spinning Wheel", "Spinning Wheel", Icon.SPINNING_WHEEL.get()));
 
     }};
 

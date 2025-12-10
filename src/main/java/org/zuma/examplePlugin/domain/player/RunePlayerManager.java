@@ -147,8 +147,9 @@ public class RunePlayerManager {
                     setPlayerOnlineAndFinalize(player, data);
                 });
 
-            } catch (PlayerDataLoadException e) {
-                runSync(() -> kickPlayer(player, e.getMessage(), e.isCritical()));
+            } catch (Exception e) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Error loading player data for " + player.getName(), e);
+                runSync(() -> kickPlayer(player, e.getMessage(), true));
                 cleanup(uuid);
             }
         });
@@ -239,6 +240,8 @@ public class RunePlayerManager {
     // -------------------- Player Saving --------------------
 
     public void saveAllPlayersAsync() {
+        if (players.isEmpty()) return;
+
         AtomicInteger remaining = new AtomicInteger(players.size());
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Auto-saving " + players.size() + " players.");
 

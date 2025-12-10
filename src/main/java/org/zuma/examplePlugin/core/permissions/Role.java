@@ -18,4 +18,5 @@ public interface Role {
     boolean isOp();
 
     int maxQueueSize();
+    int maxPartySize();
 }

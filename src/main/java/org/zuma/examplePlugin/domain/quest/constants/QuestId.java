@@ -9,7 +9,9 @@ public enum QuestId {
     PROMISE_IN_A_BOX("promise-in-a-box"),
 
     WELCOME_TO_DRAKKAR_I("welcome-to-drakkar-i"),
-    WELCOME_TO_DRAKKAR_II("welcome-to-drakkar-ii");
+    WELCOME_TO_DRAKKAR_II("welcome-to-drakkar-ii"),
+
+    HOT_MESS_AT_THE_SMELTERY("smelters-assistant");
 
     private final String id;
 

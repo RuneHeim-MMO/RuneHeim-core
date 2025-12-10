@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.mob;
 
 import io.papermc.paper.event.entity.EntityKnockbackEvent;
 import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.disguisetypes.Disguise;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -27,13 +28,15 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MobHandler {
-    private final MobRegistry registry;
     private static final long TARGET_SWITCH_SWEEP_TICK_INTERVAL = 30L;
     private static final double SEARCH_RADIUS = 12.0;
+    private final MobRegistry registry;
 
     public MobHandler(MobRegistry registry) {
         this.registry = registry;
@@ -52,6 +55,28 @@ public class MobHandler {
             });
         }, 0L, 20L);
 
+        // Redisguising mobs ticking loop (less frequent). (Might be not needed at all)
+        Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), () -> {
+            new ArrayList<>(registry.getAll()).forEach(m -> {
+                for (AbstractMob mob : registry.getDisguisedMobs()) {
+                    Entity entity = mob.getEntity();
+                    Disguise disguise = mob.getDisguise();
+
+                    if (disguise == null || entity == null || !entity.isValid()) {
+                        continue;
+                    }
+
+                    if (DisguiseAPI.isDisguised(entity)) return;
+
+                    System.out.println("Detected missing disguise for mob " + mob.getDisplayName() + ", reapplying...");
+                    mob.reapplyClientMetaToEntity(null);
+                    DisguiseAPI.disguiseToAll(mob.getEntity(), disguise);
+
+                }
+            });
+        }, 0L, 10 * 20L);
+
+
     }
 
     // Clears all mobs with MOB_UUID data keys.
@@ -69,6 +94,7 @@ public class MobHandler {
                     }
 
                     registry.removeMob(UUID.fromString(value));
+                    registry.getDisguisedMobs().remove(mob);
                     entity.remove();
                 }
 
@@ -153,10 +179,10 @@ public class MobHandler {
 
         if (mob.getUUID() != null) {
             registry.removeMob(mob.getUUID());
+            registry.getDisguisedMobs().remove(mob);
         }
 
     }
-
 
     public void onEntityDamaged(EntityDamageEvent event, AbstractMob mob) {
         if (mob.getBehavior() != null && !event.isCancelled()) {
@@ -175,18 +201,57 @@ public class MobHandler {
     }
 
     public void handleRedisguisingOnPlayerJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
+        /* LibsDisguises handles redisguising now? */
+       /* Player player = event.getPlayer();
 
-        Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-            for (Entity entity : player.getWorld().getEntities()) {
-                AbstractMob mob = registry.getMob(entity);
-                if (mob != null && mob.getDisguise() != null) {
-                    DisguiseAPI.disguiseToAll(entity, mob.getDisguise().clone());
-                    mob.reapplyMetaToEntity(null);
-                }
+        List<AbstractMob> list = new ArrayList<>(registry.getDisguisedMobs());
+        AtomicInteger index = new AtomicInteger();
+
+        Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), task -> {
+            if (index.get() >= list.size()) {
+                task.cancel();
+                return;
             }
-        }, 20L);
+
+            AbstractMob mob = list.get(index.getAndIncrement());
+            Entity entity = mob.getEntity();
+
+            mob.reapplyClientMetaToEntity(null);
+
+            if (mob.getDisguise() != null && entity != null && entity.isValid()) {
+                DisguiseAPI.disguiseToAll(entity, mob.getDisguise());
+                System.out.println("Reapplying disguise for mob " + mob.getDisplayName() + " to player " + player.getName());
+            }
+        }, 40L, 5L);*/
+
+       /* Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+            World world = player.getWorld();
+
+            for (AbstractMob mob : registry.getDisguisedMobs()) {
+                Entity entity = mob.getEntity();
+
+                if (mob.getDisguise() == null || entity == null || !entity.isValid()) {
+                    continue;
+                }
+
+                if (!entity.getWorld().equals(world)) {
+                    continue;
+                }
+
+                mob.reapplyClientMetaToEntity(null);
+
+                if (entity.getLocation().distanceSquared(player.getLocation()) > 128 * 128) {
+                    continue;
+                }
+
+                System.out.println("Reapplying disguise for mob " + mob.getDisplayName() + " to player " + player.getName());
+                Disguise disguise = mob.getDisguise();
+                DisguiseAPI.disguiseToPlayers(mob.getEntity(), disguise, player);
+
+            }
+        }, 20L);*/
     }
+
 
     // Keep target on player, regardless if hes on a mount or dismounts it.
     private void maintainTargetsForMountedPlayers() {

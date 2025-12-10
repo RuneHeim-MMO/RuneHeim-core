@@ -14,7 +14,7 @@ public class Territory implements Restrictable {
     private final Location centerPoint, spawnPoint;
     private final int radius, minLevel, maxLevel;
     private final String name, description, firstTimeDiscoveryLore, id;
-    private final boolean pvpZone, renderOnMap, silent;
+    private final boolean pvpZone, renderOnMap, silent, disableStuckCmd;
     private final List<String> requiredQuestsIds;
     private boolean dropItemsOnDeath, ignoreCutscene;
     private List<SoundType> ambientSounds;
@@ -26,7 +26,7 @@ public class Territory implements Restrictable {
     @Nullable
     private MusicType ambientMusic;
 
-    public Territory(String id, Location centerPoint, @Nullable Location spawnPoint, int radius, String name, String description, @Nullable String firstTimeDiscoveryLore, int minLevel, int maxLevel, boolean pvpZone, boolean renderOnMap, boolean silent, int maxHeight) {
+    public Territory(String id, Location centerPoint, @Nullable Location spawnPoint, int radius, String name, String description, @Nullable String firstTimeDiscoveryLore, int minLevel, int maxLevel, boolean pvpZone, boolean renderOnMap, boolean silent, int maxHeight, boolean disableStuckCmd) {
         this.centerPoint = centerPoint;
         this.radius = radius;
         this.minLevel = minLevel;
@@ -45,6 +45,11 @@ public class Territory implements Restrictable {
         this.ambientMusic = null;
         this.silent = silent; // If true, no messages will be sent to players when they discover/enter/leave the territory
         this.maxHeight = maxHeight;
+        this.disableStuckCmd = disableStuckCmd;
+    }
+
+    public boolean isDisableStuckCmd() {
+        return disableStuckCmd;
     }
 
     public Location getCenterPoint() {

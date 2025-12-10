@@ -25,6 +25,10 @@ public class TerritoriesInventory extends PaginatedIndividualGUI {
     private final static Map<String, Territory> allTerritories = RuneQuestPlugin.getTerritoryHandler()
             .getTerritoryList()
             .stream()
+            .filter(t -> !t.isSilent())
+            .sorted(Comparator.comparingDouble(t ->
+                    (t.getMinLevel() + t.getMaxLevel()) / 2.0
+            ))
             .collect(Collectors.toMap(
                     Territory::getId,
                     p -> p,

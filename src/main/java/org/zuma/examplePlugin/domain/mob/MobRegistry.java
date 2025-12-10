@@ -11,16 +11,16 @@ import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
 
 import javax.annotation.Nullable;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 public class MobRegistry {
     private final MobTypeRegistry typeRegistry;
     private final HashMap<UUID, AbstractMob> mobs = new HashMap<>();
+    private final List<AbstractMob> disguisedMobs;
 
     public MobRegistry(MobTypeRegistry typeRegistry) {
         this.typeRegistry = typeRegistry;
+        this.disguisedMobs = new ArrayList<>();
     }
 
     @Nullable
@@ -56,7 +56,14 @@ public class MobRegistry {
             Entity spawnedEntity = mob.spawn(uuid, location);
             this.mobs.put(uuid, mob);
 
-            if (mob.getEntity() != null) EntitySessionManager.tagEntity(mob.getEntity());
+            if (mob.getDisguise() != null) {
+                disguisedMobs.add(mob);
+            }
+
+            if (mob.getEntity() != null) {
+                EntitySessionManager.tagEntity(mob.getEntity());
+            }
+
 
             return spawnedEntity;
         } catch (Exception e) {
@@ -68,5 +75,9 @@ public class MobRegistry {
 
     public void removeMob(UUID uuid) {
         mobs.remove(uuid);
+    }
+
+    public List<AbstractMob> getDisguisedMobs() {
+        return disguisedMobs;
     }
 }

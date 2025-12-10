@@ -34,7 +34,7 @@ public class QuestProgressRepository {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException("Failed to retrieve json for UUID: " + playerUUID + " " + e);
+            throw new RuntimeException("Failed to retrieve quest data json for UUID: " + playerUUID, e);
         }
     }
 
@@ -57,7 +57,7 @@ public class QuestProgressRepository {
             stmt.executeUpdate();
 
         } catch (Exception e) {
-            throw new RuntimeException("Failed to upsert quest content ", e);
+            throw new RuntimeException("Failed to upsert quest data for UUID: " + playerUUID, e);
         }
     }
 }

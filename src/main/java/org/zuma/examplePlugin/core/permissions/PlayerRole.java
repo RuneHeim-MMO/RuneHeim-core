@@ -68,7 +68,7 @@ public class PlayerRole {
         Component upgradedPrefix = upgradedRole != null ? upgradedRole.getPrefix() : Component.empty();
 
         boolean baseVisible = player.getSettings().getSetting(PlayerSetting.SHOW_BASE_PREFIX);
-        boolean upgradedVisible = player.getSettings().getSetting(PlayerSetting.SHOW_UPGRADED_PREFIX);
+        boolean upgradedVisible = upgradedRole != null && player.getSettings().getSetting(PlayerSetting.SHOW_UPGRADED_PREFIX);
 
         if (baseRole.equals(BaseRole.PLAYER)) {
             return upgradedVisible ? upgradedPrefix.append(Component.text(" ")) : Component.empty();
@@ -206,6 +206,13 @@ public class PlayerRole {
     public int getMaxQueueSize() {
         int baseMax = baseRole.maxQueueSize();
         int upgradedMax = upgradedRole != null ? upgradedRole.maxQueueSize() : 0;
+
+        return Math.max(baseMax, upgradedMax);
+    }
+
+    public int getMaxPartySize() {
+        int baseMax = baseRole.maxPartySize();
+        int upgradedMax = upgradedRole != null ? upgradedRole.maxPartySize() : 0;
 
         return Math.max(baseMax, upgradedMax);
     }

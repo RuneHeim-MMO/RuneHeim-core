@@ -22,17 +22,17 @@ public class Party {
     private UUID ownerUuid;
     private String ownerUsername;
     private final Set<UUID> invites;
-    private final int maxMembers;
+    private int maxMembers;
     private boolean xpSharing;
 
-    public Party(UUID uuid, RunePlayer owner, int maxMembers) {
+    public Party(UUID uuid, RunePlayer owner) {
         this.uuid = uuid;
         this.ownerUuid = owner.getUUID();
         this.ownerUsername = owner.asBukkitPlayer().getName();
         this.players = new ArrayList<>();
         this.invites = new HashSet<>();
         this.players.add(new PartyMember(owner.getUUID(), owner.asBukkitPlayer().getName(), PartyRole.LEADER));
-        this.maxMembers = maxMembers;
+        this.maxMembers = owner.getRole().getMaxPartySize();
         this.xpSharing = true;
     }
 
@@ -72,6 +72,7 @@ public class Party {
 
         ownerUuid = player.getUUID();
         ownerUsername = player.asBukkitPlayer().getName();
+        maxMembers = player.getRole().getMaxPartySize();
         Bukkit.getServer().getPluginManager().callEvent(new PartyOwnerUpdateEvent(this, player));
         Bukkit.getServer().getPluginManager().callEvent(new PartyUpdateEvent(this));
 

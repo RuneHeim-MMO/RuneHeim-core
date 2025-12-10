@@ -28,6 +28,7 @@ public enum ItemId {
     RUNE_ORE(105),
     TIN_ORE(106),
     COAL_ORE(107),
+    PURE_COAL_ORE(108),
 
     BRONZE_BAR(200),
     IRON_BAR(201),

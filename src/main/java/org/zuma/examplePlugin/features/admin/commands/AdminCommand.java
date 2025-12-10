@@ -86,12 +86,8 @@ public class AdminCommand implements BasicCommand {
             return;
         }
 
-        if (Objects.equals(args[0], "test")) {
-            SoundType.PLAYER_QUEST_START.play(runePlayer, false);
-
-            Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-                SoundType.PLAYER_QUEST_COMPLETE.play(runePlayer, false);
-            }, 40L);
+        if (Objects.equals(args[0], "roll")) {
+            RuneQuestPlugin.getDropTableHandler().getByID(Integer.parseInt(args[1])).simulateRolls(runePlayer, Integer.parseInt(args[2]));
         }
 
         if (args.length == 2 && Objects.equals(args[0], "base")) {

@@ -97,12 +97,12 @@ public class ShearableSheep extends GenericCombatant {
     }
 
     @Override
-    public void reapplyMetaToEntity(@Nullable ChunkLoadEvent event) {
+    public void reapplyClientMetaToEntity(@Nullable ChunkLoadEvent event) {
         if (this.getEntity() instanceof LivingEntity livingEntity) {
             this.setLivingEntityMeta(livingEntity);
 
             if (this.getDisguise() != null) {
-                DisguiseAPI.disguiseToAll(this.getEntity(), this.getDisguise().clone());
+                DisguiseAPI.disguiseToAll(this.getEntity(), this.getDisguise());
                 setWoolState(this.getEntity(), hasWool);
             }
         }
