@@ -4,6 +4,7 @@ package org.zuma.examplePlugin.domain.gui.base;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -166,12 +167,19 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
         // Place pagination icons in the last row (full row assumed)
         int lastRowStart = (rows - 1) * ITEMS_IN_ROW;
 
-        ItemStack pageCountIcon = GUIControl.fromNumber(page).asItemstack(Component.text("Page: " + page));
-        assignMenuValue(pageCountIcon, -9000); // Dummy value to identify as a menu item
+        if (items.size() > getUsableSlotsCount()) {
+            ItemStack pageCountIcon = GUIControl.fromNumber(page).asItemstack(Component.text("Page: " + page));
+            assignMenuValue(pageCountIcon, -9000); // Dummy value to identify as a menu item
 
-        inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 6, previousPageIcon());
-        inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 5, pageCountIcon);
-        inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 4, nextPageIcon());
+            inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 6, previousPageIcon());
+            inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 5, pageCountIcon);
+            inventory.setItem(getPaginationControlsOffset() + lastRowStart + ITEMS_IN_ROW - 4, nextPageIcon());
+        } else {
+            // If there's only one page, fill the last row with placeholders
+            for (int i = lastRowStart; i < lastRowStart + ITEMS_IN_ROW; i++) {
+                inventory.setItem(i, new ItemStack(Material.AIR));
+            }
+        }
 
         for (Map.Entry<Integer, ItemStack> entry : overrideItems.entrySet()) {
             int slot = entry.getKey();
