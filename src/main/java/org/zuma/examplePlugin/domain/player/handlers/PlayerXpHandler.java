@@ -164,28 +164,33 @@ public class PlayerXpHandler {
         }
 
         // Player modifiers (additive, not multiplicative)
-        if (source != XpSource.QUEST && source != XpSource.XP_LAMP) {
-            if (player.getModifiers().containsKey(ModifierType.XP_BONUS_ADDITIVE)) {
-                double mult = player.getModifiers().get(ModifierType.XP_BONUS_ADDITIVE).amount();
-                bonusAdditive += mult;
-            }
-
-            if (player.getModifiers().containsKey(ModifierType.COMBAT_XP_BONUS_ADDITIVE) && combatSkills.contains(type)) {
-                double mult = player.getModifiers().get(ModifierType.COMBAT_XP_BONUS_ADDITIVE).amount();
-                bonusAdditive += mult;
-            }
-
-            if (player.getModifiers().containsKey(ModifierType.SKILLING_XP_BONUS_ADDITIVE) && skillingSkills.contains(type)) {
-                double mult = player.getModifiers().get(ModifierType.SKILLING_XP_BONUS_ADDITIVE).amount();
-                bonusAdditive += mult;
-            }
+        if (player.getModifiers().containsKey(ModifierType.XP_BONUS_ADDITIVE)) {
+            double mult = player.getModifiers().get(ModifierType.XP_BONUS_ADDITIVE).amount();
+            bonusAdditive += mult;
         }
+
+        if (player.getModifiers().containsKey(ModifierType.COMBAT_XP_BONUS_ADDITIVE) && combatSkills.contains(type)) {
+            double mult = player.getModifiers().get(ModifierType.COMBAT_XP_BONUS_ADDITIVE).amount();
+            bonusAdditive += mult;
+        }
+
+        if (player.getModifiers().containsKey(ModifierType.SKILLING_XP_BONUS_ADDITIVE) && skillingSkills.contains(type)) {
+            double mult = player.getModifiers().get(ModifierType.SKILLING_XP_BONUS_ADDITIVE).amount();
+            bonusAdditive += mult;
+        }
+
 
         // Total multiplier
         double totalMultiplier = baseMultiplier * (1.0 + bonusAdditive);
 
         // Cap at 3x
         if (totalMultiplier > 3.0) totalMultiplier = 3.0;
+
+
+        if (source == XpSource.QUEST || source == XpSource.XP_LAMP) {
+            totalMultiplier = 1;
+        }
+
         xp *= totalMultiplier;
 
         RunePlayerGainedXPEvent event = new RunePlayerGainedXPEvent(player, type, xp, source);
