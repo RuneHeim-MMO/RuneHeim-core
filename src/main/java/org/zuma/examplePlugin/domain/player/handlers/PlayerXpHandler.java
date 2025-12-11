@@ -164,7 +164,7 @@ public class PlayerXpHandler {
         }
 
         // Player modifiers (additive, not multiplicative)
-        if (source != XpSource.QUEST) {
+        if (source != XpSource.QUEST && source != XpSource.XP_LAMP) {
             if (player.getModifiers().containsKey(ModifierType.XP_BONUS_ADDITIVE)) {
                 double mult = player.getModifiers().get(ModifierType.XP_BONUS_ADDITIVE).amount();
                 bonusAdditive += mult;
@@ -196,7 +196,7 @@ public class PlayerXpHandler {
             return;
         }
 
-        if (source == XpSource.PERSONAL) {
+        if (source != XpSource.PARTY) {
             lastXPGainedSkillType = type;
         }
 

@@ -3,5 +3,6 @@ package org.zuma.examplePlugin.core.constants;
 public enum XpSource {
     PARTY,
     PERSONAL,
-    QUEST
+    QUEST,
+    XP_LAMP
 }

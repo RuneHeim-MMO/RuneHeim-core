@@ -178,7 +178,7 @@ public class XPLampInventory extends IndividualGUI {
         }
 
         PlayerUtils.subtractOneFromMainHand(player);
-        player.addXp(selectedSkill, inHandLamp.getXpReward(), XpSource.PERSONAL);
+        player.addXp(selectedSkill, inHandLamp.getXpReward(), XpSource.XP_LAMP);
         player.asBukkitPlayer().closeInventory();
         SoundType.XP_LAMP_SKILL_SELECT.play(player, true);
         AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.XP_LAMPS_USED, 1);
