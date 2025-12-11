@@ -2136,7 +2136,7 @@ public class SpawnZoneRepository {
                 ), 5, false, false), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(309, SpawnZoneType.POINT, 60, 100,
-                        new Location(Bukkit.getWorld("world"), 194.5, 72, -53.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new Location(Bukkit.getWorld("world"), 195.5, 73, -52.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.DRAKKAR_MAYOR, 1, 100)
                 ), false, null, null), 1)),
 
