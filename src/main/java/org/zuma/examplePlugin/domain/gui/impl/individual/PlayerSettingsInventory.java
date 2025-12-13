@@ -1,12 +1,16 @@
 package org.zuma.examplePlugin.domain.gui.impl.individual;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.domain.gui.base.PaginatedIndividualGUI;
 import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
+import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.settings.PlayerSetting;
 import org.zuma.examplePlugin.domain.player.settings.PlayerSettings;
@@ -52,7 +56,12 @@ public class PlayerSettingsInventory extends PaginatedIndividualGUI {
             index.getAndIncrement();
         });
 
+        HashMap<Integer, ItemStack> overrideItems = new HashMap<>();
+        ItemStack statsButton = GUIControl.PLAYER_STATS_BUTTON.asItemstack(Component.text("View Stats", Color.ACCENT.asColor()).decoration(TextDecoration.ITALIC, false));
+        assignMenuValue(statsButton, -999);
+        overrideItems.put(53, statsButton);
 
+        setOverrideItems(overrideItems, true);
         setContent(content, true);
         getBaseInventory();
     }
@@ -72,6 +81,12 @@ public class PlayerSettingsInventory extends PaginatedIndividualGUI {
         if (clickedItem == null) return;
         Integer itemValue = getMenuValue(clickedItem);
         if (itemValue == null) return;
+
+        if (itemValue == -999) {
+            Bukkit.dispatchCommand(player.asBukkitPlayer(), "modifiers");
+            SoundType.UI_CLICK.play(player, false);
+            return;
+        }
 
         PlayerSetting matchingSetting = settingMap.get(itemValue);
         if (matchingSetting == null) return;

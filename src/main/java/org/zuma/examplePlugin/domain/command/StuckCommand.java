@@ -60,8 +60,6 @@ public class StuckCommand implements BasicCommand {
             return;
         }
 
-        System.out.println("4");
-
         ActionParams params = new ActionParams.Builder()
                 .durationMs(30000)
                 .actionLabel("Teleporting to closest city...")

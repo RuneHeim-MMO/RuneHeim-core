@@ -13,6 +13,7 @@ import org.zuma.examplePlugin.domain.territory.Territory;
 
 import java.text.DecimalFormat;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -276,4 +277,44 @@ public class TextUtils {
 
         return input;
     }
+
+    public static List<Component> splitLore(
+            String text,
+            int maxWordsPerLine,
+            TextColor color
+    ) {
+        List<Component> lines = new ArrayList<>();
+
+        String[] words = text.split("\\s+");
+        StringBuilder currentLine = new StringBuilder();
+        int wordCount = 0;
+
+        for (String word : words) {
+            if (wordCount == maxWordsPerLine) {
+                lines.add(
+                        Component.text(currentLine.toString(), color)
+                                .decoration(TextDecoration.ITALIC, false)
+                );
+                currentLine.setLength(0);
+                wordCount = 0;
+            }
+
+            if (!currentLine.isEmpty()) {
+                currentLine.append(" ");
+            }
+
+            currentLine.append(word);
+            wordCount++;
+        }
+
+        if (!currentLine.isEmpty()) {
+            lines.add(
+                    Component.text(currentLine.toString(), color)
+                            .decoration(TextDecoration.ITALIC, false)
+            );
+        }
+
+        return lines;
+    }
+
 }

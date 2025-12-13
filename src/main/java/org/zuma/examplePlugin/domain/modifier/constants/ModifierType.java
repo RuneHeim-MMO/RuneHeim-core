@@ -1,5 +1,9 @@
 package org.zuma.examplePlugin.domain.modifier.constants;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 
 public enum ModifierType {
@@ -25,7 +29,7 @@ public enum ModifierType {
     STRENGTH_BONUS("Strength Bonus", "Increases overall melee damage.", Icon.STRENGTH.get(), null, null, false),
     RANGED_STRENGTH("Ranged Strength", "Enhances the power of ranged weapon attacks.", Icon.RANGED_STR.get(), null, null, false),
     RANGED_ACCURACY("Ranged Accuracy", "Improves hit chance with ranged weapons.", Icon.RANGED_ACCURACY.get(), null, null, false),
-    CLEAVE_DISTANCE("Cleave Distance", "Extends the range of melee cleave attacks, allowing you to hit additional enemies in front of you.", Icon.CLEAVE.get(), null, null, false),
+    CLEAVE_DISTANCE("Cleave Distance", "Extends the range of melee attacks, increases chance to hit additional enemies.", Icon.CLEAVE.get(), null, null, false),
     FLYING_SPEED("Flying Speed", "", Icon.FLIGHT.get(), "%", null, true),
 
     XP_BONUS_ADDITIVE("XP Bonus", "Increases experience gain rate. (Additive)", Icon.EPIC.get(), "x", null, true),
@@ -78,5 +82,17 @@ public enum ModifierType {
 
     public boolean isSpecial() {
         return special;
+    }
+
+    public Component getTitle(double amount) {
+        String amountStr = (amount == Math.floor(amount)) ? String.format("%.0f", amount) : String.valueOf(amount);
+        String sign = amount > 0 ? "+" : "";
+        TextColor color = amount > 0 ? Color.ITEM_BONUS_POSITIVE.asColor() : Color.ITEM_BONUS_NEGATIVE.asColor();
+
+        String prefix = (getNumberPrefix() == null) ? "" : getNumberPrefix();
+        String suffix = (getNumberSuffix() == null) ? "" : getNumberSuffix();
+
+        return Component.text(getSymbol(), NamedTextColor.WHITE)
+                .append(Component.text(" " + sign + prefix + amountStr + suffix + " " + getLabel()).color(color));
     }
 }
