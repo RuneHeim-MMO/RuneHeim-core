@@ -15,7 +15,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsHandler;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.RareMobDropEffect;
@@ -174,6 +177,7 @@ public class MobHandler {
             if (dropType != null && killer != null) {
                 if (RARE_DROP_TIERS.contains(dropType.rarity)) {
                     EffectHandler.playAt(droppedItem.getLocation(), new RareMobDropEffect(droppedItem, killer, dropType.rarity, mob.getDisplayName()));
+                    AnalyticsUtils.incrementServerAndPlayer(killer, AnalyticsKey.MOB_RARE_DROPS, 1);
                 }
             }
         });
