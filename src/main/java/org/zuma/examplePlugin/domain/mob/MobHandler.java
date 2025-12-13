@@ -17,6 +17,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.MathUtils;
+import org.zuma.examplePlugin.domain.effect.EffectHandler;
+import org.zuma.examplePlugin.domain.effect.effects.RareMobDropEffect;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.handlers.ownership.ItemOwnershipHandler;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
@@ -34,6 +38,7 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MobHandler {
+    public static List<ItemRarity> RARE_DROP_TIERS = List.of(ItemRarity.LEGENDARY, ItemRarity.MYTHIC, ItemRarity.DIVINE);
     private static final long TARGET_SWITCH_SWEEP_TICK_INTERVAL = 30L;
     private static final double SEARCH_RADIUS = 12.0;
     private final MobRegistry registry;
@@ -162,7 +167,15 @@ public class MobHandler {
                 ItemOwnershipHandler.setDroppedItemPrivate(drop, UUID.fromString(event.getEntity().getMetadata(MetadataKeys.MOST_DAMAGING_PLAYER_UUID.asString()).getFirst().asString()));
             }
 
-            dropLocation.getWorld().dropItem(dropLocation, drop);
+            Item droppedItem = dropLocation.getWorld().dropItem(dropLocation, drop);
+
+            AbstractItemType dropType = RuneQuestPlugin.getItemRegistry().getType(drop);
+
+            if (dropType != null && killer != null) {
+                if (RARE_DROP_TIERS.contains(dropType.rarity)) {
+                    EffectHandler.playAt(droppedItem.getLocation(), new RareMobDropEffect(droppedItem, killer, dropType.rarity, mob.getDisplayName()));
+                }
+            }
         });
 
         if (mob.getBehavior() != null && !event.isCancelled()) {

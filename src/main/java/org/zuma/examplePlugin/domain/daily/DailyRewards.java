@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DailyRewards {
+    public static List<ItemRarity> MEGA_RARE_TIERS = List.of(ItemRarity.LEGENDARY, ItemRarity.MYTHIC, ItemRarity.DIVINE);
     private final HashMap<Integer, DailyRewardEntry> rewardEntries;
     private int currentStreak;
     private long lastUpdateTimestamp;
@@ -80,7 +81,7 @@ public class DailyRewards {
         player.giveItemOrDrop(result);
         SoundType.DAILY_REWARD_CLAIM.play(player, false);
 
-        if (List.of(ItemRarity.LEGENDARY, ItemRarity.MYTHIC, ItemRarity.DIVINE).contains(type.rarity)) {
+        if (MEGA_RARE_TIERS.contains(type.rarity)) {
             EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new DailyRarePrizeClaim(player));
             Bukkit.getPluginManager().callEvent(new DailyMegaRareClaimEvent(new DailyMegaRareClaimEvent.Payload(player.asBukkitPlayer().getName(), type.displayName, type.rarity, amount)));
             AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.DAILY_MEGA_RARES_CLAIMED, 1);
