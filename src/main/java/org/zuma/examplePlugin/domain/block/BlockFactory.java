@@ -4,10 +4,7 @@ import com.google.gson.Gson;
 import org.zuma.examplePlugin.core.exception.UnsupportedJsonVersionException;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
-import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerModelledBlock;
-import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerRegularBlock;
-import org.zuma.examplePlugin.domain.block.impl.Altar;
-import org.zuma.examplePlugin.domain.block.impl.ResourceNode;
+import org.zuma.examplePlugin.domain.block.impl.*;
 import org.zuma.examplePlugin.domain.block.impl.door.DoorBlock;
 import org.zuma.examplePlugin.domain.block.impl.trigger.ItemCollectorTrigger;
 import org.zuma.examplePlugin.domain.block.impl.door.TeleportDoor;
@@ -26,9 +23,29 @@ public class BlockFactory {
             case Door -> createDoor(meta, json);
             case ItemTrigger -> createItemTrigger(meta, json);
             case TeleportDoor -> createTeleportDoor(meta, json);
+            case InvisibleMarker -> createInvisibleMarker(meta, json);
             default -> throw new IllegalArgumentException("Unknown interactable block type: " + meta.type());
         };
     }
+
+    private InvisibleMarker createInvisibleMarker(AbstractInteractableBlockMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create invisible marker block " + meta.type() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+
+                InvisibleMarkerMeta deserialized = new Gson().fromJson(json.meta(), InvisibleMarkerMeta.class);
+                InvisibleMarker block = new InvisibleMarker(meta, deserialized.markerType(), deserialized.markerLabel());
+                block.initializeBlock(deserialized.hologramContent());
+
+                return block;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+    }
+
 
     private TeleportDoor createTeleportDoor(AbstractInteractableBlockMeta meta, @Nullable VersionedJson json) {
         if (json == null) {

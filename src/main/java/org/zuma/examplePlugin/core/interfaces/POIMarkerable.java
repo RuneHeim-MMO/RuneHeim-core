@@ -14,4 +14,10 @@ public interface POIMarkerable {
 
     @Nullable
     String getMarkerLabel();
+
+    @Nullable
+    default String getDescription() {
+        return null;
+    }
+
 }
