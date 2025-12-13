@@ -65,7 +65,7 @@ public class ModifiersInventory extends PaginatedIndividualGUI {
                     if (modifier instanceof Modifier m) return getModifierItemStack(m);
                     return null;
                 }).toList();
-        
+
         setContent(icons, true);
         getBaseInventory();
     }
