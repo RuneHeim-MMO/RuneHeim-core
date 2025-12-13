@@ -52,29 +52,27 @@ public class SkillsCommand implements BasicCommand {
                     .build();
 
             Component tooltip = Component.text()
-                    .append(Component.text("Total: ", Color.ACCENT.asColor()))
-                    .append(Component.text(formattedXp + " XP", NamedTextColor.WHITE))
+                    .append(Component.text(skill.getType().getLabel() + " XP: ", Color.ACCENT.asColor()))
+                    .append(Component.text(formattedXp, NamedTextColor.WHITE))
                     .append(Component.text("\n"))
-                    .append(Component.text("Next Level: ", Color.ACCENT.asColor()))
-                    .append(Component.text(formattedNextLevelXp + " XP", NamedTextColor.WHITE))
-                    .append(Component.text("\n\n"))
-                    .append(Component.text("Remaining: ", Color.ACCENT.asColor()))
-                    .append(Component.text(
-                            NumberFormat.getNumberInstance().format(XpUtils.getRemainingXP(skill.getXp())) + " XP",
-                            NamedTextColor.WHITE
-                    ))
+                    .append(Component.text("Next level at: ", Color.ACCENT.asColor()))
+                    .append(Component.text(formattedNextLevelXp, NamedTextColor.WHITE))
+                    .append(Component.text("\n"))
+                    .append(Component.text("Remaining XP: ", Color.ACCENT.asColor()))
+                    .append(Component.text(NumberFormat.getNumberInstance().format(XpUtils.getRemainingXP(skill.getXp())), NamedTextColor.WHITE))
                     .build();
 
-            result = result
-                    .append(progressBar)
-                    .append(Component.text(" - ", NamedTextColor.GRAY))
+            Component skillComp = progressBar.append(Component.text(" - ", NamedTextColor.GRAY))
                     .append(Component.text(skill.getType().getSymbol() + " ", NamedTextColor.WHITE))
                     .append(Component.text(skill.getType().getLabel() + ": ", NamedTextColor.GRAY))
                     .append(Component.text(skill.getBaseLevel(), NamedTextColor.WHITE).decoration(TextDecoration.BOLD, true))
                     .append(skill.getBonus() > 0 ? Component.text(" (+" + skill.getBonus() + ")", NamedTextColor.GREEN) : Component.text(""))
                     .append(Component.text("\n")).hoverEvent(HoverEvent.showText(tooltip));
 
+            result = result.append(skillComp);
         }
+
+        result.append(Component.text("\n"));
 
         return result;
 
