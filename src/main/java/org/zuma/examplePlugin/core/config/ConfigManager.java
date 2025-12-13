@@ -20,6 +20,7 @@ public class ConfigManager {
     public static final Path SCHEMATICS_PATH = ROOT_CONFIG_PATH.resolve("schematics");
     public static boolean isPreviewServer = false;
     public static int serverId;
+    public static EnvironmentType environment;
 
     private static final Dotenv dotenv = Dotenv.configure()
             .directory(ConfigManager.ENVIRONMENT_CONFIG != null ? Paths.get(System.getProperty("user.dir")).resolve("plugins").getParent().toString() : null)
@@ -35,9 +36,13 @@ public class ConfigManager {
         try {
             String serverId = dotenv.get("SERVER_ID");
             String isLiveServer = dotenv.get("IS_LIVE_SERVER");
+            String envKey = dotenv.get("ENV");
 
             ConfigManager.isPreviewServer = "false".equalsIgnoreCase(isLiveServer != null ? isLiveServer.trim() : null);
             ConfigManager.serverId = Integer.parseInt(serverId);
+            ConfigManager.environment = EnvironmentType.getByKey(envKey == null ? "production" : envKey.trim());
+
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Loaded environment: " + ConfigManager.environment.getKey() + ", Server ID: " + ConfigManager.serverId + ", Is Preview Server: " + ConfigManager.isPreviewServer);
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid environment variables. SERVER_ID or IS_LIVE_SERVER is missing, or server ID is not a number.");
         }
@@ -73,7 +78,8 @@ public class ConfigManager {
                 "MYSQL_PASSWORD",
                 "MYSQL_USERNAME",
                 "REDIS_CON_STR",
-                "SERVER_ID"));
+                "SERVER_ID",
+                "ENV"));
 
         if (isPreviewServer) {
             requiredKeysInEnv.add("WEB_HOOK_KEY");

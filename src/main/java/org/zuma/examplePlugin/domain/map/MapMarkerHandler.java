@@ -10,6 +10,8 @@ import de.bluecolored.bluemap.api.math.Color;
 import de.bluecolored.bluemap.api.math.Shape;
 import org.bukkit.Bukkit;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.config.ConfigManager;
+import org.zuma.examplePlugin.core.config.EnvironmentType;
 import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.MinecraftColorConverter;
@@ -20,10 +22,7 @@ import org.zuma.examplePlugin.domain.spawnzone.impl.ChunkSpawnZone;
 import org.zuma.examplePlugin.domain.spawnzone.impl.PointSpawnZone;
 import org.zuma.examplePlugin.domain.territory.Territory;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MapMarkerHandler {
@@ -41,6 +40,13 @@ public class MapMarkerHandler {
                 MarkerSet markerSet = MarkerSet.builder()
                         .label(markerType.getLabel())
                         .build();
+
+                if (!ConfigManager.environment.equals(EnvironmentType.DEVELOPMENT)) {
+                    // In production, do not show biome and mob spawn zones
+                    if (List.of(MarkerType.BIOME_SPAWN_ZONE, MarkerType.MOB_SPAWN_ZONE).contains(markerType)) {
+                        return;
+                    }
+                }
 
                 markerSets.put(markerType, markerSet);
             });
