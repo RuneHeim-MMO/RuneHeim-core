@@ -73,7 +73,7 @@ public class MapModule implements PluginModule {
         markerHandler.clearMarkers();
         markerHandler.renderMarkers(poiMarkers);
         markerHandler.renderTerritories(territories);
-        markerHandler.renderSpawnZones(zones);
+        // markerHandler.renderSpawnZones(zones);
 
     }
 
