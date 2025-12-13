@@ -28,7 +28,7 @@ public class QuestCompletedEffect implements StaticEffect {
 
     @Override
     public void playAt(Location location) {
-        SoundType.PLAYER_QUEST_COMPLETE.play(player, true);
+        SoundType.PLAYER_QUEST_COMPLETE.play(player, false);
 
         player.asBukkitPlayer().showTitle(Title.title(
                 Component.text(quest.getName(), Color.ACCENT.asColor()),

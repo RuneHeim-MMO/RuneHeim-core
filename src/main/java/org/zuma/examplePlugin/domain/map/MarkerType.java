@@ -58,6 +58,7 @@ public enum MarkerType {
     HERBLORE_SHOP("herblore-shops", "Herblore Shop", "./assets/markers/herblore_shop.png"),
     TERRITORY("territories", "Territories", ""),
     DAILY_REWARD("daily_reward", "Collector of Days", "./assets/markers/daily_rewards.png"),
+    DUNGEON("dungeon", "Dungeons", "./assets/markers/dungeon.png"),
 
     // Dev
     BIOME_SPAWN_ZONE("biome_spawn_zone", "Biome Spawn Zones", ""),

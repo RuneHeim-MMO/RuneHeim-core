@@ -62,9 +62,11 @@ public class MapMarkerHandler {
         AtomicInteger count = new AtomicInteger();
         entities.stream().filter(entity -> entity.getMarkerType() != null).forEach(entity -> {
             MarkerType markerType = entity.getMarkerType();
+            String description = entity.getDescription() != null ? TextUtils.replaceColorCodes(entity.getDescription()) : "";
 
             POIMarker marker = POIMarker.builder()
                     .icon(markerType.getIconURL(), 24, 24)
+                    .detail("<div style='min-width: 100px; max-width: 200px; width: max-content;'><b>" + entity.getMarkerLabel() + "</b><br/>" + description + "<br/><br/></div>")
                     .position(entity.getLocation().x(), entity.getLocation().y(), entity.getLocation().z())
                     .maxDistance(1500)
                     .label(entity.getMarkerLabel() != null ? entity.getMarkerLabel() : markerType.getLabel())

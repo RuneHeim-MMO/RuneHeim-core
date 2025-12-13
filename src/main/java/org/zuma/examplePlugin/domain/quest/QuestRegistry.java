@@ -116,7 +116,7 @@ public class QuestRegistry {
 
         registerQuest(welcomeToDrakkarI.addSteps(List.of(
                 new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarI, "Talk to the §6Town Mayor §fin §6Drakkar.", "welcome-to-drakkar.talk.to.mayor", null),
-                new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarI, "Talk to the §6Shopkeeper §fin §6Drakkar.", "welcome-to-drakkar.talk.to.shopkeeper", null),
+                new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarI, "Talk to the §6General Store Shopkeeper §fin §6Drakkar.", "welcome-to-drakkar.talk.to.shopkeeper", null),
                 new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarI, "Talk to the §6Blacksmith §fin §6Drakkar.", "welcome-to-drakkar.talk.to.blacksmith", null),
                 new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarI, "Talk to the §6Banker §fin §6Drakkar.", "welcome-to-drakkar.talk.to.banker", null),
                 new EnterTeleportDoorStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarI, "Enter §6Back Office§f in the §6Drakkar's Bank.", "welcome-to-drakkar.enter.back-office",

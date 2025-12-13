@@ -7,11 +7,13 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.kyori.adventure.title.Title;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.territory.Territory;
 
 import java.text.DecimalFormat;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 
 public class TextUtils {
@@ -264,6 +266,14 @@ public class TextUtils {
     }
 
     public static String replaceColorCodes(String input) {
-        return input.replaceAll("§.", "");
+        return input.replaceAll("§.", "").replaceAll("&.", "");
+    }
+
+    public static String replaceAllIcons(String input) {
+        for (Icon icon : Icon.values()) {
+            input = input.replace(icon.get(), "");
+        }
+
+        return input;
     }
 }

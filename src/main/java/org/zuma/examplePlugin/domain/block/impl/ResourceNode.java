@@ -15,6 +15,7 @@ import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
+import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.ResourceNodeSchematicHandler;
@@ -69,6 +70,23 @@ public class ResourceNode extends AbstractInteractableBlock {
         this.origin = meta.location();
         this.manager = manager;
         this.perfectStrikeCooldownHandler = new CooldownHandler();
+    }
+
+    @Override
+    public String getDescription() {
+        List<String> description = new ArrayList<>();
+
+        if (!blockType.getRequirements().isEmpty()) {
+            description.add("<br/><b>Requirements:</b>");
+            blockType.getRequirements().forEach(req -> description.add(req.minimumLevel() + " " + req.type().getLabel()));
+        }
+
+        description.add(" ");
+        description.add("<b>Gather: </b>" + (blockType.getBaseGatheringDurationMillis() / 1000.0) + " sec");
+        description.add("<b>Respawn: </b>" + blockType.getRespawnDurationSeconds() + " sec");
+        description.add("<b>Tool Req.: </b>" + (requiresTool ? "Yes" : "No"));
+
+        return String.join("<br/>", description);
     }
 
     private void initializeHologram() {

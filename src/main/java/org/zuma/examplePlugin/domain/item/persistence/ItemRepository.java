@@ -1945,7 +1945,7 @@ public class ItemRepository {
                                         List.of(new SkillRequirement(SkillType.ATTACK, 40)),
                                         null), null, 1), 1)
                 ),
-                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.ARMADILLO_HOOKBLADE.asInt(), Material.WOODEN_SWORD, ItemRarity.RARE, "Armadillo Hookblade", List.of("A wicked curved blade that trades raw force for blistering speed."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.ARMADILLO_HOOKBLADE.asInt(), Material.WOODEN_SWORD, ItemRarity.EPIC, "Armadillo Hookblade", List.of("A wicked curved blade that trades raw force for blistering speed."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.VERY_FAST, null,
                                         List.of(
@@ -2214,7 +2214,7 @@ public class ItemRepository {
                                 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON_WITH_SOCKETS, ItemId.RUNE_CROSSBOW.asInt(), Material.CROSSBOW, ItemRarity.LEGENDARY, "Runite Crossbow", List.of("The ultimate runite crossbow with unmatched precision."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON_WITH_SOCKETS, ItemId.RUNE_CROSSBOW.asInt(), Material.CROSSBOW, ItemRarity.EPIC, "Runite Crossbow", List.of("The ultimate runite crossbow with unmatched precision."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new SocketedWeaponEquipableMeta(new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
                                         List.of(

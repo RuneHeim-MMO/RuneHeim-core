@@ -9,18 +9,17 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Door;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.adapters.LocationAdapter;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.HologramSide;
-import org.zuma.examplePlugin.domain.block.meta.v1.DoorBlockMeta;
-import org.zuma.examplePlugin.domain.block.meta.v1.ItemCollectorTriggerMeta;
-import org.zuma.examplePlugin.domain.block.meta.v1.QuestLockedMeta;
-import org.zuma.examplePlugin.domain.block.meta.v1.TeleportDoorMeta;
+import org.zuma.examplePlugin.domain.block.meta.v1.*;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
+import org.zuma.examplePlugin.domain.map.MarkerType;
 
 import javax.annotation.Nullable;
 import java.sql.Connection;
@@ -118,21 +117,36 @@ public class InteractableBlockRepository {
                             new QuestLockedMeta("This door appears to be locked.", null, null, List.of("welcome-to-drakkar.kill.rats", "welcome-to-drakkar.enter.back-office")))), 1)));
 
             result.add(new BlockEntity(
-                    new AbstractInteractableBlockMeta(9992, BlockType.TeleportDoor, BlockFace.NORTH, new Location(Bukkit.getWorld("world"), 171, 73, -30), HologramSide.TOP),
+                    new AbstractInteractableBlockMeta(9992, BlockType.TeleportDoor, BlockFace.NORTH, new Location(Bukkit.getWorld("world"), 257, 73, -56), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new TeleportDoorMeta("drakkar-bank-hall", "Hall", "world", 254, 73, -54, 90, Door.Hinge.RIGHT, null)), 1)));
+
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9991, BlockType.TeleportDoor, BlockFace.NORTH, new Location(Bukkit.getWorld("world"), 171, 73, -30), HologramSide.TOP),
                     new VersionedJson(new Gson().toJson(new TeleportDoorMeta("drakkar-smeltery-door", "", "world", 3264, 7, 3227, 90, Door.Hinge.RIGHT, new QuestLockedMeta("This door appears to be locked.", null, null, null))), 1)));
 
             result.add(new BlockEntity(
-                    new AbstractInteractableBlockMeta(9991, BlockType.TeleportDoor, BlockFace.NORTH, new Location(Bukkit.getWorld("world"), 170, 73, -30), HologramSide.TOP),
+                    new AbstractInteractableBlockMeta(9990, BlockType.TeleportDoor, BlockFace.NORTH, new Location(Bukkit.getWorld("world"), 170, 73, -30), HologramSide.TOP),
                     new VersionedJson(new Gson().toJson(new TeleportDoorMeta("drakkar-smeltery-door", "", "world", 3264, 7, 3227, 90, Door.Hinge.LEFT, new QuestLockedMeta("This door appears to be locked.", null, null, null))), 1)));
 
 
             result.add(new BlockEntity(
-                    new AbstractInteractableBlockMeta(9990, BlockType.TeleportDoor, BlockFace.EAST, new Location(Bukkit.getWorld("world"), 3265, 7, 3226), HologramSide.TOP),
+                    new AbstractInteractableBlockMeta(9989, BlockType.TeleportDoor, BlockFace.EAST, new Location(Bukkit.getWorld("world"), 3265, 7, 3226), HologramSide.TOP),
                     new VersionedJson(new Gson().toJson(new TeleportDoorMeta("drakkar-smeltery-to-drakkar-door", "", "world", 171, 73, -30, -180, Door.Hinge.LEFT, new QuestLockedMeta("This door appears to be locked.", null, null, null))), 1)));
 
             result.add(new BlockEntity(
-                    new AbstractInteractableBlockMeta(9989, BlockType.TeleportDoor, BlockFace.EAST, new Location(Bukkit.getWorld("world"), 3265, 7, 3227), HologramSide.TOP),
+                    new AbstractInteractableBlockMeta(9988, BlockType.TeleportDoor, BlockFace.EAST, new Location(Bukkit.getWorld("world"), 3265, 7, 3227), HologramSide.TOP),
                     new VersionedJson(new Gson().toJson(new TeleportDoorMeta("drakkar-smeltery-to-drakkar-door", "", "world", 171, 73, -30, -180, Door.Hinge.RIGHT, new QuestLockedMeta("This door appears to be locked.", null, null, null))), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9987, BlockType.InvisibleMarker, BlockFace.EAST, new Location(Bukkit.getWorld("world"), 488, 78, -239), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new InvisibleMarkerMeta(List.of(
+                            "&c" + Icon.SKULL_CLOSED_MOUTH.get() + " Lava Dungeon " + Icon.SKULL_CLOSED_MOUTH.get(),
+                            "&7A dangerous dungeon filled with lava pits and fiery monsters.",
+                            " ",
+                            "&6Minimum Recommended Level: &e60+",
+                            "&6No Items Lost On Death"
+                    ), MarkerType.DUNGEON, "Lava Dungeon")), 1)));
 
 
         } catch (Exception e) {
