@@ -27,12 +27,11 @@ public class EventDeserializer {
     public static Map.Entry<Class<? extends RedisEvent<?>>, RedisEvent.RedisPayload> deserializeEvent(String incomingJson) {
         JsonObject jsonObject = RedisEvent.gson.fromJson(incomingJson, JsonObject.class);
         String eventName = jsonObject.get("event").getAsString();
-        String serverId = jsonObject.get("serverId").getAsString();
 
         Map.Entry<Class<? extends RedisEvent<?>>, Class<? extends RedisEvent.RedisPayload>> matchingEntry = eventMap.get(eventName);
 
         if (matchingEntry == null) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Unknown redis event name " + eventName + " received from server #" + serverId + "! Did you register it?");
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Unknown redis event name " + eventName + " received! Did you register it?");
             return null;
         }
 
@@ -40,15 +39,23 @@ public class EventDeserializer {
         Class<? extends RedisEvent.RedisPayload> payloadClass = matchingEntry.getValue();
 
         if (eventClass == null || payloadClass == null) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Unknown redis event/payload " + eventName + " received from server #" + serverId + "!");
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Unknown redis event/payload " + eventName + " received!");
             return null;
         }
 
         try {
-            return Map.entry(eventClass, gson.fromJson(incomingJson, payloadClass));
+            // Extract the nested 'payload' object
+            JsonObject nestedPayload = jsonObject.getAsJsonObject("payload");
+            RedisEvent.RedisPayload payload = gson.fromJson(nestedPayload, payloadClass);
+
+            // Optionally get serverId from payload if needed
+            String serverId = nestedPayload.has("serverId") ? nestedPayload.get("serverId").getAsString() : "unknown";
+
+            return Map.entry(eventClass, payload);
         } catch (Exception e) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to deserialize event " + eventName + " received from server #" + serverId + "!", e);
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to deserialize event " + eventName + "!", e);
             return null;
         }
     }
+
 }

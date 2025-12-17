@@ -3,7 +3,9 @@ package org.zuma.examplePlugin.domain.command;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -41,7 +43,7 @@ public class SkillsCommand implements BasicCommand {
             Component progressBar = new LoadingBarBuilder()
                     .totalSteps(100)
                     .currentStep(isMaxed ? 100 : percentToNextLevel)
-                    .barLength(15)
+                    .barLength(25)
                     .segment(Icon.PROGRESS_SHORT_SEGMENT.get())
                     .start(Icon.PROGRESS_SHORT_START.get())
                     .stop(Icon.PROGRESS_SHORT_END.get())
@@ -49,16 +51,28 @@ public class SkillsCommand implements BasicCommand {
                     .fillColor(Color.SKILL_BAR_FILL.asColor())
                     .build();
 
-            result = result
-                    .append(progressBar)
-                    .append(Component.text(" " + skill.getType().getSymbol(), NamedTextColor.WHITE))
-                    .append(Component.text("  " + skill.getType().getLabel() + ": " + skill.getBaseLevel(), NamedTextColor.GRAY))
-                    .append(skill.getBonus() > 0 ? Component.text(" (+" + skill.getBonus() + ")", NamedTextColor.GREEN) : Component.text(""))
-                    .append(Component.text(" - ", NamedTextColor.GRAY))
-                    .append(Component.text(formattedXp + " XP" + "/" + formattedNextLevelXp + " XP", Color.ACCENT.asColor()))
-                    .append(Component.text("\n"));
+            Component tooltip = Component.text()
+                    .append(Component.text(skill.getType().getLabel() + " XP: ", Color.ACCENT.asColor()))
+                    .append(Component.text(formattedXp, NamedTextColor.WHITE))
+                    .append(Component.text("\n"))
+                    .append(Component.text("Next level at: ", Color.ACCENT.asColor()))
+                    .append(Component.text(formattedNextLevelXp, NamedTextColor.WHITE))
+                    .append(Component.text("\n"))
+                    .append(Component.text("Remaining XP: ", Color.ACCENT.asColor()))
+                    .append(Component.text(NumberFormat.getNumberInstance().format(XpUtils.getRemainingXP(skill.getXp())), NamedTextColor.WHITE))
+                    .build();
 
+            Component skillComp = progressBar.append(Component.text(" - ", NamedTextColor.GRAY))
+                    .append(Component.text(skill.getType().getSymbol() + " ", NamedTextColor.WHITE))
+                    .append(Component.text(skill.getType().getLabel() + ": ", NamedTextColor.GRAY))
+                    .append(Component.text(skill.getBaseLevel(), NamedTextColor.WHITE).decoration(TextDecoration.BOLD, true))
+                    .append(skill.getBonus() > 0 ? Component.text(" (+" + skill.getBonus() + ")", NamedTextColor.GREEN) : Component.text(""))
+                    .append(Component.text("\n")).hoverEvent(HoverEvent.showText(tooltip));
+
+            result = result.append(skillComp);
         }
+
+        result = result.append(Component.text("\n"));
 
         return result;
 

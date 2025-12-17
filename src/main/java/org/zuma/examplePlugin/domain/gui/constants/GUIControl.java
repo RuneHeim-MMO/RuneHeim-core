@@ -67,6 +67,10 @@ public enum GUIControl {
     LOADING_4(53),
     LOADING_5(54),
 
+    BUFF(55),
+    DEBUFF(56),
+    PLAYER_STATS_BUTTON(57),
+
     PRAYER_0_ACTIVE(1001),
     PRAYER_0_INACTIVE(1000),
     PRAYER_1_ACTIVE(1011),

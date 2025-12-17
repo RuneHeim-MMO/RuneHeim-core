@@ -18,7 +18,7 @@ public class FirstJoinTutorialTeleporter implements Listener {
 
     @EventHandler
     public void onPlayerFirstJoin(RunePlayerLoadedEvent event) {
-        if (!event.isFirstTimeJoin()) {
+        if (!event.isFirstTimeJoin() || event.isCancelled()) {
             return;
         }
 

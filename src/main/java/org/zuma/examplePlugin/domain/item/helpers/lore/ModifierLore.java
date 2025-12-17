@@ -59,16 +59,7 @@ public class ModifierLore implements LoreCreator {
     }
 
     private Component getModifierLine(Modifier modifier) {
-        double amount = modifier.amount();
-        String amountStr = (amount == Math.floor(amount)) ? String.format("%.0f", amount) : String.valueOf(amount);
-        String sign = amount > 0 ? "+" : "";
-        TextColor color = amount > 0 ? Color.ITEM_BONUS_POSITIVE.asColor() : Color.ITEM_BONUS_NEGATIVE.asColor();
-
-        String prefix = (modifier.type().getNumberPrefix() == null) ? "" : modifier.type().getNumberPrefix();
-        String suffix = (modifier.type().getNumberSuffix() == null) ? "" : modifier.type().getNumberSuffix();
-
-        return Component.text(modifier.type().getSymbol(), NamedTextColor.WHITE)
-                .append(Component.text(" " + sign + prefix + amountStr + suffix + " " + modifier.type().getLabel()).color(color));
+        return modifier.type().getTitle(modifier.amount());
     }
 
     @Override

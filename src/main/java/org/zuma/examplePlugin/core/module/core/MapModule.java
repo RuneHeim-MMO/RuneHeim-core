@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
+import org.zuma.examplePlugin.core.config.EnvironmentType;
 import org.zuma.examplePlugin.core.handlers.core.WebHook;
 import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
 import org.zuma.examplePlugin.core.module.PluginModule;
@@ -73,7 +74,10 @@ public class MapModule implements PluginModule {
         markerHandler.clearMarkers();
         markerHandler.renderMarkers(poiMarkers);
         markerHandler.renderTerritories(territories);
-        // markerHandler.renderSpawnZones(zones);
+
+        if (ConfigManager.environment.equals(EnvironmentType.DEVELOPMENT)) {
+            markerHandler.renderSpawnZones(zones);
+        }
 
     }
 

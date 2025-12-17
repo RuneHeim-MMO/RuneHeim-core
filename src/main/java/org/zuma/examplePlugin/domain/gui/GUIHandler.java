@@ -46,7 +46,8 @@ public class GUIHandler {
     private final RunePlayerManager playerManager;
     private final HashMap<UUID, List<UUID>> inventoryViewers = new HashMap<>();    // Inventory UUID : List<PlayerUUID>
     private final HashMap<UUID, Runnable> closeRunnables = new HashMap<>();
-    private final CooldownHandler cooldownHandler = new CooldownHandler();
+    private final CooldownHandler inventoryOpenCooldownHandler = new CooldownHandler();
+    private final CooldownHandler itemClickCooldownHandler = new CooldownHandler();
 
     public GUIHandler(GUIRegistry registry, RunePlayerManager playerManager) {
         this.registry = registry;
@@ -130,6 +131,7 @@ public class GUIHandler {
         this.registry.register(InventoryId.BOMBS_MENU.asInt(), () -> new DonatorBombsInventory(GUIOverlay.BOMBS_MENU_OVERLAY.asGlyph() + "§f" + Icon.EXPLOSION.get() + "§f Bombs Menu", InventoryId.BOMBS_MENU.asInt()));
         this.registry.register(InventoryId.PLAYER_SETTINGS_MENU.asInt(), () -> new PlayerSettingsInventory(GUIOverlay.PLAYER_SETTINGS_MENU_OVERLAY.asGlyph() + "§f" + Icon.TOOL.get() + "§f Settings", InventoryId.PLAYER_SETTINGS_MENU.asInt()));
         this.registry.register(InventoryId.DAILY_REWARDS.asInt(), () -> new DailyRewardsInventory(GUIOverlay.DAILY_REWARDS_OVERLAY.asGlyph() + "§f" + Icon.TREASURE_CHEST.get() + "§f Daily Rewards", InventoryId.DAILY_REWARDS.asInt()));
+        this.registry.register(InventoryId.PLAYER_MODIFIERS.asInt(), () -> new ModifiersInventory(GUIOverlay.PLAYER_MODIFIERS_OVERLAY.asGlyph() + "§f" + Icon.BOOK.get() + "§f Active Modifiers", InventoryId.PLAYER_MODIFIERS.asInt()));
 
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
@@ -142,7 +144,7 @@ public class GUIHandler {
 
     @Nullable
     public UUID openInventory(int id, RunePlayer player, @Nullable Runnable onClose, @Nullable AbstractInventoryOpener mobHolder, @Nullable InventoryOpenerBlock blockHolder) {
-        if (cooldownHandler.isCooldownInProgress(player)) {
+        if (inventoryOpenCooldownHandler.isCooldownInProgress(player)) {
             return null;
         }
 
@@ -156,7 +158,7 @@ public class GUIHandler {
             player.asBukkitPlayer().closeInventory();
         }
 
-        cooldownHandler.startCooldown(player, INVENTORY_OPEN_COOLDOWN_MS);
+        inventoryOpenCooldownHandler.startCooldown(player, INVENTORY_OPEN_COOLDOWN_MS);
 
         AbstractGUI matchingGUI = this.registry.getInstance(player.getUUID(), id);
 
@@ -179,6 +181,7 @@ public class GUIHandler {
 
         // Revert new instance if inventory failed to open
         if (event.isCancelled() || !matchingGUI.attemptOpenInventory(player, () -> {
+
             if (onClose != null) {
                 onClose.run();
             }
@@ -324,12 +327,12 @@ public class GUIHandler {
             return;
         }
 
-        if (cooldownHandler.isCooldownInProgress(player)) {
+        if (itemClickCooldownHandler.isCooldownInProgress(player)) {
             event.setCancelled(true);
             return;
         }
 
-        cooldownHandler.startCooldown(player, INVENTORY_CLICK_COOLDOWN_MS);
+        itemClickCooldownHandler.startCooldown(player, INVENTORY_CLICK_COOLDOWN_MS);
 
         AbstractGUI matchingGUI = this.registry.getInstance(bukkitPlayer.getUniqueId(), inventoryId);
 

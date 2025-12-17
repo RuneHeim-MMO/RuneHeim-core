@@ -29,6 +29,9 @@ public class MountCommand implements BasicCommand {
             return;
         }
 
+        if (runePlayer.hasPendingActions()) return;
+        if (runePlayer.isInCutscene()) return;
+        if (runePlayer.isDead()) return;
 
         if (args.length == 0) {
             RuneQuestPlugin.getMountHandler().spawnMount(runePlayer);

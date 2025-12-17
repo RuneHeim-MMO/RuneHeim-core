@@ -44,6 +44,9 @@ public class ToggleLockCommand implements BasicCommand {
             return;
         }
 
+        if (runePlayer.isInCutscene()) return;
+        if (runePlayer.isDead()) return;
+
         ItemStack inHand = PlayerUtils.getItemStackInHand(bukkitPlayer);
 
         if (inHand.isEmpty()) {

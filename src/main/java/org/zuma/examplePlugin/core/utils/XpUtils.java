@@ -59,6 +59,15 @@ public class XpUtils {
         return level >= MAX_LEVEL;
     }
 
+    public static double getRemainingXP(double currentXP) {
+        int currentLevel = getLevelFromXp(currentXP);
+        if (isMaxLevel(currentLevel)) {
+            return 0;
+        }
+        int xpForNextLevel = getXpForLevel(currentLevel + 1);
+        return xpForNextLevel - currentXP;
+    }
+
     public static int getProgressPercent(int totalXp, int currentLevel) {
         if (isMaxLevel(currentLevel)) {
             return 100;

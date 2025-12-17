@@ -220,6 +220,17 @@ public class RunePlayerManager {
         runePlayer.getAnalyticsContainer().increment(AnalyticsKey.PLAYER_SESSIONS, 1);
         RuneQuestPlugin.getAnalytics().increment(AnalyticsKey.PLAYER_SESSIONS, 1);
 
+        RunePlayerLoadedEvent event = new RunePlayerLoadedEvent(runePlayer, playerData.isFirstJoin());
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
+        if (event.isCancelled()) {
+            runAsync(() -> {
+                // Kick should be handled where the event is cancelled
+                cleanup(uuid);
+            });
+            return;
+        }
+
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
             runePlayer.getRole().reloadPermissions(runePlayer);
             runePlayer.reloadNametags();
@@ -228,7 +239,6 @@ public class RunePlayerManager {
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Player " + player.getName() + " (" + runePlayer.getCombatLvl() + "cmb) loaded successfully [" + runePlayer.getRole().getBaseRole().toString() + "].");
         RuneQuestPlugin.getGearModifierHandler().recalculatePlayerModifiers(runePlayer, player.getInventory().getItemInMainHand());
 
-        Bukkit.getServer().getPluginManager().callEvent(new RunePlayerLoadedEvent(runePlayer, playerData.isFirstJoin()));
         cleanup(uuid);
     }
 

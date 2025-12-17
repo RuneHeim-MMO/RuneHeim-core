@@ -45,6 +45,8 @@ public class PouchCommand implements BasicCommand {
             return;
         }
 
+        if (runePlayer.isInCutscene()) return;
+        if (runePlayer.isDead()) return;
 
         if (args.length == 2 && args[0].equalsIgnoreCase("drop") && TypeUtils.isInteger(args[1])) {
 

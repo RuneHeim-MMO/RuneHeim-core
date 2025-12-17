@@ -142,7 +142,6 @@ public class RunePlayer implements CombatEntity {
         modifiers.clear();
         modifiers.putAll(newModifiers.stream()
                 .collect(Collectors.toMap(Modifier::type, Function.identity())));
-        // System.out.println("Recalculated modifiers " + newModifiers);
     }
 
     public void setSkillModifiers(List<SkillModifier> newModifiers) {
@@ -164,6 +163,10 @@ public class RunePlayer implements CombatEntity {
 
     public EnumMap<ModifierType, Modifier> getModifiers() {
         return new EnumMap<>(modifiers);
+    }
+
+    public EnumMap<SkillType, SkillModifier> getSkillModifiers() {
+        return new EnumMap<>(skillModifiers);
     }
 
     // Skills
