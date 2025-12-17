@@ -225,7 +225,7 @@ public class RunePlayerManager {
 
         if (event.isCancelled()) {
             runAsync(() -> {
-                this.repository.setPlayerOnline(uuid, false);
+                // Kick should be handled where the event is cancelled
                 cleanup(uuid);
             });
             return;

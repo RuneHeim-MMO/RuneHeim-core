@@ -72,7 +72,7 @@ public class SkillsCommand implements BasicCommand {
             result = result.append(skillComp);
         }
 
-        result.append(Component.text("\n"));
+        result = result.append(Component.text("\n"));
 
         return result;
 

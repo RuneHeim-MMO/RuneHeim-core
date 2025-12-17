@@ -30,7 +30,7 @@ public class WhitelistHandler implements Listener {
         WhitelistMode mode = ConfigManager.whitelistMode;
         Player p = event.getPlayer();
 
-        // No registration check here, we kick even before that
+        // No permissions check here, we kick even before that
         if (mode.equals(WhitelistMode.OP_ONLY) && !p.isOp()) {
             event.disallow(PlayerLoginEvent.Result.KICK_OTHER, TextUtils.getBrandKickScreen(Component.text("Server is currently in OP_ONLY whitelist mode.\n\nCheck our Discord for updates.", Color.ERROR_LIGHT.asColor())));
             RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Kicked player " + p.getName() + " due to OP_ONLY whitelist mode.");
@@ -43,7 +43,7 @@ public class WhitelistHandler implements Listener {
         RunePlayer p = event.getPlayer();
 
 
-        // Allows registration so we can check permissions
+        // Run whitelist checks after RunePlayer has been loaded so role-based permissions are available
         if (mode.equals(WhitelistMode.STAGING) && !p.getRole().hasPermission(Permission.JOIN_STAGING_SERVER)) {
             event.setCancelled(true);
             RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Kicked player " + p.asBukkitPlayer().getName() + " due to STAGING whitelist mode.");

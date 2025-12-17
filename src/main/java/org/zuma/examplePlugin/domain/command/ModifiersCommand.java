@@ -39,7 +39,7 @@ public class ModifiersCommand implements BasicCommand {
 
     @Override
     public Collection<String> suggest(CommandSourceStack commandSourceStack, String[] args) {
-        return List.of("drop");
+        return List.of();
     }
 
 
