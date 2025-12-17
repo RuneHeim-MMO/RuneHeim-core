@@ -58,6 +58,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new PaymentModule(),
                         new AnalyticsModule(),
                         new AnnouncementModule(),
+                        new WhitelistModule(),
 
                         new PacketsModule(),
                         new QuestModule(),

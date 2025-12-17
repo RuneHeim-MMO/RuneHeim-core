@@ -68,7 +68,7 @@ public class RunePlayerListener implements Listener {
         EffectQueueManager.cleanupPlayer(player.getUniqueId());
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onRunePlayerLoaded(RunePlayerLoadedEvent event) {
         event.getBukkitPlayer().sendMessage(Component.text(TextUtils.repeatString("-", 53)).color(Color.SUCCESS.asColor()).decorate(TextDecoration.STRIKETHROUGH));
         event.getBukkitPlayer().sendMessage(Component.empty());

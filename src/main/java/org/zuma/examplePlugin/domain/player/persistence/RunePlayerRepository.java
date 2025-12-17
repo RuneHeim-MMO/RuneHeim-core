@@ -95,7 +95,10 @@ public class RunePlayerRepository {
                     upgradedRole = rs.getString("upgraded_role");
                     inventoryData = rs.getString("inventory_json");
                     location = rs.getString("location");
-                    isOnline = rs.getBoolean("online");
+
+                    rs.getInt("online");
+                    isOnline = !rs.wasNull();
+
                     trackedQuestId = rs.getString("tracking_quest_id");
 
                     if (isOnline) {
@@ -288,7 +291,12 @@ public class RunePlayerRepository {
         try (Connection conn = pool.getDataSource().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, online ? ConfigManager.serverId : null);
+            if (online) {
+                stmt.setInt(1, ConfigManager.serverId);
+            } else {
+                stmt.setNull(1, java.sql.Types.INTEGER);
+            }
+
             stmt.setString(2, uuid.toString());
 
             stmt.executeUpdate();

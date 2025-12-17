@@ -21,6 +21,7 @@ public class ConfigManager {
     public static boolean isPreviewServer = false;
     public static int serverId;
     public static EnvironmentType environment;
+    public static WhitelistMode whitelistMode;
 
     private static final Dotenv dotenv = Dotenv.configure()
             .directory(ConfigManager.ENVIRONMENT_CONFIG != null ? Paths.get(System.getProperty("user.dir")).resolve("plugins").getParent().toString() : null)
@@ -37,10 +38,12 @@ public class ConfigManager {
             String serverId = dotenv.get("SERVER_ID");
             String isLiveServer = dotenv.get("IS_LIVE_SERVER");
             String envKey = dotenv.get("ENV");
+            String whitelistKey = dotenv.get("WHITELIST_MODE");
 
             ConfigManager.isPreviewServer = "false".equalsIgnoreCase(isLiveServer != null ? isLiveServer.trim() : null);
             ConfigManager.serverId = Integer.parseInt(serverId);
             ConfigManager.environment = EnvironmentType.getByKey(envKey == null ? "production" : envKey.trim());
+            ConfigManager.whitelistMode = WhitelistMode.getByKey(whitelistKey == null ? "none" : whitelistKey.trim());
 
             RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Loaded environment: " + ConfigManager.environment.getKey() + ", Server ID: " + ConfigManager.serverId + ", Is Preview Server: " + ConfigManager.isPreviewServer);
         } catch (Exception e) {
