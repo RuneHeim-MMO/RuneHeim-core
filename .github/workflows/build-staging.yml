@@ -43,4 +43,4 @@ jobs:
     steps:
       - name: Trigger Minecraft Hook
         run: |
-          curl --max-time 30 -X POST "http://213.35.143.204:1337/restart?key=${{ secrets.WEB_HOOK_SECRET_STAGING }}&seconds=3&reason=Core%20Update&sender=Github_actions"
+          curl --max-time 30 -X POST "http://direct.3uma.dev:1337/restart?key=${{ secrets.WEB_HOOK_SECRET_STAGING }}&seconds=3&reason=Core%20Update&sender=Github_actions"
