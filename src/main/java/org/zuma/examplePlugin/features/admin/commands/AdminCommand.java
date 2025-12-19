@@ -375,7 +375,7 @@ public class AdminCommand implements BasicCommand {
         }
 
         if (Objects.equals(args[0], "quest")) {
-            Quest q = RuneQuestPlugin.getQuestHandler().getRegistry().getQuestById(QuestId.WELCOME_TO_DRAKKAR_I.getId());
+            Quest q = RuneQuestPlugin.getQuestHandler().getRegistry().getQuestById(QuestId.WELCOME_TO_DRAKKAR_II.getId());
             q.startForPlayer(runePlayer, false);
         }
 

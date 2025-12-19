@@ -141,6 +141,17 @@ public class QuestRegistry {
                 new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarII, "Talk to the §6Town Mayor §fin §6Drakkar.", "welcome-to-drakkarii.talk.to.mayor.finish", null)
         )));
 
+
+        Quest welcomeToDrakkarIII = new Quest(QuestId.WELCOME_TO_DRAKKAR_III.getId(), "Welcome to Drakkar III", QuestDifficulty.EASY, false, null)
+                .setRewards(new QuestReward(List.of(new ItemRecord(ItemId.BRONZE_BODY, 1)), null, 250));
+
+        registerQuest(welcomeToDrakkarIII.addSteps(List.of(
+                new VisitStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarIII, "Visit §6Drakkar's Lake§f at §6(X:55, Z:-75).", "welcome-to-drakkariii.visit.lake", new VisitStep.VisitStepEntry(new Quest.Coordinates(55, 66, -74), 15), null),
+                new VisitStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarIII, "Visit §6Drakkar's Mine§f at §6(X:28, Z:96).", "welcome-to-drakkariii.visit.mine", new VisitStep.VisitStepEntry(new Quest.Coordinates(28, 91, 96), 15), null),
+                new DialogStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarIII, "Talk to the §6Town Mayor §fin §6Drakkar.", "welcome-to-drakkariii.talk.to.mayor.finish", null)
+        )));
+
+
         Quest smeltersAssistant = new Quest(QuestId.HOT_MESS_AT_THE_SMELTERY.getId(), "Hot Mess At The Smeltery", QuestDifficulty.MEDIUM, false, null)
                 .setRequirements(List.of(new SkillRequirement(SkillType.MINING, 30)))
                 .setRewards(new QuestReward(null, Map.of(SkillType.SMITHING, 840.0, SkillType.MINING, 1500.0), 1000));
