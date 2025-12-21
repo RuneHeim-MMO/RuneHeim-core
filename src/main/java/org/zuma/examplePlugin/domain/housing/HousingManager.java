@@ -39,9 +39,7 @@ public class HousingManager implements Listener {
         this.schematicSpawner = new SchematicSpawner();
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-            createHousingInstance(UUID.randomUUID(), "Test1", HouseTemplate.DRAKKAR_STARTER, false);
-            createHousingInstance(UUID.randomUUID(), "Test5", HouseTemplate.DRAKKAR_STARTER, false);
-
+            createHousingInstance(UUID.randomUUID(), "TestUser", HouseTemplate.DRAKKAR_STARTER, false);
         }, 100L);
     }
 
@@ -194,7 +192,7 @@ public class HousingManager implements Listener {
                 false,
                 256, true));
 
-        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Created house instance for template " + template.name() + " at grid (" + gridX + ", " + gridZ + ") spawn point: " + spawnPoint);
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Created house instance (" + template.name() + ") at grid (" + gridX + ", " + gridZ + ") spawn point: (X " + spawnPoint.getX() + " Y " + spawnPoint.getY() + " Z " + spawnPoint.getZ() + " ) for player " + ownerName + " (" + ownerName + ")");
 
         return instance;
     }

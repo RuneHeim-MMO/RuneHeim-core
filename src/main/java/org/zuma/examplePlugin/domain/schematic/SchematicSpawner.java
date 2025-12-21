@@ -63,8 +63,10 @@ public class SchematicSpawner {
 
             World weWorld = BukkitAdapter.adapt(location.getWorld());
 
-
             try (EditSession editSession = WorldEdit.getInstance().newEditSession(weWorld)) {
+                editSession.setFastMode(true);
+                editSession.setBatchingChunks(true);
+
                 Operation operation = new ClipboardHolder(clipboard)
                         .createPaste(editSession)
                         .to(origin)
@@ -92,38 +94,39 @@ public class SchematicSpawner {
     public List<InteractiveElement> extractInteractiveElements() {
         List<InteractiveElement> elements = new ArrayList<>();
 
-        if (lastPaste == null) {
-            return elements;
-        }
+        if (lastPaste == null) return elements;
 
         World weWorld = lastPaste.getWorld();
+        org.bukkit.World bukkitWorld = BukkitAdapter.asBukkitWorld(weWorld).getWorld();
 
         lastPaste.forEach(pos -> {
-            Location loc = new Location(BukkitAdapter.asBukkitWorld(weWorld).getWorld(), pos.x(), pos.y() + 1, pos.z());
-            Block block = loc.getBlock();
+            Block block = bukkitWorld.getBlockAt(pos.x(), pos.y() + 1, pos.z());
+            Material type = block.getType();
+
+            if (!type.name().endsWith("_SIGN")) return; // cheap type check
+
             BlockData data = block.getBlockData();
             BlockFace facing = null;
 
-            if (data instanceof Directional dir) {
-                facing = dir.getFacing();
-            } else if (data instanceof Rotatable rot) {
-                facing = rot.getRotation();
-            }
+            if (data instanceof Directional dir) facing = dir.getFacing();
+            else if (data instanceof Rotatable rot) facing = rot.getRotation();
 
-            if (block.getState() instanceof Sign sign && facing != null) {
-                String firstLine = TextUtils.extractPlainText(sign.getSide(Side.FRONT).line(0));
-                try {
-                    InteractiveElType type = InteractiveElType.valueOf(firstLine);
-                    elements.add(new InteractiveElement(block.getLocation(), facing, type));
-                    block.setType(Material.AIR); // Remove the sign block
-                } catch (IllegalArgumentException e) {
-                    // Not a valid enum constant, ignore
-                }
+            if (facing == null) return;
+
+            Sign sign = (Sign) block.getState();
+            String firstLine = TextUtils.extractPlainText(sign.getSide(Side.FRONT).line(0));
+
+            try {
+                InteractiveElType typeEnum = InteractiveElType.valueOf(firstLine);
+                elements.add(new InteractiveElement(block.getLocation(), facing, typeEnum));
+                block.setType(Material.AIR); // optional: batch this later
+            } catch (IllegalArgumentException ignored) {
             }
         });
 
         return elements;
     }
+
 
     public void clearLastPaste() {
         if (lastPaste == null) return;
