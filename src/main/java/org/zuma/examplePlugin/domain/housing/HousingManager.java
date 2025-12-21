@@ -1,202 +1,174 @@
 package org.zuma.examplePlugin.domain.housing;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.block.data.type.Door;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.jetbrains.annotations.NotNull;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.domain.block.constants.BlockType;
-import org.zuma.examplePlugin.domain.block.impl.door.TeleportDoor;
-import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
-import org.zuma.examplePlugin.domain.block.meta.HologramSide;
-import org.zuma.examplePlugin.domain.block.meta.v1.QuestLockedMeta;
+import org.zuma.examplePlugin.domain.housing.instance.HouseInstance;
+import org.zuma.examplePlugin.domain.housing.instance.HouseInstanceCreator;
+import org.zuma.examplePlugin.domain.housing.persistence.HousingRepository;
+import org.zuma.examplePlugin.domain.housing.records.HouseEntry;
 import org.zuma.examplePlugin.domain.housing.template.HouseTemplate;
+import org.zuma.examplePlugin.domain.housing.template.HousingMetaLoader;
 import org.zuma.examplePlugin.domain.housing.template.TemplateMeta;
 import org.zuma.examplePlugin.domain.housing.world.WorldManager;
-import org.zuma.examplePlugin.domain.schematic.InteractiveElType;
-import org.zuma.examplePlugin.domain.schematic.InteractiveElement;
+import org.zuma.examplePlugin.domain.hud.HudService;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.schematic.SchematicSpawner;
-import org.zuma.examplePlugin.domain.territory.Territory;
+import org.zuma.examplePlugin.events.player.RunePlayerLoadedEvent;
 
+import java.sql.SQLException;
 import java.util.*;
 
 public class HousingManager implements Listener {
     public final static int GRID_SIZE = 128;
-    private final Map<Integer, Map<Integer, HouseInstance>> gridMap = new HashMap<>();
-    private final Map<HouseTemplate, TemplateMeta> templateMetaMap = new HashMap<>();
+    private final static int AUTOSAVE_INTERVAL_MINUTES = 2;
 
-    private int totalInstances = 0;
+    private final Map<Integer, Map<Integer, HouseInstance>> gridMap; // gridX : (gridZ : house instance)
+    private final Map<UUID, HashMap<HousingRegion, HouseInstance>> playerHouseMap; // player uuid : (region : house instance)
+    private final Map<UUID, HouseInstance> uuidHouseInstanceMap; // instance uuid : house instance
+    private final Map<HouseTemplate, HouseInstance> templatePreviewMap;
 
-    private final WorldManager worldManager;
-    private final SchematicSpawner schematicSpawner;
+    private final HouseInstanceCreator instanceCreator;
+    private final HousingMetaLoader houseMetaHandler;
+    private final HousingRepository repository;
 
-    public HousingManager(WorldManager worldManager) {
-        this.worldManager = worldManager;
-        this.schematicSpawner = new SchematicSpawner();
+    private final HashMap<UUID, HashMap<HousingRegion, HouseEntry>> playerHouses; // player uuid : saved house entry
 
-        Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-            createHousingInstance(UUID.randomUUID(), "TestUser", HouseTemplate.DRAKKAR_STARTER, false);
-        }, 100L);
+    public HousingManager(WorldManager worldManager, HousingRepository repository) {
+        this.gridMap = new HashMap<>();
+        this.playerHouseMap = new HashMap<>();
+        this.uuidHouseInstanceMap = new HashMap<>();
+        this.templatePreviewMap = new HashMap<>();
+        this.instanceCreator = new HouseInstanceCreator(this, worldManager, new SchematicSpawner());
+        this.houseMetaHandler = new HousingMetaLoader(this);
+        this.playerHouses = new HashMap<>();
+        this.repository = repository;
     }
 
-    // Load all house template, in order to validate them and extract metadata (interactive elements)
-    public void loadTemplatesMeta() {
-        for (HouseTemplate template : HouseTemplate.values()) {
+    public void init() {
+        this.houseMetaHandler.loadTemplatesMeta();
+        Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::autoSaveAllHouses, AUTOSAVE_INTERVAL_MINUTES * 60 * 20L, AUTOSAVE_INTERVAL_MINUTES * 60 * 20L);
+    }
+
+    public HouseInstanceCreator getInstanceCreator() {
+        return this.instanceCreator;
+    }
+
+    public TemplateMeta getTemplateMeta(HouseTemplate template) {
+        return this.houseMetaHandler.getTemplateMetaMap().get(template);
+    }
+
+    private void autoSaveAllHouses() {
+        List<HouseEntry> housesToSave = new ArrayList<>();
+
+        this.playerHouses.forEach((playerUUID, housesPerRegion) -> {
+            housesPerRegion.forEach((region, savedEntry) -> {
+                housesToSave.add(savedEntry);
+            });
+        });
+
+        if (housesToSave.isEmpty()) {
+            return;
+        }
+
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Auto-saving all player houses...");
+
+        Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
             try {
-                HouseInstance testInstance = createHousingInstance(UUID.randomUUID(), "Template", template, true);
+                this.repository.savePlayerHouses(housesToSave);
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Auto-saved " + housesToSave.size() + " player houses successfully.");
+            } catch (SQLException e) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "[PlayerHousing] Failed to auto-save player houses!", e);
+            }
+        });
+    }
 
-                List<InteractiveElement> elements = testInstance.getInteractiveElements();
-                List<InteractiveElType> requiredElements = List.of(InteractiveElType.EXIT, InteractiveElType.SPAWN);
 
-                for (InteractiveElType requiredType : requiredElements) {
-                    boolean hasType = elements.stream().anyMatch(el -> el.type() == requiredType);
+    public void teleportToOwnHouse(RunePlayer player, HousingRegion region) {
+        HashMap<HousingRegion, HouseInstance> regionMap = playerHouseMap.get(player.getUUID());
 
-                    if (!hasType) {
-                        throw new IllegalStateException("Template " + template.name() + " is missing required interactive element of type " + requiredType.name());
-                    }
-                }
+        if (regionMap != null) {
+            HouseInstance instance = regionMap.get(region);
 
-                InteractiveElement spawnPoint = elements.stream()
-                        .filter(el -> el.type() == InteractiveElType.SPAWN)
-                        .findFirst()
-                        .orElseThrow(() -> new IllegalStateException("Template " + template.name() + " is missing spawn point interactive element"));
-
-                Location relativeSpawnPoint = getRelativeSpawnPoint(spawnPoint, testInstance);
-                TemplateMeta meta = new TemplateMeta(elements.stream().filter(
-                        el -> el.type() == InteractiveElType.SLOT).toList().size(),
-                        elements.stream().filter(el -> el.type() == InteractiveElType.DECORATION_SLOT).toList().size(),
-                        relativeSpawnPoint);
-
-                templateMetaMap.put(template, meta);
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Loaded template " + template.name() + " successfully. Detected: " + (meta.interactiveSlotCount() + meta.decorationSlotCount()) + " slots and spawn point at " + meta.relativeSpawnPoint().toString());
-
-            } catch (Exception e) {
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[PlayerHousing] Failed to load template " + template.name() + " metadata. Invalid template. ", e);
+            if (instance != null) {
+                instance.teleportToHouse(player);
+                return;
             }
         }
 
-        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Loaded " + templateMetaMap.size() + " house templates.");
-    }
+        // Check for match from saved houses
+        HashMap<HousingRegion, HouseEntry> housesPerRegion = playerHouses.get(player.getUUID());
 
-    private static @NotNull Location getRelativeSpawnPoint(InteractiveElement spawnPoint, HouseInstance instance) {
-        Location relativeSpawnPoint = spawnPoint.location().clone();
-
-        switch (spawnPoint.face()) {
-            case SOUTH -> relativeSpawnPoint.setYaw(0);
-            case NORTH -> relativeSpawnPoint.setYaw(180);
-            case EAST -> relativeSpawnPoint.setYaw(90);
-            case WEST -> relativeSpawnPoint.setYaw(-90);
-            default -> relativeSpawnPoint.setYaw(0);
+        if (housesPerRegion == null) {
+            HudService.sendFailMessage(player, Component.text("You do not own a house in this region."));
+            return;
         }
 
-        relativeSpawnPoint.subtract(instance.getGridX() * GRID_SIZE, 0, instance.getGridZ() * GRID_SIZE);
-        return relativeSpawnPoint;
+        HouseEntry savedEntry = housesPerRegion.get(region);
+
+        if (savedEntry == null) {
+            HudService.sendFailMessage(player, Component.text("You do not own a house in this region."));
+            return;
+        }
+
+        HouseInstance instance = instanceCreator.createInstance(player.getUUID(), savedEntry.uuid(), player.asBukkitPlayer().getName(), savedEntry.template(), false, savedEntry.furniture());
+        instance.teleportToHouse(player);
     }
 
-    // Update interactive elements (e.g actions block, holograms) positions according to schematic
-    private void handleElementReassignation(List<InteractiveElement> elements, UUID ownerUUID, HouseInstance instance) {
-        Set<Location> processedLocations = new HashSet<>();
+    public boolean doesPlayerOwnHouseInRegion(UUID ownerUUID, HousingRegion region) {
+        // Check for match from saved houses
+        HashMap<HousingRegion, HouseEntry> housesPerRegion = playerHouses.get(ownerUUID);
 
-        for (InteractiveElement el : elements) {
+        if (housesPerRegion == null) {
+            return false;
+        }
 
-            if (el.type() != InteractiveElType.EXIT) continue;
+        HouseEntry savedEntry = housesPerRegion.get(region);
 
-            Location location = el.location().clone().add(0, -1, 0).toBlockLocation();
-            Location exitLocation = instance.getTemplate().getRegion().getExitLocation();
+        if (savedEntry == null) {
+            return false;
+        }
 
-            // Determine hinge based on adjacency
-            Door.Hinge hinge = Door.Hinge.RIGHT;
+        return true;
+    }
 
-            for (Location other : processedLocations) {
-                // Check if adjacent (simple cardinal adjacency)
-                if (other.getWorld().equals(location.getWorld())
-                        && other.getBlockX() == location.getBlockX() && Math.abs(other.getBlockZ() - location.getBlockZ()) == 1
-                        || other.getBlockZ() == location.getBlockZ() && Math.abs(other.getBlockX() - location.getBlockX()) == 1) {
-                    // Second door next to first → flip hinge
-                    hinge = (hinge == Door.Hinge.RIGHT ? Door.Hinge.LEFT : Door.Hinge.RIGHT);
-                    break;
-                }
-            }
+    public void removeHouseReference(UUID ownerUUID, HousingRegion region) {
+        HashMap<HousingRegion, HouseInstance> regionMap = playerHouseMap.get(ownerUUID);
 
-            TeleportDoor exitDoor = new TeleportDoor(
-                    new AbstractInteractableBlockMeta(
-                            1001 + instance.getGridX(),
-                            BlockType.TeleportDoor,
-                            el.face(),
-                            location,
-                            HologramSide.TOP
-                    ),
-                    hinge,
-                    "house_exit_" + ownerUUID + "_" + hinge,
-                    "Exit",
-                    exitLocation.getWorld().toString(),
-                    (int) exitLocation.x(),
-                    (int) exitLocation.y(),
-                    (int) exitLocation.z(),
-                    (int) exitLocation.getYaw(),
-                    new QuestLockedMeta(null, null, null, null)
-            );
+        if (regionMap == null) {
+            return;
+        }
 
-            exitDoor.initializeBlock();
-            RuneQuestPlugin.getBlockManager().registerBlock(exitDoor);
+        HouseInstance instance = regionMap.get(region);
 
-            // Mark this location as processed
-            processedLocations.add(location);
+        if (instance == null) {
+            return;
+        }
+
+        uuidHouseInstanceMap.remove(instance.getInstanceUUID());
+        regionMap.remove(region);
+        instance.cleanup();
+
+        int gridX = instance.getGridX();
+        int gridZ = instance.getGridZ();
+
+        Map<Integer, HouseInstance> row = gridMap.get(gridX);
+
+        if (row != null) {
+            row.remove(gridZ);
+        }
+
+        if (regionMap.isEmpty()) {
+            playerHouseMap.remove(ownerUUID);
         }
     }
 
-
-    // InitialMetaSpawn is true when creating a test instance to extract metadata from the template
-    private HouseInstance createHousingInstance(UUID ownerUUID, String ownerName, HouseTemplate template, boolean initialMetaSpawn) {
-        if (!initialMetaSpawn && !templateMetaMap.containsKey(template)) {
-            throw new IllegalArgumentException("Template " + template.name() + " is not valid or not loaded.");
-        }
-
-
-        int gridX = totalInstances % 1000;
-        int gridZ = totalInstances / 1000;
-        //int centerPoint = GRID_SIZE / 2;
-
-        Location pasteLocation = new Location(worldManager.getHousingWorld(), gridX * GRID_SIZE, 64, gridZ * GRID_SIZE);
-        schematicSpawner.pasteSchematic(pasteLocation, template.getSchematic(), true, true);
-        List<InteractiveElement> elements = schematicSpawner.extractInteractiveElements();
-
-        Location spawnPoint = new Location(worldManager.getHousingWorld(), gridX * GRID_SIZE, 64, gridZ * GRID_SIZE);
-
-        if (!initialMetaSpawn) {
-            Location offset = templateMetaMap.get(template).relativeSpawnPoint().clone();
-            spawnPoint.setY(0); // Reset Y to avoid issues
-            spawnPoint.add(offset.x(), offset.y(), offset.z());
-        }
-
-        HouseInstance instance = new HouseInstance(ownerUUID, ownerName, gridX * GRID_SIZE, gridZ * GRID_SIZE, elements, spawnPoint, template);
-        gridMap.computeIfAbsent(gridX, k -> new HashMap<>()).put(gridZ, instance);
-        totalInstances++;
-
-        handleElementReassignation(elements, ownerUUID, instance);
-        String territoryName = initialMetaSpawn ? template.getTemplateName() : ownerName + "'s House";
-
-        RuneQuestPlugin.getTerritoryHandler().getTerritoryList().add(new Territory("house_" + ownerUUID.toString(),
-                new Location(worldManager.getHousingWorld(), (gridX * GRID_SIZE) + GRID_SIZE / 2, 64, (gridZ * GRID_SIZE) + GRID_SIZE / 2),
-                instance.getSpawnPoint(),
-                GRID_SIZE / 2,
-                territoryName,
-                "",
-                null, 0, 0,
-                false,
-                false,
-                false,
-                256, true));
-
-        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Created house instance (" + template.name() + ") at grid (" + gridX + ", " + gridZ + ") spawn point: (X " + spawnPoint.getX() + " Y " + spawnPoint.getY() + " Z " + spawnPoint.getZ() + " ) for player " + ownerName + " (" + ownerName + ")");
-
-        return instance;
-    }
-
+    @Nullable
     public HouseInstance getHousingAt(int x, int z) {
         int gridX = Math.floorDiv(x, GRID_SIZE);
         int gridZ = Math.floorDiv(z, GRID_SIZE);
@@ -210,34 +182,152 @@ public class HousingManager implements Listener {
         return null;
     }
 
+    @Nullable
+    public HouseInstance getVisitingHouse(RunePlayer visitor) {
+        for (Map<HousingRegion, HouseInstance> regionMap : playerHouseMap.values()) {
+            for (HouseInstance instance : regionMap.values()) {
+                if (instance.getCurrentVisitors().stream().anyMatch(uuid -> visitor.getUUID().equals(uuid))) {
+                    return instance;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public List<HouseInstance> getAllRegionHouses(HousingRegion region) {
+        List<HouseInstance> houses = new ArrayList<>();
+
+        this.playerHouseMap.values().forEach(regionMap -> {
+            HouseInstance instance = regionMap.get(region);
+            if (instance != null) {
+                houses.add(instance);
+            }
+        });
+
+        return houses;
+    }
+
+    @Nullable
+    public HouseInstance getHouseInstanceByOwner(UUID ownerUUID, HousingRegion region) {
+        HashMap<HousingRegion, HouseInstance> regionMap = playerHouseMap.get(ownerUUID);
+
+        if (regionMap == null) {
+            return null;
+        }
+
+        return regionMap.get(region);
+    }
+
     @EventHandler
-    public void onPlayerChangeWorld(PlayerChangedWorldEvent event) {
-       /* RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(event.getPlayer());
+    public void onPlayerDisconnect(PlayerQuitEvent event) {
+        HashMap<HousingRegion, HouseEntry> existing = this.playerHouses.get(event.getPlayer().getUniqueId());
 
-        if (player == null) {
-            return;
+        if (existing != null) {
+            Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
+                if (existing.isEmpty()) {
+                    return;
+                }
+
+                try {
+                    this.repository.savePlayerHouses(new ArrayList<>(existing.values()));
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Saved " + existing.size() + " player houses for player " + event.getPlayer().getName());
+
+                    Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+                        this.playerHouses.remove(event.getPlayer().getUniqueId());
+
+                        Arrays.stream(HousingRegion.values()).forEach(region -> {
+                            removeHouseReference(event.getPlayer().getUniqueId(), region);
+                        });
+                    });
+
+                } catch (SQLException e) {
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "[PlayerHousing] Failed to save player houses for player " + event.getPlayer().getName(), e);
+                }
+            });
         }
 
-        System.out.println("Player " + event.getPlayer().getName() + " changed world to " + event.getPlayer().getWorld().getName());
+        Arrays.stream(HousingRegion.values()).forEach(region -> {
+            this.playerHouseMap.values().stream().map(a -> a.get(region)).filter(Objects::nonNull).forEach(i -> {
+                i.getCurrentVisitors().remove(event.getPlayer().getUniqueId());
+            });
+        });
+    }
 
-        String newWorld = event.getPlayer().getWorld().getName();
-        String oldWorld = event.getFrom().getName();
+    @EventHandler
+    public void onPlayerConnect(RunePlayerLoadedEvent event) {
+        Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
+            try {
+                List<HouseEntry> houses = this.repository.getPlayerHouses(event.getPlayer().getUUID());
+                HashMap<HousingRegion, HouseEntry> housesPerRegion = new HashMap<>();
 
-        if (newWorld.equals("world") && oldWorld.equals(WorldManager.WORLD_KEY)) {
-            System.out.println("Player " + event.getPlayer().getName() + " is leaving housing world, clearing safe location.");
-            player.setSafeLocation(null);
-            return;
+                for (HouseEntry house : houses) {
+                    housesPerRegion.put(house.region(), house);
+                }
+
+                if (housesPerRegion.isEmpty()) {
+                    return;
+                }
+
+                this.playerHouses.put(event.getPlayer().getUUID(), housesPerRegion);
+
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Loaded " + houses.size() + " player houses for player " + event.getPlayer().asBukkitPlayer().getName());
+            } catch (SQLException e) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "[PlayerHousing] Failed to load player houses for player " + event.getPlayer().asBukkitPlayer().getName(), e);
+            }
+        });
+    }
+
+    public void buyPlayerHouse(RunePlayer buyer, HousingRegion region, HouseTemplate template) {
+        HashMap<HousingRegion, HouseEntry> existing = this.playerHouses.get(buyer.getUUID());
+
+        if (existing != null && existing.containsKey(region)) {
+            throw new IllegalStateException("Player already owns a house in this region.");
         }
 
-        if (!newWorld.equals(WorldManager.WORLD_KEY)) {
-            System.out.println("Player " + event.getPlayer().getName() + " is not in housing world.");
-            return;
+        HouseEntry newEntry = new HouseEntry(
+                UUID.randomUUID(),
+                buyer.getUUID(),
+                region,
+                template,
+                new HashMap<>()
+        );
+
+        if (existing == null) {
+            existing = new HashMap<>();
+            this.playerHouses.put(buyer.getUUID(), existing);
         }
 
-        // Set safe location if not already set (fail-safe). It should be set when the player get's teleported to this world.
-        if (player.getSafeLocation() == null) {
-            System.out.println("Setting safe location for player " + event.getPlayer().getName());
-            player.setSafeLocation(event.getPlayer().getLocation());
-        }*/
+        existing.put(region, newEntry);
+
+        Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
+            try {
+                this.repository.savePlayerHouses(List.of(newEntry));
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Saved new player house (" + template.getTemplateName() + ") for player " + buyer.asBukkitPlayer().getName());
+            } catch (SQLException e) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "[PlayerHousing] Failed to save new player house for player " + buyer.asBukkitPlayer().getName(), e);
+            }
+        });
+    }
+
+    @Nullable
+    public HouseInstance getInstanceByUUID(UUID uuid) {
+        return this.uuidHouseInstanceMap.get(uuid);
+    }
+
+    public Map<Integer, Map<Integer, HouseInstance>> getGridMap() {
+        return this.gridMap;
+    }
+
+    public Map<UUID, HashMap<HousingRegion, HouseInstance>> getPlayerHouseMap() {
+        return this.playerHouseMap;
+    }
+
+    public Map<UUID, HouseInstance> getUuidHouseInstanceMap() {
+        return this.uuidHouseInstanceMap;
+    }
+
+    public Map<HouseTemplate, HouseInstance> getTemplatePreviewMap() {
+        return templatePreviewMap;
     }
 }

@@ -1,9 +1,7 @@
 package org.zuma.examplePlugin.domain.gui.impl.individual;
 
 import net.kyori.adventure.text.Component;
-import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
@@ -80,7 +78,7 @@ public class QuestsInventory extends PaginatedIndividualGUI {
             return;
         }
 
-        Integer menuValue = getMenuValue(clickedItem);
+        Integer menuValue = getMenuValueInt(clickedItem);
         if (menuValue == null) {
             return;
         }

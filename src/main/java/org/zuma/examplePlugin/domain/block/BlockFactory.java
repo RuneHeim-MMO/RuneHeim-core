@@ -24,9 +24,29 @@ public class BlockFactory {
             case ItemTrigger -> createItemTrigger(meta, json);
             case TeleportDoor -> createTeleportDoor(meta, json);
             case InvisibleMarker -> createInvisibleMarker(meta, json);
+            case CommandBlock -> createCommandBlock(meta, json);
             default -> throw new IllegalArgumentException("Unknown interactable block type: " + meta.type());
         };
     }
+
+    private CommandBlock createCommandBlock(AbstractInteractableBlockMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create command block " + meta.type() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+
+                CommandBlockMeta deserialized = new Gson().fromJson(json.meta(), CommandBlockMeta.class);
+                CommandBlock block = new CommandBlock(meta);
+                block.initializeBlock(deserialized.hologramContent(), deserialized.commands());
+
+                return block;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+    }
+
 
     private InvisibleMarker createInvisibleMarker(AbstractInteractableBlockMeta meta, @Nullable VersionedJson json) {
         if (json == null) {

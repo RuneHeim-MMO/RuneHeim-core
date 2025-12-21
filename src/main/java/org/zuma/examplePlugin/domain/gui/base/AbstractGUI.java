@@ -86,15 +86,28 @@ public abstract class AbstractGUI implements Listener {
 
     public void assignMenuValue(ItemStack item, int value) {
         ItemMeta meta = item.getItemMeta();
-        NamespacedKey key = new NamespacedKey(RuneQuestPlugin.getInstance(), "menu_button");
+        NamespacedKey key = new NamespacedKey(RuneQuestPlugin.getInstance(), "menu_button_int");
         meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, value);
         item.setItemMeta(meta);
     }
 
+    public void assignMenuValue(ItemStack item, String value) {
+        ItemMeta meta = item.getItemMeta();
+        NamespacedKey key = new NamespacedKey(RuneQuestPlugin.getInstance(), "menu_button_str");
+        meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, value);
+        item.setItemMeta(meta);
+    }
+
     @Nullable
-    public Integer getMenuValue(ItemStack item) {
+    public Integer getMenuValueInt(ItemStack item) {
         PersistentDataContainer container = item.getItemMeta().getPersistentDataContainer();
-        return container.get(new NamespacedKey(RuneQuestPlugin.getInstance(), "menu_button"), PersistentDataType.INTEGER);
+        return container.get(new NamespacedKey(RuneQuestPlugin.getInstance(), "menu_button_int"), PersistentDataType.INTEGER);
+    }
+
+    @Nullable
+    public String getMenuValueStr(ItemStack item) {
+        PersistentDataContainer container = item.getItemMeta().getPersistentDataContainer();
+        return container.get(new NamespacedKey(RuneQuestPlugin.getInstance(), "menu_button_str"), PersistentDataType.STRING);
     }
 
     public void setActionsLore(ItemStack item, String leftClickAction, @Nullable String shiftClickAction) {

@@ -7,21 +7,21 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitTask;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.domain.gui.base.IndividualGUI;
 import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.prayer.Prayer;
-import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 public class PrayerMenu extends IndividualGUI {
     private static final List<Integer> AVAILABLE_SLOTS = Arrays.asList(
@@ -49,7 +49,6 @@ public class PrayerMenu extends IndividualGUI {
             int slot = slotIterator.next();
 
             ItemStack button = new ItemStack(Material.AIR);
-
 
             boolean isActive = RuneQuestPlugin.getPrayerManager().getIsPrayerActive(player.getUUID(), prayer);
             List<Component> descriptionLines = new ArrayList<>();
@@ -97,7 +96,7 @@ public class PrayerMenu extends IndividualGUI {
             return;
         }
 
-        Integer menuValue = getMenuValue(currentItem);
+        Integer menuValue = getMenuValueInt(currentItem);
 
         if (menuValue == null) return;
 

@@ -193,7 +193,7 @@ public abstract class PaginatedStorageGUI extends IndividualGUI implements Seria
             return;
         }
 
-        Integer menuValue = getMenuValue(currentItem);
+        Integer menuValue = getMenuValueInt(currentItem);
 
         if (menuValue != null && menuValue == 10000) {
             nextPage();

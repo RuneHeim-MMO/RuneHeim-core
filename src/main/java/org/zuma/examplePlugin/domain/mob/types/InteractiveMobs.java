@@ -17,6 +17,9 @@ public class InteractiveMobs {
 
 
     public static void registerMobs(MobTypeRegistry registry) {
+        registry.register(MobType.DRAKKAR_CONCIERGE.getId(), () -> new DialogMob(Icon.HOUSE.get() + " Concierge", null,
+                MobBehaviors.VILLAGER_MAN_5.getBehavior(), "concierge_1", null, 0, Dialogs.drakkarConciergeDialog));
+
         registry.register(MobType.COLLECTOR_OF_DAYS.getId(), () -> new InventoryOpenerMob(Icon.TREASURE_CHEST.get() + " Collector of Days", EquipmentSet.COLLECTOR_OF_DAYS,
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "collector_of_days", null, InventoryId.DAILY_REWARDS.asInt(), 0)
                 .attachDialog(Dialogs.collectorOfDaysDialog));

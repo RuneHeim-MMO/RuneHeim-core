@@ -7,5 +7,6 @@ public enum InteractiveElType {
     SPAWN, // Player spawn point inside the house
     EXIT, // Block that will be replaced with a door
     SLOT, // Storage slot for interactive housing furniture
-    DECORATION_SLOT // Decoration slot for non interactive housing furniture
+    DECORATION_SLOT, // Decoration slot for non interactive housing furniture
+    CONTROL_PANEL // Control panel for managing house settings
 }

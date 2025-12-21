@@ -122,6 +122,12 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
         getBaseInventory();
     }
 
+    public void resetPage() {
+        page = 1;
+        recalculateIndexes();
+        getBaseInventory();
+    }
+
     public ItemStack nextPageIcon() {
         boolean enabled = page < maxPages;
         ItemStack icon = (enabled ? GUIControl.CHEVRON_RIGHT : GUIControl.CHEVRON_RIGHT_DISABLED).asItemstack(Component.text("Next page", NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
@@ -201,7 +207,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
             return;
         }
 
-        Integer menuValue = getMenuValue(currentItem);
+        Integer menuValue = getMenuValueInt(currentItem);
 
         if (menuValue != null && menuValue == -9000) {
             // Clicked on page count icon, do nothing

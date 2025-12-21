@@ -29,7 +29,8 @@ public enum ScriptedAction implements ScriptedStatement {
     CLEAR_INVENTORY("clear_inventory"),
     TRAVEL_SEQUENCE("travel_sequence", "duration_seconds", "world", "dest_x", "dest_y", "dest_z", "dest_yaw", "buffer_x", "buffer_y", "buffer_z", "buffer_yaw", "mode"),
     START_TOUR("start_tour", "tour_name"),
-    KILL_PLAYER("kill_player");
+    KILL_PLAYER("kill_player"),
+    TELEPORT_TO_HOUSE("teleport_to_house", "region");
 
     private final String trigger;
     private final List<String> argsTemplates;

@@ -4,6 +4,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.dialog.Dialog;
+import org.zuma.examplePlugin.domain.housing.HousingRegion;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -63,6 +64,10 @@ public class ScriptedConditionHandler {
                 }
                 case INVENTORY_CONTAINS -> {
                     result = PlayerUtils.hasItems(player, List.of(new ItemRecord(Integer.parseInt(args.get("item_id")), Integer.parseInt(args.get("amount")))));
+                }
+                case PLAYER_OWNS_HOUSE_IN -> {
+                    String region = args.get("region");
+                    result = RuneQuestPlugin.getHousingManager().doesPlayerOwnHouseInRegion(player.getUUID(), HousingRegion.valueOf(region));
                 }
                 case INVENTORY_CONTAINS_ANY_OF -> {
                     String[] itemIds = args.get("item_ids").split(",");

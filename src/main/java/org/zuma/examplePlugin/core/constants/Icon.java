@@ -40,6 +40,7 @@ public enum Icon {
     COIN_HANDFUL("①"),
     COIN_PILE("◬"),
     COIN_ONE("②"),
+    HOUSE("⌂"),
     COIN_TWO("③"),
     CRAFTING("҂"),
     CROSSED_SWORDS("⃇"),

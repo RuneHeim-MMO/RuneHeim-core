@@ -2271,6 +2271,12 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(328, SpawnZoneType.POINT, 10, 100,
                         new Location(Bukkit.getWorld("world"), 3239, 4, 3216)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.DRAKKAR_SMELTERY_WORKER, 1, 100)
+                ), false, null, null), 1)),
+
+                // Drakkar concierge
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(329, SpawnZoneType.POINT, 30, 100,
+                        new Location(Bukkit.getWorld("world"), 222, 72, -26.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.DRAKKAR_CONCIERGE, 1, 100)
                 ), false, null, null), 1))
 
 

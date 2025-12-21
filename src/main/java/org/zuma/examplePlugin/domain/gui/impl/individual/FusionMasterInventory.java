@@ -220,7 +220,7 @@ public class FusionMasterInventory extends IndividualGUI {
         if (currentItemOrig == null) return;
 
         ItemStack currentItem = currentItemOrig.clone();
-        Integer menuValue = getMenuValue(currentItem);
+        Integer menuValue = getMenuValueInt(currentItem);
 
         if (handleMenuClick(menuValue, player)) return;
 

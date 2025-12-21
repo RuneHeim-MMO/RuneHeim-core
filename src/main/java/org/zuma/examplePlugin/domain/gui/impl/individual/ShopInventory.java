@@ -317,7 +317,7 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
             return;
         }
 
-        Integer menuValue = getMenuValue(currentItem);
+        Integer menuValue = getMenuValueInt(currentItem);
 
         if (menuValue == null) {
 

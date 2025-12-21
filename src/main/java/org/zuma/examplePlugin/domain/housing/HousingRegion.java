@@ -6,17 +6,26 @@ import org.bukkit.Location;
 import java.util.Vector;
 
 public enum HousingRegion {
-    DRAKKAR(192, 73, -70);
+    DRAKKAR("Drakkar", 226, 77, -7, -180);
 
-    private final int exitX, exitY, exitZ;
+    private final String name;
+    private final int exitX, exitY, exitZ, yaw;
 
-    HousingRegion(int exitX, int exitY, int exitZ) {
+    HousingRegion(String name, int exitX, int exitY, int exitZ, int yaw) {
+        this.name = name;
         this.exitX = exitX;
         this.exitY = exitY;
         this.exitZ = exitZ;
+        this.yaw = yaw;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Location getExitLocation() {
-        return new Location(Bukkit.getWorld("world"), exitX, exitY, exitZ);
+        Location loc = new Location(Bukkit.getWorld("world"), exitX, exitY, exitZ);
+        loc.setYaw(yaw);
+        return loc;
     }
 }
