@@ -56,6 +56,10 @@ public class TeleportDoor extends QuestLockedInteractable implements MultiBlockH
             return;
         }
 
+        if(teleportLocation.getWorld() == null){
+            teleportLocation.setWorld(Bukkit.getWorld("world"));
+        }
+
         getLocation().getWorld().playSound(getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1f, 1f);
         setDoorOpen(true);
         inUseBy.add(player.getUUID());

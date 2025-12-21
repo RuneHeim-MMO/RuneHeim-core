@@ -88,7 +88,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new PrayerModule(),
                         new PartyModule(),
                         new ServerModifierModule(),
-                        new DailyRewardModule()
+                        new DailyRewardModule(),
+                        new PlayerHousingModule()
                 ), moduleContext);
     }
 

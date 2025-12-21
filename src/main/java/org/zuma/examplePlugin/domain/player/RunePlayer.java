@@ -339,6 +339,10 @@ public class RunePlayer implements CombatEntity {
         safeLocation = null;
     }
 
+    public void setSafeLocation(@Nullable Location safeLocation) {
+        this.safeLocation = safeLocation;
+    }
+
     @Nullable
     public Location getSafeLocation() {
         return safeLocation;

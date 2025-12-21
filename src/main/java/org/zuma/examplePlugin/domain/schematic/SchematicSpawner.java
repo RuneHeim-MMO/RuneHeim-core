@@ -17,8 +17,11 @@ import com.sk89q.worldedit.world.World;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.Rotatable;
 import org.bukkit.block.sign.Side;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
@@ -35,7 +38,7 @@ public class SchematicSpawner {
     private CuboidRegion lastPaste = null;
 
     @Nullable
-    public Clipboard pasteSchematic(Location location, File schematicFile, boolean ignoreAirBlocks) {
+    public Clipboard pasteSchematic(Location location, File schematicFile, boolean ignoreAirBlocks, boolean ignoreOriginalOrigin) {
         try {
             ClipboardFormat format = ClipboardFormats.findByFile(schematicFile);
             if (format == null) {
@@ -47,11 +50,18 @@ public class SchematicSpawner {
                 clipboard = reader.read();
             }
 
+            BlockVector3 origin;
+
+            if (ignoreOriginalOrigin) {
+                clipboard.setOrigin(clipboard.getRegion().getMinimumPoint());
+                origin = BlockVector3.at(location.getBlockX(), location.getBlockY(), location.getBlockZ());
+            } else {
+                origin = BlockVector3.at(location.getBlockX(),
+                        location.getBlockY() - 2, // Player offset
+                        location.getBlockZ());
+            }
+
             World weWorld = BukkitAdapter.adapt(location.getWorld());
-            BlockVector3 origin = BlockVector3.at(
-                    location.getBlockX(),
-                    location.getBlockY() - 2, // Player offset
-                    location.getBlockZ());
 
 
             try (EditSession editSession = WorldEdit.getInstance().newEditSession(weWorld)) {
@@ -89,14 +99,22 @@ public class SchematicSpawner {
         World weWorld = lastPaste.getWorld();
 
         lastPaste.forEach(pos -> {
-            Location loc = new Location(BukkitAdapter.asBukkitWorld(weWorld).getWorld(), pos.getX(), pos.getY() + 1, pos.getZ());
+            Location loc = new Location(BukkitAdapter.asBukkitWorld(weWorld).getWorld(), pos.x(), pos.y() + 1, pos.z());
             Block block = loc.getBlock();
+            BlockData data = block.getBlockData();
+            BlockFace facing = null;
 
-            if (block.getState() instanceof Sign sign && block.getBlockData() instanceof Directional directional) {
+            if (data instanceof Directional dir) {
+                facing = dir.getFacing();
+            } else if (data instanceof Rotatable rot) {
+                facing = rot.getRotation();
+            }
+
+            if (block.getState() instanceof Sign sign && facing != null) {
                 String firstLine = TextUtils.extractPlainText(sign.getSide(Side.FRONT).line(0));
                 try {
                     InteractiveElType type = InteractiveElType.valueOf(firstLine);
-                    elements.add(new InteractiveElement(block.getLocation(), directional.getFacing(), type));
+                    elements.add(new InteractiveElement(block.getLocation(), facing, type));
                     block.setType(Material.AIR); // Remove the sign block
                 } catch (IllegalArgumentException e) {
                     // Not a valid enum constant, ignore

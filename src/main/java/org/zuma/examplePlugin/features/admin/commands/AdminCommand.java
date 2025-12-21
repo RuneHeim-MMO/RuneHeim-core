@@ -17,13 +17,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
 import org.zuma.examplePlugin.core.permissions.Permission;
 import org.zuma.examplePlugin.core.utils.TypeUtils;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.combat.HitHandler;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
+import org.zuma.examplePlugin.domain.housing.world.WorldManager;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.impl.Mount;
 import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
@@ -36,7 +36,6 @@ import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 import org.zuma.examplePlugin.domain.player.inventory.ReservedSlot;
 import org.zuma.examplePlugin.domain.quest.Quest;
 import org.zuma.examplePlugin.domain.quest.QuestSerializer;
-import org.zuma.examplePlugin.domain.quest.constants.QuestId;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
@@ -374,9 +373,11 @@ public class AdminCommand implements BasicCommand {
             RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.DRAKKAR_GENERAL_STORE.getId());
         }
 
-        if (Objects.equals(args[0], "quest")) {
-            Quest q = RuneQuestPlugin.getQuestHandler().getRegistry().getQuestById(QuestId.WELCOME_TO_DRAKKAR_II.getId());
-            q.startForPlayer(runePlayer, false);
+        if (Objects.equals(args[0], "housing")) {
+            World w = Bukkit.getWorld(WorldManager.WORLD_KEY);
+            if (w != null) {
+                player.teleport(new Location(w, 0.5, 70, 0.5));
+            }
         }
 
         if (Objects.equals(args[0], "des")) {
