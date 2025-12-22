@@ -7,6 +7,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.config.ConfigManager;
+import org.zuma.examplePlugin.core.config.EnvironmentType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.housing.instance.HouseInstance;
 import org.zuma.examplePlugin.domain.housing.instance.HouseInstanceCreator;
@@ -76,12 +78,12 @@ public class HousingManager implements Listener {
             return;
         }
 
-        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Auto-saving all player houses...");
-
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
             try {
                 this.repository.savePlayerHouses(housesToSave);
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Auto-saved " + housesToSave.size() + " player houses successfully.");
+                if (ConfigManager.environment.equals(EnvironmentType.DEVELOPMENT)) {
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Auto-saved " + housesToSave.size() + " player houses successfully.");
+                }
             } catch (SQLException e) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "[PlayerHousing] Failed to auto-save player houses!", e);
             }

@@ -24,6 +24,7 @@ import org.zuma.examplePlugin.events.territory.TerritoryEnterEvent;
 import javax.annotation.Nullable;
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class TerritoryHandler {
     private static final long AMBIENT_SOUND_COOLDOWN_SEC = 30;
@@ -37,7 +38,7 @@ public class TerritoryHandler {
 
     public TerritoryHandler(TerritoryRepository repository) {
         this.repository = repository;
-        this.territoryList = new ArrayList<>();
+        this.territoryList = new CopyOnWriteArrayList<>();
         this.lastPlayerTerritory = new HashMap<>();
         this.lastPlayerLocation = new HashMap<>();
         this.ambientMusicHandler = new AmbientMusicHandler();
@@ -198,7 +199,7 @@ public class TerritoryHandler {
             this.ambientMusicHandler.startPlayerMusicLoop(territory.getAmbientMusic(), runePlayer);
         }
 
-        boolean isFirstDiscovery = territory.isTemporary() ? !runePlayer.getDiscoveredTerritoryIds().contains(territory.getId()) : false;
+        boolean isFirstDiscovery = !territory.isTemporary() && !runePlayer.getDiscoveredTerritoryIds().contains(territory.getId());
         TerritoryEnterEvent event = new TerritoryEnterEvent(runePlayer, territory, isFirstDiscovery);
         Bukkit.getServer().getPluginManager().callEvent(event);
 

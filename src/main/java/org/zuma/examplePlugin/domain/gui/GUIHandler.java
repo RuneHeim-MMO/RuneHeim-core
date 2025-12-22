@@ -137,7 +137,7 @@ public class GUIHandler {
 
 
         this.registry.register(InventoryId.HOUSE_SETTINGS.asInt(), () -> new HouseSettings(GUIOverlay.HOUSE_SETTINGS_OVERLAY.asGlyph() + "§f" + Icon.HOUSE.get() + "§f House Settings", InventoryId.HOUSE_SETTINGS.asInt()));
-        this.registry.register(InventoryId.DRAKKAR_HOUSE_DISCOVERER.asInt(), () -> new HouseDiscoverer(GUIOverlay.HOUSES_DISCOVERER_OVERLAY.asGlyph() + "§f" + Icon.HOUSE.get() + "§f " + HousingRegion.DRAKKAR.getName() + " houses", InventoryId.PLAYER_MODIFIERS.asInt(), HousingRegion.DRAKKAR));
+        this.registry.register(InventoryId.DRAKKAR_HOUSE_DISCOVERER.asInt(), () -> new HouseDiscoverer(GUIOverlay.HOUSES_DISCOVERER_OVERLAY.asGlyph() + "§f" + Icon.HOUSE.get() + "§f " + HousingRegion.DRAKKAR.getName() + " houses", InventoryId.DRAKKAR_HOUSE_DISCOVERER.asInt(), HousingRegion.DRAKKAR));
 
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");

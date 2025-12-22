@@ -126,7 +126,7 @@ public class HouseCommand implements BasicCommand {
         }
 
 
-        bukkitPlayer.sendMessage(Component.text("Usage: /house <invite | uninvite | kick | kickall | public | private>", Color.ERROR.asColor()));
+        bukkitPlayer.sendMessage(Component.text("Usage: /house <invite | revoke | kick | kickall | public | private>", Color.ERROR.asColor()));
 
 
     }
@@ -168,7 +168,7 @@ public class HouseCommand implements BasicCommand {
 
         // /house uninvite <tab>
         if (args.length == 2 && args[0].equalsIgnoreCase("revoke")) {
-            return house.getInvitedPlayers().stream().map(Bukkit::getPlayer).filter(Objects::nonNull).map(Player::getName).toList();
+            return house.getInvitedPlayers().stream().map(Bukkit::getPlayer).filter(Objects::nonNull).map(Player::getName)
         }
 
         // /house kick <tab>

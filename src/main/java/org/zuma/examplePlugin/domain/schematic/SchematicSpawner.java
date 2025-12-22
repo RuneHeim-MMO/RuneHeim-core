@@ -38,7 +38,7 @@ public class SchematicSpawner {
     private CuboidRegion lastPaste = null;
 
     @Nullable
-    public Clipboard pasteSchematic(Location location, File schematicFile, boolean ignoreAirBlocks, boolean ignoreOriginalOrigin) {
+    public Clipboard pasteSchematic(Location location, File schematicFile, boolean ignoreAirBlocks, boolean resetOrigin) {
         try {
             ClipboardFormat format = ClipboardFormats.findByFile(schematicFile);
             if (format == null) {
@@ -52,7 +52,7 @@ public class SchematicSpawner {
 
             BlockVector3 origin;
 
-            if (ignoreOriginalOrigin) {
+            if (resetOrigin) {
                 clipboard.setOrigin(clipboard.getRegion().getMinimumPoint());
                 origin = BlockVector3.at(location.getBlockX(), location.getBlockY(), location.getBlockZ());
             } else {
