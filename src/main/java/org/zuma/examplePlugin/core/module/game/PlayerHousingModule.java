@@ -19,6 +19,7 @@ import java.util.List;
 
 public class PlayerHousingModule implements PluginModule {
     WorldManager manager;
+    HousingManager housingManager;
 
     @Override
     public List<Class<?>> dependencies() {
@@ -31,7 +32,7 @@ public class PlayerHousingModule implements PluginModule {
         manager = new WorldManager();
         manager.init();
 
-        HousingManager housingManager = new HousingManager(manager, new HousingRepository(context.get(HikariPool.class)));
+        housingManager = new HousingManager(manager, new HousingRepository(context.get(HikariPool.class)));
         housingManager.init();
 
         plugin.getServer().getPluginManager().registerEvents(housingManager, plugin);
@@ -43,6 +44,9 @@ public class PlayerHousingModule implements PluginModule {
     @Override
     public void stop(Plugin plugin, ModuleContext context) {
         manager.cleanup();
+        if (housingManager != null) {
+            housingManager.onDisable();
+        }
     }
 
     @Override

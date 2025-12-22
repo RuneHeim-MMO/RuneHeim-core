@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.housing.template;
 
 import org.bukkit.Location;
+import org.zuma.examplePlugin.domain.housing.instance.HouseInstance;
 import org.zuma.examplePlugin.domain.housing.records.HouseSlot;
 
 import java.util.HashMap;

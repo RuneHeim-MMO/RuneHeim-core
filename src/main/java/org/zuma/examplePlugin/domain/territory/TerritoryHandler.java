@@ -199,7 +199,14 @@ public class TerritoryHandler {
             this.ambientMusicHandler.startPlayerMusicLoop(territory.getAmbientMusic(), runePlayer);
         }
 
-        boolean isFirstDiscovery = !territory.isTemporary() && !runePlayer.getDiscoveredTerritoryIds().contains(territory.getId());
+        boolean isFirstDiscovery;
+
+        if (territory.isTemporary()) {
+            isFirstDiscovery = false;
+        } else {
+            isFirstDiscovery = !runePlayer.getDiscoveredTerritoryIds().contains(territory.getId());
+        }
+
         TerritoryEnterEvent event = new TerritoryEnterEvent(runePlayer, territory, isFirstDiscovery);
         Bukkit.getServer().getPluginManager().callEvent(event);
 

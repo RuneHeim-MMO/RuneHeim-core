@@ -67,7 +67,7 @@ public class ScriptedConditionHandler {
                 }
                 case PLAYER_OWNS_HOUSE_IN -> {
                     String region = args.get("region");
-                    result = RuneQuestPlugin.getHousingManager().doesPlayerOwnHouseInRegion(player.getUUID(), HousingRegion.valueOf(region));
+                    result = RuneQuestPlugin.getHousingManager().playHasHouseInRegion(player.getUUID(), HousingRegion.valueOf(region));
                 }
                 case INVENTORY_CONTAINS_ANY_OF -> {
                     String[] itemIds = args.get("item_ids").split(",");

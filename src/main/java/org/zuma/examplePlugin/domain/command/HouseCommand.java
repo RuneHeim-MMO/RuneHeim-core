@@ -168,7 +168,7 @@ public class HouseCommand implements BasicCommand {
 
         // /house uninvite <tab>
         if (args.length == 2 && args[0].equalsIgnoreCase("revoke")) {
-            return house.getInvitedPlayers().stream().map(Bukkit::getPlayer).filter(Objects::nonNull).map(Player::getName)
+            return house.getInvitedPlayers().stream().map(Bukkit::getPlayer).filter(Objects::nonNull).map(Player::getName).toList();
         }
 
         // /house kick <tab>

@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.gui.impl.individual;
+package org.zuma.examplePlugin.domain.gui.impl.individual.house;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -52,7 +52,7 @@ public class HouseDiscoverer extends PaginatedIndividualGUI {
     private void updateInventory(RunePlayer player) {
         List<HouseInstance> houses = RuneQuestPlugin.getHousingManager().getAllRegionHouses(region);
 
-        if (RuneQuestPlugin.getHousingManager().doesPlayerOwnHouseInRegion(player.getUUID(), region)) {
+        if (RuneQuestPlugin.getHousingManager().playHasHouseInRegion(player.getUUID(), region)) {
             HashMap<Integer, ItemStack> overrides = new HashMap<>();
             ItemStack stack = GUIControl.HOUSE_BUTTON.asItemstack(Component.text("Teleport to Your House"));
             assignMenuValue(stack, "teleport-own-house");

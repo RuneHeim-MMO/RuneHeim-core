@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.gui.impl.individual;
+package org.zuma.examplePlugin.domain.gui.impl.individual.house;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -15,7 +15,6 @@ import org.zuma.examplePlugin.domain.gui.base.PaginatedIndividualGUI;
 import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
 import org.zuma.examplePlugin.domain.head.HeadGenerator;
 import org.zuma.examplePlugin.domain.housing.instance.HouseInstance;
-import org.zuma.examplePlugin.domain.housing.HousingRegion;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.housing.HouseSettingsUpdateEvent;

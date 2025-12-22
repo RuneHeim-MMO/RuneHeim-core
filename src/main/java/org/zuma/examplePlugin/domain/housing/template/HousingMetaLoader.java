@@ -47,8 +47,8 @@ public class HousingMetaLoader {
                         .orElseThrow(() -> new IllegalStateException("Template " + template.name() + " is missing spawn point interactive element"));
 
                 Location relativeSpawnPoint = getRelativeSpawnPoint(spawnPoint, testInstance);
-
                 TemplateMeta meta = getTemplateMeta(elements, relativeSpawnPoint);
+                testInstance.setSpawnPoint(relativeSpawnPoint);
 
                 this.templateMetaMap.put(template, meta);
                 manager.getTemplatePreviewMap().put(template, testInstance);
@@ -97,7 +97,11 @@ public class HousingMetaLoader {
             default -> relativeSpawnPoint.setYaw(0);
         }
 
+        System.out.println("Before adjustment: " + relativeSpawnPoint);
+
         relativeSpawnPoint.subtract(instance.getGridX() * HousingManager.GRID_SIZE, 0, instance.getGridZ() * HousingManager.GRID_SIZE);
+
+        System.out.println("After adjustment: " + relativeSpawnPoint);
         return relativeSpawnPoint;
     }
 

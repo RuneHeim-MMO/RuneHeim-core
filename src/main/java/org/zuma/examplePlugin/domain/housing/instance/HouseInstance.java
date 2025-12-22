@@ -25,13 +25,13 @@ public class HouseInstance {
     private final List<InteractiveElement> interactiveElements;
     private final List<Location> interactableLocations;
     private final int gridX, gridZ;
-    private final Location spawnPoint;
     private final HouseTemplate template;
 
     // Instance based configuration for a player's house
     private boolean openToPublic;
     private final List<UUID> invitedPlayers;
     private final List<UUID> currentVisitors;
+    private Location spawnPoint;
 
     public HouseInstance(UUID ownerUUID, UUID instanceUUID, String ownerName, int x, int z, List<InteractiveElement> interactiveElements, Location spawnPoint, HouseTemplate template) {
         this.ownerUUID = ownerUUID;
@@ -67,6 +67,10 @@ public class HouseInstance {
 
     public Location getSpawnPoint() {
         return spawnPoint;
+    }
+
+    public void setSpawnPoint(Location spawnPoint) {
+        this.spawnPoint = spawnPoint;
     }
 
     public String getOwnerName() {

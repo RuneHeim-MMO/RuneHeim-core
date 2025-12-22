@@ -54,7 +54,7 @@ public class HousingManager implements Listener {
 
     public void init() {
         this.houseMetaHandler.loadTemplatesMeta();
-        Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::autoSaveAllHouses, AUTOSAVE_INTERVAL_MINUTES * 60 * 20L, AUTOSAVE_INTERVAL_MINUTES * 60 * 20L);
+        Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), () -> saveAllHouses(false), AUTOSAVE_INTERVAL_MINUTES * 60 * 20L, AUTOSAVE_INTERVAL_MINUTES * 60 * 20L);
     }
 
     public HouseInstanceCreator getInstanceCreator() {
@@ -65,7 +65,11 @@ public class HousingManager implements Listener {
         return this.houseMetaHandler.getTemplateMetaMap().get(template);
     }
 
-    private void autoSaveAllHouses() {
+    public void onDisable() {
+        saveAllHouses(true);
+    }
+
+    private void saveAllHouses(boolean sync) {
         List<HouseEntry> housesToSave = new ArrayList<>();
 
         this.playerHouses.forEach((playerUUID, housesPerRegion) -> {
@@ -75,6 +79,18 @@ public class HousingManager implements Listener {
         });
 
         if (housesToSave.isEmpty()) {
+            return;
+        }
+
+        if (sync) {
+            try {
+                this.repository.savePlayerHouses(housesToSave);
+                if (ConfigManager.environment.equals(EnvironmentType.DEVELOPMENT)) {
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Saved " + housesToSave.size() + " player houses successfully.");
+                }
+            } catch (SQLException e) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "[PlayerHousing] Failed to save player houses!", e);
+            }
             return;
         }
 
@@ -122,7 +138,7 @@ public class HousingManager implements Listener {
         instance.teleportToHouse(player);
     }
 
-    public boolean doesPlayerOwnHouseInRegion(UUID ownerUUID, HousingRegion region) {
+    public boolean playHasHouseInRegion(UUID ownerUUID, HousingRegion region) {
         // Check for match from saved houses
         HashMap<HousingRegion, HouseEntry> housesPerRegion = playerHouses.get(ownerUUID);
 
@@ -253,6 +269,10 @@ public class HousingManager implements Listener {
             this.playerHouseMap.values().stream().map(a -> a.get(region)).filter(Objects::nonNull).forEach(i -> {
                 i.getCurrentVisitors().remove(event.getPlayer().getUniqueId());
             });
+
+            this.templatePreviewMap.values().forEach(i -> {
+                i.getCurrentVisitors().remove(event.getPlayer().getUniqueId());
+            });
         });
     }
 
@@ -280,11 +300,19 @@ public class HousingManager implements Listener {
         });
     }
 
-    public void buyPlayerHouse(RunePlayer buyer, HousingRegion region, HouseTemplate template) {
+    public void purchaseHouse(RunePlayer buyer, HousingRegion region, HouseTemplate template) {
         HashMap<HousingRegion, HouseEntry> existing = this.playerHouses.get(buyer.getUUID());
 
         if (existing != null && existing.containsKey(region)) {
             throw new IllegalStateException("Player already owns a house in this region.");
+        }
+
+        if (!template.getRegion().equals(region)) {
+            throw new IllegalArgumentException("House template does not belong to the specified region.");
+        }
+
+        if (buyer.getPouchCoins() < template.getPrice()) {
+            throw new IllegalStateException("You don't have enough coins to purchase this house.");
         }
 
         HouseEntry newEntry = new HouseEntry(
@@ -300,6 +328,7 @@ public class HousingManager implements Listener {
             this.playerHouses.put(buyer.getUUID(), existing);
         }
 
+        buyer.setPouchCoins(buyer.getPouchCoins() - template.getPrice(), false);
         existing.put(region, newEntry);
 
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {

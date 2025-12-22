@@ -156,7 +156,7 @@ public class HouseInstanceCreator {
         handleElementReassignation(elements, ownerUUID, instance);
         String territoryName = initialMetaSpawn ? template.getTemplateName() : ownerName + "'s House";
 
-        RuneQuestPlugin.getTerritoryHandler().getTerritoryList().add(new Territory("house_" + ownerUUID.toString(),
+        Territory houseTerritory = new Territory("house_" + ownerUUID.toString(),
                 new Location(worldManager.getHousingWorld(), (gridX * HousingManager.GRID_SIZE) + HousingManager.GRID_SIZE / 2, 64, (gridZ * HousingManager.GRID_SIZE) + HousingManager.GRID_SIZE / 2),
                 instance.getSpawnPoint(),
                 HousingManager.GRID_SIZE / 2,
@@ -166,7 +166,10 @@ public class HouseInstanceCreator {
                 false,
                 false,
                 false,
-                256, true));
+                256, true);
+
+        houseTerritory.setTemporary(true);
+        RuneQuestPlugin.getTerritoryHandler().getTerritoryList().add(houseTerritory);
 
         if (!initialMetaSpawn) {
             populateHouse(instance, owner, furnitureEntries);

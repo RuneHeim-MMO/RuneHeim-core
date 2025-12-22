@@ -64,7 +64,7 @@ public enum InventoryId {
 
     DRAKKAR_HOUSE_DISCOVERER(54),
     HOUSE_SETTINGS(55),
-    DRAKKAR_BUY_HOUSE(56); // TODO
+    DRAKKAR_BUY_HOUSE(56);
 
 
     private final int id;

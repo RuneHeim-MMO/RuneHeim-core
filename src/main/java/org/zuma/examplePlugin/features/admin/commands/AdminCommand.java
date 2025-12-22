@@ -375,10 +375,6 @@ public class AdminCommand implements BasicCommand {
             RuneQuestPlugin.getMobRegistry().spawnMob(UUID.randomUUID(), player.getLocation(), MobType.DRAKKAR_GENERAL_STORE.getId());
         }
 
-        if (Objects.equals(args[0], "buydrakkar")) {
-            RuneQuestPlugin.getHousingManager().buyPlayerHouse(runePlayer, HousingRegion.DRAKKAR, HouseTemplate.DRAKKAR_STARTER);
-        }
-
         if (Objects.equals(args[0], "house")) {
             RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.DRAKKAR_HOUSE_DISCOVERER.asInt(), runePlayer, null);
         }
