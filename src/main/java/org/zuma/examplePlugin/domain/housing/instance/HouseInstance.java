@@ -1,5 +1,7 @@
 package org.zuma.examplePlugin.domain.housing.instance;
 
+import eu.decentsoftware.holograms.api.DHAPI;
+import eu.decentsoftware.holograms.api.holograms.Hologram;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -8,27 +10,27 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.housing.records.HouseFurnitureEntry;
 import org.zuma.examplePlugin.domain.housing.HousingManager;
+import org.zuma.examplePlugin.domain.housing.records.HouseSlot;
 import org.zuma.examplePlugin.domain.housing.template.HouseTemplate;
+import org.zuma.examplePlugin.domain.housing.template.TemplateMeta;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.schematic.InteractiveElement;
 import org.zuma.examplePlugin.events.housing.HouseSettingsUpdateEvent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class HouseInstance {
     private final UUID ownerUUID, instanceUUID;
     private final String ownerName;
     private final List<InteractiveElement> interactiveElements;
     private final List<Location> interactableLocations;
+    private final List<Hologram> editHolograms = new ArrayList<>();
     private final int gridX, gridZ;
     private final HouseTemplate template;
 
     // Instance based configuration for a player's house
-    private boolean openToPublic;
+    private boolean openToPublic, editMode;
     private final List<UUID> invitedPlayers;
     private final List<UUID> currentVisitors;
     private Location spawnPoint;
@@ -47,6 +49,7 @@ public class HouseInstance {
         this.invitedPlayers = new ArrayList<>();
         this.currentVisitors = new ArrayList<>();
         this.interactableLocations = new ArrayList<>();
+        this.editMode = false;
     }
 
     public UUID getOwnerUUID() {
@@ -59,6 +62,10 @@ public class HouseInstance {
 
     public int getGridZ() {
         return gridZ;
+    }
+
+    public HashMap<Integer, HouseFurnitureEntry> getFurnitureMap() {
+        return RuneQuestPlugin.getHousingManager().getInstanceFurniture(this.instanceUUID);
     }
 
     public List<InteractiveElement> getInteractiveElements() {
@@ -262,10 +269,57 @@ public class HouseInstance {
             }
         }
 
+        for (Hologram hologram : editHolograms) {
+            hologram.delete();
+        }
+
         interactiveElements.clear();
         interactableLocations.clear();
         invitedPlayers.clear();
 
         Bukkit.getServer().getPluginManager().callEvent(new HouseSettingsUpdateEvent(this));
+    }
+
+    public void setEditMode(boolean editMode) {
+        Player owner = Bukkit.getPlayer(this.ownerUUID);
+
+        if (owner == null) {
+            return;
+        }
+
+        this.editMode = editMode;
+
+        if (!editMode) {
+            for (Hologram hologram : editHolograms) {
+                hologram.delete();
+            }
+            editHolograms.clear();
+        }
+
+        if (editMode) {
+            TemplateMeta meta = RuneQuestPlugin.getHousingManager().getTemplateMeta(this.getTemplate());
+            HashMap<Integer, HouseFurnitureEntry> furnitureMap = RuneQuestPlugin.getHousingManager().getInstanceFurniture(this.instanceUUID);
+
+
+            for (Map.Entry<Integer, HouseSlot> slot : meta.slots().entrySet()) {
+                int slotIndex = slot.getKey();
+                HouseSlot houseSlot = slot.getValue();
+                HouseFurnitureEntry occupiedBy = furnitureMap.get(slotIndex);
+
+                List<String> hologramLines = occupiedBy == null ?
+                        List.of(houseSlot.type().getDisplayName() + " Slot]", "Click with hammer to build") :
+                        List.of(occupiedBy.itemId() + " replace w title", "Click with hammer to edit");
+
+                Hologram hologram = DHAPI.createHologram(this.ownerUUID + "slot_" + slotIndex, houseSlot.location().clone().add(0.5, 1.5, 0.5), hologramLines);
+                hologram.setDefaultVisibleState(false);
+                hologram.setShowPlayer(owner);
+
+                editHolograms.add(hologram);
+            }
+        }
+    }
+
+    public boolean isEditMode() {
+        return editMode;
     }
 }

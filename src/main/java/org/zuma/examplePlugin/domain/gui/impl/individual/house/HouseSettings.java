@@ -116,6 +116,16 @@ public class HouseSettings extends PaginatedIndividualGUI {
             overrides.put(38, toggleButton);
         }
 
+        if(houseInstance.isEditMode()){
+            ItemStack editModeButton = GUIControl.VISIBILITY.asItemstack(Component.text("Edit Mode: ON", NamedTextColor.GREEN), List.of(Component.text("You can edit your house.", Color.ITEM_LORE_DESCRIPTION.asColor())));
+            overrides.put(39, editModeButton);
+            assignMenuValue(editModeButton, "toggle-edit-mode");
+        } else {
+            ItemStack editModeButton = GUIControl.VISIBILITY.asItemstack(Component.text("Edit Mode: OFF", NamedTextColor.RED), List.of(Component.text("You cannot edit your house.", Color.ITEM_LORE_DESCRIPTION.asColor())));
+            overrides.put(39, editModeButton);
+            assignMenuValue(editModeButton, "toggle-edit-mode");
+        }
+
         setOverrideItems(overrides, true);
         setContent(content, true);
         getBaseInventory();
@@ -177,6 +187,12 @@ public class HouseSettings extends PaginatedIndividualGUI {
 
         if (menuValue.equals("toggle-public-status")) {
             houseInstance.setOpenToPublic(!houseInstance.isOpenToPublic());
+            updateInventory();
+            return;
+        }
+
+        if(menuValue.equals("toggle-edit-mode")){
+            houseInstance.setEditMode(!houseInstance.isEditMode());
             updateInventory();
             return;
         }

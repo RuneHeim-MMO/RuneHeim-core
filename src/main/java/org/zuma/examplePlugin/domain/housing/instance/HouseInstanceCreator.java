@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.housing.instance;
 import org.bukkit.Location;
 import org.bukkit.block.data.type.Door;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
 import org.zuma.examplePlugin.domain.block.impl.CommandBlock;
@@ -102,7 +103,7 @@ public class HouseInstanceCreator {
                     }
 
                     CommandBlock block = new CommandBlock(new AbstractInteractableBlockMeta(200001 + instance.getGridX(), BlockType.CommandBlock, el.face(), location, side));
-                    block.initializeBlock(List.of("[Control Panel]"), List.of("house"));
+                    block.initializeBlock(List.of(Icon.CONTROL_PANEL.get() + " Control Panel"), List.of("house"));
                     instance.getInteractableLocations().add(location);
 
                     RuneQuestPlugin.getBlockManager().registerBlock(block);

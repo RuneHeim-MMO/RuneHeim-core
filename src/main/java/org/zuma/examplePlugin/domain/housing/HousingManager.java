@@ -14,6 +14,7 @@ import org.zuma.examplePlugin.domain.housing.instance.HouseInstance;
 import org.zuma.examplePlugin.domain.housing.instance.HouseInstanceCreator;
 import org.zuma.examplePlugin.domain.housing.persistence.HousingRepository;
 import org.zuma.examplePlugin.domain.housing.records.HouseEntry;
+import org.zuma.examplePlugin.domain.housing.records.HouseFurnitureEntry;
 import org.zuma.examplePlugin.domain.housing.template.HouseTemplate;
 import org.zuma.examplePlugin.domain.housing.template.HousingMetaLoader;
 import org.zuma.examplePlugin.domain.housing.template.TemplateMeta;
@@ -339,6 +340,18 @@ public class HousingManager implements Listener {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "[PlayerHousing] Failed to save new player house for player " + buyer.asBukkitPlayer().getName(), e);
             }
         });
+    }
+
+    public HashMap<Integer, HouseFurnitureEntry> getInstanceFurniture(UUID instanceUUID) {
+        for (HashMap<HousingRegion, HouseEntry> housesPerRegion : this.playerHouses.values()) {
+            for (HouseEntry houseEntry : housesPerRegion.values()) {
+                if (houseEntry.uuid().equals(instanceUUID)) {
+                    return houseEntry.furniture();
+                }
+            }
+        }
+
+        return new HashMap<>();
     }
 
     @Nullable

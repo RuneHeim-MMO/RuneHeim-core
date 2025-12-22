@@ -88,6 +88,9 @@ public enum Icon {
     PARTY("⾱"),
     STORAGE("⾆"),
     EXPLOSION("ⵋ"),
+    GEAR("⛚"),
+    CONTROL_PANEL("✰"),
+    FLOWER("⋕"),
 
     SKULL_OPEN_MOUTH("₮"),
     SKULL_CLOSED_MOUTH("⺳"),
