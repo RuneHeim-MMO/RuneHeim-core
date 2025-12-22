@@ -41,13 +41,12 @@ public class HousingMetaLoader {
                     }
                 }
 
-                InteractiveElement spawnPoint = elements.stream()
+                elements.stream()
                         .filter(el -> el.type() == InteractiveElType.SPAWN)
                         .findFirst()
                         .orElseThrow(() -> new IllegalStateException("Template " + template.name() + " is missing spawn point interactive element"));
 
-
-                TemplateMeta meta = getTemplateMeta(elements);
+                TemplateMeta meta = getTemplateMeta(testInstance.getGridX() * HousingManager.GRID_SIZE, testInstance.getGridZ() * HousingManager.GRID_SIZE, elements);
 
                 this.templateMetaMap.put(template, meta);
                 manager.getTemplatePreviewMap().put(template, testInstance);
@@ -61,20 +60,23 @@ public class HousingMetaLoader {
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Loaded " + this.templateMetaMap.size() + " house templates.");
     }
 
-    private static @NotNull TemplateMeta getTemplateMeta(List<InteractiveElement> elements) {
+    private static @NotNull TemplateMeta getTemplateMeta(int pasteX, int pasteZ, List<InteractiveElement> elements) {
         int index = 0;
         int interactiveSlots = 0;
         int decorationSlots = 0;
         HashMap<Integer, HouseSlot> slotsMap = new HashMap<>();
 
         for (InteractiveElement el : elements) {
+            Location absoluteLocation = el.location();
+            absoluteLocation.subtract(pasteX, 0, pasteZ);
+
             if (el.type() == InteractiveElType.SLOT) {
-                HouseSlot slot = new HouseSlot(el.location(), HouseSlot.HouseSlotType.INTERACTIVE);
+                HouseSlot slot = new HouseSlot(absoluteLocation, HouseSlot.HouseSlotType.INTERACTIVE);
                 slotsMap.put(index, slot);
                 interactiveSlots++;
                 index++;
             } else if (el.type() == InteractiveElType.DECORATION_SLOT) {
-                HouseSlot slot = new HouseSlot(el.location(), HouseSlot.HouseSlotType.DECORATION);
+                HouseSlot slot = new HouseSlot(absoluteLocation, HouseSlot.HouseSlotType.DECORATION);
                 slotsMap.put(index, slot);
                 decorationSlots++;
                 index++;

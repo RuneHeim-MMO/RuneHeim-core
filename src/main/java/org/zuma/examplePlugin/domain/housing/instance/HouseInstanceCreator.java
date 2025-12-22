@@ -160,7 +160,7 @@ public class HouseInstanceCreator {
             default -> spawnPoint.setYaw(0);
         }
 
-        HouseInstance instance = new HouseInstance(ownerUUID, instanceUUID, ownerName, gridX * HousingManager.GRID_SIZE, gridZ * HousingManager.GRID_SIZE, elements, spawnPoint, template);
+        HouseInstance instance = new HouseInstance(ownerUUID, instanceUUID, ownerName, gridX, gridZ, elements, spawnPoint, template);
         manager.getGridMap().computeIfAbsent(gridX, k -> new HashMap<>()).put(gridZ, instance);
         totalInstances++;
 
@@ -213,7 +213,7 @@ public class HouseInstanceCreator {
             return;
         }
 
-        instance.getInteractableLocations().addAll(meta.slots().values().stream().map(HouseSlot::location).toList());
+        instance.getInteractableLocations().addAll(meta.slots().values().stream().map(HouseSlot::absoluteLocation).toList());
 
         furnitureEntries.forEach((id, entry) -> {
             try {
@@ -224,13 +224,8 @@ public class HouseInstanceCreator {
                     return;
                 }
 
-                System.out.println("Before location adjustment: " + slot.location());
-
-                Location location = HousingManager.getLocationInHouse(slot.location(), instance);
+                Location location = HousingManager.getLocationInHouse(slot.absoluteLocation(), instance);
                 AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(entry.itemId());
-
-                System.out.println("After location adjustment: " + location);
-
 
                 if (!(type instanceof FurnitureItem furnitureItem)) {
                     RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot place furniture item ID " + id + " in house instance " + instance.getInstanceUUID() + " because item ID " + entry.itemId() + " is not a furniture item.");

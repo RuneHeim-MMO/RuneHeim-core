@@ -29,12 +29,12 @@ public class HouseInstance {
     private final List<Hologram> editHolograms = new ArrayList<>();
     private final int gridX, gridZ;
     private final HouseTemplate template;
+    private final Location spawnPoint;
 
     // Instance based configuration for a player's house
     private boolean openToPublic, editMode;
     private final List<UUID> invitedPlayers;
     private final List<UUID> currentVisitors;
-    private Location spawnPoint;
 
     public HouseInstance(UUID ownerUUID, UUID instanceUUID, String ownerName, int gridX, int gridZ, List<InteractiveElement> interactiveElements, Location spawnPoint, HouseTemplate template) {
         this.ownerUUID = ownerUUID;
@@ -297,11 +297,12 @@ public class HouseInstance {
             TemplateMeta meta = RuneQuestPlugin.getHousingManager().getTemplateMeta(this.getTemplate());
             HashMap<Integer, HouseFurnitureEntry> furnitureMap = RuneQuestPlugin.getHousingManager().getInstanceFurniture(this.instanceUUID);
 
-
             for (Map.Entry<Integer, HouseSlot> slot : meta.slots().entrySet()) {
                 int slotIndex = slot.getKey();
                 HouseSlot houseSlot = slot.getValue();
-                Location slotLocation = HousingManager.getLocationInHouse(houseSlot.location(), this);
+
+                Location slotLocation = HousingManager.getLocationInHouse(houseSlot.absoluteLocation(), this);
+
                 HouseFurnitureEntry occupiedBy = furnitureMap.get(slotIndex);
                 AbstractItemType type = occupiedBy != null ? RuneQuestPlugin.getItemRegistry().getType(occupiedBy.itemId()) : null;
 
