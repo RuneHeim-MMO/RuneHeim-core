@@ -313,7 +313,7 @@ public class HouseInstance {
                         List.of(houseSlot.type().getDisplayName() + " Slot", "Click with hammer to build") :
                         List.of(type != null ? type.displayName : "[UNKNOWN]", "Click with hammer to edit");
 
-                Hologram hologram = DHAPI.createHologram(this.ownerUUID + "slot_" + slotIndex, slotLocation.clone().add(0.5, 1.5, 0.5), hologramLines);
+                Hologram hologram = DHAPI.createHologram(this.ownerUUID + "slot_" + slotIndex, slotLocation.clone().add(0.5, occupiedBy == null ? 0.5 : 1.5, 0.5), hologramLines);
                 hologram.setDefaultVisibleState(false);
                 hologram.setShowPlayer(owner);
 

@@ -216,12 +216,13 @@ public class HouseInstanceCreator {
                     return;
                 }
 
-                System.out.println("Before location adjustment: " + slot.location());
+                 System.out.println("Before location adjustment: " + slot.location());
 
                 Location location = HousingManager.getLocationInHouse(slot.location(), instance);
                 AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(entry.itemId());
 
-                System.out.println("After location adjustment: " + location);
+                  System.out.println("After location adjustment: " + location);
+
 
                 if (!(type instanceof FurnitureItem furnitureItem)) {
                     RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot place furniture item ID " + id + " in house instance " + instance.getInstanceUUID() + " because item ID " + entry.itemId() + " is not a furniture item.");

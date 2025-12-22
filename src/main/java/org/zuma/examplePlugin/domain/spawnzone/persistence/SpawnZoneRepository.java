@@ -2277,7 +2277,7 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(329, SpawnZoneType.POINT, 30, 100,
                         new Location(Bukkit.getWorld("world"), 222, 72, -26.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.DRAKKAR_CONCIERGE, 1, 100)
-                ), false, null, null), 1))
+                ), false, MarkerType.PLAYER_HOUSING, "Player Housing"), 1))
 
 
                 // last 328

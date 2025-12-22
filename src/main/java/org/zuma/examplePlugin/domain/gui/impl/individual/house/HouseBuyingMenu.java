@@ -47,7 +47,7 @@ public class HouseBuyingMenu extends PaginatedIndividualGUI {
 
         meta.displayName(Component.text(template.getTemplateName(), Color.SERVER_BRAND.asColor()).decoration(TextDecoration.ITALIC, false));
         lore.add(Component.text("Interactive Slots: ", Color.ITEM_LORE_DESCRIPTION.asColor()).append(Component.text(metaData.interactiveSlotCount(), Color.ACCENT.asColor())));
-        lore.add(Component.text("Decoration Slots: ", Color.ITEM_LORE_DESCRIPTION.asColor()).append(Component.text(metaData.interactiveSlotCount(), Color.ACCENT.asColor())));
+        lore.add(Component.text("Decoration Slots: ", Color.ITEM_LORE_DESCRIPTION.asColor()).append(Component.text(metaData.decorationSlotCount(), Color.ACCENT.asColor())));
         lore.add(Component.empty());
         lore.add(Component.text("Price: ", Color.ITEM_LORE_DESCRIPTION.asColor()).append(CurrencyUtils.getCoinsCurrencyComponent(template.getPrice()).append(Component.text(" coins"))));
         lore.add(Component.empty());

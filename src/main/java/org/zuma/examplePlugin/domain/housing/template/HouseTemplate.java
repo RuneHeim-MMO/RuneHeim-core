@@ -8,7 +8,8 @@ import java.io.File;
 import java.nio.file.Path;
 
 public enum HouseTemplate {
-    DRAKKAR_STARTER("drakkar_starter", "Drakkar Starter House", HousingRegion.DRAKKAR, 15000, null);
+    DRAKKAR_SMALL_QUARTERS("drakkar_small_quarters", "Drakkar Small Quarters", HousingRegion.DRAKKAR, 15000, null),
+    DRAKKAR_MID_QUARTERS("drakkar_mid_quarters", "Drakkar Mid Quarters", HousingRegion.DRAKKAR, 75000, null);
 
     private final String schematic, name, requiredQuestId;
     private final HousingRegion region;

@@ -59,6 +59,7 @@ public enum MarkerType {
     TERRITORY("territories", "Territories", ""),
     DAILY_REWARD("daily_reward", "Collector of Days", "./assets/markers/daily_rewards.png"),
     DUNGEON("dungeon", "Dungeons", "./assets/markers/dungeon.png"),
+    PLAYER_HOUSING("concierge", "Player Housing", "./assets/markers/concierge.png"),
 
     // Dev
     BIOME_SPAWN_ZONE("biome_spawn_zone", "Biome Spawn Zones", ""),

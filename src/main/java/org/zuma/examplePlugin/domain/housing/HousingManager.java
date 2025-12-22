@@ -28,6 +28,7 @@ import org.zuma.examplePlugin.events.player.RunePlayerLoadedEvent;
 
 import java.sql.SQLException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class HousingManager implements Listener {
     public final static int GRID_SIZE = 128;
@@ -45,10 +46,10 @@ public class HousingManager implements Listener {
     private final HashMap<UUID, HashMap<HousingRegion, HouseEntry>> playerHouses; // player uuid : saved house entry
 
     public HousingManager(WorldManager worldManager, HousingRepository repository) {
-        this.gridMap = new HashMap<>();
-        this.playerHouseMap = new HashMap<>();
-        this.uuidHouseInstanceMap = new HashMap<>();
-        this.templatePreviewMap = new HashMap<>();
+        this.gridMap = new ConcurrentHashMap<>();
+        this.playerHouseMap = new ConcurrentHashMap<>();
+        this.uuidHouseInstanceMap = new ConcurrentHashMap<>();
+        this.templatePreviewMap = new ConcurrentHashMap<>();
         this.instanceCreator = new HouseInstanceCreator(this, worldManager, new SchematicSpawner());
         this.houseMetaHandler = new HousingMetaLoader(this);
         this.playerHouses = new HashMap<>();
@@ -379,7 +380,7 @@ public class HousingManager implements Listener {
 
     public static @NotNull Location getLocationInHouse(Location relativeLocation, HouseInstance instance) {
         Location relativeSpawnPoint = relativeLocation.clone();
-        relativeSpawnPoint.add(instance.getGridX() * HousingManager.GRID_SIZE, 0, instance.getGridZ() * HousingManager.GRID_SIZE);
+        relativeSpawnPoint.subtract(instance.getGridX() * HousingManager.GRID_SIZE, 0, instance.getGridZ() * HousingManager.GRID_SIZE);
         return relativeSpawnPoint;
     }
 }
