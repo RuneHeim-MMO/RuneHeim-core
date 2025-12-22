@@ -14,6 +14,7 @@ import org.zuma.examplePlugin.domain.housing.records.HouseSlot;
 import org.zuma.examplePlugin.domain.housing.template.HouseTemplate;
 import org.zuma.examplePlugin.domain.housing.template.TemplateMeta;
 import org.zuma.examplePlugin.domain.hud.HudService;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.schematic.InteractiveElement;
 import org.zuma.examplePlugin.events.housing.HouseSettingsUpdateEvent;
@@ -304,13 +305,15 @@ public class HouseInstance {
             for (Map.Entry<Integer, HouseSlot> slot : meta.slots().entrySet()) {
                 int slotIndex = slot.getKey();
                 HouseSlot houseSlot = slot.getValue();
+                Location slotLocation = HousingManager.getLocationInHouse(houseSlot.location(), this);
                 HouseFurnitureEntry occupiedBy = furnitureMap.get(slotIndex);
+                AbstractItemType type = occupiedBy != null ? RuneQuestPlugin.getItemRegistry().getType(occupiedBy.itemId()) : null;
 
                 List<String> hologramLines = occupiedBy == null ?
-                        List.of(houseSlot.type().getDisplayName() + " Slot]", "Click with hammer to build") :
-                        List.of(occupiedBy.itemId() + " replace w title", "Click with hammer to edit");
+                        List.of(houseSlot.type().getDisplayName() + " Slot", "Click with hammer to build") :
+                        List.of(type != null ? type.displayName : "[UNKNOWN]", "Click with hammer to edit");
 
-                Hologram hologram = DHAPI.createHologram(this.ownerUUID + "slot_" + slotIndex, houseSlot.location().clone().add(0.5, 1.5, 0.5), hologramLines);
+                Hologram hologram = DHAPI.createHologram(this.ownerUUID + "slot_" + slotIndex, slotLocation.clone().add(0.5, 1.5, 0.5), hologramLines);
                 hologram.setDefaultVisibleState(false);
                 hologram.setShowPlayer(owner);
 

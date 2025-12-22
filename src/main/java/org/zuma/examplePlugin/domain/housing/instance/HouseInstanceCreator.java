@@ -18,6 +18,8 @@ import org.zuma.examplePlugin.domain.housing.HousingRegion;
 import org.zuma.examplePlugin.domain.housing.template.HouseTemplate;
 import org.zuma.examplePlugin.domain.housing.template.TemplateMeta;
 import org.zuma.examplePlugin.domain.housing.world.WorldManager;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.impl.FurnitureItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.schematic.InteractiveElement;
 import org.zuma.examplePlugin.domain.schematic.SchematicSpawner;
@@ -181,7 +183,7 @@ public class HouseInstanceCreator {
         }
 
         manager.getUuidHouseInstanceMap().put(instance.getInstanceUUID(), instance);
-        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Created house instance (" + template.name() + ") at grid (" + gridX + ", " + gridZ + ") spawn point: (X " + spawnPoint.getX() + ", Y " + spawnPoint.getY() + ", Z " + spawnPoint.getZ() + ") for player " + ownerName);
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Created house instance (" + template.name() + ") at grid (" + gridX + ", " + gridZ + ") spawn point: (X " + spawnPoint.getX() + ", Y " + spawnPoint.getY() + ", Z " + spawnPoint.getZ() + ") for player " + ownerName + " with " + furnitureEntries.size() + " furniture items.");
         return instance;
     }
 
@@ -204,6 +206,38 @@ public class HouseInstanceCreator {
         }
 
         instance.getInteractableLocations().addAll(meta.slots().values().stream().map(HouseSlot::location).toList());
+
+        furnitureEntries.forEach((id, entry) -> {
+            try {
+                HouseSlot slot = meta.slots().get(entry.slotIndex());
+
+                if (slot == null) {
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot place furniture item ID " + id + " in house instance " + instance.getInstanceUUID() + " because slot ID " + entry.slotIndex() + " does not exist in template meta.");
+                    return;
+                }
+
+                System.out.println("Before location adjustment: " + slot.location());
+
+                Location location = HousingManager.getLocationInHouse(slot.location(), instance);
+                AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(entry.itemId());
+
+                System.out.println("After location adjustment: " + location);
+
+                if (!(type instanceof FurnitureItem furnitureItem)) {
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot place furniture item ID " + id + " in house instance " + instance.getInstanceUUID() + " because item ID " + entry.itemId() + " is not a furniture item.");
+                    return;
+                }
+
+                if (!furnitureItem.getFurnitureMeta().applicableSlot().equals(slot.type())) {
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot place furniture item ID " + id + " in house instance " + instance.getInstanceUUID() + " because furniture item slot type " + furnitureItem.getFurnitureMeta().applicableSlot() + " does not match house slot type " + slot.type() + ".");
+                    return;
+                }
+
+                furnitureItem.placeInHouse(location, entry.face());
+            } catch (Exception e) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to place furniture item ID " + id + " in " + instance.getOwnerName() + " house: " + e.getMessage());
+            }
+        });
 
     }
 }

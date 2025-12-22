@@ -46,9 +46,18 @@ public class HousingMetaLoader {
                         .findFirst()
                         .orElseThrow(() -> new IllegalStateException("Template " + template.name() + " is missing spawn point interactive element"));
 
-                Location relativeSpawnPoint = getRelativeSpawnPoint(spawnPoint, testInstance);
-                TemplateMeta meta = getTemplateMeta(elements, relativeSpawnPoint);
-                testInstance.setSpawnPoint(relativeSpawnPoint);
+                Location spawnLoc = HousingManager.getLocationInHouse(spawnPoint.location(), testInstance);
+
+                switch (spawnPoint.face()) {
+                    case SOUTH -> spawnLoc.setYaw(0);
+                    case NORTH -> spawnLoc.setYaw(180);
+                    case EAST -> spawnLoc.setYaw(90);
+                    case WEST -> spawnLoc.setYaw(-90);
+                    default -> spawnLoc.setYaw(0);
+                }
+
+                TemplateMeta meta = getTemplateMeta(elements, spawnLoc);
+                testInstance.setSpawnPoint(spawnLoc);
 
                 this.templateMetaMap.put(template, meta);
                 manager.getTemplatePreviewMap().put(template, testInstance);
@@ -85,25 +94,6 @@ public class HousingMetaLoader {
         return new TemplateMeta(interactiveSlots, decorationSlots, relativeSpawnPoint, slotsMap);
     }
 
-
-    private static @NotNull Location getRelativeSpawnPoint(InteractiveElement spawnPoint, HouseInstance instance) {
-        Location relativeSpawnPoint = spawnPoint.location().clone();
-
-        switch (spawnPoint.face()) {
-            case SOUTH -> relativeSpawnPoint.setYaw(0);
-            case NORTH -> relativeSpawnPoint.setYaw(180);
-            case EAST -> relativeSpawnPoint.setYaw(90);
-            case WEST -> relativeSpawnPoint.setYaw(-90);
-            default -> relativeSpawnPoint.setYaw(0);
-        }
-
-        System.out.println("Before adjustment: " + relativeSpawnPoint);
-
-        relativeSpawnPoint.subtract(instance.getGridX() * HousingManager.GRID_SIZE, 0, instance.getGridZ() * HousingManager.GRID_SIZE);
-
-        System.out.println("After adjustment: " + relativeSpawnPoint);
-        return relativeSpawnPoint;
-    }
 
     public Map<HouseTemplate, TemplateMeta> getTemplateMetaMap() {
         return this.templateMetaMap;

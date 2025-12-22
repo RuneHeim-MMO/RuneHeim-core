@@ -5,15 +5,21 @@ import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
 import org.bukkit.inventory.EquipmentSlot;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
+import org.zuma.examplePlugin.domain.block.constants.BlockType;
+import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerRegularBlock;
+import org.zuma.examplePlugin.domain.block.meta.v1.InventoryOpenerMeta;
 import org.zuma.examplePlugin.domain.droptable.DropTableId;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
+import org.zuma.examplePlugin.domain.housing.records.HouseSlot;
 import org.zuma.examplePlugin.domain.item.StatsEffect;
 import org.zuma.examplePlugin.domain.item.constants.*;
 import org.zuma.examplePlugin.domain.item.impl.EmptyContainer;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.v1.*;
+import org.zuma.examplePlugin.domain.map.MarkerType;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.SkillModifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
@@ -154,6 +160,20 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
+
+                /*public record InventoryOpenerMeta(int inventoryId, Material blockType,
+                                  @Nullable List<SkillRequirement> requirements,
+                                  MarkerType marker, String markerLabel,
+                                  String label, String icon) {*/
+
+                // Furniture
+                new ItemEntity(new AbstractItemMeta(ItemType.FURNITURE_ITEM, ItemId.ANVIL_FURNITURE.asInt(), Material.ANVIL, ItemRarity.RARE, "Anvil", List.of("To be placed in your home"), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new FurnitureItemMeta(HouseSlot.HouseSlotType.INTERACTIVE, null,
+                                        toVersionedJson(new InventoryOpenerMeta(InventoryId.ANVIL.asInt(), Material.ANVIL, null, null, null, "Anvil", Icon.ANVIL.get()), 1),
+                                        BlockType.InventoryOpener), 1)
+                ),
+
 
                 // New materials
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.CHICKEN_EGG.asInt(), Material.COAL, ItemRarity.COMMON, "Chicken Egg", List.of("A fresh egg laid by a chicken."), null, true, 1.0),

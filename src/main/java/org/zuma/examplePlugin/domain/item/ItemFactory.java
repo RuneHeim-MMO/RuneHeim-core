@@ -53,8 +53,24 @@ public class ItemFactory {
             case REMAINS -> createRemainsItem(meta, json);
             case MOUNT -> createMountItem(meta, json);
             case STORAGE_ITEM -> createStorageItem(meta, json);
+            case FURNITURE_ITEM -> createFurnitureItem(meta, json);
             default -> throw new IllegalArgumentException("Unknown item type: " + meta.type());
         };
+    }
+
+    private FurnitureItem createFurnitureItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create " + meta.type() + " " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                FurnitureItemMeta deserialized = new Gson().fromJson(json.meta(), FurnitureItemMeta.class);
+                return new FurnitureItem(meta, deserialized);
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
     }
 
     private StorageItem createStorageItem(AbstractItemMeta meta, @Nullable VersionedJson json) {

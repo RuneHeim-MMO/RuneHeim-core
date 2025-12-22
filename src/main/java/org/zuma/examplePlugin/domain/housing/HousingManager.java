@@ -2,9 +2,11 @@ package org.zuma.examplePlugin.domain.housing;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
@@ -373,5 +375,11 @@ public class HousingManager implements Listener {
 
     public Map<HouseTemplate, HouseInstance> getTemplatePreviewMap() {
         return templatePreviewMap;
+    }
+
+    public static @NotNull Location getLocationInHouse(Location relativeLocation, HouseInstance instance) {
+        Location relativeSpawnPoint = relativeLocation.clone();
+        relativeSpawnPoint.add(instance.getGridX() * HousingManager.GRID_SIZE, 0, instance.getGridZ() * HousingManager.GRID_SIZE);
+        return relativeSpawnPoint;
     }
 }

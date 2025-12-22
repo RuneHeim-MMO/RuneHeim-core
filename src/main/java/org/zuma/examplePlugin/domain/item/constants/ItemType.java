@@ -30,7 +30,8 @@ public enum ItemType {
     REMAINS(26),
     MOUNT(27),
     COMPASS(28),
-    STORAGE_ITEM(29);
+    STORAGE_ITEM(29),
+    FURNITURE_ITEM(30);
 
     private final int key;
 

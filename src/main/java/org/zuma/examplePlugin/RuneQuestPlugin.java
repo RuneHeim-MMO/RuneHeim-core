@@ -255,4 +255,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     public static HousingManager getHousingManager() {
         return pluginInstance.moduleContext.get(HousingManager.class);
     }
+
+    public static BlockLoader getBlockLoader() {
+        return pluginInstance.moduleContext.get(BlockLoader.class);
+    }
 }
