@@ -307,8 +307,8 @@ public class HouseInstance {
                 AbstractItemType type = occupiedBy != null ? RuneQuestPlugin.getItemRegistry().getType(occupiedBy.itemId()) : null;
 
                 List<String> hologramLines = occupiedBy == null ?
-                        List.of(houseSlot.type().getDisplayName() + " Slot", "Click with hammer to build") :
-                        List.of(type != null ? type.displayName : "[UNKNOWN]", "Click with hammer to edit");
+                        List.of(houseSlot.type().getDisplayName() + " §7Slot") :
+                        List.of(type != null ? "§e[" + type.displayName + "]" : "§4[UNKNOWN]");
 
                 Hologram hologram = DHAPI.createHologram(this.ownerUUID + "slot_" + slotIndex, slotLocation.clone().add(0.5, occupiedBy == null ? 0.5 : 1.5, 0.5), hologramLines);
                 hologram.setDefaultVisibleState(false);
