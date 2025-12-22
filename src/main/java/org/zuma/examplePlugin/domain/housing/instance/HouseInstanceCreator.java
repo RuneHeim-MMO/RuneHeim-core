@@ -21,6 +21,7 @@ import org.zuma.examplePlugin.domain.housing.world.WorldManager;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.impl.FurnitureItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.schematic.InteractiveElType;
 import org.zuma.examplePlugin.domain.schematic.InteractiveElement;
 import org.zuma.examplePlugin.domain.schematic.SchematicSpawner;
 import org.zuma.examplePlugin.domain.territory.Territory;
@@ -143,13 +144,20 @@ public class HouseInstanceCreator {
         schematicSpawner.pasteSchematic(pasteLocation, template.getSchematic(), true, true);
 
         List<InteractiveElement> elements = schematicSpawner.extractInteractiveElements();
-        Location spawnPoint = new Location(worldManager.getHousingWorld(), gridX * HousingManager.GRID_SIZE, 64, gridZ * HousingManager.GRID_SIZE);
+        Optional<InteractiveElement> spawnSign = elements.stream().filter(s -> s.type().equals(InteractiveElType.SPAWN)).findFirst();
 
-        if (!initialMetaSpawn) {
-            Location offset = meta.relativeSpawnPoint().clone();
-            spawnPoint.setY(0); // Reset Y to avoid issues
-            spawnPoint.add(offset.x(), offset.y(), offset.z());
-            spawnPoint.setYaw(offset.getYaw());
+        if (spawnSign.isEmpty()) {
+            throw new IllegalStateException("No spawn point found in schematic for template " + template.name());
+        }
+
+        Location spawnPoint = spawnSign.get().location();
+
+        switch (spawnSign.get().face()) {
+            case SOUTH -> spawnPoint.setYaw(0);
+            case NORTH -> spawnPoint.setYaw(180);
+            case EAST -> spawnPoint.setYaw(90);
+            case WEST -> spawnPoint.setYaw(-90);
+            default -> spawnPoint.setYaw(0);
         }
 
         HouseInstance instance = new HouseInstance(ownerUUID, instanceUUID, ownerName, gridX * HousingManager.GRID_SIZE, gridZ * HousingManager.GRID_SIZE, elements, spawnPoint, template);
@@ -216,12 +224,12 @@ public class HouseInstanceCreator {
                     return;
                 }
 
-                 System.out.println("Before location adjustment: " + slot.location());
+                System.out.println("Before location adjustment: " + slot.location());
 
                 Location location = HousingManager.getLocationInHouse(slot.location(), instance);
                 AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(entry.itemId());
 
-                  System.out.println("After location adjustment: " + location);
+                System.out.println("After location adjustment: " + location);
 
 
                 if (!(type instanceof FurnitureItem furnitureItem)) {

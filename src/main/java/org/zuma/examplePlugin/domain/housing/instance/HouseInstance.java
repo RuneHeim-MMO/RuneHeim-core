@@ -36,12 +36,12 @@ public class HouseInstance {
     private final List<UUID> currentVisitors;
     private Location spawnPoint;
 
-    public HouseInstance(UUID ownerUUID, UUID instanceUUID, String ownerName, int x, int z, List<InteractiveElement> interactiveElements, Location spawnPoint, HouseTemplate template) {
+    public HouseInstance(UUID ownerUUID, UUID instanceUUID, String ownerName, int gridX, int gridZ, List<InteractiveElement> interactiveElements, Location spawnPoint, HouseTemplate template) {
         this.ownerUUID = ownerUUID;
         this.instanceUUID = instanceUUID;
         this.ownerName = ownerName;
-        this.gridX = Math.floorDiv(x, HousingManager.GRID_SIZE);
-        this.gridZ = Math.floorDiv(z, HousingManager.GRID_SIZE);
+        this.gridX = gridX;
+        this.gridZ = gridZ;
         this.interactiveElements = interactiveElements;
         this.spawnPoint = spawnPoint;
         this.template = template;
@@ -75,10 +75,6 @@ public class HouseInstance {
 
     public Location getSpawnPoint() {
         return spawnPoint;
-    }
-
-    public void setSpawnPoint(Location spawnPoint) {
-        this.spawnPoint = spawnPoint;
     }
 
     public String getOwnerName() {

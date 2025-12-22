@@ -380,7 +380,7 @@ public class HousingManager implements Listener {
 
     public static @NotNull Location getLocationInHouse(Location relativeLocation, HouseInstance instance) {
         Location relativeSpawnPoint = relativeLocation.clone();
-        relativeSpawnPoint.subtract(instance.getGridX() * HousingManager.GRID_SIZE, 0, instance.getGridZ() * HousingManager.GRID_SIZE);
+        relativeSpawnPoint.add(instance.getGridX() * HousingManager.GRID_SIZE, 0, instance.getGridZ() * HousingManager.GRID_SIZE);
         return relativeSpawnPoint;
     }
 }

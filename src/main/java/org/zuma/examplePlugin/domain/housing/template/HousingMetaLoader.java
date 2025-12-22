@@ -46,22 +46,12 @@ public class HousingMetaLoader {
                         .findFirst()
                         .orElseThrow(() -> new IllegalStateException("Template " + template.name() + " is missing spawn point interactive element"));
 
-                Location spawnLoc = HousingManager.getLocationInHouse(spawnPoint.location(), testInstance);
 
-                switch (spawnPoint.face()) {
-                    case SOUTH -> spawnLoc.setYaw(0);
-                    case NORTH -> spawnLoc.setYaw(180);
-                    case EAST -> spawnLoc.setYaw(90);
-                    case WEST -> spawnLoc.setYaw(-90);
-                    default -> spawnLoc.setYaw(0);
-                }
-
-                TemplateMeta meta = getTemplateMeta(elements, spawnLoc);
-                testInstance.setSpawnPoint(spawnLoc);
+                TemplateMeta meta = getTemplateMeta(elements);
 
                 this.templateMetaMap.put(template, meta);
                 manager.getTemplatePreviewMap().put(template, testInstance);
-                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Loaded template " + template.name() + " successfully. Detected: " + (meta.interactiveSlotCount() + meta.decorationSlotCount()) + " slots and spawn point at " + meta.relativeSpawnPoint().toString());
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Loaded template " + template.name() + " successfully. Detected: " + (meta.interactiveSlotCount() + meta.decorationSlotCount()) + " slots.");
 
             } catch (Exception e) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[PlayerHousing] Failed to load template " + template.name() + " metadata. Invalid template. ", e);
@@ -71,7 +61,7 @@ public class HousingMetaLoader {
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Loaded " + this.templateMetaMap.size() + " house templates.");
     }
 
-    private static @NotNull TemplateMeta getTemplateMeta(List<InteractiveElement> elements, Location relativeSpawnPoint) {
+    private static @NotNull TemplateMeta getTemplateMeta(List<InteractiveElement> elements) {
         int index = 0;
         int interactiveSlots = 0;
         int decorationSlots = 0;
@@ -91,7 +81,7 @@ public class HousingMetaLoader {
             }
         }
 
-        return new TemplateMeta(interactiveSlots, decorationSlots, relativeSpawnPoint, slotsMap);
+        return new TemplateMeta(interactiveSlots, decorationSlots, slotsMap);
     }
 
 
