@@ -64,7 +64,7 @@ public class MobHandler {
         }, 0L, 20L);
 
         // Redisguising mobs ticking loop (less frequent). (Might be not needed at all)
-        Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), () -> {
+       /* Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), () -> {
             new ArrayList<>(registry.getAll()).forEach(m -> {
                 for (AbstractMob mob : registry.getDisguisedMobs()) {
                     Entity entity = mob.getEntity();
@@ -83,7 +83,7 @@ public class MobHandler {
                 }
             });
         }, 0L, 10 * 20L);
-
+        */
 
     }
 
