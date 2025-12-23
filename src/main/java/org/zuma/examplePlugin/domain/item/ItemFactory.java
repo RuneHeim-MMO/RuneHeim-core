@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import org.zuma.examplePlugin.core.exception.UnsupportedJsonVersionException;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.base.FurnitureItem;
 import org.zuma.examplePlugin.domain.item.impl.*;
 import org.zuma.examplePlugin.domain.item.impl.consumable.Food;
 import org.zuma.examplePlugin.domain.item.impl.consumable.Potion;
@@ -11,6 +12,8 @@ import org.zuma.examplePlugin.domain.item.impl.equipable.*;
 import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
 import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFood;
 import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFruit;
+import org.zuma.examplePlugin.domain.item.impl.furniture.DecorationFurniture;
+import org.zuma.examplePlugin.domain.item.impl.furniture.InteractiveFurniture;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.v1.*;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.*;
@@ -53,20 +56,36 @@ public class ItemFactory {
             case REMAINS -> createRemainsItem(meta, json);
             case MOUNT -> createMountItem(meta, json);
             case STORAGE_ITEM -> createStorageItem(meta, json);
-            case FURNITURE_ITEM -> createFurnitureItem(meta, json);
+            case INTERACTIVE_FURNITURE -> createInteractiveFurnitureItem(meta, json);
+            case DECORATIVE_FURNITURE -> createDecorativeFurnitureItem(meta, json);
             default -> throw new IllegalArgumentException("Unknown item type: " + meta.type());
         };
     }
 
-    private FurnitureItem createFurnitureItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+    private FurnitureItem createDecorativeFurnitureItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
         if (json == null) {
             throw new UnsupportedOperationException("Cannot create " + meta.type() + " " + meta.displayName() + " required json is null!");
         }
 
         switch (json.version()) {
             case 1 -> {
-                FurnitureItemMeta deserialized = new Gson().fromJson(json.meta(), FurnitureItemMeta.class);
-                return new FurnitureItem(meta, deserialized);
+                DecorationFurnitureMeta deserialized = new Gson().fromJson(json.meta(), DecorationFurnitureMeta.class);
+                return new DecorationFurniture(meta, deserialized.applicableSlot(), deserialized.material());
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
+    }
+
+    private FurnitureItem createInteractiveFurnitureItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create " + meta.type() + " " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                InteractiveFurnitureMeta deserialized = new Gson().fromJson(json.meta(), InteractiveFurnitureMeta.class);
+                return new InteractiveFurniture(meta, deserialized.applicableSlot(), deserialized.type(), deserialized.json());
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
         }

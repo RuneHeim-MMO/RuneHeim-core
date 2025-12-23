@@ -31,7 +31,8 @@ public enum ItemType {
     MOUNT(27),
     COMPASS(28),
     STORAGE_ITEM(29),
-    FURNITURE_ITEM(30);
+    DECORATIVE_FURNITURE(30),
+    INTERACTIVE_FURNITURE(31);
 
     private final int key;
 

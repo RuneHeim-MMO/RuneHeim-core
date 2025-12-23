@@ -19,7 +19,7 @@ import org.zuma.examplePlugin.domain.housing.template.HouseTemplate;
 import org.zuma.examplePlugin.domain.housing.template.TemplateMeta;
 import org.zuma.examplePlugin.domain.housing.world.WorldManager;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.item.impl.FurnitureItem;
+import org.zuma.examplePlugin.domain.item.base.FurnitureItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.schematic.InteractiveElType;
 import org.zuma.examplePlugin.domain.schematic.InteractiveElement;
@@ -232,8 +232,8 @@ public class HouseInstanceCreator {
                     return;
                 }
 
-                if (!furnitureItem.getFurnitureMeta().applicableSlot().equals(slot.type())) {
-                    RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot place furniture item ID " + id + " in house instance " + instance.getInstanceUUID() + " because furniture item slot type " + furnitureItem.getFurnitureMeta().applicableSlot() + " does not match house slot type " + slot.type() + ".");
+                if (!furnitureItem.getApplicableSlot().equals(slot.type())) {
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot place furniture item ID " + id + " in house instance " + instance.getInstanceUUID() + " because furniture item slot type " + furnitureItem.getApplicableSlot() + " does not match house slot type " + slot.type() + ".");
                     return;
                 }
 

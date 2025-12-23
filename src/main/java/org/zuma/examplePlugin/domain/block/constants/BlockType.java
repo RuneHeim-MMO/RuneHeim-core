@@ -11,7 +11,8 @@ public enum BlockType {
     ItemTrigger(5, Material.DROPPER),
     TeleportDoor(6, Material.IRON_DOOR),
     InvisibleMarker(7, Material.AIR),
-    CommandBlock(8, Material.LODESTONE);
+    CommandBlock(8, Material.LODESTONE),
+    LightableBlock(9, Material.REDSTONE_LAMP);
 
     private final int id;
     private final Material material;
