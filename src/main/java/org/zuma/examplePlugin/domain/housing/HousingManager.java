@@ -1,9 +1,11 @@
 package org.zuma.examplePlugin.domain.housing;
 
+import eu.decentsoftware.holograms.event.HologramClickEvent;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
@@ -302,6 +304,41 @@ public class HousingManager implements Listener {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "[PlayerHousing] Failed to load player houses for player " + event.getPlayer().asBukkitPlayer().getName(), e);
             }
         });
+    }
+
+    @EventHandler
+    public void onHologramClick(HologramClickEvent event) {
+        try {
+            String id = event.getHologram().getId();
+
+            if (id == null || !id.startsWith("house_")) {
+                return;
+            }
+
+            String[] split = id.split("_");
+            UUID instanceUUID = UUID.fromString(split[1]);
+            int slot = Integer.parseInt(split[2]);
+
+            HouseInstance instance = getInstanceByUUID(instanceUUID);
+
+            if (instance == null || !instance.isEditMode()) {
+                return;
+            }
+
+            RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(event.getPlayer());
+
+            if (player == null || !instance.getOwnerUUID().equals(player.getUUID())) {
+                return;
+            }
+
+            Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+                instance.handleSlotClick(player, slot, event.getHologram());
+            });
+
+        } catch (Exception e) {
+            // Ignore
+        }
+
     }
 
     public void purchaseHouse(RunePlayer buyer, HousingRegion region, HouseTemplate template) {

@@ -1,6 +1,8 @@
 package org.zuma.examplePlugin.domain.housing.instance;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Door;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Icon;
@@ -218,30 +220,33 @@ public class HouseInstanceCreator {
         furnitureEntries.forEach((id, entry) -> {
             try {
                 HouseSlot slot = meta.slots().get(entry.slotIndex());
-
-                if (slot == null) {
-                    RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot place furniture item ID " + id + " in house instance " + instance.getInstanceUUID() + " because slot ID " + entry.slotIndex() + " does not exist in template meta.");
-                    return;
-                }
-
-                Location location = HousingManager.getLocationInHouse(slot.absoluteLocation(), instance);
-                AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(entry.itemId());
-
-                if (!(type instanceof FurnitureItem furnitureItem)) {
-                    RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot place furniture item ID " + id + " in house instance " + instance.getInstanceUUID() + " because item ID " + entry.itemId() + " is not a furniture item.");
-                    return;
-                }
-
-                if (!furnitureItem.getApplicableSlot().equals(slot.type())) {
-                    RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot place furniture item ID " + id + " in house instance " + instance.getInstanceUUID() + " because furniture item slot type " + furnitureItem.getApplicableSlot() + " does not match house slot type " + slot.type() + ".");
-                    return;
-                }
-
-                furnitureItem.placeInHouse(location, entry.face());
+                placeFurnitureItem(slot, instance, entry.face(), entry.itemId(), entry.slotIndex());
             } catch (Exception e) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to place furniture item ID " + id + " in " + instance.getOwnerName() + " house: " + e.getMessage());
             }
         });
 
+    }
+
+    public void placeFurnitureItem(HouseSlot slot, HouseInstance instance, BlockFace face, int id, int slotIndex) {
+        if (slot == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot place furniture item ID " + id + " in house instance " + instance.getInstanceUUID() + " because slot ID " + slotIndex + " does not exist in template meta.");
+            return;
+        }
+
+        Location location = HousingManager.getLocationInHouse(slot.absoluteLocation(), instance);
+        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(id);
+
+        if (!(type instanceof FurnitureItem furnitureItem)) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot place furniture item ID " + id + " in house instance " + instance.getInstanceUUID() + " because item ID " + id + " is not a furniture item.");
+            return;
+        }
+
+        if (!furnitureItem.getApplicableSlot().equals(slot.type())) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot place furniture item ID " + id + " in house instance " + instance.getInstanceUUID() + " because furniture item slot type " + furnitureItem.getApplicableSlot() + " does not match house slot type " + slot.type() + ".");
+            return;
+        }
+
+        furnitureItem.placeInHouse(location, face);
     }
 }
