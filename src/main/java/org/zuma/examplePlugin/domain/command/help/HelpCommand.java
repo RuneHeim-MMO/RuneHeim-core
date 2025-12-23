@@ -46,12 +46,11 @@ public class HelpCommand implements BasicCommand {
         sendCommand(2, sender, "/pouch drop <amount>", "Drop coins from your pouch.");
         sendCommand(3, sender, "/stuck", "Teleport to the nearest safe location.");
         sendCommand(4, sender, "/modifiers", "Show active modifiers.");
-        sendCommand(5, sender, "/actions", "View available console actions.");
-        sendCommand(6, sender, "/togglelock", "Lock/unlock item in hand to prevent accidental drops.");
-        sendCommand(7, sender, "/bombs", "View your available bombs and their effects.");
-        sendCommand(8, sender, "/megaphone", "Send a message to all players on the server.");
-        sendCommand(9, sender, "/social", "View links to our social media pages.");
-        sendCommand(10, sender, "/map", "View the server map online.");
+        sendCommand(5, sender, "/togglelock", "Lock/unlock item in hand to prevent accidental drops.");
+        sendCommand(6, sender, "/bombs", "View your available bombs and their effects.");
+        sendCommand(7, sender, "/megaphone", "Send a message to all players on the server.");
+        sendCommand(8, sender, "/social", "View links to our social media pages.");
+        sendCommand(9, sender, "/map", "View the server map online.");
 
 
         sender.sendMessage(line);
