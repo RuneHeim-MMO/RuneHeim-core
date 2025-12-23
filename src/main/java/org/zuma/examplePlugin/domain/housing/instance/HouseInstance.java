@@ -5,13 +5,9 @@ import eu.decentsoftware.holograms.api.holograms.Hologram;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.SoundType;
-import org.zuma.examplePlugin.core.utils.ItemUtils;
-import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.housing.records.HouseFurnitureEntry;
 import org.zuma.examplePlugin.domain.housing.HousingManager;
@@ -20,7 +16,6 @@ import org.zuma.examplePlugin.domain.housing.template.HouseTemplate;
 import org.zuma.examplePlugin.domain.housing.template.TemplateMeta;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.item.base.FurnitureItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.schematic.InteractiveElement;
 import org.zuma.examplePlugin.events.housing.HouseSettingsUpdateEvent;
@@ -36,6 +31,7 @@ public class HouseInstance implements Listener {
     private final int gridX, gridZ;
     private final HouseTemplate template;
     private final Location spawnPoint;
+    private final HouseEditModeManager editManager;
 
     // Instance based configuration for a player's house
     private boolean openToPublic, editMode;
@@ -57,6 +53,8 @@ public class HouseInstance implements Listener {
         this.currentVisitors = new ArrayList<>();
         this.interactableLocations = new ArrayList<>();
         this.editMode = false;
+
+        this.editManager = new HouseEditModeManager(this);
     }
 
     public UUID getOwnerUUID() {
@@ -308,7 +306,7 @@ public class HouseInstance implements Listener {
         }
     }
 
-    private void updateHologramForSlot(Player player, int slotIndex, HouseSlot houseSlot) {
+    void updateHologramForSlot(Player player, int slotIndex, HouseSlot houseSlot) {
         if (editMode) {
             HashMap<Integer, HouseFurnitureEntry> furnitureMap = RuneQuestPlugin.getHousingManager().getInstanceFurniture(this.instanceUUID);
 
@@ -346,50 +344,13 @@ public class HouseInstance implements Listener {
             }
 
             if (isSlotEmpty) {
-                AbstractItemType inHand = RuneQuestPlugin.getItemRegistry().getType(player.asBukkitPlayer().getInventory().getItemInMainHand());
-
-                if (!(inHand instanceof FurnitureItem furniture)) {
-                    throw new IllegalStateException("You must be holding a furniture item to place it in the slot.");
-                }
-
-                if (!clickedSlot.type().equals(furniture.getApplicableSlot())) {
-                    throw new IllegalStateException("This furniture item cannot be placed in the selected slot.");
-                }
-
-                BlockFace face = player.asBukkitPlayer().getFacing().getOppositeFace();
-
-                HouseFurnitureEntry newEntry = new HouseFurnitureEntry(
-                        UUID.randomUUID(),
-                        inHand.id,
-                        slotIndex,
-                        face,
-                        clickedSlot.type(),
-                        "{}" // Default JSON, can be modified later
-                );
-
-                RuneQuestPlugin.getHousingManager().getInstanceCreator().placeFurnitureItem(clickedSlot, this, face, furniture.id, slotIndex);
-                PlayerUtils.subtractOneFromMainHand(player);
-                furnitureMap.put(slotIndex, newEntry);
-                SoundType.PLACE_BLOCK_GENERIC.play(player, true);
-                clickedHologram.delete();
-                updateHologramForSlot(player.asBukkitPlayer(), slotIndex, clickedSlot);
+                editManager.placeFurnitureItem(player, slotIndex, clickedHologram);
             }
         } catch (Exception e) {
             HudService.sendFailMessage(player, Component.text(e.getMessage()));
         }
     }
 
-    public void handleFurnitureEdit(RunePlayer player, int slotIndex, HouseFurnitureEntry newEntry) {
-        TemplateMeta meta = RuneQuestPlugin.getHousingManager().getTemplateMeta(this.getTemplate());
-        HashMap<Integer, HouseFurnitureEntry> furnitureMap = RuneQuestPlugin.getHousingManager().getInstanceFurniture(this.instanceUUID);
-
-        if (!meta.slots().containsKey(slotIndex)) {
-            throw new IllegalStateException("Slot index " + slotIndex + " does not exist in house template.");
-        }
-
-        furnitureMap.put(slotIndex, newEntry);
-
-    }
 
     public boolean isEditMode() {
         return editMode;
