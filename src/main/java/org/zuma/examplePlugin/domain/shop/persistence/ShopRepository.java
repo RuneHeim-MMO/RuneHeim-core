@@ -53,7 +53,7 @@ public class ShopRepository {
                 ))), 1)),
 
                 new ShopConfig(ShopId.INVESTMENT_BANKER.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
-                        new ShopItemConfig(ItemId.PLATINUM_TOKEN.asInt(), 1000, 30, 1000L, 950L, null, null),
+                        new ShopItemConfig(ItemId.PLATINUM_TOKEN.asInt(), 256, 30, 1000L, 950L, null, null),
                         new ShopItemConfig(ItemId.SCRATCH_CARD.asInt(), 10, 30, 1000L, 500L, null, null)
                 ))), 1)),
 
