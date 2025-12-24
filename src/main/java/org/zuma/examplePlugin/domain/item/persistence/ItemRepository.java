@@ -173,7 +173,7 @@ public class ItemRepository {
                                 new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.INTERACTIVE, BlockType.InventoryOpener, toVersionedJson(new InventoryOpenerMeta(InventoryId.ANVIL.asInt(), Material.ANVIL, null, null, null, "Anvil", Icon.ANVIL.get()), 1)), 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.STOVE_FURNITURE.asInt(), Material.BLAST_FURNACE, ItemRarity.RARE, "Stove", List.of("Used to cook food and meals."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.STOVE_FURNITURE.asInt(), Material.FURNACE, ItemRarity.RARE, "Stove", List.of("Used to cook food and meals."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.INTERACTIVE, BlockType.InventoryOpener, toVersionedJson(new InventoryOpenerMeta(InventoryId.STOVE.asInt(), Material.FURNACE, null, null, null, "Stove", Icon.FIRE.get()), 1)), 1)
                 ),
@@ -842,11 +842,11 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAPLE_LOG.asInt(), Material.ACACIA_LOG, ItemRarity.UNCOMMON, "Maple Log", List.of("A strong and versatile log with a reddish hue."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(400), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.YEW_LOG.asInt(), Material.DARK_OAK_LOG, ItemRarity.UNCOMMON, "Yew Log", List.of("A dense and durable wood prized in crafting."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(850), 1)),
+                        toVersionedJson(new MaterialMeta(650), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAHOGANY_LOG.asInt(), Material.MANGROVE_LOG, ItemRarity.UNCOMMON, "Mahogany Log", List.of("A rich, dark wood valued for fine construction."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(1250), 1)),
+                        toVersionedJson(new MaterialMeta(1050), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_LOG.asInt(), Material.CHERRY_LOG, ItemRarity.RARE, "Magic Log", List.of("Glows faintly with arcane energy, rare and powerful."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(1800), 1)),
+                        toVersionedJson(new MaterialMeta(1400), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ASHES.asInt(), Material.COAL, ItemRarity.COMMON, "Ashes", List.of("Fine powder left after fire consumes wood."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(1), 1)),
