@@ -19,6 +19,7 @@ import org.zuma.examplePlugin.domain.gui.base.StorageInventory;
 import org.zuma.examplePlugin.domain.gui.impl.individual.house.HouseBuyingMenu;
 import org.zuma.examplePlugin.domain.gui.impl.individual.house.HouseDiscoverer;
 import org.zuma.examplePlugin.domain.gui.impl.individual.house.HouseSettings;
+import org.zuma.examplePlugin.domain.gui.impl.individual.house.HouseSlotEditor;
 import org.zuma.examplePlugin.domain.gui.impl.individual.storage.*;
 import org.zuma.examplePlugin.domain.housing.HousingRegion;
 import org.zuma.examplePlugin.domain.hud.HudService;
@@ -141,7 +142,7 @@ public class GUIHandler {
         this.registry.register(InventoryId.HOUSE_SETTINGS.asInt(), () -> new HouseSettings(GUIOverlay.HOUSE_SETTINGS_OVERLAY.asGlyph() + "§f" + Icon.HOUSE.get() + "§f House Settings", InventoryId.HOUSE_SETTINGS.asInt()));
         this.registry.register(InventoryId.DRAKKAR_HOUSE_DISCOVERER.asInt(), () -> new HouseDiscoverer(GUIOverlay.HOUSES_DISCOVERER_OVERLAY.asGlyph() + "§f" + Icon.HOUSE.get() + "§f " + HousingRegion.DRAKKAR.getName() + " houses", InventoryId.DRAKKAR_HOUSE_DISCOVERER.asInt(), HousingRegion.DRAKKAR));
         this.registry.register(InventoryId.DRAKKAR_BUY_HOUSE.asInt(), () -> new HouseBuyingMenu(GUIOverlay.BUY_HOUSE_OVERLAY.asGlyph() + "§f" + Icon.HOUSE.get() + "§f Buy a house in " + HousingRegion.DRAKKAR.getName(), InventoryId.DRAKKAR_BUY_HOUSE.asInt(), HousingRegion.DRAKKAR));
-
+        this.registry.register(InventoryId.HOUSE_SLOT_EDITOR.asInt(), () -> new HouseSlotEditor(GUIOverlay.HOUSE_SLOT_EDITOR_OVERLAY.asGlyph() + "§fEdit Slot", InventoryId.HOUSE_SLOT_EDITOR.asInt()));
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
     }

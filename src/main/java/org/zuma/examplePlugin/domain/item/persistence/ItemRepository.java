@@ -193,7 +193,7 @@ public class ItemRepository {
                                 new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.INTERACTIVE, BlockType.InventoryOpener, toVersionedJson(new InventoryOpenerMeta(InventoryId.BASIC_FURNACE.asInt(), Material.BLAST_FURNACE, null, null, null, "Smelting Furnace", Icon.FURNACE.get()), 1)), 1)
                 ),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.ALTAR_FURNITURE.asInt(), Material.BLAST_FURNACE, ItemRarity.LEGENDARY, "Altar", List.of("Used to pray and receive blessings."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.ALTAR_FURNITURE.asInt(), Material.LECTERN, ItemRarity.LEGENDARY, "Altar", List.of("Used to pray and receive blessings."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.INTERACTIVE, BlockType.Altar, null), 1)
                 ),

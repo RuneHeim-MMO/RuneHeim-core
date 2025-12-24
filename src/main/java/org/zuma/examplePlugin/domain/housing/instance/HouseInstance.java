@@ -1,6 +1,5 @@
 package org.zuma.examplePlugin.domain.housing.instance;
 
-import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -10,12 +9,10 @@ import org.bukkit.event.Listener;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.housing.records.HouseFurnitureEntry;
-import org.zuma.examplePlugin.domain.housing.HousingManager;
 import org.zuma.examplePlugin.domain.housing.records.HouseSlot;
 import org.zuma.examplePlugin.domain.housing.template.HouseTemplate;
 import org.zuma.examplePlugin.domain.housing.template.TemplateMeta;
 import org.zuma.examplePlugin.domain.hud.HudService;
-import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.schematic.InteractiveElement;
 import org.zuma.examplePlugin.events.housing.HouseSettingsUpdateEvent;
@@ -26,7 +23,7 @@ public class HouseInstance implements Listener {
     private final UUID ownerUUID, instanceUUID;
     private final String ownerName;
     private final List<InteractiveElement> interactiveElements;
-    private final List<Location> interactableLocations;
+    private final Set<Location> interactableLocations;
     private final int gridX, gridZ;
     private final HouseTemplate template;
     private final Location spawnPoint;
@@ -50,7 +47,7 @@ public class HouseInstance implements Listener {
         this.openToPublic = false;
         this.invitedPlayers = new ArrayList<>();
         this.currentVisitors = new ArrayList<>();
-        this.interactableLocations = new ArrayList<>();
+        this.interactableLocations = new HashSet<>();
 
         this.editManager = new HouseEditModeManager(this);
     }
@@ -247,7 +244,7 @@ public class HouseInstance implements Listener {
         visitor.setSafeLocation(null);
     }
 
-    public List<Location> getInteractableLocations() {
+    public Set<Location> getInteractableLocations() {
         return interactableLocations;
     }
 
@@ -278,10 +275,14 @@ public class HouseInstance implements Listener {
     }
 
 
-
     public void handleSlotClick(RunePlayer player, int slotIndex, Hologram clickedHologram) {
         try {
             TemplateMeta meta = RuneQuestPlugin.getHousingManager().getTemplateMeta(this.getTemplate());
+
+            if (meta == null) {
+                throw new IllegalStateException("Could not retrieve template metadata for house instance.");
+            }
+
             HouseSlot clickedSlot = meta.slots().get(slotIndex);
             HashMap<Integer, HouseFurnitureEntry> furnitureMap = RuneQuestPlugin.getHousingManager().getInstanceFurniture(this.instanceUUID);
             boolean isSlotEmpty = !furnitureMap.containsKey(slotIndex);
@@ -292,6 +293,8 @@ public class HouseInstance implements Listener {
 
             if (isSlotEmpty) {
                 editManager.placeFurnitureItem(player, slotIndex, clickedHologram);
+            } else {
+                editManager.openSlotEditMenu(slotIndex, player);
             }
         } catch (Exception e) {
             HudService.sendFailMessage(player, Component.text(e.getMessage()));
@@ -305,5 +308,9 @@ public class HouseInstance implements Listener {
 
     public void setEditMode(boolean editMode) {
         this.editManager.setEditMode(editMode);
+    }
+
+    public HouseEditModeManager getEditManager() {
+        return editManager;
     }
 }

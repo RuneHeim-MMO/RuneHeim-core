@@ -39,7 +39,7 @@ public class Altar extends AbstractInteractableBlock implements POIMarkerable {
         ));
 
         hologramContent.add("Press " + Color.ACCENT.asSpigotHex() + "[RIGHT CLICK] §fto pray");
-        setHologram(DHAPI.createHologram(UUID.randomUUID().toString(), getHologramLocation(), hologramContent));
+        setHologram(DHAPI.createHologram(UUID.randomUUID().toString(), getHologramLocation().clone().add(0,0.5,0), hologramContent));
     }
 
     @Override

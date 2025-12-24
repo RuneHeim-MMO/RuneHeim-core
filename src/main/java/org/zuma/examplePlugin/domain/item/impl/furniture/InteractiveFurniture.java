@@ -34,5 +34,4 @@ public class InteractiveFurniture extends FurnitureItem {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to place furniture item in house: " + e.getMessage());
         }
     }
-
 }

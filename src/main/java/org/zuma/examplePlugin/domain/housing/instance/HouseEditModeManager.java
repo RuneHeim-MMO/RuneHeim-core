@@ -10,7 +10,9 @@ import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
+import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
+import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.housing.HousingManager;
 import org.zuma.examplePlugin.domain.housing.records.HouseFurnitureEntry;
 import org.zuma.examplePlugin.domain.housing.records.HouseSlot;
@@ -27,9 +29,11 @@ public class HouseEditModeManager {
     private final HouseInstance instance;
     private final List<Hologram> editHolograms = new ArrayList<>();
     private boolean editMode;
+    private Integer editingSlotIndex;
 
     public HouseEditModeManager(HouseInstance instance) {
         this.instance = instance;
+        editingSlotIndex = null;
     }
 
     public void setEditMode(boolean editMode) {
@@ -59,22 +63,29 @@ public class HouseEditModeManager {
 
     void updateHologramForSlot(Player player, int slotIndex, HouseSlot houseSlot) {
         if (editMode) {
+            String hologramKey = "house_" + instance.getInstanceUUID() + "_" + slotIndex;
             HashMap<Integer, HouseFurnitureEntry> furnitureMap = RuneQuestPlugin.getHousingManager().getInstanceFurniture(instance.getInstanceUUID());
 
             if (houseSlot == null) {
                 return;
             }
 
-            Location slotLocation = HousingManager.getLocationInHouse(houseSlot.absoluteLocation(), this.instance);
+            Hologram existingHologram = DHAPI.getHologram(hologramKey);
 
+            if (existingHologram != null && editHolograms.contains(existingHologram)) {
+                editHolograms.remove(existingHologram);
+                existingHologram.delete();
+            }
+
+            Location slotLocation = HousingManager.getLocationInHouse(houseSlot.absoluteLocation(), this.instance);
             HouseFurnitureEntry occupiedBy = furnitureMap.get(slotIndex);
             AbstractItemType type = occupiedBy != null ? RuneQuestPlugin.getItemRegistry().getType(occupiedBy.itemId()) : null;
 
             List<String> hologramLines = occupiedBy == null ?
                     List.of(houseSlot.type().getDisplayName() + " §7Slot") :
-                    List.of(type != null ? "§e[" + type.displayName + "]" : "§4[UNKNOWN]");
+                    List.of(type != null ? TextUtils.hexToMc(type.rarity.getHexColor()) + "[" + type.displayName + "]" : "§4[UNKNOWN]");
 
-            Hologram hologram = DHAPI.createHologram("house_" + instance.getInstanceUUID() + "_" + slotIndex, slotLocation.clone().add(0.5, occupiedBy == null ? 0.5 : 1.5, 0.5), hologramLines);
+            Hologram hologram = DHAPI.createHologram(hologramKey, slotLocation.clone().add(0.5, occupiedBy == null ? 0.5 : 1.5, 0.5), hologramLines);
             hologram.setDefaultVisibleState(false);
             hologram.setShowPlayer(player);
 
@@ -84,19 +95,23 @@ public class HouseEditModeManager {
     }
 
     @Nullable
-    private HouseSlot getSlotAtIndex(int slotIndex) {
+    public HouseSlot getSlotAtIndex(int slotIndex) {
         TemplateMeta meta = RuneQuestPlugin.getHousingManager().getTemplateMeta(instance.getTemplate());
         return meta.slots().get(slotIndex);
     }
 
     @Nullable
-    private HashMap<Integer, HouseFurnitureEntry> getFurnitureMap() {
+    public HashMap<Integer, HouseFurnitureEntry> getFurnitureMap() {
         return RuneQuestPlugin.getHousingManager().getInstanceFurniture(instance.getInstanceUUID());
     }
 
     public void placeFurnitureItem(RunePlayer player, int slotIndex, Hologram clickedHologram) {
         HashMap<Integer, HouseFurnitureEntry> furnitureMap = getFurnitureMap();
         HouseSlot clickedSlot = getSlotAtIndex(slotIndex);
+
+        if (!player.getUUID().equals(this.instance.getOwnerUUID())) {
+            throw new IllegalStateException("Only the owner of the house can place furniture items.");
+        }
 
         if (furnitureMap == null) {
             throw new IllegalStateException("Could not retrieve furniture map for house instance.");
@@ -143,6 +158,10 @@ public class HouseEditModeManager {
         HashMap<Integer, HouseFurnitureEntry> furnitureMap = getFurnitureMap();
         HouseSlot clickedSlot = getSlotAtIndex(slotIndex);
 
+        if (!player.getUniqueId().equals(this.instance.getOwnerUUID())) {
+            throw new IllegalStateException("Only the owner of the house can rotate furniture items.");
+        }
+
         if (furnitureMap == null) {
             throw new IllegalStateException("Could not retrieve furniture map for house instance.");
         }
@@ -166,13 +185,17 @@ public class HouseEditModeManager {
         }
 
         entry.setFace(newFace);
-        RuneQuestPlugin.getHousingManager().getInstanceCreator().placeFurnitureItem(clickedSlot, instance, newFace, furnitureMap.get(slotIndex).itemId(), slotIndex);
-        SoundType.PLACE_BLOCK_GENERIC.play(player, true);
+        RuneQuestPlugin.getHousingManager().getInstanceCreator().rotateFurnitureItem(clickedSlot, instance, newFace, furnitureMap.get(slotIndex).itemId(), slotIndex);
+        SoundType.ROTATE_BLOCK_GENERIC.play(player, true);
     }
 
     public void removeFurnitureItem(Player player, int slotIndex) {
         HashMap<Integer, HouseFurnitureEntry> furnitureMap = getFurnitureMap();
         HouseSlot clickedSlot = getSlotAtIndex(slotIndex);
+
+        if (!player.getUniqueId().equals(this.instance.getOwnerUUID())) {
+            throw new IllegalStateException("Only the owner of the house can rotate furniture items.");
+        }
 
         if (furnitureMap == null) {
             throw new IllegalStateException("Could not retrieve furniture map for house instance.");
@@ -205,6 +228,7 @@ public class HouseEditModeManager {
         instance.getInteractableLocations().remove(clickedBlockLocation);
         runePlayer.giveItemOrDrop(new ItemRecord(entry.itemId(), 1));
         furnitureMap.remove(slotIndex);
+        updateHologramForSlot(player, slotIndex, clickedSlot);
         SoundType.BREAK_BLOCK_GENERIC.play(player, true);
     }
 
@@ -220,4 +244,12 @@ public class HouseEditModeManager {
         editHolograms.clear();
     }
 
+    public Integer getEditingSlotIndex() {
+        return editingSlotIndex;
+    }
+
+    public void openSlotEditMenu(Integer editingSlotIndex, RunePlayer player) {
+        this.editingSlotIndex = editingSlotIndex;
+        RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.HOUSE_SLOT_EDITOR.asInt(), player, null);
+    }
 }

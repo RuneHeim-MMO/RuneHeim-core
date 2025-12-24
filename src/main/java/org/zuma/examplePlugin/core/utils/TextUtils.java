@@ -20,6 +20,11 @@ import java.util.List;
 public class TextUtils {
     private final static DecimalFormat df = new DecimalFormat("#,###");
 
+    public static String hexToMc(String hex) {
+        hex = hex.replace("#", "");
+        return "§x§" + String.join("§", hex.split(""));
+    }
+
     private static List<Component> buildTerritoryComponents(RunePlayer player, Territory territory) {
         int area = (int) (Math.PI * territory.getRadius() * territory.getRadius());
         boolean isUnlocked = player.getDiscoveredTerritoryIds().contains(territory.getId());

@@ -250,4 +250,27 @@ public class HouseInstanceCreator {
         furnitureItem.placeInHouse(location, face);
         instance.getInteractableLocations().add(location.toBlockLocation());
     }
+
+    public void rotateFurnitureItem(HouseSlot slot, HouseInstance instance, BlockFace face, int id, int slotIndex) {
+        if (slot == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot rotate furniture item ID " + id + " in house instance " + instance.getInstanceUUID() + " because slot ID " + slotIndex + " does not exist in template meta.");
+            return;
+        }
+
+        Location location = HousingManager.getLocationInHouse(slot.absoluteLocation(), instance);
+        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(id);
+
+        if (!(type instanceof FurnitureItem furnitureItem)) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot rotate furniture item ID " + id + " in house instance " + instance.getInstanceUUID() + " because item ID " + id + " is not a furniture item.");
+            return;
+        }
+
+        if (!furnitureItem.getApplicableSlot().equals(slot.type())) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot rotate furniture item ID " + id + " in house instance " + instance.getInstanceUUID() + " because furniture item slot type " + furnitureItem.getApplicableSlot() + " does not match house slot type " + slot.type() + ".");
+            return;
+        }
+
+        furnitureItem.rotateInHouse(location, face);
+        instance.getInteractableLocations().add(location.toBlockLocation());
+    }
 }
