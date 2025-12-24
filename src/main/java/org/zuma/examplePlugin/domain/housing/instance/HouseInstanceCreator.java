@@ -248,5 +248,6 @@ public class HouseInstanceCreator {
         }
 
         furnitureItem.placeInHouse(location, face);
+        instance.getInteractableLocations().add(location.toBlockLocation());
     }
 }

@@ -27,14 +27,13 @@ public class HouseInstance implements Listener {
     private final String ownerName;
     private final List<InteractiveElement> interactiveElements;
     private final List<Location> interactableLocations;
-    private final List<Hologram> editHolograms = new ArrayList<>();
     private final int gridX, gridZ;
     private final HouseTemplate template;
     private final Location spawnPoint;
     private final HouseEditModeManager editManager;
 
     // Instance based configuration for a player's house
-    private boolean openToPublic, editMode;
+    private boolean openToPublic;
     private final List<UUID> invitedPlayers;
     private final List<UUID> currentVisitors;
 
@@ -52,7 +51,6 @@ public class HouseInstance implements Listener {
         this.invitedPlayers = new ArrayList<>();
         this.currentVisitors = new ArrayList<>();
         this.interactableLocations = new ArrayList<>();
-        this.editMode = false;
 
         this.editManager = new HouseEditModeManager(this);
     }
@@ -270,10 +268,8 @@ public class HouseInstance implements Listener {
             }
         }
 
-        for (Hologram hologram : editHolograms) {
-            hologram.delete();
-        }
 
+        this.editManager.cleanup();
         interactiveElements.clear();
         interactableLocations.clear();
         invitedPlayers.clear();
@@ -281,56 +277,7 @@ public class HouseInstance implements Listener {
         Bukkit.getServer().getPluginManager().callEvent(new HouseSettingsUpdateEvent(this));
     }
 
-    public void setEditMode(boolean editMode) {
-        Player owner = Bukkit.getPlayer(this.ownerUUID);
 
-        if (owner == null) {
-            return;
-        }
-
-        this.editMode = editMode;
-
-        if (!editMode) {
-            for (Hologram hologram : editHolograms) {
-                hologram.delete();
-            }
-            editHolograms.clear();
-        }
-
-        if (editMode) {
-            TemplateMeta meta = RuneQuestPlugin.getHousingManager().getTemplateMeta(this.getTemplate());
-
-            for (Map.Entry<Integer, HouseSlot> slot : meta.slots().entrySet()) {
-                updateHologramForSlot(owner, slot.getKey(), slot.getValue());
-            }
-        }
-    }
-
-    void updateHologramForSlot(Player player, int slotIndex, HouseSlot houseSlot) {
-        if (editMode) {
-            HashMap<Integer, HouseFurnitureEntry> furnitureMap = RuneQuestPlugin.getHousingManager().getInstanceFurniture(this.instanceUUID);
-
-            if (houseSlot == null) {
-                return;
-            }
-
-            Location slotLocation = HousingManager.getLocationInHouse(houseSlot.absoluteLocation(), this);
-
-            HouseFurnitureEntry occupiedBy = furnitureMap.get(slotIndex);
-            AbstractItemType type = occupiedBy != null ? RuneQuestPlugin.getItemRegistry().getType(occupiedBy.itemId()) : null;
-
-            List<String> hologramLines = occupiedBy == null ?
-                    List.of(houseSlot.type().getDisplayName() + " §7Slot") :
-                    List.of(type != null ? "§e[" + type.displayName + "]" : "§4[UNKNOWN]");
-
-            Hologram hologram = DHAPI.createHologram("house_" + this.instanceUUID + "_" + slotIndex, slotLocation.clone().add(0.5, occupiedBy == null ? 0.5 : 1.5, 0.5), hologramLines);
-            hologram.setDefaultVisibleState(false);
-            hologram.setShowPlayer(player);
-
-            editHolograms.add(hologram);
-
-        }
-    }
 
     public void handleSlotClick(RunePlayer player, int slotIndex, Hologram clickedHologram) {
         try {
@@ -353,6 +300,10 @@ public class HouseInstance implements Listener {
 
 
     public boolean isEditMode() {
-        return editMode;
+        return this.editManager.isEditMode();
+    }
+
+    public void setEditMode(boolean editMode) {
+        this.editManager.setEditMode(editMode);
     }
 }
