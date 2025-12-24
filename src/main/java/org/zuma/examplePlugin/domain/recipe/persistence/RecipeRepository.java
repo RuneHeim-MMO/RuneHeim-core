@@ -881,7 +881,7 @@ public class RecipeRepository {
                 ), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.COOKED_PIKE.getId(), RecipeType.COOKING_RECIPE, 5000,
-                        List.of(new SkillRequirement(SkillType.COOKING, 50)),
+                        List.of(new SkillRequirement(SkillType.COOKING, 55)),
                         List.of(new IngredientRecord(ItemId.RAW_PIKE, 1, true, true)),
                         new ItemRecord(ItemId.COOKED_PIKE, 1),
                         new ItemRecord(ItemId.BURNT_FOOD, 1),
