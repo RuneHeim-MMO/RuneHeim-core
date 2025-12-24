@@ -4,7 +4,10 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.*;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Icon;
+import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
+import org.zuma.examplePlugin.domain.block.impl.furniture.CombatDummyFurniture;
 import org.zuma.examplePlugin.domain.housing.records.HouseSlot;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 
@@ -28,6 +31,12 @@ public abstract class FurnitureItem extends AbstractItemType {
     public void rotateInHouse(Location location, BlockFace face) {
         Block block = location.getBlock();
         BlockData data = block.getBlockData();
+        AbstractInteractableBlock interactableBlock = RuneQuestPlugin.getBlockManager().getAbstractInteractableBlock(location.getBlock());
+
+        if (interactableBlock instanceof CombatDummyFurniture cdf) {
+            cdf.rotate(face);
+            return;
+        }
 
         if (data instanceof Directional directional) {
             directional.setFacing(face);

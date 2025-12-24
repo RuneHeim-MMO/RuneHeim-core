@@ -19,6 +19,7 @@ import org.zuma.examplePlugin.domain.housing.records.HouseFurnitureEntry;
 import org.zuma.examplePlugin.domain.housing.records.HouseSlot;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.Arrays;
@@ -74,7 +75,7 @@ public class HouseSlotEditor extends IndividualGUI {
         }
 
         Location location = HousingManager.getLocationInHouse(editingSlot.absoluteLocation(), instance);
-        boolean isRotateable = location.getBlock().getBlockData() instanceof Directional || location.getBlock().getBlockData() instanceof Rotatable;
+        boolean isRotateable = location.getBlock().getBlockData() instanceof Directional || location.getBlock().getBlockData() instanceof Rotatable || itemType.id == ItemId.COMBAT_DUMMY_FURNITURE.asInt();
 
         setTitle(GUIOverlay.HOUSE_SLOT_EDITOR_OVERLAY.asGlyph() + "§fEditing Slot #" + slotIndex + " (" + TextUtils.hexToMc(itemType.rarity.getHexColor()) + itemType.displayName + "§f)");
         Inventory inventory = getBaseInventory();

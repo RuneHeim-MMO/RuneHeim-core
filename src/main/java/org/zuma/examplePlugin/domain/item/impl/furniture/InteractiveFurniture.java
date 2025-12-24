@@ -28,7 +28,7 @@ public class InteractiveFurniture extends FurnitureItem {
 
     public void placeInHouse(Location location, BlockFace face) {
         try {
-            AbstractInteractableBlockMeta meta = new AbstractInteractableBlockMeta((int) (Math.random() * 10000000), this.type, face, location, HologramSide.TOP);
+            AbstractInteractableBlockMeta meta = new AbstractInteractableBlockMeta(100000 + (int) (Math.random() * 10000000), this.type, face, location, HologramSide.TOP);
             RuneQuestPlugin.getBlockLoader().registerBlock(RuneQuestPlugin.getBlockManager(), meta, this.json);
         } catch (Exception e) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to place furniture item in house: " + e.getMessage());

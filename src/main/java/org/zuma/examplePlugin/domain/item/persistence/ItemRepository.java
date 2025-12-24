@@ -162,12 +162,12 @@ public class ItemRepository {
                                 , 1)
                 ),
 
-                /*public record InventoryOpenerMeta(int inventoryId, Material blockType,
-                                  @Nullable List<SkillRequirement> requirements,
-                                  MarkerType marker, String markerLabel,
-                                  String label, String icon) {*/
-
                 // Furniture
+                new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.COMBAT_DUMMY_FURNITURE.asInt(), Material.ARMOR_STAND, ItemRarity.RARE, "Combat Dummy", List.of("Used to track your max hit."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.INTERACTIVE, BlockType.CombatDummyFurniture, null), 1)
+                ),
+
                 new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.ANVIL_FURNITURE.asInt(), Material.ANVIL, ItemRarity.RARE, "Anvil", List.of("Used to craft and repair equipment."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.INTERACTIVE, BlockType.InventoryOpener, toVersionedJson(new InventoryOpenerMeta(InventoryId.ANVIL.asInt(), Material.ANVIL, null, null, null, "Anvil", Icon.ANVIL.get()), 1)), 1)

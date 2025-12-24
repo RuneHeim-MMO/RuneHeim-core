@@ -84,6 +84,10 @@ public class InteractiveMobs {
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "farm_horse_dealer", null, 0, Dialogs.farmHorseTrader));
 
         registry.register(MobType.COMBAT_DUMMY_FACE_SOUTH.getId(), () -> new CombatDummy(0));
+        registry.register(MobType.COMBAT_DUMMY_FACE_NORTH.getId(), () -> new CombatDummy(180));
+        registry.register(MobType.COMBAT_DUMMY_FACE_EAST.getId(), () -> new CombatDummy(-90));
+        registry.register(MobType.COMBAT_DUMMY_FACE_WEST.getId(), () -> new CombatDummy(90));
+
         registry.register(MobType.FUSION_MASTER.getId(), () -> new FusionMaster(Icon.SCROLL_RED.get() + " Fusion Master", MobBehaviors.FUSION_MASTER.getBehavior(), 0));
 
         registry.register(MobType.AUCTIONEER.getId(), () -> new InventoryOpenerMob(Icon.TRADE.get() + " Auctioneer", EquipmentSet.AUCTIONEER,

@@ -20,6 +20,7 @@ import org.zuma.examplePlugin.domain.housing.template.TemplateMeta;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.FurnitureItem;
+import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
@@ -85,7 +86,24 @@ public class HouseEditModeManager {
                     List.of(houseSlot.type().getDisplayName() + " §7Slot") :
                     List.of(type != null ? TextUtils.hexToMc(type.rarity.getHexColor()) + "[" + type.displayName + "]" : "§4[UNKNOWN]");
 
-            Hologram hologram = DHAPI.createHologram(hologramKey, slotLocation.clone().add(0.5, occupiedBy == null ? 0.5 : 1.5, 0.5), hologramLines);
+            Location hologramLocation = slotLocation.clone().add(0.5, occupiedBy == null ? 0.5 : 1.5, 0.5);
+
+            // If slot is occupied, offset hologram by 0.25 in the furniture's facing direction
+            if (occupiedBy != null) {
+               /* BlockFace face = occupiedBy.face();
+                switch (face) {
+                    case NORTH -> hologramLocation.add(0, 0, -0.25);
+                    case SOUTH -> hologramLocation.add(0, 0, 0.25);
+                    case EAST -> hologramLocation.add(0.25, 0, 0);
+                    case WEST -> hologramLocation.add(-0.25, 0, 0);
+                }*/
+
+                if (occupiedBy.itemId() == ItemId.COMBAT_DUMMY_FURNITURE.asInt()) {
+                    hologramLocation.add(0, 1.5, 0);
+                }
+            }
+
+            Hologram hologram = DHAPI.createHologram(hologramKey, hologramLocation, hologramLines);
             hologram.setDefaultVisibleState(false);
             hologram.setShowPlayer(player);
 
@@ -186,6 +204,7 @@ public class HouseEditModeManager {
 
         entry.setFace(newFace);
         RuneQuestPlugin.getHousingManager().getInstanceCreator().rotateFurnitureItem(clickedSlot, instance, newFace, furnitureMap.get(slotIndex).itemId(), slotIndex);
+        //updateHologramForSlot(player, slotIndex, clickedSlot);
         SoundType.ROTATE_BLOCK_GENERIC.play(player, true);
     }
 

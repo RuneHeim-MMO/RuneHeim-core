@@ -43,10 +43,23 @@ public class CombatDummy extends GenericCombatant {
             Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
                 if (entity instanceof LivingEntity livingEntity) livingEntity.setAI(false);
 
-                Location fixedYaw = entity.getLocation().clone();
-                fixedYaw.setYaw(getYaw());
+                // Find the solid ground below current position (for indoor placement)
+                Location currentLoc = entity.getLocation();
+                Location groundLoc = currentLoc.clone();
+                // Scan downwards to find solid ground, max 5 blocks down
+                for (int y = currentLoc.getBlockY(); y >= currentLoc.getBlockY() - 5; y--) {
+                    groundLoc.setY(y);
+                    if (groundLoc.getBlock().getType().isSolid() && 
+                        groundLoc.clone().add(0, 1, 0).getBlock().getType().isAir()) {
+                        groundLoc.setY(y + 1.0); // Place on top of solid block
+                        break;
+                    }
+                }
+                
+                groundLoc.setYaw(getYaw());
+                groundLoc.setPitch(currentLoc.getPitch());
 
-                entity.teleport(fixedYaw);
+                entity.teleport(groundLoc);
             }, 5);
             return null;
         });

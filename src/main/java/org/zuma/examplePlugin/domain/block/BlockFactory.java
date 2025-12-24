@@ -1,11 +1,13 @@
 package org.zuma.examplePlugin.domain.block;
 
 import com.google.gson.Gson;
+import org.bukkit.Material;
 import org.zuma.examplePlugin.core.exception.UnsupportedJsonVersionException;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.impl.*;
 import org.zuma.examplePlugin.domain.block.impl.door.DoorBlock;
+import org.zuma.examplePlugin.domain.block.impl.furniture.CombatDummyFurniture;
 import org.zuma.examplePlugin.domain.block.impl.furniture.LightableBlock;
 import org.zuma.examplePlugin.domain.block.impl.trigger.ItemCollectorTrigger;
 import org.zuma.examplePlugin.domain.block.impl.door.TeleportDoor;
@@ -27,8 +29,16 @@ public class BlockFactory {
             case InvisibleMarker -> createInvisibleMarker(meta, json);
             case CommandBlock -> createCommandBlock(meta, json);
             case LightableBlock -> createLightableBlock(meta, json);
+            case CombatDummyFurniture -> createCombatDummyFurniture(meta, json);
             default -> throw new IllegalArgumentException("Unknown interactable block type: " + meta.type());
         };
+    }
+
+    private CombatDummyFurniture createCombatDummyFurniture(AbstractInteractableBlockMeta meta, @Nullable VersionedJson json) {
+        CombatDummyFurniture block = new CombatDummyFurniture(meta);
+        block.spawn(Material.AIR);
+
+        return block;
     }
 
     private LightableBlock createLightableBlock(AbstractInteractableBlockMeta meta, @Nullable VersionedJson json) {

@@ -12,7 +12,8 @@ public enum BlockType {
     TeleportDoor(6, Material.IRON_DOOR),
     InvisibleMarker(7, Material.AIR),
     CommandBlock(8, Material.LODESTONE),
-    LightableBlock(9, Material.REDSTONE_LAMP);
+    LightableBlock(9, Material.REDSTONE_LAMP),
+    CombatDummyFurniture(10, Material.ARMOR_STAND);
 
     private final int id;
     private final Material material;

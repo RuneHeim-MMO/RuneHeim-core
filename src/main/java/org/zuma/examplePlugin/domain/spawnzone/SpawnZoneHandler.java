@@ -135,15 +135,26 @@ public class SpawnZoneHandler {
     public void initializeFromDb() {
         this.repository.getAll().forEach(record -> {
             AbstractSpawnZone zone = factory.createZone(record.meta(), record.json());
-
-            if (spawnZones.containsKey(zone.getId())) {
-                throw new IllegalStateException("Spawn zone with id " + zone.getId() + " already exists!");
-            }
-
-            spawnZones.put(zone.getId(), zone);
+            registerSpawnZone(zone);
         });
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Loaded " + spawnZones.size() + " spawn zones.");
+    }
+
+    public void registerSpawnZone(AbstractSpawnZone zone) {
+        if (spawnZones.containsKey(zone.getId())) {
+            throw new IllegalStateException("Spawn zone with id " + zone.getId() + " already exists!");
+        }
+
+        spawnZones.put(zone.getId(), zone);
+    }
+
+    public void unregisterSpawnZone(int id) {
+        AbstractSpawnZone zone = spawnZones.get(id);
+        if (zone != null) {
+            zone.clearAliveEntities();
+            spawnZones.remove(id);
+        }
     }
 
 
@@ -191,4 +202,7 @@ public class SpawnZoneHandler {
         tickPartition = (tickPartition + 1) % 3;
     }
 
+    public SpawnZoneFactory getFactory() {
+        return factory;
+    }
 }

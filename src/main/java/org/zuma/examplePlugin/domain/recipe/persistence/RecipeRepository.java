@@ -21,6 +21,23 @@ public class RecipeRepository {
     public List<RecipeEntity> getAll() {
         return List.of(
                 // Furniture
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.COMBAT_DUMMY_FURNITURE.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 8000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 44)),
+                        List.of(
+                                new IngredientRecord(ItemId.STEEL_BAR, 4, true, false),
+                                new IngredientRecord(ItemId.MAPLE_LOG, 8, true, false),
+                                new IngredientRecord(ItemId.HARD_LEATHER, 8, true, false),
+                                new IngredientRecord(ItemId.THREAD, 8, true, false),
+
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false),
+                                new IngredientRecord(ItemId.CHISEL, 1, false, false),
+                                new IngredientRecord(ItemId.NEEDLE, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.COMBAT_DUMMY_FURNITURE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 130)), null), null),
+
+
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.ANVIL_FURNITURE.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 10000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 50)),
                         List.of(
