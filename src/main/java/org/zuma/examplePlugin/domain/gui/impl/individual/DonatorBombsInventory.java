@@ -144,7 +144,7 @@ public class DonatorBombsInventory extends PaginatedIndividualGUI {
             return;
         }
 
-        Integer buttonId = getMenuValue(clickedItem);
+        Integer buttonId = getMenuValueInt(clickedItem);
 
         if (buttonId == null) {
             return;

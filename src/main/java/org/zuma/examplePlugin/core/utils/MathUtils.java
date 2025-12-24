@@ -35,6 +35,10 @@ public class MathUtils {
     }
 
     public static double getLocationsDistanceXZ(Location loc1, Location loc2) {
+        if(loc1.getWorld() != loc2.getWorld()) {
+            return Double.MAX_VALUE;
+        }
+
         double dx = loc1.getX() - loc2.getX();
         double dz = loc1.getZ() - loc2.getZ();
         return Math.sqrt(dx * dx + dz * dz);

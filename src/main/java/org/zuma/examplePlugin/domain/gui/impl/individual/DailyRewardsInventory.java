@@ -3,7 +3,6 @@ package org.zuma.examplePlugin.domain.gui.impl.individual;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -12,7 +11,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
-import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
 import org.zuma.examplePlugin.domain.daily.DailyRewardEntry;
 import org.zuma.examplePlugin.domain.gui.base.IndividualGUI;
 import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
@@ -22,7 +20,6 @@ import org.zuma.examplePlugin.domain.item.impl.CoinsItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class DailyRewardsInventory extends IndividualGUI {
     private static final List<Integer> AVAILABLE_SLOTS = Arrays.asList(
@@ -137,7 +134,7 @@ public class DailyRewardsInventory extends IndividualGUI {
             return;
         }
 
-        Integer menuValue = getMenuValue(currentItem);
+        Integer menuValue = getMenuValueInt(currentItem);
 
         if (menuValue == null) {
             return;

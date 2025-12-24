@@ -19,6 +19,7 @@ import org.zuma.examplePlugin.domain.daily.DailyRewardHandler;
 import org.zuma.examplePlugin.domain.dialog.DialogHandler;
 import org.zuma.examplePlugin.domain.droptable.DropTableHandler;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
+import org.zuma.examplePlugin.domain.housing.HousingManager;
 import org.zuma.examplePlugin.domain.item.*;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.mob.*;
@@ -88,7 +89,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new PrayerModule(),
                         new PartyModule(),
                         new ServerModifierModule(),
-                        new DailyRewardModule()
+                        new DailyRewardModule(),
+                        new PlayerHousingModule()
                 ), moduleContext);
     }
 
@@ -248,5 +250,13 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static AnalyticsContainer getAnalytics() {
         return getAnalyticsHandler().getAnalytics();
+    }
+
+    public static HousingManager getHousingManager() {
+        return pluginInstance.moduleContext.get(HousingManager.class);
+    }
+
+    public static BlockLoader getBlockLoader() {
+        return pluginInstance.moduleContext.get(BlockLoader.class);
     }
 }

@@ -158,7 +158,7 @@ public class XPLampInventory extends IndividualGUI {
             return;
         }
 
-        Integer menuValue = getMenuValue(currentItem);
+        Integer menuValue = getMenuValueInt(currentItem);
 
         if (menuValue == null) {
             return;

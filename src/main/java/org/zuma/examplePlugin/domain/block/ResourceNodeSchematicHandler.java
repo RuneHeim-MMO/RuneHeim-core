@@ -35,14 +35,14 @@ public class ResourceNodeSchematicHandler {
 
         Location location = node.getOrigin().clone(); // Player offset (during schematic creation he should be under the center point)
         String schematicName = node.isDepleted() && this.depletedSchematic != null ? this.depletedSchematic : this.schematicName;
-        Path schematicPath = ConfigManager.SCHEMATICS_PATH.resolve(schematicName + ".schem");
+        Path schematicPath = ConfigManager.NODE_SCHEMATICS_PATH.resolve(schematicName + ".schem");
 
         if (schematicName == null) {
             return;
         }
 
         spawner.clearLastPaste();
-        Clipboard spawnClipboard = spawner.pasteSchematic(location, schematicPath.toFile(), true);
+        Clipboard spawnClipboard = spawner.pasteSchematic(location, schematicPath.toFile(), true, false);
 
         if (spawnClipboard == null) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed spawning schematic for " + node.getNodeType().getLabel() + "! File: " + schematicPath);

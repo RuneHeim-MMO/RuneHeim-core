@@ -6,6 +6,7 @@ import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.impl.*;
 import org.zuma.examplePlugin.domain.block.impl.door.DoorBlock;
+import org.zuma.examplePlugin.domain.block.impl.furniture.LightableBlock;
 import org.zuma.examplePlugin.domain.block.impl.trigger.ItemCollectorTrigger;
 import org.zuma.examplePlugin.domain.block.impl.door.TeleportDoor;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
@@ -24,9 +25,48 @@ public class BlockFactory {
             case ItemTrigger -> createItemTrigger(meta, json);
             case TeleportDoor -> createTeleportDoor(meta, json);
             case InvisibleMarker -> createInvisibleMarker(meta, json);
+            case CommandBlock -> createCommandBlock(meta, json);
+            case LightableBlock -> createLightableBlock(meta, json);
             default -> throw new IllegalArgumentException("Unknown interactable block type: " + meta.type());
         };
     }
+
+    private LightableBlock createLightableBlock(AbstractInteractableBlockMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create lightable " + meta.type() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+
+                LightableBlockMeta deserialized = new Gson().fromJson(json.meta(), LightableBlockMeta.class);
+                LightableBlock block = new LightableBlock(meta);
+                block.spawn(deserialized.material());
+
+                return block;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+    }
+
+    private CommandBlock createCommandBlock(AbstractInteractableBlockMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create command block " + meta.type() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+
+                CommandBlockMeta deserialized = new Gson().fromJson(json.meta(), CommandBlockMeta.class);
+                CommandBlock block = new CommandBlock(meta);
+                block.initializeBlock(deserialized.hologramContent(), deserialized.commands());
+
+                return block;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+    }
+
 
     private InvisibleMarker createInvisibleMarker(AbstractInteractableBlockMeta meta, @Nullable VersionedJson json) {
         if (json == null) {

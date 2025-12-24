@@ -90,7 +90,7 @@ public class BlockLoader {
     }
 
     @Nullable
-    private AbstractInteractableBlock registerBlock(BlockManager manager, AbstractInteractableBlockMeta meta, VersionedJson json) {
+    public AbstractInteractableBlock registerBlock(BlockManager manager, AbstractInteractableBlockMeta meta, VersionedJson json) {
         try {
             AbstractInteractableBlock block = factory.createBlock(manager, meta, json, this);
             this.manager.registerBlock(block);

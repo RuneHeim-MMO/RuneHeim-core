@@ -14,11 +14,12 @@ public class Territory implements Restrictable {
     private final Location centerPoint, spawnPoint;
     private final int radius, minLevel, maxLevel;
     private final String name, description, firstTimeDiscoveryLore, id;
-    private final boolean pvpZone, renderOnMap, silent, disableStuckCmd;
+    private final boolean pvpZone, renderOnMap, silent, disableStuckCmd; // If true, the territory is temporary and will not be saved to player data.
     private final List<String> requiredQuestsIds;
     private boolean dropItemsOnDeath, ignoreCutscene;
     private List<SoundType> ambientSounds;
     private final int maxHeight;
+    private boolean temporary;
 
     @Nullable
     private String entryDenyMessage;
@@ -46,6 +47,7 @@ public class Territory implements Restrictable {
         this.silent = silent; // If true, no messages will be sent to players when they discover/enter/leave the territory
         this.maxHeight = maxHeight;
         this.disableStuckCmd = disableStuckCmd;
+        this.temporary = false;
     }
 
     public boolean isDisableStuckCmd() {
@@ -173,5 +175,13 @@ public class Territory implements Restrictable {
 
     public int getMaxHeight() {
         return maxHeight;
+    }
+
+    public boolean isTemporary() {
+        return temporary;
+    }
+
+    public void setTemporary(boolean temporary) {
+        this.temporary = temporary;
     }
 }

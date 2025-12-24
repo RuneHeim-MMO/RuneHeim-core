@@ -16,7 +16,12 @@ import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.InventoryOpenerBlock;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.gui.base.StorageInventory;
+import org.zuma.examplePlugin.domain.gui.impl.individual.house.HouseBuyingMenu;
+import org.zuma.examplePlugin.domain.gui.impl.individual.house.HouseDiscoverer;
+import org.zuma.examplePlugin.domain.gui.impl.individual.house.HouseSettings;
+import org.zuma.examplePlugin.domain.gui.impl.individual.house.HouseSlotEditor;
 import org.zuma.examplePlugin.domain.gui.impl.individual.storage.*;
+import org.zuma.examplePlugin.domain.housing.HousingRegion;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.storage.RepositoryQueryLockController;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
@@ -133,6 +138,11 @@ public class GUIHandler {
         this.registry.register(InventoryId.DAILY_REWARDS.asInt(), () -> new DailyRewardsInventory(GUIOverlay.DAILY_REWARDS_OVERLAY.asGlyph() + "§f" + Icon.TREASURE_CHEST.get() + "§f Daily Rewards", InventoryId.DAILY_REWARDS.asInt()));
         this.registry.register(InventoryId.PLAYER_MODIFIERS.asInt(), () -> new ModifiersInventory(GUIOverlay.PLAYER_MODIFIERS_OVERLAY.asGlyph() + "§f" + Icon.BOOK.get() + "§f Active Modifiers", InventoryId.PLAYER_MODIFIERS.asInt()));
 
+
+        this.registry.register(InventoryId.HOUSE_SETTINGS.asInt(), () -> new HouseSettings(GUIOverlay.HOUSE_SETTINGS_OVERLAY.asGlyph() + "§f" + Icon.HOUSE.get() + "§f House Settings", InventoryId.HOUSE_SETTINGS.asInt()));
+        this.registry.register(InventoryId.DRAKKAR_HOUSE_DISCOVERER.asInt(), () -> new HouseDiscoverer(GUIOverlay.HOUSES_DISCOVERER_OVERLAY.asGlyph() + "§f" + Icon.HOUSE.get() + "§f " + HousingRegion.DRAKKAR.getName() + " houses", InventoryId.DRAKKAR_HOUSE_DISCOVERER.asInt(), HousingRegion.DRAKKAR));
+        this.registry.register(InventoryId.DRAKKAR_BUY_HOUSE.asInt(), () -> new HouseBuyingMenu(GUIOverlay.BUY_HOUSE_OVERLAY.asGlyph() + "§f" + Icon.HOUSE.get() + "§f Buy a house in " + HousingRegion.DRAKKAR.getName(), InventoryId.DRAKKAR_BUY_HOUSE.asInt(), HousingRegion.DRAKKAR));
+        this.registry.register(InventoryId.HOUSE_SLOT_EDITOR.asInt(), () -> new HouseSlotEditor(GUIOverlay.HOUSE_SLOT_EDITOR_OVERLAY.asGlyph() + "§fEdit Slot", InventoryId.HOUSE_SLOT_EDITOR.asInt()));
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
     }

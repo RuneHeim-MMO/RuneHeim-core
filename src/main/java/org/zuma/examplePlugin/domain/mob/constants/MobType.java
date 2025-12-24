@@ -33,6 +33,8 @@ public enum MobType {
     CITY_CITIZEN_SAHARIJIN,
     CITY_CITIZEN_JUNGLE,
 
+    DRAKKAR_CONCIERGE,
+
     // Herblore shops
     SWAMP_ISLAND_HERBLORE_SHOP,
 

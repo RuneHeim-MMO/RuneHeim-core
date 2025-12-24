@@ -17,8 +17,11 @@ import com.sk89q.worldedit.world.World;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.Rotatable;
 import org.bukkit.block.sign.Side;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
@@ -35,7 +38,7 @@ public class SchematicSpawner {
     private CuboidRegion lastPaste = null;
 
     @Nullable
-    public Clipboard pasteSchematic(Location location, File schematicFile, boolean ignoreAirBlocks) {
+    public Clipboard pasteSchematic(Location location, File schematicFile, boolean ignoreAirBlocks, boolean resetOrigin) {
         try {
             ClipboardFormat format = ClipboardFormats.findByFile(schematicFile);
             if (format == null) {
@@ -47,14 +50,23 @@ public class SchematicSpawner {
                 clipboard = reader.read();
             }
 
-            World weWorld = BukkitAdapter.adapt(location.getWorld());
-            BlockVector3 origin = BlockVector3.at(
-                    location.getBlockX(),
-                    location.getBlockY() - 2, // Player offset
-                    location.getBlockZ());
+            BlockVector3 origin;
 
+            if (resetOrigin) {
+                clipboard.setOrigin(clipboard.getRegion().getMinimumPoint());
+                origin = BlockVector3.at(location.getBlockX(), location.getBlockY(), location.getBlockZ());
+            } else {
+                origin = BlockVector3.at(location.getBlockX(),
+                        location.getBlockY() - 2, // Player offset
+                        location.getBlockZ());
+            }
+
+            World weWorld = BukkitAdapter.adapt(location.getWorld());
 
             try (EditSession editSession = WorldEdit.getInstance().newEditSession(weWorld)) {
+                editSession.setFastMode(true);
+                editSession.setBatchingChunks(true);
+
                 Operation operation = new ClipboardHolder(clipboard)
                         .createPaste(editSession)
                         .to(origin)
@@ -82,30 +94,39 @@ public class SchematicSpawner {
     public List<InteractiveElement> extractInteractiveElements() {
         List<InteractiveElement> elements = new ArrayList<>();
 
-        if (lastPaste == null) {
-            return elements;
-        }
+        if (lastPaste == null) return elements;
 
         World weWorld = lastPaste.getWorld();
+        org.bukkit.World bukkitWorld = BukkitAdapter.asBukkitWorld(weWorld).getWorld();
 
         lastPaste.forEach(pos -> {
-            Location loc = new Location(BukkitAdapter.asBukkitWorld(weWorld).getWorld(), pos.getX(), pos.getY() + 1, pos.getZ());
-            Block block = loc.getBlock();
+            Block block = bukkitWorld.getBlockAt(pos.x(), pos.y() + 1, pos.z());
+            Material type = block.getType();
 
-            if (block.getState() instanceof Sign sign && block.getBlockData() instanceof Directional directional) {
-                String firstLine = TextUtils.extractPlainText(sign.getSide(Side.FRONT).line(0));
-                try {
-                    InteractiveElType type = InteractiveElType.valueOf(firstLine);
-                    elements.add(new InteractiveElement(block.getLocation(), directional.getFacing(), type));
-                    block.setType(Material.AIR); // Remove the sign block
-                } catch (IllegalArgumentException e) {
-                    // Not a valid enum constant, ignore
-                }
+            if (!type.name().endsWith("_SIGN")) return; // cheap type check
+
+            BlockData data = block.getBlockData();
+            BlockFace facing = null;
+
+            if (data instanceof Directional dir) facing = dir.getFacing();
+            else if (data instanceof Rotatable rot) facing = rot.getRotation();
+
+            if (facing == null) return;
+
+            Sign sign = (Sign) block.getState();
+            String firstLine = TextUtils.extractPlainText(sign.getSide(Side.FRONT).line(0));
+
+            try {
+                InteractiveElType typeEnum = InteractiveElType.valueOf(firstLine);
+                elements.add(new InteractiveElement(block.getLocation(), facing, typeEnum));
+                block.setType(Material.AIR); // optional: batch this later
+            } catch (IllegalArgumentException ignored) {
             }
         });
 
         return elements;
     }
+
 
     public void clearLastPaste() {
         if (lastPaste == null) return;

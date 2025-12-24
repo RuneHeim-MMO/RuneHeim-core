@@ -8,6 +8,8 @@ import org.zuma.examplePlugin.core.analytics.AnalyticsContainer;
 import org.zuma.examplePlugin.core.analytics.AnalyticsHandler;
 import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.analytics.AnalyticsType;
+import org.zuma.examplePlugin.core.config.ConfigManager;
+import org.zuma.examplePlugin.core.config.EnvironmentType;
 import org.zuma.examplePlugin.core.permissions.Role;
 import org.zuma.examplePlugin.core.permissions.roles.BaseRole;
 import org.zuma.examplePlugin.core.permissions.roles.UpgradedRole;
@@ -253,12 +255,16 @@ public class RunePlayerManager {
         if (players.isEmpty()) return;
 
         AtomicInteger remaining = new AtomicInteger(players.size());
-        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Auto-saving " + players.size() + " players.");
+        if (ConfigManager.environment.equals(EnvironmentType.DEVELOPMENT)) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Auto-saving " + players.size() + " players.");
+        }
 
         Bukkit.getOnlinePlayers().forEach(p -> {
             savePlayerDataAsync(p, false, false, () -> {
                 if (remaining.decrementAndGet() == 0) {
-                    RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Auto-saved " + players.size() + " players.");
+                    if (ConfigManager.environment.equals(EnvironmentType.DEVELOPMENT)) {
+                        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Auto-saved " + players.size() + " players.");
+                    }
                 }
             }, false);
         });

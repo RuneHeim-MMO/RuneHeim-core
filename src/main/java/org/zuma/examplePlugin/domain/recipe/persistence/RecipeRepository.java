@@ -20,6 +20,117 @@ public class RecipeRepository {
 
     public List<RecipeEntity> getAll() {
         return List.of(
+                // Furniture
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ANVIL_FURNITURE.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 10000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 50)),
+                        List.of(
+                                new IngredientRecord(ItemId.STEEL_BAR, 64, true, false),
+
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.ANVIL_FURNITURE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 150)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.STOVE_FURNITURE.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 10000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 53)),
+                        List.of(
+                                new IngredientRecord(ItemId.STEEL_BAR, 48, true, false),
+                                new IngredientRecord(ItemId.PURE_COAL_ORE, 32, true, false),
+
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false),
+                                new IngredientRecord(ItemId.FLINT_AND_STEEL, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.STOVE_FURNITURE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 167)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.CRAFTING_TABLE_FURNITURE.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 8000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 45)),
+                        List.of(
+                                new IngredientRecord(ItemId.YEW_LOG, 8, true, false),
+                                new IngredientRecord(ItemId.THICK_HIDE, 4, true, false),
+                                new IngredientRecord(ItemId.LINEN_FABRIC, 4, true, false),
+
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false),
+                                new IngredientRecord(ItemId.CHISEL, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.CRAFTING_TABLE_FURNITURE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 140)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.FLETCHING_TABLE_FURNITURE.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 8000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 48)),
+                        List.of(
+                                new IngredientRecord(ItemId.YEW_LOG, 8, true, false),
+                                new IngredientRecord(ItemId.HARD_LEATHER, 4, true, false),
+                                new IngredientRecord(ItemId.LINEN_FABRIC, 4, true, false),
+
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false),
+                                new IngredientRecord(ItemId.CHISEL, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.FLETCHING_TABLE_FURNITURE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 168)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.BLAST_FURNACE_FURNITURE.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 15000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 65)),
+                        List.of(
+                                new IngredientRecord(ItemId.STEEL_BAR, 64, true, false),
+                                new IngredientRecord(ItemId.PURE_COAL_ORE, 64, true, false),
+
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false),
+                                new IngredientRecord(ItemId.FLINT_AND_STEEL, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.BLAST_FURNACE_FURNITURE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 227)), null), null),
+
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ALTAR_FURNITURE.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 10000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 55)),
+                        List.of(
+                                new IngredientRecord(ItemId.MAGIC_LOG, 16, true, false),
+                                new IngredientRecord(ItemId.MAGIC_ASHES, 2, true, false),
+                                new IngredientRecord(ItemId.SOFT_CUB_FUR, 2, true, false),
+
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false),
+                                new IngredientRecord(ItemId.CHISEL, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.ALTAR_FURNITURE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 200)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.LANTERN_FURNITURE.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 40)),
+                        List.of(
+                                new IngredientRecord(ItemId.STEEL_BAR, 8, true, false),
+                                new IngredientRecord(ItemId.PURE_COAL_ORE, 2, true, false),
+
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false),
+                                new IngredientRecord(ItemId.FLINT_AND_STEEL, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.LANTERN_FURNITURE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 140)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.SOUL_LANTERN_FURNITURE.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 43)),
+                        List.of(
+                                new IngredientRecord(ItemId.STEEL_BAR, 8, true, false),
+                                new IngredientRecord(ItemId.PURE_COAL_ORE, 2, true, false),
+                                new IngredientRecord(ItemId.MAGIC_ASHES, 2, true, false),
+
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false),
+                                new IngredientRecord(ItemId.FLINT_AND_STEEL, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.SOUL_LANTERN_FURNITURE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 150)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.LAMP_FURNITURE.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 5000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 42)),
+                        List.of(
+                                new IngredientRecord(ItemId.STEEL_BAR, 8, true, false),
+                                new IngredientRecord(ItemId.PURE_COAL_ORE, 2, true, false),
+
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.REDSTONE_LAMP_FURNITURE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 147)), null), null),
+
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.TOOL_STORAGE_BAG.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 10000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 45)),
@@ -111,7 +222,7 @@ public class RecipeRepository {
                                 new IngredientRecord(ItemId.LEATHER, 1, true, false)
                         ),
                         new ItemRecord(ItemId.LEATHER_BODY, 1),
-                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 25.0)), null), null),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 38.0)), null), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.LEATHER_CHAPS.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 18)),
@@ -121,7 +232,7 @@ public class RecipeRepository {
                                 new IngredientRecord(ItemId.LEATHER, 1, true, false)
                         ),
                         new ItemRecord(ItemId.LEATHER_LEGGINGS, 1),
-                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 27.0)), null), null),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 45.0)), null), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.LEATHER_BOOTS.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 7)),
@@ -141,7 +252,7 @@ public class RecipeRepository {
                                 new IngredientRecord(ItemId.HARD_LEATHER, 1, true, false)
                         ),
                         new ItemRecord(ItemId.HARD_LEATHER_BODY, 1),
-                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 35.0)), null), null),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 70.0)), null), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.HARD_LEATHER_CHAPS.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 28)),
@@ -151,7 +262,7 @@ public class RecipeRepository {
                                 new IngredientRecord(ItemId.HARD_LEATHER, 1, true, false)
                         ),
                         new ItemRecord(ItemId.HARD_LEATHER_LEGGINGS, 1),
-                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 35.0)), null), null),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 70.0)), null), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.STUDDED_LEATHER_BODY.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 41)),
@@ -160,7 +271,7 @@ public class RecipeRepository {
                                 new IngredientRecord(ItemId.IRON_ARROW_TIPS, 1, false, false)
                         ),
                         new ItemRecord(ItemId.STUDDED_LEATHER_BODY, 1),
-                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 40.0)), null), null),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 110.0)), null), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.STUDDED_LEATHER_CHAPS.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 44)),
@@ -169,7 +280,7 @@ public class RecipeRepository {
                                 new IngredientRecord(ItemId.IRON_ARROW_TIPS, 1, false, false)
                         ),
                         new ItemRecord(ItemId.STUDDED_LEATHER_LEGGINGS, 1),
-                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 42.0)), null), null),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 115.0)), null), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.GREEN_DHIDE_BODY.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 63)),
@@ -179,7 +290,7 @@ public class RecipeRepository {
                                 new IngredientRecord(ItemId.DRAGON_LEATHER, 3, true, false)
                         ),
                         new ItemRecord(ItemId.GREEN_DHIDE_BODY, 1),
-                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 186.0)), null), null),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 190.0)), null), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.GREEN_DHIDE_CHAPS.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 60)),
@@ -189,7 +300,7 @@ public class RecipeRepository {
                                 new IngredientRecord(ItemId.DRAGON_LEATHER, 2, true, false)
                         ),
                         new ItemRecord(ItemId.GREEN_DHIDE_LEGGINGS, 1),
-                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 124.0)), null), null),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 180.0)), null), null),
 
 
                 // Gems cutting (crafting)

@@ -30,12 +30,15 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class TeleportDoor extends QuestLockedInteractable implements MultiBlockHitbox {
     private final Location teleportLocation;
     private final String id, label;
     private final Door.Hinge hinge;
     private final List<UUID> inUseBy = new ArrayList<>();
+    private @Nullable Consumer<RunePlayer> onUse;
 
     public TeleportDoor(AbstractInteractableBlockMeta meta, Door.Hinge hinge, String id, String label, String world, int x, int y, int z, int yaw, QuestLockedMeta questLockedMeta) {
         super(meta, questLockedMeta);
@@ -43,6 +46,7 @@ public class TeleportDoor extends QuestLockedInteractable implements MultiBlockH
         this.id = id;
         this.label = label;
         this.hinge = hinge;
+        this.onUse = null;
     }
 
     private void initializeHologram() {
@@ -56,6 +60,10 @@ public class TeleportDoor extends QuestLockedInteractable implements MultiBlockH
             return;
         }
 
+        if (teleportLocation.getWorld() == null) {
+            teleportLocation.setWorld(Bukkit.getWorld("world"));
+        }
+
         getLocation().getWorld().playSound(getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1f, 1f);
         setDoorOpen(true);
         inUseBy.add(player.getUUID());
@@ -63,6 +71,7 @@ public class TeleportDoor extends QuestLockedInteractable implements MultiBlockH
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
             Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
                 player.asBukkitPlayer().teleport(teleportLocation);
+                if (this.onUse != null) onUse.accept(player);
                 setDoorOpen(false);
                 inUseBy.remove(player.getUUID());
 
@@ -132,4 +141,7 @@ public class TeleportDoor extends QuestLockedInteractable implements MultiBlockH
         return this.id;
     }
 
+    public void setOnUse(@Nullable Consumer<RunePlayer> onUse) {
+        this.onUse = onUse;
+    }
 }

@@ -94,7 +94,7 @@ public class TerritoriesInventory extends PaginatedIndividualGUI {
             return;
         }
 
-        Integer menuValue = getMenuValue(currentItem);
+        Integer menuValue = getMenuValueInt(currentItem);
 
         if (menuValue == null) {
             return;

@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.player;
 
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -339,6 +340,10 @@ public class RunePlayer implements CombatEntity {
         safeLocation = null;
     }
 
+    public void setSafeLocation(@Nullable Location safeLocation) {
+        this.safeLocation = safeLocation;
+    }
+
     @Nullable
     public Location getSafeLocation() {
         return safeLocation;
@@ -556,4 +561,5 @@ public class RunePlayer implements CombatEntity {
     public void setAnalyticsContainer(AnalyticsContainer analyticsContainer) {
         this.analyticsContainer = analyticsContainer;
     }
+
 }
