@@ -16,7 +16,7 @@ public abstract class FurnitureItem extends AbstractItemType {
         this.applicableSlot = applicableSlot;
 
         if (applicableSlot.equals(HouseSlot.HouseSlotType.DECORATION)) {
-            super.setTypeLore("Decoration Furniture", Icon.FLOWER.get());
+            super.setTypeLore("Decorative Furniture", Icon.FLOWER.get());
         } else {
             super.setTypeLore("Interactive Furniture", Icon.GEAR.get());
         }
