@@ -398,7 +398,7 @@ public class SpawnZoneRepository {
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(49, SpawnZoneType.AREA, 30, 15,
-                        new Location(Bukkit.getWorld("world"), 265, 130, -425)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new Location(Bukkit.getWorld("world"), 265, 130, -455)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
                         new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
                         new SpawnZoneMobRecord(MobType.DEER_BASE_34, 6, 100),
