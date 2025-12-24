@@ -895,7 +895,7 @@ public class RecipeRepository {
                 ), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.MITHRIL_BAR.getId(), RecipeType.SMELTING_RECIPE, 8000,
-                        List.of(new SkillRequirement(SkillType.SMITHING, 50)),
+                        List.of(new SkillRequirement(SkillType.SMITHING, 45)),
                         List.of(
                                 new IngredientRecord(ItemId.MITHRIL_ORE, 1, true, false),
                                 new IngredientRecord(ItemId.PURE_COAL_ORE, 1, true, false)
@@ -906,7 +906,7 @@ public class RecipeRepository {
                 ), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANT_BAR.getId(), RecipeType.SMELTING_RECIPE, 10000,
-                        List.of(new SkillRequirement(SkillType.SMITHING, 70)),
+                        List.of(new SkillRequirement(SkillType.SMITHING, 65)),
                         List.of(
                                 new IngredientRecord(ItemId.ADAMANT_ORE, 1, true, false),
                                 new IngredientRecord(ItemId.PURE_COAL_ORE, 2, true, false)
