@@ -11,6 +11,7 @@ import io.lettuce.core.pubsub.api.async.RedisPubSubAsyncCommands;
 import org.bukkit.Bukkit;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
+import org.zuma.examplePlugin.core.config.EnvironmentType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 
 import java.util.List;
@@ -38,7 +39,9 @@ public class RedisConnection {
             pubSubConnection.addListener(new RedisPubSubListener<String, String>() {
                 @Override
                 public void message(String channel, String message) {
-                    System.out.println("Received message: " + message + " on channel: " + channel);
+                    if (!ConfigManager.environment.equals(EnvironmentType.PRODUCTION)) {
+                        System.out.println("Received message: " + message + " on channel: " + channel);
+                    }
                     Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> GlobalEventHandler.onRedisEventReceived(message));
                 }
 
@@ -66,7 +69,7 @@ public class RedisConnection {
 
             pubSub.subscribe("server-" + ConfigManager.getServerId()).get();
             pubSub.subscribe("global-events").get();
-            
+
             RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Redis connected: true. Global events available.");
         } catch (Exception e) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed redis connection init. Global events halted.", e);
