@@ -2,6 +2,8 @@ package org.zuma.examplePlugin.domain.mob.base;
 
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.config.ConfigManager;
+import org.zuma.examplePlugin.core.config.EnvironmentType;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.dialog.Dialog;
 import org.zuma.examplePlugin.domain.dialog.DialogBuilder;
@@ -46,7 +48,11 @@ public abstract class AbstractDialogMob extends FriendlyImmortalMob {
             }
 
             DialogBuilder newDialogTemplate = dialogTemplate.get();
-            System.out.println(newDialogTemplate.serialize());
+
+            if (!ConfigManager.environment.equals(EnvironmentType.PRODUCTION)) {
+                System.out.println(newDialogTemplate.serialize());
+            }
+
             Dialog dialog = newDialogTemplate.build(super.getUUID());
 
             freezeMob();
