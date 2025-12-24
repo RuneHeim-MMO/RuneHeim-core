@@ -100,10 +100,14 @@ public class HouseSlotEditor extends IndividualGUI {
     public void onInventoryClick(InventoryClickEvent event, int slot, RunePlayer player) {
         event.setCancelled(true);
 
+        if (instance == null) {
+            return;
+        }
+
         ItemStack currentItem = event.getCurrentItem();
         Integer editingSlotIndex = instance.getEditManager().getEditingSlotIndex();
 
-        if (currentItem == null || instance == null || editingSlotIndex == null) {
+        if (currentItem == null || editingSlotIndex == null) {
             return;
         }
 

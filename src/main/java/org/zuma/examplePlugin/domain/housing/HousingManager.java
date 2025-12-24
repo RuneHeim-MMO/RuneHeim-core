@@ -32,10 +32,21 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+/*
+* HouseEntry - in memory representation of a player's house data
+* HouseInstance - active instance of a player's house in the world
+* HouseSlot - represents a furniture slot in a house
+* HouseFurnitureEntry - represents a placed furniture item in a house
+* HousingRegion - enum representing different housing regions in the game
+* HousingManager - manages all player houses, loading/saving, and instance creation
+* HousingRepository - handles database interactions for player houses
+* HouseInstanceCreator - responsible for creating HouseInstance objects
+* HousingMetaLoader - loads metadata for house templates
+* SchematicSpawner - utility for spawning house schematics in the world
+* */
 public class HousingManager implements Listener {
     public final static int GRID_SIZE = 128;
     private final static int AUTOSAVE_INTERVAL_MINUTES = 2;
-
     private final Map<Integer, Map<Integer, HouseInstance>> gridMap; // gridX : (gridZ : house instance)
     private final Map<UUID, HashMap<HousingRegion, HouseInstance>> playerHouseMap; // player uuid : (region : house instance)
     private final Map<UUID, HouseInstance> uuidHouseInstanceMap; // instance uuid : house instance

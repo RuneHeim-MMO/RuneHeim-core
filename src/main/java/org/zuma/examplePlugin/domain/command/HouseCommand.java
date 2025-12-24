@@ -162,7 +162,6 @@ public class HouseCommand implements BasicCommand {
                     .stream()
                     .map(Player::getName)
                     .filter(name -> !name.equalsIgnoreCase(house.getOwnerName()))
-                    .filter(name -> !house.getInvitedPlayers().contains(name.toLowerCase()))
                     .toList();
         }
 
