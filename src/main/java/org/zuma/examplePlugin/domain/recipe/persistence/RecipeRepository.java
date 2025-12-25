@@ -202,13 +202,13 @@ public class RecipeRepository {
                         List.of(new SkillRequirement(SkillType.CRAFTING, 1)),
                         List.of(new IngredientRecord(ItemId.COWHIDE, 1, true, false)),
                         new ItemRecord(ItemId.LEATHER, 1),
-                        null, List.of(), 20L), null),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 15)), 20L), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.HARD_LEATHER.getId(), RecipeType.TANNER_RECIPE, 2000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 20)),
                         List.of(new IngredientRecord(ItemId.THICK_HIDE, 1, true, false)),
                         new ItemRecord(ItemId.HARD_LEATHER, 1),
-                        null, List.of(), 35L), null),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 25)), 35L), null),
 
                 // Crafting armor from leather
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.COIF.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
