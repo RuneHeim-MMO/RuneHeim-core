@@ -78,6 +78,11 @@ public class HousingManager implements Listener {
     }
 
     public void init() {
+        if (ConfigManager.getIsPreviewServer()) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Preview server detected, skipping housing manager initialization.");
+            return;
+        }
+        
         this.houseMetaHandler.loadTemplatesMeta();
         Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), () -> saveAllHouses(false), AUTOSAVE_INTERVAL_MINUTES * 60 * 20L, AUTOSAVE_INTERVAL_MINUTES * 60 * 20L);
     }
