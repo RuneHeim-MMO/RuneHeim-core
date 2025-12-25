@@ -21,7 +21,7 @@ public class ShopRepository {
     );
     private static final List<ShopItemConfig> TANNER_SHOP = List.of(
             new ShopItemConfig(ItemId.NEEDLE.asInt(), 8, 30, 50L, 5L, null, null),
-            new ShopItemConfig(ItemId.THREAD.asInt(), 512, 30, ItemId.THREAD.getBuyPrice(), ItemId.THREAD.getSellPrice(), null, null)
+            new ShopItemConfig(ItemId.THREAD.asInt(), 256, 30, ItemId.THREAD.getBuyPrice(), ItemId.THREAD.getSellPrice(), null, null)
     );
     private final Gson gson = new Gson();
 

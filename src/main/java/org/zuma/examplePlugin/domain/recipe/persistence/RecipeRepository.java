@@ -703,6 +703,13 @@ public class RecipeRepository {
                         null,
                         List.of(new SkillXpRecord(SkillType.CRAFTING, 5)), null
                 ), null),
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.THREAD.getId(), RecipeType.SPINNING_WHEEL_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 4)),
+                        List.of(new IngredientRecord(ItemId.BALL_OF_WOOL, 1, true, true)),
+                        new ItemRecord(ItemId.THREAD, 4),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.CRAFTING, 8)), null
+                ), null),
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.BOW_STRING_RECIPE.getId(), RecipeType.SPINNING_WHEEL_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 8)),
                         List.of(new IngredientRecord(ItemId.FLAX, 1, true, true)),
