@@ -8,7 +8,9 @@ import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
@@ -145,6 +147,7 @@ public class HouseEditModeManager {
         SoundType.PLACE_BLOCK_GENERIC.play(player, true);
         clickedHologram.delete();
         this.updateHologramForSlot(player.asBukkitPlayer(), slotIndex, clickedSlot);
+        AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.HOUSE_FURNITURE_PLACED, 1);
     }
 
     public void rotateFurnitureItem(Player player, int slotIndex) {
@@ -224,6 +227,7 @@ public class HouseEditModeManager {
         furnitureMap.remove(slotIndex);
         updateHologramForSlot(player, slotIndex, clickedSlot);
         SoundType.BREAK_BLOCK_GENERIC.play(player, true);
+        AnalyticsUtils.incrementServerAndPlayer(runePlayer, AnalyticsKey.HOUSE_FURNITURE_REMOVED, 1);
     }
 
     public boolean isEditMode() {

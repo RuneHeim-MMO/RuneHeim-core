@@ -10,9 +10,11 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.config.EnvironmentType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.housing.instance.HouseInstance;
 import org.zuma.examplePlugin.domain.housing.instance.HouseInstanceCreator;
 import org.zuma.examplePlugin.domain.housing.persistence.HousingRepository;
@@ -375,6 +377,7 @@ public class HousingManager implements Listener {
 
         buyer.setPouchCoins(buyer.getPouchCoins() - template.getPrice(), false);
         existing.put(region, newEntry);
+        AnalyticsUtils.incrementServerAndPlayer(buyer, AnalyticsKey.HOUSES_BOUGHT, 1);
 
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
             try {

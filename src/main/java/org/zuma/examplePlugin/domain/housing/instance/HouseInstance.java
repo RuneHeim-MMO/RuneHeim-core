@@ -7,6 +7,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.housing.records.HouseFurnitureEntry;
 import org.zuma.examplePlugin.domain.housing.records.HouseSlot;
@@ -211,6 +213,7 @@ public class HouseInstance implements Listener {
         currentVisitors.add(visitor.getUUID());
         visitor.asBukkitPlayer().teleport(this.spawnPoint);
         Bukkit.getServer().getPluginManager().callEvent(new HouseSettingsUpdateEvent(this));
+        AnalyticsUtils.incrementServerAndPlayer(visitor, AnalyticsKey.HOUSES_VISITED, 1);
     }
 
     public void exitHouse(RunePlayer visitor) {
