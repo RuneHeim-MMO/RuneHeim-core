@@ -4,9 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.zuma.examplePlugin.core.adapters.DialogBuilderAdapter;
 import org.zuma.examplePlugin.domain.dialog.base.DialogStep;
+import org.zuma.examplePlugin.domain.dialog.impl.ConditionStep;
 import org.zuma.examplePlugin.domain.dialog.impl.InteractiveDialogStep;
 import org.zuma.examplePlugin.domain.dialog.impl.PassiveDialogStep;
-import org.zuma.examplePlugin.domain.dialog.impl.ConditionStep;
 import org.zuma.examplePlugin.domain.dialog.impl.TeleportBranchStep;
 import org.zuma.examplePlugin.domain.heimscript.ScriptedStatementInstance;
 

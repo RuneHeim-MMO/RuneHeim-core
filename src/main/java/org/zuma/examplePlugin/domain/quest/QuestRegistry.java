@@ -1,6 +1,5 @@
 package org.zuma.examplePlugin.domain.quest;
 
-import org.bukkit.Location;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
@@ -10,7 +9,6 @@ import org.zuma.examplePlugin.domain.quest.constants.QuestDifficulty;
 import org.zuma.examplePlugin.domain.quest.constants.QuestId;
 import org.zuma.examplePlugin.domain.quest.impl.*;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
-import org.zuma.examplePlugin.domain.skill.SkillXpRecord;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import javax.annotation.Nullable;

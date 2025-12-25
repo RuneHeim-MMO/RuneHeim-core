@@ -7,12 +7,8 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
-import org.zuma.examplePlugin.domain.block.meta.HologramSide;
 import org.zuma.examplePlugin.domain.housing.records.HouseSlot;
-import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.FurnitureItem;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 

@@ -2,13 +2,9 @@ package org.zuma.examplePlugin.core.module.game;
 
 
 import org.bukkit.plugin.Plugin;
-import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.core.module.PluginModule;
-import org.zuma.examplePlugin.domain.modifier.scopes.global.GlobalModifierHandler;
 import org.zuma.examplePlugin.domain.modifier.scopes.server.ServerModifierHandler;
-
-import java.util.List;
 
 public class ServerModifierModule implements PluginModule {
 

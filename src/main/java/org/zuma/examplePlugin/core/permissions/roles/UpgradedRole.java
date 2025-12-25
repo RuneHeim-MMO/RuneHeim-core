@@ -6,7 +6,7 @@ import org.zuma.examplePlugin.core.permissions.Permission;
 import org.zuma.examplePlugin.core.permissions.Role;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.List;
 
 public enum UpgradedRole implements Role {
     MYTHIC(997, 50, 25, Icon.RANK_BADGE_MYTHIC, List.of(Permission.BONUS_BOMB_TRACKER), List.of()),

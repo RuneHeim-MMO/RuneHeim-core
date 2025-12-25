@@ -22,10 +22,6 @@ import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 public class HouseSlotEditor extends IndividualGUI {
     private HouseInstance instance = null;
 

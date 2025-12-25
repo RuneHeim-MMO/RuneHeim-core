@@ -15,7 +15,6 @@ import org.zuma.examplePlugin.domain.party.Party;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.domain.territory.Territory;
-import org.zuma.examplePlugin.domain.territory.TerritoryHandler;
 
 import javax.annotation.Nullable;
 

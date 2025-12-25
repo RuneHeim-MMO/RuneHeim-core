@@ -1,19 +1,11 @@
 package org.zuma.examplePlugin.domain.effect.effects.dailies;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.title.Title;
-import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
-import org.bukkit.Particle;
 import org.bukkit.entity.Firework;
 import org.bukkit.inventory.meta.FireworkMeta;
-import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.FireworkUtils;
 import org.zuma.examplePlugin.domain.effect.AnimatedEffect;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-
-import java.time.Duration;
 
 public class DailyGrandPrizeClaim implements AnimatedEffect {
     private final RunePlayer player;

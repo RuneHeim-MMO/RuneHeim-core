@@ -4,9 +4,9 @@ import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.domain.housing.records.HouseSlot;
-import org.zuma.examplePlugin.domain.housing.instance.HouseInstance;
 import org.zuma.examplePlugin.domain.housing.HousingManager;
+import org.zuma.examplePlugin.domain.housing.instance.HouseInstance;
+import org.zuma.examplePlugin.domain.housing.records.HouseSlot;
 import org.zuma.examplePlugin.domain.schematic.InteractiveElType;
 import org.zuma.examplePlugin.domain.schematic.InteractiveElement;
 

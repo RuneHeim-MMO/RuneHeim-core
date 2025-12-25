@@ -5,8 +5,6 @@ import org.zuma.examplePlugin.domain.mob.MobTypeRegistry;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehaviors;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.mob.impl.GenericCombatant;
-import org.zuma.examplePlugin.domain.skill.SkillLevelRecord;
-import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.util.List;
 

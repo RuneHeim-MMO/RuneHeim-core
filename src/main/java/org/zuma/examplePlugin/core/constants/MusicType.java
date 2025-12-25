@@ -1,14 +1,8 @@
 package org.zuma.examplePlugin.core.constants;
 
-import org.bukkit.Location;
-import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
-import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-
-import javax.annotation.Nullable;
 
 public enum MusicType {
     ROGUES_HAVEN_THEME("runequest.rogues_haven.music", 197, 0.20F,20),

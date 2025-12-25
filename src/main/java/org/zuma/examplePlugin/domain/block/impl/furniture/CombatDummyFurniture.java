@@ -1,37 +1,20 @@
 package org.zuma.examplePlugin.domain.block.impl.furniture;
 
 import com.google.gson.Gson;
-import eu.decentsoftware.holograms.api.DHAPI;
-import eu.decentsoftware.holograms.api.holograms.Hologram;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.Lightable;
-import org.bukkit.block.data.Rotatable;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.Icon;
-import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
-import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
-import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneMobRecord;
-import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneRecord;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneType;
 import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
-import org.zuma.examplePlugin.domain.spawnzone.impl.PointSpawnZone;
 import org.zuma.examplePlugin.domain.spawnzone.meta.AbstractSpawnZoneMeta;
 import org.zuma.examplePlugin.domain.spawnzone.meta.v1.PointSpawnZoneMeta;
 
 import java.util.List;
-import java.util.UUID;
 
 public class CombatDummyFurniture extends AbstractInteractableBlock {
     private int spawnedZoneId = -1;

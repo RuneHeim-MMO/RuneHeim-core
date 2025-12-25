@@ -11,14 +11,10 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.domain.hud.HudService;
-import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 public class MegaphoneCommand implements BasicCommand {
     @Override

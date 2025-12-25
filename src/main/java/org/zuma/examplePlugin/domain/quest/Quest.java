@@ -26,9 +26,9 @@ import org.zuma.examplePlugin.domain.quest.constants.QuestDifficulty;
 import org.zuma.examplePlugin.domain.quest.constants.QuestDuration;
 import org.zuma.examplePlugin.domain.quest.constants.QuestStartFailReason;
 import org.zuma.examplePlugin.domain.quest.constants.QuestStatus;
+import org.zuma.examplePlugin.domain.quest.impl.CampfireStep;
 import org.zuma.examplePlugin.domain.quest.impl.CollectionStep;
 import org.zuma.examplePlugin.domain.quest.impl.KillMobStep;
-import org.zuma.examplePlugin.domain.quest.impl.CampfireStep;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 
 import javax.annotation.Nullable;

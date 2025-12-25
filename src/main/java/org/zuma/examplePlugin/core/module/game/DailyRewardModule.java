@@ -10,7 +10,6 @@ import org.zuma.examplePlugin.domain.daily.persistence.DailyRewardRepository;
 import org.zuma.examplePlugin.domain.droptable.DropTable;
 import org.zuma.examplePlugin.domain.droptable.DropTableHandler;
 import org.zuma.examplePlugin.domain.droptable.DropTableId;
-import org.zuma.examplePlugin.domain.item.ItemRegistry;
 
 import java.util.List;
 

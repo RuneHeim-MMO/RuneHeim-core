@@ -2,7 +2,6 @@ package org.zuma.examplePlugin.core.analytics;
 
 import org.bukkit.Bukkit;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.analytics.impl.ServerAnalytics;
 import org.zuma.examplePlugin.core.analytics.persistence.AnalyticsRepository;
 import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.config.EnvironmentType;

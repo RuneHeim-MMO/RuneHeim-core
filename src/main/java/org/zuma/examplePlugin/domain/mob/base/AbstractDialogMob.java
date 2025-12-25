@@ -4,7 +4,6 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.config.EnvironmentType;
-import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.dialog.Dialog;
 import org.zuma.examplePlugin.domain.dialog.DialogBuilder;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;

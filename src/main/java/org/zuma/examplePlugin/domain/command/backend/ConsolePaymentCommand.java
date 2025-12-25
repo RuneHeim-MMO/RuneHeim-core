@@ -11,8 +11,8 @@ import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.permissions.roles.UpgradedRole;
 import org.zuma.examplePlugin.domain.modifier.scopes.server.ServerModifierType;
-import org.zuma.examplePlugin.domain.payments.handlers.DonationHandler;
 import org.zuma.examplePlugin.domain.payments.Payment;
+import org.zuma.examplePlugin.domain.payments.handlers.DonationHandler;
 
 import java.math.BigDecimal;
 import java.util.Collection;

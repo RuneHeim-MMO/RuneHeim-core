@@ -2,11 +2,8 @@ package org.zuma.examplePlugin.domain.item.state;
 
 import com.google.gson.Gson;
 import org.zuma.examplePlugin.core.database.HikariPool;
-import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
-import org.zuma.examplePlugin.domain.player.persistence.SerializedPlayerContainer;
 
-import javax.security.auth.login.AccountNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -2,7 +2,6 @@ package org.zuma.examplePlugin.domain.shop;
 
 import org.bukkit.Bukkit;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.shop.persistence.ShopRepository;
 
 import java.util.ArrayList;

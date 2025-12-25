@@ -1,7 +1,6 @@
 package org.zuma.examplePlugin.domain.effect.effects;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;

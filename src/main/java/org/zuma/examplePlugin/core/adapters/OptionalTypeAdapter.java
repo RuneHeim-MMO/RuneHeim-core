@@ -1,15 +1,8 @@
 package org.zuma.examplePlugin.core.adapters;
 
 import com.google.gson.*;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
 
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-
-import com.google.gson.*;
-
 import java.lang.reflect.Type;
 import java.util.Optional;
 

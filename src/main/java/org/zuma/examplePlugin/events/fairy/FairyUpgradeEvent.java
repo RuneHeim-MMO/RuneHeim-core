@@ -6,7 +6,6 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
-import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFood;
 import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFruit;
 import org.zuma.examplePlugin.domain.item.state.states.FairyState;
 import org.zuma.examplePlugin.domain.player.RunePlayer;

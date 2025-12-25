@@ -9,11 +9,10 @@ import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.PlayerQuestState;
 import org.zuma.examplePlugin.domain.quest.Quest;
-import org.zuma.examplePlugin.domain.quest.constants.StepType;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
+import org.zuma.examplePlugin.domain.quest.constants.StepType;
 import org.zuma.examplePlugin.events.item.PlayerItemToBeGiven;
 
 import javax.annotation.Nullable;

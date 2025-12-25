@@ -11,7 +11,10 @@ import org.zuma.examplePlugin.domain.quest.constants.StepType;
 import org.zuma.examplePlugin.events.block.CampfireStateChanged;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 
 public class CampfireStep extends AbstractQuestStep {

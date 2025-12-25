@@ -8,8 +8,6 @@ import org.zuma.examplePlugin.domain.shop.meta.v1.ShopMeta;
 
 import java.util.List;
 
-import static org.zuma.examplePlugin.domain.shop.ItemPriceCalculator.getPrice;
-
 public class ShopRepository {
     private final Gson gson = new Gson();
 

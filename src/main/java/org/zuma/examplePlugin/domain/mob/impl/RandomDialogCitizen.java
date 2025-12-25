@@ -6,7 +6,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.zuma.examplePlugin.domain.dialog.DialogBuilder;
 import org.zuma.examplePlugin.domain.mob.base.AbstractDialogMob;
-import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehaviors;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
 import org.zuma.examplePlugin.domain.mob.meta.FriendlyImmortalMobMeta;

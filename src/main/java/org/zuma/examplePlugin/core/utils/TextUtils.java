@@ -14,7 +14,6 @@ import org.zuma.examplePlugin.domain.territory.Territory;
 import java.text.DecimalFormat;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TextUtils {

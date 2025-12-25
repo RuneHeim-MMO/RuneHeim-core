@@ -5,8 +5,8 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
-import org.zuma.examplePlugin.domain.combat.constants.AttackType;
 import org.zuma.examplePlugin.domain.combat.Hit;
+import org.zuma.examplePlugin.domain.combat.constants.AttackType;
 
 public class RuneEntityDamageEntityEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();

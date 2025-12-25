@@ -3,8 +3,6 @@ package org.zuma.examplePlugin.domain.housing;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-import java.util.Vector;
-
 public enum HousingRegion {
     DRAKKAR("Drakkar", 226, 77, -7, -180);
 

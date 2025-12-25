@@ -1,9 +1,7 @@
 package org.zuma.examplePlugin.domain.item.helpers.lore;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.impl.consumable.Food;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 

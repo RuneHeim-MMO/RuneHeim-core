@@ -4,10 +4,8 @@ package org.zuma.examplePlugin.core.module.core;
 import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.database.HikariPool;
-import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.module.ModuleContext;
-
-import java.util.List;
+import org.zuma.examplePlugin.core.module.PluginModule;
 
 public class DatabaseModule implements PluginModule {
 

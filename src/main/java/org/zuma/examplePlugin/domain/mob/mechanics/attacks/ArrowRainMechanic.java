@@ -11,13 +11,11 @@ import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.combat.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.combat.constants.ProjectileType;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.mob.mechanics.base.MobMechanic;
-import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.concurrent.ThreadLocalRandom;
 

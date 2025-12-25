@@ -1,17 +1,12 @@
 package org.zuma.examplePlugin.core.module.core;
 
 
-import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.domain.announcements.AnnouncementsHandler;
 import org.zuma.examplePlugin.domain.announcements.persistence.AnnouncementsRepository;
-import org.zuma.examplePlugin.domain.command.backend.ConsolePaymentCommand;
-import org.zuma.examplePlugin.domain.modifier.scopes.server.ServerModifierHandler;
-import org.zuma.examplePlugin.domain.payments.handlers.PaymentHandler;
-import org.zuma.examplePlugin.domain.payments.persistence.PaymentsHistoryRepository;
 
 import java.util.List;
 

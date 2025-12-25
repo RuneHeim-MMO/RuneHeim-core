@@ -2,20 +2,11 @@ package org.zuma.examplePlugin.core.module.game;
 
 
 import org.bukkit.plugin.Plugin;
-import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.domain.ambience.sound.AmbientSoundHandler;
 import org.zuma.examplePlugin.domain.ambience.sound.AmbientSoundRepository;
-import org.zuma.examplePlugin.domain.block.BlockFactory;
-import org.zuma.examplePlugin.domain.block.BlockListener;
-import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
-import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockRepository;
-import org.zuma.examplePlugin.domain.block.persistence.ResourceNodeTypeRepository;
-import org.zuma.examplePlugin.domain.item.ItemRegistry;
-
-import java.util.List;
 
 public class AmbienceModule implements PluginModule {
 

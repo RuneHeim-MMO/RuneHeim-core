@@ -1,32 +1,13 @@
 package org.zuma.examplePlugin.domain.block.impl;
 
 import eu.decentsoftware.holograms.api.DHAPI;
-import net.kyori.adventure.text.Component;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
-import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.core.constants.SoundType;
-import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
-import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
-import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.map.MarkerType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.player.actions.ActionParams;
-import org.zuma.examplePlugin.domain.player.actions.ProgressBarAction;
-import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

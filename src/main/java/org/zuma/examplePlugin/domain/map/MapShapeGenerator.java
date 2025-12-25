@@ -1,11 +1,11 @@
 package org.zuma.examplePlugin.domain.map;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.flowpowered.math.vector.Vector2d;
 import de.bluecolored.bluemap.api.math.Shape;
 import org.json.simple.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapShapeGenerator {
 

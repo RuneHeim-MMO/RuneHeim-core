@@ -1,7 +1,7 @@
 package org.zuma.examplePlugin.domain.block.base;
 
 import net.kyori.adventure.text.Component;
-import org.bukkit.*;
+import org.bukkit.Sound;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.zuma.examplePlugin.core.constants.Color;

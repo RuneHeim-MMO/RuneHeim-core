@@ -1,8 +1,8 @@
 package org.zuma.examplePlugin.domain.dialog.impl;
 
 import org.zuma.examplePlugin.domain.dialog.base.DialogStep;
-import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.heimscript.condition.ScriptedConditionHandler;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

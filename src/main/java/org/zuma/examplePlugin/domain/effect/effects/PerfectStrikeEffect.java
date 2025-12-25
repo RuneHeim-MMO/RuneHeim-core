@@ -6,7 +6,6 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.utils.TextUtils;
-import org.zuma.examplePlugin.domain.combat.constants.AttackType;
 import org.zuma.examplePlugin.domain.effect.AnimatedEffect;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 

@@ -3,7 +3,6 @@ package org.zuma.examplePlugin.domain.mob.impl;
 import net.kyori.adventure.text.Component;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.EntityType;
-import org.zuma.examplePlugin.domain.dialog.DialogBuilder;
 import org.zuma.examplePlugin.domain.mob.base.AbstractInventoryOpener;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
@@ -12,7 +11,6 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
-import java.util.function.Supplier;
 
 public class InventoryOpenerMob extends AbstractInventoryOpener {
 

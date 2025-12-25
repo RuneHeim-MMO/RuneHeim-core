@@ -6,10 +6,10 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.domain.heimscript.action.ScriptedActionHandler;
 import org.zuma.examplePlugin.domain.dialog.DialogText;
 import org.zuma.examplePlugin.domain.dialog.InteractiveDialogOption;
 import org.zuma.examplePlugin.domain.dialog.base.DialogStep;
+import org.zuma.examplePlugin.domain.heimscript.action.ScriptedActionHandler;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.List;

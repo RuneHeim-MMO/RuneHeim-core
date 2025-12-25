@@ -1,20 +1,14 @@
 package org.zuma.examplePlugin.domain.block.impl.door;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.base.MultiBlockHitbox;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
-import org.zuma.examplePlugin.domain.map.MarkerType;
-import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class DoorBlock extends AbstractInteractableBlock implements MultiBlockHitbox {

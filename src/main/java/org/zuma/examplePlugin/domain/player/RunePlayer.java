@@ -1,7 +1,6 @@
 package org.zuma.examplePlugin.domain.player;
 
 
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -16,13 +15,15 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.analytics.AnalyticsContainer;
 import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.analytics.AnalyticsType;
-import org.zuma.examplePlugin.core.permissions.roles.BaseRole;
-import org.zuma.examplePlugin.core.permissions.PlayerRole;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.core.interfaces.InteractiveActionStrategy;
-import org.zuma.examplePlugin.core.utils.*;
+import org.zuma.examplePlugin.core.permissions.PlayerRole;
+import org.zuma.examplePlugin.core.permissions.roles.BaseRole;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
+import org.zuma.examplePlugin.core.utils.PlayerUtils;
+import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.daily.DailyRewards;
 import org.zuma.examplePlugin.domain.hud.ActionBarManager;

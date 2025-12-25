@@ -4,7 +4,6 @@ import org.zuma.examplePlugin.domain.heimscript.ScriptedStatement;
 import org.zuma.examplePlugin.domain.heimscript.ScriptedStatementInstance;
 import org.zuma.examplePlugin.domain.heimscript.StatementType;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
-import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.quest.constants.QuestId;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 

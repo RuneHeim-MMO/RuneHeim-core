@@ -1,11 +1,9 @@
 package org.zuma.examplePlugin.domain.gui.impl.individual.house;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -16,7 +14,6 @@ import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.HouseBuyEffect;
 import org.zuma.examplePlugin.domain.gui.base.PaginatedIndividualGUI;
-import org.zuma.examplePlugin.domain.head.HeadGenerator;
 import org.zuma.examplePlugin.domain.housing.HousingRegion;
 import org.zuma.examplePlugin.domain.housing.instance.HouseInstance;
 import org.zuma.examplePlugin.domain.housing.template.HouseTemplate;

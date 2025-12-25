@@ -1,10 +1,7 @@
 package org.zuma.examplePlugin.domain.shop;
 
-import net.kyori.adventure.text.Component;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 
 import javax.annotation.Nullable;

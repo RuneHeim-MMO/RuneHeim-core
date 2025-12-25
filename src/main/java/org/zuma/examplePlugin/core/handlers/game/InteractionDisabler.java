@@ -1,7 +1,6 @@
 package org.zuma.examplePlugin.core.handlers.game;
 
 import net.kyori.adventure.text.Component;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.Cancellable;
@@ -24,7 +23,6 @@ import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 
 import java.util.Locale;
 

@@ -1,6 +1,9 @@
 package org.zuma.examplePlugin.domain.mob.mechanics.traits;
 
-import org.bukkit.entity.*;
+import org.bukkit.entity.AbstractHorse;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Mob;
+import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.base.CombatantMob;

@@ -8,7 +8,6 @@ import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.domain.effect.AnimatedEffect;
 import org.zuma.examplePlugin.domain.housing.template.HouseTemplate;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.quest.Quest;
 
 import java.time.Duration;
 

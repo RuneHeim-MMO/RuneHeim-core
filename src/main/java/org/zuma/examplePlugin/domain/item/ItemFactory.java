@@ -16,8 +16,14 @@ import org.zuma.examplePlugin.domain.item.impl.furniture.DecorationFurniture;
 import org.zuma.examplePlugin.domain.item.impl.furniture.InteractiveFurniture;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.v1.*;
-import org.zuma.examplePlugin.domain.item.state.meta.v1.*;
-import org.zuma.examplePlugin.domain.item.state.states.*;
+import org.zuma.examplePlugin.domain.item.state.meta.v1.FairyStateMeta;
+import org.zuma.examplePlugin.domain.item.state.meta.v1.GearGemSocketsStateMeta;
+import org.zuma.examplePlugin.domain.item.state.meta.v1.MountStateMeta;
+import org.zuma.examplePlugin.domain.item.state.meta.v1.MultiConsumableStateMeta;
+import org.zuma.examplePlugin.domain.item.state.states.FairyState;
+import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
+import org.zuma.examplePlugin.domain.item.state.states.MountState;
+import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

@@ -1,10 +1,8 @@
 package org.zuma.examplePlugin.events.block;
 
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
-import org.zuma.examplePlugin.domain.block.impl.CampfireBlock;
 import org.zuma.examplePlugin.domain.block.impl.door.TeleportDoor;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 

@@ -13,7 +13,8 @@ import org.zuma.examplePlugin.domain.heimscript.action.ScriptedAction;
 import org.zuma.examplePlugin.domain.heimscript.action.ScriptedActionHandler;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
 
 public class ConsoleActionCommand implements BasicCommand {
 

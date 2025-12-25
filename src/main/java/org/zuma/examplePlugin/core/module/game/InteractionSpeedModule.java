@@ -2,13 +2,11 @@ package org.zuma.examplePlugin.core.module.game;
 
 
 import org.bukkit.plugin.Plugin;
-import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.module.ModuleContext;
+import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.domain.combat.melee.VisualMeleeSpeedHandler;
 import org.zuma.examplePlugin.domain.combat.melee.WeaponSpeedHandler;
 import org.zuma.examplePlugin.domain.cooldown.InteractionSpeedHandler;
-
-import java.util.List;
 
 public class InteractionSpeedModule implements PluginModule {
 

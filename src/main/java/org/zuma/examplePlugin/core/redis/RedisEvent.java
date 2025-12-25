@@ -5,7 +5,6 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
-import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
 
 import java.util.ArrayList;

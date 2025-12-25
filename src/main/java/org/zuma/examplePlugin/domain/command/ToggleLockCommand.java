@@ -3,29 +3,19 @@ package org.zuma.examplePlugin.domain.command;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
-import org.zuma.examplePlugin.core.permissions.Permission;
-import org.zuma.examplePlugin.core.utils.CurrencyUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
-import org.zuma.examplePlugin.core.utils.TypeUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
-import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.item.handlers.LockedItemHandler;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 public class ToggleLockCommand implements BasicCommand {
     @Override

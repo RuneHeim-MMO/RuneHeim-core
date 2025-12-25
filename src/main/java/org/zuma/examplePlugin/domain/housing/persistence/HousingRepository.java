@@ -4,10 +4,10 @@ import org.bukkit.block.BlockFace;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.domain.housing.records.HouseFurnitureEntry;
-import org.zuma.examplePlugin.domain.housing.records.HouseSlot;
 import org.zuma.examplePlugin.domain.housing.HousingRegion;
 import org.zuma.examplePlugin.domain.housing.records.HouseEntry;
+import org.zuma.examplePlugin.domain.housing.records.HouseFurnitureEntry;
+import org.zuma.examplePlugin.domain.housing.records.HouseSlot;
 import org.zuma.examplePlugin.domain.housing.template.HouseTemplate;
 
 import java.sql.Connection;

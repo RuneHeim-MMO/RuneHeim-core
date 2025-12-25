@@ -16,11 +16,7 @@ import org.zuma.examplePlugin.core.interfaces.InteractiveActionStrategy;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class ReactionBarAction implements InteractiveActionStrategy, Listener {
     private final Random random = new Random();

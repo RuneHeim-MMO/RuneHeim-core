@@ -1,13 +1,9 @@
 package org.zuma.examplePlugin.domain.shop.lore;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.utils.CurrencyUtils;
-import org.zuma.examplePlugin.core.utils.TextUtils;
-import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.helpers.lore.LoreCreator;
 import org.zuma.examplePlugin.domain.shop.ShopItem;
 

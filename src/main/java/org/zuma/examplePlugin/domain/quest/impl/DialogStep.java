@@ -3,8 +3,8 @@ package org.zuma.examplePlugin.domain.quest.impl;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.quest.PlayerQuestState;
 import org.zuma.examplePlugin.domain.quest.Quest;
-import org.zuma.examplePlugin.domain.quest.constants.StepType;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
+import org.zuma.examplePlugin.domain.quest.constants.StepType;
 
 import javax.annotation.Nullable;
 import java.util.UUID;

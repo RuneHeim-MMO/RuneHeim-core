@@ -1,8 +1,6 @@
 package org.zuma.examplePlugin.domain.block;
 
 import io.papermc.paper.event.block.BlockBreakProgressUpdateEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -25,9 +23,7 @@ import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BlockListener implements Listener {
     private final BlockManager manager;

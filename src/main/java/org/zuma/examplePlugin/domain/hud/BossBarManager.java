@@ -2,7 +2,6 @@ package org.zuma.examplePlugin.domain.hud;
 
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.zuma.examplePlugin.domain.player.RunePlayer;

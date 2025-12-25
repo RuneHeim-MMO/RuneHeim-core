@@ -2,8 +2,6 @@ package org.zuma.examplePlugin.domain.housing.records;
 
 import org.bukkit.block.BlockFace;
 
-import java.util.UUID;
-
 import java.util.Objects;
 import java.util.UUID;
 

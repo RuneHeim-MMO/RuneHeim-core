@@ -7,10 +7,10 @@ import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.impl.*;
 import org.zuma.examplePlugin.domain.block.impl.door.DoorBlock;
+import org.zuma.examplePlugin.domain.block.impl.door.TeleportDoor;
 import org.zuma.examplePlugin.domain.block.impl.furniture.CombatDummyFurniture;
 import org.zuma.examplePlugin.domain.block.impl.furniture.LightableBlock;
 import org.zuma.examplePlugin.domain.block.impl.trigger.ItemCollectorTrigger;
-import org.zuma.examplePlugin.domain.block.impl.door.TeleportDoor;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.v1.*;
 

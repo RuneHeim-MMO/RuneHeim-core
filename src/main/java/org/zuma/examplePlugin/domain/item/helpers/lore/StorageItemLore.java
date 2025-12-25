@@ -1,16 +1,13 @@
 package org.zuma.examplePlugin.domain.item.helpers.lore;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.utils.StorageUtils;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.impl.StorageItem;
-import org.zuma.examplePlugin.domain.quest.Quest;
 
 import java.util.ArrayList;
 import java.util.List;

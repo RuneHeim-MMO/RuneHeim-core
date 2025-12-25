@@ -8,9 +8,9 @@ import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.config.EnvironmentType;
 import org.zuma.examplePlugin.core.handlers.core.WebHook;
 import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
-import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.module.ModuleContext;
+import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.map.MapMarkerHandler;
 import org.zuma.examplePlugin.domain.map.StaticMarkers;
@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MapModule implements PluginModule {
     private static final Plugin blueMap = Bukkit.getPluginManager().getPlugin("BlueMap");

@@ -1,6 +1,5 @@
 package org.zuma.examplePlugin.events.payment;
 
-import org.zuma.examplePlugin.core.permissions.roles.UpgradedRole;
 import org.zuma.examplePlugin.core.redis.RedisEvent;
 import org.zuma.examplePlugin.domain.player.PlayerBombsContainer;
 

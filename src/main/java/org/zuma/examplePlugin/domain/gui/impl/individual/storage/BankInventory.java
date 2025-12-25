@@ -1,7 +1,7 @@
 package org.zuma.examplePlugin.domain.gui.impl.individual.storage;
 
-import org.zuma.examplePlugin.domain.storage.RepositoryQueryLockController;
 import org.zuma.examplePlugin.domain.gui.base.StorageInventory;
+import org.zuma.examplePlugin.domain.storage.RepositoryQueryLockController;
 import org.zuma.examplePlugin.domain.storage.constants.StorageType;
 
 import java.util.Arrays;

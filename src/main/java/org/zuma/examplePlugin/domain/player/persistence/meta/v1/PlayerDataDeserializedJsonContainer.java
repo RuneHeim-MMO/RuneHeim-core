@@ -1,7 +1,6 @@
 package org.zuma.examplePlugin.domain.player.persistence.meta.v1;
 
 import org.zuma.examplePlugin.domain.player.TemporaryEffect;
-import org.zuma.examplePlugin.domain.skill.Skill;
 
 import java.util.List;
 
