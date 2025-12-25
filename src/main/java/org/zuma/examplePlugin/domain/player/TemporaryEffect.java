@@ -31,7 +31,7 @@ public class TemporaryEffect {
         this.expiresInSeconds = expiresInSeconds;
     }
 
-    public boolean isExpired(){
+    public boolean isExpired() {
         return this.expiresInSeconds <= 0;
     }
 

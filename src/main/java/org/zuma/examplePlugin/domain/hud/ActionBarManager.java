@@ -24,12 +24,11 @@ public class ActionBarManager {
     private static final int FRAME_DURATION = 2;
     private final RunePlayer player;
     private final List<Component> elements;
+    int bar = 6;
     private BukkitTask activeTask;
     private boolean tick;
     private FairyStatus fairyStatus;
     private MountStatus mountStatus;
-
-    int bar = 6;
 
     public ActionBarManager(RunePlayer player) {
         this.player = player;
@@ -41,20 +40,20 @@ public class ActionBarManager {
         startDefaultLoop();
     }
 
-    public void setMountStatus(MountStatus status) {
-        this.mountStatus = status;
-    }
-
     public MountStatus getMountStatus() {
         return this.mountStatus;
     }
 
-    public void setFairyStatus(FairyStatus status) {
-        this.fairyStatus = status;
+    public void setMountStatus(MountStatus status) {
+        this.mountStatus = status;
     }
 
     public FairyStatus getFairyStatus() {
         return this.fairyStatus;
+    }
+
+    public void setFairyStatus(FairyStatus status) {
+        this.fairyStatus = status;
     }
 
     private void queueFrame(Component component, int frames) {

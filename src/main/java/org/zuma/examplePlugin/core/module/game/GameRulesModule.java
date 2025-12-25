@@ -12,7 +12,7 @@ public class GameRulesModule implements PluginModule {
         InteractionDisabler interactionDisabler = new InteractionDisabler();
         plugin.getServer().getPluginManager().registerEvents(interactionDisabler, plugin);
         interactionDisabler.disableTourViewPermission();
-        
+
         plugin.getServer().getPluginManager().registerEvents(new IllegalItemWatchdog(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new BlockProtector(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new DefaultMobDisabler(), plugin);

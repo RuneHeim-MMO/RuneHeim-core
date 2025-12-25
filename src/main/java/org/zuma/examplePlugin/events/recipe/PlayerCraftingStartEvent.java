@@ -20,10 +20,14 @@ public class PlayerCraftingStartEvent extends Event implements Cancellable {
         this.multiplier = multiplier;
     }
 
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     public RunePlayer getPlayer() {
         return player;
     }
-
 
     @Override
     public boolean isCancelled() {
@@ -37,11 +41,6 @@ public class PlayerCraftingStartEvent extends Event implements Cancellable {
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public
-    static HandlerList getHandlerList() {
         return HANDLERS;
     }
 

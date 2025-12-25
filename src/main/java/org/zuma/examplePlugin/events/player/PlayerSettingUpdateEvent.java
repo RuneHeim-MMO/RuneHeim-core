@@ -18,6 +18,10 @@ public class PlayerSettingUpdateEvent extends Event {
         this.newValue = newValue;
     }
 
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     public RunePlayer getPlayer() {
         return player;
     }
@@ -32,10 +36,6 @@ public class PlayerSettingUpdateEvent extends Event {
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public static HandlerList getHandlerList() {
         return HANDLERS;
     }
 

@@ -16,9 +16,9 @@ public class Territory implements Restrictable {
     private final String name, description, firstTimeDiscoveryLore, id;
     private final boolean pvpZone, renderOnMap, silent, disableStuckCmd; // If true, the territory is temporary and will not be saved to player data.
     private final List<String> requiredQuestsIds;
+    private final int maxHeight;
     private boolean dropItemsOnDeath, ignoreCutscene;
     private List<SoundType> ambientSounds;
-    private final int maxHeight;
     private boolean temporary;
 
     @Nullable
@@ -109,14 +109,14 @@ public class Territory implements Restrictable {
         return this;
     }
 
-    public Territory setEntryDenyMessage(@Nullable String message) {
-        this.entryDenyMessage = message;
-        return this;
-    }
-
     @Nullable
     public String getEntryDenyMessage() {
         return entryDenyMessage;
+    }
+
+    public Territory setEntryDenyMessage(@Nullable String message) {
+        this.entryDenyMessage = message;
+        return this;
     }
 
     public boolean isDropItemsOnDeath() {

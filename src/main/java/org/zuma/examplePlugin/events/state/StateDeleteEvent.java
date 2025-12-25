@@ -14,17 +14,17 @@ public class StateDeleteEvent extends Event {
         this.stateUUID = stateUUID;
     }
 
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     public UUID getStateUUID() {
         return stateUUID;
     }
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public
-    static HandlerList getHandlerList() {
         return HANDLERS;
     }
 }

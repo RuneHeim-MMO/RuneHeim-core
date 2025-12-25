@@ -48,19 +48,6 @@ public enum ScriptedCondition implements ScriptedStatement {
         this.argsTemplates = new ArrayList<>(List.of(argsTemplates));
     }
 
-    @Override
-    public StatementType getType() {
-        return StatementType.ACTION;
-    }
-
-    public String getTrigger() {
-        return this.trigger;
-    }
-
-    public List<String> getArgsTemplates() {
-        return this.argsTemplates;
-    }
-
     public static ScriptedStatementInstance questStartSuccessful(QuestId id) {
         return new ScriptedStatementInstance(ScriptedCondition.QUEST_START_IF_REQUIREMENTS_MET, Map.of(
                 "id", id.getId()
@@ -181,5 +168,18 @@ public enum ScriptedCondition implements ScriptedStatement {
         return new ScriptedStatementInstance(ScriptedCondition.COINS_LESS_THAN, Map.of(
                 "amount", String.valueOf(amount)
         ));
+    }
+
+    @Override
+    public StatementType getType() {
+        return StatementType.ACTION;
+    }
+
+    public String getTrigger() {
+        return this.trigger;
+    }
+
+    public List<String> getArgsTemplates() {
+        return this.argsTemplates;
     }
 }

@@ -58,22 +58,6 @@ public enum Color {
         this.hex = hex;
     }
 
-    public TextColor asColor() {
-        return this.color;
-    }
-
-    public String asHex() {
-        return this.hex;
-    }
-
-    public String asSpigotHex() {
-        StringBuilder builder = new StringBuilder("§x");
-        for (char c : hex.substring(1).toCharArray()) {
-            builder.append('§').append(c);
-        }
-        return builder.toString();
-    }
-
     public static TextColor coloredProgressValue(int current, int min, int max, boolean invert) {
         // Clamp current between min and max
         int clamped = Math.max(min, Math.min(current, max));
@@ -91,6 +75,22 @@ public enum Color {
         int green = (int) (255 * progress);
 
         return TextColor.color(red, green, 0);
+    }
+
+    public TextColor asColor() {
+        return this.color;
+    }
+
+    public String asHex() {
+        return this.hex;
+    }
+
+    public String asSpigotHex() {
+        StringBuilder builder = new StringBuilder("§x");
+        for (char c : hex.substring(1).toCharArray()) {
+            builder.append('§').append(c);
+        }
+        return builder.toString();
     }
 
 }

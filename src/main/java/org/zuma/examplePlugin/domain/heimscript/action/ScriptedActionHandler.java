@@ -32,13 +32,6 @@ import java.util.UUID;
 
 public class ScriptedActionHandler {
 
-    public record ActionCaller(ActionCallerType type, String identifier) {
-    }
-
-    public enum ActionCallerType {
-        PLAYER_COMMAND, CONSOLE_COMMAND, DIALOG
-    }
-
     public static void executeAction(String input, RunePlayer player, @Nullable Runnable callback, ActionCaller executor, @Nullable Dialog parentDialog) {
         try {
             ScriptedAction action = ScriptParser.matchInputToStatement(input, ScriptedAction.class);
@@ -169,6 +162,13 @@ public class ScriptedActionHandler {
             }
         }
         return holder;
+    }
+
+    public enum ActionCallerType {
+        PLAYER_COMMAND, CONSOLE_COMMAND, DIALOG
+    }
+
+    public record ActionCaller(ActionCallerType type, String identifier) {
     }
 
 

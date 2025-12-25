@@ -1,4 +1,3 @@
-
 package org.zuma.examplePlugin.domain.mob.types;
 
 import org.zuma.examplePlugin.core.constants.Icon;

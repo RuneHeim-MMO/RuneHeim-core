@@ -32,11 +32,6 @@ import java.util.UUID;
 
 public class Mount extends EquipableItemType implements Stateful {
     private static final double HORSE_HEIGHT = 2.0;
-
-    private MountState defaultStateTemplate;
-    private int maxLevel;
-    private double baseSpeed, baseJump, speedLevelBonus, jumpLevelBonus;
-
     @Nullable
     private final String model;
     @Nullable
@@ -45,6 +40,9 @@ public class Mount extends EquipableItemType implements Stateful {
     private final Horse.Color color;
     @Nullable
     private final Horse.Style style;
+    private MountState defaultStateTemplate;
+    private int maxLevel;
+    private double baseSpeed, baseJump, speedLevelBonus, jumpLevelBonus;
 
     public Mount(AbstractItemMeta meta, @Nullable String model, @Nullable EntityType baseEntity, @Nullable Horse.Color color, @Nullable Horse.Style style) {
         super(meta);
@@ -55,6 +53,21 @@ public class Mount extends EquipableItemType implements Stateful {
 
         super.setTypeLore("Mount", Icon.MOUNT.get());
         this.setStateType(StateType.MOUNT_STATE);
+    }
+
+    private static boolean canSpawnAt(Location loc) {
+        // Horse is roughly 1 block wide → check a 3x3 horizontal area centered on loc
+        for (int x = -1; x <= 1; x++) {
+            for (int z = -1; z <= 1; z++) {
+                for (int y = 0; y < HORSE_HEIGHT; y++) {
+                    Material blockType = loc.getWorld().getBlockAt(loc.clone().add(x, y, z)).getType();
+
+                    // Ignore non-solid blocks (like grass, flowers, water, etc.)
+                    if (blockType.isSolid()) return false;
+                }
+            }
+        }
+        return true;
     }
 
     public void initializeStats(int maxLevel, double baseSpeed, double baseJump, double speedLevelBonus, double jumpLevelBonus) {
@@ -111,22 +124,6 @@ public class Mount extends EquipableItemType implements Stateful {
     public double getBaseSpeed() {
         return baseSpeed;
     }
-
-    private static boolean canSpawnAt(Location loc) {
-        // Horse is roughly 1 block wide → check a 3x3 horizontal area centered on loc
-        for (int x = -1; x <= 1; x++) {
-            for (int z = -1; z <= 1; z++) {
-                for (int y = 0; y < HORSE_HEIGHT; y++) {
-                    Material blockType = loc.getWorld().getBlockAt(loc.clone().add(x, y, z)).getType();
-
-                    // Ignore non-solid blocks (like grass, flowers, water, etc.)
-                    if (blockType.isSolid()) return false;
-                }
-            }
-        }
-        return true;
-    }
-
 
     // During initialization or on level up
     public void onLevelChange(RunePlayer player, int newLevel, UUID entityUUID, boolean isLevelUp) {

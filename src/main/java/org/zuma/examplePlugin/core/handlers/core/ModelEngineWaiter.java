@@ -9,9 +9,9 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 
 public class ModelEngineWaiter implements Listener {
     private final static int THRESHOLD = 5;
+    private final Runnable callback;
     private int loadedModels = 0;
     private boolean ranCallback = false;
-    private final Runnable callback;
 
     public ModelEngineWaiter(Runnable cb, int timeoutSeconds, Runnable timeoutCallback) {
         this.callback = cb;

@@ -28,11 +28,10 @@ public class HouseInstance implements Listener {
     private final HouseTemplate template;
     private final Location spawnPoint;
     private final HouseEditModeManager editManager;
-
-    // Instance based configuration for a player's house
-    private boolean openToPublic, isCleanupScheduled;
     private final Set<UUID> invitedPlayers;
     private final Set<UUID> currentVisitors;
+    // Instance based configuration for a player's house
+    private boolean openToPublic, isCleanupScheduled;
 
     public HouseInstance(UUID ownerUUID, UUID instanceUUID, String ownerName, int gridX, int gridZ, List<InteractiveElement> interactiveElements, Location spawnPoint, HouseTemplate template) {
         this.ownerUUID = ownerUUID;

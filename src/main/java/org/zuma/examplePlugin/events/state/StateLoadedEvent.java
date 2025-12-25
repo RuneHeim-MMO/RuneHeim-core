@@ -17,17 +17,17 @@ public class StateLoadedEvent extends Event {
         this.state = state;
     }
 
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     public UUID getStateUUID() {
         return stateUUID;
     }
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public
-    static HandlerList getHandlerList() {
         return HANDLERS;
     }
 

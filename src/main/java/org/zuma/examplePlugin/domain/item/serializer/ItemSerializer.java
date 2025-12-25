@@ -25,10 +25,6 @@ public class ItemSerializer {
             .registerTypeAdapter(Class.class, new ClassTypeAdapter())
             .create();
 
-    private record PDCValue(NamespacedKey key, PersistentDataType<?, ?> type, Object value) {
-    }
-
-
     public static String serializeItemStackWithPDCSync(ItemStack item, JavaPlugin plugin, boolean clearStateCache) throws IllegalArgumentException {
         AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(item);
         if (type == null) {
@@ -175,6 +171,9 @@ public class ItemSerializer {
     @SuppressWarnings({"unchecked", "rawtypes"})
     private static void applyPDCValue(PersistentDataContainer pdc, PDCValue value) {
         pdc.set(value.key, (PersistentDataType) value.type, value.value);
+    }
+
+    private record PDCValue(NamespacedKey key, PersistentDataType<?, ?> type, Object value) {
     }
 
 }

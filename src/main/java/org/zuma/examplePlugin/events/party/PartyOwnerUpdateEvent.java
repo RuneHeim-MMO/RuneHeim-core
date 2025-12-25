@@ -16,6 +16,11 @@ public class PartyOwnerUpdateEvent extends Event {
         this.newOwner = newOwner;
     }
 
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     public Party getParty() {
         return party;
     }
@@ -26,11 +31,6 @@ public class PartyOwnerUpdateEvent extends Event {
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public
-    static HandlerList getHandlerList() {
         return HANDLERS;
     }
 }

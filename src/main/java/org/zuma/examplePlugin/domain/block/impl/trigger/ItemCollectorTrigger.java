@@ -26,9 +26,9 @@ public class ItemCollectorTrigger extends AbstractInteractableBlock {
     private final String groupId, triggeredEntityId;
     private final List<ItemRecord> requiredItems;
     private final HashMap<Integer, Integer> collectedItems = new HashMap<>();
-    private boolean isTriggered;
     private final int triggeredDurationSeconds;
     private final Location particleLoc;
+    private boolean isTriggered;
 
     public ItemCollectorTrigger(AbstractInteractableBlockMeta meta, String groupId, String triggeredEntityId, int triggeredDurationSeconds, List<ItemRecord> requiredItems) {
         super(meta, null, null);

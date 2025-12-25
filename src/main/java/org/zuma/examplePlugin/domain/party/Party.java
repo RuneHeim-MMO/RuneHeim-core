@@ -19,9 +19,9 @@ import java.util.*;
 public class Party {
     private final UUID uuid;
     private final List<PartyMember> players;
+    private final Set<UUID> invites;
     private UUID ownerUuid;
     private String ownerUsername;
-    private final Set<UUID> invites;
     private int maxMembers;
     private boolean xpSharing;
 

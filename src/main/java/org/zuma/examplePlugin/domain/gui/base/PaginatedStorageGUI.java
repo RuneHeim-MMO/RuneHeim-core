@@ -19,8 +19,8 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public abstract class PaginatedStorageGUI extends IndividualGUI implements SerializableItemContainer {
-    private static ItemStack placeholder;
     private static final int ITEMS_IN_ROW = 9;   // Always 9
+    private static ItemStack placeholder;
     private final HashMap<Integer, ItemStackSlotPair> items;
     private final Set<Integer> ignoredSlots;
     private final int usableRows = rows - 1;

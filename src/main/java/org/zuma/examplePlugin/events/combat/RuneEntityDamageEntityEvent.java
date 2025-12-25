@@ -10,17 +10,22 @@ import org.zuma.examplePlugin.domain.combat.constants.AttackType;
 
 public class RuneEntityDamageEntityEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
-    private boolean cancelled;
     private final CombatEntity attacker;
     private final CombatEntity defender;
     private final Hit hit;
     private final AttackType type;
+    private boolean cancelled;
 
     public RuneEntityDamageEntityEvent(CombatEntity attacker, CombatEntity defender, Hit hit, AttackType type) {
         this.attacker = attacker;
         this.defender = defender;
         this.hit = hit;
         this.type = type;
+    }
+
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
     }
 
     public CombatEntity getAttacker() {
@@ -43,12 +48,6 @@ public class RuneEntityDamageEntityEvent extends Event implements Cancellable {
     public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }
-
-    public
-    static HandlerList getHandlerList() {
-        return HANDLERS;
-    }
-
 
     @Override
     public boolean isCancelled() {

@@ -69,6 +69,12 @@ public class HousingManager implements Listener {
         this.repository = repository;
     }
 
+    public static @NotNull Location getLocationInHouse(Location absoluteLocation, HouseInstance instance) {
+        Location relativeSpawnPoint = absoluteLocation.clone();
+        relativeSpawnPoint.add(instance.getGridX() * HousingManager.GRID_SIZE, 0, instance.getGridZ() * HousingManager.GRID_SIZE);
+        return relativeSpawnPoint;
+    }
+
     public void init() {
         this.houseMetaHandler.loadTemplatesMeta();
         Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), () -> saveAllHouses(false), AUTOSAVE_INTERVAL_MINUTES * 60 * 20L, AUTOSAVE_INTERVAL_MINUTES * 60 * 20L);
@@ -123,7 +129,6 @@ public class HousingManager implements Listener {
         });
     }
 
-
     public void teleportToOwnHouse(RunePlayer player, HousingRegion region) {
         HashMap<HousingRegion, HouseInstance> regionMap = playerHouseMap.get(player.getUUID());
 
@@ -165,11 +170,7 @@ public class HousingManager implements Listener {
 
         HouseEntry savedEntry = housesPerRegion.get(region);
 
-        if (savedEntry == null) {
-            return false;
-        }
-
-        return true;
+        return savedEntry != null;
     }
 
     public void removeHouseReference(UUID ownerUUID, HousingRegion region) {
@@ -431,11 +432,5 @@ public class HousingManager implements Listener {
 
     public Map<HouseTemplate, HouseInstance> getTemplatePreviewMap() {
         return templatePreviewMap;
-    }
-
-    public static @NotNull Location getLocationInHouse(Location absoluteLocation, HouseInstance instance) {
-        Location relativeSpawnPoint = absoluteLocation.clone();
-        relativeSpawnPoint.add(instance.getGridX() * HousingManager.GRID_SIZE, 0, instance.getGridZ() * HousingManager.GRID_SIZE);
-        return relativeSpawnPoint;
     }
 }

@@ -39,9 +39,6 @@ import java.util.List;
 
 
 public class ModelledBlockInvCreatorInventory extends IndividualGUI {
-    private final BlockLoader loader;
-    private final GUIHandler guiHandler;
-
     private static final HashMap<Integer, InventoryOpenerModelledMeta> META_MAP = new HashMap<>() {{
         put(InventoryId.CONTRACT_BOARD.asInt(), new InventoryOpenerModelledMeta(InventoryId.CONTRACT_BOARD.asInt(), Material.BARRIER, null,
                 "quest_board", 3, 3, 1, 2, MarkerType.CONTRACT_BOARD, "Contract Board", "Contract Board", Icon.CONTRACT_SKULL.get()));
@@ -50,6 +47,8 @@ public class ModelledBlockInvCreatorInventory extends IndividualGUI {
                 "wooden_spinning_wheel", 2, 1, 2, 1, MarkerType.SPINNING_WHEEL, "Spinning Wheel", "Spinning Wheel", Icon.SPINNING_WHEEL.get()));
 
     }};
+    private final BlockLoader loader;
+    private final GUIHandler guiHandler;
 
     public ModelledBlockInvCreatorInventory(String title, int id, BlockLoader loader, GUIHandler guiHandler) {
         super(title, id, 6);

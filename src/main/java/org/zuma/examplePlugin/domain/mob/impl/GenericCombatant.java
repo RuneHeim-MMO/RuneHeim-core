@@ -16,19 +16,6 @@ import java.util.List;
 
 public class GenericCombatant extends CombatantMob {
 
-    private static EntityType getMobWithCorrectBehavior(boolean attacksOnSight, boolean attackWithGroup) {
-        if (attacksOnSight) {
-            return EntityType.ZOMBIE;
-        }
-
-        if (attackWithGroup) {
-            return EntityType.ZOMBIFIED_PIGLIN;
-        }
-        
-        return EntityType.POLAR_BEAR;
-    }
-
-
     public GenericCombatant(String displayName,
                             @Nullable EquipmentSet equipmentSet,
                             List<SkillLevelRecord> skills,
@@ -42,6 +29,7 @@ public class GenericCombatant extends CombatantMob {
                             List<Integer> dropTableIds, boolean safeSpottable) {
         this(displayName, equipmentSet, skills, modifiers, behavior, walkSpeed, attacksOnSight, attackWithGroup, health, null, model, null, dropTableIds, safeSpottable);
     }
+
 
     public GenericCombatant(String displayName,
                             @Nullable EquipmentSet equipmentSet,
@@ -79,6 +67,18 @@ public class GenericCombatant extends CombatantMob {
         if (equipmentSet != null)
             super.setMobEquipment(equipmentSet.asMobEquipmentMeta());
 
+    }
+
+    private static EntityType getMobWithCorrectBehavior(boolean attacksOnSight, boolean attackWithGroup) {
+        if (attacksOnSight) {
+            return EntityType.ZOMBIE;
+        }
+
+        if (attackWithGroup) {
+            return EntityType.ZOMBIFIED_PIGLIN;
+        }
+
+        return EntityType.POLAR_BEAR;
     }
 
 }

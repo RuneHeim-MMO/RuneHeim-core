@@ -34,24 +34,17 @@ import java.util.List;
 import java.util.Set;
 
 public class FusionMasterInventory extends IndividualGUI {
-    private final int COST_PER_GEM = 2500;
-    private final ItemStack blankItem = GUIControl.BLANK.asItemstack();
-    private final ItemStack cancelItem = GUIControl.NO.asItemstack(Component.text("Cancel", Color.ERROR.asColor()));
-
     private final static int SOCKETABLE_SLOT = 4;
     private final static int SCROLL_SLOT = 22;
     private final static List<Integer> GEM_SLOTS = new ArrayList<>(List.of(21, 23, 30, 32));
     private final static Set<Integer> ACTIVE_GEM_SLOTS = new HashSet<>();
-
     private final static int CONFIRM_SLOT = 50;
     private final static int CANCEL_SLOT = 48;
     private final static int INFO_SLOT = 53;
-
+    private final int COST_PER_GEM = 2500;
+    private final ItemStack blankItem = GUIControl.BLANK.asItemstack();
+    private final ItemStack cancelItem = GUIControl.NO.asItemstack(Component.text("Cancel", Color.ERROR.asColor()));
     private final Inventory inventory;
-
-    private enum ItemStackType {
-        SOCKETABLE, GEM, SCROLL
-    }
 
     public FusionMasterInventory(String title, int id) {
         super(title, id, 6);
@@ -386,7 +379,6 @@ public class FusionMasterInventory extends IndividualGUI {
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> updateInventory(player), 2L);
     }
 
-
     @Override
     public void onInventoryClose(@Nullable InventoryCloseEvent event, @Nullable RunePlayer player) {
         if (player == null) {
@@ -394,6 +386,11 @@ public class FusionMasterInventory extends IndividualGUI {
         }
 
         InventoryUtils.returnPlayerItemFromInventory(inventory, player);
+    }
+
+
+    private enum ItemStackType {
+        SOCKETABLE, GEM, SCROLL
     }
 
 

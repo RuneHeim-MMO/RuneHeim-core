@@ -30,7 +30,7 @@ public class EquipableLore implements LoreCreator {
 
             equipable.getRequiredCompletedQuests().forEach(questId -> {
                 Quest quest = RuneQuestPlugin.getQuestHandler().getRegistry().getQuestById(questId);
-                lore.add(Component.text("• " + (quest != null ? quest.getName() :  "INVALID: " + questId), Color.ITEM_REQUIREMENT.asColor()));
+                lore.add(Component.text("• " + (quest != null ? quest.getName() : "INVALID: " + questId), Color.ITEM_REQUIREMENT.asColor()));
             });
 
         }

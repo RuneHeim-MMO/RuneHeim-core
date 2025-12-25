@@ -23,16 +23,15 @@ import java.util.Objects;
 import java.util.UUID;
 
 public abstract class AbstractQuestStep implements Listener {
-    private transient RuneQuestPlugin plugin;
-    private transient Quest parentQuest;
-    private int id;
     private final StepType type;
     @Nullable
     private final String description;
-    private String stableId;
-
     @Nullable
     private final UUID owner;
+    private transient RuneQuestPlugin plugin;
+    private transient Quest parentQuest;
+    private int id;
+    private String stableId;
 
     public AbstractQuestStep(RuneQuestPlugin plugin, Quest parentQuest, StepType type, @Nullable String description, String stableId, @Nullable UUID owner) { // if owner is null, then this is a 'dummy' quest used for displaying to players.
         this.plugin = plugin;
@@ -149,12 +148,12 @@ public abstract class AbstractQuestStep implements Listener {
         return plugin;
     }
 
-    public String getStableId() {
-        return stableId;
-    }
-
     public void setPlugin(RuneQuestPlugin plugin) {
         this.plugin = plugin;
+    }
+
+    public String getStableId() {
+        return stableId;
     }
 
     public Quest getParentQuest() {

@@ -94,7 +94,7 @@ public class HitListener implements Listener {
 
         if (event.getDamager() instanceof Player attackerPlayer && (defenderEntity instanceof ArmorStand || !(defenderEntity instanceof LivingEntity))) {
             boolean isAllowed = PlayerUtils.canPlayerManipulateWorld(attackerPlayer);
-            
+
             if (isAllowed) {
                 event.setDamage(initialDamage); // Allow damage to non-living entities in creative mode for admins (e.g. armor stands)
                 return;

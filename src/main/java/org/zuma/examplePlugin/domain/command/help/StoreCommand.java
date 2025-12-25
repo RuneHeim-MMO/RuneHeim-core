@@ -23,7 +23,7 @@ public class StoreCommand implements BasicCommand {
             sender.sendMessage(Component.text("This command can be only used by players.").color(Color.ERROR.asColor()));
             return;
         }
-        
+
         Component line = Component.text("───────────────────────────────────")
                 .color(NamedTextColor.DARK_GRAY);
 

@@ -132,7 +132,6 @@ public class HouseSlotEditor extends IndividualGUI {
             } catch (Exception e) {
                 HudService.sendFailMessage(player, Component.text(e.getMessage()));
             }
-            return;
         }
     }
 

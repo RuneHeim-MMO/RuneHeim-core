@@ -11,10 +11,6 @@ public class MobBehavior {
     private final float pitchModifier;
     private final Random random = new Random();
 
-    public enum MobSoundType {
-        POSITIVE, NEGATIVE, IDLE, HURT, DEATH
-    }
-
     public MobBehavior(float pitchModifier, List<SoundType> idleSounds,
                        List<SoundType> interactionSuccessSounds,
                        List<SoundType> interactionFailSounds,
@@ -42,6 +38,10 @@ public class MobBehavior {
         if (sounds.isEmpty()) return;
         SoundType sound = sounds.get(random.nextInt(sounds.size()));
         sound.play(entity.getLocation(), pitchModifier);
+    }
+
+    public enum MobSoundType {
+        POSITIVE, NEGATIVE, IDLE, HURT, DEATH
     }
 
 }

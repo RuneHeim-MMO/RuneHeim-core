@@ -16,11 +16,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class InitialEffectMechanic implements MobMechanic {
-    private CombatantMob mob;
     private final int nearbyRange;
     private final List<PotionEffect> effectList;
     private final String message;
     private final SoundType soundType;
+    private CombatantMob mob;
     private boolean executed = false;
 
 

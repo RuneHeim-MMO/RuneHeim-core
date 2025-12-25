@@ -36,8 +36,6 @@ import java.util.List;
 
 
 public class NodeCreatorInventory extends IndividualGUI {
-    private final BlockLoader loader;
-
     private static final HashMap<Integer, SchematicsRecord> SCHEMATIC_MAP = new HashMap<>() {{
         put(ResourceNodeTypeId.TREE.asInt(), new SchematicsRecord("tree", "tree_depleted"));
         put(ResourceNodeTypeId.BIRCH_TREE.asInt(), new SchematicsRecord("birch_tree", "birch_tree_depleted"));
@@ -46,10 +44,7 @@ public class NodeCreatorInventory extends IndividualGUI {
         put(ResourceNodeTypeId.MAHOGANY_TREE.asInt(), new SchematicsRecord("mahogany_tree", "mahogany_tree_depleted"));
         put(ResourceNodeTypeId.MAGIC_TREE.asInt(), new SchematicsRecord("magic_tree", "magic_tree_depleted"));
     }};
-
-
-    public record SchematicsRecord(String intact, String depleted) {
-    }
+    private final BlockLoader loader;
 
 
     public NodeCreatorInventory(String title, int id, BlockLoader loader) {
@@ -160,5 +155,8 @@ public class NodeCreatorInventory extends IndividualGUI {
                 new AbstractInteractableBlockMeta(0, BlockType.ResourceNode, oppositeFace, result.getHitBlock().getLocation(), side),
                 new VersionedJson(new Gson().toJson(new ResourceNodeMeta(type.getId(), schematics != null ? schematics.intact() : null, schematics != null ? schematics.depleted() : null)), 1)));
 
+    }
+
+    public record SchematicsRecord(String intact, String depleted) {
     }
 }

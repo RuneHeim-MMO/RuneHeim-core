@@ -26,6 +26,6 @@ public class AmbientSoundRepository {
                 new AmbientSound(SoundType.AMBIENT_CREAK, new Location(Bukkit.getWorld("world"), -82, 73, -1094), 45, 15).withVariation(10, 10, 0)
 
 
-                );
+        );
     }
 }

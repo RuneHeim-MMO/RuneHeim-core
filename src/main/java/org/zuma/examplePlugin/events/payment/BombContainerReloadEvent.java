@@ -12,6 +12,11 @@ public class BombContainerReloadEvent extends RedisEvent<BombContainerReloadEven
         this.payload = payload;
     }
 
+    @Override
+    public Payload composePayload() {
+        return payload;
+    }
+
     public static class Payload extends RedisPayload {
         public UUID reloadUUID;
         public PlayerBombsContainer newContainer;
@@ -20,10 +25,5 @@ public class BombContainerReloadEvent extends RedisEvent<BombContainerReloadEven
             this.reloadUUID = reloadUUID;
             this.newContainer = newContainer;
         }
-    }
-
-    @Override
-    public Payload composePayload() {
-        return payload;
     }
 }

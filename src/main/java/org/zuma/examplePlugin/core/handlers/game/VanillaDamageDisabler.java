@@ -22,7 +22,7 @@ public class VanillaDamageDisabler implements Listener {
                     EntityDamageEvent.DamageCause.DROWNING,
                     EntityDamageEvent.DamageCause.FLY_INTO_WALL,
                     EntityDamageEvent.DamageCause.WITHER
-                    );
+            );
 
     @EventHandler
     public void onFireworkDamage(EntityDamageByEntityEvent event) {

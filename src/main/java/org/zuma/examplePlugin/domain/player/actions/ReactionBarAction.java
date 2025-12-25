@@ -20,23 +20,14 @@ import java.util.*;
 
 public class ReactionBarAction implements InteractiveActionStrategy, Listener {
     private final Random random = new Random();
-
-    public enum SegmentType {
-        RED,
-        YELLOW,
-        GREEN
-    }
-
-    private boolean isCancelled, isSuccess;
     private final Listener thisListener = this;
-    private int arrowPosition = -1;
     private final List<Integer> successPositions = new ArrayList<>();
+    private boolean isCancelled, isSuccess;
+    private int arrowPosition = -1;
     private UUID uuid = null;
-
     public ReactionBarAction() {
         this.isCancelled = false;
     }
-
 
     public InteractiveActionStrategy startAction(RunePlayer player, ActionParams params) {
         RuneQuestPlugin.getInstance().getServer().getPluginManager().registerEvents(this, RuneQuestPlugin.getInstance());
@@ -176,7 +167,6 @@ public class ReactionBarAction implements InteractiveActionStrategy, Listener {
         return this;
     }
 
-
     @Override
     public void cancelTask() {
         isCancelled = true;
@@ -197,6 +187,12 @@ public class ReactionBarAction implements InteractiveActionStrategy, Listener {
             }
         }
 
+    }
+
+    public enum SegmentType {
+        RED,
+        YELLOW,
+        GREEN
     }
 
 }

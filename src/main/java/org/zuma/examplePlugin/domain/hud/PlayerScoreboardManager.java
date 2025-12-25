@@ -21,10 +21,9 @@ import javax.annotation.Nullable;
 public class PlayerScoreboardManager {
     private final static int CENTERING_PADDING = 20;
     private final RunePlayer player;
+    int ticks = 0;
     private BukkitTask activeTask = null;
     private boolean tick = false; // Ticktock counter
-    int ticks = 0;
-
     @Nullable
     private Scoreboard scoreboard = null;
 

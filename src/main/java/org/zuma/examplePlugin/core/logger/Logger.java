@@ -12,6 +12,16 @@ public class Logger {
     public Logger() {
     }
 
+    public static String getStackTrace(String message) {
+        Exception e = new Exception(message); // Not thrown, just used for stack trace
+
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        e.printStackTrace(pw);
+
+        return sw.toString();
+    }
+
     public void log(LogLevel level, String message) {
         log(level, message, null);
     }
@@ -36,19 +46,8 @@ public class Logger {
         }
     }
 
-
     public void logWithStack(LogLevel level, String message) {
         String stackTrace = getStackTrace(message);
         log(level, message + "\n" + stackTrace);
-    }
-
-    public static String getStackTrace(String message) {
-        Exception e = new Exception(message); // Not thrown, just used for stack trace
-
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        e.printStackTrace(pw);
-
-        return sw.toString();
     }
 }

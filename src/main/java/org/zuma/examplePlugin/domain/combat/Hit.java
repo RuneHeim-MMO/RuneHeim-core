@@ -8,11 +8,11 @@ public class Hit {
     private final CombatEntity attacker;
     private final CombatEntity defender;
     private final AttackType attackType;
-    private int damage;
     private final HitType hitType;
     private final int maxDamage;
     private final double chance;
     private final boolean isSpecialAttack, isSplashHit;
+    private int damage;
 
     // Canonical constructor
     public Hit(CombatEntity attacker, CombatEntity defender, AttackType attackType, int damage,

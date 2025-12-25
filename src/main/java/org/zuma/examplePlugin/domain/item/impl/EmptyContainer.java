@@ -23,24 +23,6 @@ import java.util.Set;
 
 public class EmptyContainer extends AbstractItemType {
 
-    public record EmptyContainerConfig(InputType type, int resultItemId) {
-    }
-
-    public enum InputType {
-        WATER("Water"), LAVA("Lava"), FLOUR("Flour");
-
-        private final String label;
-
-        InputType(String label) {
-            this.label = label;
-        }
-
-        public String getLabel() {
-            return this.label;
-        }
-
-    }
-
     private final Map<InputType, Integer> resultMap = new HashMap<>();
 
     public EmptyContainer(AbstractItemMeta meta, List<EmptyContainerConfig> config) {
@@ -74,7 +56,6 @@ public class EmptyContainer extends AbstractItemType {
         player.giveItemOrDrop(newItem);
     }
 
-
     @Override
     public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player, StateManager itemStateManager) {
         // We care about both air and block right-clicks
@@ -101,5 +82,23 @@ public class EmptyContainer extends AbstractItemType {
         }
 
 
+    }
+
+    public enum InputType {
+        WATER("Water"), LAVA("Lava"), FLOUR("Flour");
+
+        private final String label;
+
+        InputType(String label) {
+            this.label = label;
+        }
+
+        public String getLabel() {
+            return this.label;
+        }
+
+    }
+
+    public record EmptyContainerConfig(InputType type, int resultItemId) {
     }
 }

@@ -18,13 +18,13 @@ public class TerritoryEnterEvent extends Event {
         this.discovered = discovered;
     }
 
-    @Override
-    public @NotNull HandlerList getHandlers() {
+    public
+    static HandlerList getHandlerList() {
         return HANDLERS;
     }
 
-    public
-    static HandlerList getHandlerList() {
+    @Override
+    public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }
 

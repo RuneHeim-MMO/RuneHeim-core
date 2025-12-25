@@ -6,6 +6,8 @@ import org.zuma.examplePlugin.domain.item.constants.WeaponType;
 
 public interface Weapon {
     Material getMaterial();
+
     WeaponSpeed getSpeed();
+
     WeaponType getType();
 }

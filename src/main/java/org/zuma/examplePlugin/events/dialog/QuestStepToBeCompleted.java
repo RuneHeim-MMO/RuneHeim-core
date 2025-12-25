@@ -16,6 +16,11 @@ public class QuestStepToBeCompleted extends Event {
         this.playerUUID = playerUUID;
     }
 
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     public String getStableDialogStepId() {
         return stableDialogStepId;
     }
@@ -24,12 +29,6 @@ public class QuestStepToBeCompleted extends Event {
     public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }
-
-    public
-    static HandlerList getHandlerList() {
-        return HANDLERS;
-    }
-
 
     public UUID getPlayerUUID() {
         return playerUUID;

@@ -10,6 +10,11 @@ public class BombActivatedEvent extends RedisEvent<BombActivatedEvent.Payload> {
         this.payload = payload;
     }
 
+    @Override
+    public Payload composePayload() {
+        return payload;
+    }
+
     public static class Payload extends RedisPayload {
         public ServerModifierType type;
         public String activatedBy;
@@ -18,10 +23,5 @@ public class BombActivatedEvent extends RedisEvent<BombActivatedEvent.Payload> {
             this.type = type;
             this.activatedBy = activatedBy;
         }
-    }
-
-    @Override
-    public Payload composePayload() {
-        return payload;
     }
 }

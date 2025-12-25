@@ -22,14 +22,9 @@ import org.zuma.examplePlugin.events.housing.HouseSettingsUpdateEvent;
 import java.util.*;
 
 public class HouseSettings extends PaginatedIndividualGUI {
-    private enum ViewMode {
-        VISITORS, INVITATIONS
-    }
-
     private static final Set<Integer> IGNORED_SLOTS = new HashSet<>();
     private UUID instanceUUID;
     private ViewMode mode;
-
     public HouseSettings(String title, int id) {
         super(title, id, 5, IGNORED_SLOTS);
         this.instanceUUID = null;
@@ -226,6 +221,10 @@ public class HouseSettings extends PaginatedIndividualGUI {
         }
 
         updateInventory();
+    }
+
+    private enum ViewMode {
+        VISITORS, INVITATIONS
     }
 
 }

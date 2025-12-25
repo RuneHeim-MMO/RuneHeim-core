@@ -84,11 +84,7 @@ public class GlobalEventHandler {
 
 
         // if the event originated from this server and is not marked for replay at origin, skip it
-        if (payload.serverId == ConfigManager.getServerId() && !payload.replayAtOrigin) {
-            return false;
-        }
-
-        return true;
+        return payload.serverId != ConfigManager.getServerId() || payload.replayAtOrigin;
     }
 
 }

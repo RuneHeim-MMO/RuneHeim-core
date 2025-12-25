@@ -65,7 +65,7 @@ public enum PlayerSetting {
 
         for (String permissionNode : visibilityPermission.getNodes()) {
             boolean has = player.asBukkitPlayer().hasPermission(permissionNode);
-            if (has == true) {
+            if (has) {
                 return true;
             }
         }

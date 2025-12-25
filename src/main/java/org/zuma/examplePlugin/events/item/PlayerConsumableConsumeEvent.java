@@ -25,6 +25,11 @@ public class PlayerConsumableConsumeEvent extends Event implements Cancellable {
         this.itemStateManager = itemStateManager;
     }
 
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     public RunePlayer getPlayer() {
         return player;
     }
@@ -35,11 +40,6 @@ public class PlayerConsumableConsumeEvent extends Event implements Cancellable {
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public
-    static HandlerList getHandlerList() {
         return HANDLERS;
     }
 

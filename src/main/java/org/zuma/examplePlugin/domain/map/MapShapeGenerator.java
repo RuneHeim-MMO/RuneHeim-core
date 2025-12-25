@@ -12,9 +12,9 @@ public class MapShapeGenerator {
     /**
      * Generates points on a circle polygon around a center point.
      *
-     * @param centerX Center X coordinate
-     * @param centerZ Center Z coordinate
-     * @param radius Radius of the circle
+     * @param centerX     Center X coordinate
+     * @param centerZ     Center Z coordinate
+     * @param radius      Radius of the circle
      * @param pointsCount Number of points to generate around the circle
      * @return List of JSONObjects with x,z coordinates suitable for BlueMap shape
      */

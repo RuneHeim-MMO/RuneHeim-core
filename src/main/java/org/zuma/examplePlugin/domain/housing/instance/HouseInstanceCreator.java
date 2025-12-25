@@ -30,11 +30,10 @@ import org.zuma.examplePlugin.domain.territory.Territory;
 import java.util.*;
 
 public class HouseInstanceCreator {
-    private int totalInstances = 0;
-
     private final HousingManager manager;
     private final HousingWorldManager housingWorldManager;
     private final SchematicSpawner schematicSpawner;
+    private int totalInstances = 0;
 
     public HouseInstanceCreator(HousingManager manager, HousingWorldManager housingWorldManager, SchematicSpawner schematicSpawner) {
         this.manager = manager;

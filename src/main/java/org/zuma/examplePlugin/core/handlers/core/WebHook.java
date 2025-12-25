@@ -24,10 +24,8 @@ import java.util.stream.Collectors;
 
 public class WebHook {
     private static final int HTTP_PORT = 8080;
-    private static HttpServer server;
     private static final AtomicInteger threadCounter = new AtomicInteger(0);
     private static final int MAX_BODY_BYTES = 128 * 1024; // 32 KB
-
     private static final ThreadPoolExecutor executor = new ThreadPoolExecutor(
             2,                // core pool size
             4,                // maximum pool size
@@ -40,6 +38,7 @@ public class WebHook {
             },
             new ThreadPoolExecutor.CallerRunsPolicy() // backpressure: caller runs task when overloaded
     );
+    private static HttpServer server;
 
     public static void initializeServer(Dotenv dotenv) {
         String secretKey = dotenv.get("WEB_HOOK_KEY", "default-secret");
@@ -111,7 +110,10 @@ public class WebHook {
                         os.write(response);
                     }
                 } catch (Exception e) {
-                    try { exchange.sendResponseHeaders(500, -1); } catch (IOException ignored) {}
+                    try {
+                        exchange.sendResponseHeaders(500, -1);
+                    } catch (IOException ignored) {
+                    }
                     RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Webhook handler error", e);
                 } finally {
                     exchange.close();

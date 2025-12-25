@@ -71,7 +71,7 @@ import java.util.Map;
  *   }
  * }
  * }</pre>
- *
+ * <p>
  * This class addresses this problem by adding type information to the serialized JSON and honoring
  * that type information when the JSON is deserialized:
  *
@@ -92,12 +92,12 @@ import java.util.Map;
  *   }
  * }
  * }</pre>
- *
+ * <p>
  * Both the type field name ({@code "type"}) and the type labels ({@code "Rectangle"}) are
  * configurable.
  *
  * <h2>Registering Types</h2>
- *
+ * <p>
  * Create a {@code RuntimeTypeAdapterFactory} by passing the base type and type field name to the
  * {@link #of} factory method. If you don't supply an explicit type field name, {@code "type"} will
  * be used.
@@ -106,7 +106,7 @@ import java.util.Map;
  * RuntimeTypeAdapterFactory<Shape> shapeAdapterFactory
  *     = RuntimeTypeAdapterFactory.of(Shape.class, "type");
  * }</pre>
- *
+ * <p>
  * Next register all of your subtypes. Every subtype must be explicitly registered. This protects
  * your application from injection attacks. If you don't supply an explicit type label, the type's
  * simple name will be used.
@@ -116,7 +116,7 @@ import java.util.Map;
  * shapeAdapterFactory.registerSubtype(Circle.class, "Circle");
  * shapeAdapterFactory.registerSubtype(Diamond.class, "Diamond");
  * }</pre>
- *
+ * <p>
  * Finally, register the type adapter factory in your application's GSON builder:
  *
  * <pre>{@code
@@ -124,7 +124,7 @@ import java.util.Map;
  *     .registerTypeAdapterFactory(shapeAdapterFactory)
  *     .create();
  * }</pre>
- *
+ * <p>
  * Like {@code GsonBuilder}, this API supports chaining:
  *
  * <pre>{@code
@@ -135,7 +135,7 @@ import java.util.Map;
  * }</pre>
  *
  * <h2>Serialization and deserialization</h2>
- *
+ * <p>
  * In order to serialize and deserialize a polymorphic object, you must specify the base type
  * explicitly.
  *
@@ -143,7 +143,7 @@ import java.util.Map;
  * Diamond diamond = new Diamond();
  * String json = gson.toJson(diamond, Shape.class);
  * }</pre>
- *
+ * <p>
  * And then:
  *
  * <pre>{@code
@@ -208,7 +208,7 @@ public final class RuntimeTypeAdapterFactory<T> implements TypeAdapterFactory {
      * Registers {@code type} identified by {@code label}. Labels are case sensitive.
      *
      * @throws IllegalArgumentException if either {@code type} or {@code label} have already been
-     *     registered on this type adapter.
+     *                                  registered on this type adapter.
      */
     @CanIgnoreReturnValue
     public RuntimeTypeAdapterFactory<T> registerSubtype(Class<? extends T> type, String label) {
@@ -228,7 +228,7 @@ public final class RuntimeTypeAdapterFactory<T> implements TypeAdapterFactory {
      * case sensitive.
      *
      * @throws IllegalArgumentException if either {@code type} or its simple name have already been
-     *     registered on this type adapter.
+     *                                  registered on this type adapter.
      */
     @CanIgnoreReturnValue
     public RuntimeTypeAdapterFactory<T> registerSubtype(Class<? extends T> type) {

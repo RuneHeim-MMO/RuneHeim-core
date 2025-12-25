@@ -186,7 +186,6 @@ public class DailyRewardsInventory extends IndividualGUI {
         if (menuValue == -2) {
             // Future reward
             HudService.sendFailMessage(player, Component.text("This reward is not available yet!", Color.ERROR.asColor()));
-            return;
         }
 
 

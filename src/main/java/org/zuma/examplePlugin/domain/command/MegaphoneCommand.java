@@ -68,10 +68,8 @@ public class MegaphoneCommand implements BasicCommand {
 
         if (runePlayer.isNextMessageMegaphone()) {
             sender.sendMessage(Component.text("Usage: /megaphone cancel - to cancel your global message.", Color.ERROR.asColor()));
-            return;
         } else {
             sender.sendMessage(Component.text("Usage: /megaphone - set your next message to be sent globally using a megaphone use.", Color.ERROR.asColor()));
-            return;
         }
 
 

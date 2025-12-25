@@ -31,10 +31,10 @@ import java.util.function.Function;
 
 public abstract class DialogStep {
     private static final Logger log = LoggerFactory.getLogger(DialogStep.class);
-    protected Dialog parent;
     private final String uniqueIdentifier;
     private final List<DialogText> content;
     private final UUID hologramUUID = UUID.randomUUID();
+    protected Dialog parent;
     private boolean finishedRendering = false;
 
     public DialogStep(List<DialogText> content, String uniqueIdentifier) {
@@ -129,8 +129,8 @@ public abstract class DialogStep {
         new BukkitRunnable() {
             int messageIndex = 0;
             boolean hasStarted = false;
-            boolean[] messagesSent = new boolean[content.size()];
-            long startTime = System.currentTimeMillis();
+            final boolean[] messagesSent = new boolean[content.size()];
+            final long startTime = System.currentTimeMillis();
 
             @Override
             public void run() {
@@ -153,17 +153,17 @@ public abstract class DialogStep {
                     if (isInteractive) {
                         player.asBukkitPlayer().sendMessage(Icon.DIALOG_BORDER.asComponent().append(Component.empty()));
                     }
-                    
+
                     for (DialogText text : content) {
                         String contentLine = replaceTemplates(text.line(), player);
                         Component message = Icon.DIALOG_BORDER.asComponent().append(prefix.append(Component.text(contentLine)));
                         player.asBukkitPlayer().sendMessage(message);
                     }
-                    
+
                     if (isInteractive) {
                         player.asBukkitPlayer().sendMessage(Icon.DIALOG_BORDER.asComponent().append(Component.empty()));
                     }
-                    
+
                     onDialogFinishRendering(player);
                     finishedRendering = true;
                     this.cancel();
@@ -177,20 +177,20 @@ public abstract class DialogStep {
                             DialogText text = content.get(i);
                             String contentLine = replaceTemplates(text.line(), player);
                             Component message = Icon.DIALOG_BORDER.asComponent().append(prefix.append(Component.text(contentLine)));
-                            
+
                             if (isInteractive && !messagesSent[0]) {
                                 player.asBukkitPlayer().sendMessage(Icon.DIALOG_BORDER.asComponent().append(Component.empty()));
                             }
-                            
+
                             player.asBukkitPlayer().sendMessage(message);
                             messagesSent[i] = true;
                         }
                     }
-                    
+
                     if (isInteractive && messageIndex < content.size()) {
                         player.asBukkitPlayer().sendMessage(Icon.DIALOG_BORDER.asComponent().append(Component.empty()));
                     }
-                    
+
                     onDialogFinishRendering(player);
                     finishedRendering = true;
                     this.cancel();
@@ -206,25 +206,25 @@ public abstract class DialogStep {
                 for (int i = 0; i < content.size(); i++) {
                     DialogText text = content.get(i);
                     String contentLine = replaceTemplates(text.line(), player);
-                    
+
                     long messageDelay = combinedDelay * 50L; // Convert ticks to milliseconds (20 ticks = 1 second)
-                    
+
                     if (elapsed >= messageDelay && !messagesSent[i]) {
                         Component message = Icon.DIALOG_BORDER.asComponent().append(prefix.append(Component.text(contentLine)));
-                        
+
                         if (isInteractive && (text.typewriter() || i == 0)) {
                             player.asBukkitPlayer().sendMessage(Icon.DIALOG_BORDER.asComponent().append(Component.empty()));
                         }
-                        
+
                         player.asBukkitPlayer().sendMessage(message);
                         messagesSent[i] = true;
                         messageIndex = i + 1;
-                        
+
                         if (isInteractive && i == content.size() - 1) {
                             player.asBukkitPlayer().sendMessage(Icon.DIALOG_BORDER.asComponent().append(Component.empty()));
                         }
                     }
-                    
+
                     if (text.typewriter()) {
                         long extra = 2L * contentLine.length();
                         combinedDelay += (int) extra;
@@ -239,7 +239,7 @@ public abstract class DialogStep {
                     long totalDuration = content.stream()
                             .mapToLong(s -> s.typewriter() ? s.line().length() * 2L : 0L)
                             .sum() * 50L + 500L; // Convert to milliseconds and add buffer
-                    
+
                     if (elapsed >= totalDuration) {
                         onDialogFinishRendering(player);
                         finishedRendering = true;
@@ -295,9 +295,9 @@ public abstract class DialogStep {
         }
 
         new BukkitRunnable() {
+            final StringBuilder displayed = new StringBuilder();
             int lineIndex = 0;
             int charIndex = 0;
-            final StringBuilder displayed = new StringBuilder();
             String currentLine = "";
             boolean isTypewriter = false;
 

@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
 
 public class AnnouncementsHandler {
     private final AnnouncementsRepository repository;
+    private final Object lock;
     private List<Announcement> activeAnnouncements;
     private int lastAnnouncementIndex;
-    private final Object lock;
 
     public AnnouncementsHandler(AnnouncementsRepository repository) {
         this.repository = repository;

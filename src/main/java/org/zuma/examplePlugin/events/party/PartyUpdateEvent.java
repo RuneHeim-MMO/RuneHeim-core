@@ -13,17 +13,17 @@ public class PartyUpdateEvent extends Event {
         this.party = party;
     }
 
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     public Party getParty() {
         return party;
     }
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public
-    static HandlerList getHandlerList() {
         return HANDLERS;
     }
 }

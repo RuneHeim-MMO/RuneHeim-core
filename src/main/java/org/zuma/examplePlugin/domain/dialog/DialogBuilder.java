@@ -21,24 +21,23 @@ public class DialogBuilder {
     private static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(DialogBuilder.class, new DialogBuilderAdapter())
             .create();
-
-    private final String id;
     public final List<DialogStep> steps = new ArrayList<>();
+    private final String id;
 
-    public String serialize() {
-        return gson.toJson(this);
+    public DialogBuilder(String id) {
+        this.id = id;
     }
 
     public static DialogBuilder deserialize(String json) {
         return gson.fromJson(json, DialogBuilder.class);
     }
 
-    public DialogBuilder(String id) {
-        this.id = id;
-    }
-
     public static DialogBuilder create(String id) {
         return new DialogBuilder(id);
+    }
+
+    public String serialize() {
+        return gson.toJson(this);
     }
 
     public DialogBuilder teleportStep(Consumer<TeleportBranchStepBuilder> stepConsumer) {
@@ -270,10 +269,10 @@ public class DialogBuilder {
     // Inner builder for options
     public static class OptionBuilder {
         private final String label;
-        private List<DialogStep> followupSteps = null;
         private final List<String> actions = new ArrayList<>();
-        private Runnable runnable = null;
         private final String parentId;
+        private List<DialogStep> followupSteps = null;
+        private Runnable runnable = null;
 
         public OptionBuilder(String label, String parentId) {
             this.label = label;

@@ -6,6 +6,16 @@ import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 public class DailyMegaRareClaimEvent extends RedisEvent<DailyMegaRareClaimEvent.Payload> {
     private final DailyMegaRareClaimEvent.Payload payload;
 
+    public DailyMegaRareClaimEvent(DailyMegaRareClaimEvent.Payload payload) {
+        this.payload = payload;
+        this.payload.replayAtOrigin = true;
+    }
+
+    @Override
+    public Payload composePayload() {
+        return payload;
+    }
+
     public static class Payload extends RedisPayload {
         public final String playerName, itemName;
         public final ItemRarity tier;
@@ -17,17 +27,6 @@ public class DailyMegaRareClaimEvent extends RedisEvent<DailyMegaRareClaimEvent.
             this.tier = tier;
             this.amount = amount;
         }
-    }
-
-    public DailyMegaRareClaimEvent(DailyMegaRareClaimEvent.Payload payload) {
-        this.payload = payload;
-        this.payload.replayAtOrigin = true;
-    }
-
-
-    @Override
-    public Payload composePayload() {
-        return payload;
     }
 
 }

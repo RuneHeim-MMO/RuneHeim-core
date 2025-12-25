@@ -13,17 +13,17 @@ public class HouseSettingsUpdateEvent extends Event {
         this.instance = instance;
     }
 
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     public HouseInstance getInstance() {
         return instance;
     }
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public
-    static HandlerList getHandlerList() {
         return HANDLERS;
     }
 }

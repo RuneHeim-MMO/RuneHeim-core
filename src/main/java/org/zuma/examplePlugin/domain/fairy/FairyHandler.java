@@ -45,12 +45,11 @@ public class FairyHandler {
     private final HashMap<UUID, Fairy> wornFairies;
     private final HashMap<UUID, Fairy> fedFairies;
     private final HashMap<UUID, Entity> fairyModels;
+    double radius = 1.0;
+    double height = 2;
     private BukkitTask spriteDrawingTask;
     private BukkitTask playerSlotTracker;
     private BukkitTask fairyTickTask;
-
-    double radius = 1.0;
-    double height = 2;
     private double t = 0;
     private double velocity = Math.PI / 40;
 

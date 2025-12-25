@@ -28,16 +28,16 @@ public class PlayerBombsContainer {
         return doubleCombatXPBombs;
     }
 
-    public void setDoubleSkillXPBombs(int doubleSkillXPBombs) {
-        this.doubleSkillXPBombs = doubleSkillXPBombs;
+    public void setDoubleCombatXPBombs(int doubleCombatXPBombs) {
+        this.doubleCombatXPBombs = doubleCombatXPBombs;
     }
 
     public int getDoubleSkillXPBombs() {
         return doubleSkillXPBombs;
     }
 
-    public void setDoubleCombatXPBombs(int doubleCombatXPBombs) {
-        this.doubleCombatXPBombs = doubleCombatXPBombs;
+    public void setDoubleSkillXPBombs(int doubleSkillXPBombs) {
+        this.doubleSkillXPBombs = doubleSkillXPBombs;
     }
 
     public int getIncreasedMobDropsBombs() {

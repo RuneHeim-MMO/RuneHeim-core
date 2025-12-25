@@ -21,8 +21,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class ArrowRainMechanic implements MobMechanic {
     public static final NamespacedKey projectileType = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.PROJECTILE_TYPE.asString());
-    private CombatantMob mob;
     private final int totalArrows, arrowsPerTick, delayBetweenTicks, spread;
+    private CombatantMob mob;
 
     public ArrowRainMechanic(int totalArrows, int arrowsPerTick, int delayBetweenTicks, int spread) {
         this.totalArrows = totalArrows;

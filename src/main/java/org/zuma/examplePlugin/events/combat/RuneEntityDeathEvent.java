@@ -22,6 +22,11 @@ public class RuneEntityDeathEvent extends Event {
         this.type = type;
     }
 
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     @Nullable
     public CombatEntity getAttacker() {
         return attacker;
@@ -43,11 +48,6 @@ public class RuneEntityDeathEvent extends Event {
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public
-    static HandlerList getHandlerList() {
         return HANDLERS;
     }
 

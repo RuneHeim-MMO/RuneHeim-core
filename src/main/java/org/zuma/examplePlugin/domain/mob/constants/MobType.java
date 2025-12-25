@@ -3,7 +3,7 @@ package org.zuma.examplePlugin.domain.mob.constants;
 public enum MobType {
     DRAKKAR_MAYOR,
     DRAKKAR_SMELTERY_WORKER,
-    
+
     // The sick camels quest
     RAFIQ_CAMEL_TRADER,
     SHAMIRA_SHAMAN,

@@ -19,8 +19,8 @@ public class Dialog {
 
     private final String id;
     private final List<DialogStep> scenario;
-    private int nextStepIndex, initialHeldSlot;
     private final UUID dialogHolderUUID;
+    private int nextStepIndex, initialHeldSlot;
     private UUID participantUUID;
     private boolean aborted = false;
     private boolean slotLocked = false;
@@ -52,6 +52,10 @@ public class Dialog {
     @Nullable
     public Runnable getOnDialogFinish() {
         return onDialogFinish;
+    }
+
+    public void setOnDialogFinish(@Nullable Runnable onDialogFinish) {
+        this.onDialogFinish = onDialogFinish;
     }
 
     protected void startDialog(RunePlayer player) {
@@ -144,10 +148,6 @@ public class Dialog {
 
     public UUID getDialogHolderUUID() {
         return this.dialogHolderUUID;
-    }
-
-    public void setOnDialogFinish(@Nullable Runnable onDialogFinish) {
-        this.onDialogFinish = onDialogFinish;
     }
 
     public String getId() {

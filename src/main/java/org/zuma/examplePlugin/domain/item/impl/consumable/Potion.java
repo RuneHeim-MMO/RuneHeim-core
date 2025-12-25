@@ -57,12 +57,12 @@ public class Potion extends AbstractItemType implements Stateful {
         return null;
     }
 
-    public void setEffect(StatsEffect effect) {
-        this.effect = effect;
-    }
-
     public StatsEffect getEffect() {
         return this.effect;
+    }
+
+    public void setEffect(StatsEffect effect) {
+        this.effect = effect;
     }
 
     @Override

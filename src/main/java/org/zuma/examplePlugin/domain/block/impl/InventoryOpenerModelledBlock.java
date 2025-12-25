@@ -22,8 +22,8 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class InventoryOpenerModelledBlock extends ModelledInteractableBlock implements Restrictable, InventoryOpenerBlock {
-    private int inventoryId;
     private final List<UUID> createdInventoryInstances;
+    private int inventoryId;
     private List<SkillRequirement> requirements;
     private String label, icon;
 

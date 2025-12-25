@@ -7,5 +7,6 @@ public interface ItemStorageRepository {
 
     @Nullable
     String getByUUID(UUID playerUUID);
+
     void save(UUID playerUUID, String content);
 }

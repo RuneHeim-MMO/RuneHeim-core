@@ -6,10 +6,10 @@ import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.mob.mechanics.base.MobMechanic;
 
 public class VariableSpeedMechanic implements MobMechanic {
-    private CombatantMob mob;
     private final double activeSpeed;
-    private Double baseSpeed;
     private final int durationSeconds;
+    private CombatantMob mob;
+    private Double baseSpeed;
     private int secondsRemaining = 0;
 
     public VariableSpeedMechanic(int durationSeconds, double activeSpeed) {

@@ -144,7 +144,7 @@ public class MobListener implements Listener {
     }
 
     @EventHandler
-    public void onProjectileHit(ProjectileHitEvent event){
+    public void onProjectileHit(ProjectileHitEvent event) {
         EntityUtils.removeEntityWithPassengers(event.getEntity());
     }
 

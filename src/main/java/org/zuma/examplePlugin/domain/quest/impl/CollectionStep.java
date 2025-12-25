@@ -49,16 +49,16 @@ public class CollectionStep extends AbstractQuestStep {
         return (float) totalAcquired / totalRequired;
     }
 
-    public void setAcquiredItems(HashMap<Integer, Integer> acquiredItems) {
-        this.acquiredItems = acquiredItems;
-    }
-
     public List<ItemRecord> getRequiredItems() {
         return requiredItems;
     }
 
     public HashMap<Integer, Integer> getAcquiredItems() {
         return this.acquiredItems;
+    }
+
+    public void setAcquiredItems(HashMap<Integer, Integer> acquiredItems) {
+        this.acquiredItems = acquiredItems;
     }
 
     @EventHandler

@@ -24,7 +24,8 @@ public class StateFactory {
             case GEAR_GEM_SOCKETS -> newState = createGearGemSocketsState(abstractStateMeta, abstractStateMeta.json());
             case FAIRY_STATE -> newState = createFairyState(abstractStateMeta, abstractStateMeta.json());
             case MOUNT_STATE -> newState = createMountState(abstractStateMeta, abstractStateMeta.json());
-            case STORAGE_ITEM_UUID_STATE -> newState = createStorageItemState(abstractStateMeta, abstractStateMeta.json());
+            case STORAGE_ITEM_UUID_STATE ->
+                    newState = createStorageItemState(abstractStateMeta, abstractStateMeta.json());
             default -> {
             }
         }

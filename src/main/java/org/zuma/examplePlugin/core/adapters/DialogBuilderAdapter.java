@@ -336,19 +336,6 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
 
     }
 
-    // Helper to hold option data during parse
-    private static class OptionData {
-        String label;
-        List<String> actions;
-        DialogBuilder followup;
-
-        OptionData(String label, List<String> actions, DialogBuilder followup) {
-            this.label = label;
-            this.actions = actions;
-            this.followup = followup;
-        }
-    }
-
     // ====== Reflection Helpers ======
     private String getId(DialogBuilder builder) {
         try {
@@ -480,6 +467,19 @@ public class DialogBuilderAdapter extends TypeAdapter<DialogBuilder> {
             return (ConditionStep.LogicalOperator) f.get(step);
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    // Helper to hold option data during parse
+    private static class OptionData {
+        String label;
+        List<String> actions;
+        DialogBuilder followup;
+
+        OptionData(String label, List<String> actions, DialogBuilder followup) {
+            this.label = label;
+            this.actions = actions;
+            this.followup = followup;
         }
     }
 

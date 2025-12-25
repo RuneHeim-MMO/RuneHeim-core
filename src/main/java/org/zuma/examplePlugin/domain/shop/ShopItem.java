@@ -7,30 +7,23 @@ import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import javax.annotation.Nullable;
 
 public class ShopItem {
+    // Indicates if shop is buy-all and the item is temporary (created & removed dynamically), disappears after stock is bought.
+    private final boolean temporaryItem;
     private int itemId;
     private int defaultStock;
     private int currentStock;
-
     @Nullable
     private Long lastReplenishedMillis;
-
     @Nullable
     private Integer stockReplenishmentSeconds;
-
     @Nullable
     private Long buyPrice;
-
     @Nullable
     private Long sellPrice;
-
     private boolean sellable;
     private boolean buyable;
-
     @Nullable
     private AbstractItemType buyCustomCurrency, sellCustomCurrency;
-
-    // Indicates if shop is buy-all and the item is temporary (created & removed dynamically), disappears after stock is bought.
-    private final boolean temporaryItem;
 
     // Constructor
     public ShopItem(int itemId,
@@ -129,6 +122,10 @@ public class ShopItem {
         return buyPrice;
     }
 
+    public void setBuyPrice(@Nullable Long buyPrice) {
+        this.buyPrice = buyPrice;
+    }
+
     @Nullable
     public AbstractItemType getBuyCurrency() {
         return this.buyCustomCurrency;
@@ -136,11 +133,6 @@ public class ShopItem {
 
     public AbstractItemType getSellCurrency() {
         return this.sellCustomCurrency;
-    }
-
-
-    public void setBuyPrice(@Nullable Long buyPrice) {
-        this.buyPrice = buyPrice;
     }
 
     @Nullable

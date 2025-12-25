@@ -21,15 +21,6 @@ public class XPLamp extends AbstractItemType {
         super.setTypeLore("XP Reward", Icon.CLOVER.get());
     }
 
-    public void setXpReward(double amount) {
-        this.xpReward = amount;
-    }
-
-    public void setDisabledSkills(List<SkillType> skills) {
-        this.disabledSkills = skills;
-    }
-
-
     @Override
     public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player, StateManager itemStateManager) {
         RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.XP_LAMP.asInt(), player, null);
@@ -39,7 +30,15 @@ public class XPLamp extends AbstractItemType {
         return disabledSkills;
     }
 
+    public void setDisabledSkills(List<SkillType> skills) {
+        this.disabledSkills = skills;
+    }
+
     public double getXpReward() {
         return xpReward;
+    }
+
+    public void setXpReward(double amount) {
+        this.xpReward = amount;
     }
 }

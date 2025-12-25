@@ -42,11 +42,10 @@ import org.zuma.examplePlugin.domain.tour.TourHandler;
 import java.util.List;
 
 public final class RuneQuestPlugin extends JavaPlugin implements Listener {
-    private final ModuleContext moduleContext;
-    private final ModuleLoader moduleLoader;
-
     public static final Logger logger = new Logger();
     private static RuneQuestPlugin pluginInstance;
+    private final ModuleContext moduleContext;
+    private final ModuleLoader moduleLoader;
 
     public RuneQuestPlugin() {
         moduleContext = new ModuleContext();
@@ -92,44 +91,6 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new DailyRewardModule(),
                         new PlayerHousingModule()
                 ), moduleContext);
-    }
-
-
-    @Override
-    public void onEnable() {
-        pluginInstance = this;
-
-        // TODO: despawn all dropped item on restart
-
-        try {
-            ConfigManager.initializeConfig();
-            moduleLoader.startAll(this);
-
-            ModelEngineWaiter waiter = new ModelEngineWaiter(() -> {
-                moduleContext.get(BlockLoader.class).loadInteractableBlocks();
-                RuneQuestPlugin.reloadMarkers();
-            }, 30, () -> {
-                // Timeout callback, shut down server
-                getServer().shutdown();
-            });
-
-            this.getServer().getPluginManager().registerEvents(waiter, this);
-
-        } catch (Exception e) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to initialize RuneHeim-core! Shutting down.", e);
-            Bukkit.getServer().shutdown();
-        }
-
-    }
-
-    @Override
-    public void onDisable() {
-        getRuneLogger().log(LogLevel.INFO, "Disabling plugin...");
-
-        Bukkit.getScheduler().cancelTasks(this);
-        moduleLoader.stopAll(this);
-
-        getRuneLogger().log(LogLevel.INFO, "Plugin disabled.");
     }
 
     public static void reloadMarkers() {
@@ -258,5 +219,42 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static BlockLoader getBlockLoader() {
         return pluginInstance.moduleContext.get(BlockLoader.class);
+    }
+
+    @Override
+    public void onEnable() {
+        pluginInstance = this;
+
+        // TODO: despawn all dropped item on restart
+
+        try {
+            ConfigManager.initializeConfig();
+            moduleLoader.startAll(this);
+
+            ModelEngineWaiter waiter = new ModelEngineWaiter(() -> {
+                moduleContext.get(BlockLoader.class).loadInteractableBlocks();
+                RuneQuestPlugin.reloadMarkers();
+            }, 30, () -> {
+                // Timeout callback, shut down server
+                getServer().shutdown();
+            });
+
+            this.getServer().getPluginManager().registerEvents(waiter, this);
+
+        } catch (Exception e) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed to initialize RuneHeim-core! Shutting down.", e);
+            Bukkit.getServer().shutdown();
+        }
+
+    }
+
+    @Override
+    public void onDisable() {
+        getRuneLogger().log(LogLevel.INFO, "Disabling plugin...");
+
+        Bukkit.getScheduler().cancelTasks(this);
+        moduleLoader.stopAll(this);
+
+        getRuneLogger().log(LogLevel.INFO, "Plugin disabled.");
     }
 }

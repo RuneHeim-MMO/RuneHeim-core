@@ -27,12 +27,10 @@ import java.util.UUID;
 
 public abstract class AbstractGUI implements Listener {
     private final static int ITEMS_IN_ROW = 9;
-
-    private final UUID uuid;
-    protected String title;
     protected final int id, rows;
     protected final boolean shared;
-
+    private final UUID uuid;
+    protected String title;
     @Nullable
     protected AbstractInventoryOpener holder;
     @Nullable
@@ -50,22 +48,22 @@ public abstract class AbstractGUI implements Listener {
         this.shared = shared;
     }
 
-    public void setBlockHolder(@Nullable InventoryOpenerBlock holder) {
-        this.blockHolder = holder;
-    }
-
     @Nullable
     public InventoryOpenerBlock getBlockHolder() {
         return this.blockHolder;
     }
 
-    public void setMobHolder(@Nullable AbstractInventoryOpener holder) {
-        this.holder = holder;
+    public void setBlockHolder(@Nullable InventoryOpenerBlock holder) {
+        this.blockHolder = holder;
     }
 
     @Nullable
     public AbstractInventoryOpener getMobHolder() {
         return this.holder;
+    }
+
+    public void setMobHolder(@Nullable AbstractInventoryOpener holder) {
+        this.holder = holder;
     }
 
     public Component getTitle() {

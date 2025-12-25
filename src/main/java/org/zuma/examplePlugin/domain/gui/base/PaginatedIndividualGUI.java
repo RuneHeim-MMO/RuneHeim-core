@@ -20,7 +20,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
     private static final int ITEMS_IN_ROW = 9;   // Always 9
     private final int usableRows = rows - 1;
     private final Inventory inventory;
-
+    private final Set<Integer> ignoredSlots;
     private int page = 1;
     private int totalItems = 0;
     private int indexStart = 0;
@@ -28,7 +28,6 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
     private int maxPages = 1;
     private List<ItemStack> items;
     private HashMap<Integer, ItemStack> overrideItems = new HashMap<>();
-    private final Set<Integer> ignoredSlots;
 
     public PaginatedIndividualGUI(String title, int id, int rows, @Nullable Set<Integer> ignoredSlots) {
         super(title, id, rows);

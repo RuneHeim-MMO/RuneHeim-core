@@ -21,9 +21,6 @@ public class KillMobStep extends AbstractQuestStep {
     private final List<KillMobStepEntry> requiredKills;
     private transient HashMap<List<String>, Integer> killsDone; // Mob type ID -> count
 
-    public record KillMobStepEntry(List<String> mobTypeIds, int requiredAmount, String displayName) {
-    }
-
     public KillMobStep(RuneQuestPlugin plugin, Quest parentQuest, String description, String stableId, List<KillMobStepEntry> requiredKills, @Nullable UUID owner) {
         super(plugin, parentQuest, StepType.KILL_MOB, description, stableId, owner);
         this.requiredKills = requiredKills;
@@ -46,7 +43,6 @@ public class KillMobStep extends AbstractQuestStep {
 
         return (float) totalKilled / totalRequired;
     }
-
 
     public List<KillMobStepEntry> getRequiredKills() {
         return requiredKills;
@@ -136,5 +132,8 @@ public class KillMobStep extends AbstractQuestStep {
         }
         toBeMutated.put("kills", encoded);
         return state;
+    }
+
+    public record KillMobStepEntry(List<String> mobTypeIds, int requiredAmount, String displayName) {
     }
 }

@@ -106,7 +106,6 @@ public class ConsolePaymentCommand implements BasicCommand {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL,
                         "Failed to add megaphone uses to uuid " + args[1] + "!", e);
             }
-            return;
         }
 
 

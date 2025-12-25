@@ -23,12 +23,12 @@ public class Food extends AbstractItemType {
         super.setTypeLore("Food", Icon.FRUIT.get());
     }
 
-    public void setHealAmount(int amount) {
-        this.healAmount = amount;
-    }
-
     public int getHealAmount() {
         return healAmount;
+    }
+
+    public void setHealAmount(int amount) {
+        this.healAmount = amount;
     }
 
     public void onPlayerConsumeItem(PlayerItemConsumeEvent event, RunePlayer player, StateManager itemStateManager) {

@@ -24,6 +24,32 @@ public class HousingMetaLoader {
         templateMetaMap = new HashMap<>();
     }
 
+    private static @NotNull TemplateMeta getTemplateMeta(int pasteX, int pasteZ, List<InteractiveElement> elements) {
+        int index = 0;
+        int interactiveSlots = 0;
+        int decorationSlots = 0;
+        HashMap<Integer, HouseSlot> slotsMap = new HashMap<>();
+
+        for (InteractiveElement el : elements) {
+            Location absoluteLocation = el.location();
+            absoluteLocation.subtract(pasteX, 0, pasteZ);
+
+            if (el.type() == InteractiveElType.SLOT) {
+                HouseSlot slot = new HouseSlot(absoluteLocation, HouseSlot.HouseSlotType.INTERACTIVE);
+                slotsMap.put(index, slot);
+                interactiveSlots++;
+                index++;
+            } else if (el.type() == InteractiveElType.DECORATION_SLOT) {
+                HouseSlot slot = new HouseSlot(absoluteLocation, HouseSlot.HouseSlotType.DECORATION);
+                slotsMap.put(index, slot);
+                decorationSlots++;
+                index++;
+            }
+        }
+
+        return new TemplateMeta(interactiveSlots, decorationSlots, slotsMap);
+    }
+
     // Load all house template, in order to validate them and extract metadata (interactive elements)
     public void loadTemplatesMeta() {
         for (HouseTemplate template : HouseTemplate.values()) {
@@ -59,33 +85,6 @@ public class HousingMetaLoader {
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[PlayerHousing] Loaded " + this.templateMetaMap.size() + " house templates.");
     }
-
-    private static @NotNull TemplateMeta getTemplateMeta(int pasteX, int pasteZ, List<InteractiveElement> elements) {
-        int index = 0;
-        int interactiveSlots = 0;
-        int decorationSlots = 0;
-        HashMap<Integer, HouseSlot> slotsMap = new HashMap<>();
-
-        for (InteractiveElement el : elements) {
-            Location absoluteLocation = el.location();
-            absoluteLocation.subtract(pasteX, 0, pasteZ);
-
-            if (el.type() == InteractiveElType.SLOT) {
-                HouseSlot slot = new HouseSlot(absoluteLocation, HouseSlot.HouseSlotType.INTERACTIVE);
-                slotsMap.put(index, slot);
-                interactiveSlots++;
-                index++;
-            } else if (el.type() == InteractiveElType.DECORATION_SLOT) {
-                HouseSlot slot = new HouseSlot(absoluteLocation, HouseSlot.HouseSlotType.DECORATION);
-                slotsMap.put(index, slot);
-                decorationSlots++;
-                index++;
-            }
-        }
-
-        return new TemplateMeta(interactiveSlots, decorationSlots, slotsMap);
-    }
-
 
     public Map<HouseTemplate, TemplateMeta> getTemplateMetaMap() {
         return this.templateMetaMap;

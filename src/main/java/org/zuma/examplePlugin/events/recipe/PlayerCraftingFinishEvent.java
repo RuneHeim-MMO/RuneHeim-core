@@ -21,10 +21,14 @@ public class PlayerCraftingFinishEvent extends Event implements Cancellable {
         this.failedCrafts = failedCrafts;
     }
 
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     public RunePlayer getPlayer() {
         return player;
     }
-
 
     @Override
     public boolean isCancelled() {
@@ -38,11 +42,6 @@ public class PlayerCraftingFinishEvent extends Event implements Cancellable {
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public
-    static HandlerList getHandlerList() {
         return HANDLERS;
     }
 

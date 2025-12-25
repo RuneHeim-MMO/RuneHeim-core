@@ -10,6 +10,11 @@ public class SupportLevelUpgradeEvent extends RedisEvent<SupportLevelUpgradeEven
         this.payload = payload;
     }
 
+    @Override
+    public Payload composePayload() {
+        return payload;
+    }
+
     public static class Payload extends RedisPayload {
         public String username;
         public SupporterLevel newLevel;
@@ -18,10 +23,5 @@ public class SupportLevelUpgradeEvent extends RedisEvent<SupportLevelUpgradeEven
             this.username = username;
             this.newLevel = newLevel;
         }
-    }
-
-    @Override
-    public Payload composePayload() {
-        return payload;
     }
 }

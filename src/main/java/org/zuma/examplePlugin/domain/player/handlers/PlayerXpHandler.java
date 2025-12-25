@@ -37,16 +37,10 @@ public class PlayerXpHandler {
 
     private final java.util.Set<SkillType> skillsToBeCombined = java.util.EnumSet.of(
             SkillType.ATTACK, SkillType.STRENGTH, SkillType.DEFENCE);
-
-    public record DeferredXP(double xp, double multiplier) {
-    }
-
+    private final EnumMap<SkillType, DeferredXP> deferredXPHolograms = new EnumMap<>(SkillType.class);
     @Nullable
     private SkillType lastXPGainedSkillType;
-    private final EnumMap<SkillType, DeferredXP> deferredXPHolograms = new EnumMap<>(SkillType.class);
     private BukkitTask debouncedXPBubbleTask;
-
-
     public PlayerXpHandler(RunePlayer player) {
         this.player = player;
         this.lastXPGainedSkillType = null;
@@ -127,7 +121,6 @@ public class PlayerXpHandler {
 
         }, 40L);
     }
-
 
     @Nullable
     private ServerModifierType getServerModifierForSkill(SkillType type) {
@@ -267,6 +260,9 @@ public class PlayerXpHandler {
     @Nullable
     public SkillType getLastXPGainedSkillType() {
         return this.lastXPGainedSkillType;
+    }
+
+    public record DeferredXP(double xp, double multiplier) {
     }
 
 

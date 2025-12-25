@@ -37,31 +37,6 @@ public class HouseEditModeManager {
         editingSlotIndex = null;
     }
 
-    public void setEditMode(boolean editMode) {
-        Player owner = Bukkit.getPlayer(instance.getOwnerUUID());
-
-        if (owner == null) {
-            return;
-        }
-
-        this.editMode = editMode;
-
-        if (!editMode) {
-            for (Hologram hologram : editHolograms) {
-                hologram.delete();
-            }
-            editHolograms.clear();
-        }
-
-        if (editMode) {
-            TemplateMeta meta = RuneQuestPlugin.getHousingManager().getTemplateMeta(instance.getTemplate());
-
-            for (Map.Entry<Integer, HouseSlot> slot : meta.slots().entrySet()) {
-                updateHologramForSlot(owner, slot.getKey(), slot.getValue());
-            }
-        }
-    }
-
     void updateHologramForSlot(Player player, int slotIndex, HouseSlot houseSlot) {
         if (editMode) {
             String hologramKey = "house_" + instance.getInstanceUUID() + "_" + slotIndex;
@@ -251,9 +226,33 @@ public class HouseEditModeManager {
         SoundType.BREAK_BLOCK_GENERIC.play(player, true);
     }
 
-
     public boolean isEditMode() {
         return editMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        Player owner = Bukkit.getPlayer(instance.getOwnerUUID());
+
+        if (owner == null) {
+            return;
+        }
+
+        this.editMode = editMode;
+
+        if (!editMode) {
+            for (Hologram hologram : editHolograms) {
+                hologram.delete();
+            }
+            editHolograms.clear();
+        }
+
+        if (editMode) {
+            TemplateMeta meta = RuneQuestPlugin.getHousingManager().getTemplateMeta(instance.getTemplate());
+
+            for (Map.Entry<Integer, HouseSlot> slot : meta.slots().entrySet()) {
+                updateHologramForSlot(owner, slot.getKey(), slot.getValue());
+            }
+        }
     }
 
     public void cleanup() {

@@ -38,6 +38,20 @@ public enum ReservedSlot {
         this.unequipSound = unequipSound;
     }
 
+    public static Map<Integer, ReservedSlot> getSlotMap() {
+        return SLOT_LOOKUP;
+    }
+
+    public static boolean isItemInCorrectSlot(int slot, AbstractItemType itemType) {
+        ReservedSlot slotDef = SLOT_LOOKUP.get(slot);
+
+        if (slotDef == null) {
+            return false;
+        }
+
+        return slotDef.isValidItem(itemType);
+
+    }
 
     public int getSlot() {
         return slot;
@@ -49,10 +63,6 @@ public enum ReservedSlot {
 
     public ReservedSlotItemType getType() {
         return type;
-    }
-
-    public static Map<Integer, ReservedSlot> getSlotMap() {
-        return SLOT_LOOKUP;
     }
 
     public boolean isValidItem(@Nullable AbstractItemType itemType) {
@@ -68,18 +78,6 @@ public enum ReservedSlot {
             case ARROW -> itemType.type == ItemType.ARROW;
         };
     }
-
-    public static boolean isItemInCorrectSlot(int slot, AbstractItemType itemType) {
-        ReservedSlot slotDef = SLOT_LOOKUP.get(slot);
-
-        if (slotDef == null) {
-            return false;
-        }
-
-        return slotDef.isValidItem(itemType);
-
-    }
-
 
     public SoundType getUnequipSound() {
         return unequipSound;

@@ -83,19 +83,19 @@ public class PlayerCombatData {
         this.specialEnergy = Math.min(1, this.specialEnergy + 0.1F);
     }
 
-    public void setSpecialEnergy(int percent) {
-        this.specialEnergy = (float) percent / 100;
+    public double getPrayerEnergy() {
+        return this.prayerEnergy;
     }
 
     public void setPrayerEnergy(double amount) {
         this.prayerEnergy = amount;
     }
 
-    public double getPrayerEnergy() {
-        return this.prayerEnergy;
-    }
-
     public float getSpecialEnergy() {
         return this.specialEnergy;
+    }
+
+    public void setSpecialEnergy(int percent) {
+        this.specialEnergy = (float) percent / 100;
     }
 }

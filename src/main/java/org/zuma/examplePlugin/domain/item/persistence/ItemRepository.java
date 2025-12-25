@@ -31,9 +31,8 @@ import java.util.List;
 
 public class ItemRepository {
     private static final double CRAFTED_ITEM_MULTIPLIER = 0.95;
-
-    private List<AbstractItemMeta> cached = new ArrayList<>();
     private final Gson gson = new Gson();
+    private List<AbstractItemMeta> cached = new ArrayList<>();
 
     private VersionedJson toVersionedJson(Object obj, int version) {
         return new VersionedJson(gson.toJson(obj), version);

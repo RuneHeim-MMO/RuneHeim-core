@@ -11,10 +11,6 @@ public enum EnvironmentType {
         this.key = key;
     }
 
-    public String getKey() {
-        return key;
-    }
-
     public static EnvironmentType getByKey(String key) {
         for (EnvironmentType type : values()) {
             if (type.getKey().equalsIgnoreCase(key)) {
@@ -23,5 +19,9 @@ public enum EnvironmentType {
         }
 
         return PRODUCTION;
+    }
+
+    public String getKey() {
+        return key;
     }
 }

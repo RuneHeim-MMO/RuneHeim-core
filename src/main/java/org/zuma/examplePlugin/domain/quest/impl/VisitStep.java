@@ -18,9 +18,6 @@ public class VisitStep extends AbstractQuestStep implements Tickable {
     private final VisitStepEntry condition;
     private @Nullable Quest.Coordinates initialCoordinates;
 
-    public record VisitStepEntry(Quest.Coordinates coordinates, int radius) {
-    }
-
     public VisitStep(RuneQuestPlugin plugin, Quest parentQuest, String description, String stableId, VisitStepEntry condition, @Nullable UUID owner) {
         super(plugin, parentQuest, StepType.VISIT_LOCATION, description, stableId, owner);
         this.condition = condition;
@@ -79,7 +76,6 @@ public class VisitStep extends AbstractQuestStep implements Tickable {
         return (float) percent;
     }
 
-
     public Quest.Coordinates getCenterPoint() {
         return condition.coordinates();
     }
@@ -132,7 +128,7 @@ public class VisitStep extends AbstractQuestStep implements Tickable {
     public AbstractQuestStep assignValuesFromState(PlayerQuestState state) {
         Object raw = state.getStepProgressData().get("initial_coords");
 
-        if (raw instanceof Map<?,?> map) {
+        if (raw instanceof Map<?, ?> map) {
             Number x = (Number) map.get("x");
             Number y = (Number) map.get("y");
             Number z = (Number) map.get("z");
@@ -156,5 +152,8 @@ public class VisitStep extends AbstractQuestStep implements Tickable {
 
     public void setInitialCoordinates(Quest.Coordinates coords) {
         this.initialCoordinates = coords;
+    }
+
+    public record VisitStepEntry(Quest.Coordinates coordinates, int radius) {
     }
 }

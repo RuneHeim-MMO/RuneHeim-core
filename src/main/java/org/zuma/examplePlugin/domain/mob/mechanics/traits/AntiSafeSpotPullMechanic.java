@@ -19,9 +19,8 @@ import java.util.UUID;
 public class AntiSafeSpotPullMechanic implements MobMechanic {
     // Number of hits within the time frame to trigger pull
     private static final int HIT_THRESHOLD = 4;
-
-    private CombatantMob mob;
     private final HashMap<UUID, List<Long>> recentAttackers;
+    private CombatantMob mob;
 
     public AntiSafeSpotPullMechanic() {
         this.recentAttackers = new HashMap<>();

@@ -229,11 +229,11 @@ public class HudService {
         DHAPI.createHologram(holoId.toString(), start, List.of(content));
 
         new BukkitRunnable() {
-            double t = 0;
             final double duration = 20;
             final double maxVerticalHeight = 0.3;
             final double baseHorizontalOffset = 0.2;
             final double horizontalRandomness = 0.1;
+            double t = 0;
 
             @Override
             public void run() {

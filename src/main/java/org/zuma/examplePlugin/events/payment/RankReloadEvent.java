@@ -12,6 +12,11 @@ public class RankReloadEvent extends RedisEvent<RankReloadEvent.Payload> {
         this.payload = payload;
     }
 
+    @Override
+    public Payload composePayload() {
+        return payload;
+    }
+
     public static class Payload extends RedisPayload {
         public UUID reloadUUID;
         public UpgradedRole newRole;
@@ -20,10 +25,5 @@ public class RankReloadEvent extends RedisEvent<RankReloadEvent.Payload> {
             this.reloadUUID = reloadUUID;
             this.newRole = newRole;
         }
-    }
-
-    @Override
-    public Payload composePayload() {
-        return payload;
     }
 }

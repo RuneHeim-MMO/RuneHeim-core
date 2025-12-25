@@ -26,7 +26,7 @@ public class RecipeModule implements PluginModule {
         RecipeRegistry recipeRegistry = new RecipeRegistry();
         RecipeLoader recipeLoader = new RecipeLoader(context.get(ItemRegistry.class), recipeRegistry, new RecipeRepository(), new RecipeFactory());
         recipeLoader.loadAllRecipes();
-        
+
         RecipeHandler recipeHandler = new RecipeHandler(recipeRegistry);
         RecipeListener recipeListener = new RecipeListener(recipeHandler);
 

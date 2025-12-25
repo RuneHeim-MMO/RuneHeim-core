@@ -9,16 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConditionStep extends DialogStep {
-    public enum LogicalOperator {
-        AND, OR
-    }
-
     private final List<String> conditions;
     private final List<DialogStep> truthyFollowUp;
     private final List<DialogStep> falsyFollowUp;
     private final LogicalOperator logicalOperator;
-
-
     public ConditionStep(List<String> conditions, @Nullable List<DialogStep> truthyFollowUp,
                          @Nullable List<DialogStep> falsyFollowUp, String uniqueIdentifier, LogicalOperator logicalOperator) {
         super(List.of(), uniqueIdentifier);
@@ -80,6 +74,10 @@ public class ConditionStep extends DialogStep {
 
     public List<DialogStep> getFalsyFollowUp() {
         return falsyFollowUp;
+    }
+
+    public enum LogicalOperator {
+        AND, OR
     }
 
 

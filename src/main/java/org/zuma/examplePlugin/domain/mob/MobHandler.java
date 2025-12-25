@@ -36,9 +36,9 @@ import java.util.List;
 import java.util.UUID;
 
 public class MobHandler {
-    public static List<ItemRarity> RARE_DROP_TIERS = List.of(ItemRarity.LEGENDARY, ItemRarity.MYTHIC, ItemRarity.DIVINE);
     private static final long TARGET_SWITCH_SWEEP_TICK_INTERVAL = 30L;
     private static final double SEARCH_RADIUS = 12.0;
+    public static List<ItemRarity> RARE_DROP_TIERS = List.of(ItemRarity.LEGENDARY, ItemRarity.MYTHIC, ItemRarity.DIVINE);
     private final MobRegistry registry;
 
     public MobHandler(MobRegistry registry) {

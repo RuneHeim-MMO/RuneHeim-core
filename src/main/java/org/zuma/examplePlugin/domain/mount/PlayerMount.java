@@ -6,9 +6,9 @@ import javax.annotation.Nullable;
 import java.util.UUID;
 
 public class PlayerMount {
+    private final UUID stateUUID;
     private UUID owner;
     private UUID activeEntity;
-    private final UUID stateUUID;
     private int mountID;
     @Nullable
     private Location lastPosition;

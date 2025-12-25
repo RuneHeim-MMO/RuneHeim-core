@@ -15,17 +15,17 @@ public class ResourceNodeRespawnedEvent extends Event implements Cancellable {
         this.node = node;
     }
 
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     public ResourceNode getResourceNode() {
         return node;
     }
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public
-    static HandlerList getHandlerList() {
         return HANDLERS;
     }
 

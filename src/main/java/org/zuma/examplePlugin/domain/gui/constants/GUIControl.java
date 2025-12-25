@@ -113,38 +113,6 @@ public enum GUIControl {
         this.modelId = modelId;
     }
 
-    public ItemStack asItemstack() {
-        return asItemstack(Component.empty());
-    }
-
-    public ItemStack asItemstack(Component displayName, boolean bypassItemWatchdog) {
-        return asItemstack(displayName, new ArrayList<>(), !bypassItemWatchdog);
-    }
-
-    public ItemStack asItemstack(Component displayName) {
-        return asItemstack(displayName, new ArrayList<>(), true);
-    }
-
-
-    public ItemStack asItemstack(Component displayName, List<Component> lore) {
-        return this.asItemstack(displayName, lore, true);
-    }
-
-    public ItemStack asItemstack(Component displayName, List<Component> lore, boolean tagIllegal) {
-        ItemStack icon = new ItemStack(Material.POTATO);
-        ItemMeta meta = icon.getItemMeta();
-        meta.displayName(displayName.decoration(TextDecoration.ITALIC, false));
-        meta.lore(lore.stream().map(comp -> comp.decoration(TextDecoration.ITALIC, false)).toList());
-        meta.setCustomModelData(modelId);
-
-        if (tagIllegal) {
-            IllegalItemWatchdog.tagIllegalItem(meta);
-        }
-
-        icon.setItemMeta(meta);
-        return icon;
-    }
-
     public static boolean isGuiItem(ItemStack item) {
         if (item == null) {
             return false;
@@ -171,5 +139,36 @@ public enum GUIControl {
             case 10 -> NUM_10;
             default -> NUM_PLUS10;
         };
+    }
+
+    public ItemStack asItemstack() {
+        return asItemstack(Component.empty());
+    }
+
+    public ItemStack asItemstack(Component displayName, boolean bypassItemWatchdog) {
+        return asItemstack(displayName, new ArrayList<>(), !bypassItemWatchdog);
+    }
+
+    public ItemStack asItemstack(Component displayName) {
+        return asItemstack(displayName, new ArrayList<>(), true);
+    }
+
+    public ItemStack asItemstack(Component displayName, List<Component> lore) {
+        return this.asItemstack(displayName, lore, true);
+    }
+
+    public ItemStack asItemstack(Component displayName, List<Component> lore, boolean tagIllegal) {
+        ItemStack icon = new ItemStack(Material.POTATO);
+        ItemMeta meta = icon.getItemMeta();
+        meta.displayName(displayName.decoration(TextDecoration.ITALIC, false));
+        meta.lore(lore.stream().map(comp -> comp.decoration(TextDecoration.ITALIC, false)).toList());
+        meta.setCustomModelData(modelId);
+
+        if (tagIllegal) {
+            IllegalItemWatchdog.tagIllegalItem(meta);
+        }
+
+        icon.setItemMeta(meta);
+        return icon;
     }
 }

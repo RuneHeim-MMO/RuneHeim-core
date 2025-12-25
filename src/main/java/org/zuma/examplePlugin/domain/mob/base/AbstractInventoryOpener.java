@@ -15,8 +15,8 @@ import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public abstract class AbstractInventoryOpener extends FriendlyImmortalMob {
-    private Supplier<DialogBuilder> dialogTemplate;
     private final int inventoryId;
+    private Supplier<DialogBuilder> dialogTemplate;
 
     public AbstractInventoryOpener(FriendlyImmortalMobMeta meta, int inventoryId, @Nullable String skin, @Nullable String model, int maxWalkDistance) {
         super(meta);

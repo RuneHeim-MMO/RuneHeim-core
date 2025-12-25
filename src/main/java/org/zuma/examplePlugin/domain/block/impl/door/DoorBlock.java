@@ -26,6 +26,10 @@ public class DoorBlock extends AbstractInteractableBlock implements MultiBlockHi
         this.isOpen = false;
     }
 
+    public boolean isOpen() {
+        return isOpen;
+    }
+
     public void setOpen(boolean open) {
         if (this.isOpen == open) {
             return;
@@ -72,10 +76,6 @@ public class DoorBlock extends AbstractInteractableBlock implements MultiBlockHi
         }.runTaskTimer(RuneQuestPlugin.getInstance(), 0, 20L);
 
 
-    }
-
-    public boolean isOpen() {
-        return isOpen;
     }
 
     public String getDoorId() {

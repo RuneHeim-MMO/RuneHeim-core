@@ -21,8 +21,8 @@ import java.util.Random;
 
 public class LavaDungeonBossTransition implements MobMechanic {
     public static final NamespacedKey projectileType = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.PROJECTILE_TYPE.asString());
-    private CombatantMob mob;
     private final double height;
+    private CombatantMob mob;
 
     public LavaDungeonBossTransition(int height) {
         this.height = height;

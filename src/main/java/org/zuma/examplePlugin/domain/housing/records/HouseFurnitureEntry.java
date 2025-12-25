@@ -9,9 +9,9 @@ public class HouseFurnitureEntry {
     private final UUID uuid;
     private final int itemId;
     private final int slotIndex;
-    private BlockFace face; // mutable
     private final HouseSlot.HouseSlotType type;
     private final String json;
+    private BlockFace face; // mutable
 
     public HouseFurnitureEntry(UUID uuid, int itemId, int slotIndex, BlockFace face, HouseSlot.HouseSlotType type, String json) {
         this.uuid = uuid;
@@ -56,8 +56,7 @@ public class HouseFurnitureEntry {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof HouseFurnitureEntry)) return false;
-        HouseFurnitureEntry that = (HouseFurnitureEntry) o;
+        if (!(o instanceof HouseFurnitureEntry that)) return false;
         return itemId == that.itemId &&
                 slotIndex == that.slotIndex &&
                 Objects.equals(uuid, that.uuid) &&

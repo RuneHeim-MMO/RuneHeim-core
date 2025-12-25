@@ -51,13 +51,13 @@ public class CombatDummy extends GenericCombatant {
                 // Scan downwards to find solid ground, max 5 blocks down
                 for (int y = currentLoc.getBlockY(); y >= currentLoc.getBlockY() - 5; y--) {
                     groundLoc.setY(y);
-                    if (groundLoc.getBlock().getType().isSolid() && 
-                        groundLoc.clone().add(0, 1, 0).getBlock().getType().isAir()) {
+                    if (groundLoc.getBlock().getType().isSolid() &&
+                            groundLoc.clone().add(0, 1, 0).getBlock().getType().isAir()) {
                         groundLoc.setY(y + 1.0); // Place on top of solid block
                         break;
                     }
                 }
-                
+
                 groundLoc.setYaw(getYaw());
                 groundLoc.setPitch(currentLoc.getPitch());
 

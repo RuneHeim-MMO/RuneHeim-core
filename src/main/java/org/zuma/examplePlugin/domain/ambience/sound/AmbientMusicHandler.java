@@ -29,7 +29,6 @@ public class AmbientMusicHandler implements Listener {
 
             if (!event.getNewValue()) {
                 stopMusic(player);
-                return;
             }
 
 

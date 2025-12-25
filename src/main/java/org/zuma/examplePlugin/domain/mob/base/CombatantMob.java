@@ -41,13 +41,12 @@ import java.util.stream.Stream;
 public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     private final EnumMap<ModifierType, Modifier> modifiers = new EnumMap<>(ModifierType.class);
     private final EnumMap<SkillType, Skill> skills = new EnumMap<>(SkillType.class);
-    private RuneProjectile projectileType = new RuneProjectile(ProjectileType.RANGED, EntityType.ARROW, 2);
     private final int combatLvl;
+    private final PendingXPHandler xpHandler;
+    private RuneProjectile projectileType = new RuneProjectile(ProjectileType.RANGED, EntityType.ARROW, 2);
     private int health, maxHealth;
     private long lastDamagedAt;
     private boolean isSpecialAttacking;
-
-    private final PendingXPHandler xpHandler;
 
     public CombatantMob(CombatantMobMeta meta) {
         super(new AbstractMobMeta(true, true, Component.empty(), meta.baseEntity()));
@@ -126,12 +125,12 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         this.health = Math.min(health, maxHealth);
     }
 
-    public void setMaxHealth(int maxHealth) {
-        this.maxHealth = maxHealth;
-    }
-
     public int getMaxHealth() {
         return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
     }
 
     @Override

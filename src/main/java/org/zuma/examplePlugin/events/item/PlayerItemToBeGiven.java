@@ -17,6 +17,11 @@ public class PlayerItemToBeGiven extends Event {
         this.itemStack = itemStack;
     }
 
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     public RunePlayer getPlayer() {
         return player;
     }
@@ -29,12 +34,6 @@ public class PlayerItemToBeGiven extends Event {
     public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }
-
-    public
-    static HandlerList getHandlerList() {
-        return HANDLERS;
-    }
-
 
     public ItemStack getItemStack() {
         return itemStack;

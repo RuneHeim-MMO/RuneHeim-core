@@ -22,12 +22,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class ProgressBarAction implements InteractiveActionStrategy {
     private final Random random = new Random();
-
+    private final boolean swingHand;
+    private final boolean progressBarVisible;
     @Nullable
     private BukkitTask task;
     private boolean isCancelled;
-    private final boolean swingHand;
-    private final boolean progressBarVisible;
 
     public ProgressBarAction(boolean swingHand, boolean progressBarVisible) {
         this.task = null;

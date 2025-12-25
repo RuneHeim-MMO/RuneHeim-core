@@ -19,16 +19,15 @@ public class ConfigManager {
     public static final Path SCHEMATICS_PATH = ROOT_CONFIG_PATH.resolve("schematics");
     public static final Path NODE_SCHEMATICS_PATH = SCHEMATICS_PATH.resolve("nodes");
     public static final Path HOUSE_SCHEMATICS_PATH = SCHEMATICS_PATH.resolve("houses");
-    public static boolean isPreviewServer = false;
-    public static int serverId;
-    public static EnvironmentType environment;
-    public static WhitelistMode whitelistMode;
-
     private static final Dotenv dotenv = Dotenv.configure()
             .directory(ConfigManager.ENVIRONMENT_CONFIG != null ? Paths.get(System.getProperty("user.dir")).resolve("plugins").getParent().toString() : null)
             .ignoreIfMissing()
             .systemProperties()
             .load();
+    public static boolean isPreviewServer = false;
+    public static int serverId;
+    public static EnvironmentType environment;
+    public static WhitelistMode whitelistMode;
 
     public ConfigManager() {
 

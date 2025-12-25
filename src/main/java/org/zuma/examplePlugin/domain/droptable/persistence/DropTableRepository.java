@@ -586,7 +586,7 @@ public class DropTableRepository {
                 new DropTableDBEntry(DropTableId.COAL_PURIFICATION_INPUT_4.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.PURE_COAL_ORE.asInt(), 1, 2, 2, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.COAL_ORE.asInt(), 1, 2, 2, DropTableEntry.Type.ITEM)
-                        ), null)), 1))
+                ), null)), 1))
         );
     }
 

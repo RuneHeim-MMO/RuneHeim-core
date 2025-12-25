@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.UUID;
 
 public class SummonCreaturesMechanic implements MobMechanic {
-    private CombatantMob mob;
     private final List<SpawnZoneMobRecord> creatures;
     private final int summonRadius;
+    private CombatantMob mob;
 
     public SummonCreaturesMechanic(List<SpawnZoneMobRecord> creatures, int summonRadius) {
         this.creatures = creatures;

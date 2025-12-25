@@ -29,10 +29,10 @@ public class SpawnZoneHandler {
             new NamespacedKey(RuneQuestPlugin.getInstance(), MobDataKey.SPAWN_ZONE_ID.toString());
 
     private final static long TICK_RATE = 3 * 20L; //  Every 3 sec
-    private int tickPartition = 0;
     private final Map<Integer, AbstractSpawnZone> spawnZones;
     private final SpawnZoneRepository repository;
     private final SpawnZoneFactory factory;
+    private int tickPartition = 0;
     private BukkitTask loop;
 
     public SpawnZoneHandler(SpawnZoneRepository repository) {

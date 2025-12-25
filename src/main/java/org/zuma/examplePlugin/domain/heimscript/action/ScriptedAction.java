@@ -40,19 +40,6 @@ public enum ScriptedAction implements ScriptedStatement {
         this.argsTemplates = new ArrayList<>(List.of(argsTemplates));
     }
 
-    @Override
-    public StatementType getType() {
-        return StatementType.ACTION;
-    }
-
-    public String getTrigger() {
-        return this.trigger;
-    }
-
-    public List<String> getArgsTemplates() {
-        return this.argsTemplates;
-    }
-
     public static ScriptedStatementInstance dialogQuestStepFinish(String stable_id) {
         return new ScriptedStatementInstance(ScriptedAction.QUEST_STEP_FINISH, Map.of(
                 "stable_id", stable_id
@@ -132,6 +119,19 @@ public enum ScriptedAction implements ScriptedStatement {
 
     public static ScriptedStatementInstance dialogHolderForwardInteraction() {
         return new ScriptedStatementInstance(ScriptedAction.DIALOG_HOLDER_FORWARD_INTERACTION, Map.of());
+    }
+
+    @Override
+    public StatementType getType() {
+        return StatementType.ACTION;
+    }
+
+    public String getTrigger() {
+        return this.trigger;
+    }
+
+    public List<String> getArgsTemplates() {
+        return this.argsTemplates;
     }
 
 
