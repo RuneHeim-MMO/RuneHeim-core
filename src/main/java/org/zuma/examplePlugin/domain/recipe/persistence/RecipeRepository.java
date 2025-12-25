@@ -300,7 +300,7 @@ public class RecipeRepository {
                         null, List.of(new SkillXpRecord(SkillType.CRAFTING, 115.0)), null), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.GREEN_DHIDE_BODY.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
-                        List.of(new SkillRequirement(SkillType.CRAFTING, 60)),
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 63)),
                         List.of(
                                 new IngredientRecord(ItemId.NEEDLE, 1, false, false),
                                 new IngredientRecord(ItemId.THREAD, 3, true, false),
@@ -310,7 +310,7 @@ public class RecipeRepository {
                         null, List.of(new SkillXpRecord(SkillType.CRAFTING, 190.0)), null), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.GREEN_DHIDE_CHAPS.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
-                        List.of(new SkillRequirement(SkillType.CRAFTING, 63)),
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 60)),
                         List.of(
                                 new IngredientRecord(ItemId.NEEDLE, 1, false, false),
                                 new IngredientRecord(ItemId.THREAD, 2, true, false),
