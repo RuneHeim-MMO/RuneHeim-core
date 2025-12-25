@@ -9,7 +9,6 @@ import org.zuma.examplePlugin.core.constants.MusicType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.settings.PlayerSetting;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 public class AmbientMusicHandler implements Listener {
@@ -30,7 +29,6 @@ public class AmbientMusicHandler implements Listener {
 
             if (!event.getNewValue()) {
                 stopMusic(player);
-                return;
             }
 
 

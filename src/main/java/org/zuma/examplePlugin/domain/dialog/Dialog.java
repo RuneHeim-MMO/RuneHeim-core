@@ -6,13 +6,11 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.dialog.base.DialogStep;
-import org.zuma.examplePlugin.domain.dialog.impl.InteractiveDialogStep;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.settings.PlayerSetting;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,8 +19,8 @@ public class Dialog {
 
     private final String id;
     private final List<DialogStep> scenario;
-    private int nextStepIndex, initialHeldSlot;
     private final UUID dialogHolderUUID;
+    private int nextStepIndex, initialHeldSlot;
     private UUID participantUUID;
     private boolean aborted = false;
     private boolean slotLocked = false;
@@ -54,6 +52,10 @@ public class Dialog {
     @Nullable
     public Runnable getOnDialogFinish() {
         return onDialogFinish;
+    }
+
+    public void setOnDialogFinish(@Nullable Runnable onDialogFinish) {
+        this.onDialogFinish = onDialogFinish;
     }
 
     protected void startDialog(RunePlayer player) {
@@ -146,10 +148,6 @@ public class Dialog {
 
     public UUID getDialogHolderUUID() {
         return this.dialogHolderUUID;
-    }
-
-    public void setOnDialogFinish(@Nullable Runnable onDialogFinish) {
-        this.onDialogFinish = onDialogFinish;
     }
 
     public String getId() {

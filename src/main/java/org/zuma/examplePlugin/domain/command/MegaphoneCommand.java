@@ -11,14 +11,10 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.domain.hud.HudService;
-import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 public class MegaphoneCommand implements BasicCommand {
     @Override
@@ -72,10 +68,8 @@ public class MegaphoneCommand implements BasicCommand {
 
         if (runePlayer.isNextMessageMegaphone()) {
             sender.sendMessage(Component.text("Usage: /megaphone cancel - to cancel your global message.", Color.ERROR.asColor()));
-            return;
         } else {
             sender.sendMessage(Component.text("Usage: /megaphone - set your next message to be sent globally using a megaphone use.", Color.ERROR.asColor()));
-            return;
         }
 
 

@@ -8,12 +8,14 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.events.core.NetworkRestartEvent;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -22,10 +24,8 @@ import java.util.stream.Collectors;
 
 public class WebHook {
     private static final int HTTP_PORT = 8080;
-    private static HttpServer server;
     private static final AtomicInteger threadCounter = new AtomicInteger(0);
     private static final int MAX_BODY_BYTES = 128 * 1024; // 32 KB
-
     private static final ThreadPoolExecutor executor = new ThreadPoolExecutor(
             2,                // core pool size
             4,                // maximum pool size
@@ -38,6 +38,7 @@ public class WebHook {
             },
             new ThreadPoolExecutor.CallerRunsPolicy() // backpressure: caller runs task when overloaded
     );
+    private static HttpServer server;
 
     public static void initializeServer(Dotenv dotenv) {
         String secretKey = dotenv.get("WEB_HOOK_KEY", "default-secret");
@@ -109,7 +110,10 @@ public class WebHook {
                         os.write(response);
                     }
                 } catch (Exception e) {
-                    try { exchange.sendResponseHeaders(500, -1); } catch (IOException ignored) {}
+                    try {
+                        exchange.sendResponseHeaders(500, -1);
+                    } catch (IOException ignored) {
+                    }
                     RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Webhook handler error", e);
                 } finally {
                     exchange.close();

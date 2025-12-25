@@ -6,7 +6,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.domain.droptable.DropTable;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
-import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
 
 public class DropTableRollEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
@@ -20,13 +19,13 @@ public class DropTableRollEvent extends Event {
         this.rollResult = rollResult;
     }
 
-    @Override
-    public @NotNull HandlerList getHandlers() {
+    public
+    static HandlerList getHandlerList() {
         return HANDLERS;
     }
 
-    public
-    static HandlerList getHandlerList() {
+    @Override
+    public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }
 

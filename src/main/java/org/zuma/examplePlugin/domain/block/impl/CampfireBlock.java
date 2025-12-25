@@ -34,11 +34,11 @@ public class CampfireBlock extends InventoryOpenerRegularBlock implements Despaw
     private final UUID owner;
     private final String initialName, burningName;
     private final int burnSeconds;
-    private int burnLeftSeconds;
-    private boolean burning;
     private final boolean soulSkin;
     @Nullable
     private final ItemRecord despawnDrop;
+    private int burnLeftSeconds;
+    private boolean burning;
 
     public CampfireBlock(UUID owner, Location location, String initialName, String burningName, boolean soulSkin, int burnSeconds, @Nullable ItemRecord despawnDrop) {
         super(new AbstractInteractableBlockMeta(-1, BlockType.InventoryOpener, BlockFace.NORTH, location, HologramSide.TOP));

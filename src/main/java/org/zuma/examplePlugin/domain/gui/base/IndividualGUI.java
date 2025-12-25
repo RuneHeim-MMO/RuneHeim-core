@@ -9,11 +9,11 @@ public abstract class IndividualGUI extends AbstractGUI {
         super(title, id, rows, false);
     }
 
-    public void setOwner(UUID uuid) {
-        this.owner = uuid;
-    }
-
     public UUID getOwner() {
         return owner;
+    }
+
+    public void setOwner(UUID uuid) {
+        this.owner = uuid;
     }
 }

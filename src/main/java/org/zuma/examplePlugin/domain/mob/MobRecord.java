@@ -1,6 +1,5 @@
 package org.zuma.examplePlugin.domain.mob;
 
-import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 
 public class MobRecord {

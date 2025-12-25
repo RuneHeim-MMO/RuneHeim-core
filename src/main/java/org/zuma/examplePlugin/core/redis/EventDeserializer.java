@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.events.core.NetworkRestartEvent;
-import org.zuma.examplePlugin.events.player.RunePlayerLevelUpEvent;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;

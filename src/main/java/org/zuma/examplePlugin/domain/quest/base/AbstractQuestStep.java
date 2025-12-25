@@ -1,7 +1,5 @@
 package org.zuma.examplePlugin.domain.quest.base;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -9,7 +7,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
-import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
@@ -26,16 +23,15 @@ import java.util.Objects;
 import java.util.UUID;
 
 public abstract class AbstractQuestStep implements Listener {
-    private transient RuneQuestPlugin plugin;
-    private transient Quest parentQuest;
-    private int id;
     private final StepType type;
     @Nullable
     private final String description;
-    private String stableId;
-
     @Nullable
     private final UUID owner;
+    private transient RuneQuestPlugin plugin;
+    private transient Quest parentQuest;
+    private int id;
+    private String stableId;
 
     public AbstractQuestStep(RuneQuestPlugin plugin, Quest parentQuest, StepType type, @Nullable String description, String stableId, @Nullable UUID owner) { // if owner is null, then this is a 'dummy' quest used for displaying to players.
         this.plugin = plugin;
@@ -152,12 +148,12 @@ public abstract class AbstractQuestStep implements Listener {
         return plugin;
     }
 
-    public String getStableId() {
-        return stableId;
-    }
-
     public void setPlugin(RuneQuestPlugin plugin) {
         this.plugin = plugin;
+    }
+
+    public String getStableId() {
+        return stableId;
     }
 
     public Quest getParentQuest() {

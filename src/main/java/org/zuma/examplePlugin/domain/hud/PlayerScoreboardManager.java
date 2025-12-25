@@ -15,17 +15,15 @@ import org.zuma.examplePlugin.domain.party.Party;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.domain.territory.Territory;
-import org.zuma.examplePlugin.domain.territory.TerritoryHandler;
 
 import javax.annotation.Nullable;
 
 public class PlayerScoreboardManager {
     private final static int CENTERING_PADDING = 20;
     private final RunePlayer player;
+    int ticks = 0;
     private BukkitTask activeTask = null;
     private boolean tick = false; // Ticktock counter
-    int ticks = 0;
-
     @Nullable
     private Scoreboard scoreboard = null;
 

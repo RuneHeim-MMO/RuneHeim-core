@@ -7,12 +7,12 @@ import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.TravelStartEffect;
 import org.zuma.examplePlugin.domain.effect.effects.TravelStopEffect;
+import org.zuma.examplePlugin.domain.housing.instance.HouseInstance;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
@@ -31,6 +31,9 @@ public class TravelStateHandler {
         EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new TravelStartEffect(player, mode));
         AtomicBoolean arrived = new AtomicBoolean(false);
         AtomicBoolean cancelled = new AtomicBoolean(false);
+
+        HouseInstance visiting = RuneQuestPlugin.getHousingManager().getVisitingHouse(player);
+        if (visiting != null) visiting.removeFromVisitors(player);
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
             if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) {

@@ -1,12 +1,11 @@
 package org.zuma.examplePlugin.domain.dialog.impl;
 
 import org.bukkit.Bukkit;
-import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
-import org.zuma.examplePlugin.domain.heimscript.action.ScriptedActionHandler;
 import org.zuma.examplePlugin.domain.dialog.DialogText;
 import org.zuma.examplePlugin.domain.dialog.base.DialogStep;
+import org.zuma.examplePlugin.domain.heimscript.action.ScriptedActionHandler;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.settings.PlayerSetting;
 

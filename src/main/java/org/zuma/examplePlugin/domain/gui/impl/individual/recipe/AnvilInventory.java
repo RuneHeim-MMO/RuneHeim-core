@@ -1,11 +1,10 @@
 package org.zuma.examplePlugin.domain.gui.impl.individual.recipe;
 
-import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.gui.base.RecipeInventory;
 import org.zuma.examplePlugin.domain.hud.HudService;
-import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.recipe.base.AbstractRecipe;
@@ -28,11 +27,9 @@ public class AnvilInventory extends RecipeInventory {
 
     @Override
     public boolean attemptOpenInventory(RunePlayer player, Runnable onFail) {
-        ItemStack inHand = PlayerUtils.getItemStackInHand(player.asBukkitPlayer());
-        AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(inHand);
+        boolean hasHammer = PlayerUtils.hasItems(player, List.of(new ItemRecord(ItemId.SMITHING_HAMMER, 1)));
 
-
-        if (type == null || type.id != ItemId.SMITHING_HAMMER.asInt()) {
+        if (!hasHammer) {
             HudService.showFailTitle(player, "You need a hammer to operate this!");
             return false;
         }

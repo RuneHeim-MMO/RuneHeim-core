@@ -1,7 +1,6 @@
 package org.zuma.examplePlugin.domain.mob.mechanics.base;
 
 import org.bukkit.Particle;
-import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;

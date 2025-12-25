@@ -6,7 +6,7 @@ import org.zuma.examplePlugin.core.permissions.Permission;
 import org.zuma.examplePlugin.core.permissions.Role;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.List;
 
 public enum BaseRole implements Role {
     OWNER(0, 5, 5, true, Icon.RANK_BADGE_OWNER, List.of(Permission.INTERACTABLE_SPAWN), List.of()),

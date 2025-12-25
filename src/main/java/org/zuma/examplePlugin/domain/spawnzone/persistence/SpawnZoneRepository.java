@@ -398,7 +398,7 @@ public class SpawnZoneRepository {
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(49, SpawnZoneType.AREA, 30, 15,
-                        new Location(Bukkit.getWorld("world"), 265, 130, -425)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new Location(Bukkit.getWorld("world"), 265, 130, -455)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.WOLF_BLONDE_ALPHA_BASE_30, 1, 100),
                         new SpawnZoneMobRecord(MobType.WOLF_GRAY_DARK_BASE_24, 2, 100),
                         new SpawnZoneMobRecord(MobType.DEER_BASE_34, 6, 100),
@@ -2271,7 +2271,13 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(328, SpawnZoneType.POINT, 10, 100,
                         new Location(Bukkit.getWorld("world"), 3239, 4, 3216)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.DRAKKAR_SMELTERY_WORKER, 1, 100)
-                ), false, null, null), 1))
+                ), false, null, null), 1)),
+
+                // Drakkar concierge
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(329, SpawnZoneType.POINT, 30, 100,
+                        new Location(Bukkit.getWorld("world"), 222, 72, -26.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.DRAKKAR_CONCIERGE, 1, 100)
+                ), false, MarkerType.PLAYER_HOUSING, "Player Housing"), 1))
 
 
                 // last 328

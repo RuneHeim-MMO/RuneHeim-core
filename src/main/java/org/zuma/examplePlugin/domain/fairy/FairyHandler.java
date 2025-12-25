@@ -7,7 +7,10 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.*;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
@@ -42,12 +45,11 @@ public class FairyHandler {
     private final HashMap<UUID, Fairy> wornFairies;
     private final HashMap<UUID, Fairy> fedFairies;
     private final HashMap<UUID, Entity> fairyModels;
+    double radius = 1.0;
+    double height = 2;
     private BukkitTask spriteDrawingTask;
     private BukkitTask playerSlotTracker;
     private BukkitTask fairyTickTask;
-
-    double radius = 1.0;
-    double height = 2;
     private double t = 0;
     private double velocity = Math.PI / 40;
 

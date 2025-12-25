@@ -2,8 +2,8 @@ package org.zuma.examplePlugin.core.module.game;
 
 
 import org.bukkit.plugin.Plugin;
-import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.module.ModuleContext;
+import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.recipe.RecipeFactory;
 import org.zuma.examplePlugin.domain.recipe.RecipeHandler;
@@ -26,7 +26,7 @@ public class RecipeModule implements PluginModule {
         RecipeRegistry recipeRegistry = new RecipeRegistry();
         RecipeLoader recipeLoader = new RecipeLoader(context.get(ItemRegistry.class), recipeRegistry, new RecipeRepository(), new RecipeFactory());
         recipeLoader.loadAllRecipes();
-        
+
         RecipeHandler recipeHandler = new RecipeHandler(recipeRegistry);
         RecipeListener recipeListener = new RecipeListener(recipeHandler);
 

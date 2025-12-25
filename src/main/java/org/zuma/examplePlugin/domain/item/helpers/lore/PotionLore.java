@@ -1,16 +1,11 @@
 package org.zuma.examplePlugin.domain.item.helpers.lore;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
-import org.zuma.examplePlugin.domain.item.impl.consumable.Food;
 import org.zuma.examplePlugin.domain.item.impl.consumable.Potion;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.SkillModifier;
-import org.zuma.examplePlugin.domain.quest.Quest;
-import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.util.ArrayList;
 import java.util.List;

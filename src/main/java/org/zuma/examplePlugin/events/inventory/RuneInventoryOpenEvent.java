@@ -12,10 +12,10 @@ import java.util.UUID;
 
 public class RuneInventoryOpenEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
-    private boolean cancelled;
     private final RunePlayer viewer;
     private final AbstractGUI gui;
     private final List<UUID> otherViewerUUIDs;
+    private boolean cancelled;
 
     public RuneInventoryOpenEvent(RunePlayer viewer, AbstractGUI gui, List<UUID> otherViewerUUIDs) {
         this.viewer = viewer;
@@ -23,16 +23,15 @@ public class RuneInventoryOpenEvent extends Event implements Cancellable {
         this.otherViewerUUIDs = otherViewerUUIDs;
     }
 
-    @Override
-    public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
     public
     static HandlerList getHandlerList() {
         return HANDLERS;
     }
 
+    @Override
+    public @NotNull HandlerList getHandlers() {
+        return HANDLERS;
+    }
 
     @Override
     public boolean isCancelled() {

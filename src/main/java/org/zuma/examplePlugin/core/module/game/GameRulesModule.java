@@ -2,8 +2,8 @@ package org.zuma.examplePlugin.core.module.game;
 
 import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.core.handlers.game.*;
-import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.core.module.ModuleContext;
+import org.zuma.examplePlugin.core.module.PluginModule;
 
 public class GameRulesModule implements PluginModule {
 
@@ -12,7 +12,7 @@ public class GameRulesModule implements PluginModule {
         InteractionDisabler interactionDisabler = new InteractionDisabler();
         plugin.getServer().getPluginManager().registerEvents(interactionDisabler, plugin);
         interactionDisabler.disableTourViewPermission();
-        
+
         plugin.getServer().getPluginManager().registerEvents(new IllegalItemWatchdog(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new BlockProtector(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new DefaultMobDisabler(), plugin);

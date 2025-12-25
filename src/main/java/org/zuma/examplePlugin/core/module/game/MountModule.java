@@ -6,8 +6,6 @@ import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.domain.command.MountCommand;
-import org.zuma.examplePlugin.domain.fairy.FairyHandler;
-import org.zuma.examplePlugin.domain.fairy.FairyListener;
 import org.zuma.examplePlugin.domain.mount.MountHandler;
 import org.zuma.examplePlugin.domain.mount.MountListener;
 import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;

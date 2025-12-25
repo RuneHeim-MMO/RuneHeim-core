@@ -37,7 +37,6 @@ import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSlot;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
-import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.mob.mechanics.base.MobMechanic;
 import org.zuma.examplePlugin.domain.mob.meta.AbstractMobMeta;
 import org.zuma.examplePlugin.domain.mob.meta.MobEquipmentMeta;
@@ -50,27 +49,23 @@ import java.util.function.Function;
 
 public abstract class AbstractMob {
     private final static Random random = new Random();
-
+    private final HashMap<Class<? extends MobMechanic>, MobMechanic> mobMechanics;
     private UUID uuid;
     private Component displayName;
     private EntityType baseMob;
     private String type;
     private boolean ai, silent, isBaby, isInvulnerable, clearDefaultHandsEquipment, frozen;
-
     private int maxWalkDistance, yaw, secondsAlive;
     private HashMap<Attribute, Double> customAttributes;
     private List<Integer> dropTableIds;
     private Function<Entity, Void> onSpawnRunnable;
     private String healthBarSafeName = "";
-
     private @Nullable Entity entity;
     private @Nullable Location spawnLocation;
     private @Nullable MobEquipmentMeta mobEquipment;
     private @Nullable Disguise disguise;
     private @Nullable String model;
     private @Nullable MobBehavior behavior;
-
-    private final HashMap<Class<? extends MobMechanic>, MobMechanic> mobMechanics;
 
     public AbstractMob(AbstractMobMeta meta) {
         this.type = null; // Set dynamically later.
@@ -96,12 +91,12 @@ public abstract class AbstractMob {
         this.mobMechanics = new HashMap<>();
     }
 
-    public void setYaw(int yaw) {
-        this.yaw = yaw;
-    }
-
     public int getYaw() {
         return this.yaw;
+    }
+
+    public void setYaw(int yaw) {
+        this.yaw = yaw;
     }
 
     public void setSpawnRunnable(Function<Entity, Void> runnable) {
@@ -175,22 +170,18 @@ public abstract class AbstractMob {
         this.mobEquipment = equipment;
     }
 
-    public void setDisplayName(Component name) {
-        this.displayName = name;
-    }
-
     public AbstractMob setBaby(boolean baby) {
         this.isBaby = baby;
         return this;
     }
 
+    public int getMaxWalkDistance() {
+        return this.maxWalkDistance;
+    }
+
     public AbstractMob setMaxWalkDistance(int distance) {
         this.maxWalkDistance = distance;
         return this;
-    }
-
-    public int getMaxWalkDistance() {
-        return this.maxWalkDistance;
     }
 
     public boolean canWalk() {
@@ -199,6 +190,10 @@ public abstract class AbstractMob {
 
     public String getDisplayName() {
         return TextUtils.extractPlainText(displayName);
+    }
+
+    public void setDisplayName(Component name) {
+        this.displayName = name;
     }
 
     public void setSilent(boolean silent) {
@@ -227,12 +222,6 @@ public abstract class AbstractMob {
     @Nullable
     public Entity getEntity() {
         return this.entity;
-    }
-
-    public void setDisguise(DisguiseType type) {
-        MobDisguise disguise = new MobDisguise(type);
-        disguise.setReplaceSounds(true);
-        this.disguise = disguise;
     }
 
     public void setPlayerDisguise(String username) {
@@ -377,7 +366,6 @@ public abstract class AbstractMob {
         entity.getPersistentDataContainer().set(key, PersistentDataType.STRING, this.uuid.toString());
     }
 
-
     public void reapplyClientMetaToEntity(ChunkLoadEvent event) {
         if (entity instanceof LivingEntity livingEntity) {
             this.setClientSideMeta(livingEntity);
@@ -392,19 +380,6 @@ public abstract class AbstractMob {
         behavior.playSound(entity, type);
     }
 
-    public void setLivingEntitySpeedAttr(double speed) {
-        if (!(this.getEntity() instanceof LivingEntity livingEntity)) {
-            return;
-        }
-        AttributeInstance entityAttr = livingEntity.getAttribute(Attribute.MOVEMENT_SPEED);
-
-        if (entityAttr == null) {
-            return;
-        }
-
-        entityAttr.setBaseValue(speed);
-    }
-
     public double getLivingEntitySpeedAttr() {
         if (!(this.getEntity() instanceof LivingEntity livingEntity)) {
             return 0;
@@ -416,6 +391,19 @@ public abstract class AbstractMob {
         }
 
         return entityAttr.getBaseValue();
+    }
+
+    public void setLivingEntitySpeedAttr(double speed) {
+        if (!(this.getEntity() instanceof LivingEntity livingEntity)) {
+            return;
+        }
+        AttributeInstance entityAttr = livingEntity.getAttribute(Attribute.MOVEMENT_SPEED);
+
+        if (entityAttr == null) {
+            return;
+        }
+
+        entityAttr.setBaseValue(speed);
     }
 
     // secondRoll is used to prevent infinite recursion when rolling extra drops.
@@ -466,11 +454,16 @@ public abstract class AbstractMob {
         return drops;
     }
 
-
     @Nullable
     public Disguise getDisguise() {
         if (disguise == null) return null;
         return disguise.clone();
+    }
+
+    public void setDisguise(DisguiseType type) {
+        MobDisguise disguise = new MobDisguise(type);
+        disguise.setReplaceSounds(true);
+        this.disguise = disguise;
     }
 
     public void setModel(@Nullable String model) {

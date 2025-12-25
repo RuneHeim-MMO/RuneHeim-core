@@ -2,9 +2,7 @@ package org.zuma.examplePlugin.core.adapters;
 
 import com.google.gson.*;
 
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.Optional;
 
 public class ClassTypeAdapter implements JsonSerializer<Class<?>>, JsonDeserializer<Class<?>> {
 

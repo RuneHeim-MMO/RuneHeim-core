@@ -12,8 +12,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.core.utils.TextUtils;
-import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.constants.CustomModelId;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
@@ -32,11 +30,7 @@ import java.util.List;
 import java.util.UUID;
 
 public abstract class AbstractItemType {
-    private final MetaGenerator metaGenerator;
-    private final ItemStackCreator creator;
-
     public final int id;
-    private final double craftPriceMultiplier;
     public final ItemType type;
     public final ItemRarity rarity;
     public final Material material;
@@ -44,14 +38,16 @@ public abstract class AbstractItemType {
     public final List<Component> typeLore;
     public final List<String> descriptionLore;
     public final boolean isTradeable;
+    @Nullable
+    public final String headTexture;
+    public final NamespacedKey untradeableOwnerUUIDKey = PersistenceDataKey.UNTRADEABLE_OWNER_UUID.key(RuneQuestPlugin.getInstance());
+    public final PersistentDataType<?, String> untradeableOwnerUUIDType = (PersistentDataType<?, String>) PersistenceDataKey.UNTRADEABLE_OWNER_UUID.getType();
+    private final MetaGenerator metaGenerator;
+    private final ItemStackCreator creator;
+    private final double craftPriceMultiplier;
     public int customModelData;
     @Nullable
     public StateType stateType;
-    @Nullable
-    public final String headTexture;
-
-    public final NamespacedKey untradeableOwnerUUIDKey = PersistenceDataKey.UNTRADEABLE_OWNER_UUID.key(RuneQuestPlugin.getInstance());
-    public final PersistentDataType<?, String> untradeableOwnerUUIDType = (PersistentDataType<?, String>) PersistenceDataKey.UNTRADEABLE_OWNER_UUID.getType();
 
     public AbstractItemType(AbstractItemMeta meta) {
         this.type = meta.type();

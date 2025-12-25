@@ -1,7 +1,5 @@
 package org.zuma.examplePlugin.domain.heimscript;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.lang.reflect.MalformedParametersException;
 import java.util.ArrayList;
 import java.util.Arrays;

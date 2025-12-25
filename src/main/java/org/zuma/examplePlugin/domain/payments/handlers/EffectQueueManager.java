@@ -15,7 +15,7 @@ public class EffectQueueManager {
     private static final Set<UUID> activePlayers = new HashSet<>();
 
     public static void startEffect(RunePlayer player, AnimatedEffect effect) {
-        if (player == null || !isPlayerValid(player)) return;
+        if (!isPlayerValid(player)) return;
 
         UUID uuid = player.getUUID();
         effectQueues.computeIfAbsent(uuid, k -> new LinkedList<>()).offer(effect);
@@ -51,7 +51,7 @@ public class EffectQueueManager {
     }
 
     private static void playNextEffect(RunePlayer player) {
-        if (player == null || !isPlayerValid(player)) {
+        if (!isPlayerValid(player)) {
             cleanupPlayer(player != null ? player.getUUID() : null);
             return;
         }

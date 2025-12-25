@@ -17,10 +17,10 @@ import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import java.util.*;
 
 public class FlyingHandler implements Listener {
+    private static final long COOLDOWN_MS = 500;
     private final RunePlayerManager manager;
     private final Map<UUID, Long> glideCooldowns = new HashMap<>();
     private final Set<UUID> recentlyDamaged = new HashSet<>();
-    private static final long COOLDOWN_MS = 500;
 
 
     public FlyingHandler(RunePlayerManager manager) {

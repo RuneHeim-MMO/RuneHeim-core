@@ -15,7 +15,6 @@ public enum CustomModelId {
     YELLOW_POTION_MEDIUM(111);
 
 
-
     private final int id;
 
     CustomModelId(int id) {

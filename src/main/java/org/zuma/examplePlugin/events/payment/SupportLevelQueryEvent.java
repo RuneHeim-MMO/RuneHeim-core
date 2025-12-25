@@ -11,16 +11,16 @@ public class SupportLevelQueryEvent extends RedisEvent<SupportLevelQueryEvent.Pa
         this.payload = payload;
     }
 
+    @Override
+    public Payload composePayload() {
+        return payload;
+    }
+
     public static class Payload extends RedisPayload {
         public UUID reloadUUID;
 
         public Payload(UUID reloadUUID) {
             this.reloadUUID = reloadUUID;
         }
-    }
-
-    @Override
-    public Payload composePayload() {
-        return payload;
     }
 }

@@ -16,6 +16,11 @@ public class PartyPlayerJoinedEvent extends Event {
         this.player = player;
     }
 
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     public Party getParty() {
         return party;
     }
@@ -26,11 +31,6 @@ public class PartyPlayerJoinedEvent extends Event {
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public
-    static HandlerList getHandlerList() {
         return HANDLERS;
     }
 }

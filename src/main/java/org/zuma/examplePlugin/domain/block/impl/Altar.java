@@ -2,7 +2,10 @@ package org.zuma.examplePlugin.domain.block.impl;
 
 import eu.decentsoftware.holograms.api.DHAPI;
 import net.kyori.adventure.text.Component;
-import org.bukkit.*;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -33,13 +36,25 @@ public class Altar extends AbstractInteractableBlock implements POIMarkerable {
         super(meta, null, null);
     }
 
+    private static double[][] precomputeRing(int points, double radius) {
+        double[][] ring = new double[points][2];
+        double step = 2 * Math.PI / points;
+
+        for (int i = 0; i < points; i++) {
+            ring[i][0] = i * step;   // base angle
+            ring[i][1] = radius;     // constant radius (can vary if needed)
+        }
+
+        return ring;
+    }
+
     private void initializeHologram() {
         List<String> hologramContent = new ArrayList<>(List.of(
                 Color.INTERACTABLE_ENTITY.asSpigotHex() + "Altar"
         ));
 
         hologramContent.add("Press " + Color.ACCENT.asSpigotHex() + "[RIGHT CLICK] §fto pray");
-        setHologram(DHAPI.createHologram(UUID.randomUUID().toString(), getHologramLocation(), hologramContent));
+        setHologram(DHAPI.createHologram(UUID.randomUUID().toString(), getHologramLocation().clone().add(0, 0.5, 0), hologramContent));
     }
 
     @Override
@@ -77,20 +92,6 @@ public class Altar extends AbstractInteractableBlock implements POIMarkerable {
             }
         }.runTaskTimer(RuneQuestPlugin.getInstance(), 0L, 10L);
     }
-
-
-    private static double[][] precomputeRing(int points, double radius) {
-        double[][] ring = new double[points][2];
-        double step = 2 * Math.PI / points;
-
-        for (int i = 0; i < points; i++) {
-            ring[i][0] = i * step;   // base angle
-            ring[i][1] = radius;     // constant radius (can vary if needed)
-        }
-
-        return ring;
-    }
-
 
     @Override
     public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItemType itemInHand) {

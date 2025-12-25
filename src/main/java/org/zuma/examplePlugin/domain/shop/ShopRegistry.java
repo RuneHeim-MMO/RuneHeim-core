@@ -1,7 +1,5 @@
 package org.zuma.examplePlugin.domain.shop;
 
-import org.zuma.examplePlugin.domain.shop.persistence.ShopConfig;
-
 import javax.annotation.Nullable;
 import java.util.HashMap;
 

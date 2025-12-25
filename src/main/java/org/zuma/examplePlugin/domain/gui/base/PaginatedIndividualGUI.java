@@ -20,7 +20,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
     private static final int ITEMS_IN_ROW = 9;   // Always 9
     private final int usableRows = rows - 1;
     private final Inventory inventory;
-
+    private final Set<Integer> ignoredSlots;
     private int page = 1;
     private int totalItems = 0;
     private int indexStart = 0;
@@ -28,7 +28,6 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
     private int maxPages = 1;
     private List<ItemStack> items;
     private HashMap<Integer, ItemStack> overrideItems = new HashMap<>();
-    private final Set<Integer> ignoredSlots;
 
     public PaginatedIndividualGUI(String title, int id, int rows, @Nullable Set<Integer> ignoredSlots) {
         super(title, id, rows);
@@ -122,6 +121,12 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
         getBaseInventory();
     }
 
+    public void resetPage() {
+        page = 1;
+        recalculateIndexes();
+        getBaseInventory();
+    }
+
     public ItemStack nextPageIcon() {
         boolean enabled = page < maxPages;
         ItemStack icon = (enabled ? GUIControl.CHEVRON_RIGHT : GUIControl.CHEVRON_RIGHT_DISABLED).asItemstack(Component.text("Next page", NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
@@ -201,7 +206,7 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
             return;
         }
 
-        Integer menuValue = getMenuValue(currentItem);
+        Integer menuValue = getMenuValueInt(currentItem);
 
         if (menuValue != null && menuValue == -9000) {
             // Clicked on page count icon, do nothing

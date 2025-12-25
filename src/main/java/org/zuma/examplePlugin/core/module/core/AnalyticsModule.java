@@ -3,12 +3,12 @@ package org.zuma.examplePlugin.core.module.core;
 
 import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsHandler;
+import org.zuma.examplePlugin.core.analytics.persistence.AnalyticsRepository;
 import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.core.module.PluginModule;
-import org.zuma.examplePlugin.core.analytics.AnalyticsHandler;
-import org.zuma.examplePlugin.core.analytics.persistence.AnalyticsRepository;
 
 import java.util.List;
 

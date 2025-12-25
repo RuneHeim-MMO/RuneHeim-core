@@ -1,9 +1,9 @@
 package org.zuma.examplePlugin.core.analytics.impl;
 
-import org.zuma.examplePlugin.core.config.ConfigManager;
 import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.analytics.AnalyticsType;
 import org.zuma.examplePlugin.core.analytics.base.BaseContainer;
+import org.zuma.examplePlugin.core.config.ConfigManager;
 
 import javax.annotation.Nullable;
 import java.util.Map;

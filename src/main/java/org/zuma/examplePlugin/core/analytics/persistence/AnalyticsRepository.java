@@ -1,11 +1,9 @@
 package org.zuma.examplePlugin.core.analytics.persistence;
 
-import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.database.HikariPool;
-import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.analytics.AnalyticsContainer;
 import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.analytics.AnalyticsType;
+import org.zuma.examplePlugin.core.database.HikariPool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

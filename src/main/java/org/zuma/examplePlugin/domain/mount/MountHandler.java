@@ -4,7 +4,6 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
@@ -31,11 +30,9 @@ public class MountHandler {
     private static final int DESPAWN_DISTANCE_BLOCKS = 50;
 
     private final AdditionalGearSlotHandler slotHandler;
-
+    private final HashMap<UUID, PlayerMount> mounts = new HashMap<>(); // Player UUID : Mount
     private BukkitTask tickTask;
     private BukkitTask playerSlotTracker;
-
-    private final HashMap<UUID, PlayerMount> mounts = new HashMap<>(); // Player UUID : Mount
 
     // TODO: maybe assign datakey to prevent mounts from being alive infinitely if left in an unloaded chunk
     public MountHandler(AdditionalGearSlotHandler slotHandler) {

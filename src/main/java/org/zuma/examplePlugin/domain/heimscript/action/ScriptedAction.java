@@ -2,11 +2,11 @@ package org.zuma.examplePlugin.domain.heimscript.action;
 
 import org.zuma.examplePlugin.domain.droptable.DropTableId;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
-import org.zuma.examplePlugin.domain.item.ItemRecord;
-import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.heimscript.ScriptedStatement;
 import org.zuma.examplePlugin.domain.heimscript.ScriptedStatementInstance;
 import org.zuma.examplePlugin.domain.heimscript.StatementType;
+import org.zuma.examplePlugin.domain.item.ItemRecord;
+import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.util.ArrayList;
@@ -29,7 +29,8 @@ public enum ScriptedAction implements ScriptedStatement {
     CLEAR_INVENTORY("clear_inventory"),
     TRAVEL_SEQUENCE("travel_sequence", "duration_seconds", "world", "dest_x", "dest_y", "dest_z", "dest_yaw", "buffer_x", "buffer_y", "buffer_z", "buffer_yaw", "mode"),
     START_TOUR("start_tour", "tour_name"),
-    KILL_PLAYER("kill_player");
+    KILL_PLAYER("kill_player"),
+    TELEPORT_TO_HOUSE("teleport_to_house", "region");
 
     private final String trigger;
     private final List<String> argsTemplates;
@@ -37,19 +38,6 @@ public enum ScriptedAction implements ScriptedStatement {
     ScriptedAction(String trigger, String... argsTemplates) {
         this.trigger = trigger;
         this.argsTemplates = new ArrayList<>(List.of(argsTemplates));
-    }
-
-    @Override
-    public StatementType getType() {
-        return StatementType.ACTION;
-    }
-
-    public String getTrigger() {
-        return this.trigger;
-    }
-
-    public List<String> getArgsTemplates() {
-        return this.argsTemplates;
     }
 
     public static ScriptedStatementInstance dialogQuestStepFinish(String stable_id) {
@@ -131,6 +119,19 @@ public enum ScriptedAction implements ScriptedStatement {
 
     public static ScriptedStatementInstance dialogHolderForwardInteraction() {
         return new ScriptedStatementInstance(ScriptedAction.DIALOG_HOLDER_FORWARD_INTERACTION, Map.of());
+    }
+
+    @Override
+    public StatementType getType() {
+        return StatementType.ACTION;
+    }
+
+    public String getTrigger() {
+        return this.trigger;
+    }
+
+    public List<String> getArgsTemplates() {
+        return this.argsTemplates;
     }
 
 

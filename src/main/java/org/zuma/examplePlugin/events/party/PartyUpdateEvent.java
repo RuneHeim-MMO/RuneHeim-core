@@ -4,7 +4,6 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.domain.party.Party;
-import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class PartyUpdateEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
@@ -14,17 +13,17 @@ public class PartyUpdateEvent extends Event {
         this.party = party;
     }
 
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     public Party getParty() {
         return party;
     }
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public
-    static HandlerList getHandlerList() {
         return HANDLERS;
     }
 }

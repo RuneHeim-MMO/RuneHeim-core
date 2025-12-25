@@ -11,8 +11,10 @@ import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
 import org.zuma.examplePlugin.domain.recipe.base.AbstractRecipe;
 
 import javax.annotation.Nullable;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 
 public class ItemPriceCalculator {
     private static final double SELL_PRICE_MULTIPLIER = 0.19; // NPCs buy items at 80% of the calculated price
@@ -22,7 +24,7 @@ public class ItemPriceCalculator {
         priceCache.clear();
 
         List<AbstractItemType> items = new ArrayList<>(RuneQuestPlugin.getItemRegistry().getAllItems());
-        items.sort(Comparator.comparing((AbstractItemType item) ->  item.displayName));
+        items.sort(Comparator.comparing((AbstractItemType item) -> item.displayName));
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Algorithmic item price calculation started for " + items.size() + " items...");
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "----------------------------------------------------------------------");

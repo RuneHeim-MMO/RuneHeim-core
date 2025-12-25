@@ -4,7 +4,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
-import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.quest.Quest;
 
@@ -31,7 +30,7 @@ public class EquipableLore implements LoreCreator {
 
             equipable.getRequiredCompletedQuests().forEach(questId -> {
                 Quest quest = RuneQuestPlugin.getQuestHandler().getRegistry().getQuestById(questId);
-                lore.add(Component.text("• " + (quest != null ? quest.getName() :  "INVALID: " + questId), Color.ITEM_REQUIREMENT.asColor()));
+                lore.add(Component.text("• " + (quest != null ? quest.getName() : "INVALID: " + questId), Color.ITEM_REQUIREMENT.asColor()));
             });
 
         }

@@ -11,15 +11,15 @@ import org.zuma.examplePlugin.domain.quest.constants.StepType;
 import org.zuma.examplePlugin.events.block.CampfireStateChanged;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 
 public class CampfireStep extends AbstractQuestStep {
     private final List<CampfireStepEntry> requiredFires;
     private transient HashMap<String, Integer> litFires; // id:amount
-
-    public record CampfireStepEntry(String zoneId, Location location, int radius, int amount) {
-    }
 
     public CampfireStep(RuneQuestPlugin plugin, Quest parentQuest, String description, String stableId, List<CampfireStepEntry> requiredFires, @Nullable UUID owner) {
         super(plugin, parentQuest, StepType.LIGHT_CAMPFIRE, description, stableId, owner);
@@ -46,17 +46,16 @@ public class CampfireStep extends AbstractQuestStep {
         return (float) totalAcquired / totalRequired;
     }
 
-
-    public void setLitFires(HashMap<String, Integer> litFires) {
-        this.litFires = litFires;
-    }
-
     public List<CampfireStepEntry> getRequiredFires() {
         return requiredFires;
     }
 
     public HashMap<String, Integer> getLitFires() {
         return this.litFires;
+    }
+
+    public void setLitFires(HashMap<String, Integer> litFires) {
+        this.litFires = litFires;
     }
 
     @EventHandler
@@ -79,7 +78,6 @@ public class CampfireStep extends AbstractQuestStep {
             }
         }
     }
-
 
     private void addCampfiresToLit(String id) {
         if (!litFires.containsKey(id)) {
@@ -135,5 +133,8 @@ public class CampfireStep extends AbstractQuestStep {
         Map<String, Object> toBeMutated = state.getStepProgressData();
         toBeMutated.put("lit_fires", this.litFires);
         return state;
+    }
+
+    public record CampfireStepEntry(String zoneId, Location location, int radius, int amount) {
     }
 }

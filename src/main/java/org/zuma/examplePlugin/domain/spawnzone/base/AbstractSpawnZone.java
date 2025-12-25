@@ -25,15 +25,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public abstract class AbstractSpawnZone {
     private static final int BLOCK_DISTANCE_FROM_CENTER_KILL_THRESHOLD = 256; // If too far away, kill entity.
     private static final Random RANDOM = new Random();
-
-    private List<SpawnZoneMobRecord> mobRecords;
     private final SpawnZoneType type;
     private final int id, waveRateSeconds, deadThresholdForWave;
     private final Location centerPoint;
-    private Long lastWaveAttemptOccurred;
     private final int centerChunkX, centerChunkZ;
-
     private final Set<UUID> spawnedAndLoadedEntities;
+    private List<SpawnZoneMobRecord> mobRecords;
+    private Long lastWaveAttemptOccurred;
     private int maximumMobs, lastWaveSpawnedAmount;
 
 
@@ -61,13 +59,13 @@ public abstract class AbstractSpawnZone {
 
     public abstract Location getNextMobLocation();
 
+    public List<SpawnZoneMobRecord> getMobRecords() {
+        return this.mobRecords;
+    }
+
     public void setMobRecords(List<SpawnZoneMobRecord> mobRecords) {
         this.mobRecords = mobRecords;
         mobRecords.forEach(record -> maximumMobs += record.amount());
-    }
-
-    public List<SpawnZoneMobRecord> getMobRecords() {
-        return this.mobRecords;
     }
 
     public int getId() {

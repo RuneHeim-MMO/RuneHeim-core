@@ -2,11 +2,6 @@ package org.zuma.examplePlugin.domain.hud;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Bukkit;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarFlag;
-import org.bukkit.boss.BarStyle;
-import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -29,12 +24,11 @@ public class ActionBarManager {
     private static final int FRAME_DURATION = 2;
     private final RunePlayer player;
     private final List<Component> elements;
+    int bar = 6;
     private BukkitTask activeTask;
     private boolean tick;
     private FairyStatus fairyStatus;
     private MountStatus mountStatus;
-
-    int bar = 6;
 
     public ActionBarManager(RunePlayer player) {
         this.player = player;
@@ -46,20 +40,20 @@ public class ActionBarManager {
         startDefaultLoop();
     }
 
-    public void setMountStatus(MountStatus status) {
-        this.mountStatus = status;
-    }
-
     public MountStatus getMountStatus() {
         return this.mountStatus;
     }
 
-    public void setFairyStatus(FairyStatus status) {
-        this.fairyStatus = status;
+    public void setMountStatus(MountStatus status) {
+        this.mountStatus = status;
     }
 
     public FairyStatus getFairyStatus() {
         return this.fairyStatus;
+    }
+
+    public void setFairyStatus(FairyStatus status) {
+        this.fairyStatus = status;
     }
 
     private void queueFrame(Component component, int frames) {

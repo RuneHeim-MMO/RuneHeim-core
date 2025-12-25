@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 
 public interface DespawnableBlock {
     void onDespawn();
-    
+
     boolean shouldBeDespawned();
 
     default int despawnSeconds() {

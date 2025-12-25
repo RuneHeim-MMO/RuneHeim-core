@@ -5,10 +5,15 @@ import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
 import org.bukkit.inventory.EquipmentSlot;
+import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
+import org.zuma.examplePlugin.domain.block.constants.BlockType;
+import org.zuma.examplePlugin.domain.block.meta.v1.InventoryOpenerMeta;
+import org.zuma.examplePlugin.domain.block.meta.v1.LightableBlockMeta;
 import org.zuma.examplePlugin.domain.droptable.DropTableId;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
+import org.zuma.examplePlugin.domain.housing.records.HouseSlot;
 import org.zuma.examplePlugin.domain.item.StatsEffect;
 import org.zuma.examplePlugin.domain.item.constants.*;
 import org.zuma.examplePlugin.domain.item.impl.EmptyContainer;
@@ -26,9 +31,8 @@ import java.util.List;
 
 public class ItemRepository {
     private static final double CRAFTED_ITEM_MULTIPLIER = 0.95;
-
-    private List<AbstractItemMeta> cached = new ArrayList<>();
     private final Gson gson = new Gson();
+    private List<AbstractItemMeta> cached = new ArrayList<>();
 
     private VersionedJson toVersionedJson(Object obj, int version) {
         return new VersionedJson(gson.toJson(obj), version);
@@ -154,6 +158,68 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
+
+                // Furniture
+                new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.COMBAT_DUMMY_FURNITURE.asInt(), Material.ARMOR_STAND, ItemRarity.RARE, "Combat Dummy", List.of("Used to track your max hit."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.INTERACTIVE, BlockType.CombatDummyFurniture, null), 1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.ANVIL_FURNITURE.asInt(), Material.ANVIL, ItemRarity.RARE, "Anvil", List.of("Used to craft and repair equipment."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.INTERACTIVE, BlockType.InventoryOpener, toVersionedJson(new InventoryOpenerMeta(InventoryId.ANVIL.asInt(), Material.ANVIL, null, null, null, "Anvil", Icon.ANVIL.get()), 1)), 1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.STOVE_FURNITURE.asInt(), Material.FURNACE, ItemRarity.RARE, "Stove", List.of("Used to cook food and meals."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.INTERACTIVE, BlockType.InventoryOpener, toVersionedJson(new InventoryOpenerMeta(InventoryId.STOVE.asInt(), Material.FURNACE, null, null, null, "Stove", Icon.FIRE.get()), 1)), 1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.CRAFTING_TABLE_FURNITURE.asInt(), Material.CRAFTING_TABLE, ItemRarity.RARE, "Crafting Table", List.of("Used to craft items and components."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.INTERACTIVE, BlockType.InventoryOpener, toVersionedJson(new InventoryOpenerMeta(InventoryId.CRAFTING_TABLE.asInt(), Material.CRAFTING_TABLE, null, null, null, "Crafting Table", Icon.CRAFTING.get()), 1)), 1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.FLETCHING_TABLE_FURNITURE.asInt(), Material.FLETCHING_TABLE, ItemRarity.RARE, "Fletching Table", List.of("Used to craft bows, arrows, and ranged gear."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.INTERACTIVE, BlockType.InventoryOpener, toVersionedJson(new InventoryOpenerMeta(InventoryId.FLETCHING_TABLE.asInt(), Material.FLETCHING_TABLE, null, null, null, "Fletching Table", Icon.ARROW.get()), 1)), 1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.BLAST_FURNACE_FURNITURE.asInt(), Material.BLAST_FURNACE, ItemRarity.LEGENDARY, "Blast Furnace", List.of("Portable furnace", "Used to smelt ores and refine metals."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.INTERACTIVE, BlockType.InventoryOpener, toVersionedJson(new InventoryOpenerMeta(InventoryId.BASIC_FURNACE.asInt(), Material.BLAST_FURNACE, null, null, null, "Smelting Furnace", Icon.FURNACE.get()), 1)), 1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.ALTAR_FURNITURE.asInt(), Material.LECTERN, ItemRarity.LEGENDARY, "Altar", List.of("Used to pray and receive blessings."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.INTERACTIVE, BlockType.Altar, null), 1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.LANTERN_FURNITURE.asInt(), Material.LANTERN, ItemRarity.UNCOMMON, "Lantern", List.of("Provides steady light."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.DECORATION, BlockType.LightableBlock, toVersionedJson(new LightableBlockMeta(Material.LANTERN), 1)), 1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.SOUL_LANTERN_FURNITURE.asInt(), Material.SOUL_LANTERN, ItemRarity.RARE, "Blue Lantern", List.of("Emits an eerie blue glow."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.DECORATION, BlockType.LightableBlock, toVersionedJson(new LightableBlockMeta(Material.SOUL_LANTERN), 1)), 1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.REDSTONE_LAMP_FURNITURE.asInt(), Material.REDSTONE_LAMP, ItemRarity.UNCOMMON, "Lamp", List.of("Provides steady light."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.DECORATION, BlockType.LightableBlock, toVersionedJson(new LightableBlockMeta(Material.REDSTONE_LAMP), 1)), 1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.WHITE_CANDLE_FURNITURE.asInt(), Material.CANDLE, ItemRarity.COMMON, "Candle", List.of("A small candle for decoration."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.DECORATION, BlockType.LightableBlock, toVersionedJson(new LightableBlockMeta(Material.CANDLE), 1)), 1)
+                ),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.WHITE_CANDLE_CAKE_FURNITURE.asInt(), Material.CAKE, ItemRarity.COMMON, "Candle Cake", List.of("A cake topped with a decorative candle."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.DECORATION, BlockType.LightableBlock, toVersionedJson(new LightableBlockMeta(Material.CANDLE_CAKE), 1)), 1)
+                ),
+
 
                 // New materials
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.CHICKEN_EGG.asInt(), Material.COAL, ItemRarity.COMMON, "Chicken Egg", List.of("A fresh egg laid by a chicken."), null, true, 1.0),
@@ -773,11 +839,11 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAPLE_LOG.asInt(), Material.ACACIA_LOG, ItemRarity.UNCOMMON, "Maple Log", List.of("A strong and versatile log with a reddish hue."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(400), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.YEW_LOG.asInt(), Material.DARK_OAK_LOG, ItemRarity.UNCOMMON, "Yew Log", List.of("A dense and durable wood prized in crafting."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(850), 1)),
+                        toVersionedJson(new MaterialMeta(650), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAHOGANY_LOG.asInt(), Material.MANGROVE_LOG, ItemRarity.UNCOMMON, "Mahogany Log", List.of("A rich, dark wood valued for fine construction."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(1250), 1)),
+                        toVersionedJson(new MaterialMeta(1050), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MAGIC_LOG.asInt(), Material.CHERRY_LOG, ItemRarity.RARE, "Magic Log", List.of("Glows faintly with arcane energy, rare and powerful."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(1800), 1)),
+                        toVersionedJson(new MaterialMeta(1400), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ASHES.asInt(), Material.COAL, ItemRarity.COMMON, "Ashes", List.of("Fine powder left after fire consumes wood."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(1), 1)),

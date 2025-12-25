@@ -1,27 +1,23 @@
 package org.zuma.examplePlugin.domain.block.impl.door;
 
 import eu.decentsoftware.holograms.api.DHAPI;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
-import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
-import org.zuma.examplePlugin.core.utils.PlayerUtils;
-import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.base.MultiBlockHitbox;
 import org.zuma.examplePlugin.domain.block.base.QuestLockedInteractable;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.v1.QuestLockedMeta;
-import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.block.TeleportDoorEnteredEvent;
@@ -30,12 +26,14 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 public class TeleportDoor extends QuestLockedInteractable implements MultiBlockHitbox {
     private final Location teleportLocation;
     private final String id, label;
     private final Door.Hinge hinge;
     private final List<UUID> inUseBy = new ArrayList<>();
+    private @Nullable Consumer<RunePlayer> onUse;
 
     public TeleportDoor(AbstractInteractableBlockMeta meta, Door.Hinge hinge, String id, String label, String world, int x, int y, int z, int yaw, QuestLockedMeta questLockedMeta) {
         super(meta, questLockedMeta);
@@ -43,6 +41,7 @@ public class TeleportDoor extends QuestLockedInteractable implements MultiBlockH
         this.id = id;
         this.label = label;
         this.hinge = hinge;
+        this.onUse = null;
     }
 
     private void initializeHologram() {
@@ -56,6 +55,10 @@ public class TeleportDoor extends QuestLockedInteractable implements MultiBlockH
             return;
         }
 
+        if (teleportLocation.getWorld() == null) {
+            teleportLocation.setWorld(Bukkit.getWorld("world"));
+        }
+
         getLocation().getWorld().playSound(getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1f, 1f);
         setDoorOpen(true);
         inUseBy.add(player.getUUID());
@@ -63,6 +66,7 @@ public class TeleportDoor extends QuestLockedInteractable implements MultiBlockH
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
             Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
                 player.asBukkitPlayer().teleport(teleportLocation);
+                if (this.onUse != null) onUse.accept(player);
                 setDoorOpen(false);
                 inUseBy.remove(player.getUUID());
 
@@ -132,4 +136,7 @@ public class TeleportDoor extends QuestLockedInteractable implements MultiBlockH
         return this.id;
     }
 
+    public void setOnUse(@Nullable Consumer<RunePlayer> onUse) {
+        this.onUse = onUse;
+    }
 }

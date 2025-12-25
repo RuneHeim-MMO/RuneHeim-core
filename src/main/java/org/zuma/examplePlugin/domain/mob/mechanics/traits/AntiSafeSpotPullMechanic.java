@@ -11,14 +11,16 @@ import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.mob.mechanics.base.MobMechanic;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 public class AntiSafeSpotPullMechanic implements MobMechanic {
     // Number of hits within the time frame to trigger pull
     private static final int HIT_THRESHOLD = 4;
-
-    private CombatantMob mob;
     private final HashMap<UUID, List<Long>> recentAttackers;
+    private CombatantMob mob;
 
     public AntiSafeSpotPullMechanic() {
         this.recentAttackers = new HashMap<>();

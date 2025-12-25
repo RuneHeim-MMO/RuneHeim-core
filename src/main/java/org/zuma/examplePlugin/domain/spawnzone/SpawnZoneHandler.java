@@ -19,17 +19,20 @@ import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
 import org.zuma.examplePlugin.domain.spawnzone.persistence.SpawnZoneRepository;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class SpawnZoneHandler {
     public static final NamespacedKey ZONE_KEY =
             new NamespacedKey(RuneQuestPlugin.getInstance(), MobDataKey.SPAWN_ZONE_ID.toString());
 
     private final static long TICK_RATE = 3 * 20L; //  Every 3 sec
-    private int tickPartition = 0;
     private final Map<Integer, AbstractSpawnZone> spawnZones;
     private final SpawnZoneRepository repository;
     private final SpawnZoneFactory factory;
+    private int tickPartition = 0;
     private BukkitTask loop;
 
     public SpawnZoneHandler(SpawnZoneRepository repository) {
@@ -135,15 +138,26 @@ public class SpawnZoneHandler {
     public void initializeFromDb() {
         this.repository.getAll().forEach(record -> {
             AbstractSpawnZone zone = factory.createZone(record.meta(), record.json());
-
-            if (spawnZones.containsKey(zone.getId())) {
-                throw new IllegalStateException("Spawn zone with id " + zone.getId() + " already exists!");
-            }
-
-            spawnZones.put(zone.getId(), zone);
+            registerSpawnZone(zone);
         });
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Loaded " + spawnZones.size() + " spawn zones.");
+    }
+
+    public void registerSpawnZone(AbstractSpawnZone zone) {
+        if (spawnZones.containsKey(zone.getId())) {
+            throw new IllegalStateException("Spawn zone with id " + zone.getId() + " already exists!");
+        }
+
+        spawnZones.put(zone.getId(), zone);
+    }
+
+    public void unregisterSpawnZone(int id) {
+        AbstractSpawnZone zone = spawnZones.get(id);
+        if (zone != null) {
+            zone.clearAliveEntities();
+            spawnZones.remove(id);
+        }
     }
 
 
@@ -191,4 +205,7 @@ public class SpawnZoneHandler {
         tickPartition = (tickPartition + 1) % 3;
     }
 
+    public SpawnZoneFactory getFactory() {
+        return factory;
+    }
 }

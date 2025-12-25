@@ -8,11 +8,7 @@ import org.zuma.examplePlugin.domain.shop.meta.v1.ShopMeta;
 
 import java.util.List;
 
-import static org.zuma.examplePlugin.domain.shop.ItemPriceCalculator.getPrice;
-
 public class ShopRepository {
-    private final Gson gson = new Gson();
-
     private static final List<ShopItemConfig> GENERAL_STORE_ITEMS = List.of(
             new ShopItemConfig(ItemId.SMITHING_HAMMER.asInt(), 8, 30, 100L, 20L, null, null),
             new ShopItemConfig(ItemId.SHEARS.asInt(), 8, 30, 35L, 10L, null, null),
@@ -23,12 +19,11 @@ public class ShopRepository {
             // new ShopItemConfig(ItemId.EMPTY_BUCKET.asInt(), 8, 30, 10L, 3L, null, null),
             // new ShopItemConfig(ItemId.POT_OF_FLOUR.asInt(), 0, 10, 25L, 8L, null, null)
     );
-
     private static final List<ShopItemConfig> TANNER_SHOP = List.of(
             new ShopItemConfig(ItemId.NEEDLE.asInt(), 8, 30, 50L, 5L, null, null),
             new ShopItemConfig(ItemId.THREAD.asInt(), 128, 30, ItemId.THREAD.getBuyPrice(), ItemId.THREAD.getSellPrice(), null, null)
     );
-
+    private final Gson gson = new Gson();
 
     public List<ShopConfig> getAll() {
         return List.of(
@@ -53,7 +48,7 @@ public class ShopRepository {
                 ))), 1)),
 
                 new ShopConfig(ShopId.INVESTMENT_BANKER.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
-                        new ShopItemConfig(ItemId.PLATINUM_TOKEN.asInt(), 1000, 30, 1000L, 950L, null, null),
+                        new ShopItemConfig(ItemId.PLATINUM_TOKEN.asInt(), 256, 30, 1000L, 950L, null, null),
                         new ShopItemConfig(ItemId.SCRATCH_CARD.asInt(), 10, 30, 1000L, 500L, null, null)
                 ))), 1)),
 

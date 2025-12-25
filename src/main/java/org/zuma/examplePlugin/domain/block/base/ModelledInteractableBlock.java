@@ -21,11 +21,11 @@ import java.util.List;
 import java.util.UUID;
 
 public abstract class ModelledInteractableBlock extends AbstractInteractableBlock implements MultiBlockHitbox {
-    private UUID armorStandUUID = null;
     private final String model;
     private final int height, width, depth;
     private final double scale;
     private final List<Location> interactableBlockLocations;
+    private UUID armorStandUUID = null;
 
     public ModelledInteractableBlock(AbstractInteractableBlockMeta meta, int height, int width, int depth, double scale, String model) {
         super(meta, null, null);

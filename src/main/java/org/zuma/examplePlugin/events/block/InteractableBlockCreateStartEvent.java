@@ -15,17 +15,17 @@ public class InteractableBlockCreateStartEvent extends Event implements Cancella
         this.entity = entity;
     }
 
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     public BlockEntity getBlockEntity() {
         return entity;
     }
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public
-    static HandlerList getHandlerList() {
         return HANDLERS;
     }
 

@@ -17,16 +17,19 @@ import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
-import org.zuma.examplePlugin.core.utils.*;
-import org.zuma.examplePlugin.domain.combat.constants.AttackType;
+import org.zuma.examplePlugin.core.utils.CurrencyUtils;
+import org.zuma.examplePlugin.core.utils.DateUtils;
+import org.zuma.examplePlugin.core.utils.PlayerUtils;
+import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
+import org.zuma.examplePlugin.domain.combat.constants.AttackType;
 import org.zuma.examplePlugin.domain.combat.constants.HitType;
+import org.zuma.examplePlugin.domain.effect.EffectHandler;
+import org.zuma.examplePlugin.domain.effect.effects.FusionThunderEffect;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.impl.FusionMaster;
-import org.zuma.examplePlugin.domain.effect.EffectHandler;
-import org.zuma.examplePlugin.domain.effect.effects.FusionThunderEffect;
 import org.zuma.examplePlugin.domain.modifier.scopes.global.GlobalModifier;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.Quest;
@@ -226,11 +229,11 @@ public class HudService {
         DHAPI.createHologram(holoId.toString(), start, List.of(content));
 
         new BukkitRunnable() {
-            double t = 0;
             final double duration = 20;
             final double maxVerticalHeight = 0.3;
             final double baseHorizontalOffset = 0.2;
             final double horizontalRandomness = 0.1;
+            double t = 0;
 
             @Override
             public void run() {

@@ -19,36 +19,6 @@ public class PendingXPHandler {
 
     private final HashMap<UUID, PendingXpContainer> pendingPlayerXP;
 
-    private static class PendingXpContainer {
-        private final HashMap<SkillType, Double> pendingXP;
-        private long lastInteraction;
-
-        public PendingXpContainer(long lastInteraction) {
-            this.pendingXP = new HashMap<>();
-            this.lastInteraction = lastInteraction;
-        }
-
-        public HashMap<SkillType, Double> getPendingXP() {
-            return pendingXP;
-        }
-
-        public void addXP(SkillType type, double amount) {
-            if (!pendingXP.containsKey(type)) {
-                pendingXP.put(type, 0.0);
-            }
-
-            pendingXP.compute(type, (k, currentXP) -> (currentXP == null ? 0 : currentXP) + amount);
-        }
-
-        public void updateLastInteraction(long timestamp) {
-            this.lastInteraction = timestamp;
-        }
-
-        public long getLastInteraction() {
-            return lastInteraction;
-        }
-    }
-
     public PendingXPHandler() {
         pendingPlayerXP = new HashMap<>();
     }
@@ -153,5 +123,35 @@ public class PendingXPHandler {
 
         return recentAttackers;
 
+    }
+
+    private static class PendingXpContainer {
+        private final HashMap<SkillType, Double> pendingXP;
+        private long lastInteraction;
+
+        public PendingXpContainer(long lastInteraction) {
+            this.pendingXP = new HashMap<>();
+            this.lastInteraction = lastInteraction;
+        }
+
+        public HashMap<SkillType, Double> getPendingXP() {
+            return pendingXP;
+        }
+
+        public void addXP(SkillType type, double amount) {
+            if (!pendingXP.containsKey(type)) {
+                pendingXP.put(type, 0.0);
+            }
+
+            pendingXP.compute(type, (k, currentXP) -> (currentXP == null ? 0 : currentXP) + amount);
+        }
+
+        public void updateLastInteraction(long timestamp) {
+            this.lastInteraction = timestamp;
+        }
+
+        public long getLastInteraction() {
+            return lastInteraction;
+        }
     }
 }

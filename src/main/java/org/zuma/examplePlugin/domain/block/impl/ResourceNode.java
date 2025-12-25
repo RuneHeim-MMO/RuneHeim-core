@@ -3,7 +3,10 @@ package org.zuma.examplePlugin.domain.block.impl;
 import eu.decentsoftware.holograms.api.DHAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -15,7 +18,6 @@ import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
-import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.ResourceNodeSchematicHandler;
@@ -48,17 +50,16 @@ public class ResourceNode extends AbstractInteractableBlock {
     public static Double PERFECT_STRIKE_CHANCE = 2.5;
 
     private final Random random = new Random();
-    private ResourceNodeType blockType;
-    private boolean isDepleted;
     private final BlockManager manager;
     private final Location origin;
+    private final CooldownHandler perfectStrikeCooldownHandler; // To prevent interruption abuse;
+    private ResourceNodeType blockType;
+    private boolean isDepleted;
     private ItemStack displayItemStack;
     private boolean isRemoved;
     private boolean displayResultInHologram, requiresTool;
-
     @Nullable
     private ResourceNodeSchematicHandler schematicHandler;
-    private final CooldownHandler perfectStrikeCooldownHandler; // To prevent interruption abuse;
 
     public ResourceNode(BlockManager manager, AbstractInteractableBlockMeta meta) {
         super(meta, null, null);

@@ -5,10 +5,7 @@ import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.item.state.StateType;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
-import org.zuma.examplePlugin.domain.item.state.meta.v1.GearGemSocketsStateMeta;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.MultiConsumableStateMeta;
-
-import java.util.ArrayList;
 
 public class MultiConsumableState extends AbstractState {
     private final int maxUsages;

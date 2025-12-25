@@ -4,7 +4,6 @@ import org.zuma.examplePlugin.domain.heimscript.ScriptedStatement;
 import org.zuma.examplePlugin.domain.heimscript.ScriptedStatementInstance;
 import org.zuma.examplePlugin.domain.heimscript.StatementType;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
-import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.quest.constants.QuestId;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
@@ -38,7 +37,8 @@ public enum ScriptedCondition implements ScriptedStatement {
     QUEST_STEP_ACTIVE("quest_step_active", "stable_id"),
     NEVER_TRUE("never_true"),
     RANDOM_CHANCE("random_chance", "percent"),
-    CAN_CLAIM_DAILY_REWARD("can_claim_daily_reward");
+    CAN_CLAIM_DAILY_REWARD("can_claim_daily_reward"),
+    PLAYER_OWNS_HOUSE_IN("player_owns_house_in", "region");
 
     public final String trigger;
     public final List<String> argsTemplates;
@@ -46,19 +46,6 @@ public enum ScriptedCondition implements ScriptedStatement {
     ScriptedCondition(String trigger, String... argsTemplates) {
         this.trigger = trigger;
         this.argsTemplates = new ArrayList<>(List.of(argsTemplates));
-    }
-
-    @Override
-    public StatementType getType() {
-        return StatementType.ACTION;
-    }
-
-    public String getTrigger() {
-        return this.trigger;
-    }
-
-    public List<String> getArgsTemplates() {
-        return this.argsTemplates;
     }
 
     public static ScriptedStatementInstance questStartSuccessful(QuestId id) {
@@ -181,5 +168,18 @@ public enum ScriptedCondition implements ScriptedStatement {
         return new ScriptedStatementInstance(ScriptedCondition.COINS_LESS_THAN, Map.of(
                 "amount", String.valueOf(amount)
         ));
+    }
+
+    @Override
+    public StatementType getType() {
+        return StatementType.ACTION;
+    }
+
+    public String getTrigger() {
+        return this.trigger;
+    }
+
+    public List<String> getArgsTemplates() {
+        return this.argsTemplates;
     }
 }

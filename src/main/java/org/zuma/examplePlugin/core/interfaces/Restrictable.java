@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface Restrictable {
     List<SkillRequirement> getSkillRequirements();
+
     List<String> getRequiredCompletedQuests();
 }

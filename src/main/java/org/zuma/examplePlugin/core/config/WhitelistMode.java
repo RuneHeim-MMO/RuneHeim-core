@@ -12,10 +12,6 @@ public enum WhitelistMode {
         this.key = key;
     }
 
-    public String getKey() {
-        return key;
-    }
-
     public static WhitelistMode getByKey(String key) {
         for (WhitelistMode type : values()) {
             if (type.getKey().equalsIgnoreCase(key)) {
@@ -24,5 +20,9 @@ public enum WhitelistMode {
         }
 
         return NONE;
+    }
+
+    public String getKey() {
+        return key;
     }
 }

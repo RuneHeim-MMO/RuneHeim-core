@@ -3,10 +3,8 @@ package org.zuma.examplePlugin.domain.dialog.impl;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.dialog.base.DialogStep;
-import org.zuma.examplePlugin.domain.heimscript.condition.ScriptedConditionHandler;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

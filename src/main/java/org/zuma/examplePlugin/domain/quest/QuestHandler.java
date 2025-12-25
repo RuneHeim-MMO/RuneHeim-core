@@ -10,7 +10,6 @@ import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
 import org.zuma.examplePlugin.domain.quest.base.Tickable;
 import org.zuma.examplePlugin.domain.quest.persistence.QuestProgressRepository;
 
-import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;

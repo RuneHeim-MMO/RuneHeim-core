@@ -14,6 +14,11 @@ public class GearModifiersRecalculatedEvent extends Event {
         this.player = player;
     }
 
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     public RunePlayer getPlayer() {
         return player;
     }
@@ -24,11 +29,6 @@ public class GearModifiersRecalculatedEvent extends Event {
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public
-    static HandlerList getHandlerList() {
         return HANDLERS;
     }
 }

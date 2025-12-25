@@ -2,8 +2,6 @@ package org.zuma.examplePlugin.core.permissions;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.permissions.PermissionAttachment;
-import org.zuma.examplePlugin.core.constants.Icon;
-import org.zuma.examplePlugin.core.permissions.Permission;
 import org.zuma.examplePlugin.core.permissions.roles.BaseRole;
 import org.zuma.examplePlugin.core.permissions.roles.UpgradedRole;
 import org.zuma.examplePlugin.domain.payments.SupporterLevel;

@@ -3,7 +3,7 @@ package org.zuma.examplePlugin.domain.mob.constants;
 public enum MobType {
     DRAKKAR_MAYOR,
     DRAKKAR_SMELTERY_WORKER,
-    
+
     // The sick camels quest
     RAFIQ_CAMEL_TRADER,
     SHAMIRA_SHAMAN,
@@ -21,6 +21,9 @@ public enum MobType {
     TUTOR_SURVIVAL,
 
     COMBAT_DUMMY_FACE_SOUTH,
+    COMBAT_DUMMY_FACE_NORTH,
+    COMBAT_DUMMY_FACE_EAST,
+    COMBAT_DUMMY_FACE_WEST,
 
     BROWN_FARMHOUSE_MOUNT_SHOP,
     ABRAHAM_FAIRY_TEACHER,
@@ -32,6 +35,8 @@ public enum MobType {
     CITY_CITIZEN_INFERNAK,
     CITY_CITIZEN_SAHARIJIN,
     CITY_CITIZEN_JUNGLE,
+
+    DRAKKAR_CONCIERGE,
 
     // Herblore shops
     SWAMP_ISLAND_HERBLORE_SHOP,

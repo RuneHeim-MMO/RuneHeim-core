@@ -14,7 +14,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import java.util.*;
 
 public class DonatorBombsInventory extends PaginatedIndividualGUI {
-    private static final Set<Integer> IGNORED_SLOTS = new HashSet<>(List.of(0,1,2,3,4,5,6,7,8));
+    private static final Set<Integer> IGNORED_SLOTS = new HashSet<>(List.of(0, 1, 2, 3, 4, 5, 6, 7, 8));
     private static final EnumMap<ServerModifierType, Integer> buttonIds = new EnumMap<>(Map.of(
             ServerModifierType.DOUBLE_SKILL_XP, 1,
             ServerModifierType.DOUBLE_COMBAT_XP, 2,
@@ -144,7 +144,7 @@ public class DonatorBombsInventory extends PaginatedIndividualGUI {
             return;
         }
 
-        Integer buttonId = getMenuValue(clickedItem);
+        Integer buttonId = getMenuValueInt(clickedItem);
 
         if (buttonId == null) {
             return;

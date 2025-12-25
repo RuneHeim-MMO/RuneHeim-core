@@ -15,13 +15,15 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.analytics.AnalyticsContainer;
 import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.analytics.AnalyticsType;
-import org.zuma.examplePlugin.core.permissions.roles.BaseRole;
-import org.zuma.examplePlugin.core.permissions.PlayerRole;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.constants.XpSource;
 import org.zuma.examplePlugin.core.interfaces.CombatEntity;
 import org.zuma.examplePlugin.core.interfaces.InteractiveActionStrategy;
-import org.zuma.examplePlugin.core.utils.*;
+import org.zuma.examplePlugin.core.permissions.PlayerRole;
+import org.zuma.examplePlugin.core.permissions.roles.BaseRole;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
+import org.zuma.examplePlugin.core.utils.PlayerUtils;
+import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.daily.DailyRewards;
 import org.zuma.examplePlugin.domain.hud.ActionBarManager;
@@ -49,22 +51,11 @@ import java.util.stream.Collectors;
 
 public class RunePlayer implements CombatEntity {
     private static final double HP_SKILL_XP_PER_DMG_POINT_RECEIVED = 10;
-    private @Nullable UUID partyUUID;
     private final UUID uuid;
-
-    private PlayerRole role;
-    private PermissionAttachment permissionAttachment;
-
     private final PlayerCombatData combatData;
-    private PlayerSettings settings;
-    private PlayerBombsContainer bombsContainer;
-    private DailyRewards dailyRewards;
-    private AnalyticsContainer analyticsContainer;
-
     private final PendingXPHandler pendingXPHandler;
     private final EnumMap<ModifierType, Modifier> modifiers;
     private final EnumMap<SkillType, SkillModifier> skillModifiers;
-    private List<TemporaryEffect> activeEffects; // Potions, etc
     private final EnumMap<SkillType, Skill> skills;
     private final PlayerXpHandler xpHandler;
     private final PlayerItemDistributor itemHandler;
@@ -73,7 +64,14 @@ public class RunePlayer implements CombatEntity {
     private final BusyStateHandler busyStateHandler;
     private final PlayerScoreboardManager scoreboardManager;
     private final ScoreboardUsernameRenderer scoreboardUsernameRenderer;
-
+    private @Nullable UUID partyUUID;
+    private PlayerRole role;
+    private PermissionAttachment permissionAttachment;
+    private PlayerSettings settings;
+    private PlayerBombsContainer bombsContainer;
+    private DailyRewards dailyRewards;
+    private AnalyticsContainer analyticsContainer;
+    private List<TemporaryEffect> activeEffects; // Potions, etc
     private long pouchCoins;
     private List<String> discoveredTerritoryIds, completedQuestIds;
     private boolean isInCutscene, isDead, isInDialog, isDialogOptionChoosing, isNextMessageMegaphone;
@@ -129,12 +127,16 @@ public class RunePlayer implements CombatEntity {
         return this.asBukkitPlayer();
     }
 
+    public DailyRewards getDailyRewards() {
+        return dailyRewards;
+    }
+
     public void setDailyRewards(DailyRewards dailyRewards) {
         this.dailyRewards = dailyRewards;
     }
 
-    public DailyRewards getDailyRewards() {
-        return dailyRewards;
+    public EnumMap<ModifierType, Modifier> getModifiers() {
+        return new EnumMap<>(modifiers);
     }
 
     // Modifiers
@@ -142,6 +144,10 @@ public class RunePlayer implements CombatEntity {
         modifiers.clear();
         modifiers.putAll(newModifiers.stream()
                 .collect(Collectors.toMap(Modifier::type, Function.identity())));
+    }
+
+    public EnumMap<SkillType, SkillModifier> getSkillModifiers() {
+        return new EnumMap<>(skillModifiers);
     }
 
     public void setSkillModifiers(List<SkillModifier> newModifiers) {
@@ -159,14 +165,6 @@ public class RunePlayer implements CombatEntity {
 
             matchingSkill.setBonus(skillModifier.amount());
         });
-    }
-
-    public EnumMap<ModifierType, Modifier> getModifiers() {
-        return new EnumMap<>(modifiers);
-    }
-
-    public EnumMap<SkillType, SkillModifier> getSkillModifiers() {
-        return new EnumMap<>(skillModifiers);
     }
 
     // Skills
@@ -329,11 +327,6 @@ public class RunePlayer implements CombatEntity {
         safeLocation = null;
     }
 
-    public void setInCutscene(Location safeLocation) {
-        this.isInCutscene = true;
-        this.safeLocation = safeLocation;
-    }
-
     public void setOutOfCutscene() {
         this.isInCutscene = false;
         safeLocation = null;
@@ -342,6 +335,10 @@ public class RunePlayer implements CombatEntity {
     @Nullable
     public Location getSafeLocation() {
         return safeLocation;
+    }
+
+    public void setSafeLocation(@Nullable Location safeLocation) {
+        this.safeLocation = safeLocation;
     }
 
     public boolean isInCombat() {
@@ -388,12 +385,12 @@ public class RunePlayer implements CombatEntity {
         isDead = dead;
     }
 
-    public void setPrayerEnergy(double amount) {
-        this.combatData.setPrayerEnergy(amount);
-    }
-
     public double getPrayerEnergy() {
         return this.combatData.getPrayerEnergy();
+    }
+
+    public void setPrayerEnergy(double amount) {
+        this.combatData.setPrayerEnergy(amount);
     }
 
     public HashMap<String, AbstractQuestStep> getActiveQuestSteps() {
@@ -424,7 +421,6 @@ public class RunePlayer implements CombatEntity {
         this.completedQuestIds = completedQuestIds;
     }
 
-
     public boolean isDialogOptionChoosing() {
         return isDialogOptionChoosing;
     }
@@ -437,8 +433,18 @@ public class RunePlayer implements CombatEntity {
         return isInCutscene;
     }
 
+    public void setInCutscene(Location safeLocation) {
+        this.isInCutscene = true;
+        this.safeLocation = safeLocation;
+    }
+
     public List<TemporaryEffect> getActiveEffects() {
         return activeEffects;
+    }
+
+    public void setActiveEffects(List<TemporaryEffect> effects) {
+        if (effects == null) return;
+        this.activeEffects = effects;
     }
 
     public boolean hasActiveEffect(String grantedByKey) {
@@ -446,11 +452,6 @@ public class RunePlayer implements CombatEntity {
                 .anyMatch(effect -> effect.getGrantedBy() != null
                         && effect.getGrantedBy().equals(grantedByKey)
                         && !effect.isExpired());
-    }
-
-    public void setActiveEffects(List<TemporaryEffect> effects) {
-        if (effects == null) return;
-        this.activeEffects = effects;
     }
 
     public void addActiveEffect(TemporaryEffect effect) {
@@ -473,6 +474,10 @@ public class RunePlayer implements CombatEntity {
         return permissionAttachment;
     }
 
+    public void setPermissionAttachment(PermissionAttachment permissionAttachment) {
+        this.permissionAttachment = permissionAttachment;
+    }
+
     public PlayerScoreboardManager getScoreboardManager() {
         return scoreboardManager;
     }
@@ -483,10 +488,6 @@ public class RunePlayer implements CombatEntity {
 
     public ScoreboardUsernameRenderer getScoreboardUsernameRenderer() {
         return scoreboardUsernameRenderer;
-    }
-
-    public void setPermissionAttachment(PermissionAttachment permissionAttachment) {
-        this.permissionAttachment = permissionAttachment;
     }
 
     public void setSupporterLevel(SupporterLevel supporterLevel) {
@@ -556,4 +557,5 @@ public class RunePlayer implements CombatEntity {
     public void setAnalyticsContainer(AnalyticsContainer analyticsContainer) {
         this.analyticsContainer = analyticsContainer;
     }
+
 }

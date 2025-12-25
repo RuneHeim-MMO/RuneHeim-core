@@ -1,4 +1,3 @@
-
 package org.zuma.examplePlugin.domain.mob.types;
 
 import org.zuma.examplePlugin.core.constants.Icon;
@@ -17,6 +16,9 @@ public class InteractiveMobs {
 
 
     public static void registerMobs(MobTypeRegistry registry) {
+        registry.register(MobType.DRAKKAR_CONCIERGE.getId(), () -> new DialogMob(Icon.HOUSE.get() + " Concierge", null,
+                MobBehaviors.VILLAGER_MAN_5.getBehavior(), "concierge_1", null, 0, Dialogs.drakkarConciergeDialog));
+
         registry.register(MobType.COLLECTOR_OF_DAYS.getId(), () -> new InventoryOpenerMob(Icon.TREASURE_CHEST.get() + " Collector of Days", EquipmentSet.COLLECTOR_OF_DAYS,
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "collector_of_days", null, InventoryId.DAILY_REWARDS.asInt(), 0)
                 .attachDialog(Dialogs.collectorOfDaysDialog));
@@ -81,6 +83,10 @@ public class InteractiveMobs {
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "farm_horse_dealer", null, 0, Dialogs.farmHorseTrader));
 
         registry.register(MobType.COMBAT_DUMMY_FACE_SOUTH.getId(), () -> new CombatDummy(0));
+        registry.register(MobType.COMBAT_DUMMY_FACE_NORTH.getId(), () -> new CombatDummy(180));
+        registry.register(MobType.COMBAT_DUMMY_FACE_EAST.getId(), () -> new CombatDummy(-90));
+        registry.register(MobType.COMBAT_DUMMY_FACE_WEST.getId(), () -> new CombatDummy(90));
+
         registry.register(MobType.FUSION_MASTER.getId(), () -> new FusionMaster(Icon.SCROLL_RED.get() + " Fusion Master", MobBehaviors.FUSION_MASTER.getBehavior(), 0));
 
         registry.register(MobType.AUCTIONEER.getId(), () -> new InventoryOpenerMob(Icon.TRADE.get() + " Auctioneer", EquipmentSet.AUCTIONEER,

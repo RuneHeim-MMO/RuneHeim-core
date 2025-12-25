@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * Iterative ModuleLoader that starts modules when their dependencies are satisfied
  * either by context-bound services or by modules already started.
- *
+ * <p>
  * This avoids requiring modules to declare "provides()" and works with existing
  * modules that bind services during their start() calls.
  */

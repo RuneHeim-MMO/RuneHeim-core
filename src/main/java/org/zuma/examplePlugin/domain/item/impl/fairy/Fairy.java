@@ -1,6 +1,5 @@
 package org.zuma.examplePlugin.domain.item.impl.fairy;
 
-import org.bukkit.Particle;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Icon;

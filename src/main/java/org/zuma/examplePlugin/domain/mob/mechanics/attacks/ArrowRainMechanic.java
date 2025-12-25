@@ -11,20 +11,18 @@ import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.combat.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.combat.constants.ProjectileType;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.mob.mechanics.base.MobMechanic;
-import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ArrowRainMechanic implements MobMechanic {
     public static final NamespacedKey projectileType = new NamespacedKey(RuneQuestPlugin.getInstance(), PersistenceDataKey.PROJECTILE_TYPE.asString());
-    private CombatantMob mob;
     private final int totalArrows, arrowsPerTick, delayBetweenTicks, spread;
+    private CombatantMob mob;
 
     public ArrowRainMechanic(int totalArrows, int arrowsPerTick, int delayBetweenTicks, int spread) {
         this.totalArrows = totalArrows;

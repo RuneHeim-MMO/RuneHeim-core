@@ -4,9 +4,7 @@ import org.bukkit.Material;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.domain.block.constants.ResourceNodeTypeId;
 import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
-import org.zuma.examplePlugin.domain.droptable.DropTable;
 import org.zuma.examplePlugin.domain.droptable.DropTableId;
-import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.map.MarkerType;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
@@ -49,21 +47,21 @@ public class ResourceNodeTypeRepository {
 
                 new ResourceNodeType(ResourceNodeTypeId.MAPLE_TREE.asInt(), MarkerType.MAPLE,
                         "Maple Tree", Material.ACACIA_LOG, true,
-                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 45)),
+                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 30)),
                         ModifierType.WOODCUTTING_BOOST, 9000, 50,
                         List.of(DropTableId.MAPLE_TREE_NODE.asInt(), DropTableId.WOODCUTTING_RARE_DROPTABLE.asInt()), ItemId.MAPLE_LOG.asInt(),
                         "You need a hatchet to cut that!", "Woodcutting",
                         SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 100.0))),
+                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 70))),
 
                 new ResourceNodeType(ResourceNodeTypeId.MAHOGANY_TREE.asInt(), MarkerType.MAHOGANY,
                         "Mahogany Tree", Material.MANGROVE_LOG, true,
-                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 50)),
+                        List.of(new SkillRequirement(SkillType.WOODCUTTING, 45)),
                         ModifierType.WOODCUTTING_BOOST, 11000, 55,
                         List.of(DropTableId.MAHOGANY_TREE_NODE.asInt(), DropTableId.WOODCUTTING_RARE_DROPTABLE.asInt()), ItemId.MAHOGANY_LOG.asInt(),
                         "You need a hatchet to cut that!", "Woodcutting",
                         SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 125.0))),
+                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 100.0))),
 
                 new ResourceNodeType(ResourceNodeTypeId.YEW_TREE.asInt(), MarkerType.YEW,
                         "Yew Tree", Material.DARK_OAK_LOG, true,
@@ -72,7 +70,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.YEW_TREE_NODE.asInt(), DropTableId.WOODCUTTING_RARE_DROPTABLE.asInt()), ItemId.YEW_LOG.asInt(),
                         "You need a hatchet to cut that!", "Woodcutting",
                         SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 175.0))),
+                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 135.0))),
 
                 new ResourceNodeType(ResourceNodeTypeId.MAGIC_TREE.asInt(), MarkerType.MAGIC,
                         "Magic Tree", Material.CHERRY_LOG, true,
@@ -81,7 +79,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.MAGIC_TREE_NODE.asInt(), DropTableId.WOODCUTTING_RARE_DROPTABLE.asInt()), ItemId.MAGIC_LOG.asInt(),
                         "You need a hatchet to cut that!", "Woodcutting",
                         SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 250.0))),
+                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 160.0))),
 
 
                 // Ores

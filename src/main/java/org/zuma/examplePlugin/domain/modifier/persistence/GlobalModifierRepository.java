@@ -1,8 +1,8 @@
 package org.zuma.examplePlugin.domain.modifier.persistence;
 
 import org.zuma.examplePlugin.core.database.HikariPool;
-import org.zuma.examplePlugin.domain.modifier.scopes.global.GlobalModifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
+import org.zuma.examplePlugin.domain.modifier.scopes.global.GlobalModifier;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,7 +1,6 @@
 package org.zuma.examplePlugin.domain.effect.effects;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -41,6 +40,27 @@ public class RareMobDropEffect implements AnimatedEffect {
         this.killer = killer;
         this.rarity = rarity;
         this.mobName = mobName;
+    }
+
+    public static void spawnHexDust(Location loc, String hex, float size) {
+        World w = loc.getWorld();
+        if (w == null) return;
+
+        if (hex.startsWith("#")) hex = hex.substring(1);
+        int rgb = Integer.parseInt(hex, 16);
+
+        int r = (rgb >> 16) & 0xFF;
+        int g = (rgb >> 8) & 0xFF;
+        int b = rgb & 0xFF;
+
+        Particle.DustOptions dust = new Particle.DustOptions(Color.fromRGB(r, g, b), size);
+
+        w.spawnParticle(Particle.DUST, loc, 5, 0.15, 0.15, 0.15, 0.0, dust);
+    }
+
+    private static double easeOutCubic(double t) {
+        double p = 1.0 - t;
+        return 1.0 - (p * p * p);
     }
 
     @Override
@@ -145,27 +165,6 @@ public class RareMobDropEffect implements AnimatedEffect {
         droppedItem.setGlowing(false);
         droppedItem.setPickupDelay(20);
         droppedItem.setGravity(true);
-    }
-
-    public static void spawnHexDust(Location loc, String hex, float size) {
-        World w = loc.getWorld();
-        if (w == null) return;
-
-        if (hex.startsWith("#")) hex = hex.substring(1);
-        int rgb = Integer.parseInt(hex, 16);
-
-        int r = (rgb >> 16) & 0xFF;
-        int g = (rgb >> 8) & 0xFF;
-        int b = rgb & 0xFF;
-
-        Particle.DustOptions dust = new Particle.DustOptions(Color.fromRGB(r, g, b), size);
-
-        w.spawnParticle(Particle.DUST, loc, 5, 0.15, 0.15, 0.15, 0.0, dust);
-    }
-
-    private static double easeOutCubic(double t) {
-        double p = 1.0 - t;
-        return 1.0 - (p * p * p);
     }
 
     @Override

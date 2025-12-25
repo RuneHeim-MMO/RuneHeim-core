@@ -12,22 +12,22 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class ConfigManager {
     public static final Path ENVIRONMENT_CONFIG = Paths.get(System.getProperty("user.dir")).resolve("plugins").getParent();
     public static final Path ROOT_CONFIG_PATH = Paths.get("plugins").resolve("RuneQuest");
     public static final Path SCHEMATICS_PATH = ROOT_CONFIG_PATH.resolve("schematics");
-    public static boolean isPreviewServer = false;
-    public static int serverId;
-    public static EnvironmentType environment;
-    public static WhitelistMode whitelistMode;
-
+    public static final Path NODE_SCHEMATICS_PATH = SCHEMATICS_PATH.resolve("nodes");
+    public static final Path HOUSE_SCHEMATICS_PATH = SCHEMATICS_PATH.resolve("houses");
     private static final Dotenv dotenv = Dotenv.configure()
             .directory(ConfigManager.ENVIRONMENT_CONFIG != null ? Paths.get(System.getProperty("user.dir")).resolve("plugins").getParent().toString() : null)
             .ignoreIfMissing()
             .systemProperties()
             .load();
+    public static boolean isPreviewServer = false;
+    public static int serverId;
+    public static EnvironmentType environment;
+    public static WhitelistMode whitelistMode;
 
     public ConfigManager() {
 
@@ -93,7 +93,7 @@ public class ConfigManager {
     }
 
     private static void createFoldersIfMissing() {
-        List<Path> paths = List.of(ROOT_CONFIG_PATH, SCHEMATICS_PATH);
+        List<Path> paths = List.of(ROOT_CONFIG_PATH, SCHEMATICS_PATH, NODE_SCHEMATICS_PATH, HOUSE_SCHEMATICS_PATH);
 
         paths.forEach(path -> {
             try {

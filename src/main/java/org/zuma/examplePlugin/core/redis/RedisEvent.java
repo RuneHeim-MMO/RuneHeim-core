@@ -5,7 +5,6 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
-import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.config.ConfigManager;
 
 import java.util.ArrayList;
@@ -16,15 +15,12 @@ public abstract class RedisEvent<T extends RedisEvent.RedisPayload> extends Even
     private static final HandlerList HANDLERS = new HandlerList();
     boolean isForwarded = false;
 
-    public static class RedisPayload {
-        public String event;
-        public Integer serverId;
-        public Long timestamp;
-        public List<Integer> targetServers = new ArrayList<>(); // Empty - broadcast to all
-        public boolean replayAtOrigin = true;
+    protected RedisEvent() {
     }
 
-    protected RedisEvent() {
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
     }
 
     public T getComposedPayload() {
@@ -52,17 +48,20 @@ public abstract class RedisEvent<T extends RedisEvent.RedisPayload> extends Even
         return HANDLERS;
     }
 
-    public
-    static HandlerList getHandlerList() {
-        return HANDLERS;
-    }
-
     public boolean isForwarded() {
         return isForwarded;
     }
 
     public void setForwarded(boolean forwarded) {
         isForwarded = forwarded;
+    }
+
+    public static class RedisPayload {
+        public String event;
+        public Integer serverId;
+        public Long timestamp;
+        public List<Integer> targetServers = new ArrayList<>(); // Empty - broadcast to all
+        public boolean replayAtOrigin = true;
     }
 
 

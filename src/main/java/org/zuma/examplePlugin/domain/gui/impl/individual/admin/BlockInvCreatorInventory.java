@@ -39,9 +39,6 @@ import java.util.List;
 
 
 public class BlockInvCreatorInventory extends IndividualGUI {
-    private final BlockLoader loader;
-    private final GUIHandler guiHandler;
-
     private static final HashMap<Integer, InventoryOpenerMeta> META_MAP = new HashMap<>() {{
         put(InventoryId.STOVE.asInt(), new InventoryOpenerMeta(InventoryId.STOVE.asInt(), Material.FURNACE, null, MarkerType.FIRE_SOURCE, "Stove", "Stove", Icon.FIRE.get()));
         put(InventoryId.FIRE.asInt(), new InventoryOpenerMeta(InventoryId.FIRE.asInt(), Material.CAMPFIRE, null, MarkerType.FIRE_SOURCE, "Campfire", "Campfire", Icon.FIRE.get()));
@@ -52,6 +49,8 @@ public class BlockInvCreatorInventory extends IndividualGUI {
         put(InventoryId.FLETCHING_TABLE.asInt(), new InventoryOpenerMeta(InventoryId.FLETCHING_TABLE.asInt(), Material.FLETCHING_TABLE, null, MarkerType.FLETCHING_TABLE, "Fletching Table", "Fletching Table", Icon.ARROW.get()));
 
     }};
+    private final BlockLoader loader;
+    private final GUIHandler guiHandler;
 
     public BlockInvCreatorInventory(String title, int id, BlockLoader loader, GUIHandler guiHandler) {
         super(title, id, 6);
@@ -122,7 +121,7 @@ public class BlockInvCreatorInventory extends IndividualGUI {
             return;
         }
 
-        Integer menuValue = getMenuValue(currentItem);
+        Integer menuValue = getMenuValueInt(currentItem);
 
         if (menuValue == null) {
             return;

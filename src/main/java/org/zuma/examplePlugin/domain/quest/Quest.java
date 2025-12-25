@@ -26,9 +26,9 @@ import org.zuma.examplePlugin.domain.quest.constants.QuestDifficulty;
 import org.zuma.examplePlugin.domain.quest.constants.QuestDuration;
 import org.zuma.examplePlugin.domain.quest.constants.QuestStartFailReason;
 import org.zuma.examplePlugin.domain.quest.constants.QuestStatus;
+import org.zuma.examplePlugin.domain.quest.impl.CampfireStep;
 import org.zuma.examplePlugin.domain.quest.impl.CollectionStep;
 import org.zuma.examplePlugin.domain.quest.impl.KillMobStep;
-import org.zuma.examplePlugin.domain.quest.impl.CampfireStep;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 
 import javax.annotation.Nullable;
@@ -46,14 +46,9 @@ public class Quest implements Restrictable {
     private @Nullable String countinationQuestId;
     private QuestDuration duration;
     private QuestReward reward;
-
-    public record Coordinates(int x, int y, int z) {
-    }
-
     // Starting conditions
     private List<SkillRequirement> requirements;
     private List<String> requiredCompletedQuests;
-
     public Quest(String id, String name, QuestDifficulty difficulty, boolean silent, @Nullable Coordinates startLocation) {
         this.id = id;
         this.name = name;
@@ -78,11 +73,6 @@ public class Quest implements Restrictable {
         return this;
     }
 
-    public Quest setRequiredCompletedQuests(List<String> questIds) {
-        this.requiredCompletedQuests = questIds;
-        return this;
-    }
-
     public Quest setRequirements(List<SkillRequirement> requirements) {
         this.requirements = requirements;
         return this;
@@ -90,7 +80,7 @@ public class Quest implements Restrictable {
 
     public Quest addSteps(List<AbstractQuestStep> steps) {
         for (AbstractQuestStep step : steps) {
-            if(!step.getParentQuest().equals(this)){
+            if (!step.getParentQuest().equals(this)) {
                 throw new IllegalArgumentException(step.getStableId() + " Step's parent quest does not match the quest it is being added to.");
             }
 
@@ -365,7 +355,6 @@ public class Quest implements Restrictable {
         AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.QUESTS_COMPLETED, 1);
     }
 
-
     public QuestDifficulty getDifficulty() {
         return difficulty;
     }
@@ -380,12 +369,20 @@ public class Quest implements Restrictable {
         return requiredCompletedQuests;
     }
 
+    public Quest setRequiredCompletedQuests(List<String> questIds) {
+        this.requiredCompletedQuests = questIds;
+        return this;
+    }
+
     public QuestReward getReward() {
         return reward;
     }
 
     public boolean isSilent() {
         return silent;
+    }
+
+    public record Coordinates(int x, int y, int z) {
     }
 
 }

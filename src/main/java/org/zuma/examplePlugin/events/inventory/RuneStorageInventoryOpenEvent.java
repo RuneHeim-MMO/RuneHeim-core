@@ -11,6 +11,12 @@ public class RuneStorageInventoryOpenEvent extends RedisEvent<RuneStorageInvento
         this.payload = payload;
     }
 
+    @Override
+    public Payload composePayload() {
+        this.payload.replayAtOrigin = false;
+        return payload;
+    }
+
     public static class Payload extends RedisPayload {
         public String senderName;
         public UUID senderUUID;
@@ -21,11 +27,5 @@ public class RuneStorageInventoryOpenEvent extends RedisEvent<RuneStorageInvento
             this.senderUUID = senderUUID;
             this.containerUUID = containerUUID;
         }
-    }
-
-    @Override
-    public Payload composePayload() {
-        this.payload.replayAtOrigin = false;
-        return payload;
     }
 }

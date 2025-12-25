@@ -24,6 +24,7 @@ import org.zuma.examplePlugin.events.territory.TerritoryEnterEvent;
 import javax.annotation.Nullable;
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class TerritoryHandler {
     private static final long AMBIENT_SOUND_COOLDOWN_SEC = 30;
@@ -37,7 +38,7 @@ public class TerritoryHandler {
 
     public TerritoryHandler(TerritoryRepository repository) {
         this.repository = repository;
-        this.territoryList = new ArrayList<>();
+        this.territoryList = new CopyOnWriteArrayList<>();
         this.lastPlayerTerritory = new HashMap<>();
         this.lastPlayerLocation = new HashMap<>();
         this.ambientMusicHandler = new AmbientMusicHandler();
@@ -90,7 +91,6 @@ public class TerritoryHandler {
             int playerY = player.getLocation().getBlockY();
 
             Territory lastTerritory = lastPlayerTerritory.get(uuid);
-
 
             for (Territory territory : territoryList) {
                 double distance = MathUtils.getLocationsDistanceXZ(player.getLocation(), territory.getCenterPoint());
@@ -199,7 +199,14 @@ public class TerritoryHandler {
             this.ambientMusicHandler.startPlayerMusicLoop(territory.getAmbientMusic(), runePlayer);
         }
 
-        boolean isFirstDiscovery = !runePlayer.getDiscoveredTerritoryIds().contains(territory.getId());
+        boolean isFirstDiscovery;
+
+        if (territory.isTemporary()) {
+            isFirstDiscovery = false;
+        } else {
+            isFirstDiscovery = !runePlayer.getDiscoveredTerritoryIds().contains(territory.getId());
+        }
+
         TerritoryEnterEvent event = new TerritoryEnterEvent(runePlayer, territory, isFirstDiscovery);
         Bukkit.getServer().getPluginManager().callEvent(event);
 
@@ -219,33 +226,35 @@ public class TerritoryHandler {
             SoundType.TERRITORY_ENTER.play(player, false);
             AnalyticsUtils.incrementServerAndPlayer(runePlayer, AnalyticsKey.TERRITORIES_ENTERED, 1);
         } else {
-            runePlayer.getDiscoveredTerritoryIds().add(territory.getId());
-            SoundType.TERRITORY_DISCOVERY.play(player, false);
+            if (!territory.isTemporary()) {
+                runePlayer.getDiscoveredTerritoryIds().add(territory.getId());
+                SoundType.TERRITORY_DISCOVERY.play(player, false);
 
-            Component hoverText = TextUtils.getChatTerritoryHoverComponent(runePlayer, territory);
-            player.sendMessage(Icon.INFO.asComponent().append(Component.text("New location discovered: ", Color.INFO.asColor())
-                    .append(Icon.MAP.asComponent().append(Component.text(territory.getName() + "!", NamedTextColor.AQUA)).hoverEvent(HoverEvent.showText(hoverText)))));
+                Component hoverText = TextUtils.getChatTerritoryHoverComponent(runePlayer, territory);
+                player.sendMessage(Icon.INFO.asComponent().append(Component.text("New location discovered: ", Color.INFO.asColor())
+                        .append(Icon.MAP.asComponent().append(Component.text(territory.getName() + "!", NamedTextColor.AQUA)).hoverEvent(HoverEvent.showText(hoverText)))));
 
-            if (territory.getFirstTimeDiscoveryLore() != null) {
-                Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-                    if (!player.isOnline()) return;
+                if (territory.getFirstTimeDiscoveryLore() != null) {
+                    Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+                        if (!player.isOnline()) return;
 
-                    player.showTitle(Title.title(
-                            Component.empty(),
-                            Component.text(territory.getFirstTimeDiscoveryLore(), NamedTextColor.GRAY),
-                            Title.Times.times(
-                                    Duration.ofSeconds(1),
-                                    Duration.ofSeconds(3, 5),
-                                    Duration.ofSeconds(3)
-                            )
-                    ));
+                        player.showTitle(Title.title(
+                                Component.empty(),
+                                Component.text(territory.getFirstTimeDiscoveryLore(), NamedTextColor.GRAY),
+                                Title.Times.times(
+                                        Duration.ofSeconds(1),
+                                        Duration.ofSeconds(3, 5),
+                                        Duration.ofSeconds(3)
+                                )
+                        ));
 
-                    SoundType.TERRITORY_ENTER.play(player, false);
-                }, 120);
+                        SoundType.TERRITORY_ENTER.play(player, false);
+                    }, 120);
 
+                }
+
+                AnalyticsUtils.incrementServerAndPlayer(runePlayer, AnalyticsKey.TERRITORIES_DISCOVERED, 1);
             }
-
-            AnalyticsUtils.incrementServerAndPlayer(runePlayer, AnalyticsKey.TERRITORIES_DISCOVERED, 1);
             AnalyticsUtils.incrementServerAndPlayer(runePlayer, AnalyticsKey.TERRITORIES_ENTERED, 1);
         }
 

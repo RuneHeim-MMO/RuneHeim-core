@@ -1,20 +1,15 @@
 package org.zuma.examplePlugin.domain.quest.impl;
 
 import org.bukkit.Location;
-import org.bukkit.event.EventHandler;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.domain.block.impl.CampfireBlock;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.PlayerQuestState;
 import org.zuma.examplePlugin.domain.quest.Quest;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
 import org.zuma.examplePlugin.domain.quest.base.Tickable;
 import org.zuma.examplePlugin.domain.quest.constants.StepType;
-import org.zuma.examplePlugin.events.block.CampfireStateChanged;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -22,9 +17,6 @@ import java.util.UUID;
 public class VisitStep extends AbstractQuestStep implements Tickable {
     private final VisitStepEntry condition;
     private @Nullable Quest.Coordinates initialCoordinates;
-
-    public record VisitStepEntry(Quest.Coordinates coordinates, int radius) {
-    }
 
     public VisitStep(RuneQuestPlugin plugin, Quest parentQuest, String description, String stableId, VisitStepEntry condition, @Nullable UUID owner) {
         super(plugin, parentQuest, StepType.VISIT_LOCATION, description, stableId, owner);
@@ -84,7 +76,6 @@ public class VisitStep extends AbstractQuestStep implements Tickable {
         return (float) percent;
     }
 
-
     public Quest.Coordinates getCenterPoint() {
         return condition.coordinates();
     }
@@ -137,7 +128,7 @@ public class VisitStep extends AbstractQuestStep implements Tickable {
     public AbstractQuestStep assignValuesFromState(PlayerQuestState state) {
         Object raw = state.getStepProgressData().get("initial_coords");
 
-        if (raw instanceof Map<?,?> map) {
+        if (raw instanceof Map<?, ?> map) {
             Number x = (Number) map.get("x");
             Number y = (Number) map.get("y");
             Number z = (Number) map.get("z");
@@ -161,5 +152,8 @@ public class VisitStep extends AbstractQuestStep implements Tickable {
 
     public void setInitialCoordinates(Quest.Coordinates coords) {
         this.initialCoordinates = coords;
+    }
+
+    public record VisitStepEntry(Quest.Coordinates coordinates, int radius) {
     }
 }

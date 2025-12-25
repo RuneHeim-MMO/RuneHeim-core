@@ -11,7 +11,6 @@ import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.InteractiveActionStrategy;
 import org.zuma.examplePlugin.core.utils.TextUtils;
-import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.hud.LoadingBarBuilder;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
@@ -23,12 +22,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class ProgressBarAction implements InteractiveActionStrategy {
     private final Random random = new Random();
-
+    private final boolean swingHand;
+    private final boolean progressBarVisible;
     @Nullable
     private BukkitTask task;
     private boolean isCancelled;
-    private final boolean swingHand;
-    private final boolean progressBarVisible;
 
     public ProgressBarAction(boolean swingHand, boolean progressBarVisible) {
         this.task = null;

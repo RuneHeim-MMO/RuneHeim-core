@@ -1,20 +1,20 @@
 package org.zuma.examplePlugin.domain.map;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.flowpowered.math.vector.Vector2d;
 import de.bluecolored.bluemap.api.math.Shape;
 import org.json.simple.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapShapeGenerator {
 
     /**
      * Generates points on a circle polygon around a center point.
      *
-     * @param centerX Center X coordinate
-     * @param centerZ Center Z coordinate
-     * @param radius Radius of the circle
+     * @param centerX     Center X coordinate
+     * @param centerZ     Center Z coordinate
+     * @param radius      Radius of the circle
      * @param pointsCount Number of points to generate around the circle
      * @return List of JSONObjects with x,z coordinates suitable for BlueMap shape
      */

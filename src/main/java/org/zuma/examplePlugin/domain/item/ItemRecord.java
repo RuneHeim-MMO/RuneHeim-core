@@ -5,7 +5,7 @@ import org.zuma.examplePlugin.domain.item.constants.ItemId;
 public class ItemRecord {
     private final int itemId;
     private final int amount;
-    
+
     public ItemRecord(ItemId itemId, int amount) {
         this(itemId.asInt(), amount);
     }

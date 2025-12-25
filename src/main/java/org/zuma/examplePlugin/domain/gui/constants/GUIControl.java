@@ -71,6 +71,15 @@ public enum GUIControl {
     DEBUFF(56),
     PLAYER_STATS_BUTTON(57),
 
+    HOUSE_BUTTON(58),
+    VISIBILITY(59),
+    HOUSE_MODE_PUBLIC(60),
+    HOUSE_MODE_PRIVATE(61),
+    HOUSE_EDIT_MODE_ON(62),
+    HOUSE_EDIT_MODE_OFF(63),
+    HOUSE_ROTATE_FURNITURE(64),
+    HOUSE_REMOVE_FURNITURE(65),
+
     PRAYER_0_ACTIVE(1001),
     PRAYER_0_INACTIVE(1000),
     PRAYER_1_ACTIVE(1011),
@@ -104,38 +113,6 @@ public enum GUIControl {
         this.modelId = modelId;
     }
 
-    public ItemStack asItemstack() {
-        return asItemstack(Component.empty());
-    }
-
-    public ItemStack asItemstack(Component displayName, boolean bypassItemWatchdog) {
-        return asItemstack(displayName, new ArrayList<>(), !bypassItemWatchdog);
-    }
-
-    public ItemStack asItemstack(Component displayName) {
-        return asItemstack(displayName, new ArrayList<>(), true);
-    }
-
-
-    public ItemStack asItemstack(Component displayName, List<Component> lore) {
-        return this.asItemstack(displayName, lore, true);
-    }
-
-    public ItemStack asItemstack(Component displayName, List<Component> lore, boolean tagIllegal) {
-        ItemStack icon = new ItemStack(Material.POTATO);
-        ItemMeta meta = icon.getItemMeta();
-        meta.displayName(displayName.decoration(TextDecoration.ITALIC, false));
-        meta.lore(lore.stream().map(comp -> comp.decoration(TextDecoration.ITALIC, false)).toList());
-        meta.setCustomModelData(modelId);
-
-        if (tagIllegal) {
-            IllegalItemWatchdog.tagIllegalItem(meta);
-        }
-
-        icon.setItemMeta(meta);
-        return icon;
-    }
-
     public static boolean isGuiItem(ItemStack item) {
         if (item == null) {
             return false;
@@ -162,5 +139,36 @@ public enum GUIControl {
             case 10 -> NUM_10;
             default -> NUM_PLUS10;
         };
+    }
+
+    public ItemStack asItemstack() {
+        return asItemstack(Component.empty());
+    }
+
+    public ItemStack asItemstack(Component displayName, boolean bypassItemWatchdog) {
+        return asItemstack(displayName, new ArrayList<>(), !bypassItemWatchdog);
+    }
+
+    public ItemStack asItemstack(Component displayName) {
+        return asItemstack(displayName, new ArrayList<>(), true);
+    }
+
+    public ItemStack asItemstack(Component displayName, List<Component> lore) {
+        return this.asItemstack(displayName, lore, true);
+    }
+
+    public ItemStack asItemstack(Component displayName, List<Component> lore, boolean tagIllegal) {
+        ItemStack icon = new ItemStack(Material.POTATO);
+        ItemMeta meta = icon.getItemMeta();
+        meta.displayName(displayName.decoration(TextDecoration.ITALIC, false));
+        meta.lore(lore.stream().map(comp -> comp.decoration(TextDecoration.ITALIC, false)).toList());
+        meta.setCustomModelData(modelId);
+
+        if (tagIllegal) {
+            IllegalItemWatchdog.tagIllegalItem(meta);
+        }
+
+        icon.setItemMeta(meta);
+        return icon;
     }
 }

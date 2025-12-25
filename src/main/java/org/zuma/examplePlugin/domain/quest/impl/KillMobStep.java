@@ -1,11 +1,7 @@
 package org.zuma.examplePlugin.domain.quest.impl;
 
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.domain.mob.MobRecord;
-import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.PlayerQuestState;
@@ -15,15 +11,15 @@ import org.zuma.examplePlugin.domain.quest.constants.StepType;
 import org.zuma.examplePlugin.events.combat.RuneEntityDeathEvent;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 
 public class KillMobStep extends AbstractQuestStep {
     private final List<KillMobStepEntry> requiredKills;
     private transient HashMap<List<String>, Integer> killsDone; // Mob type ID -> count
-
-    public record KillMobStepEntry(List<String> mobTypeIds, int requiredAmount, String displayName) {
-    }
 
     public KillMobStep(RuneQuestPlugin plugin, Quest parentQuest, String description, String stableId, List<KillMobStepEntry> requiredKills, @Nullable UUID owner) {
         super(plugin, parentQuest, StepType.KILL_MOB, description, stableId, owner);
@@ -47,7 +43,6 @@ public class KillMobStep extends AbstractQuestStep {
 
         return (float) totalKilled / totalRequired;
     }
-
 
     public List<KillMobStepEntry> getRequiredKills() {
         return requiredKills;
@@ -137,5 +132,8 @@ public class KillMobStep extends AbstractQuestStep {
         }
         toBeMutated.put("kills", encoded);
         return state;
+    }
+
+    public record KillMobStepEntry(List<String> mobTypeIds, int requiredAmount, String displayName) {
     }
 }

@@ -1,14 +1,8 @@
 package org.zuma.examplePlugin.domain.spawnzone;
 
 import com.google.gson.Gson;
-import org.bukkit.Location;
 import org.zuma.examplePlugin.core.exception.UnsupportedJsonVersionException;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
-import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.item.impl.CoinsItem;
-import org.zuma.examplePlugin.domain.item.impl.EmptyContainer;
-import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
-import org.zuma.examplePlugin.domain.item.meta.v1.EmptyContainerMeta;
 import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
 import org.zuma.examplePlugin.domain.spawnzone.impl.AreaSpawnZone;
 import org.zuma.examplePlugin.domain.spawnzone.impl.ChunkSpawnZone;
@@ -19,7 +13,6 @@ import org.zuma.examplePlugin.domain.spawnzone.meta.v1.ChunkSpawnZoneMeta;
 import org.zuma.examplePlugin.domain.spawnzone.meta.v1.PointSpawnZoneMeta;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 public class SpawnZoneFactory {
     public AbstractSpawnZone createZone(AbstractSpawnZoneMeta meta, @Nullable VersionedJson json) {

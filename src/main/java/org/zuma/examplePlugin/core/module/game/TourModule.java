@@ -4,8 +4,6 @@ package org.zuma.examplePlugin.core.module.game;
 import org.bukkit.plugin.Plugin;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.core.module.PluginModule;
-import org.zuma.examplePlugin.domain.combat.ranged.BowSpeedHandler;
-import org.zuma.examplePlugin.domain.combat.ranged.BowVelocityHandler;
 import org.zuma.examplePlugin.domain.tour.TourHandler;
 import org.zuma.examplePlugin.domain.tour.TourListener;
 

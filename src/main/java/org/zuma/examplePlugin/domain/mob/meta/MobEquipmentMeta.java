@@ -1,6 +1,5 @@
 package org.zuma.examplePlugin.domain.mob.meta;
 
-import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.domain.mob.EquipmentSetRecord;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSlot;

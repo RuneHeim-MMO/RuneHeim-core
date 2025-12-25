@@ -1,6 +1,9 @@
 package org.zuma.examplePlugin.domain.mob.mechanics.traits;
 
-import org.bukkit.entity.*;
+import org.bukkit.entity.AbstractHorse;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Mob;
+import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.core.utils.MathUtils;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
@@ -8,10 +11,10 @@ import org.zuma.examplePlugin.domain.mob.mechanics.base.MobMechanic;
 import org.zuma.examplePlugin.domain.mob.projectiles.RuneProjectile;
 
 public class RangedMobMechanic implements MobMechanic {
-    private CombatantMob mob;
     private final RuneProjectile projectileType;
     private final boolean canHybridAttack;
     private final int tickShotPercentage;
+    private CombatantMob mob;
 
 
     public RangedMobMechanic(RuneProjectile projectileType, boolean canHybridAttack, int tickShotPercentage) {

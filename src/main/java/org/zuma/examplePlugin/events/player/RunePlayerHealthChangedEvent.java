@@ -7,20 +7,20 @@ import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class RunePlayerHealthChangedEvent extends Event implements Cancellable {
-    public enum Cause {
-        COMBAT, REGENERATION, HEALING, INITIALIZATION, RESPAWN
-    }
-
     private static final HandlerList HANDLERS = new HandlerList();
-    private boolean cancelled;
     private final RunePlayer player;
     private final double newHealth;
     private final Cause cause;
-
+    private boolean cancelled;
     public RunePlayerHealthChangedEvent(RunePlayer player, double newHealth, Cause cause) {
         this.player = player;
         this.newHealth = newHealth;
         this.cause = cause;
+    }
+
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
     }
 
     public RunePlayer getPlayer() {
@@ -29,11 +29,6 @@ public class RunePlayerHealthChangedEvent extends Event implements Cancellable {
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public
-    static HandlerList getHandlerList() {
         return HANDLERS;
     }
 
@@ -53,5 +48,9 @@ public class RunePlayerHealthChangedEvent extends Event implements Cancellable {
 
     public double getNewHealth() {
         return newHealth;
+    }
+
+    public enum Cause {
+        COMBAT, REGENERATION, HEALING, INITIALIZATION, RESPAWN
     }
 }

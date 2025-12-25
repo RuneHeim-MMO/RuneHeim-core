@@ -13,7 +13,6 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.world.ChunkLoadEvent;
 import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
@@ -61,16 +60,6 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
         }
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public void setHologramLocation(Location location) {
-        this.hologramLocation = location;
-        if (this.hologram != null)
-            this.hologram.setLocation(location);
-    }
-
     public int getId() {
         return this.id;
     }
@@ -91,8 +80,18 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
         return hologramLocation;
     }
 
+    public void setHologramLocation(Location location) {
+        this.hologramLocation = location;
+        if (this.hologram != null)
+            this.hologram.setLocation(location);
+    }
+
     public Location getLocation() {
         return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public void onDisable() {
@@ -122,13 +121,13 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
         this.markerLabel = markerLabel;
     }
 
-    public void setFace(@Nullable BlockFace face) {
-        this.face = face;
-    }
-
     @Nullable
     public BlockFace getFace() {
         return this.face;
+    }
+
+    public void setFace(@Nullable BlockFace face) {
+        this.face = face;
     }
 
     public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItemType itemInHand) {

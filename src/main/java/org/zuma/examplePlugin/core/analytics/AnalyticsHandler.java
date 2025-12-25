@@ -2,9 +2,9 @@ package org.zuma.examplePlugin.core.analytics;
 
 import org.bukkit.Bukkit;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.analytics.impl.ServerAnalytics;
 import org.zuma.examplePlugin.core.analytics.persistence.AnalyticsRepository;
 import org.zuma.examplePlugin.core.config.ConfigManager;
+import org.zuma.examplePlugin.core.config.EnvironmentType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 
 public class AnalyticsHandler {
@@ -26,7 +26,9 @@ public class AnalyticsHandler {
             Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
                 try {
                     saveAnalyticsSync(analytics);
-                    RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Server analytics have been saved.");
+                    if (ConfigManager.environment.equals(EnvironmentType.DEVELOPMENT)) {
+                        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Server analytics have been saved.");
+                    }
                 } catch (Exception e) {
                     RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to save analytics!", e);
                 }

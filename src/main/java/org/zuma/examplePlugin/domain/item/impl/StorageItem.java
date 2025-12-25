@@ -7,7 +7,6 @@ import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.interfaces.Stateful;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
-import org.zuma.examplePlugin.domain.item.constants.ItemType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.v1.StorageItemMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
@@ -18,7 +17,6 @@ import org.zuma.examplePlugin.domain.item.state.states.StorageItemState;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
-import java.util.List;
 import java.util.UUID;
 
 public class StorageItem extends AbstractItemType implements Stateful {

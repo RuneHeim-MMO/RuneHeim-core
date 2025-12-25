@@ -26,10 +26,6 @@ import org.zuma.examplePlugin.domain.player.inventory.ReservedSlot;
 import java.util.Set;
 
 public class IllegalItemWatchdog implements Listener {
-    public enum LegalityType {
-        LEGAL, ILLEGAL_VANILLA, ILLEGAL
-    }
-
     public static ItemMeta tagIllegalItem(ItemMeta meta) {
         PersistentDataContainer container = meta.getPersistentDataContainer();
         container.set(PersistenceDataKey.ILLEGAL_ITEM.key(RuneQuestPlugin.getInstance()), PersistentDataType.BYTE, (byte) 1);
@@ -122,6 +118,10 @@ public class IllegalItemWatchdog implements Listener {
                 }
             }
         }
+    }
+
+    public enum LegalityType {
+        LEGAL, ILLEGAL_VANILLA, ILLEGAL
     }
 
 

@@ -14,6 +14,9 @@ import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.interfaces.Restrictable;
 import org.zuma.examplePlugin.core.permissions.Permission;
+import org.zuma.examplePlugin.domain.housing.HousingRegion;
+import org.zuma.examplePlugin.domain.housing.instance.HouseInstance;
+import org.zuma.examplePlugin.domain.housing.world.HousingWorldManager;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -37,11 +40,19 @@ public class PlayerUtils {
             return;
         }
 
+        if (player.getWorld().getName().equals(HousingWorldManager.WORLD_KEY)) {
+            player.teleport(HousingRegion.DRAKKAR.getExitLocation());
+            return;
+        }
+
         Territory closestTerritory = PlayerUtils.getClosestDiscoveredTerritory(runePlayer, skipTutorialIsland);
 
         if (closestTerritory != null && closestTerritory.getSpawnPoint() != null) {
             spawnPoint = closestTerritory.getSpawnPoint();
         }
+
+        HouseInstance visiting = RuneQuestPlugin.getHousingManager().getVisitingHouse(runePlayer);
+        if (visiting != null) visiting.removeFromVisitors(runePlayer);
 
         player.teleport(spawnPoint);
     }

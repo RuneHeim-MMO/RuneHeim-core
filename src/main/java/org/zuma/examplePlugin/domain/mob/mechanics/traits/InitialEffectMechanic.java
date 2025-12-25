@@ -1,6 +1,5 @@
 package org.zuma.examplePlugin.domain.mob.mechanics.traits;
 
-import com.ibm.icu.impl.CollectionSet;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityTargetEvent;
@@ -12,17 +11,16 @@ import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.mob.mechanics.base.MobMechanic;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 public class InitialEffectMechanic implements MobMechanic {
-    private CombatantMob mob;
     private final int nearbyRange;
     private final List<PotionEffect> effectList;
     private final String message;
     private final SoundType soundType;
+    private CombatantMob mob;
     private boolean executed = false;
 
 

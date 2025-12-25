@@ -17,6 +17,11 @@ public class PartyPlayerKickedEvent extends Event {
         this.kickedPlayer = kickedPlayer;
     }
 
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     public Party getParty() {
         return party;
     }
@@ -27,11 +32,6 @@ public class PartyPlayerKickedEvent extends Event {
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public
-    static HandlerList getHandlerList() {
         return HANDLERS;
     }
 }

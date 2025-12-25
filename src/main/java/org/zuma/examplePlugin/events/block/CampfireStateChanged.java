@@ -9,12 +9,17 @@ import org.zuma.examplePlugin.domain.block.impl.CampfireBlock;
 public class CampfireStateChanged extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
     private final CampfireBlock campfire;
-    private boolean cancelled;
     private final boolean toBeLit;
+    private boolean cancelled;
 
     public CampfireStateChanged(CampfireBlock campfire, boolean toBeLit) {
         this.campfire = campfire;
         this.toBeLit = toBeLit;
+    }
+
+    public
+    static HandlerList getHandlerList() {
+        return HANDLERS;
     }
 
     public CampfireBlock getCampfire() {
@@ -25,12 +30,6 @@ public class CampfireStateChanged extends Event implements Cancellable {
     public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }
-
-    public
-    static HandlerList getHandlerList() {
-        return HANDLERS;
-    }
-
 
     @Override
     public boolean isCancelled() {

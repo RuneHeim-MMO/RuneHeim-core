@@ -14,12 +14,8 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import java.util.*;
 
 public class BossMechanic implements MobMechanic {
-    private AbstractMob mob;
     private final LinkedList<BossPhase> phases;
     private final List<Candidate> candidates = new ArrayList<>();
-
-    private boolean stopped;
-
     // Internal state & config
     private final Random rnd = new Random();
     private final Map<MobMechanic, Integer> internalCooldownTicks = new HashMap<>(); // mechanic -> ticks remaining
@@ -27,6 +23,8 @@ public class BossMechanic implements MobMechanic {
     private final double utilityExponent = 1.0;     // >1 favors higher utility-per-energy
     private final int lookaheadTicks = 5;           // how many ticks ahead we'll consider "can afford soon"
     private final double saveThreshold = 2.0;       // if top score >> second * this and we lack energy, we'll try to save
+    private AbstractMob mob;
+    private boolean stopped;
 
     public BossMechanic(List<BossPhase> phases) {
         this.phases = new LinkedList<>(phases);
@@ -56,7 +54,7 @@ public class BossMechanic implements MobMechanic {
         Entity entity = mob.getEntity();
         if (entity == null) return;
 
-        if(phaseParticlesType != null){
+        if (phaseParticlesType != null) {
             entity.getWorld().spawnParticle(phaseParticlesType, entity.getLocation(), 50, 2, 2, 2, 0.05);
         }
 
@@ -237,6 +235,21 @@ public class BossMechanic implements MobMechanic {
         return null;
     }
 
+    @Override
+    public void cleanup() {
+        this.mob = null;
+        this.stopped = true;
+        this.candidates.clear();
+
+        this.phases.forEach(p -> {
+            if (p.getTransitionMechanic() != null) {
+                p.getTransitionMechanic().cleanup();
+            }
+
+            p.getWeightedMechanics().forEach(we -> we.mechanic().cleanup());
+        });
+    }
+
     private static class Candidate {
         final WeightedMechanic wm;
         final MobMechanic mech;
@@ -252,20 +265,5 @@ public class BossMechanic implements MobMechanic {
             this.score = score;
             this.affordableNow = affordableNow;
         }
-    }
-
-    @Override
-    public void cleanup() {
-        this.mob = null;
-        this.stopped = true;
-        this.candidates.clear();
-
-        this.phases.forEach(p -> {
-            if (p.getTransitionMechanic() != null) {
-                p.getTransitionMechanic().cleanup();
-            }
-
-            p.getWeightedMechanics().forEach(we -> we.mechanic().cleanup());
-        });
     }
 }

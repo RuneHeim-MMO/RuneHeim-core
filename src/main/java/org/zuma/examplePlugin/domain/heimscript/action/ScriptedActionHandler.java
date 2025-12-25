@@ -12,11 +12,13 @@ import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.dialog.Dialog;
 import org.zuma.examplePlugin.domain.droptable.DropTable;
+import org.zuma.examplePlugin.domain.heimscript.ScriptParser;
+import org.zuma.examplePlugin.domain.housing.HousingRegion;
+import org.zuma.examplePlugin.domain.housing.instance.HouseInstance;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.domain.heimscript.ScriptParser;
 import org.zuma.examplePlugin.domain.player.states.TravelMode;
 import org.zuma.examplePlugin.domain.player.states.TravelStateHandler;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
@@ -29,13 +31,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class ScriptedActionHandler {
-
-    public record ActionCaller(ActionCallerType type, String identifier) {
-    }
-
-    public enum ActionCallerType {
-        PLAYER_COMMAND, CONSOLE_COMMAND, DIALOG
-    }
 
     public static void executeAction(String input, RunePlayer player, @Nullable Runnable callback, ActionCaller executor, @Nullable Dialog parentDialog) {
         try {
@@ -51,7 +46,7 @@ public class ScriptedActionHandler {
                     holder.handleInteraction(player);
                 }
                 case KILL_PLAYER -> {
-                    if(player.asBukkitPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
+                    if (player.asBukkitPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
                         player.killPlayer(null);
                     } else {
                         RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "[SCRIPT] Cannot kill player " + player.asBukkitPlayer().getName() + " because they are not in SURVIVAL mode!");
@@ -82,6 +77,9 @@ public class ScriptedActionHandler {
                 case TELEPORT_PLAYER -> {
                     Location loc = new Location(Bukkit.getWorld(args.get("world")), Integer.parseInt(args.get("x")), Integer.parseInt(args.get("y")), Integer.parseInt(args.get("z")));
                     player.asBukkitPlayer().teleport(loc);
+
+                    HouseInstance visiting = RuneQuestPlugin.getHousingManager().getVisitingHouse(player);
+                    if (visiting != null) visiting.removeFromVisitors(player);
                 }
                 case TAKE_POUCH_COINS -> {
                     long coins = Long.parseLong(args.get("amount"));
@@ -90,6 +88,10 @@ public class ScriptedActionHandler {
                 }
                 case TAKE_INVENTORY_ITEM -> {
                     PlayerUtils.removeItems(player, List.of(new ItemRecord(Integer.parseInt(args.get("item_id")), Integer.parseInt(args.get("amount")))));
+                }
+                case TELEPORT_TO_HOUSE -> {
+                    HousingRegion region = HousingRegion.valueOf(args.get("region"));
+                    RuneQuestPlugin.getHousingManager().teleportToOwnHouse(player, region);
                 }
                 case QUEST_STEP_FINISH -> {
                     String stableId = args.get("stable_id");
@@ -160,6 +162,13 @@ public class ScriptedActionHandler {
             }
         }
         return holder;
+    }
+
+    public enum ActionCallerType {
+        PLAYER_COMMAND, CONSOLE_COMMAND, DIALOG
+    }
+
+    public record ActionCaller(ActionCallerType type, String identifier) {
     }
 
 

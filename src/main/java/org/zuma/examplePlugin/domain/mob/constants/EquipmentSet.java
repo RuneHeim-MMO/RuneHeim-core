@@ -171,7 +171,7 @@ public enum EquipmentSet {
     ))),
 
     RUNE_FULL_IRON_CROSSBOW(new MobEquipmentMeta(List.of(
-            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.IRON_CROSSBOW ), 100),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.IRON_CROSSBOW), 100),
             new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNE_BODY), 100),
             new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNE_PLATELEGS), 100)
     ))),
@@ -325,6 +325,12 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNE_SWORD), 10)
     )));
 
+    private final MobEquipmentMeta meta;
+
+    EquipmentSet(MobEquipmentMeta meta) {
+        this.meta = meta;
+    }
+
     private static ItemStack getRuneItem(ItemId id) {
         return getRuneItem(id, 1);
     }
@@ -334,12 +340,6 @@ public enum EquipmentSet {
 
         if (type == null) return new ItemStack(Material.AIR);
         return type.createItemStackOfTypeIgnoreState(amount); // skip state management for mob equipment
-    }
-
-    private final MobEquipmentMeta meta;
-
-    EquipmentSet(MobEquipmentMeta meta) {
-        this.meta = meta;
     }
 
     public MobEquipmentMeta asMobEquipmentMeta() {
