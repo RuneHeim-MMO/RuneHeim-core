@@ -235,8 +235,8 @@ public class RecipeRepository {
                         List.of(new SkillRequirement(SkillType.CRAFTING, 14)),
                         List.of(
                                 new IngredientRecord(ItemId.NEEDLE, 1, false, false),
-                                new IngredientRecord(ItemId.THREAD, 1, true, false),
-                                new IngredientRecord(ItemId.LEATHER, 1, true, false)
+                                new IngredientRecord(ItemId.THREAD, 3, true, false),
+                                new IngredientRecord(ItemId.LEATHER, 3, true, false)
                         ),
                         new ItemRecord(ItemId.LEATHER_BODY, 1),
                         null, List.of(new SkillXpRecord(SkillType.CRAFTING, 38.0)), null), null),
@@ -245,8 +245,8 @@ public class RecipeRepository {
                         List.of(new SkillRequirement(SkillType.CRAFTING, 18)),
                         List.of(
                                 new IngredientRecord(ItemId.NEEDLE, 1, false, false),
-                                new IngredientRecord(ItemId.THREAD, 1, true, false),
-                                new IngredientRecord(ItemId.LEATHER, 1, true, false)
+                                new IngredientRecord(ItemId.THREAD, 2, true, false),
+                                new IngredientRecord(ItemId.LEATHER, 2, true, false)
                         ),
                         new ItemRecord(ItemId.LEATHER_LEGGINGS, 1),
                         null, List.of(new SkillXpRecord(SkillType.CRAFTING, 45.0)), null), null),
@@ -265,8 +265,8 @@ public class RecipeRepository {
                         List.of(new SkillRequirement(SkillType.CRAFTING, 28)),
                         List.of(
                                 new IngredientRecord(ItemId.NEEDLE, 1, false, false),
-                                new IngredientRecord(ItemId.THREAD, 1, true, false),
-                                new IngredientRecord(ItemId.HARD_LEATHER, 1, true, false)
+                                new IngredientRecord(ItemId.THREAD, 3, true, false),
+                                new IngredientRecord(ItemId.HARD_LEATHER, 3, true, false)
                         ),
                         new ItemRecord(ItemId.HARD_LEATHER_BODY, 1),
                         null, List.of(new SkillXpRecord(SkillType.CRAFTING, 70.0)), null), null),
@@ -275,45 +275,45 @@ public class RecipeRepository {
                         List.of(new SkillRequirement(SkillType.CRAFTING, 28)),
                         List.of(
                                 new IngredientRecord(ItemId.NEEDLE, 1, false, false),
-                                new IngredientRecord(ItemId.THREAD, 1, true, false),
-                                new IngredientRecord(ItemId.HARD_LEATHER, 1, true, false)
+                                new IngredientRecord(ItemId.THREAD, 2, true, false),
+                                new IngredientRecord(ItemId.HARD_LEATHER, 2, true, false)
                         ),
                         new ItemRecord(ItemId.HARD_LEATHER_LEGGINGS, 1),
                         null, List.of(new SkillXpRecord(SkillType.CRAFTING, 70.0)), null), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.STUDDED_LEATHER_BODY.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
-                        List.of(new SkillRequirement(SkillType.CRAFTING, 41)),
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 44)),
                         List.of(
                                 new IngredientRecord(ItemId.LEATHER_BODY, 1, true, false),
-                                new IngredientRecord(ItemId.IRON_ARROW_TIPS, 1, false, false)
+                                new IngredientRecord(ItemId.IRON_ARROW_TIPS, 10, false, false)
                         ),
                         new ItemRecord(ItemId.STUDDED_LEATHER_BODY, 1),
                         null, List.of(new SkillXpRecord(SkillType.CRAFTING, 110.0)), null), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.STUDDED_LEATHER_CHAPS.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
-                        List.of(new SkillRequirement(SkillType.CRAFTING, 44)),
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 41)),
                         List.of(
                                 new IngredientRecord(ItemId.LEATHER_LEGGINGS, 1, true, false),
-                                new IngredientRecord(ItemId.IRON_ARROW_TIPS, 1, false, false)
+                                new IngredientRecord(ItemId.IRON_ARROW_TIPS, 8, false, false)
                         ),
                         new ItemRecord(ItemId.STUDDED_LEATHER_LEGGINGS, 1),
                         null, List.of(new SkillXpRecord(SkillType.CRAFTING, 115.0)), null), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.GREEN_DHIDE_BODY.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
-                        List.of(new SkillRequirement(SkillType.CRAFTING, 63)),
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 60)),
                         List.of(
                                 new IngredientRecord(ItemId.NEEDLE, 1, false, false),
-                                new IngredientRecord(ItemId.THREAD, 1, true, false),
+                                new IngredientRecord(ItemId.THREAD, 3, true, false),
                                 new IngredientRecord(ItemId.DRAGON_LEATHER, 3, true, false)
                         ),
                         new ItemRecord(ItemId.GREEN_DHIDE_BODY, 1),
                         null, List.of(new SkillXpRecord(SkillType.CRAFTING, 190.0)), null), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.GREEN_DHIDE_CHAPS.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 3000,
-                        List.of(new SkillRequirement(SkillType.CRAFTING, 60)),
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 63)),
                         List.of(
                                 new IngredientRecord(ItemId.NEEDLE, 1, false, false),
-                                new IngredientRecord(ItemId.THREAD, 1, true, false),
+                                new IngredientRecord(ItemId.THREAD, 2, true, false),
                                 new IngredientRecord(ItemId.DRAGON_LEATHER, 2, true, false)
                         ),
                         new ItemRecord(ItemId.GREEN_DHIDE_LEGGINGS, 1),
