@@ -1,9 +1,6 @@
 package org.zuma.examplePlugin.core.utils;
 
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.NamespacedKey;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
@@ -14,7 +11,9 @@ import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.interfaces.Restrictable;
 import org.zuma.examplePlugin.core.permissions.Permission;
+import org.zuma.examplePlugin.domain.housing.HousingRegion;
 import org.zuma.examplePlugin.domain.housing.instance.HouseInstance;
+import org.zuma.examplePlugin.domain.housing.world.HousingWorldManager;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -35,6 +34,11 @@ public class PlayerUtils {
 
         if (runePlayer == null) {
             player.teleport(spawnPoint);
+            return;
+        }
+
+        if (player.getWorld().getName().equals(HousingWorldManager.WORLD_KEY)) {
+            player.teleport(HousingRegion.DRAKKAR.getExitLocation());
             return;
         }
 

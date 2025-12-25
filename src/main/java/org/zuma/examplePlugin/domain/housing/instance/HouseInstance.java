@@ -30,9 +30,9 @@ public class HouseInstance implements Listener {
     private final HouseEditModeManager editManager;
 
     // Instance based configuration for a player's house
-    private boolean openToPublic;
-    private final List<UUID> invitedPlayers;
-    private final List<UUID> currentVisitors;
+    private boolean openToPublic, isCleanupScheduled;
+    private final Set<UUID> invitedPlayers;
+    private final Set<UUID> currentVisitors;
 
     public HouseInstance(UUID ownerUUID, UUID instanceUUID, String ownerName, int gridX, int gridZ, List<InteractiveElement> interactiveElements, Location spawnPoint, HouseTemplate template) {
         this.ownerUUID = ownerUUID;
@@ -45,8 +45,8 @@ public class HouseInstance implements Listener {
         this.template = template;
 
         this.openToPublic = false;
-        this.invitedPlayers = new ArrayList<>();
-        this.currentVisitors = new ArrayList<>();
+        this.invitedPlayers = new HashSet<>();
+        this.currentVisitors = new HashSet<>();
         this.interactableLocations = new HashSet<>();
 
         this.editManager = new HouseEditModeManager(this);
@@ -73,7 +73,7 @@ public class HouseInstance implements Listener {
     }
 
     public Location getSpawnPoint() {
-        return spawnPoint;
+        return spawnPoint.clone();
     }
 
     public String getOwnerName() {
@@ -95,7 +95,7 @@ public class HouseInstance implements Listener {
         Bukkit.getServer().getPluginManager().callEvent(new HouseSettingsUpdateEvent(this));
     }
 
-    public List<UUID> getInvitedPlayers() {
+    public Set<UUID> getInvitedPlayers() {
         return invitedPlayers;
     }
 
@@ -219,7 +219,7 @@ public class HouseInstance implements Listener {
     }
 
     // Is mutated by housing manager when player disconnects
-    public List<UUID> getCurrentVisitors() {
+    public Set<UUID> getCurrentVisitors() {
         return currentVisitors;
     }
 
@@ -267,9 +267,10 @@ public class HouseInstance implements Listener {
 
 
         this.editManager.cleanup();
-        interactiveElements.clear();
-        interactableLocations.clear();
-        invitedPlayers.clear();
+        this.interactiveElements.clear();
+        this.interactableLocations.clear();
+        this.invitedPlayers.clear();
+        this.isCleanupScheduled = true;
 
         Bukkit.getServer().getPluginManager().callEvent(new HouseSettingsUpdateEvent(this));
     }

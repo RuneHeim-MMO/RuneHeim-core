@@ -7,18 +7,15 @@ import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.module.ModuleContext;
 import org.zuma.examplePlugin.core.module.PluginModule;
 import org.zuma.examplePlugin.domain.block.BlockManager;
-import org.zuma.examplePlugin.domain.combat.HitHandler;
 import org.zuma.examplePlugin.domain.command.HouseCommand;
 import org.zuma.examplePlugin.domain.housing.HousingManager;
 import org.zuma.examplePlugin.domain.housing.persistence.HousingRepository;
-import org.zuma.examplePlugin.domain.housing.world.WorldManager;
-import org.zuma.examplePlugin.domain.item.ItemRegistry;
-import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
+import org.zuma.examplePlugin.domain.housing.world.HousingWorldManager;
 
 import java.util.List;
 
 public class PlayerHousingModule implements PluginModule {
-    WorldManager manager;
+    HousingWorldManager manager;
     HousingManager housingManager;
 
     @Override
@@ -29,7 +26,7 @@ public class PlayerHousingModule implements PluginModule {
 
     @Override
     public void start(Plugin plugin, ModuleContext context) {
-        manager = new WorldManager();
+        manager = new HousingWorldManager();
         manager.init();
 
         housingManager = new HousingManager(manager, new HousingRepository(context.get(HikariPool.class)));

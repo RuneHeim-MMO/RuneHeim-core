@@ -1,6 +1,5 @@
 package org.zuma.examplePlugin.domain.housing.instance;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Door;
@@ -19,7 +18,7 @@ import org.zuma.examplePlugin.domain.housing.HousingManager;
 import org.zuma.examplePlugin.domain.housing.HousingRegion;
 import org.zuma.examplePlugin.domain.housing.template.HouseTemplate;
 import org.zuma.examplePlugin.domain.housing.template.TemplateMeta;
-import org.zuma.examplePlugin.domain.housing.world.WorldManager;
+import org.zuma.examplePlugin.domain.housing.world.HousingWorldManager;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.FurnitureItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
@@ -34,12 +33,12 @@ public class HouseInstanceCreator {
     private int totalInstances = 0;
 
     private final HousingManager manager;
-    private final WorldManager worldManager;
+    private final HousingWorldManager housingWorldManager;
     private final SchematicSpawner schematicSpawner;
 
-    public HouseInstanceCreator(HousingManager manager, WorldManager worldManager, SchematicSpawner schematicSpawner) {
+    public HouseInstanceCreator(HousingManager manager, HousingWorldManager housingWorldManager, SchematicSpawner schematicSpawner) {
         this.manager = manager;
-        this.worldManager = worldManager;
+        this.housingWorldManager = housingWorldManager;
         this.schematicSpawner = schematicSpawner;
     }
 
@@ -142,7 +141,7 @@ public class HouseInstanceCreator {
         int gridX = totalInstances % 1000;
         int gridZ = totalInstances / 1000;
 
-        Location pasteLocation = new Location(worldManager.getHousingWorld(), gridX * HousingManager.GRID_SIZE, 64, gridZ * HousingManager.GRID_SIZE);
+        Location pasteLocation = new Location(housingWorldManager.getHousingWorld(), gridX * HousingManager.GRID_SIZE, 64, gridZ * HousingManager.GRID_SIZE);
         schematicSpawner.pasteSchematic(pasteLocation, template.getSchematic(), true, true);
 
         List<InteractiveElement> elements = schematicSpawner.extractInteractiveElements();
@@ -152,7 +151,7 @@ public class HouseInstanceCreator {
             throw new IllegalStateException("No spawn point found in schematic for template " + template.name());
         }
 
-        Location spawnPoint = spawnSign.get().location();
+        Location spawnPoint = spawnSign.get().location().clone();
 
         switch (spawnSign.get().face()) {
             case SOUTH -> spawnPoint.setYaw(0);
@@ -170,7 +169,7 @@ public class HouseInstanceCreator {
         String territoryName = initialMetaSpawn ? template.getTemplateName() : ownerName + "'s House";
 
         Territory houseTerritory = new Territory("house_" + ownerUUID.toString(),
-                new Location(worldManager.getHousingWorld(), (gridX * HousingManager.GRID_SIZE) + HousingManager.GRID_SIZE / 2, 64, (gridZ * HousingManager.GRID_SIZE) + HousingManager.GRID_SIZE / 2),
+                new Location(housingWorldManager.getHousingWorld(), (gridX * HousingManager.GRID_SIZE) + HousingManager.GRID_SIZE / 2, 64, (gridZ * HousingManager.GRID_SIZE) + HousingManager.GRID_SIZE / 2),
                 instance.getSpawnPoint(),
                 HousingManager.GRID_SIZE / 2,
                 territoryName,

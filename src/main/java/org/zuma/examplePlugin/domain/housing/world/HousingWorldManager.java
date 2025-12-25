@@ -10,7 +10,7 @@ import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import java.io.File;
 import java.io.IOException;
 
-public class WorldManager {
+public class HousingWorldManager {
     public static final String WORLD_KEY = "housing_world";
     private World housingWorld;
 

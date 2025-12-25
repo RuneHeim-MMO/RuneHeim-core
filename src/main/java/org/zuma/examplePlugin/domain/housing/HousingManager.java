@@ -5,7 +5,6 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
@@ -22,10 +21,11 @@ import org.zuma.examplePlugin.domain.housing.records.HouseFurnitureEntry;
 import org.zuma.examplePlugin.domain.housing.template.HouseTemplate;
 import org.zuma.examplePlugin.domain.housing.template.HousingMetaLoader;
 import org.zuma.examplePlugin.domain.housing.template.TemplateMeta;
-import org.zuma.examplePlugin.domain.housing.world.WorldManager;
+import org.zuma.examplePlugin.domain.housing.world.HousingWorldManager;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.schematic.SchematicSpawner;
+import org.zuma.examplePlugin.events.housing.HouseSettingsUpdateEvent;
 import org.zuma.examplePlugin.events.player.RunePlayerLoadedEvent;
 
 import java.sql.SQLException;
@@ -33,17 +33,17 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /*
-* HouseEntry - in memory representation of a player's house data
-* HouseInstance - active instance of a player's house in the world
-* HouseSlot - represents a furniture slot in a house
-* HouseFurnitureEntry - represents a placed furniture item in a house
-* HousingRegion - enum representing different housing regions in the game
-* HousingManager - manages all player houses, loading/saving, and instance creation
-* HousingRepository - handles database interactions for player houses
-* HouseInstanceCreator - responsible for creating HouseInstance objects
-* HousingMetaLoader - loads metadata for house templates
-* SchematicSpawner - utility for spawning house schematics in the world
-* */
+ * HouseEntry - in memory representation of a player's house data
+ * HouseInstance - active instance of a player's house in the world
+ * HouseSlot - represents a furniture slot in a house
+ * HouseFurnitureEntry - represents a placed furniture item in a house
+ * HousingRegion - enum representing different housing regions in the game
+ * HousingManager - manages all player houses, loading/saving, and instance creation
+ * HousingRepository - handles database interactions for player houses
+ * HouseInstanceCreator - responsible for creating HouseInstance objects
+ * HousingMetaLoader - loads metadata for house templates
+ * SchematicSpawner - utility for spawning house schematics in the world
+ * */
 public class HousingManager implements Listener {
     public final static int GRID_SIZE = 128;
     private final static int AUTOSAVE_INTERVAL_MINUTES = 2;
@@ -58,12 +58,12 @@ public class HousingManager implements Listener {
 
     private final HashMap<UUID, HashMap<HousingRegion, HouseEntry>> playerHouses; // player uuid : saved house entry
 
-    public HousingManager(WorldManager worldManager, HousingRepository repository) {
+    public HousingManager(HousingWorldManager housingWorldManager, HousingRepository repository) {
         this.gridMap = new ConcurrentHashMap<>();
         this.playerHouseMap = new ConcurrentHashMap<>();
         this.uuidHouseInstanceMap = new ConcurrentHashMap<>();
         this.templatePreviewMap = new ConcurrentHashMap<>();
-        this.instanceCreator = new HouseInstanceCreator(this, worldManager, new SchematicSpawner());
+        this.instanceCreator = new HouseInstanceCreator(this, housingWorldManager, new SchematicSpawner());
         this.houseMetaHandler = new HousingMetaLoader(this);
         this.playerHouses = new HashMap<>();
         this.repository = repository;
@@ -282,15 +282,7 @@ public class HousingManager implements Listener {
             });
         }
 
-        Arrays.stream(HousingRegion.values()).forEach(region -> {
-            this.playerHouseMap.values().stream().map(a -> a.get(region)).filter(Objects::nonNull).forEach(i -> {
-                i.getCurrentVisitors().remove(event.getPlayer().getUniqueId());
-            });
-
-            this.templatePreviewMap.values().forEach(i -> {
-                i.getCurrentVisitors().remove(event.getPlayer().getUniqueId());
-            });
-        });
+        removePlayerFromVisitors(event.getPlayer().getUniqueId());
     }
 
     @EventHandler
@@ -408,6 +400,21 @@ public class HousingManager implements Listener {
     @Nullable
     public HouseInstance getInstanceByUUID(UUID uuid) {
         return this.uuidHouseInstanceMap.get(uuid);
+    }
+
+    public void removePlayerFromVisitors(UUID playerUUID) {
+        for (Map<HousingRegion, HouseInstance> regionMap : playerHouseMap.values()) {
+            for (HouseInstance instance : regionMap.values()) {
+                if (instance.getCurrentVisitors().contains(playerUUID)) {
+                    instance.getCurrentVisitors().remove(playerUUID);
+                    Bukkit.getServer().getPluginManager().callEvent(new HouseSettingsUpdateEvent(instance));
+                }
+            }
+        }
+
+        for (HouseInstance instance : templatePreviewMap.values()) {
+            instance.getCurrentVisitors().remove(playerUUID);
+        }
     }
 
     public Map<Integer, Map<Integer, HouseInstance>> getGridMap() {
