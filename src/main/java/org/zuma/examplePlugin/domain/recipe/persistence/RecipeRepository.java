@@ -715,7 +715,7 @@ public class RecipeRepository {
                         List.of(new IngredientRecord(ItemId.FLAX, 3, true, true)),
                         new ItemRecord(ItemId.FISHING_NET, 1),
                         null,
-                        List.of(new SkillXpRecord(SkillType.CRAFTING, 30)), null
+                        List.of(new SkillXpRecord(SkillType.CRAFTING, 20)), null
                 ), null),
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.LINEN_FABRIC.getId(), RecipeType.SPINNING_WHEEL_RECIPE, 5000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 30)),
