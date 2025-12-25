@@ -74,7 +74,7 @@ public class RunePlayer implements CombatEntity {
     private List<TemporaryEffect> activeEffects; // Potions, etc
     private long pouchCoins;
     private List<String> discoveredTerritoryIds, completedQuestIds;
-    private boolean isInCutscene, isDead, isInDialog, isDialogOptionChoosing, isNextMessageMegaphone;
+    private boolean isInCutscene, isDead, isInDialog, isDialogOptionChoosing, isNextMessageMegaphone, isBotVerificationPending;
     private HashMap<String, AbstractQuestStep> activeQuestSteps; // Quest id : step
     private @Nullable Location safeLocation; // is set when player is in spectator/cutscene mode.
     private @Nullable String trackedQuestId;
@@ -107,6 +107,7 @@ public class RunePlayer implements CombatEntity {
         this.activeEffects = new ArrayList<>();
         this.bombsContainer = new PlayerBombsContainer(0, 0, 0, 0, 0, 0);
         this.trackedQuestId = null;
+        this.isBotVerificationPending = false;
 
         Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
             this.permissionAttachment = asBukkitPlayer().addAttachment(RuneQuestPlugin.getInstance());
@@ -556,6 +557,15 @@ public class RunePlayer implements CombatEntity {
 
     public void setAnalyticsContainer(AnalyticsContainer analyticsContainer) {
         this.analyticsContainer = analyticsContainer;
+    }
+
+    public void setBotVerificationPending(boolean pending) {
+        if (pending) this.cancelActionTask(true);
+        this.isBotVerificationPending = pending;
+    }
+
+    public boolean isBotVerificationPending() {
+        return isBotVerificationPending;
     }
 
 }

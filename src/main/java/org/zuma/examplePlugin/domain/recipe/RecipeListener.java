@@ -7,6 +7,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.handlers.game.BotVerificationHandler;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
@@ -54,7 +55,6 @@ public class RecipeListener implements Listener {
         if (customClicked == null || customCursor == null) {
             return;
         }
-
 
         boolean craftingStarted = recipeHandler.handleInventoryRecipeClick(runePlayer, event.getInventory(), customClicked, customCursor);
 

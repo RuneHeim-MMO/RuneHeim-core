@@ -37,7 +37,7 @@ public abstract class AbstractInventoryOpener extends FriendlyImmortalMob {
         RuneQuestPlugin.getGUIHandler().openInventory(inventoryId, player, () -> {
             onInventoryClose(player);
             unfreezeMob();
-        }, this, null);
+        }, this, null, false);
     }
 
     @Override

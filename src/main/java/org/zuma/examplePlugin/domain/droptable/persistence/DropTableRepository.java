@@ -332,6 +332,10 @@ public class DropTableRepository {
                         new DropTableEntry(ItemId.COINS.asInt(), 10, 150, 3, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
+                new DropTableDBEntry(DropTableId.COINS_MEDIUM_GUARANTEED.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.COINS.asInt(), 10, 150, 1, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
                 new DropTableDBEntry(DropTableId.WOOL.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.WOOL.asInt(), 1, 1, 4, DropTableEntry.Type.ITEM)
                 ), null)), 1)),

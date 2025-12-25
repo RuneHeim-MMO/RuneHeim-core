@@ -42,7 +42,8 @@ public class RunePlayerSerializer {
                 (float) runePlayer.getSpecialEnergyPercent() / 100,
                 runePlayer.getPrayerEnergy(),
                 runePlayer.getCompletedQuestIds() == null ? new ArrayList<>() : runePlayer.getCompletedQuestIds(),
-                runePlayer.getActiveEffects()
+                runePlayer.getActiveEffects(),
+                runePlayer.isBotVerificationPending()
         );
 
         VersionedJson versionedPlayerData = new VersionedJson(gson.toJson(container), 1);
@@ -113,6 +114,7 @@ public class RunePlayerSerializer {
                 player.setBombsContainer(container.bombsContainer());
                 player.setSettings(container.settings());
                 player.setTrackedQuestId(container.trackedQuestId());
+                player.setBotVerificationPending(playerDataDeserializedJsonContainer.isBotVerificationPending());
 
                 List<ItemStackSlotPair> inventory = ItemContainerContentSerializer.deserializeItemContainerContentSync(inventoryData);
                 Location location = gson.fromJson(container.location(), Location.class);

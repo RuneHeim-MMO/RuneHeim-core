@@ -65,7 +65,8 @@ public enum InventoryId {
     DRAKKAR_HOUSE_DISCOVERER(54),
     HOUSE_SETTINGS(55),
     DRAKKAR_BUY_HOUSE(56),
-    HOUSE_SLOT_EDITOR(57);
+    HOUSE_SLOT_EDITOR(57),
+    BOT_VERIFICATION_MENU(58);
 
 
     private final int id;

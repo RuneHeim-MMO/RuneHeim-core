@@ -15,6 +15,7 @@ import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.InventoryHolder;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.handlers.game.BotVerificationHandler;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.base.ModelledInteractableBlock;
@@ -66,7 +67,6 @@ public class BlockListener implements Listener {
             return;
         }
 
-
         AbstractItemType itemInHand = itemRegistry.getType(PlayerUtils.getItemStackInHand(player));
         block.onPlayerInteractEvent(runePlayer, event.getAction(), event, itemInHand);
 
@@ -101,6 +101,10 @@ public class BlockListener implements Listener {
         AbstractInteractableBlock block = manager.getAbstractInteractableBlock(dumbBlock);
 
         if (runePlayer == null || block == null) {
+            return;
+        }
+
+        if (runePlayer.isBotVerificationPending()) {
             return;
         }
 
