@@ -22,9 +22,7 @@ import org.zuma.examplePlugin.events.payment.BombActivatedEvent;
 import org.zuma.examplePlugin.events.player.RunePlayerLoadedEvent;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
+import java.util.*;
 
 public class ServerModifierHandler implements Listener {
     private final EnumMap<ServerModifierType, ServerModifier> activeModifiers;
@@ -65,9 +63,20 @@ public class ServerModifierHandler implements Listener {
             return false;
         }
 
-        // Check if modifier is expired
         return modifier.activeUntilMillis() >= System.currentTimeMillis();
     }
+
+    public HashMap<ServerModifierType, Integer> getModifiersWithDurationLeft() {
+        HashMap<ServerModifierType, Integer> result = new HashMap<>();
+
+        for (ServerModifier modifier : activeModifiers.values()) {
+            int minutesRemaining = getMinutesRemaining(modifier.type());
+            result.put(modifier.type(), minutesRemaining);
+        }
+
+        return result;
+    }
+
 
     public int getMinutesRemaining(ServerModifierType type) {
         ServerModifier modifier = activeModifiers.get(type);

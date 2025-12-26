@@ -11,29 +11,58 @@ import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.combat.HitListener;
+import org.zuma.examplePlugin.domain.modifier.scopes.server.ServerModifierType;
 import org.zuma.examplePlugin.domain.party.Party;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.domain.territory.Territory;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
 
 public class PlayerScoreboardManager {
     private final static int CENTERING_PADDING = 20;
+
     private final RunePlayer player;
-    int ticks = 0;
-    private BukkitTask activeTask = null;
+    private int ticks = 0;
     private boolean tick = false; // Ticktock counter
-    @Nullable
-    private Scoreboard scoreboard = null;
+
+    private BukkitTask activeTask = null;
+    private @Nullable Scoreboard scoreboard = null;
+
+    private HashMap<ServerModifierType, Integer> activeModifiers;
+    private @Nullable Integer visibleModifierIndex;
 
     public PlayerScoreboardManager(RunePlayer player) {
         this.player = player;
+        this.activeModifiers = new HashMap<>();
+        this.visibleModifierIndex = null;
 
         Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
             initializeScoreboard();
             startDefaultLoop();
         });
+    }
+
+    private void updateVisibleModifier() {
+        this.activeModifiers = RuneQuestPlugin.getServerModifierHandler().getModifiersWithDurationLeft();
+
+        if (!activeModifiers.isEmpty() && visibleModifierIndex == null) {
+            visibleModifierIndex = 0;
+        }
+
+        if (ticks % 20 == 0) {
+            if (!activeModifiers.isEmpty()) {
+                int index = visibleModifierIndex + 1;
+
+                if (index >= activeModifiers.size()) {
+                    index = 0;
+                }
+                visibleModifierIndex = index;
+            } else {
+                visibleModifierIndex = null;
+            }
+        }
     }
 
 
@@ -42,6 +71,12 @@ public class PlayerScoreboardManager {
         String partyString = player.getParty() == null ? "§fNone" : "§6" + player.getParty().getOwnerUsername();
         SkillType lastXPGainedSkillType = player.getLastXPGainedSkillType();
         Territory territory = RuneQuestPlugin.getTerritoryHandler().getPlayersTerritory(player);
+        int lineIndex = 15;
+
+        boolean safetyWarning = false;
+        boolean modifierActive = visibleModifierIndex != null;;
+
+        updateVisibleModifier();
 
         if (o == null) {
             return;
@@ -49,39 +84,49 @@ public class PlayerScoreboardManager {
 
         if (territory != null && territory.isPvpZone()) {
             if (!HitListener.isPlayerInPVPDisabledRegion(player.asBukkitPlayer())) {
-                o.getScore(TextUtils.centerText(tick ? " §c§l[PVP ZONE]" : " §4§l[PVP ZONE]", PlayerScoreboardManager.CENTERING_PADDING)).setScore(15);
+                o.getScore(TextUtils.centerText(tick ? " §c§l[PVP ZONE]" : " §4§l[PVP ZONE]", PlayerScoreboardManager.CENTERING_PADDING)).setScore(lineIndex--);
+                safetyWarning = true;
             }
 
             if (territory.isDropItemsOnDeath()) {
-                o.getScore(TextUtils.centerText(tick ? " §c§lItems Not Safe" : " §4§lItems Not Safe", PlayerScoreboardManager.CENTERING_PADDING)).setScore(14);
+                o.getScore(TextUtils.centerText(tick ? " §c§lItems Not Safe" : " §4§lItems Not Safe", PlayerScoreboardManager.CENTERING_PADDING)).setScore(lineIndex--);
+                safetyWarning = true;
             }
         }
 
+        if (modifierActive) {
+            o.getScore("         ").setScore(lineIndex--);
+            ServerModifierType[] types = activeModifiers.keySet().toArray(new ServerModifierType[0]);
+            ServerModifierType visibleType = types[visibleModifierIndex];
+            Integer minutesLeft = activeModifiers.get(visibleType);
+            String effectLabel = visibleType.getLabel().replace(" Bomb", "");
 
-        o.getScore("").setScore(13);
+            o.getScore(TextUtils.centerText("§a" + minutesLeft + "m " + visibleType.getColor() + effectLabel, PlayerScoreboardManager.CENTERING_PADDING)).setScore(lineIndex--);
+        }
 
-        o.getScore("§7Party: " + partyString).setScore(12);
-        o.getScore("§7Combat Level: §3" + TextUtils.getLegacyColorCodeForLevel(player.getCombatLvl()) + player.getCombatLvl()).setScore(11);
+        o.getScore("      ").setScore(lineIndex--);
+        o.getScore("§7Party: " + partyString).setScore(lineIndex--);
+        o.getScore("§7Combat Level: §3" + TextUtils.getLegacyColorCodeForLevel(player.getCombatLvl()) + player.getCombatLvl()).setScore(lineIndex--);
 
-        o.getScore(" ").setScore(10);
-        o.getScore("§7Skill Progression:").setScore(9);
+        o.getScore(" ").setScore(lineIndex--);
+        o.getScore("§7Skill Progression:").setScore(lineIndex--);
         if (lastXPGainedSkillType != null) {
             o.getScore(TextUtils.centerText("§f" + lastXPGainedSkillType.getSymbol() + " §f" + lastXPGainedSkillType.getLabel() + " §f"
-                    + TextUtils.getLegacyColorCodeForPercent(PlayerUtils.getLastSkillPercent(player)) + PlayerUtils.getLastSkillPercent(player) + "%", PlayerScoreboardManager.CENTERING_PADDING)).setScore(8);
+                    + TextUtils.getLegacyColorCodeForPercent(PlayerUtils.getLastSkillPercent(player)) + PlayerUtils.getLastSkillPercent(player) + "%", PlayerScoreboardManager.CENTERING_PADDING)).setScore(lineIndex--);
         } else {
-            o.getScore(TextUtils.centerText("§fNo recent skill", PlayerScoreboardManager.CENTERING_PADDING)).setScore(8);
+            o.getScore(TextUtils.centerText("§fNo recent skill", PlayerScoreboardManager.CENTERING_PADDING)).setScore(lineIndex--);
         }
 
-        o.getScore("  ").setScore(7);
-        o.getScore("§7Current Location:").setScore(6);
+        o.getScore("  ").setScore(lineIndex--);
+        o.getScore("§7Current Location:").setScore(lineIndex--);
 
         if (territory != null) {
-            o.getScore("§3" + TextUtils.centerText(territory.getName(), PlayerScoreboardManager.CENTERING_PADDING)).setScore(5);
+            o.getScore("§3" + TextUtils.centerText(territory.getName(), PlayerScoreboardManager.CENTERING_PADDING)).setScore(lineIndex--);
         } else {
-            o.getScore("§2" + TextUtils.centerText("Wilderness", PlayerScoreboardManager.CENTERING_PADDING)).setScore(5);
+            o.getScore("§2" + TextUtils.centerText("Wilderness", PlayerScoreboardManager.CENTERING_PADDING)).setScore(lineIndex--);
         }
 
-        o.getScore("           ").setScore(4);
+        o.getScore("           ").setScore(lineIndex--);
 
         ticks += 1;
     }
