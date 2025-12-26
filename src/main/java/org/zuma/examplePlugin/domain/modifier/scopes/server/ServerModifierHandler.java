@@ -99,7 +99,7 @@ public class ServerModifierHandler implements Listener {
         waitingForAnimationFinish.add(type);
         EffectHandler.playAt(activatedBy.asBukkitPlayer().getLocation(), new BonusBombEffect(activatedBy, type));
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-            if (activatedBy.asBukkitPlayer() != null && !activatedBy.asBukkitPlayer().isOnline()) {
+            if (!activatedBy.isOnline()) {
                 waitingForAnimationFinish.remove(type);
                 return;
             }

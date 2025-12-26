@@ -36,7 +36,7 @@ public class TravelStateHandler {
         if (visiting != null) visiting.removeFromVisitors(player);
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-            if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) {
+            if (!player.isOnline()) {
                 cancelled.set(true);
                 return;
             }
@@ -49,7 +49,7 @@ public class TravelStateHandler {
             new BukkitRunnable() {
 
                 public void run() {
-                    if (arrived.get() || player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) {
+                    if (arrived.get() || !player.isOnline()) {
                         if (!arrived.get()) cancelled.set(true);
                         cancel();
                         return;
@@ -62,7 +62,7 @@ public class TravelStateHandler {
             }.runTaskTimer(RuneQuestPlugin.getInstance(), TRANSITION_DURATION_TICKS, 12);
 
             Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-                if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) return;
+                if (!player.isOnline()) return;
 
                 player.asBukkitPlayer().showTitle(Title.title(
                         Component.empty(),
@@ -74,14 +74,14 @@ public class TravelStateHandler {
             }, durationTicks - (durationTicks / 3));
 
             Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-                if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline() || cancelled.get()) return;
+                if (!player.isOnline() || cancelled.get()) return;
 
                 arrived.set(true);
                 EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new TravelStopEffect(player, mode));
                 mode.getEndSound().play(player, false);
 
                 Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-                    if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline() || cancelled.get())
+                    if (!player.isOnline() || cancelled.get())
                         return;
 
                     PlayerUtils.restorePlayersVisibilityForPlayer(player.asBukkitPlayer());

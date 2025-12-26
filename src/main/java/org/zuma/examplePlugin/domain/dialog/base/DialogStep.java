@@ -139,7 +139,7 @@ public abstract class DialogStep {
                     return;
                 }
 
-                if (player == null || player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) {
+                if (player == null || !player.isOnline()) {
                     parent.cleanUp();
                     this.cancel();
                     return;
@@ -263,7 +263,7 @@ public abstract class DialogStep {
                     return;
                 }
 
-                if (player == null || player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) {
+                if (player == null || !player.isOnline()) {
                     parent.cleanUp();
                     this.cancel();
                     return;
@@ -308,7 +308,7 @@ public abstract class DialogStep {
                     return;
                 }
 
-                if (player == null || player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) {
+                if (player == null || !player.isOnline()) {
                     parent.cleanUp();
                     this.cancel();
                     return;

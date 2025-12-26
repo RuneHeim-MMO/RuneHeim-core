@@ -19,7 +19,7 @@ public class FirstJoinEffect implements AnimatedEffect {
 
     @Override
     public void playAt(Location location, double time) {
-        if (time == 30 && player.asBukkitPlayer() != null && player.asBukkitPlayer().isOnline()) {
+        if (time == 30 && player.isOnline()) {
 
             player.asBukkitPlayer().showTitle(Title.title(
                     Component.empty(),

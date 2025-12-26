@@ -117,7 +117,7 @@ public class HouseBuyingMenu extends PaginatedIndividualGUI {
                     player.asBukkitPlayer().closeInventory();
 
                     Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-                        if (player == null || player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) {
+                        if (player == null || !player.isOnline()) {
                             return;
                         }
                         EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new HouseBuyEffect(player, template));

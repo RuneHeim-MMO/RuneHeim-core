@@ -80,7 +80,7 @@ public class RunePlayerListener implements Listener {
             if (RuneQuestPlugin.getGlobalModifierHandler().getActiveModifiers().isEmpty() || event.getPlayer() == null)
                 return;
 
-            if (event.getPlayer().asBukkitPlayer().isOnline()) {
+            if (event.getPlayer().isOnline()) {
                 HudService.globalModifiersActivated(event.getPlayer(), RuneQuestPlugin.getGlobalModifierHandler().getActiveModifiers().stream().toList());
                 SoundType.GLOBAL_EFFECT_ACTIVATED.play(event.getPlayer(), true);
             }

@@ -196,7 +196,7 @@ public class BotVerificationMenu extends IndividualGUI {
         }
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-            if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) return;
+            if (!player.isOnline()) return;
             if (lockLocation != null) player.asBukkitPlayer().teleport(lockLocation);
 
             RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.BOT_VERIFICATION_MENU.asInt(), player, null, null, null, true);

@@ -121,7 +121,7 @@ public abstract class StorageInventory extends PaginatedStorageGUI {
 
             List<ItemStackSlotPair> finalLoadedPairs = loadedPairs;
             Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                if (!player.asBukkitPlayer().isOnline()) {
+                if (!player.isOnline()) {
                     onFail.run();
                     return;
                 }

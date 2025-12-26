@@ -33,14 +33,14 @@ public class PendingXPHandler {
 
                 RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(uuid);
 
-                if (player == null || player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) {
+                if (!player.isOnline()) {
                     return;
                 }
 
                 AtomicInteger index = new AtomicInteger();
                 container.getPendingXP().forEach((type, amount) -> {
                     Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-                        if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) {
+                        if (!player.isOnline()) {
                             return;
                         }
 

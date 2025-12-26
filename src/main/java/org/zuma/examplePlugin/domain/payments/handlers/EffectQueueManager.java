@@ -88,9 +88,7 @@ public class EffectQueueManager {
     }
 
     private static boolean isPlayerValid(RunePlayer player) {
-        return player != null &&
-                player.asBukkitPlayer() != null &&
-                player.asBukkitPlayer().isOnline();
+        return player != null && !player.isOnline();
     }
 
     private static RunePlayer getRunePlayer(UUID uuid) {
