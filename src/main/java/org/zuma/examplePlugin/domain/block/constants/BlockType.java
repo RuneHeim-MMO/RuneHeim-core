@@ -13,7 +13,8 @@ public enum BlockType {
     InvisibleMarker(7, Material.AIR),
     CommandBlock(8, Material.LODESTONE),
     LightableBlock(9, Material.REDSTONE_LAMP),
-    CombatDummyFurniture(10, Material.ARMOR_STAND);
+    CombatDummyFurniture(10, Material.ARMOR_STAND),
+    CropResourceNode(11, Material.WHEAT);
 
     private final int id;
     private final Material material;

@@ -149,10 +149,11 @@ public class NodeCreatorInventory extends IndividualGUI {
         List<ResourceNodeType> types = loader.getResourceNodeTypes().values().stream().toList();
         ResourceNodeType type = types.get(menuValue);
         SchematicsRecord schematics = SCHEMATIC_MAP.get(type.getId());
+        BlockType blockType = List.of(ResourceNodeTypeId.POTATO_CROP.asInt(), ResourceNodeTypeId.CARROT_CROP.asInt()).contains(type.getId()) ? BlockType.CropResourceNode : BlockType.ResourceNode;
 
 
         loader.insertNewBlock(new BlockEntity(
-                new AbstractInteractableBlockMeta(0, BlockType.ResourceNode, oppositeFace, result.getHitBlock().getLocation(), side),
+                new AbstractInteractableBlockMeta(0, blockType, oppositeFace, result.getHitBlock().getLocation(), side),
                 new VersionedJson(new Gson().toJson(new ResourceNodeMeta(type.getId(), schematics != null ? schematics.intact() : null, schematics != null ? schematics.depleted() : null)), 1)));
 
     }

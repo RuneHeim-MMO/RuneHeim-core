@@ -77,11 +77,11 @@ public class ItemPriceCalculator {
     @Nullable
     // Returns null if price cannot be determined
     private static Integer calculateFinalPrice(AbstractItemType item) {
-        if (item instanceof Material material && material.getBasePrice() == null) {
+        if (item instanceof Material && item.getBasePrice() == null) {
             return null; // Cannot determine price if base price is not set for materials
         }
 
-        Integer basePrice = item instanceof Material material ? material.getBasePrice() : 0;
+        Integer basePrice = item.getBasePrice() == null ? 0 : item.getBasePrice();
 
         RecipeRegistry recipeRegistry = RuneQuestPlugin.getRecipeRegistry();
         AbstractRecipe matchingRecipe = null;

@@ -39,6 +39,7 @@ public class MapMarkerHandler {
             Arrays.stream(MarkerType.values()).forEach(markerType -> {
                 MarkerSet markerSet = MarkerSet.builder()
                         .label(markerType.getLabel())
+                        .defaultHidden(!markerType.isDefaultVisible())
                         .build();
 
                 if (!ConfigManager.environment.equals(EnvironmentType.DEVELOPMENT)) {

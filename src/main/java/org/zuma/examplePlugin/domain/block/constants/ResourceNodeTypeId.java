@@ -29,7 +29,10 @@ public enum ResourceNodeTypeId {
     EEL_SWAMP(8),
     SHARK_DEPTHS(9),
     TURTLE_BAY(10),
-    RAY_SANDBANK(11);
+    RAY_SANDBANK(11),
+
+    POTATO_CROP(400),
+    CARROT_CROP(401);
 
 
     private final int id;

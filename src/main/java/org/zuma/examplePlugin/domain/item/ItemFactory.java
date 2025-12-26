@@ -601,7 +601,9 @@ public class ItemFactory {
                 FoodTypeMeta deserialized = new Gson().fromJson(json.meta(), FoodTypeMeta.class);
                 Food item = new Food(meta);
 
+                item.setBasePrice(deserialized.basePrice());
                 item.setHealAmount(deserialized.healAmount());
+
                 return item;
             }
             default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());

@@ -197,6 +197,14 @@ public class DropTableRepository {
                         new DropTableEntry(ItemId.FLAX.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
+                new DropTableDBEntry(DropTableId.CARROT_CROP_NODE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.CARROT.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.POTATO_CROP_NODE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.POTATO.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
 
                 // Woodcutting
                 new DropTableDBEntry(DropTableId.WOODCUTTING_RARE_DROPTABLE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(

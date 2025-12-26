@@ -20,6 +20,7 @@ public class BlockFactory {
     public AbstractInteractableBlock createBlock(BlockManager manager, AbstractInteractableBlockMeta meta, VersionedJson json, BlockLoader loader) {
         return switch (meta.type()) {
             case ResourceNode -> createResourceNode(manager, meta, json, loader);
+            case CropResourceNode -> createCropResourceNode(manager, meta, json, loader);
             case InventoryOpener -> createInventoryOpener(meta, json);
             case InventoryOpenerModelled -> createInventoryOpenerEntity(meta, json);
             case Altar -> createAltar(meta, json);
@@ -32,6 +33,23 @@ public class BlockFactory {
             case CombatDummyFurniture -> createCombatDummyFurniture(meta, json);
             default -> throw new IllegalArgumentException("Unknown interactable block type: " + meta.type());
         };
+    }
+
+    private ResourceNodeCrop createCropResourceNode(BlockManager manager, AbstractInteractableBlockMeta meta, @Nullable VersionedJson json, BlockLoader loader) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create resource node block " + meta.type() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                ResourceNodeMeta deserialized = new Gson().fromJson(json.meta(), ResourceNodeMeta.class);
+                ResourceNodeCrop block = new ResourceNodeCrop(manager, meta);
+                block.setSchematics(deserialized.schematicName(), deserialized.depletedSchematicName());
+                block.initializeBlock(deserialized.resourceMetaId(), loader);
+                return block;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
     }
 
     private CombatDummyFurniture createCombatDummyFurniture(AbstractInteractableBlockMeta meta, @Nullable VersionedJson json) {
