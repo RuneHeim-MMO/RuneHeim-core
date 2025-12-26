@@ -312,6 +312,7 @@ public abstract class AbstractRecipe implements Restrictable {
                 .successSound(type.getFinishSound())
                 .onSuccess(() -> executeCraft(player, times, totalCost, resultComponent))
                 .onFailure(() -> this.handleRecipeCraftingAborted(player))
+                .setRecipeType(this.type)
                 .build();
 
         if (this.type == RecipeType.CAMPFIRE_RECIPE) {

@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.player.actions;
 
 import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.domain.recipe.constants.RecipeType;
 
 import javax.annotation.Nullable;
 
@@ -9,10 +10,13 @@ public class ActionParams {
     private final int stepSoundEveryNth;
     private final String action, successAction;
     private final Runnable onSuccess;
+
     @Nullable
     private final SoundType stepSound, successSound;
     @Nullable
     private final Runnable onFailure, onFinally;
+    @Nullable
+    private final RecipeType recipeType; // Optional, for tracking campfire extinguishing.
 
     private ActionParams(Builder builder) {
         this.durationMs = builder.durationMs;
@@ -24,6 +28,7 @@ public class ActionParams {
         this.onSuccess = builder.onSuccess;
         this.onFailure = builder.onFailure;
         this.onFinally = builder.onFinally;
+        this.recipeType = builder.recipeType;
     }
 
     // Getters
@@ -68,6 +73,11 @@ public class ActionParams {
         return onFinally;
     }
 
+    @Nullable
+    public RecipeType getRecipeType() {
+        return recipeType;
+    }
+
 
     // Builder class
     public static class Builder {
@@ -84,6 +94,8 @@ public class ActionParams {
         @Nullable
         private Runnable onFinally;
         private int stepSoundEveryNth = 1;
+        @Nullable
+        private RecipeType recipeType;
 
         public Builder stepSoundEveryNth(int stepSoundEveryNth) {
             this.stepSoundEveryNth = stepSoundEveryNth;
@@ -127,6 +139,11 @@ public class ActionParams {
 
         public Builder onFinally(@Nullable Runnable onFinally) {
             this.onFinally = onFinally;
+            return this;
+        }
+
+        public Builder setRecipeType(@Nullable RecipeType recipeType) {
+            this.recipeType = recipeType;
             return this;
         }
 

@@ -37,6 +37,7 @@ import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.party.Party;
 import org.zuma.examplePlugin.domain.payments.SupporterLevel;
 import org.zuma.examplePlugin.domain.player.actions.ActionParams;
+import org.zuma.examplePlugin.domain.player.actions.QueuedAction;
 import org.zuma.examplePlugin.domain.player.handlers.*;
 import org.zuma.examplePlugin.domain.player.settings.PlayerSettings;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
@@ -248,7 +249,11 @@ public class RunePlayer implements CombatEntity {
         this.busyStateHandler.cancelActionTask(interrupted);
     }
 
-    public int getQueuedTasks() {
+    public int getQueuedTaskCount() {
+        return this.busyStateHandler.getQueuedTaskCount();
+    }
+
+    public List<QueuedAction> getQueuedTasks() {
         return this.busyStateHandler.getQueuedTasks();
     }
 
