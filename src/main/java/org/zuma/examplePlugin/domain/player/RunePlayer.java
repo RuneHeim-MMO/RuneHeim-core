@@ -125,6 +125,11 @@ public class RunePlayer implements CombatEntity {
         return Bukkit.getPlayer(uuid);
     }
 
+    public boolean isOnline() {
+        Player player = asBukkitPlayer();
+        return player != null && player.isOnline();
+    }
+
     public Entity getEntity() {
         return this.asBukkitPlayer();
     }
