@@ -287,6 +287,10 @@ public class GUIHandler {
             return;
         }
 
+        if (id == InventoryId.QUIVER_INVENTORY.asInt()) {
+            return; // Quiver inventory close is handled separately
+        }
+
         handleCloseInventoryCleanup(player, id, instanceUUID, isForced, event);
     }
 
@@ -320,6 +324,38 @@ public class GUIHandler {
         matchingGUI.onPlayerDropItem(event, player);
     }
 
+    public void onQuiverClickEvent(InventoryClickEvent event) {
+        InventoryHolder holder = event.getInventory().getHolder();
+
+        if (!(event.getWhoClicked() instanceof Player bukkitPlayer)) {
+            return;
+        }
+
+        if (!(holder instanceof IDHolder idHolder)) {
+            return;
+        }
+
+        RunePlayer player = playerManager.getRunePlayer(bukkitPlayer);
+        int inventoryId = idHolder.id();
+
+        if (player == null) {
+            return;
+        }
+
+        if (inventoryId != InventoryId.QUIVER_INVENTORY.asInt()) {
+            return;
+        }
+
+        if (itemClickCooldownHandler.isCooldownInProgress(player)) {
+            event.setCancelled(true);
+            return;
+        }
+
+        itemClickCooldownHandler.startCooldown(player, INVENTORY_CLICK_COOLDOWN_MS);
+        player.getQuiverHandler().onQuiverClickEvent(event);
+
+    }
+
     public void onInventoryClick(InventoryClickEvent event) {
         InventoryHolder holder = event.getInventory().getHolder();
 
@@ -336,6 +372,10 @@ public class GUIHandler {
 
         if (player == null) {
             return;
+        }
+
+        if (inventoryId == InventoryId.QUIVER_INVENTORY.asInt()) {
+            return; // Quiver inventory close is handled separately
         }
 
         if (itemClickCooldownHandler.isCooldownInProgress(player)) {

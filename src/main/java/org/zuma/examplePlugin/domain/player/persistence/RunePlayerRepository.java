@@ -59,7 +59,7 @@ public class RunePlayerRepository {
 
         String playerSQL =
                 "SELECT p.uuid, p.last_username, p.base_role, p.upgraded_role, p.online, p.location, p.json, " +
-                        "pic.json AS inventory_json, " +
+                        "pic.json AS inventory_json, pic.quiver_json AS quiver_json, " +
                         "pb.double_combat_xp, pb.double_skill_xp, pb.mob_drops, pb.resource_drops, pb.perfect_strike, pb.megaphone_uses, " +
                         "pqd.tracking_quest_id " +
                         "FROM players p " +
@@ -76,7 +76,7 @@ public class RunePlayerRepository {
 
         try (Connection conn = pool.getDataSource().getConnection()) {
 
-            String json, lastUsername, baseRole, upgradedRole, inventoryData, location, trackedQuestId;
+            String json, lastUsername, baseRole, upgradedRole, inventoryData, quiverData, location, trackedQuestId;
             boolean isOnline;
             PlayerBombsContainer bombsContainer;
 
@@ -93,7 +93,13 @@ public class RunePlayerRepository {
                     lastUsername = rs.getString("last_username");
                     baseRole = rs.getString("base_role");
                     upgradedRole = rs.getString("upgraded_role");
-                    inventoryData = rs.getString("inventory_json");
+
+                    Object invObj = rs.getObject("inventory_json");
+                    inventoryData = (invObj != null && !Objects.equals(invObj.toString(), "null")) ? invObj.toString() : "{}";
+
+                    Object quiverObj = rs.getObject("quiver_json");
+                    quiverData = (quiverObj != null && !Objects.equals(quiverObj.toString(), "null")) ? quiverObj.toString() : "{}";
+
                     location = rs.getString("location");
 
                     rs.getInt("online");
@@ -154,7 +160,8 @@ public class RunePlayerRepository {
                     location,
                     null,
                     json,
-                    inventoryData == null ? "{}" : inventoryData,
+                    inventoryData,
+                    quiverData,
                     bombsContainer,
                     settings,
                     trackedQuestId
@@ -192,10 +199,11 @@ public class RunePlayerRepository {
                 """;
 
         String inventorySql = """
-                INSERT INTO player_inventory_contents (uuid, json, updated_at)
-                VALUES (?, ?, CURRENT_TIMESTAMP)
+                INSERT INTO player_inventory_contents (uuid, json, quiver_json, updated_at)
+                VALUES (?, ?, ?, CURRENT_TIMESTAMP)
                 ON DUPLICATE KEY UPDATE
                     json = VALUES(json),
+                    quiver_json = VALUES(quiver_json),
                     updated_at = CURRENT_TIMESTAMP
                 """;
 
@@ -257,6 +265,7 @@ public class RunePlayerRepository {
             // 3. Upsert inventory
             inventoryStmt.setString(1, container.uuid().toString());
             inventoryStmt.setString(2, container.inventoryData());
+            inventoryStmt.setString(3, container.quiverData());
             inventoryStmt.executeUpdate();
 
             // 4. Upsert bombs

@@ -41,6 +41,9 @@ public class IllegalItemWatchdog implements Listener {
         ItemMeta meta = item.getItemMeta();
         PersistentDataContainer container = meta.getPersistentDataContainer();
 
+        boolean isOverridden = container.get(PersistenceDataKey.OVERRIDE_SAVING_AND_ILLEGALITY.key(RuneQuestPlugin.getInstance()), PersistentDataType.BYTE) != null;
+        if (isOverridden) return LegalityType.LEGAL;
+
         boolean isIllegalItem = container.get(PersistenceDataKey.ILLEGAL_ITEM.key(RuneQuestPlugin.getInstance()), PersistentDataType.BYTE) != null;
         if (isIllegalItem) return LegalityType.ILLEGAL;
 

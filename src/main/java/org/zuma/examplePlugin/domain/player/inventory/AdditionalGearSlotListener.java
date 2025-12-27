@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.domain.player.inventory;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -10,18 +11,10 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
-import org.zuma.examplePlugin.core.constants.SoundType;
-import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
-import org.zuma.examplePlugin.core.utils.PlayerUtils;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
-import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
 import org.zuma.examplePlugin.domain.hud.HudService;
-import org.zuma.examplePlugin.domain.modifier.Modifier;
-import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class AdditionalGearSlotListener implements Listener {
@@ -42,67 +35,19 @@ public class AdditionalGearSlotListener implements Listener {
             return;
         }
 
-        ItemStack consumedArrow = event.getConsumable();
-        PlayerInventory inv = player.getInventory();
-        int reservedSlot = ReservedSlot.ARROW_SLOT.getSlot();
-        ItemStack reservedArrow = inv.getItem(reservedSlot);
-        ItemStack deductedArrow = consumedArrow;
-
-        if (consumedArrow == null) {
-            // Something weird happened
+        if (!runePlayer.getQuiverHandler().hasArrows()) {
+            HudService.showFailTitle(runePlayer, "You do not have arrows in your quiver!");
             event.setCancelled(true);
             return;
         }
 
-        // If engine took arrow not in reserved slot
-        if (reservedArrow == null || !reservedArrow.isSimilar(consumedArrow)) {
-            // Refund the consumed arrow
-            ItemStack refund = consumedArrow.clone();
-            refund.setAmount(1);
-            runePlayer.giveItemOrDrop(refund);
+        runePlayer.getQuiverHandler().deductArrow();
 
-            if (reservedArrow == null || GUIControl.isGuiItem(reservedArrow)) {
-                HudService.showFailTitle(runePlayer, "You do not have arrows in your arrows slot!");
-                event.setCancelled(true);
-                return;
-            }
+        int arrowsLeft = runePlayer.getQuiverHandler().getArrowCount();
 
-
-            deductedArrow = reservedArrow.clone();
-
-            // Deduct 1 arrow from arrow slot
-            int newAmount = reservedArrow.getAmount() - 1;
-            if (newAmount <= 0) {
-                inv.setItem(reservedSlot, null);
-                slotHandler.fillReservedSlots(runePlayer);
-            } else {
-                reservedArrow.setAmount(newAmount);
-                inv.setItem(reservedSlot, reservedArrow);
-            }
-
+        if (arrowsLeft <= 5) {
+            HudService.sendInfoMessage(runePlayer, Component.text("You have " + (arrowsLeft == 0 ? "no" : arrowsLeft) + " arrows left in your quiver!", Color.WARNING.asColor()));
         }
-
-        boolean isArrowConsumed = true;
-
-        Modifier arrowRecoveryModifier = runePlayer.getModifiers().get(ModifierType.ARROW_RECOVERY_PERCENT);
-        if (arrowRecoveryModifier != null) {
-            double randomRoll = PlayerUtils.getRandom().nextDouble() * 100.0;
-            if (randomRoll < arrowRecoveryModifier.amount()) {
-                isArrowConsumed = false;
-            }
-
-        }
-
-        if (!isArrowConsumed) {
-            SoundType.ARROW_RECOVERED.play(runePlayer, false);
-            ItemStack refund = deductedArrow.clone();
-            refund.setAmount(1);
-            runePlayer.giveItemOrDrop(refund);
-        } else {
-            AnalyticsUtils.incrementServerAndPlayer(runePlayer, AnalyticsKey.ARROWS_CONSUMED, 1);
-        }
-
-
     }
 
     @EventHandler

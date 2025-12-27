@@ -19,6 +19,11 @@ public class GUIListener implements Listener {
     }
 
     @EventHandler
+    public void onQuiverClick(InventoryClickEvent event) {
+        handler.onQuiverClickEvent(event);
+    }
+
+    @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
         handler.onInventoryClose(event);
     }

@@ -12,6 +12,9 @@ public enum PersistenceDataKey {
     // Custom marked illegal item
     ILLEGAL_ITEM("illegal_item", PersistentDataType.BYTE),
 
+    // Used for fake arrows so quivers can function
+    OVERRIDE_SAVING_AND_ILLEGALITY("override_saving_illegality", PersistentDataType.BYTE),
+
     // First owner of the item, for untradeable items
     UNTRADEABLE_OWNER_UUID("untradeable_owner_uuid", PersistentDataType.STRING),
 

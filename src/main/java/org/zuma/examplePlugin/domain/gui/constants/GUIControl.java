@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
+import org.zuma.examplePlugin.domain.player.inventory.QuiverHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +118,7 @@ public enum GUIControl {
         if (item == null) {
             return false;
         }
-        return IllegalItemWatchdog.getItemStackStatus(item) != IllegalItemWatchdog.LegalityType.LEGAL;
+        return IllegalItemWatchdog.getItemStackStatus(item) != IllegalItemWatchdog.LegalityType.LEGAL || QuiverHandler.isFakeArrow(item);
     }
 
     public static GUIControl fromNumber(int number) {

@@ -39,6 +39,7 @@ import org.zuma.examplePlugin.domain.payments.SupporterLevel;
 import org.zuma.examplePlugin.domain.player.actions.ActionParams;
 import org.zuma.examplePlugin.domain.player.actions.QueuedAction;
 import org.zuma.examplePlugin.domain.player.handlers.*;
+import org.zuma.examplePlugin.domain.player.inventory.QuiverHandler;
 import org.zuma.examplePlugin.domain.player.settings.PlayerSettings;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
 import org.zuma.examplePlugin.domain.skill.Skill;
@@ -65,6 +66,8 @@ public class RunePlayer implements CombatEntity {
     private final BusyStateHandler busyStateHandler;
     private final PlayerScoreboardManager scoreboardManager;
     private final ScoreboardUsernameRenderer scoreboardUsernameRenderer;
+    private final QuiverHandler quiverHandler;
+
     private @Nullable UUID partyUUID;
     private PlayerRole role;
     private PermissionAttachment permissionAttachment;
@@ -99,6 +102,7 @@ public class RunePlayer implements CombatEntity {
         this.scoreboardUsernameRenderer = new ScoreboardUsernameRenderer(this);
         this.settings = new PlayerSettings();
         this.dailyRewards = new DailyRewards(1, System.currentTimeMillis(), false, new HashMap<>());
+        this.quiverHandler = new QuiverHandler(this);
 
         this.pouchCoins = 0;
         this.discoveredTerritoryIds = new ArrayList<>();
@@ -578,4 +582,7 @@ public class RunePlayer implements CombatEntity {
         return isBotVerificationPending;
     }
 
+    public QuiverHandler getQuiverHandler() {
+        return quiverHandler;
+    }
 }

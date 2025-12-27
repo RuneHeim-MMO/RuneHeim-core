@@ -43,6 +43,7 @@ public enum GUIOverlay {
     HOUSE_SETTINGS_OVERLAY("⡭"),
     BUY_HOUSE_OVERLAY("⢯"),
     HOUSE_SLOT_EDITOR_OVERLAY("⍾"),
+    QUIVER_OVERLAY("⟠"),
 
     GENERIC_OVERLAY_1("⼮"),
     GENERIC_OVERLAY_2("⌱"),

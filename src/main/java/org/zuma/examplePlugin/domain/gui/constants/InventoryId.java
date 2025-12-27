@@ -66,7 +66,9 @@ public enum InventoryId {
     HOUSE_SETTINGS(55),
     DRAKKAR_BUY_HOUSE(56),
     HOUSE_SLOT_EDITOR(57),
-    BOT_VERIFICATION_MENU(58);
+    BOT_VERIFICATION_MENU(58),
+
+    QUIVER_INVENTORY(59); // Not used within GUI system, but kept here to avoid ID conflicts
 
 
     private final int id;
