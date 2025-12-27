@@ -42,7 +42,8 @@ public class ResourceNodeSchematicHandler {
             return;
         }
 
-        Clipboard spawnClipboard = spawner.pasteSchematic(location, schematicPath.toFile(), false, false);
+        spawner.clearLastPaste();
+        Clipboard spawnClipboard = spawner.pasteSchematic(location, schematicPath.toFile(), true, false);
 
         if (spawnClipboard == null) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed spawning schematic for " + node.getNodeType().getLabel() + "! File: " + schematicPath);

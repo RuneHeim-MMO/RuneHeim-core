@@ -29,7 +29,7 @@ public class Cows {
                 "Calf", null,
                 getBaseSkills(5, 0.5),
                 null,
-                MobBehaviors.EAGLE.getBehavior(),
+                MobBehaviors.COW.getBehavior(),
                 0.25,
                 false, false, 5, null, null, DisguiseType.COW,
                 List.of(DropTableId.BONES.asInt(), DropTableId.RAW_ANIMAL_MEAT.asInt()),

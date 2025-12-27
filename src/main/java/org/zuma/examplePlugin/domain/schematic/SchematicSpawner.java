@@ -3,7 +3,6 @@ package org.zuma.examplePlugin.domain.schematic;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
-import com.sk89q.worldedit.extent.clipboard.BlockArrayClipboard;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
@@ -129,10 +128,11 @@ public class SchematicSpawner {
 
 
     public void clearLastPaste() {
-        if (lastPaste == null) return;
+        if (lastPaste == null) {
+            return;
+        }
 
         World weWorld = lastPaste.getWorld();
-        BlockVector3 min = lastPaste.getMinimumPoint();
 
         try (EditSession editSession = WorldEdit.getInstance()
                 .newEditSessionBuilder()
@@ -140,20 +140,12 @@ public class SchematicSpawner {
                 .maxBlocks(-1)
                 .build()) {
 
-            // Create an empty clipboard (all air) with same size as lastPaste
-            BlockArrayClipboard emptyClipboard = new BlockArrayClipboard(lastPaste);
-
-            // Paste empty clipboard exactly at the lastPaste minimum point to clear region
-            Operation clearOperation = new ClipboardHolder(emptyClipboard)
-                    .createPaste(editSession)
-                    .to(min)
-                    .ignoreAirBlocks(false)
-                    .build();
-
-            Operations.complete(clearOperation);
-
+            editSession.setFastMode(true);
+            editSession.setBatchingChunks(true);
+            editSession.setBlocks(lastPaste, BukkitAdapter.adapt(Material.AIR.createBlockData()));
+            
         } catch (Exception e) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Unable to clear last paste schemtic", e);
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Unable to clear last paste schematic", e);
         }
     }
 }
