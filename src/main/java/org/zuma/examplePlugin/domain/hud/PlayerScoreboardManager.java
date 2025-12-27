@@ -74,7 +74,7 @@ public class PlayerScoreboardManager {
         int lineIndex = 15;
 
         boolean safetyWarning = false;
-        boolean modifierActive = visibleModifierIndex != null;;
+        boolean modifierActive = visibleModifierIndex != null;
 
         updateVisibleModifier();
 

@@ -78,7 +78,7 @@ public class BotVerificationHandler implements Listener {
         }
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-            if (event.getPlayer() == null || event.getPlayer().asBukkitPlayer() == null || !event.getPlayer().asBukkitPlayer().isOnline()) {
+            if (event.getPlayer() == null || !event.getPlayer().isOnline()) {
                 return;
             }
             RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.BOT_VERIFICATION_MENU.asInt(), event.getPlayer(), null, null, null, true);
