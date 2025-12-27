@@ -183,10 +183,6 @@ public class ItemListener implements Listener {
         withItemAndPlayer(event.getPlayer(), event.getItem().getItemStack(), (item, player) -> {
             if (event.isCancelled()) return;
             itemHandler.onPlayerPickupItem(event, item, player, itemStateManager);
-
-            if (!(item instanceof CoinsItem)) {
-                AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.ITEMS_PICKED_UP, event.getItem().getItemStack().getAmount());
-            }
         });
     }
 

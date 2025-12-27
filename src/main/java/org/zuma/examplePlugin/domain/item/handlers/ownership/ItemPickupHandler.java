@@ -3,9 +3,12 @@ package org.zuma.examplePlugin.domain.item.handlers.ownership;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.player.PlayerAttemptPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.impl.CoinsItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.UUID;
@@ -54,6 +57,10 @@ public class ItemPickupHandler {
         }
 
         ItemOwnershipHandler.removeOwnershipKeys(itemStack);
+
+        if (!(item instanceof CoinsItem)) {
+            AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.ITEMS_PICKED_UP, event.getItem().getItemStack().getAmount());
+        }
 
     }
 }
