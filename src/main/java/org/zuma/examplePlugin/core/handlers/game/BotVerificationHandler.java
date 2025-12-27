@@ -29,7 +29,7 @@ public class BotVerificationHandler implements Listener {
             return;
         }
 
-        int thresholdMultiplier = verificationAmounts.getOrDefault(player.getUUID(), 1);
+        int thresholdMultiplier = Math.min(3, verificationAmounts.getOrDefault(player.getUUID(), 1)); // Increase threshold with each successful verification, up to 3x
         incrementActionCount(player);
 
         if (actionsSinceLastVerification.get(player.getUUID()) >= ACTIONS_BOT_CHECK_THRESHOLD * thresholdMultiplier) {
