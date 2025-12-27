@@ -681,7 +681,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.BRONZE_ARROW.asInt(), Material.ARROW, ItemRarity.COMMON, "Bronze Arrow", List.of("A basic bronze-tipped arrow.", "Useful for training ranged skills."), null, true, CRAFTED_ITEM_MULTIPLIER), toVersionedJson(
                         new EquipableTypeMeta(null, null, null,
                                 List.of(
-                                        new Modifier(ModifierType.RANGED_STRENGTH, 1)
+                                        new Modifier(ModifierType.RANGED_STRENGTH, 3)
                                 ), List.of(new SkillRequirement(SkillType.RANGED, 1)),
                                 null),
                         1)),
@@ -689,7 +689,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.IRON_ARROW.asInt(), Material.ARROW, ItemRarity.COMMON, "Iron Arrow", List.of("Stronger than bronze arrows.", "Commonly used by beginner archers."), null, true, CRAFTED_ITEM_MULTIPLIER), toVersionedJson(
                         new EquipableTypeMeta(null, null, null,
                                 List.of(
-                                        new Modifier(ModifierType.RANGED_STRENGTH, 2)
+                                        new Modifier(ModifierType.RANGED_STRENGTH, 7)
                                 ), List.of(new SkillRequirement(SkillType.RANGED, 10)),
                                 null),
                         1)),
@@ -697,7 +697,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.STEEL_ARROW.asInt(), Material.ARROW, ItemRarity.COMMON, "Steel Arrow", List.of("A sturdy steel-tipped arrow.", "Offers good damage and durability."), null, true, CRAFTED_ITEM_MULTIPLIER), toVersionedJson(
                         new EquipableTypeMeta(null, null, null,
                                 List.of(
-                                        new Modifier(ModifierType.RANGED_STRENGTH, 3)
+                                        new Modifier(ModifierType.RANGED_STRENGTH, 9)
                                 ), List.of(new SkillRequirement(SkillType.RANGED, 20)),
                                 null),
                         1)),
@@ -705,7 +705,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.MITHRIL_ARROW.asInt(), Material.ARROW, ItemRarity.UNCOMMON, "Mithril Arrow", List.of("Lightweight yet powerful.", "Favored by mid-level rangers."), null, true, CRAFTED_ITEM_MULTIPLIER), toVersionedJson(
                         new EquipableTypeMeta(null, null, null,
                                 List.of(
-                                        new Modifier(ModifierType.RANGED_STRENGTH, 4)
+                                        new Modifier(ModifierType.RANGED_STRENGTH, 12)
                                 ), List.of(new SkillRequirement(SkillType.RANGED, 30)),
                                 null),
                         1)),
@@ -713,7 +713,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.ADAMANT_ARROW.asInt(), Material.ARROW, ItemRarity.UNCOMMON, "Adamant Arrow", List.of("Forged from adamantite.", "High damage for experienced archers."), null, true, CRAFTED_ITEM_MULTIPLIER), toVersionedJson(
                         new EquipableTypeMeta(null, null, null,
                                 List.of(
-                                        new Modifier(ModifierType.RANGED_STRENGTH, 6)
+                                        new Modifier(ModifierType.RANGED_STRENGTH, 14)
                                 ), List.of(new SkillRequirement(SkillType.RANGED, 40)),
                                 null),
                         1)),
@@ -721,7 +721,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.RUNE_ARROW.asInt(), Material.ARROW, ItemRarity.RARE, "Runite Arrow", List.of("Top-tier arrow made from runite.", "Delivers deadly ranged attacks."), null, true, CRAFTED_ITEM_MULTIPLIER), toVersionedJson(
                         new EquipableTypeMeta(null, null, null,
                                 List.of(
-                                        new Modifier(ModifierType.RANGED_STRENGTH, 7)
+                                        new Modifier(ModifierType.RANGED_STRENGTH, 22)
                                 ), List.of(new SkillRequirement(SkillType.RANGED, 50)),
                                 null),
                         1)),
