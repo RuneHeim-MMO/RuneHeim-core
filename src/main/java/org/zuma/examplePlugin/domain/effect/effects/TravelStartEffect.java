@@ -22,7 +22,7 @@ public class TravelStartEffect implements AnimatedEffect {
 
     @Override
     public void playAt(Location location, double time) {
-        if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) return;
+        if (!player.isOnline()) return;
 
         if (time == 0) {
             player.asBukkitPlayer().showTitle(Title.title(

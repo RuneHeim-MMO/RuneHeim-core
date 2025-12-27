@@ -13,6 +13,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
+import org.zuma.examplePlugin.core.handlers.game.BotVerificationHandler;
 import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
 import org.zuma.examplePlugin.core.interfaces.Restrictable;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
@@ -311,6 +312,7 @@ public abstract class AbstractRecipe implements Restrictable {
                 .successSound(type.getFinishSound())
                 .onSuccess(() -> executeCraft(player, times, totalCost, resultComponent))
                 .onFailure(() -> this.handleRecipeCraftingAborted(player))
+                .setRecipeType(this.type)
                 .build();
 
         if (this.type == RecipeType.CAMPFIRE_RECIPE) {
@@ -327,6 +329,10 @@ public abstract class AbstractRecipe implements Restrictable {
     }
 
     private void executeCraft(RunePlayer player, int times, long totalCost, Component resultComponent) {
+        if (!BotVerificationHandler.canStartAction(player)) {
+            return;
+        }
+
         Optional<Component> blockReason = getCraftBlockReason(player, times);
         if (blockReason.isPresent()) {
             if (player.hasPendingActions()) player.cancelActionTask(true);
@@ -367,6 +373,8 @@ public abstract class AbstractRecipe implements Restrictable {
 
         if (successCrafts > 0)
             AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.SUCCESSFUL_RECIPES_CRAFTED, successCrafts);
+
+        BotVerificationHandler.logSuccessfulAction(player);
     }
 
     private boolean removeCraftingIngredients(RunePlayer player, int successCrafts, int failedCrafts) {

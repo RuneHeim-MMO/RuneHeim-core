@@ -5,6 +5,8 @@ import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.codehaus.plexus.util.FileUtils;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.config.ConfigManager;
+import org.zuma.examplePlugin.core.config.EnvironmentType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 
 import java.io.File;
@@ -15,6 +17,11 @@ public class HousingWorldManager {
     private World housingWorld;
 
     public void init() {
+        if (ConfigManager.getIsPreviewServer() && !ConfigManager.environment.equals(EnvironmentType.DEVELOPMENT)) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Preview server detected, skipping housing world creation.");
+            return;
+        }
+
         World existing = Bukkit.getWorld(WORLD_KEY);
 
         if (existing != null) {

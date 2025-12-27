@@ -149,7 +149,7 @@ public class DailyRewardsInventory extends IndividualGUI {
                 int i = 0;
 
                 public void run() {
-                    if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) {
+                    if (!player.isOnline()) {
                         cancel();
                         return;
                     }

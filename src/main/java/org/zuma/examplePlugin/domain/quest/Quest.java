@@ -337,13 +337,13 @@ public class Quest implements Restrictable {
 
         // Delay reward application and effects/messages to ensure any clear inventory from quests like tutorial island run first.
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-            if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) return;
+            if (!player.isOnline()) return;
 
             reward.applyRewards(player);
         }, 10L);
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-            if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) return;
+            if (!player.isOnline()) return;
 
             if (!this.silent) {
                 EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new QuestCompletedEffect(player, this));

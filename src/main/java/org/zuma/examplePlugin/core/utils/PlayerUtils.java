@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.core.utils;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -12,7 +13,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.interfaces.Restrictable;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.permissions.Permission;
 import org.zuma.examplePlugin.domain.housing.HousingRegion;
 import org.zuma.examplePlugin.domain.housing.instance.HouseInstance;
@@ -333,5 +336,15 @@ public class PlayerUtils {
 
     public static Random getRandom() {
         return random;
+    }
+
+    public static void alertStaff(String message) {
+        RuneQuestPlugin.getPlayerManager().getOnlinePlayers().forEach(runePlayer -> {
+            if (runePlayer.getRole().hasPermission(Permission.STAFF_ALERTS)) {
+                runePlayer.asBukkitPlayer().sendMessage(Component.text("[Staff Alert] >> " + message, Color.ERROR_LIGHT.asColor()));
+            }
+        });
+
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[Staff Alert] " + message);
     }
 }

@@ -42,7 +42,8 @@ public class RunePlayerSerializer {
                 (float) runePlayer.getSpecialEnergyPercent() / 100,
                 runePlayer.getPrayerEnergy(),
                 runePlayer.getCompletedQuestIds() == null ? new ArrayList<>() : runePlayer.getCompletedQuestIds(),
-                runePlayer.getActiveEffects()
+                runePlayer.getActiveEffects(),
+                runePlayer.isBotVerificationPending()
         );
 
         VersionedJson versionedPlayerData = new VersionedJson(gson.toJson(container), 1);
@@ -57,6 +58,8 @@ public class RunePlayerSerializer {
         String serializedPlayerData = gson.toJson(versionedPlayerData);
         String serializedLocation = gson.toJson(runePlayer.getSafeLocation() != null ? runePlayer.getSafeLocation() : player.getLocation());
         String inventoryData = ItemContainerContentSerializer.serializeItemSlotPairsSync(getPlayerInventoryContent(player), clearStateCache);
+        String quiverData = ItemContainerContentSerializer.serializeItemSlotPairsSync(runePlayer.getQuiverHandler().getContent(), clearStateCache);
+
         @Nullable String lastTerritoryId = lastTerritory != null ? lastTerritory.getId() : null;
         List<Skill> skills = runePlayer.getSkills().values().stream().toList();
 
@@ -73,6 +76,7 @@ public class RunePlayerSerializer {
                 lastTerritoryId,
                 serializedPlayerData,
                 inventoryData,
+                quiverData,
                 runePlayer.getBombsContainer(),
                 runePlayer.getSettings(),
                 runePlayer.getTrackedQuestId()
@@ -82,6 +86,7 @@ public class RunePlayerSerializer {
     public static AbstractMap.SimpleEntry<RunePlayer, DeserializedPlayerEntity> deserializePlayerSync(SerializedPlayerContainer container) {
         VersionedJson playerData = gson.fromJson(container.playerData(), VersionedJson.class);
         String inventoryData = container.inventoryData();
+        String quiverData = container.quiverData();
 
         switch (playerData.version()) {
             case 1 -> {
@@ -113,11 +118,13 @@ public class RunePlayerSerializer {
                 player.setBombsContainer(container.bombsContainer());
                 player.setSettings(container.settings());
                 player.setTrackedQuestId(container.trackedQuestId());
+                player.setBotVerificationPending(playerDataDeserializedJsonContainer.isBotVerificationPending());
 
                 List<ItemStackSlotPair> inventory = ItemContainerContentSerializer.deserializeItemContainerContentSync(inventoryData);
+                List<ItemStackSlotPair> quiver = ItemContainerContentSerializer.deserializeItemContainerContentSync(quiverData);
                 Location location = gson.fromJson(container.location(), Location.class);
 
-                return new AbstractMap.SimpleEntry<>(player, new DeserializedPlayerEntity(inventory, location, false));
+                return new AbstractMap.SimpleEntry<>(player, new DeserializedPlayerEntity(inventory, quiver, location, false));
             }
 
             default ->

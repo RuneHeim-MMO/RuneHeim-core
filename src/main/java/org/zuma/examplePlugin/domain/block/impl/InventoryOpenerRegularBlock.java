@@ -70,7 +70,7 @@ public class InventoryOpenerRegularBlock extends AbstractInteractableBlock imple
             return;
         }
 
-        UUID initializedInventoryUUID = RuneQuestPlugin.getGUIHandler().openInventory(inventoryId, player, null, null, this);
+        UUID initializedInventoryUUID = RuneQuestPlugin.getGUIHandler().openInventory(inventoryId, player, null, null, this, false);
         createdInventoryInstances.add(initializedInventoryUUID);
 
     }

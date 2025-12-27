@@ -25,6 +25,7 @@ public enum Icon {
     LEATHER("ⱦ"),
     CAMPFIRE("ⷚ"),
     CHAT_BUBBLE("┬"),
+    QUIVER("═"),
     DIALOG_BORDER("⹀"),
     DOLLAR("⋗"),
     FLIGHT("⊙"),

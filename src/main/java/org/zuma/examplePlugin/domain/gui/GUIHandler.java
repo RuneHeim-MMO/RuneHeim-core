@@ -138,23 +138,24 @@ public class GUIHandler {
         this.registry.register(InventoryId.DAILY_REWARDS.asInt(), () -> new DailyRewardsInventory(GUIOverlay.DAILY_REWARDS_OVERLAY.asGlyph() + "§f" + Icon.TREASURE_CHEST.get() + "§f Daily Rewards", InventoryId.DAILY_REWARDS.asInt()));
         this.registry.register(InventoryId.PLAYER_MODIFIERS.asInt(), () -> new ModifiersInventory(GUIOverlay.PLAYER_MODIFIERS_OVERLAY.asGlyph() + "§f" + Icon.BOOK.get() + "§f Active Modifiers", InventoryId.PLAYER_MODIFIERS.asInt()));
 
-
         this.registry.register(InventoryId.HOUSE_SETTINGS.asInt(), () -> new HouseSettings(GUIOverlay.HOUSE_SETTINGS_OVERLAY.asGlyph() + "§f" + Icon.HOUSE.get() + "§f House Settings", InventoryId.HOUSE_SETTINGS.asInt()));
         this.registry.register(InventoryId.DRAKKAR_HOUSE_DISCOVERER.asInt(), () -> new HouseDiscoverer(GUIOverlay.HOUSES_DISCOVERER_OVERLAY.asGlyph() + "§f" + Icon.HOUSE.get() + "§f " + HousingRegion.DRAKKAR.getName() + " houses", InventoryId.DRAKKAR_HOUSE_DISCOVERER.asInt(), HousingRegion.DRAKKAR));
         this.registry.register(InventoryId.DRAKKAR_BUY_HOUSE.asInt(), () -> new HouseBuyingMenu(GUIOverlay.BUY_HOUSE_OVERLAY.asGlyph() + "§f" + Icon.HOUSE.get() + "§f Buy a house in " + HousingRegion.DRAKKAR.getName(), InventoryId.DRAKKAR_BUY_HOUSE.asInt(), HousingRegion.DRAKKAR));
         this.registry.register(InventoryId.HOUSE_SLOT_EDITOR.asInt(), () -> new HouseSlotEditor(GUIOverlay.HOUSE_SLOT_EDITOR_OVERLAY.asGlyph() + "§fEdit Slot", InventoryId.HOUSE_SLOT_EDITOR.asInt()));
+
+        this.registry.register(InventoryId.BOT_VERIFICATION_MENU.asInt(), () -> new BotVerificationMenu(GUIOverlay.GENERIC_OVERLAY_6.asGlyph() + "§fAnti-Bot Verification", InventoryId.BOT_VERIFICATION_MENU.asInt()));
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
     }
 
     @Nullable
     public UUID openInventory(int id, RunePlayer player, @Nullable Runnable onClose) {
-        return openInventory(id, player, onClose, null, null);
+        return openInventory(id, player, onClose, null, null, false);
     }
 
     @Nullable
-    public UUID openInventory(int id, RunePlayer player, @Nullable Runnable onClose, @Nullable AbstractInventoryOpener mobHolder, @Nullable InventoryOpenerBlock blockHolder) {
-        if (inventoryOpenCooldownHandler.isCooldownInProgress(player)) {
+    public UUID openInventory(int id, RunePlayer player, @Nullable Runnable onClose, @Nullable AbstractInventoryOpener mobHolder, @Nullable InventoryOpenerBlock blockHolder, boolean skipCooldown) {
+        if (!skipCooldown && inventoryOpenCooldownHandler.isCooldownInProgress(player)) {
             return null;
         }
 
@@ -286,6 +287,10 @@ public class GUIHandler {
             return;
         }
 
+        if (id == InventoryId.QUIVER_INVENTORY.asInt()) {
+            return; // Quiver inventory close is handled separately
+        }
+
         handleCloseInventoryCleanup(player, id, instanceUUID, isForced, event);
     }
 
@@ -319,6 +324,38 @@ public class GUIHandler {
         matchingGUI.onPlayerDropItem(event, player);
     }
 
+    public void onQuiverClickEvent(InventoryClickEvent event) {
+        InventoryHolder holder = event.getInventory().getHolder();
+
+        if (!(event.getWhoClicked() instanceof Player bukkitPlayer)) {
+            return;
+        }
+
+        if (!(holder instanceof IDHolder idHolder)) {
+            return;
+        }
+
+        RunePlayer player = playerManager.getRunePlayer(bukkitPlayer);
+        int inventoryId = idHolder.id();
+
+        if (player == null) {
+            return;
+        }
+
+        if (inventoryId != InventoryId.QUIVER_INVENTORY.asInt()) {
+            return;
+        }
+
+        if (itemClickCooldownHandler.isCooldownInProgress(player)) {
+            event.setCancelled(true);
+            return;
+        }
+
+        itemClickCooldownHandler.startCooldown(player, INVENTORY_CLICK_COOLDOWN_MS);
+        player.getQuiverHandler().onQuiverClickEvent(event);
+
+    }
+
     public void onInventoryClick(InventoryClickEvent event) {
         InventoryHolder holder = event.getInventory().getHolder();
 
@@ -335,6 +372,10 @@ public class GUIHandler {
 
         if (player == null) {
             return;
+        }
+
+        if (inventoryId == InventoryId.QUIVER_INVENTORY.asInt()) {
+            return; // Quiver inventory close is handled separately
         }
 
         if (itemClickCooldownHandler.isCooldownInProgress(player)) {

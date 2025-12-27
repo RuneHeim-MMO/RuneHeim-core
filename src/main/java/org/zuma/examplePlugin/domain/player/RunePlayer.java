@@ -37,7 +37,9 @@ import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.party.Party;
 import org.zuma.examplePlugin.domain.payments.SupporterLevel;
 import org.zuma.examplePlugin.domain.player.actions.ActionParams;
+import org.zuma.examplePlugin.domain.player.actions.QueuedAction;
 import org.zuma.examplePlugin.domain.player.handlers.*;
+import org.zuma.examplePlugin.domain.player.inventory.QuiverHandler;
 import org.zuma.examplePlugin.domain.player.settings.PlayerSettings;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
 import org.zuma.examplePlugin.domain.skill.Skill;
@@ -64,6 +66,8 @@ public class RunePlayer implements CombatEntity {
     private final BusyStateHandler busyStateHandler;
     private final PlayerScoreboardManager scoreboardManager;
     private final ScoreboardUsernameRenderer scoreboardUsernameRenderer;
+    private final QuiverHandler quiverHandler;
+
     private @Nullable UUID partyUUID;
     private PlayerRole role;
     private PermissionAttachment permissionAttachment;
@@ -74,7 +78,7 @@ public class RunePlayer implements CombatEntity {
     private List<TemporaryEffect> activeEffects; // Potions, etc
     private long pouchCoins;
     private List<String> discoveredTerritoryIds, completedQuestIds;
-    private boolean isInCutscene, isDead, isInDialog, isDialogOptionChoosing, isNextMessageMegaphone;
+    private boolean isInCutscene, isDead, isInDialog, isDialogOptionChoosing, isNextMessageMegaphone, isBotVerificationPending;
     private HashMap<String, AbstractQuestStep> activeQuestSteps; // Quest id : step
     private @Nullable Location safeLocation; // is set when player is in spectator/cutscene mode.
     private @Nullable String trackedQuestId;
@@ -98,6 +102,7 @@ public class RunePlayer implements CombatEntity {
         this.scoreboardUsernameRenderer = new ScoreboardUsernameRenderer(this);
         this.settings = new PlayerSettings();
         this.dailyRewards = new DailyRewards(1, System.currentTimeMillis(), false, new HashMap<>());
+        this.quiverHandler = new QuiverHandler(this);
 
         this.pouchCoins = 0;
         this.discoveredTerritoryIds = new ArrayList<>();
@@ -107,6 +112,7 @@ public class RunePlayer implements CombatEntity {
         this.activeEffects = new ArrayList<>();
         this.bombsContainer = new PlayerBombsContainer(0, 0, 0, 0, 0, 0);
         this.trackedQuestId = null;
+        this.isBotVerificationPending = false;
 
         Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
             this.permissionAttachment = asBukkitPlayer().addAttachment(RuneQuestPlugin.getInstance());
@@ -121,6 +127,11 @@ public class RunePlayer implements CombatEntity {
 
     public Player asBukkitPlayer() {
         return Bukkit.getPlayer(uuid);
+    }
+
+    public boolean isOnline() {
+        Player player = asBukkitPlayer();
+        return player != null && player.isOnline();
     }
 
     public Entity getEntity() {
@@ -247,7 +258,11 @@ public class RunePlayer implements CombatEntity {
         this.busyStateHandler.cancelActionTask(interrupted);
     }
 
-    public int getQueuedTasks() {
+    public int getQueuedTaskCount() {
+        return this.busyStateHandler.getQueuedTaskCount();
+    }
+
+    public List<QueuedAction> getQueuedTasks() {
         return this.busyStateHandler.getQueuedTasks();
     }
 
@@ -558,4 +573,16 @@ public class RunePlayer implements CombatEntity {
         this.analyticsContainer = analyticsContainer;
     }
 
+    public void setBotVerificationPending(boolean pending) {
+        if (pending) this.cancelActionTask(true);
+        this.isBotVerificationPending = pending;
+    }
+
+    public boolean isBotVerificationPending() {
+        return isBotVerificationPending;
+    }
+
+    public QuiverHandler getQuiverHandler() {
+        return quiverHandler;
+    }
 }

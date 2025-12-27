@@ -14,6 +14,7 @@ public enum Permission {
 
     JOIN_STAGING_SERVER(List.of("runeheim.whitelist.staging")),
     JOIN_LOCKDOWN_SERVER(List.of("runeheim.whitelist.lockdown")),
+    STAFF_ALERTS(List.of("runeheim.staff.alerts")),
 
     CHAT_SPY(List.of("runeheim.chat", "runeheim.chat.spy", "runeheim.chat.spy.server", "runeheim.chat.spy.network")),
     CHAT_PROFANITY_BYPASS(List.of("runeheim.chat.profanity")),

@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 public class AdditionalGearSlotHandler {
+    public static final int QUIVER_SLOT = 15;
     public static final int INFO_SLOT = 16;
     public static final int SETTINGS_SLOT = 17;
 
@@ -31,7 +32,6 @@ public class AdditionalGearSlotHandler {
     public static final int PRAYER_SLOT = 2;
     public static final int PARTY_SLOT = 3;
     public static final int MAP_SLOT = 4;
-
 
     private final Map<Integer, ReservedSlot> slotsDef = ReservedSlot.getSlotMap();
     private final List<Integer> slots = slotsDef.keySet().stream().toList();
@@ -45,8 +45,17 @@ public class AdditionalGearSlotHandler {
     public void fillReservedSlots(RunePlayer player) {
         PlayerInventory inventory = player.asBukkitPlayer().getInventory();
 
+
+        // For backwards compatibility, drop any real arrows in the quiver slot
+        ItemStack existingItemInArrowSlot = inventory.getItem(QUIVER_SLOT);
+        if (existingItemInArrowSlot != null && !QuiverHandler.isFakeArrow(existingItemInArrowSlot) && !GUIControl.isGuiItem(existingItemInArrowSlot)) {
+            player.giveItemOrDrop(existingItemInArrowSlot);
+            inventory.setItem(QUIVER_SLOT, new ItemStack(Material.AIR));
+        }
+
         inventory.setItem(INFO_SLOT, GUIControl.TRANSPARENT.asItemstack(Component.text("Quests"), true));
         inventory.setItem(SETTINGS_SLOT, GUIControl.TRANSPARENT.asItemstack(Component.text("Settings"), true));
+        inventory.setItem(QUIVER_SLOT, QuiverHandler.getFakeArrow());
 
         for (int slot : slots) {
             ItemStack inSlot = inventory.getItem(slot);
@@ -122,7 +131,7 @@ public class AdditionalGearSlotHandler {
         PlayerInventory inventory = player.asBukkitPlayer().getInventory();
         int slot = event.getSlot();
 
-        if (slot == INFO_SLOT || slot == SETTINGS_SLOT) {
+        if (slot == INFO_SLOT || slot == SETTINGS_SLOT || slot == QUIVER_SLOT) {
             if (slot == INFO_SLOT) {
                 RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.QUESTS_LIST.asInt(), player, null);
             }
@@ -131,6 +140,9 @@ public class AdditionalGearSlotHandler {
                 RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.PLAYER_SETTINGS_MENU.asInt(), player, null);
             }
 
+            if (slot == QUIVER_SLOT) {
+                player.getQuiverHandler().openQuiver();
+            }
 
             SoundType.UI_CLICK.play(player, false);
             event.setCancelled(true);

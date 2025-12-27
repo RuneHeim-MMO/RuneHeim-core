@@ -6,5 +6,5 @@ import java.util.List;
 
 public record PlayerDataDeserializedJsonContainer(long pouchCoins, List<String> discoveredTerritoryIds,
                                                   int health, float specialEnergy, double prayerEnergy,
-                                                  List<String> completedQuestIds, List<TemporaryEffect> effects) {
+                                                  List<String> completedQuestIds, List<TemporaryEffect> effects, boolean isBotVerificationPending) {
 }

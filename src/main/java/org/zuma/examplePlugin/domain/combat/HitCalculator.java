@@ -90,6 +90,10 @@ public class HitCalculator {
             int baseDamage = (int) (Math.random() * (maxHit + 1));
             int damage = Math.min(defender.getHealth(), baseDamage);
 
+            if (type.equals(AttackType.RANGED)) {
+                damage = Math.max(1, damage); // Ensure at least 1 damage for ranged attacks on successful hit
+            }
+
             return new Hit(attacker, defender, type, damage, getHitType(defender, damage), (int) maxHit, hitChance, isSpecialAttack, isSplashHit);
         } else if (Math.random() < 0.25) {
             // Glancing blow

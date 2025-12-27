@@ -88,7 +88,11 @@ public class BusyStateHandler {
         }
     }
 
-    public int getQueuedTasks() {
+    public int getQueuedTaskCount() {
         return this.pendingActions.size();
+    }
+
+    public List<QueuedAction> getQueuedTasks() {
+        return pendingActions;
     }
 }

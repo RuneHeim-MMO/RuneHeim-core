@@ -9,6 +9,12 @@ import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.player.actions.QueuedAction;
+import org.zuma.examplePlugin.domain.recipe.constants.RecipeType;
+import org.zuma.examplePlugin.events.block.CampfireStateChanged;
+
+import java.util.List;
+import java.util.Objects;
 
 public class RecipeListener implements Listener {
     private final RecipeHandler recipeHandler;
@@ -55,11 +61,39 @@ public class RecipeListener implements Listener {
             return;
         }
 
-
         boolean craftingStarted = recipeHandler.handleInventoryRecipeClick(runePlayer, event.getInventory(), customClicked, customCursor);
 
         if (craftingStarted) {
             event.setCancelled(true);
         }
+    }
+
+    // Cancel cooking tasks when campfire is extinguished
+    @EventHandler
+    public void onCampfireExtinguish(CampfireStateChanged event) {
+        boolean extinguished = !event.getToBeLit();
+
+        if (!extinguished) {
+            return;
+        }
+
+        List<RunePlayer> nearPlayers = event.getCampfire().getLocation().getNearbyPlayers(4).stream()
+                .map(p -> RuneQuestPlugin.getPlayerManager().getRunePlayer(p))
+                .filter(Objects::nonNull).toList();
+
+        nearPlayers.forEach(p -> {
+            if (p.getQueuedTaskCount() == 0) {
+                return;
+            }
+
+            QueuedAction task = p.getQueuedTasks().getFirst();
+
+            if (task.params().getRecipeType() != null && task.params().getRecipeType().equals(RecipeType.COOKING_RECIPE)) {
+                p.cancelActionTask(true);
+            }
+
+        });
+
+
     }
 }

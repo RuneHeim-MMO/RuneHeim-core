@@ -49,6 +49,9 @@ public abstract class AbstractItemType {
     @Nullable
     public StateType stateType;
 
+    private Integer basePrice = null;
+    private Double pastIngredientsPriceMultiplier = null;
+
     public AbstractItemType(AbstractItemMeta meta) {
         this.type = meta.type();
         this.id = meta.id();
@@ -70,6 +73,27 @@ public abstract class AbstractItemType {
         this.metaGenerator = new MetaGenerator(this);
         this.creator = new ItemStackCreator(this);
 
+    }
+
+    @Nullable
+    public Integer getBasePrice() {
+        if (basePrice == null) return null;
+        if (pastIngredientsPriceMultiplier == null) return basePrice;
+
+        return (int) (basePrice * pastIngredientsPriceMultiplier);
+    }
+
+    public void setBasePrice(Integer basePrice) {
+        this.basePrice = basePrice;
+    }
+
+    @Nullable // If null, then base price is used as is - usually for first tier materials
+    public Double getPastIngredientsPriceMultiplier() {
+        return pastIngredientsPriceMultiplier;
+    }
+
+    public void setPastIngredientsPriceMultiplier(Double pastIngredientsPriceMultiplier) {
+        this.pastIngredientsPriceMultiplier = pastIngredientsPriceMultiplier;
     }
 
     public void setTypeLore(String type, @Nullable String icon) {

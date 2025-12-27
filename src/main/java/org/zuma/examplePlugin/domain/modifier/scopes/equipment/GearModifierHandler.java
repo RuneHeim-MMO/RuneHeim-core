@@ -77,6 +77,8 @@ public class GearModifierHandler {
         List<ItemStack> items = new ArrayList<>(Arrays.asList(inventory.getArmorContents()));
         items.addAll(additionalGearSlotHandler.getSlotItems(player));
 
+        ItemStack quiverNextArrow = player.getQuiverHandler().getNextArrow();
+        if (quiverNextArrow != null) items.add(quiverNextArrow);
 
         if (itemRegistry.getType(itemInHand) instanceof EquipableItemType gearItem) {
             if (gearItem.getEquipableType().equals(EquipableType.HANDHELD)) items.add(itemInHand);

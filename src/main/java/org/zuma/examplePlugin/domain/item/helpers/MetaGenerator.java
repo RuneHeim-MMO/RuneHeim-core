@@ -24,6 +24,7 @@ import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.base.SocketedEquipableItemType;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
+import org.zuma.examplePlugin.domain.item.constants.ItemType;
 import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.item.helpers.lore.*;
 import org.zuma.examplePlugin.domain.item.impl.EmptyContainer;
@@ -58,6 +59,11 @@ public class MetaGenerator {
             meta.setCustomModelData(itemType.customModelData);
         }
 
+        if (List.of(ItemType.RANGED_WEAPON, ItemType.RANGED_WEAPON_WITH_SOCKETS).contains(itemType.type)) {
+            meta.addEnchant(Enchantment.INFINITY, 1, true);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        }
+
         if (isItemGlowing(item)) {
             meta.addEnchant(Enchantment.UNBREAKING, 1, true);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -69,6 +75,7 @@ public class MetaGenerator {
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_DYE);
 
+        // Equipable component model handling
         if (itemType instanceof EquipableItemType equipableItemType && equipableItemType.getEquipmentSlot() != null) {
             EquippableComponent eq = meta.getEquippable(); // snapshot
             eq.setSlot(equipableItemType.getEquipmentSlot());

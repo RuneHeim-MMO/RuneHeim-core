@@ -16,6 +16,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
+import org.zuma.examplePlugin.core.handlers.game.BotVerificationHandler;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.block.BlockLoader;
@@ -201,6 +202,10 @@ public class ResourceNode extends AbstractInteractableBlock {
     }
 
     private void startGatheringAction(RunePlayer player, double modifier) {
+        if (!BotVerificationHandler.canStartAction(player)) {
+            return;
+        }
+
         if (blockType.getStartSound() != null) blockType.getStartSound().play(player, true);
 
         if (rollPerfectStrikeChange(player)) {
@@ -237,6 +242,7 @@ public class ResourceNode extends AbstractInteractableBlock {
         rollDropTableLoot(player, baseGatheringLuckPercentage);
         blockType.getXpReward().forEach(reward -> player.distributeXp(reward.type(), reward.xp()));
 
+        BotVerificationHandler.logSuccessfulAction(player);
     }
 
     private void rollDropTableLoot(RunePlayer player, double baseGatheringLuckPercentage) {

@@ -86,7 +86,7 @@ public class PlayerItemDistributor {
                     }
             );
 
-            if (runePlayer.getQueuedTasks() > 0) {
+            if (runePlayer.getQueuedTaskCount() > 0) {
                 runePlayer.cancelActionTask(true);
             }
 

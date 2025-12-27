@@ -241,7 +241,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNDERGROUND_FUNGUS.asInt(), Material.COAL, ItemRarity.COMMON, "Underground Fungus", List.of("A pale mushroom grown in dark tunnels."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(1125), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.MOLDY_CHEESE.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Moldy Cheese",
-                        List.of("A piece of cheese nibbled by rodents."), null, true, 1), toVersionedJson(new FoodTypeMeta(-2), 1)),
+                        List.of("A piece of cheese nibbled by rodents."), null, true, 1), toVersionedJson(new FoodTypeMeta(-2, 30), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.SOFT_FUR.asInt(), Material.COAL, ItemRarity.COMMON, "Soft Fur", List.of("Fine fur from a gentle creature."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(180), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.INSECT_WINGS.asInt(), Material.COAL, ItemRarity.COMMON, "Insect Wings", List.of("Delicate wings from various bugs."), null, true, 1.0),
@@ -681,7 +681,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.BRONZE_ARROW.asInt(), Material.ARROW, ItemRarity.COMMON, "Bronze Arrow", List.of("A basic bronze-tipped arrow.", "Useful for training ranged skills."), null, true, CRAFTED_ITEM_MULTIPLIER), toVersionedJson(
                         new EquipableTypeMeta(null, null, null,
                                 List.of(
-                                        new Modifier(ModifierType.RANGED_STRENGTH, 1)
+                                        new Modifier(ModifierType.RANGED_STRENGTH, 3)
                                 ), List.of(new SkillRequirement(SkillType.RANGED, 1)),
                                 null),
                         1)),
@@ -689,7 +689,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.IRON_ARROW.asInt(), Material.ARROW, ItemRarity.COMMON, "Iron Arrow", List.of("Stronger than bronze arrows.", "Commonly used by beginner archers."), null, true, CRAFTED_ITEM_MULTIPLIER), toVersionedJson(
                         new EquipableTypeMeta(null, null, null,
                                 List.of(
-                                        new Modifier(ModifierType.RANGED_STRENGTH, 2)
+                                        new Modifier(ModifierType.RANGED_STRENGTH, 7)
                                 ), List.of(new SkillRequirement(SkillType.RANGED, 10)),
                                 null),
                         1)),
@@ -697,7 +697,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.STEEL_ARROW.asInt(), Material.ARROW, ItemRarity.COMMON, "Steel Arrow", List.of("A sturdy steel-tipped arrow.", "Offers good damage and durability."), null, true, CRAFTED_ITEM_MULTIPLIER), toVersionedJson(
                         new EquipableTypeMeta(null, null, null,
                                 List.of(
-                                        new Modifier(ModifierType.RANGED_STRENGTH, 3)
+                                        new Modifier(ModifierType.RANGED_STRENGTH, 9)
                                 ), List.of(new SkillRequirement(SkillType.RANGED, 20)),
                                 null),
                         1)),
@@ -705,7 +705,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.MITHRIL_ARROW.asInt(), Material.ARROW, ItemRarity.UNCOMMON, "Mithril Arrow", List.of("Lightweight yet powerful.", "Favored by mid-level rangers."), null, true, CRAFTED_ITEM_MULTIPLIER), toVersionedJson(
                         new EquipableTypeMeta(null, null, null,
                                 List.of(
-                                        new Modifier(ModifierType.RANGED_STRENGTH, 4)
+                                        new Modifier(ModifierType.RANGED_STRENGTH, 12)
                                 ), List.of(new SkillRequirement(SkillType.RANGED, 30)),
                                 null),
                         1)),
@@ -713,7 +713,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.ADAMANT_ARROW.asInt(), Material.ARROW, ItemRarity.UNCOMMON, "Adamant Arrow", List.of("Forged from adamantite.", "High damage for experienced archers."), null, true, CRAFTED_ITEM_MULTIPLIER), toVersionedJson(
                         new EquipableTypeMeta(null, null, null,
                                 List.of(
-                                        new Modifier(ModifierType.RANGED_STRENGTH, 6)
+                                        new Modifier(ModifierType.RANGED_STRENGTH, 14)
                                 ), List.of(new SkillRequirement(SkillType.RANGED, 40)),
                                 null),
                         1)),
@@ -721,7 +721,7 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.RUNE_ARROW.asInt(), Material.ARROW, ItemRarity.RARE, "Runite Arrow", List.of("Top-tier arrow made from runite.", "Delivers deadly ranged attacks."), null, true, CRAFTED_ITEM_MULTIPLIER), toVersionedJson(
                         new EquipableTypeMeta(null, null, null,
                                 List.of(
-                                        new Modifier(ModifierType.RANGED_STRENGTH, 7)
+                                        new Modifier(ModifierType.RANGED_STRENGTH, 22)
                                 ), List.of(new SkillRequirement(SkillType.RANGED, 50)),
                                 null),
                         1)),
@@ -1065,44 +1065,50 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.MISC, ItemId.BURNT_FOOD.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Charred Remains", List.of("All that's left after fire claims its meal."), null, true, 1.0), null),
 
                 // Food
+                new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.POTATO.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Potato",
+                        List.of("A nutritious potato."), null, true, CRAFTED_ITEM_MULTIPLIER), toVersionedJson(new FoodTypeMeta(2, 25), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.CARROT.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Carrot",
+                        List.of("A crunchy, sweet root vegetable."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(1, 15), 1)),
+
                 new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_CHICKEN.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Cooked Chicken",
-                        List.of("Tender meat roasted to perfection."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(3), 1)),
+                        List.of("Tender meat roasted to perfection."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(3, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_MEAT.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Cooked Meat",
-                        List.of("Cooked to a golden brown, still juicy inside."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(3), 1)),
+                        List.of("Cooked to a golden brown, still juicy inside."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(3, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_HERRING.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Cooked Herring",
-                        List.of("Lightly roasted river fish, a quick meal."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(3), 1)),
+                        List.of("Lightly roasted river fish, a quick meal."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(3, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_MINNOW.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Cooked Minnow",
-                        List.of("Tiny fish, crisped over a fire."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(1), 1)),
+                        List.of("Tiny fish, crisped over a fire."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(1, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_TROUT.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Cooked Trout",
-                        List.of("Flaky and rich, a river-dweller's feast."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(7), 1)),
+                        List.of("Flaky and rich, a river-dweller's feast."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(7, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_SALMON.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Cooked Salmon",
-                        List.of("Bold flavor, pink flesh, campfire ready."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(9), 1)),
+                        List.of("Bold flavor, pink flesh, campfire ready."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(9, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_TUNA.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Cooked Tuna",
-                        List.of("Dense meat, satisfying and nutritious."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(10), 1)),
+                        List.of("Dense meat, satisfying and nutritious."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(10, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_CRAWLER.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Cooked Crawler",
-                        List.of("Charred crustacean, crunchy and filling."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(12), 1)),
+                        List.of("Charred crustacean, crunchy and filling."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(12, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_PIKE.asInt(), Material.COOKED_SALMON, ItemRarity.COMMON, "Cooked Pike",
-                        List.of("A sharp-finned delicacy from cold waters."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(14), 1)),
+                        List.of("A sharp-finned delicacy from cold waters."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(14, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_EEL.asInt(), Material.COOKED_SALMON, ItemRarity.UNCOMMON, "Cooked Eel",
-                        List.of("Grilled serpent of the deep marshes."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(16), 1)),
+                        List.of("Grilled serpent of the deep marshes."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(16, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_SHARK.asInt(), Material.COOKED_SALMON, ItemRarity.UNCOMMON, "Cooked Shark",
-                        List.of("Meaty apex predator, expertly seared."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(20), 1)),
+                        List.of("Meaty apex predator, expertly seared."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(20, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_TURTLE.asInt(), Material.COOKED_SALMON, ItemRarity.RARE, "Cooked Turtle",
-                        List.of("Tender shell beast meat, slow-cooked to perfection."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(21), 1)),
+                        List.of("Tender shell beast meat, slow-cooked to perfection."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(21, null), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.FOOD, ItemId.COOKED_RAY.asInt(), Material.COOKED_SALMON, ItemRarity.RARE, "Cooked Ray",
-                        List.of("Wings of the deep skyfish, rich in nutrients."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(22), 1)),
+                        List.of("Wings of the deep skyfish, rich in nutrients."), null, true, 1.3), toVersionedJson(new FoodTypeMeta(22, null), 1)),
 
                 // Potions
                 new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.DEFENCE_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.UNCOMMON, "Defence Potion I",

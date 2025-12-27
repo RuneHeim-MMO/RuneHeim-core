@@ -197,6 +197,14 @@ public class DropTableRepository {
                         new DropTableEntry(ItemId.FLAX.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
+                new DropTableDBEntry(DropTableId.CARROT_CROP_NODE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.CARROT.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.POTATO_CROP_NODE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.POTATO.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
 
                 // Woodcutting
                 new DropTableDBEntry(DropTableId.WOODCUTTING_RARE_DROPTABLE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
@@ -330,6 +338,10 @@ public class DropTableRepository {
 
                 new DropTableDBEntry(DropTableId.COINS_MEDIUM.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.COINS.asInt(), 10, 150, 3, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.COINS_MEDIUM_GUARANTEED.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.COINS.asInt(), 10, 150, 1, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
                 new DropTableDBEntry(DropTableId.WOOL.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(

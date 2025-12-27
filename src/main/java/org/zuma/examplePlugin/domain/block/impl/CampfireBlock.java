@@ -23,6 +23,7 @@ import org.zuma.examplePlugin.domain.block.meta.HologramSide;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.hud.LoadingBarBuilder;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.block.CampfireStateChanged;
 
 import javax.annotation.Nullable;
@@ -164,7 +165,18 @@ public class CampfireBlock extends InventoryOpenerRegularBlock implements Despaw
     }
 
     public boolean shouldBeDespawned() {
-        return burnLeftSeconds <= 0;
+        if (burning) {
+            return burnLeftSeconds <= 0;
+        }
+
+        @Nullable
+        RunePlayer owner = RuneQuestPlugin.getPlayerManager().getRunePlayer(getOwner());
+
+        if (owner == null || !owner.isOnline()) {
+            return true;
+        }
+
+        return false;
     }
 
     public int despawnSeconds() {
@@ -172,7 +184,7 @@ public class CampfireBlock extends InventoryOpenerRegularBlock implements Despaw
     }
 
     public ItemRecord dropOnDespawn() {
-        return despawnDrop;
+        return burning ? despawnDrop : null;
     }
 
     public UUID getOwner() {

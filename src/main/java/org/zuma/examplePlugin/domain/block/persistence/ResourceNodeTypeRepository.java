@@ -26,6 +26,20 @@ public class ResourceNodeTypeRepository {
                         SoundType.PICKING_UP_PLANT_START, null, SoundType.PICKING_UP_PLANT_END,
                         List.of()),
 
+                new ResourceNodeType(ResourceNodeTypeId.POTATO_CROP.asInt(), MarkerType.POTATO,
+                        "Potato", Material.POTATOES, false, null, null, 500, 60,
+                        List.of(DropTableId.POTATO_CROP_NODE.asInt()), ItemId.POTATO.asInt(),
+                        "", "Picking",
+                        SoundType.PICKING_UP_PLANT_START, null, SoundType.PICKING_UP_PLANT_END,
+                        List.of()),
+
+                new ResourceNodeType(ResourceNodeTypeId.CARROT_CROP.asInt(), MarkerType.CARROT,
+                        "Carrot", Material.CARROTS, false, null, null, 500, 60,
+                        List.of(DropTableId.CARROT_CROP_NODE.asInt()), ItemId.CARROT.asInt(),
+                        "", "Picking",
+                        SoundType.PICKING_UP_PLANT_START, null, SoundType.PICKING_UP_PLANT_END,
+                        List.of()),
+
                 // Trees
                 new ResourceNodeType(ResourceNodeTypeId.TREE.asInt(), MarkerType.TREE,
                         "Tree", Material.OAK_LOG, true,

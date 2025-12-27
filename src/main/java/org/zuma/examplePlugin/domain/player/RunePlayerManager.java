@@ -179,7 +179,7 @@ public class RunePlayerManager {
             RunePlayer newPlayer = new RunePlayer(uuid, new EnumMap<>(createDefaultSkills()));
             SerializedPlayerContainer serialized = RunePlayerSerializer.serializePlayerSync(newPlayer, player, false);
             repository.upsertPlayer(serialized, false);
-            return new AbstractMap.SimpleEntry<>(newPlayer, new DeserializedPlayerEntity(new ArrayList<>(), player.getLocation(), true));
+            return new AbstractMap.SimpleEntry<>(newPlayer, new DeserializedPlayerEntity(new ArrayList<>(), new ArrayList<>(), player.getLocation(), true));
         } catch (Exception e) {
             kickPlayer(player, "Failed creating new profile.", true);
             RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Failed creating new player for " + player.getName(), e);
@@ -214,6 +214,7 @@ public class RunePlayerManager {
         }
         players.put(uuid, runePlayer);
         RunePlayerSerializer.setPlayerInventoryContent(player, playerData.inventory());
+        runePlayer.getQuiverHandler().setContent(playerData.quiver());
         player.teleport(playerData.location());
         loadingStateHandler.setPlayerLoaded(player);
         runePlayer.setSurvivalMode();

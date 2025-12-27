@@ -22,7 +22,7 @@ public class SupporterLevelUpEffect implements AnimatedEffect {
     @Override
     public void playAt(Location location, double time) {
         if (time < 0) return;
-        if (player.asBukkitPlayer() == null || !player.asBukkitPlayer().isOnline()) return;
+        if (!player.isOnline()) return;
 
         if (time == 1) {
             // Play initial sound

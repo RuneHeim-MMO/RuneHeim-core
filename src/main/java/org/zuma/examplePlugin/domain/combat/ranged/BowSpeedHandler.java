@@ -28,7 +28,6 @@ public class BowSpeedHandler implements Listener {
         }
 
         ItemStack inHandStack = event.getBow();
-        ItemStack consumedArrow = event.getConsumable();
 
         if (inHandStack == null || inHandStack.getType().isAir()) return;
 
@@ -48,10 +47,6 @@ public class BowSpeedHandler implements Listener {
             event.setCancelled(true);
             player.asBukkitPlayer().sendMessage(Component.text("You need to draw the bow further!", Color.ERROR.asColor()));
             SoundType.BOW_SHOT_TOO_EARLY.play(player, true);
-
-            if (consumedArrow != null) {
-                player.giveItemOrDrop(consumedArrow.clone());
-            }
         }
 
     }
