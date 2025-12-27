@@ -38,11 +38,11 @@ public class ResourceNodeSchematicHandler {
         Path schematicPath = ConfigManager.NODE_SCHEMATICS_PATH.resolve(schematicName + ".schem");
 
         if (schematicName == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot spawn schematic for " + node.getNodeType().getLabel() + "! File not found: " + schematicPath);
             return;
         }
 
-        spawner.clearLastPaste();
-        Clipboard spawnClipboard = spawner.pasteSchematic(location, schematicPath.toFile(), true, false);
+        Clipboard spawnClipboard = spawner.pasteSchematic(location, schematicPath.toFile(), false, false);
 
         if (spawnClipboard == null) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed spawning schematic for " + node.getNodeType().getLabel() + "! File: " + schematicPath);
