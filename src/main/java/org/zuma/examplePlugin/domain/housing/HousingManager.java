@@ -78,7 +78,7 @@ public class HousingManager implements Listener {
     }
 
     public void init() {
-        if (ConfigManager.getIsPreviewServer()) {
+        if (ConfigManager.getIsPreviewServer() && !ConfigManager.environment.equals(EnvironmentType.DEVELOPMENT)) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Preview server detected, skipping housing manager initialization.");
             return;
         }
