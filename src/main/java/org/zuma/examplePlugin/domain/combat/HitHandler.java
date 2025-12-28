@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import org.zuma.examplePlugin.RuneQuestPlugin;
@@ -88,6 +89,8 @@ public class HitHandler {
         List<Entity> nearbyEntities = player.getNearbyEntities(radiusWithBaseReach, radiusWithBaseReach, radiusWithBaseReach);
         for (Entity entity : nearbyEntities) {
             AbstractMob matchingMob = RuneQuestPlugin.getMobRegistry().getMob(entity);
+
+
             if (!(matchingMob instanceof CombatEntity combatMob)) continue;
             if (combatMob.equals(originalDefender)) continue; // skip original target
 
@@ -97,6 +100,10 @@ public class HitHandler {
             double dot = toEntity.dot(direction);
             double magnitude = toEntity.length() * direction.length(); // only magnitude needed once
             if (dot / magnitude <= coneDotThreshold) continue; // skip if not in front
+
+            if (matchingMob.getEntity() instanceof Mob mob && mob.getTargetEntity(16) == null) {
+                mob.setTarget(player); // set target to attacker player if no current target
+            }
 
             Hit splashHit = HitCalculator.getNewHit(attacker, combatMob, type, isSpecialAttack, true);
             applyHit(attacker, combatMob, splashHit);
