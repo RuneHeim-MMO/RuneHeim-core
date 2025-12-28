@@ -3,6 +3,8 @@ package org.zuma.examplePlugin.domain.housing.template;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.config.ConfigManager;
+import org.zuma.examplePlugin.core.config.EnvironmentType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.housing.HousingManager;
 import org.zuma.examplePlugin.domain.housing.instance.HouseInstance;
@@ -52,6 +54,10 @@ public class HousingMetaLoader {
 
     // Load all house template, in order to validate them and extract metadata (interactive elements)
     public void loadTemplatesMeta() {
+        if (ConfigManager.getIsPreviewServer() && !ConfigManager.environment.equals(EnvironmentType.DEVELOPMENT)) {
+            return;
+        }
+
         for (HouseTemplate template : HouseTemplate.values()) {
             try {
                 HouseInstance testInstance = manager.getInstanceCreator().createInstance(UUID.randomUUID(), UUID.randomUUID(), "Template", template, true, new HashMap<>());

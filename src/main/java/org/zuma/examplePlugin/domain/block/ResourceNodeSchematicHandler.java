@@ -38,6 +38,7 @@ public class ResourceNodeSchematicHandler {
         Path schematicPath = ConfigManager.NODE_SCHEMATICS_PATH.resolve(schematicName + ".schem");
 
         if (schematicName == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot spawn schematic for " + node.getNodeType().getLabel() + "! File not found: " + schematicPath);
             return;
         }
 

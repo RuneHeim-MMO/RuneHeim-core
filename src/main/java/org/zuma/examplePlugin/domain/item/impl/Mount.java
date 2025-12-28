@@ -147,7 +147,9 @@ public class Mount extends EquipableItemType implements Stateful {
 
     @Nullable
     public UUID spawn(RunePlayer player, MountState state) {
-        if (!canSpawnAt(player.asBukkitPlayer().getLocation())) {
+        Location spawnLocation = player.asBukkitPlayer().getLocation().clone().add(0, 0.5, 0);
+
+        if (!canSpawnAt(spawnLocation)) {
             HudService.sendFailMessage(player, Component.text("Not enough space for your mount!"));
             return null;
         }
@@ -156,8 +158,8 @@ public class Mount extends EquipableItemType implements Stateful {
             state.setName(player.asBukkitPlayer().getName() + "'s " + this.displayName, false);
         }
 
-        Location loc = player.asBukkitPlayer().getLocation();
-        Entity horseEntity = loc.getWorld().spawnEntity(loc, baseEntity == null ? EntityType.HORSE : baseEntity);
+        player.asBukkitPlayer().teleport(spawnLocation);
+        Entity horseEntity = spawnLocation.getWorld().spawnEntity(spawnLocation, baseEntity == null ? EntityType.HORSE : baseEntity);
 
         if (!(horseEntity instanceof AbstractHorse abstractHorse)) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot spawn mount " + this.displayName + "! Base model is not AbstractHorse.");

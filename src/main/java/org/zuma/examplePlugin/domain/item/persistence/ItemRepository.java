@@ -2114,7 +2114,7 @@ public class ItemRepository {
 
                 // SHORTBOWS
 
-                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON, ItemId.SHORT_BOW.asInt(), Material.BOW, ItemRarity.COMMON, "Oak Shortbow", List.of("A basic shortbow made from oak."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON, ItemId.SHORT_BOW.asInt(), Material.BOW, ItemRarity.COMMON, "Shortbow", List.of("A basic shortbow made from oak."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.SLOW, null,
                                         List.of(
@@ -2176,7 +2176,7 @@ public class ItemRepository {
 
                 // LONGBOWS
 
-                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON, ItemId.LONG_BOW.asInt(), Material.BOW, ItemRarity.COMMON, "Oak Longbow", List.of("A standard longbow with increased range."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                new ItemEntity(new AbstractItemMeta(ItemType.RANGED_WEAPON, ItemId.LONG_BOW.asInt(), Material.BOW, ItemRarity.COMMON, "Longbow", List.of("A standard longbow with increased range."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new EquipableWeaponTypeMeta(WeaponSpeed.VERY_SLOW, null,
                                         List.of(
