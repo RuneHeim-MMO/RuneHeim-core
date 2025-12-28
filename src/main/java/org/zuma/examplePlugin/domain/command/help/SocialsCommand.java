@@ -43,7 +43,7 @@ public class SocialsCommand implements BasicCommand {
         sender.sendMessage(Component.empty()); // top spacing
         sender.sendMessage(line);
         sender.sendMessage(
-                Component.text("RuneHeim Links")
+                Component.text("RuneHeim Social Links")
                         .color(Color.SERVER_BRAND.asColor())
                         .decorate(TextDecoration.BOLD)
         );
@@ -51,11 +51,12 @@ public class SocialsCommand implements BasicCommand {
 
         sendLink(1, sender, "Website", "https://runeheim.org");
         sendLink(2, sender, "Our store", "https://store.runeheim.org");
-        sendLink(3, sender, "Database/Wiki (WIP)", "https://database.runeheim.org/");
-        sendLink(4, sender, "Map", "https://database.runeheim.org/map");
-        sendLink(5, sender, "Discord", "https://discord.com/invite/dZpS2mkb2k");
-        sendLink(6, sender, "YouTube", "https://www.youtube.com/@RuneHeimOfficial");
-        sendLink(7, sender, "X (Twitter)", "https://x.com/RuneHeimMMORPG");
+        sendLink(3, sender, "Hi-scores / Wiki", "https://database.runeheim.org/");
+        sendLink(4, sender, "Rules", "https://runeheim.org/rules");
+        sendLink(5, sender, "Map", "https://database.runeheim.org/map");
+        sendLink(6, sender, "Discord", "https://discord.com/invite/dZpS2mkb2k");
+        sendLink(7, sender, "YouTube", "https://www.youtube.com/@RuneHeimOfficial");
+        sendLink(8, sender, "X (Twitter)", "https://x.com/RuneHeimMMORPG");
 
         sender.sendMessage(line);
         sender.sendMessage(Component.empty());
