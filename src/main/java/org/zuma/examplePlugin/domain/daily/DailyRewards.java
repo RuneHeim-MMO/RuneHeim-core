@@ -111,6 +111,7 @@ public class DailyRewards {
 
         long daysBetween = java.time.temporal.ChronoUnit.DAYS.between(last, current);
         boolean isNextOverRewardsBoundary = currentStreak + 1 > rewardEntries.size();
+        boolean shouldSetNewRewardsIfStreakLost = currentStreak >= 7;
 
         if ((isNextOverRewardsBoundary && daysBetween == 1) || daysBetween > 1) {
             String serverMessage = isNextOverRewardsBoundary && daysBetween == 1
@@ -142,6 +143,10 @@ public class DailyRewards {
                 } else {
                     HudService.sendInfoMessage(player, Component.text("Your daily reward streak has been reset due to inactivity. Login daily to maintain your streak!"));
                     SoundType.DAILY_REWARD_LOSE_STREAK.play(player, false);
+
+                    if (shouldSetNewRewardsIfStreakLost) {
+                        RuneQuestPlugin.getDailyRewardHandler().assignNewDailyRewards(this);
+                    }
                 }
 
             }, 60L);
