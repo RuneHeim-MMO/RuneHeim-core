@@ -111,7 +111,7 @@ public class DailyRewards {
 
         long daysBetween = java.time.temporal.ChronoUnit.DAYS.between(last, current);
         boolean isNextOverRewardsBoundary = currentStreak + 1 > rewardEntries.size();
-        boolean shouldSetNewRewardsIfStreakLost = currentStreak >= 7;
+        boolean shouldSetNewRewardsIfStreakLost = currentStreak >= 4;
 
         if ((isNextOverRewardsBoundary && daysBetween == 1) || daysBetween > 1) {
             String serverMessage = isNextOverRewardsBoundary && daysBetween == 1
@@ -129,6 +129,15 @@ public class DailyRewards {
             lastUpdateTimestamp = now;
             RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Reset daily reward streak for player " + player.getUUID() + " due to " + serverMessage);
 
+            if (isNextOverRewardsBoundary && daysBetween == 1) {
+                SoundType.DAILY_REWARD_RESET_STREAK.play(player, false);
+                RuneQuestPlugin.getDailyRewardHandler().assignNewDailyRewards(this);
+            } else {
+                if (shouldSetNewRewardsIfStreakLost) {
+                    RuneQuestPlugin.getDailyRewardHandler().assignNewDailyRewards(this);
+                }
+            }
+
             Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
                 Player bukkitPlayer = player.asBukkitPlayer();
 
@@ -138,15 +147,10 @@ public class DailyRewards {
 
                 if (isNextOverRewardsBoundary && daysBetween == 1) {
                     HudService.sendInfoMessage(player, Component.text("Your daily reward streak has been reset because you have exceeded the maximum streak."));
-                    SoundType.DAILY_REWARD_RESET_STREAK.play(player, false);
-                    RuneQuestPlugin.getDailyRewardHandler().assignNewDailyRewards(this);
+
                 } else {
                     HudService.sendInfoMessage(player, Component.text("Your daily reward streak has been reset due to inactivity. Login daily to maintain your streak!"));
                     SoundType.DAILY_REWARD_LOSE_STREAK.play(player, false);
-
-                    if (shouldSetNewRewardsIfStreakLost) {
-                        RuneQuestPlugin.getDailyRewardHandler().assignNewDailyRewards(this);
-                    }
                 }
 
             }, 60L);
