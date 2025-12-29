@@ -63,9 +63,6 @@ public class BotVerificationMenu extends IndividualGUI {
 
         switch (color) {
             case RED -> i = new ItemStack(Material.RED_WOOL);
-            case CYAN -> i = new ItemStack(Material.CYAN_WOOL);
-            case GREEN -> i = new ItemStack(Material.GREEN_WOOL);
-            case YELLOW -> i = new ItemStack(Material.YELLOW_WOOL);
             case BLACK -> i = new ItemStack(Material.BLACK_WOOL);
             case WHITE -> i = new ItemStack(Material.WHITE_WOOL);
             default -> i = new ItemStack(Material.WHITE_WOOL);
@@ -151,9 +148,6 @@ public class BotVerificationMenu extends IndividualGUI {
 
         WoolColor clickedColor = switch (clickedItem.getType()) {
             case RED_WOOL -> WoolColor.RED;
-            case CYAN_WOOL -> WoolColor.CYAN;
-            case GREEN_WOOL -> WoolColor.GREEN;
-            case YELLOW_WOOL -> WoolColor.YELLOW;
             case BLACK_WOOL -> WoolColor.BLACK;
             case WHITE_WOOL -> WoolColor.WHITE;
             default -> null;
@@ -166,7 +160,7 @@ public class BotVerificationMenu extends IndividualGUI {
 
         if (clickedColor == task.color) {
             task.decrementAmount();
-            this.inventory.setItem(event.getSlot(), new ItemStack(Material.GRAY_WOOL));
+            this.inventory.setItem(event.getSlot(), null);
 
             SoundType.UI_CLICK.play(player, false);
 
@@ -207,9 +201,6 @@ public class BotVerificationMenu extends IndividualGUI {
 
     private enum WoolColor {
         RED("§cRed"),
-        CYAN("§bCyan"),
-        GREEN("§aGreen"),
-        YELLOW("§eYellow"),
         BLACK("§8Black"),
         WHITE("§fWhite");
 
