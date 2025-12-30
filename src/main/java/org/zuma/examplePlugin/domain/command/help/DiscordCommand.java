@@ -9,6 +9,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.domain.quest.constants.QuestId;
 
 import java.util.Collection;
 import java.util.List;
@@ -25,8 +27,28 @@ public class DiscordCommand implements BasicCommand {
             return;
         }
 
+        RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(bukkitPlayer);
+
+        if (runePlayer == null) {
+            sender.sendMessage(Component.text("Could not find RunePlayer instance!").color(Color.ERROR.asColor()));
+            return;
+        }
+
+
         Component line = Component.text("───────────────────────────────────")
                 .color(NamedTextColor.DARK_GRAY);
+
+        boolean completedTutorial = runePlayer.getCompletedQuestIds().contains(QuestId.TUTORIAL.getId());
+
+        if (!completedTutorial) {
+            bukkitPlayer.sendMessage(line);
+            bukkitPlayer.sendMessage(Component.empty());
+            SocialsCommand.sendLink(1, sender, "Discord", "https://discord.gg/dZpS2mkb2k");
+            bukkitPlayer.sendMessage(Component.empty());
+            bukkitPlayer.sendMessage(Component.text("Tutorial must be completed before you can verify your Discord account.", NamedTextColor.YELLOW));
+            bukkitPlayer.sendMessage(line);
+            return;
+        }
 
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
             boolean isVerified = RuneQuestPlugin.getDiscordVerificationHandler().isPlayerVerified(bukkitPlayer.getUniqueId());
