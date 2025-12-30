@@ -1,5 +1,7 @@
 package org.zuma.examplePlugin.domain.discord;
 
+import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.discord.persistence.VerificationRepository;
 
 import javax.annotation.Nullable;
@@ -14,7 +16,7 @@ public class DiscordVerificationHandler {
     }
 
     @Nullable
-    public String createOrUpdateVerificationCode(UUID playerUUID) throws IllegalStateException {
+    public String createOrUpdateVerificationCode(UUID playerUUID) {
         String code = generateCode();
 
         try {
@@ -24,6 +26,7 @@ public class DiscordVerificationHandler {
                 repository.addVerificationCode(playerUUID, code);
             }
         } catch (Exception e) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to create or update verification code for player " + playerUUID, e);
             return null;
         }
 
@@ -34,6 +37,7 @@ public class DiscordVerificationHandler {
         try {
             return repository.isPlayerVerified(playerUUID);
         } catch (Exception e) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Failed to check verification status for player " + playerUUID, e);
             return false;
         }
     }
@@ -47,7 +51,6 @@ public class DiscordVerificationHandler {
                 'a' + r.nextInt(26), 'a' + r.nextInt(26), 'a' + r.nextInt(26)
         );
     }
-
 
 
 }
