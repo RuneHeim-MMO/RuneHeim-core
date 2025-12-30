@@ -148,6 +148,32 @@ public class InteractableBlockRepository {
                             "&6No Items Lost On Death"
                     ), MarkerType.DUNGEON, "Lava Dungeon")), 1)));
 
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9986, BlockType.Door, BlockFace.EAST, new Location(Bukkit.getWorld("world"), -313, 41, -325), HologramSide.FRONT),
+                    new VersionedJson(new Gson().toJson(new DoorBlockMeta("spider-dungeon-door", 5, 5)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9985, BlockType.Door, BlockFace.EAST, new Location(Bukkit.getWorld("world"), -315, 41, -325), HologramSide.FRONT),
+                    new VersionedJson(new Gson().toJson(new DoorBlockMeta("spider-dungeon-door", 5, 5)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9984, BlockType.ItemTrigger, BlockFace.EAST, new Location(Bukkit.getWorld("world"), -304, 42, -323), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemCollectorTriggerMeta("spider-dungeon-door-group", "spider-dungeon-door", 10, List.of(new ItemRecord(ItemId.CHITIN_PLATES, 3)))), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9983, BlockType.ButtonTrigger, BlockFace.WEST, new Location(Bukkit.getWorld("world"), -316, 42, -322), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ButtonTriggerMeta("spider-dungeon-door-exit-group", "spider-dungeon-door", 5, "Exit")), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9982, BlockType.InvisibleMarker, BlockFace.EAST, new Location(Bukkit.getWorld("world"), -288, 70, -367), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new InvisibleMarkerMeta(List.of(
+                            "&c" + Icon.SKULL_CLOSED_MOUTH.get() + " Spider Dungeon " + Icon.SKULL_CLOSED_MOUTH.get(),
+                            "&7A dangerous dungeon filled with spiders.",
+                            " ",
+                            "&6Minimum Recommended Level: &e40+",
+                            "&6No Items Lost On Death"
+                    ), MarkerType.DUNGEON, "Spider Dungeon")), 1)));
+
 
         } catch (Exception e) {
             throw new RuntimeException("Failed to fetch block entities", e);

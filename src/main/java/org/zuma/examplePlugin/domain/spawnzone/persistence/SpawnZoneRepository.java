@@ -940,7 +940,7 @@ public class SpawnZoneRepository {
                         new SpawnZoneMobRecord(MobType.GOBLIN_3_BASE_1, 3, 100),
                         new SpawnZoneMobRecord(MobType.GOBLIN_4_BASE_1, 3, 100),
                         new SpawnZoneMobRecord(MobType.GOBLIN_5_BASE_1, 3, 100)
-                ), 30, false, true), 1)),
+                ), 20, false, true), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(121, SpawnZoneType.POINT, 10, 20,
                         new Location(Bukkit.getWorld("world"), 2522, 110, 2454)), toVersionedJson(new PointSpawnZoneMeta(List.of(
@@ -2277,10 +2277,40 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(329, SpawnZoneType.POINT, 30, 100,
                         new Location(Bukkit.getWorld("world"), 222, 72, -26.5)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.DRAKKAR_CONCIERGE, 1, 100)
-                ), false, MarkerType.PLAYER_HOUSING, "Player Housing"), 1))
+                ), false, MarkerType.PLAYER_HOUSING, "Player Housing"), 1)),
+
+                // Spider dungeon
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(330, SpawnZoneType.AREA, 15, 20,
+                        new Location(Bukkit.getWorld("world"), -316, 41, -360)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SPIDER_BABY_BASE_10, 1, 100),
+                        new SpawnZoneMobRecord(MobType.SPIDER_BASE_25, 2, 100)
+                ), 10, false, false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(331, SpawnZoneType.AREA, 15, 20,
+                        new Location(Bukkit.getWorld("world"), -293, 41, -347)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SPIDER_BABY_BASE_10, 1, 100),
+                        new SpawnZoneMobRecord(MobType.SPIDER_BASE_25, 2, 100)
+                ), 10, false, false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(332, SpawnZoneType.AREA, 15, 20,
+                        new Location(Bukkit.getWorld("world"), -262, 41, -346)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SPIDER_BABY_BASE_10, 1, 100),
+                        new SpawnZoneMobRecord(MobType.SPIDER_BASE_25, 3, 100)
+                ), 10, false, false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(333, SpawnZoneType.AREA, 15, 20,
+                        new Location(Bukkit.getWorld("world"), -322, 43, -324)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SPIDER_BABY_BASE_10, 5, 100)
+                ), 20, false, false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(334, SpawnZoneType.POINT, 20, 100,
+                        new Location(Bukkit.getWorld("world"), -322, 43, -324)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SPIDER_BOSS_BASE_40, 1, 100)
+                ), false, null, null), 1))
 
 
-                // last 328
+                // last 334
 
 
         );

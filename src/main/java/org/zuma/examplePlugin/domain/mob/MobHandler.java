@@ -94,6 +94,7 @@ public class MobHandler {
 
                     if (mob != null) {
                         mob.onDisable();
+                        mob.handleMechanicsCleanup();
                     }
 
                     registry.removeMob(UUID.fromString(value));

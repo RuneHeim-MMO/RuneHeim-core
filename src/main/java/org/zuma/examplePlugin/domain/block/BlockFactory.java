@@ -10,6 +10,7 @@ import org.zuma.examplePlugin.domain.block.impl.door.DoorBlock;
 import org.zuma.examplePlugin.domain.block.impl.door.TeleportDoor;
 import org.zuma.examplePlugin.domain.block.impl.furniture.CombatDummyFurniture;
 import org.zuma.examplePlugin.domain.block.impl.furniture.LightableBlock;
+import org.zuma.examplePlugin.domain.block.impl.trigger.ButtonTrigger;
 import org.zuma.examplePlugin.domain.block.impl.trigger.ItemCollectorTrigger;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.v1.*;
@@ -26,6 +27,7 @@ public class BlockFactory {
             case Altar -> createAltar(meta, json);
             case Door -> createDoor(meta, json);
             case ItemTrigger -> createItemTrigger(meta, json);
+            case ButtonTrigger -> createButtonTrigger(meta, json);
             case TeleportDoor -> createTeleportDoor(meta, json);
             case InvisibleMarker -> createInvisibleMarker(meta, json);
             case CommandBlock -> createCommandBlock(meta, json);
@@ -128,6 +130,23 @@ public class BlockFactory {
                         deserialized.world(), deserialized.x(), deserialized.y(), deserialized.z(), deserialized.yaw(),
                         deserialized.questLockedMeta());
 
+                block.initializeBlock();
+                return block;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+    }
+
+    private ButtonTrigger createButtonTrigger(AbstractInteractableBlockMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create item collector trigger " + meta.type() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+
+                ButtonTriggerMeta deserialized = new Gson().fromJson(json.meta(), ButtonTriggerMeta.class);
+                ButtonTrigger block = new ButtonTrigger(meta, deserialized.groupId(), deserialized.triggeredEntityId(), deserialized.triggeredDurationSeconds(), deserialized.title());
                 block.initializeBlock();
                 return block;
             }

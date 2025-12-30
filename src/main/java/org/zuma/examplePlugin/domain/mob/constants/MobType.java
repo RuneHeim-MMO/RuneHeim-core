@@ -248,6 +248,11 @@ public enum MobType {
     RAT_GRAY_BASE_1,
     RAT_ALBINO_BASE_1,
 
+    // Spiders
+    SPIDER_BABY_BASE_10,
+    SPIDER_BASE_25,
+    SPIDER_BOSS_BASE_40,
+
     AXOLOTL,
     BEE,
     CAT,

@@ -14,7 +14,8 @@ public enum BlockType {
     CommandBlock(8, Material.LODESTONE),
     LightableBlock(9, Material.REDSTONE_LAMP),
     CombatDummyFurniture(10, Material.ARMOR_STAND),
-    CropResourceNode(11, Material.WHEAT);
+    CropResourceNode(11, Material.WHEAT),
+    ButtonTrigger(12, Material.STONE_BUTTON);
 
     private final int id;
     private final Material material;
