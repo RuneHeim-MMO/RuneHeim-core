@@ -68,7 +68,7 @@ public class CommandModule implements PluginModule {
                 event -> event.registrar().register("shop", new StoreCommand()));
 
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> event.registrar().register("discord", new SocialsCommand()));
+                event -> event.registrar().register("discord", new DiscordCommand()));
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("website", new SocialsCommand()));
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,

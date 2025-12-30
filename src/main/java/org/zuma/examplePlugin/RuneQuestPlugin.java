@@ -17,6 +17,7 @@ import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.daily.DailyRewardHandler;
 import org.zuma.examplePlugin.domain.dialog.DialogHandler;
+import org.zuma.examplePlugin.domain.discord.DiscordVerificationHandler;
 import org.zuma.examplePlugin.domain.droptable.DropTableHandler;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
 import org.zuma.examplePlugin.domain.housing.HousingManager;
@@ -59,6 +60,7 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new AnalyticsModule(),
                         new AnnouncementModule(),
                         new WhitelistModule(),
+                        new DiscordVerificationModule(),
 
                         new PacketsModule(),
                         new QuestModule(),
@@ -219,6 +221,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static BlockLoader getBlockLoader() {
         return pluginInstance.moduleContext.get(BlockLoader.class);
+    }
+
+    public static DiscordVerificationHandler getDiscordVerificationHandler() {
+        return pluginInstance.moduleContext.get(DiscordVerificationHandler.class);
     }
 
     @Override
