@@ -94,14 +94,16 @@ public class PlayerScoreboardManager {
             }
         }
 
-        if (modifierActive) {
+        if (modifierActive && visibleModifierIndex != null && activeModifiers.size() > 0) {
             o.getScore("         ").setScore(lineIndex--);
             ServerModifierType[] types = activeModifiers.keySet().toArray(new ServerModifierType[0]);
-            ServerModifierType visibleType = types[visibleModifierIndex];
-            Integer minutesLeft = activeModifiers.get(visibleType);
-            String effectLabel = visibleType.getLabel().replace(" Bomb", "");
+            if (visibleModifierIndex < types.length) {
+                ServerModifierType visibleType = types[visibleModifierIndex];
+                Integer minutesLeft = activeModifiers.get(visibleType);
+                String effectLabel = visibleType.getLabel().replace(" Bomb", "");
 
-            o.getScore(TextUtils.centerText("§a" + minutesLeft + "m " + visibleType.getColor() + effectLabel, PlayerScoreboardManager.CENTERING_PADDING)).setScore(lineIndex--);
+                o.getScore(TextUtils.centerText("§a" + minutesLeft + "m " + visibleType.getColor() + effectLabel, PlayerScoreboardManager.CENTERING_PADDING)).setScore(lineIndex--);
+            }
         }
 
         o.getScore("      ").setScore(lineIndex--);

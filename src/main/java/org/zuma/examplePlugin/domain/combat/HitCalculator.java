@@ -5,6 +5,7 @@ import org.zuma.examplePlugin.domain.combat.constants.AttackType;
 import org.zuma.examplePlugin.domain.combat.constants.HitType;
 import org.zuma.examplePlugin.domain.modifier.Modifier;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
@@ -90,8 +91,8 @@ public class HitCalculator {
             int baseDamage = (int) (Math.random() * (maxHit + 1));
             int damage = Math.min(defender.getHealth(), baseDamage);
 
-            if (type.equals(AttackType.RANGED)) {
-                damage = Math.max(1, damage); // Ensure at least 1 damage for ranged attacks on successful hit
+            if (attacker instanceof RunePlayer) {
+                damage = Math.max(1, damage); // Ensure at least 1 damage for attacks on successful hit
             }
 
             return new Hit(attacker, defender, type, damage, getHitType(defender, damage), (int) maxHit, hitChance, isSpecialAttack, isSplashHit);

@@ -30,12 +30,11 @@ public class StoreCommand implements BasicCommand {
         sender.sendMessage(Component.empty()); // top spacing
         sender.sendMessage(line);
         sender.sendMessage(
-                Component.text("RuneHeim Links")
+                Component.text("RuneHeim Store")
                         .color(Color.SERVER_BRAND.asColor())
                         .decorate(TextDecoration.BOLD)
         );
         sender.sendMessage(line);
-
 
         SocialsCommand.sendLink(1, sender, "Store", "https://store.runeheim.org");
 

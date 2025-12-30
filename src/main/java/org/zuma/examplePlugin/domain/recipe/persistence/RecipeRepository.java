@@ -285,7 +285,7 @@ public class RecipeRepository {
                         List.of(new SkillRequirement(SkillType.CRAFTING, 44)),
                         List.of(
                                 new IngredientRecord(ItemId.LEATHER_BODY, 1, true, false),
-                                new IngredientRecord(ItemId.IRON_ARROW_TIPS, 10, false, false)
+                                new IngredientRecord(ItemId.IRON_ARROW_TIPS, 10, true, false)
                         ),
                         new ItemRecord(ItemId.STUDDED_LEATHER_BODY, 1),
                         null, List.of(new SkillXpRecord(SkillType.CRAFTING, 110.0)), null), null),
@@ -294,7 +294,7 @@ public class RecipeRepository {
                         List.of(new SkillRequirement(SkillType.CRAFTING, 41)),
                         List.of(
                                 new IngredientRecord(ItemId.LEATHER_LEGGINGS, 1, true, false),
-                                new IngredientRecord(ItemId.IRON_ARROW_TIPS, 8, false, false)
+                                new IngredientRecord(ItemId.IRON_ARROW_TIPS, 8, true, false)
                         ),
                         new ItemRecord(ItemId.STUDDED_LEATHER_LEGGINGS, 1),
                         null, List.of(new SkillXpRecord(SkillType.CRAFTING, 115.0)), null), null),

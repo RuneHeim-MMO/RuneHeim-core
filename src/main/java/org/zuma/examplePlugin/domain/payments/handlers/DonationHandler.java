@@ -22,6 +22,7 @@ import org.zuma.examplePlugin.events.payment.RankReloadEvent;
 import org.zuma.examplePlugin.events.payment.SupportLevelUpgradeEvent;
 
 import java.math.BigDecimal;
+import java.util.Map;
 import java.util.UUID;
 
 public class DonationHandler {
@@ -52,14 +53,48 @@ public class DonationHandler {
     public static void addBonusBomb(UUID uuid, ServerModifierType type, int amount) {
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
             synchronized (CONCURRENT_LOCK) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[DONATE] Starting addBonusBomb for " + type.getLabel() + " amount: " + amount + " player: " + uuid);
+                
                 PlayerBombsContainer container = RuneQuestPlugin.getPlayerManager().getPlayerBombsContainerFromDatabaseSync(uuid);
+                
+                // Log container state before modification
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[DONATE] Container before: Resource=" + container.getIncreasedResourceDropsBombs() + 
+                    ", Skill=" + container.getDoubleSkillXPBombs() + ", Strike=" + container.getIncreasedPerfectStrikeBombs());
+                
                 container.addBomb(type, amount);
+                
+                // Log container state after modification
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[DONATE] Container after: Resource=" + container.getIncreasedResourceDropsBombs() + 
+                    ", Skill=" + container.getDoubleSkillXPBombs() + ", Strike=" + container.getIncreasedPerfectStrikeBombs());
+                
                 RuneQuestPlugin.getPlayerManager().writeNewPlayerBombsContainerToDatabaseSync(uuid, container);
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[DONATE] Database write completed for " + type.getLabel());
 
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                     BombContainerReloadEvent reloadEvent = new BombContainerReloadEvent(new BombContainerReloadEvent.Payload(uuid, container));
                     Bukkit.getServer().getPluginManager().callEvent(reloadEvent);
                     RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[DONATE] Added " + amount + " " + type.getLabel() + " bomb(s) to player " + uuid);
+                });
+            }
+        });
+    }
+
+    public static void addMultipleBonusBombs(UUID uuid, Map<ServerModifierType, Integer> bombsToAdd) {
+        Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
+            synchronized (CONCURRENT_LOCK) {
+                PlayerBombsContainer container = RuneQuestPlugin.getPlayerManager().getPlayerBombsContainerFromDatabaseSync(uuid);
+                
+                // Add all bomb types in one operation
+                for (Map.Entry<ServerModifierType, Integer> entry : bombsToAdd.entrySet()) {
+                    container.addBomb(entry.getKey(), entry.getValue());
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "[DONATE] Added " + entry.getValue() + " " + entry.getKey().getLabel() + " bomb(s) to player " + uuid);
+                }
+                
+                RuneQuestPlugin.getPlayerManager().writeNewPlayerBombsContainerToDatabaseSync(uuid, container);
+
+                Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+                    BombContainerReloadEvent reloadEvent = new BombContainerReloadEvent(new BombContainerReloadEvent.Payload(uuid, container));
+                    Bukkit.getServer().getPluginManager().callEvent(reloadEvent);
                 });
             }
         });

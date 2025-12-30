@@ -10,10 +10,7 @@ import org.zuma.examplePlugin.domain.block.persistence.InteractableBlockReposito
 import org.zuma.examplePlugin.domain.combat.HitHandler;
 import org.zuma.examplePlugin.domain.command.*;
 import org.zuma.examplePlugin.domain.command.backend.ConsoleActionCommand;
-import org.zuma.examplePlugin.domain.command.help.HelpCommand;
-import org.zuma.examplePlugin.domain.command.help.MapCommand;
-import org.zuma.examplePlugin.domain.command.help.SocialsCommand;
-import org.zuma.examplePlugin.domain.command.help.StoreCommand;
+import org.zuma.examplePlugin.domain.command.help.*;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
 import org.zuma.examplePlugin.features.admin.commands.AdminCommand;
@@ -71,13 +68,13 @@ public class CommandModule implements PluginModule {
                 event -> event.registrar().register("shop", new StoreCommand()));
 
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> event.registrar().register("discord", new SocialsCommand()));
+                event -> event.registrar().register("discord", new DiscordCommand()));
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("website", new SocialsCommand()));
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("site", new SocialsCommand()));
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> event.registrar().register("rules", new SocialsCommand()));
+                event -> event.registrar().register("rules", new RulesCommand()));
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("social", new SocialsCommand()));
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
