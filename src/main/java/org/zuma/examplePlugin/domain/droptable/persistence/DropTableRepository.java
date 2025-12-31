@@ -446,7 +446,7 @@ public class DropTableRepository {
                         new DropTableEntry(ItemId.AMULET_OF_THE_WARD.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.AMULET_OF_THE_SHARPSHOOTER.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.AMULET_OF_THE_GLADIATOR.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
-                        new DropTableEntry(ItemId.LARGE_ITEM_BAG.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.MEDIUM_ITEM_BAG.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.FAIRY_OF_DARKNESS.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.BLADESTONE.asInt(), 1, 1, 120, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
@@ -468,7 +468,7 @@ public class DropTableRepository {
                         new DropTableEntry(ItemId.AMULET_OF_THE_HUNTER.asInt(), 1, 1, 60, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.AMULET_OF_FORTITUDE.asInt(), 1, 1, 60, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.AMULET_OF_THE_DUELIST.asInt(), 1, 1, 60, DropTableEntry.Type.ITEM),
-                        new DropTableEntry(ItemId.MEDIUM_ITEM_BAG.asInt(), 1, 1, 70, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.SMALL_ITEM_BAG.asInt(), 1, 1, 70, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.FAIRY_OF_SILENCE.asInt(), 1, 1, 80, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.OBSIDIAN_BULWARK.asInt(), 1, 1, 120, DropTableEntry.Type.ITEM)
                 ), null)), 1)),

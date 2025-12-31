@@ -99,6 +99,11 @@ public class MobHandler {
 
                     registry.removeMob(UUID.fromString(value));
                     registry.getDisguisedMobs().remove(mob);
+
+                    if(entity instanceof ArmorStand){
+                        return;
+                    }
+
                     entity.remove();
                 }
 

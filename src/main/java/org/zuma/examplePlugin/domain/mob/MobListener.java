@@ -1,10 +1,7 @@
 package org.zuma.examplePlugin.domain.mob;
 
 import io.papermc.paper.event.entity.EntityKnockbackEvent;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -155,6 +152,10 @@ public class MobListener implements Listener {
         Arrays.stream(event.getChunk().getEntities()).forEach(entity -> {
             if (seen.contains(entity.getUniqueId())) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Duplicate entity uuid on chunk load! " + entity.getUniqueId());
+                return;
+            }
+
+            if (entity instanceof ArmorStand) {
                 return;
             }
 
