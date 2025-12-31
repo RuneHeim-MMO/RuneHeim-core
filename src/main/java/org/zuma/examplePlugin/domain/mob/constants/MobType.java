@@ -28,6 +28,7 @@ public enum MobType {
     BROWN_FARMHOUSE_MOUNT_SHOP,
     ABRAHAM_FAIRY_TEACHER,
     SHEPHERD, // Sheep shearer quest
+    DOCTOR_BRAM, // Threads of aid quest
 
     // Random citizens
     CITY_CITIZEN_MAN,

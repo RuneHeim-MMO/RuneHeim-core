@@ -2307,6 +2307,11 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(334, SpawnZoneType.POINT, 20, 100,
                         new Location(Bukkit.getWorld("world"), -322, 43, -324)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.SPIDER_BOSS_BASE_40, 1, 100)
+                ), false, null, null), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(335, SpawnZoneType.POINT, 30, 100,
+                        new Location(Bukkit.getWorld("world"), 977, 77, 485)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.DOCTOR_BRAM, 1, 100)
                 ), false, null, null), 1))
 
 

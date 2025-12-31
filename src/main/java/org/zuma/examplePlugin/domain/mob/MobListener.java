@@ -161,6 +161,7 @@ public class MobListener implements Listener {
             seen.add(entity.getUniqueId());
 
             AbstractMob mob = mobRegistry.getMob(entity);
+
             if (mob == null && entity instanceof LivingEntity && !(entity instanceof Player))
                 entity.remove(); // Remove unknown entities.
 

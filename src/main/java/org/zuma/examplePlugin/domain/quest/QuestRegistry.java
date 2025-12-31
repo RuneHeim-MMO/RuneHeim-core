@@ -159,6 +159,16 @@ public class QuestRegistry {
                 new DialogStep(RuneQuestPlugin.getInstance(), smeltersAssistant, "Bring §620x Purified Coal Ore §fto §6Smeltery Worker §fin §6Drakkar.", "smeltery-assistant.bring-coal", null)
         )));
 
+        Quest threadsOfAid = new Quest(QuestId.THREADS_OF_AID.getId(), "Threads of Aid", QuestDifficulty.MEDIUM, false, null)
+                .setRequirements(List.of(new SkillRequirement(SkillType.ATTACK, 30), new SkillRequirement(SkillType.STRENGTH, 30), new SkillRequirement(SkillType.DEFENCE, 30)))
+                .setRewards(new QuestReward(null, Map.of(SkillType.HITPOINTS, 1200.0), 1600));
+
+        registerQuest(threadsOfAid.addSteps(List.of(
+                new CollectionStep(RuneQuestPlugin.getInstance(), threadsOfAid, "Obtain §616x Spider Silk.", "threads-of-aid.obtain-silk", List.of(new ItemRecord(ItemId.SPIDER_SILK, 16)), null),
+                new CollectionStep(RuneQuestPlugin.getInstance(), threadsOfAid, "Obtain §61x Max Health Potion.", "threads-of-aid.obtain-potion", List.of(new ItemRecord(ItemId.HEALTH_POTION_I, 1)), null),
+                new DialogStep(RuneQuestPlugin.getInstance(), threadsOfAid, "Bring §616x Spider Silk & §61x Health Potion to §6Doctor Bram", "threads-of-aid.bring-ingredients", null)
+        )));
+
 
     }
 

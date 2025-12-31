@@ -30,6 +30,9 @@ public class QuestMobs {
         registry.register(MobType.SHEPHERD.getId(), () -> new DialogMob("Shepherd", EquipmentSet.SHEPHERD,
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "shepherd", null, 0, Dialogs.sheepShearerDialog));
 
+        registry.register(MobType.DOCTOR_BRAM.getId(), () -> new DialogMob("Doctor Bram", EquipmentSet.DOCTOR_BRAM,
+                MobBehaviors.VILLAGER_MAN_3.getBehavior(), "doctor_bram", null, 20, Dialogs.doctorBramDialog));
+
         // The sick camels quest
         registry.register(MobType.RAFIQ_CAMEL_TRADER.getId(), () -> new DialogMob("Rafiq", null,
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "rafiq_camel_trader", null, 50, Dialogs.rafiqCamelTrader));

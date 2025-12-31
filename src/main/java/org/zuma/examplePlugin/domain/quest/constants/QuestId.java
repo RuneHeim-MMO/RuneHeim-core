@@ -12,7 +12,8 @@ public enum QuestId {
     WELCOME_TO_DRAKKAR_II("welcome-to-drakkar-ii"),
     WELCOME_TO_DRAKKAR_III("welcome-to-drakkar-iii"),
 
-    HOT_MESS_AT_THE_SMELTERY("smelters-assistant");
+    HOT_MESS_AT_THE_SMELTERY("smelters-assistant"),
+    THREADS_OF_AID("threads-of-aid");
 
     private final String id;
 
