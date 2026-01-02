@@ -7,7 +7,7 @@ import org.zuma.examplePlugin.domain.mob.meta.FriendlyImmortalMobMeta;
 
 public class StaticMob extends FriendlyImmortalMob {
     public StaticMob(EntityType type, boolean silent) {
-        super(new FriendlyImmortalMobMeta(Component.empty(), type, silent));
+        super(new FriendlyImmortalMobMeta(Component.empty(), type, silent, false));
         setMaxWalkDistance(0);
     }
 }

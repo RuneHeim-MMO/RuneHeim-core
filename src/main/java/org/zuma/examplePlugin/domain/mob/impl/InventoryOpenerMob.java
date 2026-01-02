@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class InventoryOpenerMob extends AbstractInventoryOpener {
 
     public InventoryOpenerMob(String displayName, @Nullable EquipmentSet equipmentSet, MobBehavior behavior, @Nullable String skin, @Nullable String model, int inventoryId, int maxWalkDistance) {
-        super(new FriendlyImmortalMobMeta(Component.text(displayName), EntityType.SHEEP, true), inventoryId, skin, model, maxWalkDistance);
+        super(new FriendlyImmortalMobMeta(Component.text(displayName), EntityType.SHEEP, true, false), inventoryId, skin, model, maxWalkDistance);
 
         if (equipmentSet != null) super.setMobEquipment(equipmentSet.asMobEquipmentMeta());
         super.setBehavior(behavior);

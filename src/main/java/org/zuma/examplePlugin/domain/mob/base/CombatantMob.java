@@ -49,7 +49,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     private boolean isSpecialAttacking;
 
     public CombatantMob(CombatantMobMeta meta) {
-        super(new AbstractMobMeta(true, true, Component.empty(), meta.baseEntity()));
+        super(new AbstractMobMeta(true, true, false, Component.empty(), meta.baseEntity()));
         this.health = meta.maxHealth();
         this.maxHealth = meta.maxHealth();
         this.xpHandler = new PendingXPHandler();
