@@ -270,7 +270,7 @@ public class ItemRepository {
                         toVersionedJson(new MaterialMeta(2250), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ARMADILLO_SCALE.asInt(), Material.COAL, ItemRarity.COMMON, "Armadillo Scale", List.of("A protective scale from an armadillo's shell."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(450), 1)),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.SPIDER_SILK.asInt(), Material.COAL, ItemRarity.COMMON, "Spider Silk", List.of("Dine, silvery thread harvested from giant spiders."), null, true, 1.0),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.SPIDER_SILK.asInt(), Material.COAL, ItemRarity.COMMON, "Spider Silk", List.of("Fine, silvery thread harvested from giant spiders."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(200), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.LINEN_FABRIC.asInt(), Material.COAL, ItemRarity.COMMON, "Linen Fabric", List.of("A sheet of woven flax fibers.", "Durable, breathable, and used in mid-tier tailoring."), null, true, 1.0),

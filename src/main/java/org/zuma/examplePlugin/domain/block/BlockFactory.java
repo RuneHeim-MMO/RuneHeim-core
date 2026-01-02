@@ -139,7 +139,7 @@ public class BlockFactory {
 
     private ButtonTrigger createButtonTrigger(AbstractInteractableBlockMeta meta, @Nullable VersionedJson json) {
         if (json == null) {
-            throw new UnsupportedOperationException("Cannot create item collector trigger " + meta.type() + " required json is null!");
+            throw new UnsupportedOperationException("Cannot create button trigger " + meta.type() + " required json is null!");
         }
 
         switch (json.version()) {

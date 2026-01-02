@@ -32,7 +32,6 @@ public class LaunchTowardsPlayerOnTarget implements MobMechanic {
 
 
         MobUtils.pullEntityTowardMob(living, target, strength, strength / 3);
-        System.out.println("Launched " + target.getName() + " towards " + living.getName());
     }
 
     @Override
