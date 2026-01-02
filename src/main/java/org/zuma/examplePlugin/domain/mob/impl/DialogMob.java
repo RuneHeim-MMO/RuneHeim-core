@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 public class DialogMob extends AbstractDialogMob {
 
     public DialogMob(String displayName, @Nullable EquipmentSet equipmentSet, MobBehavior behavior, @Nullable String skin, @Nullable String model, int maxWalkDistance, Supplier<DialogBuilder> dialog) {
-        super(new FriendlyImmortalMobMeta(Component.text(displayName), EntityType.SHEEP, true), skin, model, maxWalkDistance, dialog);
+        super(new FriendlyImmortalMobMeta(Component.text(displayName), EntityType.SHEEP, true, false), skin, model, maxWalkDistance, dialog);
 
         if (equipmentSet != null) super.setMobEquipment(equipmentSet.asMobEquipmentMeta());
         super.setBehavior(behavior);

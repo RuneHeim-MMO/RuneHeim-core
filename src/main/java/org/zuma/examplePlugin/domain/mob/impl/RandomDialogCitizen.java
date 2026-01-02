@@ -20,7 +20,7 @@ public class RandomDialogCitizen extends AbstractDialogMob {
     private final List<Supplier<DialogBuilder>> dialogTemplates;
 
     public RandomDialogCitizen(String displayName, @Nullable List<EquipmentSet> equipmentSet, @Nullable List<String> skin, @Nullable List<MobBehaviors> behaviors, List<Supplier<DialogBuilder>> dialogs) {
-        super(new FriendlyImmortalMobMeta(Component.text(displayName), EntityType.SHEEP, true), null, null, 500, dialogs.getFirst());
+        super(new FriendlyImmortalMobMeta(Component.text(displayName), EntityType.SHEEP, true, true), null, null, 500, dialogs.getFirst());
         this.dialogTemplates = dialogs;
 
         EquipmentSet randomSet = equipmentSet != null && !equipmentSet.isEmpty() ? equipmentSet.get((int) (Math.random() * equipmentSet.size())) : null;

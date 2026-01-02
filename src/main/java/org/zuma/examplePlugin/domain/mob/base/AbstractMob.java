@@ -54,7 +54,7 @@ public abstract class AbstractMob {
     private Component displayName;
     private EntityType baseMob;
     private String type;
-    private boolean ai, silent, isBaby, isInvulnerable, clearDefaultHandsEquipment, frozen;
+    private boolean ai, silent, isBaby, isInvulnerable, clearDefaultHandsEquipment, frozen, hideName;
     private int maxWalkDistance, yaw, secondsAlive;
     private HashMap<Attribute, Double> customAttributes;
     private List<Integer> dropTableIds;
@@ -89,6 +89,7 @@ public abstract class AbstractMob {
         this.yaw = 0;
         this.secondsAlive = 0;
         this.mobMechanics = new HashMap<>();
+        this.hideName = meta.hideName();
     }
 
     public int getYaw() {
@@ -120,8 +121,13 @@ public abstract class AbstractMob {
 
             if (disguise instanceof MobDisguise) {
                 LivingWatcher watcher = (LivingWatcher) cloned.getWatcher();
-                watcher.setCustomName(healthBarSafeName);
-                watcher.setCustomNameVisible(true);
+
+                if (!hideName) {
+                    watcher.setCustomName(healthBarSafeName);
+                    watcher.setCustomNameVisible(true);
+                } else {
+                    watcher.setCustomNameVisible(false);
+                }
             }
 
             DisguiseAPI.disguiseNextEntity(disguise);
@@ -228,7 +234,14 @@ public abstract class AbstractMob {
         PlayerDisguise disguise = new PlayerDisguise(username);
         disguise.setDisplayedInTab(false);
         disguise.setReplaceSounds(true);
-        disguise.setName(healthBarSafeName);
+
+        if (!hideName) {
+            disguise.setName(healthBarSafeName);
+        } else {
+            disguise.setName("");
+            disguise.setCustomDisguiseName(false);
+        }
+
         this.disguise = disguise;
     }
 
@@ -296,8 +309,12 @@ public abstract class AbstractMob {
 
     protected void setLivingEntityMeta(LivingEntity entity) {
         setClientSideMeta(entity);
-        entity.customName(Component.text(healthBarSafeName));
-        entity.setCustomNameVisible(true);
+        if (!hideName) {
+            entity.customName(Component.text(healthBarSafeName));
+            entity.setCustomNameVisible(true);
+        } else {
+            entity.setCustomNameVisible(false);
+        }
         entity.setAI(ai);
         entity.setSilent(silent);
         entity.setInvulnerable(isInvulnerable);

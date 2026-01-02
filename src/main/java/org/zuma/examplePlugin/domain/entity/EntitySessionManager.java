@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.entity;
 
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
@@ -34,6 +35,10 @@ public class EntitySessionManager implements Listener {
         for (Entity entity : event.getChunk().getEntities()) {
             PersistentDataContainer pdc = entity.getPersistentDataContainer();
             String storedSessionId = pdc.get(EntitySessionManager.SESSION_KEY, PersistentDataType.STRING);
+
+            if (entity instanceof ArmorStand) {
+                return;
+            }
 
             if (storedSessionId != null && !storedSessionId.equals(EntitySessionManager.SESSION_UUID.toString())) {
 

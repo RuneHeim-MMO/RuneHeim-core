@@ -6,6 +6,7 @@ import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.impl.door.DoorBlock;
 import org.zuma.examplePlugin.domain.block.impl.trigger.ItemCollectorTrigger;
+import org.zuma.examplePlugin.domain.block.impl.trigger.Trigger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,6 @@ public class TriggeredBlocksHandler {
         boolean found = false;
 
         for (AbstractInteractableBlock block : this.manager.getAllBlocks()) {
-            if (found) break;
 
             if (block instanceof DoorBlock doorBlock) {
                 if (doorBlock.getDoorId().equals(doorId)) {
@@ -43,10 +43,10 @@ public class TriggeredBlocksHandler {
 
     public void onTriggerTriggered(String groupId, String triggeredEntityId) {
         boolean groupAllTriggered = true;
-        List<ItemCollectorTrigger> triggers = new ArrayList<>();
+        List<Trigger> triggers = new ArrayList<>();
 
         for (AbstractInteractableBlock block : this.manager.getAllBlocks()) {
-            if (!(block instanceof ItemCollectorTrigger trigger)) {
+            if (!(block instanceof Trigger trigger)) {
                 continue;
             }
 
@@ -62,7 +62,7 @@ public class TriggeredBlocksHandler {
         }
 
         if (groupAllTriggered) {
-            triggers.forEach(ItemCollectorTrigger::startStateResetCountdown);
+            triggers.forEach(Trigger::startStateResetCountdown);
         }
 
         handleDoorStateTrigger(triggeredEntityId, groupAllTriggered);

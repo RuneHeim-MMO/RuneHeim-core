@@ -28,6 +28,7 @@ public enum MobType {
     BROWN_FARMHOUSE_MOUNT_SHOP,
     ABRAHAM_FAIRY_TEACHER,
     SHEPHERD, // Sheep shearer quest
+    DOCTOR_BRAM, // Threads of aid quest
 
     // Random citizens
     CITY_CITIZEN_MAN,
@@ -247,6 +248,11 @@ public enum MobType {
     RAT_BROWN_BASE_1,
     RAT_GRAY_BASE_1,
     RAT_ALBINO_BASE_1,
+
+    // Spiders
+    SPIDER_BABY_BASE_10,
+    SPIDER_BASE_25,
+    SPIDER_BOSS_BASE_40,
 
     AXOLOTL,
     BEE,

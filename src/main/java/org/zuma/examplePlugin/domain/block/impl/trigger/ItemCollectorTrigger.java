@@ -22,7 +22,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import java.util.*;
 
-public class ItemCollectorTrigger extends AbstractInteractableBlock {
+public class ItemCollectorTrigger extends AbstractInteractableBlock implements Trigger {
     private final String groupId, triggeredEntityId;
     private final List<ItemRecord> requiredItems;
     private final HashMap<Integer, Integer> collectedItems = new HashMap<>();

@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.domain.mob.mechanics.attacks;
+package org.zuma.examplePlugin.domain.mob.mechanics.attacks.boss;
 
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;

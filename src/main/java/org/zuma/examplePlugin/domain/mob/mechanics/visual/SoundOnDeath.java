@@ -1,16 +1,19 @@
-package org.zuma.examplePlugin.domain.mob.mechanics.attacks;
+package org.zuma.examplePlugin.domain.mob.mechanics.visual;
 
 import org.bukkit.entity.LivingEntity;
+import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.domain.combat.Hit;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.mob.mechanics.base.MobMechanic;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
-public class SpecialAttackMechanic implements MobMechanic {
+public class SoundOnDeath implements MobMechanic {
     private CombatantMob mob;
+    private final SoundType sound;
 
-    public SpecialAttackMechanic() {
+    public SoundOnDeath(SoundType sound) {
+        this.sound = sound;
     }
 
     @Override
@@ -23,19 +26,20 @@ public class SpecialAttackMechanic implements MobMechanic {
     }
 
     @Override
-    public void onMobDamagePlayer(RunePlayer target, Hit hit) {
-        if (mob == null) return;
-        mob.setSpecialAttacking(false);
+    public void execute(LivingEntity entity) {
+        sound.play(entity.getLocation());
     }
 
+
     @Override
-    public void execute(LivingEntity target) {
-        if (mob == null) return;
-        mob.setSpecialAttacking(true);
+    public void onDeath(RunePlayer attacker, Hit lastHit) {
+        if (mob == null || mob.getEntity() == null || !(mob.getEntity() instanceof LivingEntity living)) return;
+        execute(living);
     }
 
     @Override
     public void cleanup() {
         this.mob = null;
     }
+
 }

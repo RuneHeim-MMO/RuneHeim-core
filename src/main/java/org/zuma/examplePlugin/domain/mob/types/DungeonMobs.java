@@ -13,7 +13,10 @@ import org.zuma.examplePlugin.domain.mob.behavior.MobBehaviors;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.mob.impl.GenericCombatant;
-import org.zuma.examplePlugin.domain.mob.mechanics.attacks.*;
+import org.zuma.examplePlugin.domain.mob.mechanics.attacks.BigCobwebMechanic;
+import org.zuma.examplePlugin.domain.mob.mechanics.attacks.CobwebMechanic;
+import org.zuma.examplePlugin.domain.mob.mechanics.attacks.LaunchTowardsPlayerOnTarget;
+import org.zuma.examplePlugin.domain.mob.mechanics.attacks.boss.*;
 import org.zuma.examplePlugin.domain.mob.mechanics.base.BossMechanic;
 import org.zuma.examplePlugin.domain.mob.mechanics.base.BossPhase;
 import org.zuma.examplePlugin.domain.mob.mechanics.base.WeightedMechanic;
@@ -21,6 +24,8 @@ import org.zuma.examplePlugin.domain.mob.mechanics.traits.InitialEffectMechanic;
 import org.zuma.examplePlugin.domain.mob.mechanics.traits.MobEnergyMechanic;
 import org.zuma.examplePlugin.domain.mob.mechanics.traits.RangedMobMechanic;
 import org.zuma.examplePlugin.domain.mob.mechanics.transitions.LavaDungeonBossTransition;
+import org.zuma.examplePlugin.domain.mob.mechanics.visual.GlowOnTarget;
+import org.zuma.examplePlugin.domain.mob.mechanics.visual.SoundOnDeath;
 import org.zuma.examplePlugin.domain.mob.projectiles.RuneProjectile;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneMobRecord;
 
@@ -80,6 +85,7 @@ public class DungeonMobs {
                 List.of(DropTableId.LAVA_DUNGEON_BOSS_BONES.asInt(), DropTableId.LAVA_DUNGEON_BOSS_COINS.asInt(), DropTableId.LAVA_DUNGEON_BOSS_COMMON.asInt(), DropTableId.LAVA_DUNGEON_BOSS_RARE.asInt()),
                 false)
                 .addMobMechanic(new MobEnergyMechanic(200, 10, 3))
+                .addMobMechanic(new SoundOnDeath(SoundType.LAVA_DUNGEON_BOSS_DEATH))
                 .addMobMechanic(new InitialEffectMechanic(20, List.of(new PotionEffect(PotionEffectType.BLINDNESS, 200, 1), new PotionEffect(PotionEffectType.SLOWNESS, 200, 1)), "The air grows thick with smoke...", SoundType.RAVAGER_DEATH))
                 .addMobMechanic(new BossMechanic(List.of(
                         new BossPhase(80, 80, List.of(new WeightedMechanic(5, 8, new RangedMobMechanic(new RuneProjectile(ProjectileType.RANGED, EntityType.SHULKER_BULLET, 5), true, 70), "Ashes to ashes, intruder!", SoundType.RANGED_ATTACK_FIRE),
@@ -115,6 +121,37 @@ public class DungeonMobs {
 
 
                 ));
+
+
+        registry.register(MobType.SPIDER_BABY_BASE_10.getId(), () -> new GenericCombatant(
+                "Baby Spider", null, getBaseSkills(10, 0.5),
+                null, MobBehaviors.SPIDER.getBehavior(0.5f),
+                0.23, true, false, 15, null, null, DisguiseType.SPIDER,
+                List.of(DropTableId.CHITIN_PLATES.asInt(), DropTableId.SPIDER_SILK.asInt()),
+                true).setBaby(true)
+                .addMobMechanic(new CobwebMechanic(2, 80)));
+
+        registry.register(MobType.SPIDER_BASE_25.getId(), () -> new GenericCombatant(
+                "Spider", null, getBaseSkills(25, 0.5),
+                null, MobBehaviors.SPIDER.getBehavior(),
+                0.25, true, false, 25, null, null, DisguiseType.SPIDER,
+                List.of(DropTableId.CHITIN_PLATES.asInt(), DropTableId.SPIDER_SILK.asInt()),
+                true)
+                .addMobMechanic(new CobwebMechanic(3, 120))
+                .addMobMechanic(new BigCobwebMechanic(1, 80))
+                .addMobMechanic(new LaunchTowardsPlayerOnTarget(2.5)));
+
+        registry.register(MobType.SPIDER_BOSS_BASE_40.getId(), () -> new GenericCombatant(
+                "Big Spider", null, getBaseSkills(40, 0.75),
+                null, MobBehaviors.SPIDER.getBehavior(),
+                0.45, true, false, 120, null, null, DisguiseType.SPIDER,
+                List.of(DropTableId.CHITIN_PLATES.asInt(), DropTableId.SPIDER_SILK.asInt(), DropTableId.SPIDER_DUNGEON_BOSS_RARE.asInt(), DropTableId.SPIDER_DUNGEON_BOSS_COMMON.asInt(), DropTableId.SPIDER_DUNGEON_BOSS_COINS.asInt()),
+                true)
+                .addMobMechanic(new CobwebMechanic(5, 200))
+                .addMobMechanic(new BigCobwebMechanic(5, 160))
+                .addMobMechanic(new GlowOnTarget())
+                .addMobMechanic(new LaunchTowardsPlayerOnTarget(2))
+                .addMobMechanic(new SoundOnDeath(SoundType.SPIDER_BOSS_DEATH)));
 
     }
 }

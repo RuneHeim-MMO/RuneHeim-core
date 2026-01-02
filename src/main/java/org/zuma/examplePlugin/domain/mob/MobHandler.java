@@ -94,10 +94,16 @@ public class MobHandler {
 
                     if (mob != null) {
                         mob.onDisable();
+                        mob.handleMechanicsCleanup();
                     }
 
                     registry.removeMob(UUID.fromString(value));
                     registry.getDisguisedMobs().remove(mob);
+
+                    if(entity instanceof ArmorStand){
+                        return;
+                    }
+
                     entity.remove();
                 }
 

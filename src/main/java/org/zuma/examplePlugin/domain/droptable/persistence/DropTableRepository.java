@@ -436,15 +436,41 @@ public class DropTableRepository {
                 ), null)), 1)),
 
                 new DropTableDBEntry(DropTableId.LAVA_DUNGEON_BOSS_RARE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
-                        new DropTableEntry(ItemId.MITHRIL_CROSSBOW.asInt(), 1, 1, 16, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.MITHRIL_CROSSBOW.asInt(), 1, 1, 28, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.ADAMANT_CROSSBOW.asInt(), 1, 1, 32, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.FUSION_SCROLL.asInt(), 1, 1, 64, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.PLATINUM_TOKEN.asInt(), 1, 5, 64, DropTableEntry.Type.ITEM),
-                        new DropTableEntry(ItemId.DRAGON_LEATHER.asInt(), 4, 8, 60, DropTableEntry.Type.ITEM),
-                        new DropTableEntry(ItemId.GREEN_DHIDE_BODY.asInt(), 1, 1, 80, DropTableEntry.Type.ITEM),
-                        new DropTableEntry(ItemId.GREEN_DHIDE_LEGGINGS.asInt(), 1, 1, 80, DropTableEntry.Type.ITEM),
-                        new DropTableEntry(ItemId.AMULET_OF_THE_WARD.asInt(), 1, 1, 100, DropTableEntry.Type.ITEM),
-                        new DropTableEntry(ItemId.FAIRY_OF_DARKNESS.asInt(), 1, 1, 149, DropTableEntry.Type.ITEM)
+                        new DropTableEntry(ItemId.DRAGON_LEATHER.asInt(), 4, 8, 40, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.GREEN_DHIDE_BODY.asInt(), 1, 1, 40, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.GREEN_DHIDE_LEGGINGS.asInt(), 1, 1, 40, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.AMULET_OF_THE_WARD.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.AMULET_OF_THE_SHARPSHOOTER.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.AMULET_OF_THE_GLADIATOR.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.MEDIUM_ITEM_BAG.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.FAIRY_OF_DARKNESS.asInt(), 1, 1, 50, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.BLADESTONE.asInt(), 1, 1, 120, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.SPIDER_DUNGEON_BOSS_COINS.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.COINS.asInt(), 100, 250, 1, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.SPIDER_DUNGEON_BOSS_COMMON.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.REGULAR_FAIRY_RATION.asInt(), 1, 16, 32, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.SPIDER_SILK.asInt(), 1, 12, 1, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.SPIDER_DUNGEON_BOSS_RARE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.MITHRIL_CROSSBOW.asInt(), 1, 1, 16, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.ADAMANT_CROSSBOW.asInt(), 1, 1, 32, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.FUSION_SCROLL.asInt(), 1, 1, 64, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.PLATINUM_TOKEN.asInt(), 1, 2, 64, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.AMULET_OF_THE_HUNTER.asInt(), 1, 1, 60, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.AMULET_OF_FORTITUDE.asInt(), 1, 1, 60, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.AMULET_OF_THE_DUELIST.asInt(), 1, 1, 60, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.SMALL_ITEM_BAG.asInt(), 1, 1, 70, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.FAIRY_OF_SILENCE.asInt(), 1, 1, 80, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.OBSIDIAN_BULWARK.asInt(), 1, 1, 120, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
 
@@ -546,6 +572,10 @@ public class DropTableRepository {
 
                 new DropTableDBEntry(DropTableId.CHITIN_PLATES.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.CHITIN_PLATES.asInt(), 1, 2, 5, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
+                new DropTableDBEntry(DropTableId.SPIDER_SILK.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.SPIDER_SILK.asInt(), 1, 2, 5, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
                 new DropTableDBEntry(DropTableId.SCORPION.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(

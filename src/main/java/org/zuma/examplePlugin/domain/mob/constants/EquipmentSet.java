@@ -164,6 +164,10 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.SHEARS), 100)
     ))),
 
+    DOCTOR_BRAM(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.NEEDLE), 100)
+    ))),
+
     RUNE_FULL_CROSSBOW(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNE_CROSSBOW), 100),
             new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNE_BODY), 100),

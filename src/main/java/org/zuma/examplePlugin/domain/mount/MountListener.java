@@ -33,7 +33,9 @@ public class MountListener implements Listener {
 
         // If a player dismounts from a horse, remove all passengers from the horse/camel
         if (entity instanceof Player && mount instanceof AbstractHorse horse) {
-            horse.getPassengers().forEach(horse::removePassenger);
+            if (horse.getOwner().equals(entity)) {
+                horse.getPassengers().forEach(horse::removePassenger);
+            }
 
             // Set slow speed for a mount after dismount so it doesn't run away
             AttributeInstance speedAttr = horse.getAttribute(Attribute.MOVEMENT_SPEED);

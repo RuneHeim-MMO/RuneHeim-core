@@ -265,6 +265,7 @@ public enum ItemId {
     SOFT_CUB_FUR(2352),
     UNDERGROUND_FUNGUS(2353), // moles
     MOLDY_CHEESE(2354), // rats
+    SPIDER_SILK(2355),
 
     SHORT_BOW(2400),
     BIRCH_SHORT_BOW(2401),
