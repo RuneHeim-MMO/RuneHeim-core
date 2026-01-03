@@ -524,7 +524,7 @@ public class ItemRepository {
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_RING, ItemId.GOLD_RING.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Gold Ring", List.of("A gold ring offering mild strength advantage."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new EquipableTypeMeta(null, null, null,
-                                List.of(new Modifier(ModifierType.STRENGTH_BONUS, 3)), List.of(),
+                                List.of(new Modifier(ModifierType.STRENGTH_BONUS, 3)), List.of(new SkillRequirement(SkillType.STRENGTH, 15)),
                                 null), 1)),
 
                 // Defence Amulets
@@ -672,7 +672,12 @@ public class ItemRepository {
 
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.GOLD_AMULET.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Gold Amulet", List.of("Gold amulet, slightly enhances your strength."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new EquipableTypeMeta(null, null, null,
-                                List.of(new Modifier(ModifierType.STRENGTH_BONUS, 5)), List.of(), null), 1)),
+                                List.of(new Modifier(ModifierType.STRENGTH_BONUS, 5)), List.of(new SkillRequirement(SkillType.STRENGTH, 15)), null), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.IRON_AMULET.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Iron Amulet", List.of("Iron amulet. Barely improves your strength."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new EquipableTypeMeta(null, null, null,
+                                List.of(new Modifier(ModifierType.STRENGTH_BONUS, 2)), List.of(new SkillRequirement(SkillType.STRENGTH, 8)), null), 1)),
+
 
                 // XP Lamps
                 new ItemEntity(new AbstractItemMeta(ItemType.XP_LAMP, ItemId.GENIE_XP_LAMP.asInt(), Material.COAL, ItemRarity.RARE, "Genie XP Lamp",

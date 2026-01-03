@@ -15,13 +15,86 @@ import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
 import java.util.List;
 
+/*
+Bronze bar: 1x 12.5 | 2x 25 | 3x 37.5 | 4x 50 | 5x 62.5 |
+
+Iron bar: 1x 17.5 | 2x 35 | 3x 52.5 | 4x 70 | 5x 87.5 |
+
+Steel bar: 1x 25 | 2x 50 | 3x 75 | 4x 100 | 5x 125 |
+
+Gold bar: 1x 30 | 2x 60 | 3x 90 | 4x 120 | 5x 150 |
+
+Mithril bar: 1x 45 | 2x 90 | 3x 135 | 4x 180 | 5x 225 |
+
+Adamantite bar: 1x 50 | 2x 100 | 3x 150 | 4x 200 | 5x 250 |
+
+Runite bar: 1x 65 | 2x 130 | 3x 195 | 4x 260 | 5x 325 |
+
+ */
 public class RecipeRepository {
     private final Gson gson = new Gson();
 
     public List<RecipeEntity> getAll() {
         return List.of(
-                // Furniture
 
+                //Amulets
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.AMULET_OF_GUARDING.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 6000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 22)),
+                        List.of(
+                                new IngredientRecord(ItemId.SAPPHIRE, 1, true, false),
+                                new IngredientRecord(ItemId.IRON_AMULET, 1, true, false)
+                        ),
+                        new ItemRecord(ItemId.AMULET_OF_GUARDING, 1),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 60)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.AMULET_OF_THE_ARCHER.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 6000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 24)),
+                        List.of(
+                                new IngredientRecord(ItemId.SAPPHIRE, 1, true, false),
+                                new IngredientRecord(ItemId.IRON_AMULET, 1, true, false)
+                        ),
+                        new ItemRecord(ItemId.AMULET_OF_THE_ARCHER, 1),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 65)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.AMULET_OF_NOVICE_BLADE.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 6000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 26)),
+                        List.of(
+                                new IngredientRecord(ItemId.SAPPHIRE, 1, true, false),
+                                new IngredientRecord(ItemId.IRON_AMULET, 1, true, false)
+                        ),
+                        new ItemRecord(ItemId.AMULET_OF_THE_NOVICE_BLADE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 70)), null), null),
+
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.AMULET_OF_PROTECTOR.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 6000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 29)),
+                        List.of(
+                                new IngredientRecord(ItemId.EMERALD, 1, true, false),
+                                new IngredientRecord(ItemId.IRON_AMULET, 1, true, false)
+                        ),
+                        new ItemRecord(ItemId.AMULET_OF_THE_PROTECTOR, 1),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 80)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.AMULET_OF_PRECISION.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 6000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 31)),
+                        List.of(
+                                new IngredientRecord(ItemId.EMERALD, 1, true, false),
+                                new IngredientRecord(ItemId.IRON_AMULET, 1, true, false)
+                        ),
+                        new ItemRecord(ItemId.AMULET_OF_PRECISION, 1),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 90)), null), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.AMULET_OF_MIGHT.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 6000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 33)),
+                        List.of(
+                                new IngredientRecord(ItemId.EMERALD, 1, true, false),
+                                new IngredientRecord(ItemId.IRON_AMULET, 1, true, false)
+                        ),
+                        new ItemRecord(ItemId.AMULET_OF_MIGHT, 1),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 100)), null), null),
+
+
+                // Furniture
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.COMBAT_DUMMY_FURNITURE.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 8000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 44)),
                         List.of(
@@ -1235,6 +1308,18 @@ public class RecipeRepository {
                         new ItemRecord(ItemId.GOLD_AMULET, 1),
                         null,
                         List.of(new SkillXpRecord(SkillType.SMITHING, 90)), null
+                ), null),
+
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.IRON_AMULET.getId(), RecipeType.SMITHING_RECIPE, 4000,
+                        List.of(new SkillRequirement(SkillType.SMITHING, 23)),
+                        List.of(
+                                new IngredientRecord(ItemId.AMULET_MOULD, 1, false, false),
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false),
+                                new IngredientRecord(ItemId.IRON_BAR, 3, true, false)
+                        ),
+                        new ItemRecord(ItemId.IRON_AMULET, 1),
+                        null,
+                        List.of(new SkillXpRecord(SkillType.SMITHING, 52.5)), null
                 ), null),
 
 
