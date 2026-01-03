@@ -70,7 +70,8 @@ public enum InventoryId {
 
     QUIVER_INVENTORY(59), // Not used within GUI system, but kept here to avoid ID conflicts
     SAHARIJIN_JEWELER(60),
-    GLACIEM_AXE_SHOP(61);
+    GLACIEM_AXE_SHOP(61),
+    GLACIEM_WEAPON_SHOP(62);
 
 
     private final int id;

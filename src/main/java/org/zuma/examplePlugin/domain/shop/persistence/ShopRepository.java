@@ -153,6 +153,11 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.COAL_ORE.asInt(), 64, 30, ItemId.COAL_ORE.getBuyPrice(), ItemId.COAL_ORE.getSellPrice(), null, null)
                 ))), 1)),
 
+                new ShopConfig(ShopId.GLACIEM_WEAPON_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
+                        new ShopItemConfig(ItemId.MITHRIL_DAGGER.asInt(), 2, 120, ItemId.MITHRIL_DAGGER.getBuyPrice(), ItemId.MITHRIL_DAGGER.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.MITHRIL_SWORD.asInt(), 2, 120, ItemId.MITHRIL_SWORD.getBuyPrice(), ItemId.MITHRIL_SWORD.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.MITHRIL_BATTLEAXE.asInt(), 2, 120, ItemId.MITHRIL_BATTLEAXE.getBuyPrice(), ItemId.MITHRIL_BATTLEAXE.getSellPrice(), null, null)
+                ))), 1)),
 
                 new ShopConfig(ShopId.VALDRIN_WEAPON_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.MITHRIL_SWORD.asInt(), 2, 30, ItemId.MITHRIL_SWORD.getBuyPrice(), ItemId.MITHRIL_SWORD.getSellPrice(), null, null),
@@ -199,7 +204,7 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.STEEL_AXE.asInt(), 2, 300, ItemId.STEEL_AXE.getBuyPrice(), ItemId.STEEL_AXE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.MITHRIL_AXE.asInt(), 2, 300, ItemId.MITHRIL_AXE.getBuyPrice(), ItemId.MITHRIL_AXE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.ADAMANT_AXE.asInt(), 1, 300, ItemId.ADAMANT_AXE.getBuyPrice(), ItemId.ADAMANT_AXE.getSellPrice(), null, null)
-                        ))), 1)),
+                ))), 1)),
 
                 new ShopConfig(ShopId.MURKWATCH_ARCHERY_MERCHANT.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.SHORT_BOW.asInt(), 4, 30, ItemId.SHORT_BOW.getBuyPrice(), null, null, null),

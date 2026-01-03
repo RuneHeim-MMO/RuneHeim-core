@@ -30,10 +30,10 @@ public class BlockManager {
 
     public BlockManager() {
         triggeredBlocksHandler = new TriggeredBlocksHandler(this);
-        startDespawnLoop();
+        startLoop();
     }
 
-    public void startDespawnLoop() {
+    private void startLoop() {
         new BukkitRunnable() {
 
             @Override
@@ -72,7 +72,7 @@ public class BlockManager {
 
             }
 
-        }.runTaskTimer(RuneQuestPlugin.getInstance(), 20, 20);
+        }.runTaskTimer(RuneQuestPlugin.getInstance(), 60, 60);
     }
 
     public void despawnBlock(DespawnableBlock block) {

@@ -120,6 +120,13 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.MITHRIL_SWORD), 100)
     ))),
 
+    MITHRIL_CHAIN_HALF_SET_HAMMER(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.MITHRIL_CHAINBODY), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.MITHRIL_PLATELEGS), 100),
+            new EquipmentSetRecord(EquipmentSlot.FEET, getRuneItem(ItemId.MITHRIL_BOOTS), 100),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.SMITHING_HAMMER), 100)
+    ))),
+
     ADAMANT_CHAIN_HALF_SET_SWORD(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.ADAMANT_CHAINBODY), 100),
             new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.ADAMANT_PLATELEGS), 100),

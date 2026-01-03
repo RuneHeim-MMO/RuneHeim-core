@@ -2328,11 +2328,16 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(338, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 994, 77, 516)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.GLACIEM_AXE_SHOP, 1, 100)
-                ), false, MarkerType.AXE_SHOP, "Axe Shop"), 1))
+                ), false, MarkerType.AXE_SHOP, "Axe Shop"), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(339, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 935, 71, 508)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.GLACIEM_WEAPON_SHOP, 1, 100)
+                ), false, MarkerType.WEAPON_SHOP, "Weapon Shop"), 1))
 
 
 
-                // last 337
+                // last 339
 
 
         );

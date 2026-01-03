@@ -16,6 +16,13 @@ import java.util.function.Supplier;
 
 public class Shopkeepers {
 
+    private static final Supplier<DialogBuilder> glaciemWeaponShopDialog = () -> DialogBuilder.create("glaciem-weapon-shop-dialog")
+            .passiveStep(c -> c.randomText(List.of("Looking for some fine weapons?", "This land is rich of Mithril!")))
+            .interactiveStep(c -> c.text("Open shop?")
+                    .option("§aYes" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
+                    .option("§cNo", n -> n.followupSteps(d -> d.passiveStep(p -> p.randomText(DialogPreset.FAREWELL.getList())))));
+
+
     private static final Supplier<DialogBuilder> genericShopDialog = () -> DialogBuilder.create("generic-shop-dialog")
             .interactiveStep(c -> c.randomText(DialogPreset.WANT_TO_SEE_STOCK.getList())
                     .option("§aYes" + " §f" + Icon.MONEY_BAG.get(), b -> b.action("dialog_holder_forward_interaction"))
@@ -97,6 +104,10 @@ public class Shopkeepers {
         registry.register(MobType.GLACIEM_AXE_SHOP.getId(), () -> new InventoryOpenerMob(Icon.AXE.get() + " Axe Merchant", EquipmentSet.AXES,
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "glaciem_lumberjack", null, InventoryId.GLACIEM_AXE_SHOP.asInt(), 40)
                 .attachDialog(genericShopDialog));
+
+        registry.register(MobType.GLACIEM_WEAPON_SHOP.getId(), () -> new InventoryOpenerMob(Icon.SWORD.get() + " Weapon Merchant", EquipmentSet.MITHRIL_CHAIN_HALF_SET_HAMMER,
+                MobBehaviors.VILLAGER_MAN_2.getBehavior(), "glaciem_weapon_merchant", null, InventoryId.GLACIEM_WEAPON_SHOP.asInt(), 30)
+                .attachDialog(glaciemWeaponShopDialog));
 
         registry.register(MobType.SPOREFELL_FISHING_SHOP.getId(), () -> new InventoryOpenerMob(Icon.FISHING_HOOK.get() + " Fishing Merchant", EquipmentSet.FISHERMAN,
                 MobBehaviors.VILLAGER_MAN_4.getBehavior(), "sporefell_fisherman", null, InventoryId.SPOREFELL_FISHING_SHOP.asInt(), 40)
