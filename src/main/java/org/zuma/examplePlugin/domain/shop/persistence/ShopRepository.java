@@ -29,7 +29,7 @@ public class ShopRepository {
     public List<ShopConfig> getAll() {
         return List.of(
 
-                new ShopConfig(ShopId.DRAKKAR_JEWLER.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
+                new ShopConfig(ShopId.DRAKKAR_JEWELER.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.UNCUT_SAPPHIRE.asInt(), 4, 30, ItemId.UNCUT_SAPPHIRE.getBuyPrice(), ItemId.UNCUT_SAPPHIRE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.UNCUT_EMERALD.asInt(), 3, 30, ItemId.UNCUT_EMERALD.getBuyPrice(), ItemId.UNCUT_EMERALD.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.UNCUT_RUBY.asInt(), 2, 30, ItemId.UNCUT_RUBY.getBuyPrice(), ItemId.UNCUT_RUBY.getSellPrice(), null, null),
@@ -47,6 +47,26 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.AMULET_OF_GUARDING.asInt(), 1, 300, ItemId.AMULET_OF_GUARDING.getBuyPrice(), ItemId.AMULET_OF_GUARDING.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.AMULET_OF_THE_NOVICE_BLADE.asInt(), 1, 300, ItemId.AMULET_OF_GUARDING.getBuyPrice(), ItemId.AMULET_OF_GUARDING.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.AMULET_OF_THE_ARCHER.asInt(), 1, 300, ItemId.AMULET_OF_GUARDING.getBuyPrice(), ItemId.AMULET_OF_GUARDING.getSellPrice(), null, null)
+                ))), 1)),
+
+                new ShopConfig(ShopId.SAHARIJIN_JEWELER.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
+                        new ShopItemConfig(ItemId.UNCUT_SAPPHIRE.asInt(), 4, 30, ItemId.UNCUT_SAPPHIRE.getBuyPrice(), ItemId.UNCUT_SAPPHIRE.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.UNCUT_EMERALD.asInt(), 3, 30, ItemId.UNCUT_EMERALD.getBuyPrice(), ItemId.UNCUT_EMERALD.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.UNCUT_RUBY.asInt(), 2, 30, ItemId.UNCUT_RUBY.getBuyPrice(), ItemId.UNCUT_RUBY.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.UNCUT_DIAMOND.asInt(), 1, 30, ItemId.UNCUT_DIAMOND.getBuyPrice(), ItemId.UNCUT_DIAMOND.getSellPrice(), null, null),
+
+                        new ShopItemConfig(ItemId.SAPPHIRE.asInt(), 2, 300, ItemId.SAPPHIRE.getBuyPrice(), ItemId.SAPPHIRE.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.EMERALD.asInt(), 1, 300, ItemId.EMERALD.getBuyPrice(), ItemId.EMERALD.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.RUBY.asInt(), 0, 300, ItemId.RUBY.getBuyPrice(), ItemId.RUBY.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.DIAMOND.asInt(), 0, 300, ItemId.DIAMOND.getBuyPrice(), ItemId.DIAMOND.getSellPrice(), null, null),
+
+                        new ShopItemConfig(ItemId.GOLD_BAR.asInt(), 1, 60, ItemId.GOLD_BAR.getBuyPrice(), (long) (ItemId.GOLD_BAR.getSellPrice() * 1.25), null, null),
+
+                        new ShopItemConfig(ItemId.IRON_RING.asInt(), 2, 300, ItemId.IRON_RING.getBuyPrice(), ItemId.IRON_RING.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.GOLD_RING.asInt(), 2, 300, ItemId.GOLD_RING.getBuyPrice(), ItemId.GOLD_RING.getSellPrice(), null, null),
+
+                        new ShopItemConfig(ItemId.IRON_AMULET.asInt(), 1, 150, ItemId.IRON_AMULET.getBuyPrice(), ItemId.IRON_AMULET.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.GOLD_AMULET.asInt(), 1, 300, ItemId.GOLD_AMULET.getBuyPrice(), ItemId.GOLD_AMULET.getSellPrice(), null, null)
                 ))), 1)),
 
                 new ShopConfig(ShopId.INVESTMENT_BANKER.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(

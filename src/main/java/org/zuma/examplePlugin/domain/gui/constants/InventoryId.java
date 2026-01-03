@@ -18,7 +18,7 @@ public enum InventoryId {
     DRAKKAR_BLACKSMITH(8),
     BANK(9),
     INVESTMENT_BANKER(10),
-    JEWELER(11),
+    DRAKKAR_JEWELER(11),
     XP_LAMP(12),
     TERRITORY_INVENTORY(13),
     CONTRACT_BOARD(14),
@@ -68,7 +68,8 @@ public enum InventoryId {
     HOUSE_SLOT_EDITOR(57),
     BOT_VERIFICATION_MENU(58),
 
-    QUIVER_INVENTORY(59); // Not used within GUI system, but kept here to avoid ID conflicts
+    QUIVER_INVENTORY(59), // Not used within GUI system, but kept here to avoid ID conflicts
+    SAHARIJIN_JEWELER(60);
 
 
     private final int id;

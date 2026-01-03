@@ -111,7 +111,7 @@ public class SpawnZoneRepository {
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(15, SpawnZoneType.POINT, 30, 1,
                         new Location(Bukkit.getWorld("world"), 153.5, 73, -50)), toVersionedJson(new PointSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.DRAKKAR_JEWLER, 1, 100)
+                        new SpawnZoneMobRecord(MobType.DRAKKAR_JEWELER, 1, 100)
                 ), false, MarkerType.JEWELER, "Jeweler"), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(16, SpawnZoneType.AREA, 30, 15,
@@ -2312,10 +2312,21 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(335, SpawnZoneType.POINT, 30, 100,
                         new Location(Bukkit.getWorld("world"), 977, 77, 485)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.DOCTOR_BRAM, 1, 100)
+                ), false, null, null), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(336, SpawnZoneType.POINT, 30, 1,
+                        new Location(Bukkit.getWorld("world"), -950, 67.5, -617)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SAHARIJIN_JEWELER, 1, 100)
+                ), false, MarkerType.JEWELER, "Jeweler"), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(337, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -944, 67.5, -619)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.STATIC_CAMEL, 1, 100)
                 ), false, null, null), 1))
 
 
-                // last 334
+
+                // last 337
 
 
         );

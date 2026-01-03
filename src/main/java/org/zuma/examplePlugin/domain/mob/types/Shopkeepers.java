@@ -53,9 +53,13 @@ public class Shopkeepers {
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "murkwatch_blacksmith", null, InventoryId.MURKWATCH_BLACKSMITH.asInt(), 40)
                 .attachDialog(genericShopDialog));
 
-        registry.register(MobType.DRAKKAR_JEWLER.getId(), () -> new InventoryOpenerMob(Icon.BLUE_GEM.get() + " Jeweler", EquipmentSet.JEWELER,
-                MobBehaviors.VILLAGER_MAN_3.getBehavior(), "jeweler", null, InventoryId.JEWELER.asInt(), 40)
+        registry.register(MobType.DRAKKAR_JEWELER.getId(), () -> new InventoryOpenerMob(Icon.BLUE_GEM.get() + " Jeweler", EquipmentSet.JEWELER,
+                MobBehaviors.VILLAGER_MAN_3.getBehavior(), "jeweler", null, InventoryId.DRAKKAR_JEWELER.asInt(), 40)
                 .attachDialog(Dialogs.drakkarJewelerDialog));
+
+        registry.register(MobType.SAHARIJIN_JEWELER.getId(), () -> new InventoryOpenerMob(Icon.BLUE_GEM.get() + " Jeweler", EquipmentSet.JEWELER,
+                MobBehaviors.VILLAGER_MAN_3.getBehavior(), "saharijin_jeweler", null, InventoryId.SAHARIJIN_JEWELER.asInt(), 40)
+                .attachDialog(genericShopDialog));
 
         registry.register(MobType.DRAKKAR_ARMOR_SHOP.getId(), () -> new InventoryOpenerMob(Icon.ARMOR.get() + " Armor Merchant", EquipmentSet.RUNE_CHAIN_AND_SWORD,
                 MobBehaviors.VILLAGER_MAN_1.getBehavior(), "armor_merchant", null, InventoryId.DRAKKAR_ARMOR_SHOP.asInt(), 40)
