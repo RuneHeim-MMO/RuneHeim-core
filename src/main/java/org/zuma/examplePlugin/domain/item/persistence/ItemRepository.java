@@ -936,13 +936,13 @@ public class ItemRepository {
 
                 // Gems
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNCUT_SAPPHIRE.asInt(), Material.COAL, ItemRarity.COMMON, "Uncut Sapphire", List.of("A rough, uncut sapphire.", "Can be cut with a chisel."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(300), 1)),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNCUT_EMERALD.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Uncut Emerald", List.of("A rough, uncut emerald.", "Can be cut with a chisel."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(400), 1)),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNCUT_RUBY.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Uncut Ruby", List.of("A rough, uncut ruby.", "Can be cut with a chisel."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(600), 1)),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNCUT_DIAMOND.asInt(), Material.COAL, ItemRarity.RARE, "Uncut Diamond", List.of("A rough, uncut diamond.", "Can be cut with a chisel."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(900), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNCUT_EMERALD.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Uncut Emerald", List.of("A rough, uncut emerald.", "Can be cut with a chisel."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(1600), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNCUT_RUBY.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Uncut Ruby", List.of("A rough, uncut ruby.", "Can be cut with a chisel."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(2400), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNCUT_DIAMOND.asInt(), Material.COAL, ItemRarity.RARE, "Uncut Diamond", List.of("A rough, uncut diamond.", "Can be cut with a chisel."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(3200), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.SAPPHIRE.asInt(), Material.COAL, ItemRarity.COMMON, "Sapphire", List.of("A polished sapphire gem.", "Used for crafting jewelry."), null, true, 1.3),
                         toVersionedJson(new MaterialMeta(0), 1)),

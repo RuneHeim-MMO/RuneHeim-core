@@ -66,7 +66,7 @@ public class QuestRegistry {
 
 
         Quest blacksmithsRightHandI = new Quest(QuestId.BLACKSMITHS_RIGHT_HAND_I.getId(), "Blacksmith's Right Hand", QuestDifficulty.EASY, false, new Quest.Coordinates(209, 73, -100))
-                .setRewards(new QuestReward(null, Map.of(SkillType.SMITHING, 1000.0), 800));
+                .setRewards(new QuestReward(null, Map.of(SkillType.SMITHING, 1000.0), 1400));
 
         registerQuest(blacksmithsRightHandI.addSteps(List.of(
                 new CollectionStep(RuneQuestPlugin.getInstance(), blacksmithsRightHandI, "Collect §616x Copper Ore§f and §616x Tin Ore.", "blacksmith-right-hand-i.collect-ores", List.of(new ItemRecord(ItemId.COPPER_ORE, 16), new ItemRecord(ItemId.TIN_ORE, 16)), null),

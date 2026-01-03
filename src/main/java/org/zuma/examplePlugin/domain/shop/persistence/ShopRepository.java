@@ -43,9 +43,10 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.BRONZE_RING.asInt(), 2, 300, ItemId.BRONZE_RING.getBuyPrice(), ItemId.BRONZE_RING.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.IRON_RING.asInt(), 2, 300, ItemId.IRON_RING.getBuyPrice(), ItemId.IRON_RING.getSellPrice(), null, null),
 
-                        new ShopItemConfig(ItemId.AMULET_OF_GUARDING.asInt(), 1, 300, 1000L, 360L, null, null),
-                        new ShopItemConfig(ItemId.AMULET_OF_THE_NOVICE_BLADE.asInt(), 1, 300, 1000L, 360L, null, null),
-                        new ShopItemConfig(ItemId.AMULET_OF_THE_ARCHER.asInt(), 1, 300, 1000L, 360L, null, null)
+                        new ShopItemConfig(ItemId.IRON_AMULET.asInt(), 1, 150, ItemId.IRON_AMULET.getBuyPrice(), ItemId.IRON_AMULET.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.AMULET_OF_GUARDING.asInt(), 1, 300, ItemId.AMULET_OF_GUARDING.getBuyPrice(), ItemId.AMULET_OF_GUARDING.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.AMULET_OF_THE_NOVICE_BLADE.asInt(), 1, 300, ItemId.AMULET_OF_GUARDING.getBuyPrice(), ItemId.AMULET_OF_GUARDING.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.AMULET_OF_THE_ARCHER.asInt(), 1, 300, ItemId.AMULET_OF_GUARDING.getBuyPrice(), ItemId.AMULET_OF_GUARDING.getSellPrice(), null, null)
                 ))), 1)),
 
                 new ShopConfig(ShopId.INVESTMENT_BANKER.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
@@ -193,7 +194,7 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.BRONZE_ARROW.asInt(), 512, 10, ItemId.BRONZE_ARROW.getBuyPrice(), ItemId.BRONZE_ARROW.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.IRON_ARROW.asInt(), 512, 10, ItemId.IRON_ARROW.getBuyPrice(), ItemId.IRON_ARROW.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.STEEL_ARROW.asInt(), 512, 10, ItemId.STEEL_ARROW.getBuyPrice(), ItemId.STEEL_ARROW.getSellPrice(), null, null),
-                        new ShopItemConfig(ItemId.AMULET_OF_PRECISION.asInt(), 1, 300, 5000L, 720L, null, null)
+                        new ShopItemConfig(ItemId.AMULET_OF_PRECISION.asInt(), 1, 300,  ItemId.AMULET_OF_PRECISION.getBuyPrice(), ItemId.AMULET_OF_PRECISION.getSellPrice(), null, null)
 
                 ))), 1)),
 
