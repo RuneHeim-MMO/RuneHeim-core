@@ -94,6 +94,9 @@ public class Shopkeepers {
                 MobBehaviors.VILLAGER_MAN_3.getBehavior(), "ashwale_lumberjack", null, InventoryId.ASHWALE_AXE_SHOP.asInt(), 40)
                 .attachDialog(genericShopDialog));
 
+        registry.register(MobType.GLACIEM_AXE_SHOP.getId(), () -> new InventoryOpenerMob(Icon.AXE.get() + " Axe Merchant", EquipmentSet.AXES,
+                MobBehaviors.VILLAGER_MAN_3.getBehavior(), "glaciem_lumberjack", null, InventoryId.GLACIEM_AXE_SHOP.asInt(), 40)
+                .attachDialog(genericShopDialog));
 
         registry.register(MobType.SPOREFELL_FISHING_SHOP.getId(), () -> new InventoryOpenerMob(Icon.FISHING_HOOK.get() + " Fishing Merchant", EquipmentSet.FISHERMAN,
                 MobBehaviors.VILLAGER_MAN_4.getBehavior(), "sporefell_fisherman", null, InventoryId.SPOREFELL_FISHING_SHOP.asInt(), 40)

@@ -69,7 +69,8 @@ public enum InventoryId {
     BOT_VERIFICATION_MENU(58),
 
     QUIVER_INVENTORY(59), // Not used within GUI system, but kept here to avoid ID conflicts
-    SAHARIJIN_JEWELER(60);
+    SAHARIJIN_JEWELER(60),
+    GLACIEM_AXE_SHOP(61);
 
 
     private final int id;
