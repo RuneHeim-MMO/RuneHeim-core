@@ -13,6 +13,7 @@ public class ShopRepository {
             new ShopItemConfig(ItemId.SMITHING_HAMMER.asInt(), 8, 30, 100L, 20L, null, null),
             new ShopItemConfig(ItemId.SHEARS.asInt(), 8, 30, 35L, 10L, null, null),
             new ShopItemConfig(ItemId.CHISEL.asInt(), 8, 30, 35L, 10L, null, null),
+            new ShopItemConfig(ItemId.KNIFE.asInt(), 4, 30, ItemId.KNIFE.getBuyPrice(), ItemId.KNIFE.getSellPrice(), null, null),
             new ShopItemConfig(ItemId.FLINT_AND_STEEL.asInt(), 8, 30, 40L, 12L, null, null),
             new ShopItemConfig(ItemId.COMPASS.asInt(), 8, 30, ItemId.COMPASS.getBuyPrice(), ItemId.COMPASS.getSellPrice(), null, null)
             // new ShopItemConfig(ItemId.EMPTY_POT.asInt(), 8, 30, 10L, 3L, null, null),

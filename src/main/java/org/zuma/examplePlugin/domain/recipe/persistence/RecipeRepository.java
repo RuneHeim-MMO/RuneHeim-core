@@ -602,7 +602,7 @@ public class RecipeRepository {
                         ),
                         new ItemRecord(ItemId.MITHRIL_ARROW, 15),
                         null,
-                        List.of(new SkillXpRecord(SkillType.FLETCHING, 112.5)), null), null),
+                        List.of(new SkillXpRecord(SkillType.FLETCHING, 45)), null), null),
 
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.ADAMANT_ARROW.getId(), RecipeType.INVENTORY_RECIPE, 3000,
                         List.of(new SkillRequirement(SkillType.FLETCHING, 60)),
