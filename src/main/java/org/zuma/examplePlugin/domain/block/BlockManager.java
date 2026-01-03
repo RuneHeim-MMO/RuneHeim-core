@@ -12,6 +12,7 @@ import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.base.ModelledInteractableBlock;
 import org.zuma.examplePlugin.domain.block.handlers.TriggeredBlocksHandler;
 import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerRegularBlock;
+import org.zuma.examplePlugin.domain.block.impl.ResourceNode;
 import org.zuma.examplePlugin.domain.gui.IDHolder;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -38,6 +39,12 @@ public class BlockManager {
             @Override
             public void run() {
                 blocks.values().forEach((block) -> {
+
+                    if (block instanceof ResourceNode node) {
+                        node.tick();
+                    }
+
+
                     if (!(block instanceof DespawnableBlock despawnable)) {
                         return;
                     }

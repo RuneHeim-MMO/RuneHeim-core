@@ -55,18 +55,19 @@ public class ResourceNode extends AbstractInteractableBlock {
     private final Location origin;
     private final CooldownHandler perfectStrikeCooldownHandler; // To prevent interruption abuse;
     private ResourceNodeType blockType;
-    private boolean isDepleted;
+    private int deposit;
     private ItemStack displayItemStack;
-    private boolean isRemoved;
-    private boolean displayResultInHologram, requiresTool;
+    private boolean isRemoved, displayResultInHologram, requiresTool;
+    private long lastDepositUpdateTimestamp;
     @Nullable
     private ResourceNodeSchematicHandler schematicHandler;
+
+    private Integer holoResultIndex, holoDepositIndex;
 
     public ResourceNode(BlockManager manager, AbstractInteractableBlockMeta meta) {
         super(meta, null, null);
         this.displayItemStack = new ItemStack(Material.AIR);
         this.isRemoved = false;
-        this.isDepleted = false;
         this.displayResultInHologram = false;
         this.schematicHandler = null;
         this.origin = meta.location();
@@ -85,6 +86,7 @@ public class ResourceNode extends AbstractInteractableBlock {
 
         description.add(" ");
         description.add("<b>Gather: </b>" + (blockType.getBaseGatheringDurationMillis() / 1000.0) + " sec");
+        description.add("<b>Max Deposit: </b> " + blockType.getMaxDeposit());
         description.add("<b>Respawn: </b>" + blockType.getRespawnDurationSeconds() + " sec");
         description.add("<b>Tool Req.: </b>" + (requiresTool ? "Yes" : "No"));
 
@@ -92,6 +94,7 @@ public class ResourceNode extends AbstractInteractableBlock {
     }
 
     private void initializeHologram() {
+
         List<String> hologramContent = new ArrayList<>(List.of(
                 Color.INTERACTABLE_ENTITY.asSpigotHex() + blockType.getLabel()
         ));
@@ -103,10 +106,51 @@ public class ResourceNode extends AbstractInteractableBlock {
             hologramContent.add("");
         }
 
-
         setHologram(DHAPI.createHologram(UUID.randomUUID().toString(), getHologramLocation(), hologramContent));
-        if (displayResultInHologram) DHAPI.addHologramLine(this.getHologram(), displayItemStack);
+        int index = hologramContent.size();
 
+        if (displayResultInHologram) {
+            DHAPI.addHologramLine(this.getHologram(), displayItemStack);
+            holoResultIndex = index++;
+        }
+
+        if (this.getNodeType().getMaxDeposit() > 1) {
+            DHAPI.addHologramLine(this.getHologram(), "§7" + this.deposit + "x");
+            holoDepositIndex = index++;
+        }
+
+    }
+
+    public void tick() {
+        long now = System.currentTimeMillis();
+        if (isRemoved) return;
+
+        if (now - lastDepositUpdateTimestamp < blockType.getRespawnDurationSeconds() * 1000L)
+            return;
+
+        if (deposit >= blockType.getMaxDeposit()) return;
+
+        if (this.deposit == 0) {
+            ResourceNodeRespawnedEvent event = new ResourceNodeRespawnedEvent(this);
+            Bukkit.getServer().getPluginManager().callEvent(event);
+
+            if (event.isCancelled()) {
+                return;
+            }
+
+            if (schematicHandler != null) {
+                Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+                    schematicHandler.updateNodeModel(this);
+                    this.spawn(blockType.getMaterial());
+                });
+            } else {
+                this.spawn(blockType.getMaterial());
+            }
+        }
+
+        this.lastDepositUpdateTimestamp = now;
+        this.deposit++;
+        updateHologram();
     }
 
     public void initializeBlock(int resourceTypeId, BlockLoader loader) {
@@ -124,33 +168,21 @@ public class ResourceNode extends AbstractInteractableBlock {
             return;
         }
 
-
-        if (schematicHandler != null) {
-            schematicHandler.updateNodeModel(this);
-        }
-
         this.blockType = type;
         this.displayItemStack = drop.createItemStackOfType();
         this.displayResultInHologram = type.isDisplayResultInHologram();
         this.requiresTool = type.getRequiredToolModifier() != null;
-        super.setMarkerType(type.getMarkerType());
-        super.setMarkerLabel(type.getLabel());
-        this.spawn(type.getMaterial());
+        this.deposit = Math.max(1, type.getStartingDeposit());
 
-        initializeHologram();
-    }
-
-    private void respawnBlock() {
-        ResourceNodeRespawnedEvent event = new ResourceNodeRespawnedEvent(this);
-        Bukkit.getServer().getPluginManager().callEvent(event);
-
-        if (event.isCancelled()) {
-            return;
+        if (type.getStartingDeposit() <= 0) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Resource Node " + type.getLabel() + " initialized with 0 starting deposit. Setting deposit to 1 to avoid spawn issues.");
         }
 
+        super.setMarkerType(type.getMarkerType());
+        super.setMarkerLabel(type.getLabel());
 
-        this.spawn(blockType.getMaterial());
-
+        this.spawn(type.getMaterial());
+        initializeHologram();
     }
 
     private boolean rollPerfectStrikeChange(RunePlayer player) {
@@ -208,6 +240,8 @@ public class ResourceNode extends AbstractInteractableBlock {
 
         if (blockType.getStartSound() != null) blockType.getStartSound().play(player, true);
 
+        this.lastDepositUpdateTimestamp = System.currentTimeMillis();
+
         if (rollPerfectStrikeChange(player)) {
             return; // If is perfect strike, handle it in rollPerfectStrikeChange
         }
@@ -225,8 +259,8 @@ public class ResourceNode extends AbstractInteractableBlock {
         player.queueOrStartAction(new ProgressBarAction(true, true), params, false);
     }
 
-    private void onGather(RunePlayer player, double baseGatheringLuckPercentage) {
-        if (isDepleted) {
+    public void onGather(RunePlayer player, double baseGatheringLuckPercentage) {
+        if (deposit <= 0) {
             return;
         }
 
@@ -238,10 +272,19 @@ public class ResourceNode extends AbstractInteractableBlock {
             return;
         }
 
-        depleteResource();
+        this.deposit--;
+
+        if (isDepleted()) {
+            this.spawn(Material.AIR);
+
+            if (schematicHandler != null) {
+                schematicHandler.updateNodeModel(this);
+            }
+        }
+
+        updateHologram();
         rollDropTableLoot(player, baseGatheringLuckPercentage);
         blockType.getXpReward().forEach(reward -> player.distributeXp(reward.type(), reward.xp()));
-
         BotVerificationHandler.logSuccessfulAction(player);
     }
 
@@ -271,24 +314,29 @@ public class ResourceNode extends AbstractInteractableBlock {
 
     }
 
-    public void depleteResource() {
-        isDepleted = true;
+    private void updateHologram() {
 
-        this.spawn(Material.AIR);
 
-        if (displayResultInHologram) DHAPI.setHologramLine(this.getHologram(), this.getHologram().size() + 1, "");
-        DHAPI.setHologramLine(this.getHologram(), 0, Color.DEPLETED_RESOURCE.asSpigotHex() + "❌ " + blockType.getLabel());
-
-        Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
-            isDepleted = false;
-            respawnBlock();
-
-            if (displayResultInHologram)
-                DHAPI.setHologramLine(this.getHologram(), this.getHologram().size() + 1, displayItemStack);
+        if (isDepleted()) {
+            if (holoDepositIndex != null) {
+                DHAPI.setHologramLine(this.getHologram(), holoDepositIndex, "");
+            }
+            if (holoResultIndex != null) {
+                DHAPI.setHologramLine(this.getHologram(), holoResultIndex, "");
+            }
+            DHAPI.setHologramLine(this.getHologram(), 0, Color.DEPLETED_RESOURCE.asSpigotHex() + "❌ " + blockType.getLabel());
+        } else {
+            if (holoDepositIndex != null) {
+                DHAPI.setHologramLine(this.getHologram(), holoDepositIndex, "§7" + this.deposit + "x");
+            }
+            if (holoResultIndex != null) {
+                DHAPI.setHologramLine(this.getHologram(), holoResultIndex, displayItemStack);
+            }
 
             DHAPI.setHologramLine(this.getHologram(), 0, Color.INTERACTABLE_ENTITY.asSpigotHex() + blockType.getLabel());
-        }, blockType.getRespawnDurationSeconds() * 20L);
+        }
     }
+
 
     public void onPlayerBlockBreakEvent(RunePlayer player, BlockBreakEvent event) {
         event.setCancelled(true);
@@ -302,7 +350,7 @@ public class ResourceNode extends AbstractInteractableBlock {
     }
 
     public boolean isDepleted() {
-        return this.isDepleted;
+        return this.deposit == 0;
     }
 
     public Location getOrigin() {
@@ -325,10 +373,6 @@ public class ResourceNode extends AbstractInteractableBlock {
 
         if (schematicHandler != null) {
             schematicHandler.updateNodeModel(this);
-
-            if (material.equals(Material.AIR)) {
-                return;
-            }
         }
         super.spawn(material);
     }
@@ -336,7 +380,7 @@ public class ResourceNode extends AbstractInteractableBlock {
     @Override
     public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItemType itemInHand) {
         // Cancel interaction if player is busy or the resource is depleted
-        if (player.hasPendingActions() || isDepleted) {
+        if (player.hasPendingActions() || isDepleted()) {
             event.setCancelled(true);
             return;
         }
