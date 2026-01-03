@@ -11,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
+import org.zuma.examplePlugin.core.config.ConfigManager;
+import org.zuma.examplePlugin.core.config.EnvironmentType;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.handlers.game.BotVerificationHandler;
@@ -206,6 +208,14 @@ public abstract class AbstractRecipe implements Restrictable {
             itemLore.add(Component.empty());
             itemLore.add(Component.text("Cost: ", Color.ITEM_CATEGORY_LABEL.asColor()));
             itemLore.add(CurrencyUtils.getCoinsCurrencyComponent(cost));
+        }
+
+        if (ConfigManager.environment.equals(EnvironmentType.DEVELOPMENT)) {
+            itemLore.add(Component.empty());
+            itemLore.add(Component.text("Dev status:", Color.SUCCESS.asColor()));
+            this.successXp.forEach(re -> {
+                itemLore.add(Component.text("+ " + re.xp() + " " + re.type().getLabel() + " XP", Color.SUCCESS.asColor()));
+            });
         }
 
         meta.lore(itemLore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());

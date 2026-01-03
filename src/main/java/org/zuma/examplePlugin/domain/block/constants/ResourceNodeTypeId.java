@@ -18,6 +18,7 @@ public enum ResourceNodeTypeId {
     RUNE_ORE(105),
     TIN_ORE(106),
     COAL_ORE(107),
+    GOLD_ORE(108),
 
     HERRING_POOL(1),
     MINNOW_POOL(2),

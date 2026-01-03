@@ -133,6 +133,15 @@ public class ResourceNodeTypeRepository {
                         SoundType.MINING_START, SoundType.MINING_STEP, SoundType.MINING_SUCCESS,
                         List.of(new SkillXpRecord(SkillType.MINING, 50.0)), 1, 2),
 
+                new ResourceNodeType(ResourceNodeTypeId.GOLD_ORE.asInt(), MarkerType.GOLD,
+                        "Gold Ore Vein", Material.DIAMOND_ORE, true,
+                        List.of(new SkillRequirement(SkillType.MINING, 40)),
+                        ModifierType.MINING_BOOST, 13500, 15,
+                        List.of(DropTableId.GOLD_NODE.asInt(), DropTableId.MINING_RARE_DROPTABLE.asInt()), ItemId.GOLD_ORE.asInt(),
+                        "You need a pickaxe to mine that!", "Mining",
+                        SoundType.MINING_START, SoundType.MINING_STEP, SoundType.MINING_SUCCESS,
+                        List.of(new SkillXpRecord(SkillType.MINING, 65.0)), 1, 2),
+
                 new ResourceNodeType(ResourceNodeTypeId.MITHRIL_ORE.asInt(), MarkerType.MITHRIL,
                         "Mithril Ore Vein", Material.DEEPSLATE_LAPIS_ORE, true,
                         List.of(new SkillRequirement(SkillType.MINING, 55)),

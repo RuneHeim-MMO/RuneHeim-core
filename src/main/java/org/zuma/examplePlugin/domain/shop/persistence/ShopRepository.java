@@ -39,8 +39,8 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.RUBY.asInt(), 0, 300, ItemId.RUBY.getBuyPrice(), ItemId.RUBY.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.DIAMOND.asInt(), 0, 300, ItemId.DIAMOND.getBuyPrice(), ItemId.DIAMOND.getSellPrice(), null, null),
 
-                        new ShopItemConfig(ItemId.BRONZE_RING.asInt(), 2, 300, 300L, 100L, null, null),
-                        new ShopItemConfig(ItemId.IRON_RING.asInt(), 2, 300, 400L, 150L, null, null),
+                        new ShopItemConfig(ItemId.BRONZE_RING.asInt(), 2, 300, ItemId.BRONZE_RING.getBuyPrice(), ItemId.BRONZE_RING.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.IRON_RING.asInt(), 2, 300, ItemId.IRON_RING.getBuyPrice(), ItemId.IRON_RING.getSellPrice(), null, null),
 
                         new ShopItemConfig(ItemId.AMULET_OF_GUARDING.asInt(), 1, 300, 1000L, 360L, null, null),
                         new ShopItemConfig(ItemId.AMULET_OF_THE_NOVICE_BLADE.asInt(), 1, 300, 1000L, 360L, null, null),
@@ -56,10 +56,13 @@ public class ShopRepository {
 
                 new ShopConfig(ShopId.DRAKKAR_BLACKSMITH.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.SMITHING_HAMMER.asInt(), 8, 30, 90L, 20L, null, null),
+                        new ShopItemConfig(ItemId.AMULET_MOULD.asInt(), 8, 30, 270L, 40L, null, null),
+                        new ShopItemConfig(ItemId.RING_MOULD.asInt(), 8, 30, 270L, 40L, null, null),
                         new ShopItemConfig(ItemId.BRONZE_BAR.asInt(), 8, 30, ItemId.BRONZE_BAR.getBuyPrice(), ItemId.BRONZE_BAR.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.IRON_BAR.asInt(), 8, 30, ItemId.IRON_BAR.getBuyPrice(), ItemId.IRON_BAR.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.STEEL_BAR.asInt(), 8, 30, ItemId.STEEL_BAR.getBuyPrice(), ItemId.STEEL_BAR.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.COAL_ORE.asInt(), 4, 30, ItemId.COAL_ORE.getBuyPrice(), ItemId.COAL_ORE.getSellPrice(), null, null)
+
                 ))), 1)),
 
                 new ShopConfig(ShopId.DRAKKAR_ARMOR_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
@@ -120,6 +123,8 @@ public class ShopRepository {
 
                 new ShopConfig(ShopId.INFERNAK_BLACKSMITH.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.SMITHING_HAMMER.asInt(), 8, 30, 90L, 20L, null, null),
+                        new ShopItemConfig(ItemId.AMULET_MOULD.asInt(), 8, 30, 270L, 40L, null, null),
+                        new ShopItemConfig(ItemId.RING_MOULD.asInt(), 8, 30, 270L, 40L, null, null),
                         new ShopItemConfig(ItemId.STEEL_BAR.asInt(), 16, 30, ItemId.STEEL_BAR.getBuyPrice(), ItemId.STEEL_BAR.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.MITHRIL_BAR.asInt(), 4, 30, ItemId.MITHRIL_BAR.getBuyPrice(), ItemId.MITHRIL_BAR.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.ADAMANT_BAR.asInt(), 4, 30, ItemId.ADAMANT_BAR.getBuyPrice(), ItemId.ADAMANT_BAR.getSellPrice(), null, null),
@@ -193,6 +198,8 @@ public class ShopRepository {
 
                 new ShopConfig(ShopId.MURKWATCH_BLACKSMITH.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.SMITHING_HAMMER.asInt(), 8, 30, 90L, 20L, null, null),
+                        new ShopItemConfig(ItemId.AMULET_MOULD.asInt(), 8, 30, 270L, 40L, null, null),
+                        new ShopItemConfig(ItemId.RING_MOULD.asInt(), 8, 30, 270L, 40L, null, null),
                         new ShopItemConfig(ItemId.STEEL_BAR.asInt(), 8, 30, ItemId.STEEL_BAR.getBuyPrice(), ItemId.STEEL_BAR.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.MITHRIL_BAR.asInt(), 4, 30, ItemId.MITHRIL_BAR.getBuyPrice(), ItemId.MITHRIL_BAR.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.COPPER_ORE.asInt(), 32, 30, ItemId.COPPER_ORE.getBuyPrice(), ItemId.COPPER_ORE.getSellPrice(), null, null),
@@ -249,7 +256,7 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.STEEL_AXE.asInt(), 3, 300, ItemId.STEEL_AXE.getBuyPrice(), ItemId.STEEL_AXE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.MITHRIL_PICKAXE.asInt(), 1, 1800, ItemId.MITHRIL_PICKAXE.getBuyPrice(), ItemId.MITHRIL_PICKAXE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.MITHRIL_AXE.asInt(), 1, 1800, ItemId.MITHRIL_AXE.getBuyPrice(), ItemId.MITHRIL_AXE.getSellPrice(), null, null),
-                        new ShopItemConfig(ItemId.MITHRIL_RING.asInt(), 1, 1800, 2500L, 250L, null, null)
+                        new ShopItemConfig(ItemId.MITHRIL_RING.asInt(), 1, 1800, ItemId.MITHRIL_RING.getBuyPrice(), ItemId.MITHRIL_RING.getSellPrice(), null, null)
                 ))), 1))
 
         );

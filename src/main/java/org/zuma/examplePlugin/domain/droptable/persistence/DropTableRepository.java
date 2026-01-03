@@ -258,6 +258,10 @@ public class DropTableRepository {
                         new DropTableEntry(ItemId.COAL_ORE.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
+                new DropTableDBEntry(DropTableId.GOLD_NODE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
+                        new DropTableEntry(ItemId.GOLD_ORE.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
+                ), null)), 1)),
+
                 new DropTableDBEntry(DropTableId.MITHRIL_NODE.asInt(), new VersionedJson(gson.toJson(new DropTableRecord(List.of(
                         new DropTableEntry(ItemId.MITHRIL_ORE.asInt(), 1, 1, 1, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
