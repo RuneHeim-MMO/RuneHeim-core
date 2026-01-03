@@ -140,7 +140,7 @@ public class QuestRegistry {
         )));
 
 
-        Quest welcomeToDrakkarIII = new Quest(QuestId.WELCOME_TO_DRAKKAR_III.getId(), "Welcome to Drakkar III", QuestDifficulty.EASY, false, null)
+        Quest welcomeToDrakkarIII = new Quest(QuestId.WELCOME_TO_DRAKKAR_III.getId(), "Welcome to Drakkar III", QuestDifficulty.EASY, false, new Quest.Coordinates(195, 73, -53))
                 .setRewards(new QuestReward(List.of(new ItemRecord(ItemId.BRONZE_BODY, 1)), null, 250));
 
         registerQuest(welcomeToDrakkarIII.addSteps(List.of(
@@ -150,7 +150,7 @@ public class QuestRegistry {
         )));
 
 
-        Quest smeltersAssistant = new Quest(QuestId.HOT_MESS_AT_THE_SMELTERY.getId(), "Hot Mess At The Smeltery", QuestDifficulty.MEDIUM, false, null)
+        Quest smeltersAssistant = new Quest(QuestId.HOT_MESS_AT_THE_SMELTERY.getId(), "Hot Mess At The Smeltery", QuestDifficulty.MEDIUM, false, new Quest.Coordinates(170, 73, -30))
                 .setRequirements(List.of(new SkillRequirement(SkillType.MINING, 30)))
                 .setRewards(new QuestReward(null, Map.of(SkillType.SMITHING, 840.0, SkillType.MINING, 1500.0), 1000));
 
@@ -159,7 +159,7 @@ public class QuestRegistry {
                 new DialogStep(RuneQuestPlugin.getInstance(), smeltersAssistant, "Bring §620x Purified Coal Ore §fto §6Smeltery Worker §fin §6Drakkar.", "smeltery-assistant.bring-coal", null)
         )));
 
-        Quest threadsOfAid = new Quest(QuestId.THREADS_OF_AID.getId(), "Threads of Aid", QuestDifficulty.MEDIUM, false, null)
+        Quest threadsOfAid = new Quest(QuestId.THREADS_OF_AID.getId(), "Threads of Aid", QuestDifficulty.MEDIUM, false, new Quest.Coordinates(976, 77, 486))
                 .setRequirements(List.of(new SkillRequirement(SkillType.ATTACK, 30), new SkillRequirement(SkillType.STRENGTH, 30), new SkillRequirement(SkillType.DEFENCE, 30)))
                 .setRewards(new QuestReward(null, Map.of(SkillType.HITPOINTS, 1200.0), 1600));
 
