@@ -26,7 +26,7 @@ public class SupporterLevelUpEffect implements AnimatedEffect {
 
         if (time == 1) {
             // Play initial sound
-            SoundType.PLAYER_LEVEL_UP.play(player, true);
+            SoundType.PLAYER_LEVEL_UP.play(player, false);
 
             // Show level-up title
             player.asBukkitPlayer().showTitle(Title.title(
