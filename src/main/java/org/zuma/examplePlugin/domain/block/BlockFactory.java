@@ -46,7 +46,6 @@ public class BlockFactory {
             case 1 -> {
                 ResourceNodeMeta deserialized = new Gson().fromJson(json.meta(), ResourceNodeMeta.class);
                 ResourceNodeCrop block = new ResourceNodeCrop(manager, meta);
-                block.setSchematics(deserialized.schematicName(), deserialized.depletedSchematicName());
                 block.initializeBlock(deserialized.resourceMetaId(), loader);
                 return block;
             }

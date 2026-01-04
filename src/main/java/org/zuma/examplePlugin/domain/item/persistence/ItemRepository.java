@@ -522,6 +522,11 @@ public class ItemRepository {
                                 new SkillRequirement(SkillType.DEFENCE, 40)),
                                 null), 1)),
 
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_RING, ItemId.GOLD_RING.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Gold Ring", List.of("A gold ring offering mild strength advantage."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new EquipableTypeMeta(null, null, null,
+                                List.of(new Modifier(ModifierType.STRENGTH_BONUS, 3)), List.of(new SkillRequirement(SkillType.STRENGTH, 15)),
+                                null), 1)),
+
                 // Defence Amulets
                 new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.AMULET_OF_GUARDING.asInt(), Material.COAL, ItemRarity.COMMON, "Amulet of Guarding", List.of("Reduces damage taken from all melee attacks."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new EquipableTypeMeta(null, null, null,
@@ -665,6 +670,15 @@ public class ItemRepository {
                                 ), List.of(new SkillRequirement(SkillType.RANGED, 60)),
                                 null), 1)),
 
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.GOLD_AMULET.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Gold Amulet", List.of("Gold amulet, slightly enhances your strength."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new EquipableTypeMeta(null, null, null,
+                                List.of(new Modifier(ModifierType.STRENGTH_BONUS, 5)), List.of(new SkillRequirement(SkillType.STRENGTH, 15)), null), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.IRON_AMULET.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Iron Amulet", List.of("Iron amulet. Barely improves your strength."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new EquipableTypeMeta(null, null, null,
+                                List.of(new Modifier(ModifierType.STRENGTH_BONUS, 2)), List.of(new SkillRequirement(SkillType.STRENGTH, 8)), null), 1)),
+
+
                 // XP Lamps
                 new ItemEntity(new AbstractItemMeta(ItemType.XP_LAMP, ItemId.GENIE_XP_LAMP.asInt(), Material.COAL, ItemRarity.RARE, "Genie XP Lamp",
                         List.of("Grants a magical XP boost.", "Use wisely to level up faster."), null, false, 1.0), toVersionedJson(new XPLampMeta(500, List.of()), 1)),
@@ -730,6 +744,13 @@ public class ItemRepository {
 
 
                 // Tools
+                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.AMULET_MOULD.asInt(), Material.COAL, ItemRarity.COMMON, "Necklace Mould", List.of("A mould for casting metal necklaces."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new EquipableTypeMeta(null, null, null, null, null, null), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.RING_MOULD.asInt(), Material.COAL, ItemRarity.COMMON, "Ring Mould", List.of("A mould for casting rings."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new EquipableTypeMeta(null, null, null, null, null, null), 1)),
+
+
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.NEEDLE.asInt(), Material.COAL, ItemRarity.COMMON, "Needle", List.of("A small, sharp tool used for sewing or crafting."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new EquipableTypeMeta(null, null, null, null, null, null), 1)),
 
@@ -787,6 +808,8 @@ public class ItemRepository {
                         toVersionedJson(new MaterialMeta(700), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.IRON_ORE.asInt(), Material.COAL, ItemRarity.COMMON, "Iron Ore", List.of("Heavy iron ore, a basic material for crafting."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(175), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.GOLD_ORE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Gold Ore", List.of("Raw rock flecked with gold."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(220), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MITHRIL_ORE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Mithril Ore", List.of("Rare mithril ore, prized for its lightweight strength."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(600), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ADAMANT_ORE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Adamantite Ore", List.of("Tough adamantite ore, used for elite armor and weapons."), null, true, 1.0),
@@ -799,6 +822,8 @@ public class ItemRepository {
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.IRON_BAR.asInt(), Material.COAL, ItemRarity.COMMON, "Iron Bar", List.of("Solid iron bar, reliable for sturdy weapons and armor."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(0), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.STEEL_BAR.asInt(), Material.COAL, ItemRarity.COMMON, "Steel Bar", List.of("Refined steel bar, favored by seasoned blacksmiths."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.GOLD_BAR.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Gold Bar", List.of("Refined gold cast into a bar."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(0), 1)),
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MITHRIL_BAR.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Mithril Bar", List.of("Light yet strong mithril bar, perfect for advanced gear."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new MaterialMeta(0), 1)),
@@ -911,13 +936,13 @@ public class ItemRepository {
 
                 // Gems
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNCUT_SAPPHIRE.asInt(), Material.COAL, ItemRarity.COMMON, "Uncut Sapphire", List.of("A rough, uncut sapphire.", "Can be cut with a chisel."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(300), 1)),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNCUT_EMERALD.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Uncut Emerald", List.of("A rough, uncut emerald.", "Can be cut with a chisel."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(400), 1)),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNCUT_RUBY.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Uncut Ruby", List.of("A rough, uncut ruby.", "Can be cut with a chisel."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(600), 1)),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNCUT_DIAMOND.asInt(), Material.COAL, ItemRarity.RARE, "Uncut Diamond", List.of("A rough, uncut diamond.", "Can be cut with a chisel."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(900), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNCUT_EMERALD.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Uncut Emerald", List.of("A rough, uncut emerald.", "Can be cut with a chisel."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(1600), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNCUT_RUBY.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Uncut Ruby", List.of("A rough, uncut ruby.", "Can be cut with a chisel."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(2400), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.UNCUT_DIAMOND.asInt(), Material.COAL, ItemRarity.RARE, "Uncut Diamond", List.of("A rough, uncut diamond.", "Can be cut with a chisel."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(3200), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.SAPPHIRE.asInt(), Material.COAL, ItemRarity.COMMON, "Sapphire", List.of("A polished sapphire gem.", "Used for crafting jewelry."), null, true, 1.3),
                         toVersionedJson(new MaterialMeta(0), 1)),

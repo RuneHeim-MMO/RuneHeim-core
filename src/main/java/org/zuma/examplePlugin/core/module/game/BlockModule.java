@@ -30,7 +30,6 @@ public class BlockModule implements PluginModule {
         InteractableBlockRepository blockRepository = new InteractableBlockRepository(context.get(HikariPool.class));
         BlockLoader blockLoader = new BlockLoader(blockManager, blockRepository, new BlockFactory(), new ResourceNodeTypeRepository());
         blockLoader.fetchAllResourceNodeTypes();
-
         plugin.getServer().getPluginManager().registerEvents(blockListener, plugin);
 
         context.bind(BlockManager.class, blockManager);

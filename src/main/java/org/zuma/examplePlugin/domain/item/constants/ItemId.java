@@ -20,6 +20,8 @@ public enum ItemId {
     KNIFE(5),
     COMPASS(6),
     NEEDLE(7),
+    AMULET_MOULD(8),
+    RING_MOULD(9),
 
     COPPER_ORE(100),
     IRON_ORE(101),
@@ -29,6 +31,7 @@ public enum ItemId {
     TIN_ORE(106),
     COAL_ORE(107),
     PURE_COAL_ORE(108),
+    GOLD_ORE(109),
 
     BRONZE_BAR(200),
     IRON_BAR(201),
@@ -36,6 +39,7 @@ public enum ItemId {
     MITHRIL_BAR(203),
     ADAMANT_BAR(204),
     RUNE_BAR(205),
+    GOLD_BAR(206),
 
     BRONZE_MEDHELM(300),
     IRON_MEDHELM(301),
@@ -332,12 +336,15 @@ public enum ItemId {
     AMULET_OF_THE_HUNTER(3112),
     AMULET_OF_THE_SHARPSHOOTER(3113),
     AMULET_OF_THE_EAGLE_EYE(3114),
+    GOLD_AMULET(3115),
+    IRON_AMULET(3116),
 
     BRONZE_RING(3200),
     IRON_RING(3201),
     MITHRIL_RING(3202),
     ADAMANT_RING(3203),
     RUNE_RING(3204),
+    GOLD_RING(3205),
 
 
     // Mounts

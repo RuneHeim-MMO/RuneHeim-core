@@ -15,7 +15,7 @@ public enum SoundType {
     FAIL_ACTION("ENTITY_VILLAGER_NO", false, 1.0f, 1.0f),
     SUCCESS_ACTION("BLOCK_BEACON_POWER_SELECT", false, 1.0f, 1.2f),
     PLAYER_FIRST_JOIN("BLOCK_NOTE_BLOCK_BANJO", false, 1.0f, 1f),
-    PLAYER_LEVEL_UP("UI_TOAST_CHALLENGE_COMPLETE", false, 1.0f, 0.9f),
+    PLAYER_LEVEL_UP("UI_TOAST_CHALLENGE_COMPLETE", false, 0.8f, 0.9f),
     SUPPORTER_LEVEL_APPEAR("ENTITY_EVOKER_CAST_SPELL", false, 1.0f, 0.9f),
     PLAYER_QUEST_COMPLETE("runequest.quest.finish", true, 0.5f, 1f),
     PLAYER_QUEST_START("runequest.quest.start", true, 0.5f, 1f),

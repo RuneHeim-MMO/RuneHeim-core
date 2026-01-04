@@ -32,6 +32,7 @@ public enum DropTableId {
     MITHRIL_NODE(205),
     ADAMANT_NODE(206),
     RUNE_NODE(207),
+    GOLD_NODE(208),
 
     FISHING_RARE_DROPTABLE(300),
     HERRING_NODE(301),

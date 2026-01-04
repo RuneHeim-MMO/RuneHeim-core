@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ResourceNodeType {
-    private final int id;
+    private final int id, startingDeposit, maxDeposit;
     private final String label, wrongToolMessage, actionVerb;
     private final Material material;
     private final List<SkillRequirement> requirements;
@@ -34,7 +34,7 @@ public class ResourceNodeType {
     private final ModifierType toolModifier;
 
     public ResourceNodeType(int id, MarkerType markerType, String label, Material material, boolean displayResultInHologram, @Nullable List<SkillRequirement> requirements, @Nullable ModifierType toolRequiresModifier,
-                            int baseGatheringDurationMs, int respawnDurationSecs, List<Integer> dropTableIds, int displayItemStackID, String wrongToolMsg, String actionVerb, SoundType startSound, SoundType stepSound, SoundType gatherSuccessSound, @Nullable List<SkillXpRecord> xpReward) {
+                            int baseGatheringDurationMs, int respawnDurationSecs, List<Integer> dropTableIds, int displayItemStackID, String wrongToolMsg, String actionVerb, SoundType startSound, SoundType stepSound, SoundType gatherSuccessSound, @Nullable List<SkillXpRecord> xpReward, int startingDeposit, int maxDeposit) {
         this.id = id;
         this.markerType = markerType;
         this.label = label;
@@ -49,6 +49,8 @@ public class ResourceNodeType {
         this.stepSound = stepSound;
         this.gatherSuccessSound = gatherSuccessSound;
         this.displayResultInHologram = displayResultInHologram;
+        this.startingDeposit = startingDeposit;
+        this.maxDeposit = maxDeposit;
 
         this.requirements = Objects.requireNonNullElseGet(requirements, ArrayList::new);
         this.xpReward = Objects.requireNonNullElseGet(xpReward, ArrayList::new);
@@ -145,5 +147,13 @@ public class ResourceNodeType {
 
     public boolean isDisplayResultInHologram() {
         return displayResultInHologram;
+    }
+
+    public int getStartingDeposit() {
+        return startingDeposit;
+    }
+
+    public int getMaxDeposit() {
+        return maxDeposit;
     }
 }

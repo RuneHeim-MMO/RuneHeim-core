@@ -36,7 +36,7 @@ public class LevelUpEffect implements AnimatedEffect {
         this.delayBetween = 5;
 
         // Play initial sound
-        SoundType.PLAYER_LEVEL_UP.play(player, true);
+        SoundType.PLAYER_LEVEL_UP.play(player, false);
 
         if (!isMaxedSkill) {
             // Show level-up title

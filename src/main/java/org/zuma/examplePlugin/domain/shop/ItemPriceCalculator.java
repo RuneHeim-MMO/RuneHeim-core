@@ -11,14 +11,12 @@ import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
 import org.zuma.examplePlugin.domain.recipe.base.AbstractRecipe;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class ItemPriceCalculator {
     private static final double SELL_PRICE_MULTIPLIER = 0.19; // NPCs buy items at 80% of the calculated price
     private static final HashMap<Integer, Integer> priceCache = new HashMap<>(); // id : buy price
+    private static final ThreadLocal<Set<Integer>> processingStack = ThreadLocal.withInitial(HashSet::new);
 
     public static void buildCache() {
         priceCache.clear();
@@ -77,6 +75,23 @@ public class ItemPriceCalculator {
     @Nullable
     // Returns null if price cannot be determined
     private static Integer calculateFinalPrice(AbstractItemType item) {
+        Set<Integer> processing = processingStack.get();
+        if (processing.contains(item.id)) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, 
+                "Circular recipe dependency detected for item " + item.id + ". Using null price.");
+            return null;
+        }
+        
+        processing.add(item.id);
+        try {
+            return calculateFinalPriceInternal(item);
+        } finally {
+            processing.remove(item.id);
+        }
+    }
+
+    @Nullable
+    private static Integer calculateFinalPriceInternal(AbstractItemType item) {
         if (item instanceof Material && item.getBasePrice() == null) {
             return null; // Cannot determine price if base price is not set for materials
         }

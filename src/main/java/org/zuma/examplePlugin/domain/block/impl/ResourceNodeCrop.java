@@ -7,6 +7,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Farmland;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
+import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class ResourceNodeCrop extends ResourceNode {
     public ResourceNodeCrop(BlockManager manager, AbstractInteractableBlockMeta meta) {
@@ -36,10 +37,13 @@ public class ResourceNodeCrop extends ResourceNode {
     }
 
     @Override
-    public void depleteResource() {
+    public void onGather(RunePlayer player, double baseGatheringLuckPercentage) {
         Block blockUnder = getLocation().getBlock().getRelative(0, -1, 0);
-        super.depleteResource();
-        blockUnder.setType(Material.DIRT);
-        getLocation().getBlock().setType(Material.AIR);
+        super.onGather(player, baseGatheringLuckPercentage);
+
+        if(super.isDepleted()){
+            blockUnder.setType(Material.DIRT);
+            getLocation().getBlock().setType(Material.AIR);
+        }
     }
 }

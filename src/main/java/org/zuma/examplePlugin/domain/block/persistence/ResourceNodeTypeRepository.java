@@ -24,21 +24,21 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.FLAX_NODE.asInt()), ItemId.FLAX.asInt(),
                         "", "Picking",
                         SoundType.PICKING_UP_PLANT_START, null, SoundType.PICKING_UP_PLANT_END,
-                        List.of()),
+                        List.of(), 1, 1),
 
                 new ResourceNodeType(ResourceNodeTypeId.POTATO_CROP.asInt(), MarkerType.POTATO,
                         "Potato", Material.POTATOES, false, null, null, 500, 60,
                         List.of(DropTableId.POTATO_CROP_NODE.asInt()), ItemId.POTATO.asInt(),
                         "", "Picking",
                         SoundType.PICKING_UP_PLANT_START, null, SoundType.PICKING_UP_PLANT_END,
-                        List.of()),
+                        List.of(), 1, 1),
 
                 new ResourceNodeType(ResourceNodeTypeId.CARROT_CROP.asInt(), MarkerType.CARROT,
                         "Carrot", Material.CARROTS, false, null, null, 500, 60,
                         List.of(DropTableId.CARROT_CROP_NODE.asInt()), ItemId.CARROT.asInt(),
                         "", "Picking",
                         SoundType.PICKING_UP_PLANT_START, null, SoundType.PICKING_UP_PLANT_END,
-                        List.of()),
+                        List.of(), 1, 1),
 
                 // Trees
                 new ResourceNodeType(ResourceNodeTypeId.TREE.asInt(), MarkerType.TREE,
@@ -48,7 +48,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.TREE_NODE.asInt(), DropTableId.WOODCUTTING_RARE_DROPTABLE.asInt()), ItemId.LOG.asInt(),
                         "You need a hatchet to cut that!", "Woodcutting",
                         SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 25.0))),
+                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 25.0)), 1, 1),
 
                 new ResourceNodeType(ResourceNodeTypeId.BIRCH_TREE.asInt(), MarkerType.BIRCH,
                         "Birch Tree", Material.BIRCH_LOG, true,
@@ -57,7 +57,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.BIRCH_TREE_NODE.asInt(), DropTableId.WOODCUTTING_RARE_DROPTABLE.asInt()), ItemId.BIRCH_LOG.asInt(),
                         "You need a hatchet to cut that!", "Woodcutting",
                         SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 37.5))),
+                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 37.5)), 1, 1),
 
                 new ResourceNodeType(ResourceNodeTypeId.MAPLE_TREE.asInt(), MarkerType.MAPLE,
                         "Maple Tree", Material.ACACIA_LOG, true,
@@ -66,7 +66,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.MAPLE_TREE_NODE.asInt(), DropTableId.WOODCUTTING_RARE_DROPTABLE.asInt()), ItemId.MAPLE_LOG.asInt(),
                         "You need a hatchet to cut that!", "Woodcutting",
                         SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 70))),
+                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 70)), 1, 1),
 
                 new ResourceNodeType(ResourceNodeTypeId.MAHOGANY_TREE.asInt(), MarkerType.MAHOGANY,
                         "Mahogany Tree", Material.MANGROVE_LOG, true,
@@ -75,7 +75,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.MAHOGANY_TREE_NODE.asInt(), DropTableId.WOODCUTTING_RARE_DROPTABLE.asInt()), ItemId.MAHOGANY_LOG.asInt(),
                         "You need a hatchet to cut that!", "Woodcutting",
                         SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 100.0))),
+                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 100.0)), 1, 1),
 
                 new ResourceNodeType(ResourceNodeTypeId.YEW_TREE.asInt(), MarkerType.YEW,
                         "Yew Tree", Material.DARK_OAK_LOG, true,
@@ -84,7 +84,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.YEW_TREE_NODE.asInt(), DropTableId.WOODCUTTING_RARE_DROPTABLE.asInt()), ItemId.YEW_LOG.asInt(),
                         "You need a hatchet to cut that!", "Woodcutting",
                         SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 135.0))),
+                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 135.0)), 1, 1),
 
                 new ResourceNodeType(ResourceNodeTypeId.MAGIC_TREE.asInt(), MarkerType.MAGIC,
                         "Magic Tree", Material.CHERRY_LOG, true,
@@ -93,7 +93,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.MAGIC_TREE_NODE.asInt(), DropTableId.WOODCUTTING_RARE_DROPTABLE.asInt()), ItemId.MAGIC_LOG.asInt(),
                         "You need a hatchet to cut that!", "Woodcutting",
                         SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 160.0))),
+                        List.of(new SkillXpRecord(SkillType.WOODCUTTING, 160.0)), 1, 1),
 
 
                 // Ores
@@ -104,7 +104,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.TIN_NODE.asInt(), DropTableId.MINING_RARE_DROPTABLE.asInt()), ItemId.TIN_ORE.asInt(),
                         "You need a pickaxe to mine that!", "Mining",
                         SoundType.MINING_START, SoundType.MINING_STEP, SoundType.MINING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.MINING, 17.5))),
+                        List.of(new SkillXpRecord(SkillType.MINING, 17.5)), 1, 2),
 
                 new ResourceNodeType(ResourceNodeTypeId.COPPER_ORE.asInt(), MarkerType.COPPER,
                         "Copper Ore Vein", Material.DEEPSLATE_COPPER_ORE, true,
@@ -113,7 +113,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.COPPER_NODE.asInt(), DropTableId.MINING_RARE_DROPTABLE.asInt()), ItemId.COPPER_ORE.asInt(),
                         "You need a pickaxe to mine that!", "Mining",
                         SoundType.MINING_START, SoundType.MINING_STEP, SoundType.MINING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.MINING, 17.5))),
+                        List.of(new SkillXpRecord(SkillType.MINING, 17.5)), 1, 2),
 
                 new ResourceNodeType(ResourceNodeTypeId.IRON_ORE.asInt(), MarkerType.IRON,
                         "Iron Ore Vein", Material.DEEPSLATE_IRON_ORE, true,
@@ -122,7 +122,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.IRON_NODE.asInt(), DropTableId.MINING_RARE_DROPTABLE.asInt()), ItemId.IRON_ORE.asInt(),
                         "You need a pickaxe to mine that!", "Mining",
                         SoundType.MINING_START, SoundType.MINING_STEP, SoundType.MINING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.MINING, 35.0))),
+                        List.of(new SkillXpRecord(SkillType.MINING, 35.0)), 1, 2),
 
                 new ResourceNodeType(ResourceNodeTypeId.COAL_ORE.asInt(), MarkerType.COAL,
                         "Coal Ore Vein", Material.DEEPSLATE_COAL_ORE, true,
@@ -131,7 +131,16 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.COAL_NODE.asInt(), DropTableId.MINING_RARE_DROPTABLE.asInt()), ItemId.COAL_ORE.asInt(),
                         "You need a pickaxe to mine that!", "Mining",
                         SoundType.MINING_START, SoundType.MINING_STEP, SoundType.MINING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.MINING, 50.0))),
+                        List.of(new SkillXpRecord(SkillType.MINING, 50.0)), 1, 2),
+
+                new ResourceNodeType(ResourceNodeTypeId.GOLD_ORE.asInt(), MarkerType.GOLD,
+                        "Gold Ore Vein", Material.DIAMOND_ORE, true,
+                        List.of(new SkillRequirement(SkillType.MINING, 40)),
+                        ModifierType.MINING_BOOST, 13500, 15,
+                        List.of(DropTableId.GOLD_NODE.asInt(), DropTableId.MINING_RARE_DROPTABLE.asInt()), ItemId.GOLD_ORE.asInt(),
+                        "You need a pickaxe to mine that!", "Mining",
+                        SoundType.MINING_START, SoundType.MINING_STEP, SoundType.MINING_SUCCESS,
+                        List.of(new SkillXpRecord(SkillType.MINING, 65.0)), 1, 2),
 
                 new ResourceNodeType(ResourceNodeTypeId.MITHRIL_ORE.asInt(), MarkerType.MITHRIL,
                         "Mithril Ore Vein", Material.DEEPSLATE_LAPIS_ORE, true,
@@ -140,7 +149,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.MITHRIL_NODE.asInt(), DropTableId.MINING_RARE_DROPTABLE.asInt()), ItemId.MITHRIL_ORE.asInt(),
                         "You need a pickaxe to mine that!", "Mining",
                         SoundType.MINING_START, SoundType.MINING_STEP, SoundType.MINING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.MINING, 80.0))),
+                        List.of(new SkillXpRecord(SkillType.MINING, 80.0)), 1, 2),
 
                 new ResourceNodeType(ResourceNodeTypeId.ADAMANT_ORE.asInt(), MarkerType.ADAMANT,
                         "Adamantite Ore Vein", Material.DEEPSLATE_EMERALD_ORE, true,
@@ -149,7 +158,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.ADAMANT_NODE.asInt(), DropTableId.MINING_RARE_DROPTABLE.asInt()), ItemId.ADAMANT_ORE.asInt(),
                         "You need a pickaxe to mine that!", "Mining",
                         SoundType.MINING_START, SoundType.MINING_STEP, SoundType.MINING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.MINING, 95.0))),
+                        List.of(new SkillXpRecord(SkillType.MINING, 95.0)), 1, 2),
 
                 new ResourceNodeType(ResourceNodeTypeId.RUNE_ORE.asInt(), MarkerType.RUNE,
                         "Runite Ore Vein", Material.DEEPSLATE_DIAMOND_ORE, true,
@@ -158,7 +167,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.RUNE_NODE.asInt(), DropTableId.MINING_RARE_DROPTABLE.asInt()), ItemId.RUNE_ORE.asInt(),
                         "You need a pickaxe to mine that!", "Mining",
                         SoundType.MINING_START, SoundType.MINING_STEP, SoundType.MINING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.MINING, 125.0))),
+                        List.of(new SkillXpRecord(SkillType.MINING, 125.0)), 1, 1),
 
 
                 new ResourceNodeType(ResourceNodeTypeId.HERRING_POOL.asInt(), MarkerType.HERRING, "Herring Pool", Material.EXPOSED_COPPER_GRATE, true,
@@ -167,7 +176,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.HERRING_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_HERRING.asInt(),
                         "You need a fishing net to catch that!", "Casting net at",
                         SoundType.FISHING_START_NET, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.FISHING, 17.5))),
+                        List.of(new SkillXpRecord(SkillType.FISHING, 17.5)), 1, 2),
 
                 new ResourceNodeType(ResourceNodeTypeId.MINNOW_POOL.asInt(), MarkerType.MINNOW, "Minnow Pool", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 5)),
@@ -175,7 +184,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.MINNOW_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_MINNOW.asInt(),
                         "You need a fishing net to catch that!", "Sweeping net at",
                         SoundType.FISHING_START_NET, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.FISHING, 20))),
+                        List.of(new SkillXpRecord(SkillType.FISHING, 20)), 1, 2),
 
                 new ResourceNodeType(ResourceNodeTypeId.TROUT_STREAM.asInt(), MarkerType.TROUT, "Trout Stream", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 15)),
@@ -183,7 +192,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.TROUT_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_TROUT.asInt(),
                         "You need a fishing rod to catch that!", "Casting line at",
                         SoundType.FISHING_START_ROD, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.FISHING, 17.5))),
+                        List.of(new SkillXpRecord(SkillType.FISHING, 17.5)), 1, 2),
 
                 new ResourceNodeType(ResourceNodeTypeId.SALMON_STREAM.asInt(), MarkerType.SALMON, "Salmon Stream", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 25)),
@@ -191,7 +200,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.SALMON_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_SALMON.asInt(),
                         "You need a fishing rod to catch that!", "Reeling in at",
                         SoundType.FISHING_START_ROD, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.FISHING, 40))),
+                        List.of(new SkillXpRecord(SkillType.FISHING, 40)), 1, 2),
 
                 new ResourceNodeType(ResourceNodeTypeId.TUNA_SPOT.asInt(), MarkerType.TUNA, "Tuna Spot", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 35)),
@@ -199,7 +208,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.TUNA_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_TUNA.asInt(),
                         "You need a fishing rod to catch that!", "Hooking fish at",
                         SoundType.FISHING_START_ROD, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.FISHING, 50))),
+                        List.of(new SkillXpRecord(SkillType.FISHING, 50)), 1, 2),
 
                 new ResourceNodeType(ResourceNodeTypeId.CRAWLER_REEF.asInt(), MarkerType.CRAWLER, "Crawler Reef", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 45)),
@@ -207,7 +216,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.CRAWLER_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_CRAWLER.asInt(),
                         "You need a fishing rod to catch that!", "Casting line at",
                         SoundType.FISHING_START_ROD, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.FISHING, 60))),
+                        List.of(new SkillXpRecord(SkillType.FISHING, 60)), 1, 2),
 
                 new ResourceNodeType(ResourceNodeTypeId.PIKE_LAKE.asInt(), MarkerType.PIKE, "Pike Lake", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 55)),
@@ -215,7 +224,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.PIKE_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_PIKE.asInt(),
                         "You need a fishing rod to catch that!", "Reeling in at",
                         SoundType.FISHING_START_ROD, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.FISHING, 75))),
+                        List.of(new SkillXpRecord(SkillType.FISHING, 75)), 1, 2),
 
                 new ResourceNodeType(ResourceNodeTypeId.EEL_SWAMP.asInt(), MarkerType.EEL, "Eel Swamp", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 65)),
@@ -223,7 +232,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.EEL_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_EEL.asInt(),
                         "You need a fishing rod to catch that!", "Casting line at",
                         SoundType.FISHING_START_ROD, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.FISHING, 90))),
+                        List.of(new SkillXpRecord(SkillType.FISHING, 90)), 1, 2),
 
                 new ResourceNodeType(ResourceNodeTypeId.SHARK_DEPTHS.asInt(), MarkerType.SHARK, "Shark Depths", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 75)),
@@ -231,7 +240,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.SHARK_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_SHARK.asInt(),
                         "You need a reinforced fishing rod to catch that!", "Casting reinforced rod at",
                         SoundType.FISHING_START_REINFORCED_ROD, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.FISHING, 105))),
+                        List.of(new SkillXpRecord(SkillType.FISHING, 105)), 1, 2),
 
                 new ResourceNodeType(ResourceNodeTypeId.TURTLE_BAY.asInt(), MarkerType.TURTLE, "Turtle Bay", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 85)),
@@ -239,7 +248,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.TURTLE_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_TURTLE.asInt(),
                         "You need a fishing trap to catch that!", "Setting trap at",
                         SoundType.FISHING_START_TRAP, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.FISHING, 125))),
+                        List.of(new SkillXpRecord(SkillType.FISHING, 125)), 1, 2),
 
                 new ResourceNodeType(ResourceNodeTypeId.RAY_SANDBANK.asInt(), MarkerType.RAY, "Ray Sandbank", Material.EXPOSED_COPPER_GRATE, true,
                         List.of(new SkillRequirement(SkillType.FISHING, 95)),
@@ -247,7 +256,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.RAY_NODE.asInt(), DropTableId.FISHING_RARE_DROPTABLE.asInt()), ItemId.RAW_RAY.asInt(),
                         "You need a fishing trap to catch that!", "Checking trap at",
                         SoundType.FISHING_START_TRAP, SoundType.FISHING_STEP, SoundType.FISHING_SUCCESS,
-                        List.of(new SkillXpRecord(SkillType.FISHING, 170)))
+                        List.of(new SkillXpRecord(SkillType.FISHING, 170)), 1, 1)
 
 
         );

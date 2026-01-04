@@ -9,6 +9,7 @@ import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
+import me.libraryaddict.disguise.disguisetypes.watchers.AgeableWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.LivingWatcher;
 import me.libraryaddict.disguise.utilities.animations.DisguiseAnimation;
 import net.kyori.adventure.text.Component;
@@ -119,7 +120,7 @@ public abstract class AbstractMob {
         if (this.disguise != null) {
             Disguise cloned = disguise.clone();
 
-            if (disguise instanceof MobDisguise) {
+            if (disguise instanceof MobDisguise mobDisguise) {
                 LivingWatcher watcher = (LivingWatcher) cloned.getWatcher();
 
                 if (!hideName) {
@@ -128,6 +129,11 @@ public abstract class AbstractMob {
                 } else {
                     watcher.setCustomNameVisible(false);
                 }
+
+                if (disguise.getWatcher() instanceof AgeableWatcher ageableWatcher) {
+                    ageableWatcher.setBaby(this.isBaby);
+                }
+
             }
 
             DisguiseAPI.disguiseNextEntity(disguise);

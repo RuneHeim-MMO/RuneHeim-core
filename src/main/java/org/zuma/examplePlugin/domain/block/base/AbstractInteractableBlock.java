@@ -82,6 +82,7 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
 
     public void setHologramLocation(Location location) {
         this.hologramLocation = location;
+
         if (this.hologram != null)
             this.hologram.setLocation(location);
     }
