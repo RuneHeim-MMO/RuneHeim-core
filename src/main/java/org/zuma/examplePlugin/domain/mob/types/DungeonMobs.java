@@ -126,7 +126,7 @@ public class DungeonMobs {
         registry.register(MobType.SPIDER_BABY_BASE_10.getId(), () -> new GenericCombatant(
                 "Baby Spider", null, getBaseSkills(10, 0.5),
                 null, MobBehaviors.SPIDER.getBehavior(0.5f),
-                0.23, true, false, 15, null, null, DisguiseType.SPIDER,
+                0.23, true, false, 15, null, null, DisguiseType.CAVE_SPIDER,
                 List.of(DropTableId.CHITIN_PLATES.asInt(), DropTableId.SPIDER_SILK.asInt()),
                 true).setBaby(true)
                 .addMobMechanic(new CobwebMechanic(2, 80)));
