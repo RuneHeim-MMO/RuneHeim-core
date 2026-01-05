@@ -130,7 +130,7 @@ public class BlockListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onChunkLoad(ChunkLoadEvent event) {
-        List<AbstractInteractableBlock> blocks = this.manager.getBlocksByChunk().get(event.getChunk());
+        List<AbstractInteractableBlock> blocks = this.manager.getBlocksByChunk().get(event.getChunk().getChunkKey());
 
         if (blocks != null) {
             blocks.forEach(block -> {

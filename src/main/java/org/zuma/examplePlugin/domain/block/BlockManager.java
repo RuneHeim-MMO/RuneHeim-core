@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class BlockManager {
-    private final Map<Chunk, List<AbstractInteractableBlock>> blocksByChunk = new HashMap<>();
+    private final Map<Long, List<AbstractInteractableBlock>> blocksByChunk = new HashMap<>();
     private final HashMap<Location, AbstractInteractableBlock> blocks = new HashMap<>();
     private final HashMap<Location, ModelledInteractableBlock> modelledBlocks = new HashMap<>();
     private final HashMap<DespawnableBlock, Long> despawnableQueue = new HashMap<>();
@@ -106,7 +106,7 @@ public class BlockManager {
     }
 
 
-    public Map<Chunk, List<AbstractInteractableBlock>> getBlocksByChunk() {
+    public Map<Long, List<AbstractInteractableBlock>> getBlocksByChunk() {
         return this.blocksByChunk;
     }
 
@@ -147,7 +147,7 @@ public class BlockManager {
             }
 
             blocks.put(blockLocation, block);
-            blocksByChunk.computeIfAbsent(blockLocation.getChunk(), k -> new ArrayList<>()).add(block);
+            blocksByChunk.computeIfAbsent(blockLocation.getChunk().getChunkKey(), k -> new ArrayList<>()).add(block);
         });
     }
 
@@ -164,10 +164,12 @@ public class BlockManager {
         blocks.get(blockLocation).onDisable();
         blocks.remove(blockLocation, block);
 
-        List<AbstractInteractableBlock> list = blocksByChunk.get(block.getLocation().getChunk());
+        Long chunkKey = block.getLocation().getChunk().getChunkKey();
+        List<AbstractInteractableBlock> list = blocksByChunk.get(chunkKey);
+
         if (list != null) {
             list.remove(block);
-            if (list.isEmpty()) blocksByChunk.remove(block.getLocation().getChunk());
+            if (list.isEmpty()) blocksByChunk.remove(chunkKey);
         }
     }
 
