@@ -1868,7 +1868,7 @@ public class SpawnZoneRepository {
                 ), false, null, null), 1)),
 
                 // Lava dungeon boss
-                new SpawnZoneRecord(new AbstractSpawnZoneMeta(267, SpawnZoneType.POINT, 60, 100,
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(267, SpawnZoneType.POINT, 180, 100,
                         new Location(Bukkit.getWorld("world"), 741, 15, -227)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.LAVA_DUNGEON_BOSS_BASE_55, 1, 100)
                 ), false, null, null), 1)),
@@ -2304,7 +2304,7 @@ public class SpawnZoneRepository {
                         new SpawnZoneMobRecord(MobType.SPIDER_BABY_BASE_10, 5, 100)
                 ), 20, false, false), 1)),
 
-                new SpawnZoneRecord(new AbstractSpawnZoneMeta(334, SpawnZoneType.POINT, 20, 100,
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(334, SpawnZoneType.POINT, 120, 100,
                         new Location(Bukkit.getWorld("world"), -322, 43, -324)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.SPIDER_BOSS_BASE_40, 1, 100)
                 ), false, null, null), 1)),
