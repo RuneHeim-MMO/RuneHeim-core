@@ -8,6 +8,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitTask;
@@ -19,10 +20,7 @@ import org.zuma.examplePlugin.domain.spawnzone.base.AbstractSpawnZone;
 import org.zuma.examplePlugin.domain.spawnzone.persistence.SpawnZoneRepository;
 
 import javax.annotation.Nullable;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class SpawnZoneHandler {
     public static final NamespacedKey ZONE_KEY =
@@ -30,6 +28,7 @@ public class SpawnZoneHandler {
 
     private final static long TICK_RATE = 3 * 20L; //  Every 3 sec
     private final Map<Integer, AbstractSpawnZone> spawnZones;
+    private final Map<Long, List<AbstractSpawnZone>> spawnZonesByChunk = new HashMap<>();
     private final SpawnZoneRepository repository;
     private final SpawnZoneFactory factory;
     private int tickPartition = 0;
@@ -68,10 +67,40 @@ public class SpawnZoneHandler {
         return closest;
     }
 
+    public void onChunkLoad(ChunkLoadEvent event) {
+        Long key = event.getChunk().getChunkKey();
+
+        List<AbstractSpawnZone> zonesInChunk = spawnZonesByChunk.get(key);
+        if (zonesInChunk == null) {
+            return;
+        }
+
+        for (AbstractSpawnZone zone : zonesInChunk) {
+            if(zone.getId() == 267){
+                System.out.println("Handling chunk load for zone id 267");
+            }
+            zone.handleChunkLoad();
+        }
+
+    }
 
     public void onChunkUnload(ChunkUnloadEvent event) {
         Chunk chunk = event.getChunk();
+        Long key = event.getChunk().getChunkKey();
 
+        List<AbstractSpawnZone> zonesInChunk = spawnZonesByChunk.get(key);
+        if (zonesInChunk == null) {
+            return;
+        }
+
+        for (AbstractSpawnZone zone : zonesInChunk) {
+            if(zone.getId() == 267){
+                System.out.println("Handling chunk unload for zone id 267");
+            }
+            zone.handleChunkUnload();
+        }
+
+        // Process entities after zones have cleared their alive lists
         for (Entity entity : chunk.getEntities()) {
             Integer zoneId = entity.getPersistentDataContainer().get(ZONE_KEY, PersistentDataType.INTEGER);
 
@@ -93,9 +122,6 @@ public class SpawnZoneHandler {
                 entity.remove();
                 continue;
             }
-
-            matchingZone.getSpawnedAndLoadedEntities().remove(entity.getUniqueId());
-
 
         }
     }
@@ -150,6 +176,7 @@ public class SpawnZoneHandler {
         }
 
         spawnZones.put(zone.getId(), zone);
+        spawnZonesByChunk.computeIfAbsent(zone.getCenterPoint().getChunk().getChunkKey(), k -> new ArrayList<>()).add(zone);
     }
 
     public void unregisterSpawnZone(int id) {
@@ -157,6 +184,14 @@ public class SpawnZoneHandler {
         if (zone != null) {
             zone.clearAliveEntities();
             spawnZones.remove(id);
+
+            Long chunkKey = zone.getCenterPoint().getChunk().getChunkKey();
+            List<AbstractSpawnZone> list = spawnZonesByChunk.get(chunkKey);
+
+            if (list != null) {
+                list.remove(zone);
+                if (list.isEmpty()) spawnZonesByChunk.remove(chunkKey);
+            }
         }
     }
 

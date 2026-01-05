@@ -324,6 +324,11 @@ public abstract class AbstractMob {
         entity.setAI(ai);
         entity.setSilent(silent);
         entity.setInvulnerable(isInvulnerable);
+        
+        if (entity instanceof Mob mob) {
+            mob.setPersistent(true);
+            mob.setRemoveWhenFarAway(false);
+        }
 
         customAttributes.forEach((attr, val) -> {
             AttributeInstance entityAttr = entity.getAttribute(attr);

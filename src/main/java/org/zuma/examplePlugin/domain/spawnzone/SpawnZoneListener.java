@@ -4,6 +4,7 @@ import com.destroystokyo.paper.event.entity.EntityRemoveFromWorldEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
 public class SpawnZoneListener implements Listener {
@@ -16,6 +17,11 @@ public class SpawnZoneListener implements Listener {
     @EventHandler
     public void onChunkUnload(ChunkUnloadEvent event) {
         handler.onChunkUnload(event);
+    }
+
+    @EventHandler
+    public void onChunkLoad(ChunkLoadEvent event) {
+        handler.onChunkLoad(event);
     }
 
     @EventHandler
