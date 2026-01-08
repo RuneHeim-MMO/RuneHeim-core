@@ -159,36 +159,36 @@ public class ItemRepository {
                                 , 1)
                 ),
 
-                // Herblore
+                // Herblore TODO ADJUST FKIN PRICES!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.DEWLEAF.asInt(), Material.COAL, ItemRarity.COMMON, "Dewleaf", List.of("A small bluish-green leaf, still glistening with morning dew."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(80), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.SUNROOT.asInt(), Material.COAL, ItemRarity.COMMON, "Sunroot", List.of("A thick golden root that stores the warmth of the sun."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(90), 1)),
+                        toVersionedJson(new MaterialMeta(200), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MOONSHADE.asInt(), Material.COAL, ItemRarity.COMMON, "Moonshade", List.of("Pale silver leaves that seem to shimmer under moonlight."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(150), 1)),
+                        toVersionedJson(new MaterialMeta(80), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.CRIMSON_THISTLE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Crimson Thistle", List.of("A red, spiky flower with jagged green leaves and tiny thorns."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(250), 1)),
+                        toVersionedJson(new MaterialMeta(200), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.FROSTCAP.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Frostcap", List.of("A blue-capped mushroom speckled with frost."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(245), 1)),
+                        toVersionedJson(new MaterialMeta(150), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.GLOWFERN.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Glowfern", List.of("Delicate fern fronds that emit a faint blue glow in the dark."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(260), 1)),
+                        toVersionedJson(new MaterialMeta(150), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.STORMVINE.asInt(), Material.COAL, ItemRarity.RARE, "Stormvine", List.of("Dark twisting vines that tingle with the energy of storms."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(290), 1)),
-
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BLOODORCHID.asInt(), Material.COAL, ItemRarity.RARE, "Blood Orchid", List.of("A deep red orchid with thick jagged leaves, rumored to hold regenerative powers."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(350), 1)),
-
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.DRAGONS_BREATH.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Dragons Breath", List.of("Spiky orange-red petals that seem to radiate heat and energy."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(400), 1)),
 
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BLOODORCHID.asInt(), Material.COAL, ItemRarity.RARE, "Blood Orchid", List.of("A deep red orchid with thick jagged leaves, rumored to hold regenerative powers."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(400), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.DRAGONS_BREATH.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Dragons Breath", List.of("Spiky orange-red petals that seem to radiate heat and energy."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(1400), 1)),
+
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ETHEREAL_BLOOM.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Ethereal Bloom", List.of("A shimmering multicolor flower that glows faintly and seems almost unreal."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(500), 1)),
+                        toVersionedJson(new MaterialMeta(1500), 1)),
 
 
                 // Furniture

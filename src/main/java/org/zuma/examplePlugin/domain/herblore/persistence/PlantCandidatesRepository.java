@@ -11,16 +11,16 @@ public class PlantCandidatesRepository {
 
     public List<PlantRecord> getAll() {
         return List.of(
-                new PlantRecord(ResourceNodeTypeId.DEWLEAF.asInt(), 0.8, 1, 0.8, 1, 2, Material.GRASS_BLOCK),
-                new PlantRecord(ResourceNodeTypeId.SUNROOT.asInt(), 0.6, 0.8, 0.6, 0.8, 1.5, Material.GRASS_BLOCK),
-                new PlantRecord(ResourceNodeTypeId.MOONSHADE.asInt(), 0.4, 0.6, 0.4, 0.6, 1, Material.GRASS_BLOCK),
-                new PlantRecord(ResourceNodeTypeId.CRIMSON_THISTLE.asInt(), 0.2, 0.4, 0.2, 0.4, 0.5, Material.GRASS_BLOCK),
-                new PlantRecord(ResourceNodeTypeId.FROSTCAP.asInt(), 0, 0.2, 0, 0.2, 0.25, Material.GRASS_BLOCK),
-                new PlantRecord(ResourceNodeTypeId.GLOWFERN.asInt(), -0.2, 0, -0.2, 0, 0.15, Material.GRASS_BLOCK),
-                new PlantRecord(ResourceNodeTypeId.STORMVINE.asInt(), -0.4, -0.2, -0.4, -0.2, 0.10, Material.GRASS_BLOCK),
-                new PlantRecord(ResourceNodeTypeId.BLOODORCHID.asInt(), -0.6, -0.4, -0.6, -0.4, 0.05, Material.GRASS_BLOCK),
-                new PlantRecord(ResourceNodeTypeId.DRAGONS_BREATH.asInt(), -0.8, -0.6, -0.8, -0.6, 0.020, Material.GRASS_BLOCK),
-                new PlantRecord(ResourceNodeTypeId.ETHEREAL_BLOOM.asInt(), -0.8, -0.6, -1, -0.8, 0.01, Material.GRASS_BLOCK)
+                new PlantRecord(ResourceNodeTypeId.DEWLEAF.asInt(), 0.8, 1, 0.8, 1, 2, List.of(Material.GRASS_BLOCK)),
+                new PlantRecord(ResourceNodeTypeId.SUNROOT.asInt(), 0.6, 0.8, 0.6, 0.8, 1.5, List.of(Material.GRASS_BLOCK, Material.SAND)),
+                new PlantRecord(ResourceNodeTypeId.MOONSHADE.asInt(), 0.4, 0.6, 0.4, 0.6, 1, List.of(Material.GRASS_BLOCK)),
+                new PlantRecord(ResourceNodeTypeId.CRIMSON_THISTLE.asInt(), 0.2, 0.4, 0.2, 0.4, 0.5, List.of(Material.GRASS_BLOCK)),
+                new PlantRecord(ResourceNodeTypeId.FROSTCAP.asInt(), 0, 0.2, -1, 1, 0.15, List.of(Material.SNOW, Material.ICE, Material.BLUE_ICE, Material.PACKED_ICE)),
+                new PlantRecord(ResourceNodeTypeId.GLOWFERN.asInt(), -0.2, 0, -0.2, 0, 0.15, List.of(Material.GRASS_BLOCK)),
+                new PlantRecord(ResourceNodeTypeId.STORMVINE.asInt(), -0.4, -0.2, -1, 1, 0.25, List.of(Material.SAND, Material.PODZOL)),
+                new PlantRecord(ResourceNodeTypeId.BLOODORCHID.asInt(), -0.6, -0.4, -0.6, -0.4, 0.05, List.of(Material.GRASS_BLOCK)),
+                new PlantRecord(ResourceNodeTypeId.DRAGONS_BREATH.asInt(), -0.8, -0.6, -0.8, -0.6, 0.020, List.of(Material.GRASS_BLOCK, Material.SAND)),
+                new PlantRecord(ResourceNodeTypeId.ETHEREAL_BLOOM.asInt(), -0.8, -0.6, -1, -0.8, 0.01, List.of(Material.GRASS_BLOCK, Material.SAND))
         );
 
     }

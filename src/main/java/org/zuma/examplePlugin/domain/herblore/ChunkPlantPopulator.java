@@ -28,7 +28,7 @@ public class ChunkPlantPopulator {
     private final HashMap<Long, Long> lastChunkPopulationTimes;
 
     public ChunkPlantPopulator() {
-        noiseGen = new FastNoiseLite(2);
+        noiseGen = new FastNoiseLite();
         noiseGen.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
         lastChunkPopulationTimes = new HashMap<>();
     }
@@ -108,7 +108,7 @@ public class ChunkPlantPopulator {
                     break;
                 }
 
-                if (!soilBlockMaterial.equals(candidate.requiredSoilMaterial())) {
+                if (!candidate.requiredSoilMaterial().contains(soilBlockMaterial)) {
                     break;
                 }
 

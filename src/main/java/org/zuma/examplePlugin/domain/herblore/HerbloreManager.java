@@ -14,6 +14,7 @@ import java.util.*;
 import java.util.function.Function;
 
 public class HerbloreManager {
+    private final static long CHUNK_REPOPULATION_INTERVAL_TICKS = 60 * 20L * 10; // 10 minutes in ticks
     public final ChunkPlantPopulator populator;
 
     private final Map<Long, FertileBlock[]> validGrowthBlocks;
@@ -26,7 +27,14 @@ public class HerbloreManager {
         this.chunkPopulatedBlocks = new HashMap<>();
         this.plantCandidates = repository.getAll();
 
-        Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::tryPopulateActiveChunks, 60 * 20 * 10, 60 * 20 * 10); // Every 10 minutes
+        Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::tryPopulateActiveChunks, 30 * 20L, CHUNK_REPOPULATION_INTERVAL_TICKS); // Every 10 minutes
+    }
+
+    private boolean canRepopulateChunk(Chunk chunk) {
+        Long lastPopTime = populator.getChunkLastPopulationTime(chunk); // stored in ticks
+        long currentTimeTicks = System.currentTimeMillis() / 50L; // ms -> ticks
+
+        return lastPopTime == null || (currentTimeTicks - lastPopTime) >= CHUNK_REPOPULATION_INTERVAL_TICKS;
     }
 
     private void tryPopulateActiveChunks() {
@@ -50,7 +58,7 @@ public class HerbloreManager {
 
                 Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
                     for (Chunk chunk : batch) {
-                        populateChunk(chunk);
+                        if (canRepopulateChunk(chunk)) populateChunk(chunk);
                     }
                 }, (i / batchSize) * 20L); // Spread batches over time (1 second apart)
             }
@@ -64,7 +72,7 @@ public class HerbloreManager {
             return;
         }
         if (validGrowthBlocks.containsKey(chunk.getChunkKey())) {
-            populateChunk(chunk);
+            if (canRepopulateChunk(chunk)) populateChunk(chunk);
             return;
         }
 
@@ -72,7 +80,7 @@ public class HerbloreManager {
         getValidBlocksForGrowth(chunk);
 
         // Initial population
-        populateChunk(chunk);
+        if (canRepopulateChunk(chunk)) populateChunk(chunk);
     }
 
     public void populateChunk(Chunk chunk) {

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FertileBlock {
-    private static final Material[] MATERIALS = {Material.GRASS_BLOCK, Material.DIRT, Material.COARSE_DIRT, Material.PODZOL};
+    private static final Material[] MATERIALS = {Material.GRASS_BLOCK, Material.DIRT, Material.COARSE_DIRT, Material.PODZOL, Material.SNOW, Material.ICE, Material.BLUE_ICE, Material.PACKED_ICE, Material.SAND, Material.SNOW_BLOCK};
     private static final Map<Material, Byte> MATERIAL_TO_BYTE = new HashMap<>();
 
     static {
