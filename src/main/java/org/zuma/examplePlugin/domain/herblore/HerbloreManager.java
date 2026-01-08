@@ -1,23 +1,23 @@
 package org.zuma.examplePlugin.domain.herblore;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.event.world.ChunkLoadEvent;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.herblore.base.FertileBlock;
 import org.zuma.examplePlugin.domain.herblore.base.PlantRecord;
 import org.zuma.examplePlugin.domain.herblore.base.PopulatedBlock;
 import org.zuma.examplePlugin.domain.herblore.persistence.PlantCandidatesRepository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 public class HerbloreManager {
     public final ChunkPlantPopulator populator;
 
     private final Map<Long, FertileBlock[]> validGrowthBlocks;
-    private final Map<Long, String> chunkPopulatedBlocks; // ChunkKey to x_z key
+    private final Map<Long, List<String>> chunkPopulatedBlocks; // ChunkKey to x_z key
     private final List<PlantRecord> plantCandidates;
 
     public HerbloreManager(PlantCandidatesRepository repository, ChunkPlantPopulator populator) {
@@ -25,32 +25,70 @@ public class HerbloreManager {
         this.validGrowthBlocks = new HashMap<>();
         this.chunkPopulatedBlocks = new HashMap<>();
         this.plantCandidates = repository.getAll();
+
+        Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::tryPopulateActiveChunks, 60 * 20 * 10, 60 * 20 * 10); // Every 10 minutes
+    }
+
+    private void tryPopulateActiveChunks() {
+        for (World world : Bukkit.getWorlds()) {
+
+            if (!world.getName().equals("world")) {
+                continue;
+            }
+
+            int parts = 10;
+            Chunk[] chunks = world.getLoadedChunks();
+            int batchSize = (int) Math.ceil(chunks.length / (double) parts);
+
+            if (chunks.length == 0) {
+                continue;
+            }
+
+            for (int i = 0; i < chunks.length; i += batchSize) {
+                int end = Math.min(i + batchSize, chunks.length);
+                Chunk[] batch = Arrays.copyOfRange(chunks, i, end);
+
+                Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+                    for (Chunk chunk : batch) {
+                        populateChunk(chunk);
+                    }
+                }, (i / batchSize) * 20L); // Spread batches over time (1 second apart)
+            }
+        }
     }
 
     public void onChunkLoad(ChunkLoadEvent event) {
-        if (validGrowthBlocks.containsKey(event.getChunk().getChunkKey())) {
+        Chunk chunk = event.getChunk();
+
+        if (!chunk.getWorld().getName().equals("world")) {
+            return;
+        }
+        if (validGrowthBlocks.containsKey(chunk.getChunkKey())) {
+            populateChunk(chunk);
             return;
         }
 
         // Build cache of valid growth blocks
-        getValidBlocksForGrowth(event.getChunk());
+        getValidBlocksForGrowth(chunk);
+
+        // Initial population
+        populateChunk(chunk);
     }
 
     public void populateChunk(Chunk chunk) {
         FertileBlock[] validBlocks = getValidBlocksForGrowth(chunk);
-        List<PopulatedBlock> populatedBlockList = populator.populateChunk(chunk, validBlocks, plantCandidates, this::deletePopulatedBlock);
+        int plantAmount = chunkPopulatedBlocks.computeIfAbsent(chunk.getChunkKey(), k -> new ArrayList<>()).size();
+        List<PopulatedBlock> populatedBlockList = populator.populateChunk(chunk, validBlocks, plantCandidates, this::deletePopulatedBlock, plantAmount);
 
         for (PopulatedBlock populatedBlock : populatedBlockList) {
-            chunkPopulatedBlocks.put(chunk.getChunkKey(), populatedBlock.key());
+            chunkPopulatedBlocks.computeIfAbsent(chunk.getChunkKey(), k -> new ArrayList<>()).add(populatedBlock.key());
         }
     }
 
     public void deletePopulatedBlock(long chunkKey, String blockKey) {
         if (chunkPopulatedBlocks.containsKey(chunkKey)) {
-            String storedKey = chunkPopulatedBlocks.get(chunkKey);
-            if (storedKey.equals(blockKey)) {
-                chunkPopulatedBlocks.remove(chunkKey);
-            }
+            List<String> storedKeys = chunkPopulatedBlocks.computeIfAbsent(chunkKey, k -> new ArrayList<>());
+            storedKeys.remove(blockKey);
         }
     }
 

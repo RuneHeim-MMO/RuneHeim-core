@@ -21,6 +21,7 @@ import java.util.Objects;
 public class ResourceNodeType {
     private final int id, startingDeposit, maxDeposit;
     private final String label, wrongToolMessage, actionVerb;
+    private final String labelHex;
     private final Material material;
     private final List<SkillRequirement> requirements;
     private final int baseGatheringDurationMs, respawnDurationSecs;
@@ -36,11 +37,12 @@ public class ResourceNodeType {
     @Nullable
     private final ModifierType toolModifier;
 
-    public ResourceNodeType(int id, MarkerType markerType, String label, Material material, boolean displayResultInHologram, @Nullable List<SkillRequirement> requirements, @Nullable ModifierType toolRequiresModifier,
+    public ResourceNodeType(int id, MarkerType markerType, String label, @Nullable String labelHex, Material material, boolean displayResultInHologram, @Nullable List<SkillRequirement> requirements, @Nullable ModifierType toolRequiresModifier,
                             int baseGatheringDurationMs, int respawnDurationSecs, List<Integer> dropTableIds, int displayItemStackID, String wrongToolMsg, String actionVerb, SoundType startSound, SoundType stepSound, SoundType gatherSuccessSound, @Nullable List<SkillXpRecord> xpReward, int startingDeposit, int maxDeposit) {
         this.id = id;
         this.markerType = markerType;
         this.label = label;
+        this.labelHex = labelHex == null ? "" : labelHex;
         this.material = material;
         this.toolModifier = toolRequiresModifier;
         this.baseGatheringDurationMs = baseGatheringDurationMs;
@@ -168,5 +170,9 @@ public class ResourceNodeType {
 
     public int getMaxDeposit() {
         return maxDeposit;
+    }
+    
+    public String getLabelHex() {
+        return labelHex;
     }
 }

@@ -111,7 +111,7 @@ public class ResourceNode extends AbstractInteractableBlock {
     private void initializeHologram() {
 
         List<String> hologramContent = new ArrayList<>(List.of(
-                Color.INTERACTABLE_ENTITY.asSpigotHex() + blockType.getLabel()
+                Color.INTERACTABLE_ENTITY.asSpigotHex() + blockType.getLabelHex() + blockType.getLabel()
         ));
 
         blockType.getRequirements().forEach(req -> hologramContent.add(Color.ACCENT.asSpigotHex() +

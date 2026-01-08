@@ -17,15 +17,20 @@ import org.zuma.examplePlugin.domain.herblore.base.FertileBlock;
 import org.zuma.examplePlugin.domain.herblore.base.PlantRecord;
 import org.zuma.examplePlugin.domain.herblore.base.PopulatedBlock;
 
+import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.BiConsumer;
 
 public class ChunkPlantPopulator {
+    private static final int MAX_PLANTS_PER_CHUNK = 1;
     private final FastNoiseLite noiseGen;
+    private final HashMap<Long, Long> lastChunkPopulationTimes;
 
     public ChunkPlantPopulator() {
         noiseGen = new FastNoiseLite(2);
         noiseGen.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
+        lastChunkPopulationTimes = new HashMap<>();
     }
 
     public FertileBlock[] findValidGrowthBlocksInChunk(Chunk chunk) {
@@ -57,9 +62,14 @@ public class ChunkPlantPopulator {
     }
 
     // Returns x_z keys of populated plants
-    public List<PopulatedBlock> populateChunk(Chunk chunk, FertileBlock[] validBlocks, List<PlantRecord> candidates, BiConsumer<Long, String> handleDelete) {
+    public List<PopulatedBlock> populateChunk(Chunk chunk, FertileBlock[] validBlocks, List<PlantRecord> candidates, BiConsumer<Long, String> handleDelete, int inChunk) {
         List<PopulatedBlock> populatedBlocks = new java.util.ArrayList<>();
         double chunkNoise = noiseGen.GetNoise(chunk.getX() * 5f, chunk.getZ() * 5f);
+        lastChunkPopulationTimes.put(chunk.getChunkKey(), System.currentTimeMillis());
+
+        if (inChunk >= MAX_PLANTS_PER_CHUNK) {
+            return populatedBlocks;
+        }
 
         for (FertileBlock fertileBlock : validBlocks) {
             if (fertileBlock == null) {
@@ -71,17 +81,19 @@ public class ChunkPlantPopulator {
             double noiseValue = noiseGen.GetNoise(x * 15f, z * 15f);
 
             for (PlantRecord candidate : candidates) {
+                if (inChunk >= MAX_PLANTS_PER_CHUNK) {
+                    return populatedBlocks;
+                }
+
                 if (PlayerUtils.getRandom().nextDouble() > candidate.spawnChance() / 100) {
                     continue;
                 }
 
                 if (chunkNoise < candidate.chunkNoiseMin() || chunkNoise > candidate.chunkNoiseMax()) {
-                    System.out.println("Skipping chunk " + chunk.getX() + "," + chunk.getZ() + " due to noise value: " + chunkNoise);
                     continue;
                 }
 
                 if (noiseValue < candidate.noiseMin() || noiseValue > candidate.noiseMax()) {
-                    System.out.println("Skipping plant at " + x + "," + z + " due to noise value: " + noiseValue + " not in range: " + candidate.noiseMin() + " - " + candidate.noiseMax());
                     continue;
                 }
 
@@ -110,6 +122,7 @@ public class ChunkPlantPopulator {
 
                     node.setPersistent(false);
                     populatedBlocks.add(new PopulatedBlock(node, x + "_" + z));
+                    inChunk++;
                 }
 
                 continue;
@@ -118,5 +131,9 @@ public class ChunkPlantPopulator {
         }
 
         return populatedBlocks;
+    }
+
+    public @Nullable Long getChunkLastPopulationTime(Chunk chunk) {
+        return lastChunkPopulationTimes.get(chunk.getChunkKey());
     }
 }
