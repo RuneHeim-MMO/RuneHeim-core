@@ -1,5 +1,7 @@
 package org.zuma.examplePlugin.domain.block.constants;
 
+import org.bukkit.Material;
+
 public enum ResourceNodeTypeId {
 
     FLAX(300),
@@ -33,7 +35,17 @@ public enum ResourceNodeTypeId {
     RAY_SANDBANK(11),
 
     POTATO_CROP(400),
-    CARROT_CROP(401);
+    CARROT_CROP(401),
+    DEWLEAF(402),
+    SUNROOT(403),
+    MOONSHADE(404),
+    CRIMSON_THISTLE(405),
+    FROSTCAP(406),
+    GLOWFERN(407),
+    STORMVINE(408),
+    BLOODORCHID(409),
+    DRAGONS_BREATH(410),
+    ETHEREAL_BLOOM(411);
 
 
     private final int id;

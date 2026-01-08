@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.domain.block.constants.RetexturedStem;
 import org.zuma.examplePlugin.domain.droptable.DropTable;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.map.MarkerType;
@@ -30,6 +31,8 @@ public class ResourceNodeType {
     private final MarkerType markerType;
     private final boolean displayResultInHologram;
 
+    private @Nullable RetexturedStem retexturedStem;
+
     @Nullable
     private final ModifierType toolModifier;
 
@@ -51,6 +54,7 @@ public class ResourceNodeType {
         this.displayResultInHologram = displayResultInHologram;
         this.startingDeposit = startingDeposit;
         this.maxDeposit = maxDeposit;
+        this.retexturedStem = null;
 
         this.requirements = Objects.requireNonNullElseGet(requirements, ArrayList::new);
         this.xpReward = Objects.requireNonNullElseGet(xpReward, ArrayList::new);
@@ -64,6 +68,15 @@ public class ResourceNodeType {
 
             return table;
         }).toList();
+    }
+
+    public ResourceNodeType setRetexturedStem(RetexturedStem stem) {
+        this.retexturedStem = stem;
+        return this;
+    }
+
+    public @Nullable RetexturedStem getRetexturedStem() {
+        return retexturedStem;
     }
 
     public Material getMaterial() {

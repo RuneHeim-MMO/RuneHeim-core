@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.block.persistence;
 import org.bukkit.Material;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.domain.block.constants.ResourceNodeTypeId;
+import org.zuma.examplePlugin.domain.block.constants.RetexturedStem;
 import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
 import org.zuma.examplePlugin.domain.droptable.DropTableId;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
@@ -18,6 +19,78 @@ public class ResourceNodeTypeRepository {
 
     public List<ResourceNodeType> getAll() {
         return List.of(
+
+                // Herblore
+                new ResourceNodeType(ResourceNodeTypeId.DEWLEAF.asInt(), null,
+                        "Dewleaf", Material.AIR, false, null, null, 500, 999999,
+                        List.of(DropTableId.FLAX_NODE.asInt()), ItemId.FLAX.asInt(),
+                        "", "Picking",
+                        SoundType.PICKING_UP_PLANT_START, null, SoundType.PICKING_UP_PLANT_END,
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 25.0)), 1, 1).setRetexturedStem(RetexturedStem.DEWLEAF),
+
+                new ResourceNodeType(ResourceNodeTypeId.SUNROOT.asInt(), null,
+                        "Sunroot", Material.AIR, false, null, null, 500, 999999,
+                        List.of(DropTableId.FLAX_NODE.asInt()), ItemId.FLAX.asInt(),
+                        "", "Picking",
+                        SoundType.PICKING_UP_PLANT_START, null, SoundType.PICKING_UP_PLANT_END,
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 25.0)), 1, 1).setRetexturedStem(RetexturedStem.SUNROOT),
+
+                new ResourceNodeType(ResourceNodeTypeId.MOONSHADE.asInt(), null,
+                        "Moonshade", Material.AIR, false, null, null, 500, 999999,
+                        List.of(DropTableId.FLAX_NODE.asInt()), ItemId.FLAX.asInt(),
+                        "", "Picking",
+                        SoundType.PICKING_UP_PLANT_START, null, SoundType.PICKING_UP_PLANT_END,
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 25.0)), 1, 1).setRetexturedStem(RetexturedStem.MOONSHADE),
+
+                new ResourceNodeType(ResourceNodeTypeId.CRIMSON_THISTLE.asInt(), null,
+                        "Crimson Thistle", Material.AIR, false, null, null, 500, 999999,
+                        List.of(DropTableId.FLAX_NODE.asInt()), ItemId.FLAX.asInt(),
+                        "", "Picking",
+                        SoundType.PICKING_UP_PLANT_START, null, SoundType.PICKING_UP_PLANT_END,
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 25.0)), 1, 1).setRetexturedStem(RetexturedStem.CRIMSON_THISTLE),
+
+                new ResourceNodeType(ResourceNodeTypeId.FROSTCAP.asInt(), null,
+                        "Frostcap", Material.AIR, false, null, null, 500, 999999,
+                        List.of(DropTableId.FLAX_NODE.asInt()), ItemId.FLAX.asInt(),
+                        "", "Picking",
+                        SoundType.PICKING_UP_PLANT_START, null, SoundType.PICKING_UP_PLANT_END,
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 25.0)), 1, 1).setRetexturedStem(RetexturedStem.FROSTCAP),
+
+                new ResourceNodeType(ResourceNodeTypeId.GLOWFERN.asInt(), null,
+                        "Glowfern", Material.AIR, false, null, null, 500, 999999,
+                        List.of(DropTableId.FLAX_NODE.asInt()), ItemId.FLAX.asInt(),
+                        "", "Picking",
+                        SoundType.PICKING_UP_PLANT_START, null, SoundType.PICKING_UP_PLANT_END,
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 25.0)), 1, 1).setRetexturedStem(RetexturedStem.GLOWFERN),
+
+                new ResourceNodeType(ResourceNodeTypeId.STORMVINE.asInt(), null,
+                        "Stormvine", Material.AIR, false, null, null, 500, 999999,
+                        List.of(DropTableId.FLAX_NODE.asInt()), ItemId.FLAX.asInt(),
+                        "", "Picking",
+                        SoundType.PICKING_UP_PLANT_START, null, SoundType.PICKING_UP_PLANT_END,
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 25.0)), 1, 1).setRetexturedStem(RetexturedStem.STORMVINE),
+
+                new ResourceNodeType(ResourceNodeTypeId.BLOODORCHID.asInt(), null,
+                        "Bloodorchid", Material.AIR, false, null, null, 500, 999999,
+                        List.of(DropTableId.FLAX_NODE.asInt()), ItemId.FLAX.asInt(),
+                        "", "Picking",
+                        SoundType.PICKING_UP_PLANT_START, null, SoundType.PICKING_UP_PLANT_END,
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 25.0)), 1, 1).setRetexturedStem(RetexturedStem.BLOODORCHID),
+
+                new ResourceNodeType(ResourceNodeTypeId.DRAGONS_BREATH.asInt(), null,
+                        "Dragons Breath", Material.AIR, false, null, null, 500, 999999,
+                        List.of(DropTableId.FLAX_NODE.asInt()), ItemId.FLAX.asInt(),
+                        "", "Picking",
+                        SoundType.PICKING_UP_PLANT_START, null, SoundType.PICKING_UP_PLANT_END,
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 25.0)), 1, 1).setRetexturedStem(RetexturedStem.DRAGONS_BREATH),
+
+                new ResourceNodeType(ResourceNodeTypeId.ETHEREAL_BLOOM.asInt(), null,
+                        "Ethereal Bloom", Material.AIR, false, null, null, 500, 999999,
+                        List.of(DropTableId.FLAX_NODE.asInt()), ItemId.FLAX.asInt(),
+                        "", "Picking",
+                        SoundType.PICKING_UP_PLANT_START, null, SoundType.PICKING_UP_PLANT_END,
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 25.0)), 1, 1).setRetexturedStem(RetexturedStem.ETHEREAL_BLOOM),
+
 
                 new ResourceNodeType(ResourceNodeTypeId.FLAX.asInt(), MarkerType.FLAX,
                         "Flax", Material.BLUE_ORCHID, false, null, null, 500, 60,

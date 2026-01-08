@@ -1,7 +1,6 @@
 package org.zuma.examplePlugin.domain.block;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -179,7 +178,13 @@ public class BlockManager {
 
     public void onDisable() {
         synchronized (this.blocks) {
-            this.blocks.values().forEach(AbstractInteractableBlock::onDisable);
+            this.blocks.values().forEach(b -> {
+                try {
+                    b.onDisable();
+                } catch (Exception e) {
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Error while disabling block at " + b.getLocation() + ": " + e.getMessage());
+                }
+            });
             this.blocks.clear();
         }
 

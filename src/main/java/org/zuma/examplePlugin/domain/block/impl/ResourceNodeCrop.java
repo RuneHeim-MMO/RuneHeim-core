@@ -10,6 +10,8 @@ import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class ResourceNodeCrop extends ResourceNode {
+    private Material previousMaterial;
+
     public ResourceNodeCrop(BlockManager manager, AbstractInteractableBlockMeta meta) {
         super(manager, meta);
     }
@@ -19,19 +21,21 @@ public class ResourceNodeCrop extends ResourceNode {
         super.spawn(material);
         Block farmLand = getLocation().getBlock().getRelative(0, -1, 0);
         Block crop = getLocation().getBlock();
+        previousMaterial = farmLand.getType();
 
         farmLand.setType(Material.FARMLAND);
-        crop.setType(Material.AIR);
-
         Farmland farmLandData = (Farmland) farmLand.getBlockData();
         farmLandData.setMoisture(farmLandData.getMaximumMoisture());
         farmLand.setBlockData(farmLandData);
 
-        crop.setType(material);
-        BlockData blockData = crop.getBlockData();
-        if (blockData instanceof Ageable ageable) {
-            ageable.setAge(ageable.getMaximumAge());
-            crop.setBlockData(ageable);
+        if (super.getNodeType().getRetexturedStem() == null) {
+            crop.setType(material);
+
+            BlockData blockData = crop.getBlockData();
+            if (blockData instanceof Ageable ageable) {
+                ageable.setAge(ageable.getMaximumAge());
+                crop.setBlockData(ageable);
+            }
         }
 
     }
@@ -41,9 +45,24 @@ public class ResourceNodeCrop extends ResourceNode {
         Block blockUnder = getLocation().getBlock().getRelative(0, -1, 0);
         super.onGather(player, baseGatheringLuckPercentage);
 
-        if(super.isDepleted()){
-            blockUnder.setType(Material.DIRT);
-            getLocation().getBlock().setType(Material.AIR);
+        if (super.isDepleted()) {
+            if (!super.isPersistent()) {
+                blockUnder.setType(this.previousMaterial);
+            } else {
+                getLocation().getBlock().setType(Material.DIRT);
+            }
+
         }
+    }
+
+    @Override
+    public void onDisable() {
+        if (previousMaterial != null) {
+            Block blockUnder = getLocation().getBlock().getRelative(0, -1, 0);
+            getLocation().getBlock().setType(Material.AIR, false);
+            blockUnder.setType(previousMaterial, false);
+        }
+
+        super.onDisable();
     }
 }
