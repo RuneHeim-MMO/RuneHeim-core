@@ -403,7 +403,19 @@ public enum ItemId {
 
     WHEAT(3800), // unused atm
     POTATO(3801),
-    CARROT(3802);
+    CARROT(3802),
+
+    // Herblore
+    DEWLEAF(3900),
+    SUNROOT(3901),
+    MOONSHADE(3902),
+    CRIMSON_THISTLE(3903),
+    FROSTCAP(3904),
+    GLOWFERN(3905),
+    STORMVINE(3906),
+    BLOODORCHID(3907),
+    DRAGONS_BREATH(3908),
+    ETHEREAL_BLOOM(3909);
 
     private final int id;
 

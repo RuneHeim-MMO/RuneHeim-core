@@ -5,12 +5,15 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Farmland;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 public class ResourceNodeCrop extends ResourceNode {
     private Material previousMaterial;
+    private boolean needsFarmland;
 
     public ResourceNodeCrop(BlockManager manager, AbstractInteractableBlockMeta meta) {
         super(manager, meta);
@@ -18,18 +21,21 @@ public class ResourceNodeCrop extends ResourceNode {
 
     @Override
     public void spawn(Material material) {
+        this.needsFarmland = super.getNodeType().getRetexturedStem() == null || super.getNodeType().getRetexturedStem().isNeedsFarmland();
         super.spawn(material);
         Block farmLand = getLocation().getBlock().getRelative(0, -1, 0);
         Block crop = getLocation().getBlock();
         previousMaterial = farmLand.getType();
 
-        farmLand.setType(Material.FARMLAND);
-        Farmland farmLandData = (Farmland) farmLand.getBlockData();
-        farmLandData.setMoisture(farmLandData.getMaximumMoisture());
-        farmLand.setBlockData(farmLandData);
+        if (needsFarmland) {
+            farmLand.setType(Material.FARMLAND);
+            Farmland farmLandData = (Farmland) farmLand.getBlockData();
+            farmLandData.setMoisture(farmLandData.getMaximumMoisture());
+            farmLand.setBlockData(farmLandData);
+        }
 
         if (super.getNodeType().getRetexturedStem() == null) {
-            crop.setType(material);
+            crop.setType(material,false);
 
             BlockData blockData = crop.getBlockData();
             if (blockData instanceof Ageable ageable) {
@@ -49,7 +55,7 @@ public class ResourceNodeCrop extends ResourceNode {
             if (!super.isPersistent()) {
                 blockUnder.setType(this.previousMaterial);
             } else {
-                getLocation().getBlock().setType(Material.DIRT);
+                if (needsFarmland) getLocation().getBlock().setType(Material.DIRT);
             }
 
         }
