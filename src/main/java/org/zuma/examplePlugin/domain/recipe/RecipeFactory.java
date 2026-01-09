@@ -2,7 +2,9 @@ package org.zuma.examplePlugin.domain.recipe;
 
 import com.google.gson.Gson;
 import org.bukkit.inventory.ItemStack;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.exception.UnsupportedJsonVersionException;
+import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.meta.VersionedJson;
 import org.zuma.examplePlugin.domain.recipe.base.AbstractRecipe;
 import org.zuma.examplePlugin.domain.recipe.impl.*;
@@ -23,7 +25,13 @@ public class RecipeFactory {
             case CRAFTING_TABLE_RECIPE -> new CraftingTableRecipe(displayItem, meta);
             case TANNER_RECIPE -> new TannerRecipe(displayItem, meta);
             case FLETCHING_TABLE_RECIPE -> new FletchingTableRecipe(displayItem, meta);
-            default -> new InventoryRecipe(displayItem, meta);
+            case BREWING_RECIPE -> new BrewingRecipe(displayItem, meta);
+            case ESSENCE_EXTRACTION_RECIPE -> new EssenceRecipe(displayItem, meta);
+            case INVENTORY_RECIPE -> new InventoryRecipe(displayItem, meta);
+            default -> {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, " Unsupported recipe type " + meta.type() + " for recipe id " + meta.id());
+                yield null;
+            }
 
         };
     }

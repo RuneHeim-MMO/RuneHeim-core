@@ -98,6 +98,7 @@ public class GUIHandler {
         this.registry.register(InventoryId.DRAKKAR_FOOD_STALL.asInt(), () -> new ShopInventory(GUIOverlay.FOOD_SHOP_OVERLAY.asGlyph() + "§f" + Icon.FRUIT.get() + "§f Food Stall", InventoryId.DRAKKAR_FOOD_STALL.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_BASIC_FOOD_STALL.asInt())));
         this.registry.register(InventoryId.DRAKKAR_GUARD_ARCHERY_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.ARCHERY_SHOP_OVERLAY.asGlyph() + "§f" + Icon.FRUIT.get() + "§f Town Archer", InventoryId.DRAKKAR_GUARD_ARCHERY_SHOP.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_GUARD_ARCHER_MERCHANT.asInt())));
         this.registry.register(InventoryId.QUESTS_LIST.asInt(), () -> new QuestsInventory(GUIOverlay.QUESTS_INVENTORY_OVERLAY.asGlyph() + "§f" + Icon.BOOK.get() + "§f Quests", InventoryId.QUESTS_LIST.asInt()));
+        this.registry.register(InventoryId.BREWING_CAULDRON.asInt(), () -> new BrewingCauldronInventory(GUIOverlay.BREWING_CAULDRON_OVERLAY.asGlyph() + "§f" + Icon.HERBLORE.get() + "§f Brewing Cauldron", InventoryId.BREWING_CAULDRON.asInt()));
 
 
         this.registry.register(InventoryId.MURKWATCH_ARCHERY_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.ARCHERY_SHOP_OVERLAY.asGlyph() + "§f" + Icon.ARROW.get() + "§f Archery Shop", InventoryId.MURKWATCH_ARCHERY_SHOP.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.MURKWATCH_ARCHERY_MERCHANT.asInt())));

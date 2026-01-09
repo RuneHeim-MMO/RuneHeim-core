@@ -159,15 +159,57 @@ public class ItemRepository {
                                 , 1)
                 ),
 
-                // Herblore TODO ADJUST FKIN PRICES!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                // Herblore
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.DEWLEAF_ESSENCE.asInt(), Material.COAL, ItemRarity.COMMON, "Dewleaf Essence", List.of("A fresh essence used in restorative and healing potions."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.SUNROOT_ESSENCE.asInt(), Material.COAL, ItemRarity.COMMON, "Sunroot Essence", List.of("A warm essence that empowers attack and gathering brews."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MOONSHADE_ESSENCE.asInt(), Material.COAL, ItemRarity.COMMON, "Moonshade Essence", List.of("A shadowed essence tied to strength and skill enhancement."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.VITALITY_ESSENCE.asInt(), Material.COAL, ItemRarity.COMMON, "Vitality Essence", List.of("A stabilizing essence commonly used in defensive potions."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BALANCE_ESSENCE.asInt(), Material.COAL, ItemRarity.COMMON, "Balance Essence", List.of("A precise essence favored in ranged and control brews."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.CRIMSON_ESSENCE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Crimson Essence", List.of("A potent essence that amplifies raw combat power."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.FROST_ESSENCE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Frost Essence", List.of("A chilling essence used in endurance and recovery brews."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.GLOW_ESSENCE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Glow Essence", List.of("A radiant essence linked to focus and spiritual restoration."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.GUARDIAN_ESSENCE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Guardian Essence", List.of("A steadfast essence prized for powerful defensive potions."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.PRECISION_ESSENCE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Precision Essence", List.of("A refined essence that enhances accuracy and efficiency."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.STORM_ESSENCE.asInt(), Material.COAL, ItemRarity.RARE, "Storm Essence", List.of("A volatile essence infused with raw elemental force."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BLOOD_ESSENCE.asInt(), Material.COAL, ItemRarity.RARE, "Blood Essence", List.of("A dangerous essence used in powerful life-altering brews."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.DRAGON_ESSENCE.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Dragon Essence", List.of("An ancient essence radiating overwhelming combat power."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ETHEREAL_ESSENCE.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Ethereal Essence", List.of("A rare essence that bends vitality beyond mortal limits."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.DEWLEAF.asInt(), Material.COAL, ItemRarity.COMMON, "Dewleaf", List.of("A small bluish-green leaf, still glistening with morning dew."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(80), 1)),
+                        toVersionedJson(new MaterialMeta(50), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.SUNROOT.asInt(), Material.COAL, ItemRarity.COMMON, "Sunroot", List.of("A thick golden root that stores the warmth of the sun."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(200), 1)),
+                        toVersionedJson(new MaterialMeta(140), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MOONSHADE.asInt(), Material.COAL, ItemRarity.COMMON, "Moonshade", List.of("Pale silver leaves that seem to shimmer under moonlight."), null, true, 1.0),
-                        toVersionedJson(new MaterialMeta(80), 1)),
+                        toVersionedJson(new MaterialMeta(40), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.CRIMSON_THISTLE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Crimson Thistle", List.of("A red, spiky flower with jagged green leaves and tiny thorns."), null, true, 1.0),
                         toVersionedJson(new MaterialMeta(200), 1)),

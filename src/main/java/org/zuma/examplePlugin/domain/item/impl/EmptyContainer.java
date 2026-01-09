@@ -28,6 +28,7 @@ public class EmptyContainer extends AbstractItemType {
     public EmptyContainer(AbstractItemMeta meta, List<EmptyContainerConfig> config) {
         super(meta);
         super.setTypeLore("Container", Icon.BUCKET.get());
+        this.setBasePrice(190);
 
         config.forEach(entry -> resultMap.put(entry.type, entry.resultItemId));
     }

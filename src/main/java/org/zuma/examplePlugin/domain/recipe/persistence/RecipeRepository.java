@@ -37,6 +37,450 @@ public class RecipeRepository {
     public List<RecipeEntity> getAll() {
         return List.of(
 
+                // Herblore
+                // Herblore Potion Recipes - Lore-Appropriate Ingredients
+
+// MINOR HEALING POTION - Level 1 (Simple, no extras)
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.MINOR_HEALING_POTION.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 1)),
+                        List.of(
+                                new IngredientRecord(ItemId.DEWLEAF_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false)
+                        ),
+                        new ItemRecord(ItemId.MINOR_HEALING_POTION, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 80)), null), null),
+
+// HEALTH POTION I - Level 1 (Enhanced version)
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.HEALTH_POTION_I.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 1)),
+                        List.of(
+                                new IngredientRecord(ItemId.DEWLEAF_ESSENCE, 2, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
+                                new IngredientRecord(ItemId.SOFT_FUR, 1, true, false) // Soothing properties
+                        ),
+                        new ItemRecord(ItemId.HEALTH_POTION_I, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 120)), null), null),
+
+// STRENGTH POTION I - Level 10
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.STRENGTH_POTION_I.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 10)),
+                        List.of(
+                                new IngredientRecord(ItemId.MOONSHADE_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
+                                new IngredientRecord(ItemId.BOAR_TUSK, 1, true, false) // Ground tusk powder for strength
+                        ),
+                        new ItemRecord(ItemId.STRENGTH_POTION_I, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 150)), null), null),
+
+// DEFENCE POTION I - Level 15
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.DEFENCE_POTION_I.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 15)),
+                        List.of(
+                                new IngredientRecord(ItemId.VITALITY_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
+                                new IngredientRecord(ItemId.THICK_HIDE, 1, true, false) // Ground hide for protection
+                        ),
+                        new ItemRecord(ItemId.DEFENCE_POTION_I, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 180)), null), null),
+
+// ATTACK POTION II - Level 30
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ATTACK_POTION_II.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 30)),
+                        List.of(
+                                new IngredientRecord(ItemId.CRIMSON_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
+                                new IngredientRecord(ItemId.SCORPION_STINGER, 1, true, false) // Venom for potency
+                        ),
+                        new ItemRecord(ItemId.ATTACK_POTION_II, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 300)), null), null),
+
+// STRENGTH POTION II - Level 35
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.STRENGTH_POTION_II.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 35)),
+                        List.of(
+                                new IngredientRecord(ItemId.CRIMSON_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.FROST_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
+                                new IngredientRecord(ItemId.PREDATOR_CLAW, 1, true, false) // Ground claw for ferocity
+                        ),
+                        new ItemRecord(ItemId.STRENGTH_POTION_II, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 350)), null), null),
+
+// HEALTH POTION II - Level 45
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.HEALTH_POTION_II.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 45)),
+                        List.of(
+                                new IngredientRecord(ItemId.FROST_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.DEWLEAF_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
+                                new IngredientRecord(ItemId.COOKED_MEAT, 1, true, false) // Nourishment
+                        ),
+                        new ItemRecord(ItemId.HEALTH_POTION_II, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 450)), null), null),
+
+// RANGED POTION II - Level 50
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.RANGED_POTION_II.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 50)),
+                        List.of(
+                                new IngredientRecord(ItemId.PRECISION_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
+                                new IngredientRecord(ItemId.FEATHER, 3, true, false) // For lightness and precision
+                        ),
+                        new ItemRecord(ItemId.RANGED_POTION_II, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 480)), null), null),
+
+// SUPREME ATTACK POTION - Level 60
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.SUPREME_ATTACK_POTION.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 60)),
+                        List.of(
+                                new IngredientRecord(ItemId.STORM_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.CRIMSON_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
+                                new IngredientRecord(ItemId.VENOM_SAC, 1, true, false), // Potent venom
+                                new IngredientRecord(ItemId.ASHES, 1, true, false) // Purifying agent
+                        ),
+                        new ItemRecord(ItemId.SUPREME_ATTACK_POTION, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 650)), null), null),
+
+// SUPREME STRENGTH POTION - Level 65
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.SUPREME_STRENGTH_POTION.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 65)),
+                        List.of(
+                                new IngredientRecord(ItemId.STORM_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.BLOOD_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
+                                new IngredientRecord(ItemId.HOGLIN_TUSK, 1, true, false), // Massive strength
+                                new IngredientRecord(ItemId.COAL_ORE, 2, true, false) // Mineral fortification
+                        ),
+                        new ItemRecord(ItemId.SUPREME_STRENGTH_POTION, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 700)), null), null),
+
+// SUPREME DEFENCE POTION - Level 70
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.SUPREME_DEFENCE_POTION.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 70)),
+                        List.of(
+                                new IngredientRecord(ItemId.BLOOD_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.GUARDIAN_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
+                                new IngredientRecord(ItemId.CHITIN_PLATES, 2, true, false), // Natural armor
+                                new IngredientRecord(ItemId.SPIDER_SILK, 1, true, false) // Resilience
+                        ),
+                        new ItemRecord(ItemId.SUPREME_DEFENCE_POTION, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 750)), null), null),
+
+// SUPREME HEALTH POTION - Level 75
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.SUPREME_HEALTH_POTION.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 75)),
+                        List.of(
+                                new IngredientRecord(ItemId.BLOOD_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.DEWLEAF_ESSENCE, 2, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
+                                new IngredientRecord(ItemId.COOKED_SHARK, 1, true, false), // High-quality nourishment
+                                new IngredientRecord(ItemId.SOFT_CUB_FUR, 1, true, false) // Soothing properties
+                        ),
+                        new ItemRecord(ItemId.SUPREME_HEALTH_POTION, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 800)), null), null),
+
+// SUPREME RANGED POTION - Level 78
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.SUPREME_RANGED_POTION.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 78)),
+                        List.of(
+                                new IngredientRecord(ItemId.STORM_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.GLOW_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
+                                new IngredientRecord(ItemId.EAGLE_CLAW, 1, true, false), // Keen eyesight
+                                new IngredientRecord(ItemId.INSECT_WINGS, 2, true, false) // Lightness and speed
+                        ),
+                        new ItemRecord(ItemId.SUPREME_RANGED_POTION, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 850)), null), null),
+
+// DRAGON'S MIGHT POTION - Level 80
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.DRAGONS_MIGHT_POTION.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 80)),
+                        List.of(
+                                new IngredientRecord(ItemId.DRAGON_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
+                                new IngredientRecord(ItemId.VENOM_SAC, 2, true, false), // Double venom potency
+                                new IngredientRecord(ItemId.HUGE_BONES, 1, true, false) // Massive creature essence
+                        ),
+                        new ItemRecord(ItemId.DRAGONS_MIGHT_POTION, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 1000)), null), null),
+
+// ETHEREAL RESTORATION - Level 85
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ETHEREAL_RESTORATION.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 85)),
+                        List.of(
+                                new IngredientRecord(ItemId.ETHEREAL_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
+                                new IngredientRecord(ItemId.MAGIC_ASHES, 1, true, false) // Magical residue
+                        ),
+                        new ItemRecord(ItemId.ETHEREAL_RESTORATION, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 1200)), null), null),
+
+// OVERLOAD POTION - Level 90
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.OVERLOAD_POTION.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 90)),
+                        List.of(
+                                new IngredientRecord(ItemId.DRAGON_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.ETHEREAL_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.BLOOD_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
+                                new IngredientRecord(ItemId.UNCUT_DIAMOND, 1, true, false), // Pure crystal energy
+                                new IngredientRecord(ItemId.BIG_BONES, 2, true, false), // Powerful creature essence
+                                new IngredientRecord(ItemId.PURE_COAL_ORE, 2, true, false) // Concentrated mineral power
+                        ),
+                        new ItemRecord(ItemId.OVERLOAD_POTION, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 1500)), null), null),
+
+// ULTIMATE POWER POTION - Level 95
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ULTIMATE_POWER_POTION.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 95)),
+                        List.of(
+                                new IngredientRecord(ItemId.DRAGON_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.ETHEREAL_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.STORM_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.BLOOD_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
+                                new IngredientRecord(ItemId.DIAMOND, 1, true, false), // Perfect gem
+                                new IngredientRecord(ItemId.RUBY, 1, true, false), // Fire gem
+                                new IngredientRecord(ItemId.EMERALD, 1, true, false), // Earth gem
+                                new IngredientRecord(ItemId.SAPPHIRE, 1, true, false) // Water gem
+                        ),
+                        new ItemRecord(ItemId.ULTIMATE_POWER_POTION, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 2000)), null), null),
+
+// GATHERING POTION - Level 25
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.GATHERING_POTION.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 25)),
+                        List.of(
+                                new IngredientRecord(ItemId.SUNROOT_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.MOONSHADE_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
+                                new IngredientRecord(ItemId.DEER_ANTLER, 1, true, false), // For gathering luck
+                                new IngredientRecord(ItemId.UNCUT_SAPPHIRE, 1, true, false) // Minor gem for fortune
+                        ),
+                        new ItemRecord(ItemId.GATHERING_POTION, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 250)), null), null),
+
+// SKILLING POTION - Level 70
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.SKILLING_POTION.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 70)),
+                        List.of(
+                                new IngredientRecord(ItemId.STORM_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.DEWLEAF_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
+                                new IngredientRecord(ItemId.UNCUT_EMERALD, 1, true, false), // Growth gem
+                                new IngredientRecord(ItemId.UNDERGROUND_FUNGUS, 2, true, false) // Earth connection
+                        ),
+                        new ItemRecord(ItemId.SKILLING_POTION, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 700)), null), null),
+
+// COMBAT POTION - Level 50
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.COMBAT_POTION.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 50)),
+                        List.of(
+                                new IngredientRecord(ItemId.GUARDIAN_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.PRECISION_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
+                                new IngredientRecord(ItemId.UNCUT_RUBY, 1, true, false), // Combat gem
+                                new IngredientRecord(ItemId.ANT_MANDIBLES, 2, true, false) // Precision mandibles
+                        ),
+                        new ItemRecord(ItemId.COMBAT_POTION, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 500)), null), null),
+
+// PRAYER POTION - Level 55
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.PRAYER_POTION.getId(), RecipeType.BREWING_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 55)),
+                        List.of(
+                                new IngredientRecord(ItemId.GLOW_ESSENCE, 1, true, false),
+                                new IngredientRecord(ItemId.BONES, 3, true, false),
+                                new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
+                                new IngredientRecord(ItemId.ASHES, 2, true, false) // Spiritual residue
+                        ),
+                        new ItemRecord(ItemId.PRAYER_POTION, 1),
+                        new ItemRecord(ItemId.EMPTY_VIAL, 1),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 550)), null), null),
+
+                // DEWLEAF ESSENCE - Level 1
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.DEWLEAF_ESSENCE.getId(), RecipeType.ESSENCE_EXTRACTION_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 1)),
+                        List.of(
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false),
+                                new IngredientRecord(ItemId.EMPTY_VIAL, 1, true, false),
+                                new IngredientRecord(ItemId.DEWLEAF, 4, true, false)
+                        ),
+                        new ItemRecord(ItemId.DEWLEAF_ESSENCE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.HERBLORE, 60)), null), null),
+
+// SUNROOT ESSENCE - Level 5
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.SUNROOT_ESSENCE.getId(), RecipeType.ESSENCE_EXTRACTION_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 5)),
+                        List.of(
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false),
+                                new IngredientRecord(ItemId.EMPTY_VIAL, 1, true, false),
+                                new IngredientRecord(ItemId.SUNROOT, 2, true, false)
+                        ),
+                        new ItemRecord(ItemId.SUNROOT_ESSENCE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.HERBLORE, 80)), null), null),
+
+// MOONSHADE ESSENCE - Level 10
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.MOONSHADE_ESSENCE.getId(), RecipeType.ESSENCE_EXTRACTION_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 10)),
+                        List.of(
+                                new IngredientRecord(ItemId.SHEARS, 1, false, false),
+                                new IngredientRecord(ItemId.EMPTY_VIAL, 1, true, false),
+                                new IngredientRecord(ItemId.MOONSHADE, 2, true, false)
+                        ),
+                        new ItemRecord(ItemId.MOONSHADE_ESSENCE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.HERBLORE, 100)), null), null),
+
+// VITALITY ESSENCE - Level 15
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.VITALITY_ESSENCE.getId(), RecipeType.ESSENCE_EXTRACTION_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 15)),
+                        List.of(
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false),
+                                new IngredientRecord(ItemId.EMPTY_VIAL, 1, true, false),
+                                new IngredientRecord(ItemId.DEWLEAF, 2, true, false),
+                                new IngredientRecord(ItemId.SUNROOT, 1, true, false)
+                        ),
+                        new ItemRecord(ItemId.VITALITY_ESSENCE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.HERBLORE, 120)), null), null),
+
+// BALANCE ESSENCE - Level 20
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.BALANCE_ESSENCE.getId(), RecipeType.ESSENCE_EXTRACTION_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 20)),
+                        List.of(
+                                new IngredientRecord(ItemId.SHEARS, 1, false, false),
+                                new IngredientRecord(ItemId.EMPTY_VIAL, 1, true, false),
+                                new IngredientRecord(ItemId.SUNROOT, 1, true, false),
+                                new IngredientRecord(ItemId.MOONSHADE, 3, true, false)
+                        ),
+                        new ItemRecord(ItemId.BALANCE_ESSENCE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.HERBLORE, 140)), null), null),
+
+// CRIMSON ESSENCE - Level 30
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.CRIMSON_ESSENCE.getId(), RecipeType.ESSENCE_EXTRACTION_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 30)),
+                        List.of(
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false),
+                                new IngredientRecord(ItemId.EMPTY_VIAL, 1, true, false),
+                                new IngredientRecord(ItemId.CRIMSON_THISTLE, 2, true, false)
+                        ),
+                        new ItemRecord(ItemId.CRIMSON_ESSENCE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.HERBLORE, 200)), null), null),
+
+// FROST ESSENCE - Level 40
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.FROST_ESSENCE.getId(), RecipeType.ESSENCE_EXTRACTION_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 40)),
+                        List.of(
+                                new IngredientRecord(ItemId.SHEARS, 1, false, false),
+                                new IngredientRecord(ItemId.EMPTY_VIAL, 1, true, false),
+                                new IngredientRecord(ItemId.FROSTCAP, 3, true, false)
+                        ),
+                        new ItemRecord(ItemId.FROST_ESSENCE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.HERBLORE, 300)), null), null),
+
+// GLOW ESSENCE - Level 50
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.GLOW_ESSENCE.getId(), RecipeType.ESSENCE_EXTRACTION_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 50)),
+                        List.of(
+                                new IngredientRecord(ItemId.SHEARS, 1, false, false),
+                                new IngredientRecord(ItemId.EMPTY_VIAL, 1, true, false),
+                                new IngredientRecord(ItemId.GLOWFERN, 3, true, false)
+                        ),
+                        new ItemRecord(ItemId.GLOW_ESSENCE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.HERBLORE, 400)), null), null),
+
+// GUARDIAN ESSENCE - Level 50
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.GUARDIAN_ESSENCE.getId(), RecipeType.ESSENCE_EXTRACTION_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 50)),
+                        List.of(
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false),
+                                new IngredientRecord(ItemId.EMPTY_VIAL, 1, true, false),
+                                new IngredientRecord(ItemId.CRIMSON_THISTLE, 1, true, false),
+                                new IngredientRecord(ItemId.FROSTCAP, 2, true, false)
+                        ),
+                        new ItemRecord(ItemId.GUARDIAN_ESSENCE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.HERBLORE, 400)), null), null),
+
+// PRECISION ESSENCE - Level 55
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.PRECISION_ESSENCE.getId(), RecipeType.ESSENCE_EXTRACTION_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 55)),
+                        List.of(
+                                new IngredientRecord(ItemId.SHEARS, 1, false, false),
+                                new IngredientRecord(ItemId.EMPTY_VIAL, 1, true, false),
+                                new IngredientRecord(ItemId.CRIMSON_THISTLE, 1, true, false),
+                                new IngredientRecord(ItemId.GLOWFERN, 2, true, false)
+                        ),
+                        new ItemRecord(ItemId.PRECISION_ESSENCE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.HERBLORE, 450)), null), null),
+
+// STORM ESSENCE - Level 60
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.STORM_ESSENCE.getId(), RecipeType.ESSENCE_EXTRACTION_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 60)),
+                        List.of(
+                                new IngredientRecord(ItemId.KNIFE, 1, false, false),
+                                new IngredientRecord(ItemId.EMPTY_VIAL, 1, true, false),
+                                new IngredientRecord(ItemId.STORMVINE, 2, true, false)
+                        ),
+                        new ItemRecord(ItemId.STORM_ESSENCE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.HERBLORE, 500)), null), null),
+
+// BLOOD ESSENCE - Level 70
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.BLOOD_ESSENCE.getId(), RecipeType.ESSENCE_EXTRACTION_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 70)),
+                        List.of(
+                                new IngredientRecord(ItemId.SHEARS, 1, false, false),
+                                new IngredientRecord(ItemId.EMPTY_VIAL, 1, true, false),
+                                new IngredientRecord(ItemId.BLOODORCHID, 2, true, false)
+                        ),
+                        new ItemRecord(ItemId.BLOOD_ESSENCE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.HERBLORE, 600)), null), null),
+
+// DRAGON ESSENCE - Level 80
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.DRAGON_ESSENCE.getId(), RecipeType.ESSENCE_EXTRACTION_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 80)),
+                        List.of(
+                                new IngredientRecord(ItemId.FLINT_AND_STEEL, 1, false, false),
+                                new IngredientRecord(ItemId.EMPTY_VIAL, 1, true, false),
+                                new IngredientRecord(ItemId.DRAGONS_BREATH, 1, true, false)
+                        ),
+                        new ItemRecord(ItemId.DRAGON_ESSENCE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.HERBLORE, 800)), null), null),
+
+// ETHEREAL ESSENCE - Level 90
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.ETHEREAL_ESSENCE.getId(), RecipeType.ESSENCE_EXTRACTION_RECIPE, 3000,
+                        List.of(new SkillRequirement(SkillType.HERBLORE, 90)),
+                        List.of(
+                                new IngredientRecord(ItemId.SHEARS, 1, false, false),
+                                new IngredientRecord(ItemId.EMPTY_VIAL, 1, true, false),
+                                new IngredientRecord(ItemId.ETHEREAL_BLOOM, 1, true, false),
+                                new IngredientRecord(ItemId.MAGIC_ASHES, 1, true, false)
+                        ),
+                        new ItemRecord(ItemId.ETHEREAL_ESSENCE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.HERBLORE, 1000)), null), null),
+
+
                 //Amulets
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.AMULET_OF_GUARDING.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 6000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 22)),

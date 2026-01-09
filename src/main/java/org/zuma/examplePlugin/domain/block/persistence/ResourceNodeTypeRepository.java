@@ -41,7 +41,7 @@ public class ResourceNodeTypeRepository {
                         List.of(DropTableId.MOONSHADE_NODE.asInt()), ItemId.MOONSHADE.asInt(),
                         "", "Picking",
                         SoundType.PICKING_UP_PLANT_START, null, SoundType.PICKING_UP_PLANT_END,
-                        List.of(new SkillXpRecord(SkillType.HERBLORE, 30.0)), 3, 3).setRetexturedStem(RetexturedStem.MOONSHADE),
+                        List.of(new SkillXpRecord(SkillType.HERBLORE, 16.6)), 3, 3).setRetexturedStem(RetexturedStem.MOONSHADE),
 
                 new ResourceNodeType(ResourceNodeTypeId.CRIMSON_THISTLE.asInt(), null,
                         "Crimson Thistle", ItemRarity.UNCOMMON.getHexColor(), Material.AIR, false, List.of(new SkillRequirement(SkillType.HERBLORE, 6)), null, 500, 999999,

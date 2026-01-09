@@ -44,6 +44,7 @@ public enum GUIOverlay {
     BUY_HOUSE_OVERLAY("⢯"),
     HOUSE_SLOT_EDITOR_OVERLAY("⍾"),
     QUIVER_OVERLAY("⟠"),
+    BREWING_CAULDRON_OVERLAY("⤈"),
 
     GENERIC_OVERLAY_1("⼮"),
     GENERIC_OVERLAY_2("⌱"),
