@@ -15,8 +15,9 @@ import org.zuma.examplePlugin.domain.daily.DailyRewardHandler;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
 import org.zuma.examplePlugin.domain.modifier.scopes.server.ServerModifierHandler;
 import org.zuma.examplePlugin.domain.payments.handlers.DonationHandler;
-import org.zuma.examplePlugin.events.DailyMegaRareClaimEvent;
+import org.zuma.examplePlugin.events.drops.DailyMegaRareClaimEvent;
 import org.zuma.examplePlugin.events.core.NetworkRestartEvent;
+import org.zuma.examplePlugin.events.drops.RareDropEvent;
 import org.zuma.examplePlugin.events.inventory.RuneStorageInventoryOpenEvent;
 import org.zuma.examplePlugin.events.payment.*;
 
@@ -47,6 +48,7 @@ public class InterCommunicationModule implements PluginModule {
             GlobalEventHandler.registerEvent(BombActivatedEvent.class, BombActivatedEvent.Payload.class);
             GlobalEventHandler.registerEvent(SupportLevelUpgradeEvent.class, SupportLevelUpgradeEvent.Payload.class);
             GlobalEventHandler.registerEvent(DailyMegaRareClaimEvent.class, DailyMegaRareClaimEvent.Payload.class);
+            GlobalEventHandler.registerEvent(RareDropEvent.class, RareDropEvent.Payload.class);
 
             GlobalEventHandler.addListener(NetworkRestartEvent.class, e -> ScheduledRestartHandler.scheduleRestart(e.restartAt, e.reason));
             GlobalEventHandler.addListener(RuneStorageInventoryOpenEvent.class, e -> context.get(GUIHandler.class).onStorageContainerOpenGlobalEvent(e.containerUUID));

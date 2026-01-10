@@ -1,4 +1,4 @@
-package org.zuma.examplePlugin.events;
+package org.zuma.examplePlugin.events.drops;
 
 import org.zuma.examplePlugin.core.redis.RedisEvent;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
@@ -19,13 +19,14 @@ public class DailyMegaRareClaimEvent extends RedisEvent<DailyMegaRareClaimEvent.
     public static class Payload extends RedisPayload {
         public final String playerName, itemName;
         public final ItemRarity tier;
-        public final int amount;
+        public final int amount, streakDay;
 
-        public Payload(String playerName, String itemName, ItemRarity tier, int amount) {
+        public Payload(String playerName, String itemName, ItemRarity tier, int amount, int streakDay) {
             this.playerName = playerName;
             this.itemName = itemName;
             this.tier = tier;
             this.amount = amount;
+            this.streakDay = streakDay;
         }
     }
 
