@@ -16,7 +16,6 @@ public class EmptyContainerLore implements LoreCreator {
                 .map(a -> a.getLabel().toLowerCase())
                 .collect(Collectors.joining(", "));
 
-        lore.add(Component.empty());
         lore.add(Component.text("Can hold: ", Color.ITEM_LORE_DESCRIPTION.asColor()).append(Component.text(formatted + ".", Color.ACCENT.asColor())));
     }
 
