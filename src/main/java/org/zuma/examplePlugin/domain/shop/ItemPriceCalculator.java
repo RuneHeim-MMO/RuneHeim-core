@@ -58,7 +58,7 @@ public class ItemPriceCalculator {
             Integer price = priceCache.get(item.id);
 
             if (price != null)
-                return new PriceRecord((long) priceCache.get(item.id), Math.max(1, (long) (price * SELL_PRICE_MULTIPLIER)));
+                return new PriceRecord((long) priceCache.get(item.id), item.isSellableToShop() ? Math.max(1, (long) (price * SELL_PRICE_MULTIPLIER)) : -1);
         }
 
         Integer price = calculateFinalPrice(item);
@@ -69,7 +69,7 @@ public class ItemPriceCalculator {
             return null;
         }
 
-        return new PriceRecord((long) finalPrice, (long) (finalPrice * SELL_PRICE_MULTIPLIER));
+        return new PriceRecord((long) finalPrice, item.isSellableToShop() ? (long) (finalPrice * SELL_PRICE_MULTIPLIER) : -1);
     }
 
     @Nullable
@@ -77,11 +77,11 @@ public class ItemPriceCalculator {
     private static Integer calculateFinalPrice(AbstractItemType item) {
         Set<Integer> processing = processingStack.get();
         if (processing.contains(item.id)) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, 
-                "Circular recipe dependency detected for item " + item.id + ". Using null price.");
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN,
+                    "Circular recipe dependency detected for item " + item.id + ". Using null price.");
             return null;
         }
-        
+
         processing.add(item.id);
         try {
             return calculateFinalPriceInternal(item);

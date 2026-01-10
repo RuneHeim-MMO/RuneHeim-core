@@ -272,7 +272,7 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.ATTACK_POTION_I.asInt(), 5, 120, 500L, null, null, null),
                         new ShopItemConfig(ItemId.STRENGTH_POTION_I.asInt(), 5, 120, 500L, null, null, null),
                         new ShopItemConfig(ItemId.RANGED_POTION_I.asInt(), 5, 120, 500L, null, null, null),
-                        new ShopItemConfig(ItemId.HEALTH_POTION_I.asInt(), 5, 120, 400L, null, null, null),
+                        new ShopItemConfig(ItemId.MAX_HEALTH_POTION_I.asInt(), 5, 120, 400L, null, null, null),
                         new ShopItemConfig(ItemId.DEFENCE_POTION_I.asInt(), 5, 120, 400L, null, null, null)
                 ))), 1)),
 
@@ -280,7 +280,7 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.ATTACK_POTION_I.asInt(), 5, 120, 500L, null, null, null),
                         new ShopItemConfig(ItemId.STRENGTH_POTION_I.asInt(), 5, 120, 500L, null, null, null),
                         new ShopItemConfig(ItemId.RANGED_POTION_I.asInt(), 5, 120, 500L, null, null, null),
-                        new ShopItemConfig(ItemId.HEALTH_POTION_I.asInt(), 5, 120, 400L, null, null, null),
+                        new ShopItemConfig(ItemId.MAX_HEALTH_POTION_I.asInt(), 5, 120, 400L, null, null, null),
                         new ShopItemConfig(ItemId.DEFENCE_POTION_I.asInt(), 5, 120, 400L, null, null, null)
                 ))), 1)),
 

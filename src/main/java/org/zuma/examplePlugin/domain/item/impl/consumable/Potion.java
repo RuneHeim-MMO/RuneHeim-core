@@ -36,6 +36,7 @@ public class Potion extends AbstractItemType implements Stateful {
         super(meta);
         super.setTypeLore("Potion", Icon.POTION.get());
         this.setStateType(StateType.MULTI_CONSUMABLE);
+        this.setSellableToShop(false);
     }
 
     public AbstractState cloneDefaultStateTemplate() {

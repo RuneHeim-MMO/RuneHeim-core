@@ -59,7 +59,7 @@ public class RecipeRepository {
                                 new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
                                 new IngredientRecord(ItemId.SOFT_FUR, 1, true, false) // Soothing properties
                         ),
-                        new ItemRecord(ItemId.HEALTH_POTION_I, 1),
+                        new ItemRecord(ItemId.MAX_HEALTH_POTION_I, 1),
                         new ItemRecord(ItemId.EMPTY_VIAL, 1),
                         List.of(new SkillXpRecord(SkillType.HERBLORE, 120)), null), null),
 
@@ -121,7 +121,7 @@ public class RecipeRepository {
                                 new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
                                 new IngredientRecord(ItemId.COOKED_MEAT, 1, true, false) // Nourishment
                         ),
-                        new ItemRecord(ItemId.HEALTH_POTION_II, 1),
+                        new ItemRecord(ItemId.MAX_HEALTH_POTION_II, 1),
                         new ItemRecord(ItemId.EMPTY_VIAL, 1),
                         List.of(new SkillXpRecord(SkillType.HERBLORE, 450)), null), null),
 
@@ -255,7 +255,7 @@ public class RecipeRepository {
                                 new IngredientRecord(ItemId.STORM_ESSENCE, 1, true, false),
                                 new IngredientRecord(ItemId.BLOOD_ESSENCE, 1, true, false),
                                 new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
-                                new IngredientRecord(ItemId.DIAMOND, 1, true, false),
+                                new IngredientRecord(ItemId.DIAMOND, 1, true, false)
                         ),
                         new ItemRecord(ItemId.ULTIMATE_POWER_POTION, 1),
                         new ItemRecord(ItemId.EMPTY_VIAL, 1),

@@ -477,7 +477,7 @@ public class DropTableRepository {
                         new DropTableEntry(ItemId.ADAMANT_ORE.asInt(), 1, 4, 6, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.ATTACK_POTION_I.asInt(), 1, 3, 8, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.DEFENCE_POTION_I.asInt(), 1, 3, 8, DropTableEntry.Type.ITEM),
-                        new DropTableEntry(ItemId.HEALTH_POTION_I.asInt(), 1, 3, 8, DropTableEntry.Type.ITEM),
+                        new DropTableEntry(ItemId.MAX_HEALTH_POTION_I.asInt(), 1, 3, 8, DropTableEntry.Type.ITEM),
                         new DropTableEntry(ItemId.RANGED_POTION_I.asInt(), 1, 3, 8, DropTableEntry.Type.ITEM)
                 ), null)), 1)),
 
