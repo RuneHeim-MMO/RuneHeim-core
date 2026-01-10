@@ -102,7 +102,7 @@ public class Shop {
             throw new IllegalStateException("This item is untradeable!");
         }
 
-        if (!this.buyAll && !stock.containsKey(type.id) || !type.isSellableToShop()) {
+        if (!type.isSellableToShop() || (!this.buyAll && !stock.containsKey(type.id))) {
             throw new IllegalStateException("You cannot sell this item to this shop!");
         }
 

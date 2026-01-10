@@ -109,7 +109,7 @@ public class ChunkPlantPopulator {
                 }
 
                 if (!candidate.requiredSoilMaterial().contains(soilBlockMaterial)) {
-                    break;
+                    continue;
                 }
 
                 AbstractInteractableBlock block = RuneQuestPlugin.getBlockLoader().registerBlock(org.zuma.examplePlugin.RuneQuestPlugin.getBlockManager(),
