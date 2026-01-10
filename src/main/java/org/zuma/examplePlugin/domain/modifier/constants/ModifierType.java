@@ -33,8 +33,8 @@ public enum ModifierType {
     FLYING_SPEED("Flying Speed", "", Icon.FLIGHT.get(), "%", null, true),
 
     XP_BONUS_ADDITIVE("XP Bonus", "Increases experience gain rate. (Additive)", Icon.EPIC.get(), "x", null, true),
-    COMBAT_XP_BONUS_ADDITIVE("Combat XP Bonus", "Increases combat experience gain rate. (Additive)", Icon.EPIC.get(), "x", null, true),
-    SKILLING_XP_BONUS_ADDITIVE("Skilling XP Bonus", "Increases skilling experience gain rate. (Additive)", Icon.EPIC.get(), "x", null, true),
+    COMBAT_XP_BONUS_ADDITIVE("Combat XP Bonus", "Increases combat experience gain rate. (Additive)", Icon.CROSSED_SWORDS.get(), "x", null, true),
+    SKILLING_XP_BONUS_ADDITIVE("Skilling XP Bonus", "Increases skilling experience gain rate. (Additive)", Icon.PICKAXE.get(), "x", null, true),
 
     ATTACK_BOOST_PERCENT("Attack Bonus", "", Icon.PRAYER.get(), null, null, false),
     STRENGTH_BOOST_PERCENT("Strength Bonus", "", Icon.PRAYER.get(), null, null, false),
@@ -42,10 +42,13 @@ public enum ModifierType {
     RANGED_STR_BOOST_PERCENT("Ranged Strength Bonus", "", Icon.PRAYER.get(), null, null, false),
     RANGED_ACC_BOOST_PERCENT("Ranged Bonus", "", Icon.PRAYER.get(), null, null, false),
     RANGED_BOOST_PERCENT("Ranged Bonus", "", Icon.PRAYER.get(), null, null, false),
-    HP_RECOVERY_BOOST_PERCENT("HP Recovery Bonus", "", Icon.PRAYER.get(), null, null, false),
+    HP_RECOVERY_BOOST_PERCENT("HP Recovery Bonus", "Increases default health regeneration speed.", Icon.HEART.get(), "%", null, false),
     ARROW_RECOVERY_PERCENT("Arrow Recovery", "Increases the chance to not consume arrow.", Icon.ARROW.get(), "%", null, false),
 
-    MAX_HIT_PENALTY("Max Hit Reduction", "Reduces the maximum possible hit you can deal.", Icon.SPECIAL_ATTACK.get(), "%", null, false);
+    MAX_HIT_PENALTY("Max Hit Reduction", "Reduces the maximum possible hit you can deal.", Icon.SPECIAL_ATTACK.get(), "%", null, false),
+    HEALTH_REGENERATION("Health Regeneration", "Regenerates health over time.", Icon.HEART.get(), "/sec", null, false),
+    PRAYER_REGENERATION("Prayer Regeneration", "Regenerates prayer over time.", Icon.PRAYER.get(), "/sec", null, false);
+
 
     private final String label, description, symbol, numSuffix, numPrefix;
     private final boolean special;

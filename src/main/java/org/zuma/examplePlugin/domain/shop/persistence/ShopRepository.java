@@ -269,19 +269,19 @@ public class ShopRepository {
                 new ShopConfig(ShopId.DRAKKAR_TANNER_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, TANNER_SHOP)), 1)),
 
                 new ShopConfig(ShopId.ZARALI_HERBLORE_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
-                        new ShopItemConfig(ItemId.ATTACK_POTION_I.asInt(), 5, 120, 500L, null, null, null),
-                        new ShopItemConfig(ItemId.STRENGTH_POTION_I.asInt(), 5, 120, 500L, null, null, null),
-                        new ShopItemConfig(ItemId.RANGED_POTION_I.asInt(), 5, 120, 500L, null, null, null),
-                        new ShopItemConfig(ItemId.MAX_HEALTH_POTION_I.asInt(), 5, 120, 400L, null, null, null),
-                        new ShopItemConfig(ItemId.DEFENCE_POTION_I.asInt(), 5, 120, 400L, null, null, null)
+                        new ShopItemConfig(ItemId.ATTACK_POTION_I.asInt(), 5, 120, ItemId.ATTACK_POTION_I.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.STRENGTH_POTION_I.asInt(), 5, 120, ItemId.STRENGTH_POTION_I.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.RANGED_POTION_I.asInt(), 5, 120, ItemId.RANGED_POTION_I.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.MAX_HEALTH_POTION_I.asInt(), 5, 120, ItemId.MAX_HEALTH_POTION_I.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.DEFENCE_POTION_I.asInt(), 5, 120, ItemId.DEFENCE_POTION_I.getBuyPrice(), null, null, null)
                 ))), 1)),
 
                 new ShopConfig(ShopId.SWAMP_ISLAND_HERBLORE_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
-                        new ShopItemConfig(ItemId.ATTACK_POTION_I.asInt(), 5, 120, 500L, null, null, null),
-                        new ShopItemConfig(ItemId.STRENGTH_POTION_I.asInt(), 5, 120, 500L, null, null, null),
-                        new ShopItemConfig(ItemId.RANGED_POTION_I.asInt(), 5, 120, 500L, null, null, null),
-                        new ShopItemConfig(ItemId.MAX_HEALTH_POTION_I.asInt(), 5, 120, 400L, null, null, null),
-                        new ShopItemConfig(ItemId.DEFENCE_POTION_I.asInt(), 5, 120, 400L, null, null, null)
+                        new ShopItemConfig(ItemId.ATTACK_POTION_I.asInt(), 5, 120, ItemId.ATTACK_POTION_I.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.STRENGTH_POTION_I.asInt(), 5, 120, ItemId.STRENGTH_POTION_I.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.RANGED_POTION_I.asInt(), 5, 120, ItemId.RANGED_POTION_I.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.MAX_HEALTH_POTION_I.asInt(), 5, 120, ItemId.MAX_HEALTH_POTION_I.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.DEFENCE_POTION_I.asInt(), 5, 120, ItemId.DEFENCE_POTION_I.getBuyPrice(), null, null, null)
                 ))), 1)),
 
                 new ShopConfig(ShopId.DRAKKAR_SMELTERY_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(

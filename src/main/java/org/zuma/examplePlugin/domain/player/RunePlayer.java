@@ -174,7 +174,12 @@ public class RunePlayer implements CombatEntity {
                 return;
             }
 
-            matchingSkill.setBonus(skillModifier.amount());
+            int baseLevelBonus = skillModifier.amount();
+            double percentBonus = skillModifier.percent() != null
+                    ? skillModifier.percent() * 0.01 * matchingSkill.getBaseLevel()
+                    : 0;
+
+            matchingSkill.setBonus(baseLevelBonus + (int) Math.floor(percentBonus));
         });
     }
 

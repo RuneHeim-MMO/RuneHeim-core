@@ -21,11 +21,23 @@ public class ModifierLore implements LoreCreator {
         if (!skillModifiers.isEmpty()) {
             skillModifiers.forEach(modifier -> {
                 int amount = Math.toIntExact(modifier.amount());
-                String sign = amount > 0 ? "+" : "";
-                TextColor color = amount > 0 ? Color.ITEM_BONUS_POSITIVE.asColor() : Color.ITEM_BONUS_NEGATIVE.asColor();
+                Double percent = modifier.percent() != null ? modifier.percent() : null;
 
-                lore.add(Component.text(modifier.type().getSymbol(), NamedTextColor.WHITE)
-                        .append(Component.text(" " + sign + amount + " " + modifier.type().getLabel() + " Level").color(color)));
+                if (amount != 0) {
+                    String sign = amount > 0 ? "+" : "";
+                    TextColor color = amount > 0 ? Color.ITEM_BONUS_POSITIVE.asColor() : Color.ITEM_BONUS_NEGATIVE.asColor();
+
+                    lore.add(Component.text(modifier.type().getSymbol(), NamedTextColor.WHITE)
+                            .append(Component.text(" " + sign + amount + " " + modifier.type().getLabel() + " Level").color(color)));
+                }
+
+                if (percent != null) {
+                    String sign = percent > 0 ? "+" : "";
+                    TextColor color = percent > 0 ? Color.ITEM_BONUS_POSITIVE.asColor() : Color.ITEM_BONUS_NEGATIVE.asColor();
+
+                    lore.add(Component.text(modifier.type().getSymbol(), NamedTextColor.WHITE)
+                            .append(Component.text(" " + sign + percent + "% " + modifier.type().getLabel() + " Level").color(color)));
+                }
             });
 
             if (!modifiers.isEmpty()) {
