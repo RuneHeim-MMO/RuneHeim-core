@@ -240,8 +240,6 @@ public class RecipeRepository {
                                 new IngredientRecord(ItemId.ETHEREAL_ESSENCE, 1, true, false),
                                 new IngredientRecord(ItemId.BLOOD_ESSENCE, 1, true, false),
                                 new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
-                                new IngredientRecord(ItemId.UNCUT_DIAMOND, 1, true, false), // Pure crystal energy
-                                new IngredientRecord(ItemId.BIG_BONES, 2, true, false), // Powerful creature essence
                                 new IngredientRecord(ItemId.PURE_COAL_ORE, 2, true, false) // Concentrated mineral power
                         ),
                         new ItemRecord(ItemId.OVERLOAD_POTION, 1),
@@ -257,10 +255,7 @@ public class RecipeRepository {
                                 new IngredientRecord(ItemId.STORM_ESSENCE, 1, true, false),
                                 new IngredientRecord(ItemId.BLOOD_ESSENCE, 1, true, false),
                                 new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
-                                new IngredientRecord(ItemId.DIAMOND, 1, true, false), // Perfect gem
-                                new IngredientRecord(ItemId.RUBY, 1, true, false), // Fire gem
-                                new IngredientRecord(ItemId.EMERALD, 1, true, false), // Earth gem
-                                new IngredientRecord(ItemId.SAPPHIRE, 1, true, false) // Water gem
+                                new IngredientRecord(ItemId.DIAMOND, 1, true, false),
                         ),
                         new ItemRecord(ItemId.ULTIMATE_POWER_POTION, 1),
                         new ItemRecord(ItemId.EMPTY_VIAL, 1),
