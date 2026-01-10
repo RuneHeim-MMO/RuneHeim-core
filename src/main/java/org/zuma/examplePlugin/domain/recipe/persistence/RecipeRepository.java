@@ -506,7 +506,7 @@ public class RecipeRepository {
                                 new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
                                 new IngredientRecord(ItemId.PURE_COAL_ORE, 2, true, false)
                         ),
-                        new ItemRecord(ItemId.OVERLOAD_POTION, 1),
+                        new ItemRecord(ItemId.ULTIMATE_POWER_POTION, 1),
                         new ItemRecord(ItemId.EMPTY_VIAL, 1),
                         List.of(new SkillXpRecord(SkillType.HERBLORE, 560)), null), null),
 

@@ -1078,8 +1078,8 @@ public class ItemRepository {
                                 new EmptyContainer.EmptyContainerConfig(EmptyContainer.InputType.LAVA, ItemId.VIAL_OF_LAVA.asInt())
                         )), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.VIAL_OF_WATER.asInt(), Material.COAL, ItemRarity.COMMON, "Vial of water", List.of("A vial filled with water."), null, true, 1.0), toVersionedJson(new MaterialMeta(210), 1)),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.VIAL_OF_LAVA.asInt(), Material.COAL, ItemRarity.COMMON, "Vial of lava", List.of("A vial filled with lava."), null, true, 1.0), toVersionedJson(new MaterialMeta(230), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.VIAL_OF_WATER.asInt(), Material.COAL, ItemRarity.COMMON, "Vial of water", List.of("A vial filled with water."), null, true, 1.0), toVersionedJson(new MaterialMeta(60), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.VIAL_OF_LAVA.asInt(), Material.COAL, ItemRarity.COMMON, "Vial of lava", List.of("A vial filled with lava."), null, true, 1.0), toVersionedJson(new MaterialMeta(80), 1)),
 
                 // Fairy food
                 new ItemEntity(new AbstractItemMeta(ItemType.FAIRY_FOOD, ItemId.REGULAR_FAIRY_RATION.asInt(), Material.COAL, ItemRarity.RARE, "Fairy Ration", List.of("Regular food for fairies.", "Keeps them strong and energized."), null, true, 1.0),
