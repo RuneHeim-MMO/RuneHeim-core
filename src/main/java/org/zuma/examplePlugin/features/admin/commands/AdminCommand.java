@@ -4,10 +4,7 @@ package org.zuma.examplePlugin.features.admin.commands;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.NamespacedKey;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +26,6 @@ import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
 import org.zuma.examplePlugin.domain.item.state.states.FairyState;
 import org.zuma.examplePlugin.domain.item.state.states.MountState;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
-import org.zuma.examplePlugin.domain.modifier.scopes.server.ServerModifierType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 import org.zuma.examplePlugin.domain.player.inventory.ReservedSlot;
@@ -153,31 +149,22 @@ public class AdminCommand implements BasicCommand {
         }
 
 
-        if (args.length == 2 && Objects.equals(args[0], "bomb") && TypeUtils.isInteger(args[1])) {
-            int index = Integer.parseInt(args[1]);
+        if (args.length == 1 && Objects.equals(args[0], "chunk")) {
+            Chunk playerChunk = player.getChunk();
+            int playerChunkX = playerChunk.getX();
+            int playerChunkZ = playerChunk.getZ();
+            int radius = 10; // Adjust radius to get ~50 chunks
 
-            switch (index) {
-                case 1: {
-                    RuneQuestPlugin.getServerModifierHandler().activateBomb(runePlayer, ServerModifierType.DOUBLE_COMBAT_XP, 1000 * 10);
-                    break;
-                }
-                case 2: {
-                    RuneQuestPlugin.getServerModifierHandler().activateBomb(runePlayer, ServerModifierType.DOUBLE_SKILL_XP, 1000 * 10);
-                    break;
-                }
-                case 3: {
-                    RuneQuestPlugin.getServerModifierHandler().activateBomb(runePlayer, ServerModifierType.INCREASED_MOB_DROPS, 1000 * 10);
-                    break;
-                }
-                case 4: {
-                    RuneQuestPlugin.getServerModifierHandler().activateBomb(runePlayer, ServerModifierType.INCREASED_RESOURCE_DROPS, 1000 * 10);
-                    break;
-                }
-                case 5: {
-                    RuneQuestPlugin.getServerModifierHandler().activateBomb(runePlayer, ServerModifierType.INCREASED_PERFECT_STRIKE, 1000 * 10);
-                    break;
+            for (int dx = -radius; dx <= radius; dx++) {
+                for (int dz = -radius; dz <= radius; dz++) {
+                    Chunk chunk = player.getWorld().getChunkAt(playerChunkX + dx, playerChunkZ + dz);
+                    RuneQuestPlugin.getHerbloreManager().populateChunk(chunk);
                 }
             }
+        }
+
+        if (args.length == 1 && Objects.equals(args[0], "growthblocks")) {
+            RuneQuestPlugin.getHerbloreManager().printGrowthBlocksAmount();
         }
 
         if (args.length == 2 && Objects.equals(args[0], "pouch") && TypeUtils.isInteger(args[1])) {

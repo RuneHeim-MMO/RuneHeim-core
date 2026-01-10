@@ -20,6 +20,7 @@ import org.zuma.examplePlugin.domain.dialog.DialogHandler;
 import org.zuma.examplePlugin.domain.discord.DiscordVerificationHandler;
 import org.zuma.examplePlugin.domain.droptable.DropTableHandler;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
+import org.zuma.examplePlugin.domain.herblore.HerbloreManager;
 import org.zuma.examplePlugin.domain.housing.HousingManager;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
@@ -92,7 +93,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new PartyModule(),
                         new ServerModifierModule(),
                         new DailyRewardModule(),
-                        new PlayerHousingModule()
+                        new PlayerHousingModule(),
+                        new HerbloreModule()
                 ), moduleContext);
     }
 
@@ -230,6 +232,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static AdditionalGearSlotHandler getAdditionalGearSlotHandler() {
         return pluginInstance.moduleContext.get(AdditionalGearSlotHandler.class);
+    }
+    
+    public static HerbloreManager getHerbloreManager() {
+        return pluginInstance.moduleContext.get(HerbloreManager.class);
     }
 
     @Override

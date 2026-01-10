@@ -20,10 +20,10 @@ public enum SkillType {
     SMITHING(12, "Smithing", "Forge ores into weapons and armor.", 0, null, Icon.ANVIL, Material.ANVIL),
     MINING(13, "Mining", "Mine rocks to gather ores and gems.", 0, null, Icon.PICKAXE, Material.IRON_PICKAXE),
     FLETCHING(14, "Fletching", "Make bows and arrows to improve your ranged combat.", 0, null, Icon.BOW, Material.ARROW),
-    PRAYER(15, "Prayer", "Enhance your abilities and protect yourself using divine blessings.", 0, null, Icon.PRAYER, Material.BONE);
+    PRAYER(15, "Prayer", "Enhance your abilities and protect yourself using divine blessings.", 0, null, Icon.PRAYER, Material.BONE),
+    HERBLORE(16, "Herblore", "Discover and create variety of potions.", 0, null, Icon.HERBLORE, Material.TALL_GRASS);
 
     /*
-        HERBLORE(15, "Herblore", 0),
         AGILITY(16, "Agility", 0),
         THIEVING(17, "Thieving", 0),
         SLAYER(18, "Slayer", 0),

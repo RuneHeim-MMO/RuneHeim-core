@@ -64,6 +64,7 @@ public enum MarkerType {
 
     POTATO("potato-markers", "Potato", "./assets/markers/potato.png", true),
     CARROT("carrot-markers", "Carrot", "./assets/markers/carrot.png", true),
+    BREWING_CAULDRON("brewing-cauldron-markers", "Brewing Cauldron", "./assets/markers/brewing_cauldron.png", true),
 
 
     // Dev

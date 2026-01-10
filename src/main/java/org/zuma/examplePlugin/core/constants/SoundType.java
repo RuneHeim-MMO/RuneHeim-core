@@ -163,6 +163,15 @@ public enum SoundType {
     COINS_DROP("runequest.coins.drop", true, 1f, 1f),
     SHOP_BUY_WITH_CUSTOM_CURRENCY("item.trident.return", true, 1f, 1f),
 
+    BREW_START("BLOCK_BREWING_STAND_BREW", false, 0.8f, 1.0f),
+    BREW_STEP("PARTICLE_SOUL_ESCAPE", false, 0.7f, 1.0f),
+    BREW_SUCCESS("ITEM_BOTTLE_EMPTY", false, 1.0f, 0.9f),
+
+    EXTRACTION_START("BLOCK_BREWING_STAND_BREW", false, 0.8f, 1.0f),
+    EXTRACTION_STEP("BLOCK_SUSPICIOUS_SAND_BREAK", false, 0.7f, 1.0f),
+    EXTRACTION_SUCCESS("ITEM_BOTTLE_FILL", false, 0.9f, 1.0f),
+
+
     CRAFT_START("BLOCK_WOOD_PLACE", false, 0.8f, 1.0f),
     CRAFT_STEP("ITEM_ARMOR_EQUIP_GENERIC", false, 0.8f, 0.8f),
     CRAFT_SUCCESS("ITEM_ARMOR_EQUIP_GENERIC", false, 0.8f, 0.8f),

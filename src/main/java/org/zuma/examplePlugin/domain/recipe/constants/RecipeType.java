@@ -11,7 +11,9 @@ public enum RecipeType {
     COOKING_RECIPE("Prepare", "Preparing", "Prepared", SoundType.COOKING_START, SoundType.COOKING_STEP, SoundType.COOKING_SUCCESS, true),
     CAMPFIRE_RECIPE("Start", "Starting", "Started", SoundType.CAMPFIRE_RECIPE_START, SoundType.CAMPFIRE_RECIPE_STEP, SoundType.CAMPFIRE_RECIPE_START, false),
     SPINNING_WHEEL_RECIPE("Spin", "Spinning", "Spun", SoundType.SPINNING_WHEEL_RECIPE_START, SoundType.SPINNING_WHEEL_RECIPE_STEP, SoundType.SPINNING_WHEEL_RECIPE_SUCCESS, true),
-    TANNER_RECIPE("Tan", "Tanning", "Tanned", SoundType.TANNER_RECIPE_START, SoundType.TANNER_RECIPE_STEP, SoundType.TANNER_RECIPE_SUCCESS, true);
+    TANNER_RECIPE("Tan", "Tanning", "Tanned", SoundType.TANNER_RECIPE_START, SoundType.TANNER_RECIPE_STEP, SoundType.TANNER_RECIPE_SUCCESS, true),
+    BREWING_RECIPE("Brew", "Brewing", "Brewed", SoundType.BREW_START, SoundType.BREW_STEP, SoundType.BREW_SUCCESS, true),
+    ESSENCE_EXTRACTION_RECIPE("Extract", "Extracting", "Extracted", SoundType.EXTRACTION_START, SoundType.EXTRACTION_STEP, SoundType.EXTRACTION_SUCCESS, true);
 
     private final String verb;
     private final String continuousVerb;

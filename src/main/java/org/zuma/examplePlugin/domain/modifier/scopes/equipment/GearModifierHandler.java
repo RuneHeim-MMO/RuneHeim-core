@@ -21,6 +21,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.TemporaryEffect;
 import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 import org.zuma.examplePlugin.domain.prayer.Prayer;
+import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.events.modifier.GearModifiersRecalculatedEvent;
 
 import java.util.*;
@@ -47,12 +48,39 @@ public class GearModifierHandler {
         // Combined
         List<Modifier> modifiers = new ArrayList<>();
         List<SkillModifier> skillModifiers = new ArrayList<>();
+        Map<SkillType, List<SkillModifier>> grouped = new HashMap<>();
 
+        // Temporary Effects
         for (TemporaryEffect effect : temporaryEffects) {
-            if (effect.isExpired()) continue; // Skip expired effects
+            if (effect.isExpired()) continue;
 
             modifiers.addAll(effect.getEffect().modifiers());
-            skillModifiers.addAll(effect.getEffect().skillModifiers());
+
+            for (SkillModifier sm : effect.getEffect().skillModifiers()) {
+                grouped.computeIfAbsent(sm.type(), k -> new ArrayList<>()).add(sm);
+            }
+        }
+
+        // Amounts stack flat, percents take highest to avoid combining multiple potions etc.
+        for (Map.Entry<SkillType, List<SkillModifier>> entry : grouped.entrySet()) {
+            int totalAmount = 0;
+            Double highestPercent = null;
+
+            for (SkillModifier sm : entry.getValue()) {
+                totalAmount += sm.amount();
+
+                if (sm.percent() != null) {
+                    if (highestPercent == null || sm.percent() > highestPercent) {
+                        highestPercent = sm.percent();
+                    }
+                }
+            }
+
+            skillModifiers.add(new SkillModifier(
+                    entry.getKey(),
+                    totalAmount,
+                    highestPercent
+            ));
         }
 
         modifiers.addAll(prayerModifiers);

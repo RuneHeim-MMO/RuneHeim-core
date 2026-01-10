@@ -25,14 +25,28 @@ public class ModifierUtils {
     }
 
     public static List<SkillModifier> combineSkillModifiersByType(List<SkillModifier> modifiers) {
-        Map<SkillType, Integer> combined = new HashMap<>();
+        class Acc {
+            int amount = 0;
+            double percent = 0;
+        }
+
+        Map<SkillType, Acc> combined = new HashMap<>();
 
         for (SkillModifier modifier : modifiers) {
-            combined.merge(modifier.type(), modifier.amount(), Integer::sum);
+            Acc acc = combined.computeIfAbsent(modifier.type(), k -> new Acc());
+            acc.amount += modifier.amount();
+            if (modifier.percent() != null) {
+                acc.percent += modifier.percent();
+            }
         }
 
         return combined.entrySet().stream()
-                .map(entry -> new SkillModifier(entry.getKey(), entry.getValue()))
+                .map(e -> new SkillModifier(
+                        e.getKey(),
+                        e.getValue().amount,
+                        e.getValue().percent == 0 ? null : e.getValue().percent
+                ))
                 .collect(Collectors.toList());
     }
+
 }

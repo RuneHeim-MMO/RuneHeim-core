@@ -76,9 +76,6 @@ public class SpawnZoneHandler {
         }
 
         for (AbstractSpawnZone zone : zonesInChunk) {
-            if(zone.getId() == 267){
-                System.out.println("Handling chunk load for zone id 267");
-            }
             zone.handleChunkLoad();
         }
 
@@ -94,9 +91,6 @@ public class SpawnZoneHandler {
         }
 
         for (AbstractSpawnZone zone : zonesInChunk) {
-            if(zone.getId() == 267){
-                System.out.println("Handling chunk unload for zone id 267");
-            }
             zone.handleChunkUnload();
         }
 

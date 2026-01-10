@@ -32,12 +32,25 @@ public class ItemPriceCalculator {
             if (priceRecord == null) continue;
 
             priceCache.put(item.id, Math.toIntExact(priceRecord.buyPrice()));
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "1x " + item.displayName + ": \u001B[93mB " + priceRecord.buyPrice() + "gp | S \u001B[93m" + priceRecord.sellPrice() + "gp\u001B[0m\u001B[96m (mult: x" + item.getCraftPriceMultiplier() + ").\u001B[0m");
+            boolean isSellable = priceRecord.sellPrice() != null && priceRecord.sellPrice() > 0;
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "1x " + item.displayName + ": \u001B[93mB " + priceRecord.buyPrice() + "gp | S \u001B[93m" + (isSellable ? (priceRecord.sellPrice() + "gp") : "NOT SELLABLE")+"\u001B[0m\u001B[96m (mult: x" + item.getCraftPriceMultiplier() + ").\u001B[0m");
 
         }
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "----------------------------------------------------------------------");
 
 
+    }
+
+    @Nullable // Buy price, sell price
+    public static PriceRecord getPrice(int id) {
+        AbstractItemType item = RuneQuestPlugin.getItemRegistry().getType(id);
+
+        if (item == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "ItemPriceCalculator: Item with id " + id + " not found in registry.");
+            return null;
+        }
+
+        return getPrice(item);
     }
 
     @Nullable // Buy price, sell price
@@ -58,7 +71,7 @@ public class ItemPriceCalculator {
             Integer price = priceCache.get(item.id);
 
             if (price != null)
-                return new PriceRecord((long) priceCache.get(item.id), Math.max(1, (long) (price * SELL_PRICE_MULTIPLIER)));
+                return new PriceRecord((long) priceCache.get(item.id), item.isSellableToShop() ? Math.max(1, (long) (price * SELL_PRICE_MULTIPLIER)) : -1);
         }
 
         Integer price = calculateFinalPrice(item);
@@ -69,7 +82,7 @@ public class ItemPriceCalculator {
             return null;
         }
 
-        return new PriceRecord((long) finalPrice, (long) (finalPrice * SELL_PRICE_MULTIPLIER));
+        return new PriceRecord((long) finalPrice, item.isSellableToShop() ? (long) (finalPrice * SELL_PRICE_MULTIPLIER) : -1);
     }
 
     @Nullable
@@ -77,11 +90,11 @@ public class ItemPriceCalculator {
     private static Integer calculateFinalPrice(AbstractItemType item) {
         Set<Integer> processing = processingStack.get();
         if (processing.contains(item.id)) {
-            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, 
-                "Circular recipe dependency detected for item " + item.id + ". Using null price.");
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN,
+                    "Circular recipe dependency detected for item " + item.id + ". Using null price.");
             return null;
         }
-        
+
         processing.add(item.id);
         try {
             return calculateFinalPriceInternal(item);

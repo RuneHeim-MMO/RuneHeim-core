@@ -7,6 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.Ageable;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -23,6 +25,7 @@ import org.zuma.examplePlugin.domain.block.BlockLoader;
 import org.zuma.examplePlugin.domain.block.BlockManager;
 import org.zuma.examplePlugin.domain.block.ResourceNodeSchematicHandler;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
+import org.zuma.examplePlugin.domain.block.constants.RetexturedStem;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.ResourceNodeType;
 import org.zuma.examplePlugin.domain.cooldown.CooldownHandler;
@@ -57,12 +60,11 @@ public class ResourceNode extends AbstractInteractableBlock {
     private ResourceNodeType blockType;
     private int deposit;
     private ItemStack displayItemStack;
-    private boolean isRemoved, displayResultInHologram, requiresTool;
+    private boolean isRemoved, displayResultInHologram, requiresTool, isPersistent;
     private long lastDepositUpdateTimestamp;
-    @Nullable
-    private ResourceNodeSchematicHandler schematicHandler;
-
+    private @Nullable ResourceNodeSchematicHandler schematicHandler;
     private Integer holoResultIndex, holoDepositIndex;
+    private @Nullable Runnable onDepleteCallback;
 
     public ResourceNode(BlockManager manager, AbstractInteractableBlockMeta meta) {
         super(meta, null, null);
@@ -93,10 +95,23 @@ public class ResourceNode extends AbstractInteractableBlock {
         return String.join("<br/>", description);
     }
 
+    public boolean isPersistent() {
+        return isPersistent;
+    }
+
+    public void setPersistent(boolean persistent) {
+        isPersistent = persistent;
+
+        if (!persistent) {
+            super.setMarkerLabel(null);
+            super.setMarkerType(null);
+        }
+    }
+
     private void initializeHologram() {
 
         List<String> hologramContent = new ArrayList<>(List.of(
-                Color.INTERACTABLE_ENTITY.asSpigotHex() + blockType.getLabel()
+                Color.INTERACTABLE_ENTITY.asSpigotHex() + blockType.getLabelHex() + blockType.getLabel()
         ));
 
         blockType.getRequirements().forEach(req -> hologramContent.add(Color.ACCENT.asSpigotHex() +
@@ -274,18 +289,28 @@ public class ResourceNode extends AbstractInteractableBlock {
 
         this.deposit--;
 
-        if (isDepleted()) {
-            this.spawn(Material.AIR);
-
-            if (schematicHandler != null) {
-                schematicHandler.updateNodeModel(this);
-            }
-        }
-
         updateHologram();
         rollDropTableLoot(player, baseGatheringLuckPercentage);
         blockType.getXpReward().forEach(reward -> player.distributeXp(reward.type(), reward.xp()));
         BotVerificationHandler.logSuccessfulAction(player);
+
+        if (isDepleted()) {
+            this.spawn(Material.AIR);
+
+            if (schematicHandler != null && isPersistent) {
+                schematicHandler.updateNodeModel(this);
+            }
+
+            if (onDepleteCallback != null) {
+                onDepleteCallback.run();
+            }
+
+            if (!isPersistent) {
+                onDisable();
+                RuneQuestPlugin.getBlockManager().unregisterBlock(this);
+            }
+        }
+
     }
 
     private void rollDropTableLoot(RunePlayer player, double baseGatheringLuckPercentage) {
@@ -315,8 +340,6 @@ public class ResourceNode extends AbstractInteractableBlock {
     }
 
     private void updateHologram() {
-
-
         if (isDepleted()) {
             if (holoDepositIndex != null) {
                 DHAPI.setHologramLine(this.getHologram(), holoDepositIndex, "");
@@ -374,7 +397,22 @@ public class ResourceNode extends AbstractInteractableBlock {
         if (schematicHandler != null) {
             schematicHandler.updateNodeModel(this);
         }
-        super.spawn(material);
+
+        Material toSpawn = material;
+        RetexturedStem stemHack = this.getNodeType().getRetexturedStem();
+
+        if (stemHack != null) {
+            toSpawn = this.getNodeType().getRetexturedStem().getStemMaterial();
+        }
+
+        super.spawn(toSpawn);
+
+        Block block = getLocation().getBlock();
+
+        if (block.getBlockData() instanceof Ageable ageable && stemHack != null) {
+            ageable.setAge(stemHack.getAge());
+            block.setBlockData(ageable);
+        }
     }
 
     @Override
@@ -443,4 +481,7 @@ public class ResourceNode extends AbstractInteractableBlock {
         super.onDisable();
     }
 
+    public void setOnDepleteCallback(@Nullable Runnable onDepleteCallback) {
+        this.onDepleteCallback = onDepleteCallback;
+    }
 }

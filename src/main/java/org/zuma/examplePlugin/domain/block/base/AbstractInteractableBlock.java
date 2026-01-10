@@ -13,6 +13,8 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.interfaces.POIMarkerable;
 import org.zuma.examplePlugin.domain.block.constants.BlockType;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
@@ -51,7 +53,8 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
 
     public void spawn(Material material) {
         Block block = location.getBlock();
-        block.setType(material);
+        block.setType(material,false);
+        block.setMetadata("no_physics", new FixedMetadataValue(RuneQuestPlugin.getInstance(), true));
 
         BlockData data = Bukkit.createBlockData(material);
         if (data instanceof Directional directional && face != null) {
@@ -100,7 +103,7 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
             DHAPI.removeHologram(hologram.getId());
         }
 
-        location.getBlock().setType(Material.AIR);
+        location.getBlock().setType(Material.AIR, false);
 
     }
 

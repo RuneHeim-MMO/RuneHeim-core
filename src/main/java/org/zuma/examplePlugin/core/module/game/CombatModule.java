@@ -8,7 +8,7 @@ import org.zuma.examplePlugin.domain.combat.HitHandler;
 import org.zuma.examplePlugin.domain.combat.HitListener;
 import org.zuma.examplePlugin.domain.mob.MobRegistry;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
-import org.zuma.examplePlugin.domain.player.handlers.HPRegenerationHandler;
+import org.zuma.examplePlugin.domain.player.handlers.RegenerationHandler;
 
 import java.util.List;
 
@@ -23,18 +23,18 @@ public class CombatModule implements PluginModule {
     public void start(Plugin plugin, ModuleContext context) {
         HitHandler hitHandler = new HitHandler();
         HitListener hitListener = new HitListener(hitHandler, context.get(RunePlayerManager.class), context.get(MobRegistry.class));
-        HPRegenerationHandler hpRegenerationHandler = new HPRegenerationHandler(context.get(RunePlayerManager.class));
-        hpRegenerationHandler.startLoop();
+        RegenerationHandler regenerationHandler = new RegenerationHandler(context.get(RunePlayerManager.class));
+        regenerationHandler.startLoop();
 
         plugin.getServer().getPluginManager().registerEvents(hitListener, plugin);
 
         context.bind(HitHandler.class, hitHandler);
-        context.bind(HPRegenerationHandler.class, hpRegenerationHandler);
+        context.bind(RegenerationHandler.class, regenerationHandler);
     }
 
     @Override
     public void stop(Plugin plugin, ModuleContext context) {
-        context.get(HPRegenerationHandler.class).cleanUp();
+        context.get(RegenerationHandler.class).cleanUp();
     }
 
     @Override

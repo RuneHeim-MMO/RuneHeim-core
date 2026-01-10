@@ -27,6 +27,7 @@ public class StorageItem extends AbstractItemType implements Stateful {
         super.setTypeLore("Bag", Icon.STORAGE.get());
         this.setStateType(StateType.STORAGE_ITEM_UUID_STATE);
         this.inventoryId = storageMeta.inventoryId();
+        this.setSellableToShop(false);
     }
 
     @Override
