@@ -54,9 +54,10 @@ public class SocialsCommand implements BasicCommand {
         sendLink(3, sender, "Hi-scores / Wiki", "https://database.runeheim.org/");
         sendLink(4, sender, "Rules", "https://runeheim.org/rules");
         sendLink(5, sender, "Map", "https://database.runeheim.org/map");
-        sendLink(6, sender, "Discord", "https://discord.com/invite/dZpS2mkb2k");
-        sendLink(7, sender, "YouTube", "https://www.youtube.com/@RuneHeimOfficial");
-        sendLink(8, sender, "X (Twitter)", "https://x.com/RuneHeimMMORPG");
+        sendLink(6, sender, "Wiki", "https://wiki.runeheim.org/");
+        sendLink(7, sender, "Discord", "https://discord.com/invite/dZpS2mkb2k");
+        sendLink(8, sender, "YouTube", "https://www.youtube.com/@RuneHeimOfficial");
+        sendLink(9, sender, "X (Twitter)", "https://x.com/RuneHeimMMORPG");
 
         sender.sendMessage(line);
         sender.sendMessage(Component.empty());
