@@ -234,6 +234,10 @@ public class ItemRepository {
 
 
                 // Furniture
+                new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.BREWING_CAULDRON_FURNITURE.asInt(), Material.CAULDRON, ItemRarity.RARE, "Brewing Cauldron", List.of("Used for essence extraction and potion breweing."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.INTERACTIVE, BlockType.InventoryOpener, toVersionedJson(new InventoryOpenerMeta(InventoryId.BREWING_CAULDRON.asInt(), Material.DIAMOND_BLOCK, null, null, null, "Brewing Cauldron", Icon.HERBLORE.get()), 1)), 1)
+                ),
                 new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.COMBAT_DUMMY_FURNITURE.asInt(), Material.ARMOR_STAND, ItemRarity.RARE, "Combat Dummy", List.of("Used to track your max hit."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.INTERACTIVE, BlockType.CombatDummyFurniture, null), 1)
@@ -1275,7 +1279,7 @@ public class ItemRepository {
 
                 new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.SUPREME_RANGED_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Supreme Ranged Potion",
                         List.of("Greatly enhances your ranged abilities.", "For the ultimate archer."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
-                        new StatsEffect("ranged-potion", 300, List.of( new Modifier(ModifierType.ARROW_RECOVERY_PERCENT, 30)), List.of(new SkillModifier(SkillType.RANGED, 0, 10.0))), CustomModelId.SUPREME_RANGED_POTION), 1)),
+                        new StatsEffect("ranged-potion", 300, List.of(new Modifier(ModifierType.ARROW_RECOVERY_PERCENT, 30)), List.of(new SkillModifier(SkillType.RANGED, 0, 10.0))), CustomModelId.SUPREME_RANGED_POTION), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.DRAGONS_MIGHT_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Dragon's Might Potion",
                         List.of("Harnesses the power of dragons.", "Feel the might of ancient beasts."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,

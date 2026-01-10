@@ -568,6 +568,21 @@ public class RecipeRepository {
 
 
                 // Furniture
+                new RecipeEntity(new AbstractRecipeMeta(RecipeId.BREWING_CAULDRON_FURNITURE.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 8000,
+                        List.of(new SkillRequirement(SkillType.CRAFTING, 67)),
+                        List.of(
+                                new IngredientRecord(ItemId.STEEL_BAR, 64, true, false),
+                                new IngredientRecord(ItemId.BLOOD_ESSENCE, 8, true, false),
+                                new IngredientRecord(ItemId.DRAGON_ESSENCE, 4, true, false),
+                                new IngredientRecord(ItemId.ETHEREAL_ESSENCE, 1, true, false),
+
+                                new IngredientRecord(ItemId.SMITHING_HAMMER, 1, false, false)
+                        ),
+                        new ItemRecord(ItemId.BREWING_CAULDRON_FURNITURE, 1),
+                        null, List.of(new SkillXpRecord(SkillType.CRAFTING, 650)), null), null),
+
+
+
                 new RecipeEntity(new AbstractRecipeMeta(RecipeId.COMBAT_DUMMY_FURNITURE.getId(), RecipeType.CRAFTING_TABLE_RECIPE, 8000,
                         List.of(new SkillRequirement(SkillType.CRAFTING, 44)),
                         List.of(
