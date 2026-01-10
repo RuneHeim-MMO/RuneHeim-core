@@ -166,7 +166,11 @@ public class Shopkeepers {
                 .attachDialog(tannerDialog));
 
         registry.register(MobType.SWAMP_ISLAND_HERBLORE_SHOP.getId(), () -> new InventoryOpenerMob(Icon.HERBLORE.get() + " Herblore Shop", null,
-                MobBehaviors.VILLAGER_WOMAN_5.getBehavior(), "swamp_villager", null, InventoryId.SWAMP_ISLAND_HERBLORE_SHOP.asInt(), 30)
+                MobBehaviors.VILLAGER_MAN_2.getBehavior(), "swamp_villager", null, InventoryId.SWAMP_ISLAND_HERBLORE_SHOP.asInt(), 30)
+                .attachDialog(genericShopDialog));
+
+        registry.register(MobType.THORNBARK_HERBLORE_SHOP.getId(), () -> new InventoryOpenerMob(Icon.HERBLORE.get() + " Herblore Shop", null,
+                MobBehaviors.VILLAGER_WOMAN_3.getBehavior(), "thornbark_herblore_shop", null, InventoryId.THORNBARK_HERBLORE_SHOP.asInt(), 30)
                 .attachDialog(genericShopDialog));
 
 

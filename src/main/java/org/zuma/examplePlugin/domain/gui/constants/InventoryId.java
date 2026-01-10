@@ -72,7 +72,8 @@ public enum InventoryId {
     SAHARIJIN_JEWELER(60),
     GLACIEM_AXE_SHOP(61),
     GLACIEM_WEAPON_SHOP(62),
-    BREWING_CAULDRON(63);
+    BREWING_CAULDRON(63),
+    THORNBARK_HERBLORE_SHOP(64);
 
 
     private final int id;

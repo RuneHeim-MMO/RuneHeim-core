@@ -290,6 +290,17 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.DEFENCE_POTION_I.asInt(), 5, 120, ItemId.DEFENCE_POTION_I.getBuyPrice(), null, null, null)
                         ))), 1)),
 
+                new ShopConfig(ShopId.THORNBARK_HERBLORE_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
+                        new ShopItemConfig(ItemId.SHEARS.asInt(), 8, 30, 35L, 10L, null, null),
+                        new ShopItemConfig(ItemId.KNIFE.asInt(), 4, 30, ItemId.KNIFE.getBuyPrice(), ItemId.KNIFE.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.EMPTY_VIAL.asInt(), 24, 30, ItemId.EMPTY_VIAL.getBuyPrice(), ItemId.EMPTY_VIAL.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.ATTACK_POTION_I.asInt(), 5, 120, ItemId.ATTACK_POTION_I.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.STRENGTH_POTION_I.asInt(), 5, 120, ItemId.STRENGTH_POTION_I.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.RANGED_POTION_I.asInt(), 5, 120, ItemId.RANGED_POTION_I.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.MINOR_HEALING_POTION.asInt(), 5, 120, ItemId.MINOR_HEALING_POTION.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.DEFENCE_POTION_I.asInt(), 5, 120, ItemId.DEFENCE_POTION_I.getBuyPrice(), null, null, null)
+                ))), 1)),
+
                 new ShopConfig(ShopId.DRAKKAR_SMELTERY_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
                         new ShopItemConfig(ItemId.STEEL_PICKAXE.asInt(), 3, 300, ItemId.STEEL_PICKAXE.getBuyPrice(), ItemId.STEEL_PICKAXE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.STEEL_AXE.asInt(), 3, 300, ItemId.STEEL_AXE.getBuyPrice(), ItemId.STEEL_AXE.getSellPrice(), null, null),

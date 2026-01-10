@@ -33,7 +33,8 @@ public enum ShopId {
     DRAKKAR_SMELTERY_SHOP(30),
     SAHARIJIN_JEWELER(31),
     GLACIEM_AXE_SHOP(32),
-    GLACIEM_WEAPON_SHOP(33);
+    GLACIEM_WEAPON_SHOP(33),
+    THORNBARK_HERBLORE_SHOP(34);
 
 
     private final int id;

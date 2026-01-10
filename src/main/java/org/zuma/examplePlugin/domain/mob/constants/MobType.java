@@ -41,6 +41,7 @@ public enum MobType {
 
     // Herblore shops
     SWAMP_ISLAND_HERBLORE_SHOP,
+    THORNBARK_HERBLORE_SHOP,
 
     // Goblins
     GOBLIN_1_BASE_1,

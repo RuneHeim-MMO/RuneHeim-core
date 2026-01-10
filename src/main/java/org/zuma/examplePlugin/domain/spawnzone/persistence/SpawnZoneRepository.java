@@ -2333,11 +2333,15 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(339, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 935, 71, 508)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.GLACIEM_WEAPON_SHOP, 1, 100)
-                ), false, MarkerType.WEAPON_SHOP, "Weapon Shop"), 1))
+                ), false, MarkerType.WEAPON_SHOP, "Weapon Shop"), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(340, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 1126, 72.5, -371)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.THORNBARK_HERBLORE_SHOP, 1, 100)
+                ), false, MarkerType.HERBLORE_SHOP, "Herblore Shop"), 1))
 
 
-
-                // last 339
+                // last 340
 
 
         );
