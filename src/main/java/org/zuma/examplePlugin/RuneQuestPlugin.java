@@ -31,6 +31,7 @@ import org.zuma.examplePlugin.domain.mount.MountHandler;
 import org.zuma.examplePlugin.domain.party.PartyManager;
 import org.zuma.examplePlugin.domain.payments.handlers.PaymentHandler;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
+import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 import org.zuma.examplePlugin.domain.prayer.PrayerManager;
 import org.zuma.examplePlugin.domain.quest.QuestHandler;
 import org.zuma.examplePlugin.domain.recipe.RecipeHandler;
@@ -225,6 +226,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static DiscordVerificationHandler getDiscordVerificationHandler() {
         return pluginInstance.moduleContext.get(DiscordVerificationHandler.class);
+    }
+
+    public static AdditionalGearSlotHandler getAdditionalGearSlotHandler() {
+        return pluginInstance.moduleContext.get(AdditionalGearSlotHandler.class);
     }
 
     @Override

@@ -30,7 +30,8 @@ public enum ScriptedAction implements ScriptedStatement {
     TRAVEL_SEQUENCE("travel_sequence", "duration_seconds", "world", "dest_x", "dest_y", "dest_z", "dest_yaw", "buffer_x", "buffer_y", "buffer_z", "buffer_yaw", "mode"),
     START_TOUR("start_tour", "tour_name"),
     KILL_PLAYER("kill_player"),
-    TELEPORT_TO_HOUSE("teleport_to_house", "region");
+    TELEPORT_TO_HOUSE("teleport_to_house", "region"),
+    FORCE_FINISH_QUEST("force_finish_quest", "id");
 
     private final String trigger;
     private final List<String> argsTemplates;

@@ -45,7 +45,6 @@ public class AdditionalGearSlotHandler {
     public void fillReservedSlots(RunePlayer player) {
         PlayerInventory inventory = player.asBukkitPlayer().getInventory();
 
-
         // For backwards compatibility, drop any real arrows in the quiver slot
         ItemStack existingItemInArrowSlot = inventory.getItem(QUIVER_SLOT);
         if (existingItemInArrowSlot != null && !QuiverHandler.isFakeArrow(existingItemInArrowSlot) && !GUIControl.isGuiItem(existingItemInArrowSlot)) {

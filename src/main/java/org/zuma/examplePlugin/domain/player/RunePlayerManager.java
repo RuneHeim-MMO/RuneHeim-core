@@ -221,6 +221,7 @@ public class RunePlayerManager {
         runePlayer.getDailyRewards().updateIfNeeded(runePlayer);
         runePlayer.getAnalyticsContainer().increment(AnalyticsKey.PLAYER_SESSIONS, 1);
         RuneQuestPlugin.getAnalytics().increment(AnalyticsKey.PLAYER_SESSIONS, 1);
+        RuneQuestPlugin.getAdditionalGearSlotHandler().checkReservedSlotsValidity(runePlayer);
 
         RunePlayerLoadedEvent event = new RunePlayerLoadedEvent(runePlayer, playerData.isFirstJoin());
         Bukkit.getServer().getPluginManager().callEvent(event);
