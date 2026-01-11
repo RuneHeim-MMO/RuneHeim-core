@@ -14,6 +14,7 @@ import org.zuma.examplePlugin.domain.block.meta.v1.LightableBlockMeta;
 import org.zuma.examplePlugin.domain.droptable.DropTableId;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.housing.records.HouseSlot;
+import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.StatsEffect;
 import org.zuma.examplePlugin.domain.item.constants.*;
 import org.zuma.examplePlugin.domain.item.impl.EmptyContainer;
@@ -158,6 +159,25 @@ public class ItemRepository {
                                         null)
                                 , 1)
                 ),
+
+
+                new ItemEntity(new AbstractItemMeta(ItemType.BULK_ITEM, ItemId.BULK_10_GENIE_XP_LAMP.asInt(), Material.IRON_INGOT, ItemRarity.LEGENDARY, "10x Genie Lamp", List.of("Box, containing a bulk of items."), null, false, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new BulkItemMeta(List.of(new ItemRecord(ItemId.GENIE_XP_LAMP, 10)), CustomModelId.BULK_GENIE_LAMP), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.BULK_ITEM, ItemId.BULK_10_PLATINUM_TOKEN.asInt(), Material.IRON_INGOT, ItemRarity.LEGENDARY, "10x Platinum Tokens", List.of("Box, containing a bulk of items."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new BulkItemMeta(List.of(new ItemRecord(ItemId.PLATINUM_TOKEN, 10)), CustomModelId.BULK_PLATINUM_TOKEN), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.BULK_ITEM, ItemId.BULK_3_OVERLOAD_POTION.asInt(), Material.IRON_INGOT, ItemRarity.LEGENDARY, "3x Overload Potions", List.of("Box, containing a bulk of items."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new BulkItemMeta(List.of(new ItemRecord(ItemId.OVERLOAD_POTION, 3)), CustomModelId.BULK_OVERLOAD), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.BULK_ITEM, ItemId.BULK_3_ETHEREAL_RESTORATION.asInt(), Material.IRON_INGOT, ItemRarity.LEGENDARY, "3x Ethereal Restoration Potions", List.of("Box, containing a bulk of items."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new BulkItemMeta(List.of(new ItemRecord(ItemId.ETHEREAL_RESTORATION, 3)), CustomModelId.BULK_ETHEREAL_RESTORATION), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.BULK_ITEM, ItemId.BULK_3_DRAGONS_MIGHT_POTION.asInt(), Material.IRON_INGOT, ItemRarity.LEGENDARY, "3x Dragons Might Potions", List.of("Box, containing a bulk of items."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new BulkItemMeta(List.of(new ItemRecord(ItemId.DRAGONS_MIGHT_POTION, 3)), CustomModelId.BULK_DRAGONS_MIGHT), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.BULK_ITEM, ItemId.BULK_3_ULTIMATE_POWER_POTION.asInt(), Material.IRON_INGOT, ItemRarity.MYTHIC, "3x Ultimate Power Potions", List.of("Box, containing a bulk of items."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new BulkItemMeta(List.of(new ItemRecord(ItemId.ULTIMATE_POWER_POTION, 3)), CustomModelId.BULK_ULTIMATE_POWER), 1)),
 
                 // Herblore
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.DEWLEAF_ESSENCE.asInt(), Material.COAL, ItemRarity.COMMON, "Dewleaf Essence", List.of("A fresh essence used in restorative and healing potions."), null, true, CRAFTED_ITEM_MULTIPLIER),
@@ -770,6 +790,7 @@ public class ItemRepository {
                 // Currency
                 new ItemEntity(new AbstractItemMeta(ItemType.COINS, ItemId.COINS.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Coins", List.of("Shiny gold!"), null, true, 1.0), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.CURRENCY, ItemId.PLATINUM_TOKEN.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Platinum Token", List.of("A Platinum token that is worth approximately 1k gold pieces."), null, true, 1.0), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.CURRENCY, ItemId.RECRUIT_TOKEN.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Recruit Token", List.of("A Recruit Token is proof of persuasion. Whether through charm, promise, or necessity", "You convinced another to step into the fray. The Guild does not ask how.", "It only records that the world has grown more crowded."), null, false, 1.0), null),
 
                 // Arrows
                 new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.BRONZE_ARROW.asInt(), Material.ARROW, ItemRarity.COMMON, "Bronze Arrow", List.of("A basic bronze-tipped arrow.", "Useful for training ranged skills."), null, true, CRAFTED_ITEM_MULTIPLIER), toVersionedJson(

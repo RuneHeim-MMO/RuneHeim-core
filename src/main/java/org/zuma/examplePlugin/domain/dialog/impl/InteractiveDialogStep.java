@@ -111,4 +111,10 @@ public class InteractiveDialogStep extends DialogStep {
         return interactiveContent;
     }
 
+    @Override
+    public void cleanUp() {
+        this.selected = false;
+        super.cleanUp();
+    }
+
 }

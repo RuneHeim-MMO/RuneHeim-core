@@ -16,6 +16,26 @@ public class InteractiveMobs {
 
 
     public static void registerMobs(MobTypeRegistry registry) {
+        registry.register(MobType.SUNDERING_HAND_WARRIOR_1.getId(), () -> new InventoryOpenerMob(Icon.GUILD.get() + " Sundering Hand Member", EquipmentSet.SUNDERING_HAND_WARRIOR,
+                MobBehaviors.VILLAGER_MAN_1.getBehavior(), "sundering_hand_man_1", null, InventoryId.REFERRAL_REWARDS_SHOP.asInt(), 200)
+                .attachDialog(Dialogs.sunderingGuildMember));
+
+        registry.register(MobType.SUNDERING_HAND_WARRIOR_2.getId(), () -> new InventoryOpenerMob(Icon.GUILD.get() + " Sundering Hand Member", EquipmentSet.SUNDERING_HAND_WARRIOR,
+                MobBehaviors.VILLAGER_MAN_1.getBehavior(), "sundering_hand_man_2", null, InventoryId.REFERRAL_REWARDS_SHOP.asInt(), 200)
+                .attachDialog(Dialogs.sunderingGuildMember));
+
+        registry.register(MobType.SUNDERING_HAND_WARRIOR_3.getId(), () -> new InventoryOpenerMob(Icon.GUILD.get() + " Sundering Hand Member", EquipmentSet.SUNDERING_HAND_WARRIOR,
+                MobBehaviors.VILLAGER_MAN_2.getBehavior(), "sundering_hand_man_3", null, InventoryId.REFERRAL_REWARDS_SHOP.asInt(), 200)
+                .attachDialog(Dialogs.sunderingGuildMember));
+
+        registry.register(MobType.SUNDERING_HAND_WARRIOR_4.getId(), () -> new InventoryOpenerMob(Icon.GUILD.get() + " Sundering Hand Member", EquipmentSet.SUNDERING_HAND_WARRIOR,
+                MobBehaviors.VILLAGER_MAN_3.getBehavior(), "sundering_hand_man_4", null, InventoryId.REFERRAL_REWARDS_SHOP.asInt(), 200)
+                .attachDialog(Dialogs.sunderingGuildMember));
+
+        registry.register(MobType.SUNDERING_HAND_WARRIOR_5.getId(), () -> new InventoryOpenerMob(Icon.GUILD.get() + " Sundering Hand Member", EquipmentSet.SUNDERING_HAND_WARRIOR,
+                MobBehaviors.VILLAGER_MAN_2.getBehavior(), "sundering_hand_man_5", null, InventoryId.REFERRAL_REWARDS_SHOP.asInt(), 200)
+                .attachDialog(Dialogs.sunderingGuildMember));
+
         registry.register(MobType.DRAKKAR_CONCIERGE.getId(), () -> new DialogMob(Icon.HOUSE.get() + " Concierge", null,
                 MobBehaviors.VILLAGER_MAN_5.getBehavior(), "concierge_1", null, 0, Dialogs.drakkarConciergeDialog));
 

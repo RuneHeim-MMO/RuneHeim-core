@@ -12,5 +12,5 @@ public record SerializedPlayerContainer(UUID uuid, String username, List<Skill> 
                                         @Nullable String upgradedRole,
                                         String location, @Nullable String lastTerritory, String playerData,
                                         String inventoryData, String quiverData, PlayerBombsContainer bombsContainer,
-                                        PlayerSettings settings, @Nullable String trackedQuestId) {
+                                        PlayerSettings settings, @Nullable String trackedQuestId, boolean hasMentor) {
 }

@@ -70,15 +70,30 @@ public class RunePlayerRepository {
             throws AccountNotFoundException, IllegalAccessException {
 
         String playerSQL =
-                "SELECT p.uuid, p.last_username, p.base_role, p.upgraded_role, p.online, p.location, p.json, " +
-                        "pic.json AS inventory_json, pic.quiver_json AS quiver_json, " +
-                        "pb.double_combat_xp, pb.double_skill_xp, pb.mob_drops, pb.resource_drops, pb.perfect_strike, pb.megaphone_uses, " +
-                        "pqd.tracking_quest_id " +
-                        "FROM players p " +
-                        "INNER JOIN player_inventory_contents pic ON p.uuid = pic.uuid " +
-                        "INNER JOIN player_bonus_bombs pb ON p.uuid = pb.uuid " +
-                        "INNER JOIN player_quest_data pqd ON p.uuid = pqd.uuid " +
-                        "WHERE p.uuid = ?";
+                """
+                        SELECT  p.uuid,
+                                p.last_username,
+                                p.base_role,
+                                p.upgraded_role,
+                                p.online,
+                                p.location,
+                                p.json,
+                                pic.json AS inventory_json,
+                        pic.quiver_json AS quiver_json,
+                                pb.double_combat_xp,
+                                pb.double_skill_xp,
+                                pb.mob_drops,
+                                pb.resource_drops,
+                                pb.perfect_strike,
+                                pb.megaphone_uses,
+                                pqd.tracking_quest_id,
+                                EXISTS(SELECT 1 FROM player_referrals pr WHERE pr.mentee_uuid = p.uuid) AS has_mentor
+                        FROM players p
+                        INNER JOIN player_inventory_contents pic ON p.uuid = pic.uuid
+                        INNER JOIN player_bonus_bombs pb ON p.uuid = pb.uuid
+                        INNER JOIN player_quest_data pqd ON p.uuid = pqd.uuid
+                        WHERE p.uuid = ?
+                        """;
 
         String skillsSQL =
                 "SELECT skill, xp FROM player_skills WHERE uuid = ?";
@@ -89,7 +104,7 @@ public class RunePlayerRepository {
         try (Connection conn = pool.getDataSource().getConnection()) {
 
             String json, lastUsername, baseRole, upgradedRole, inventoryData, quiverData, location, trackedQuestId;
-            boolean isOnline;
+            boolean isOnline, hasMentor;
             PlayerBombsContainer bombsContainer;
 
             // Fetch main player record
@@ -113,6 +128,7 @@ public class RunePlayerRepository {
                     quiverData = (quiverObj != null && !Objects.equals(quiverObj.toString(), "null")) ? quiverObj.toString() : "{}";
 
                     location = rs.getString("location");
+                    hasMentor = rs.getBoolean("has_mentor");
 
                     rs.getInt("online");
                     isOnline = !rs.wasNull();
@@ -176,7 +192,8 @@ public class RunePlayerRepository {
                     quiverData,
                     bombsContainer,
                     settings,
-                    trackedQuestId
+                    trackedQuestId,
+                    hasMentor
             );
 
         } catch (IllegalAccessException | AccountNotFoundException e) {
