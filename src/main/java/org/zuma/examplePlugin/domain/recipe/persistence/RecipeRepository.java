@@ -369,7 +369,7 @@ public class RecipeRepository {
                                 new IngredientRecord(ItemId.GLOW_ESSENCE, 1, true, false),
                                 new IngredientRecord(ItemId.BONES, 3, true, false),
                                 new IngredientRecord(ItemId.VIAL_OF_WATER, 1, true, false),
-                                new IngredientRecord(ItemId.ASHES, 2, true, false)
+                                new IngredientRecord(ItemId.MAGIC_ASHES, 2, true, false)
                         ),
                         new ItemRecord(ItemId.PRAYER_POTION, 1),
                         new ItemRecord(ItemId.EMPTY_VIAL, 1),

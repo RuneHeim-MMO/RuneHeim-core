@@ -1257,43 +1257,43 @@ public class ItemRepository {
                         List.of("Temporarily increases strength.", "Tear through enemies with ease."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
                         new StatsEffect("strength-potion", 240, List.of(), List.of(new SkillModifier(SkillType.STRENGTH, 5, null))), CustomModelId.STRENGTH_POTION_II), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.MINOR_HEALING_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Minor Healing Potion",
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.MINOR_HEALING_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.COMMON, "Minor Healing Potion",
                         List.of("Restores a small amount of health.", "Basic healing for minor wounds."), null, true, 1.0), toVersionedJson(new PotionMeta(1, 1,
                         new StatsEffect("healing-potion", 10, List.of(new Modifier(ModifierType.HEALTH_REGENERATION, 1)), List.of()), CustomModelId.MINOR_HEALING_POTION), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.SUPREME_ATTACK_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Supreme Attack Potion",
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.SUPREME_ATTACK_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.EPIC, "Supreme Attack Potion",
                         List.of("Greatly boosts your attack power.", "Unleash supreme fury in battle."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
                         new StatsEffect("attack-potion", 300, List.of(), List.of(new SkillModifier(SkillType.ATTACK, 0, 10.0))), CustomModelId.SUPREME_ATTACK_POTION), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.SUPREME_STRENGTH_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Supreme Strength Potion",
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.SUPREME_STRENGTH_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.EPIC, "Supreme Strength Potion",
                         List.of("Greatly increases strength temporarily.", "Tear through enemies with supreme power."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
                         new StatsEffect("strength-potion", 300, List.of(), List.of(new SkillModifier(SkillType.STRENGTH, 0, 10.0))), CustomModelId.SUPREME_STRENGTH_POTION), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.SUPREME_DEFENCE_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Supreme Defence Potion",
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.SUPREME_DEFENCE_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.EPIC, "Supreme Defence Potion",
                         List.of("Greatly increases your defence temporarily.", "Brewed by master alchemists."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
                         new StatsEffect("defence-potion", 300, List.of(), List.of(new SkillModifier(SkillType.DEFENCE, 0, 10.0))), CustomModelId.SUPREME_DEFENCE_POTION), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.SUPREME_HEALTH_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Supreme Health Potion",
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.SUPREME_HEALTH_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.EPIC, "Supreme Health Potion",
                         List.of("Boosts a large amount of your maximum health.", "The pinnacle of health enhancement."), null, true, 1.0), toVersionedJson(new PotionMeta(2, 2,
                         new StatsEffect("healing-potion", 5, List.of(new Modifier(ModifierType.HEALTH_REGENERATION, 10)), List.of()), CustomModelId.SUPREME_HEALTH_POTION), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.SUPREME_RANGED_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Supreme Ranged Potion",
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.SUPREME_RANGED_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.EPIC, "Supreme Ranged Potion",
                         List.of("Greatly enhances your ranged abilities.", "For the ultimate archer."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
                         new StatsEffect("ranged-potion", 300, List.of(new Modifier(ModifierType.ARROW_RECOVERY_PERCENT, 30)), List.of(new SkillModifier(SkillType.RANGED, 0, 10.0))), CustomModelId.SUPREME_RANGED_POTION), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.DRAGONS_MIGHT_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Dragon's Might Potion",
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.DRAGONS_MIGHT_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.EPIC, "Dragon's Might Potion",
                         List.of("Harnesses the power of dragons.", "Feel the might of ancient beasts."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
                         new StatsEffect("overload-potion", 300, List.of(), List.of(new SkillModifier(SkillType.ATTACK, 0, 20.0), new SkillModifier(SkillType.STRENGTH, 0, 20.0))), CustomModelId.DRAGONS_MIGHT_POTION), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.ETHEREAL_RESTORATION.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Ethereal Restoration",
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.ETHEREAL_RESTORATION.asInt(), Material.MILK_BUCKET, ItemRarity.EPIC, "Ethereal Restoration",
                         List.of("Restores energy from the ethereal plane.", "A mystical concoction."), null, true, 1.0), toVersionedJson(new PotionMeta(2, 2,
                         new StatsEffect("healing-potion", 120, List.of(new Modifier(ModifierType.HEALTH_REGENERATION, 3)), List.of()), CustomModelId.ETHEREAL_RESTORATION), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.OVERLOAD_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Overload Potion",
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.OVERLOAD_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.LEGENDARY, "Overload Potion",
                         List.of("Overloads your combat abilities.", "Pushes your limits beyond normal."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
                         new StatsEffect("overload-potion", 240, List.of(new Modifier(ModifierType.COMBAT_XP_BONUS_ADDITIVE, 0.10)), List.of(new SkillModifier(SkillType.ATTACK, 0, 15.0), new SkillModifier(SkillType.STRENGTH, 0, 15.0), new SkillModifier(SkillType.DEFENCE, 0, 15.0), new SkillModifier(SkillType.RANGED, 0, 15.0))), CustomModelId.OVERLOAD_POTION), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.ULTIMATE_POWER_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Ultimate Power Potion",
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.ULTIMATE_POWER_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.MYTHIC, "Ultimate Power Potion",
                         List.of("Unleashes ultimate power.", "The peak of alchemical achievement."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
                         new StatsEffect("overload-potion", 300, List.of(new Modifier(ModifierType.COMBAT_XP_BONUS_ADDITIVE, 0.15)), List.of(new SkillModifier(SkillType.ATTACK, 0, 20.0), new SkillModifier(SkillType.STRENGTH, 0, 20.0), new SkillModifier(SkillType.DEFENCE, 0, 20.0), new SkillModifier(SkillType.RANGED, 0, 20.0))), CustomModelId.ULTIMATE_POWER_POTION), 1)),
 
