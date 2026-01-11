@@ -28,6 +28,18 @@ public class RunePlayerRepository {
         this.pool = pool;
     }
 
+    public void clearAllOnlineFlags(int serverId) {
+        String sql = "UPDATE players SET online = NULL WHERE online = ?";
+
+        try (Connection conn = pool.getDataSource().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, serverId);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to clear online flags", e);
+        }
+    }
+
     private void checkMissingSkills(Connection conn, UUID uuid, List<Skill> currentSkills) throws SQLException {
         // Ensure all skills are present in the database
         Set<SkillType> missingSkills = new HashSet<>();
