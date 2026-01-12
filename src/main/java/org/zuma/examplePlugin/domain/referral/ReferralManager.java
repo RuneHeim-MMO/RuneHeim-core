@@ -47,7 +47,13 @@ public class ReferralManager implements Listener {
                 if (!unclaimedUsernames.isEmpty()) {
                     String menteeList = String.join(", ", unclaimedUsernames);
                     Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                        HudService.sendInfoMessage(player, Component.text("§aYou have referral rewards to claim for the following mentees who reached total level " + MINIMUM_TOTAL_LEVEL_REWARD + ": §e" + menteeList + "§a. Please visit §eSundering Hand Member§a to claim your rewards."));
+                        HudService.sendSuccessMessage(player, Component.text("You have referral rewards to claim for the following mentees who reached total level ", Color.SUCCESS.asColor())
+                                .append(Component.text(MINIMUM_TOTAL_LEVEL_REWARD, Color.ACCENT.asColor()))
+                                .append(Component.text(": ", Color.SUCCESS.asColor()))
+                                .append(Component.text(menteeList, Color.ACCENT.asColor()))
+                                .append(Component.text(". Please visit ", Color.SUCCESS.asColor()))
+                                .append(Component.text("Sundering Hand Member", Color.ACCENT.asColor()))
+                                .append(Component.text(" to claim your rewards.", Color.SUCCESS.asColor())));
                         SoundType.DAILY_REWARD_ADVANCE_STREAK.play(player, false);
                     });
                 }
@@ -58,7 +64,11 @@ public class ReferralManager implements Listener {
 
                     if (playerTotalLevel >= MINIMUM_TOTAL_LEVEL_REWARD) {
                         Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                            HudService.sendInfoMessage(player, Component.text("§aYou unclaimed reward for reaching total level " + MINIMUM_TOTAL_LEVEL_REWARD + ". Please visit §eSundering Hand Member§a to claim it."));
+                            HudService.sendSuccessMessage(player, Component.text("You have an unclaimed reward for reaching total level ", Color.SUCCESS.asColor())
+                                    .append(Component.text(MINIMUM_TOTAL_LEVEL_REWARD, Color.ACCENT.asColor()))
+                                    .append(Component.text(". Please visit ", Color.SUCCESS.asColor()))
+                                    .append(Component.text("Sundering Hand Member", Color.ACCENT.asColor()))
+                                    .append(Component.text(" to claim it.", Color.SUCCESS.asColor())));
                             SoundType.DAILY_REWARD_ADVANCE_STREAK.play(player, false);
                         });
                     }
@@ -95,9 +105,13 @@ public class ReferralManager implements Listener {
         int after = before + event.getLevelDelta();
 
         if (before < MINIMUM_TOTAL_LEVEL_REWARD && after >= MINIMUM_TOTAL_LEVEL_REWARD) {
-            HudService.sendInfoMessage(
+            HudService.sendSuccessMessage(
                     player,
-                    Component.text("§aYou have reached a total level of §e" + after + "§a! You can claim your reward from §eSundering Hand Member.")
+                    Component.text("You have reached a total level of ", Color.SUCCESS.asColor())
+                            .append(Component.text(after, Color.ACCENT.asColor()))
+                            .append(Component.text("! You can claim your reward from ", Color.SUCCESS.asColor()))
+                            .append(Component.text("Sundering Hand Member", Color.ACCENT.asColor()))
+                            .append(Component.text(".", Color.SUCCESS.asColor()))
             );
             SoundType.DAILY_REWARD_ADVANCE_STREAK.play(player, true);
 
@@ -131,10 +145,35 @@ public class ReferralManager implements Listener {
     public void getMenteesForMentor(UUID mentorUUID, Consumer<List<ReferralEntry>> cb) {
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
             try {
+                List<ReferralEntry> pagination = new ArrayList<>();
                 List<ReferralEntry> mentees = referralRepository.getMenteesForMentor(mentorUUID);
+
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+                pagination.addAll(mentees);
+
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                     List<ReferralEntry> sortedMentees = mentees.stream().sorted((a, b) -> Boolean.compare(a.isMentorRewardClaimed(), b.isMentorRewardClaimed())).toList();
-                    cb.accept(sortedMentees);
+                    cb.accept(pagination);
                 });
             } catch (SQLException e) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN,
@@ -183,8 +222,8 @@ public class ReferralManager implements Listener {
                     List<ItemRecord> rewards = isMentor ? mentorRewards : menteeRewards;
                     rewards.forEach(claimedBy::giveItemOrDrop);
 
-                    HudService.sendInfoMessage(claimedBy,
-                            Component.text("§aYou have successfully claimed your reward!")
+                    HudService.sendSuccessMessage(claimedBy,
+                            Component.text("You have successfully claimed your reward!", Color.SUCCESS.asColor())
                     );
                     SoundType.DAILY_REWARD_CLAIM.play(claimedBy, false);
                 });
@@ -194,11 +233,11 @@ public class ReferralManager implements Listener {
                         e
                 );
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                    HudService.sendFailMessage(claimedBy, Component.text("§cAn error occurred while trying to claim your reward. Please try again later."));
+                    HudService.sendFailMessage(claimedBy, Component.text("An error occurred while trying to claim your reward. Please try again later."));
                 });
             } catch (IllegalStateException e) {
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                    HudService.sendFailMessage(claimedBy, Component.text(e.getMessage(), Color.ERROR.asColor()));
+                    HudService.sendFailMessage(claimedBy, Component.text(e.getMessage()));
                 });
             } finally {
                 finallyCb.run();
@@ -211,7 +250,9 @@ public class ReferralManager implements Listener {
             int menteeTotalLevel = mentee.getSkills().values().stream().mapToInt(Skill::getBaseLevel).sum();
 
             if (menteeTotalLevel >= MINIMUM_TOTAL_LEVEL_REWARD) {
-                HudService.sendFailMessage(mentee, Component.text("§cYou cannot set a mentor after reaching total level " + MINIMUM_TOTAL_LEVEL_REWARD + "."));
+                HudService.sendFailMessage(mentee, Component.text("You cannot set a mentor after reaching total level ", Color.ERROR.asColor())
+                        .append(Component.text(MINIMUM_TOTAL_LEVEL_REWARD, Color.ACCENT.asColor()))
+                        .append(Component.text(".", Color.ERROR.asColor())));
                 return;
             }
 
@@ -235,8 +276,12 @@ public class ReferralManager implements Listener {
                 referralRepository.addPlayerAsMentor(matchingPlayer, mentee.getUUID());
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                     mentee.setHasMentor(true);
-                    HudService.sendInfoMessage(mentee,
-                            Component.text("§aYou have successfully set §e" + mentorUsername + "§a as your mentor! You can now earn rewards when you reach total level §e" + MINIMUM_TOTAL_LEVEL_REWARD + ".")
+                    HudService.sendSuccessMessage(mentee,
+                            Component.text("You have successfully set ", Color.SUCCESS.asColor())
+                                    .append(Component.text(mentorUsername, Color.ACCENT.asColor()))
+                                    .append(Component.text(" as your mentor! You can now earn rewards when you reach total level ", Color.SUCCESS.asColor()))
+                                    .append(Component.text(MINIMUM_TOTAL_LEVEL_REWARD, Color.ACCENT.asColor()))
+                                    .append(Component.text(".", Color.SUCCESS.asColor()))
                     );
                 });
             } catch (SQLException e) {
@@ -246,7 +291,7 @@ public class ReferralManager implements Listener {
                 );
             } catch (IllegalStateException e) {
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                    HudService.sendFailMessage(mentee, Component.text("§c" + e.getMessage()));
+                    HudService.sendFailMessage(mentee, Component.text(e.getMessage()));
                 });
             }
         });
@@ -259,8 +304,10 @@ public class ReferralManager implements Listener {
 
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                     mentee.setHasMentor(false);
-                    HudService.sendInfoMessage(mentee,
-                            Component.text("§aYou have successfully abandoned your mentor. You can set a new mentor at any time by typing §e/mentor <username>.")
+                    HudService.sendSuccessMessage(mentee,
+                            Component.text("You have successfully abandoned your mentor. You can set a new mentor at any time by typing ", Color.SUCCESS.asColor())
+                                    .append(Component.text("/mentor <username>", Color.ACCENT.asColor()))
+                                    .append(Component.text(".", Color.SUCCESS.asColor()))
                     );
                 });
 
@@ -271,7 +318,7 @@ public class ReferralManager implements Listener {
                 );
             } catch (IllegalStateException e) {
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                    HudService.sendFailMessage(mentee, Component.text("§c" + e.getMessage()));
+                    HudService.sendFailMessage(mentee, Component.text(e.getMessage()));
                 });
             }
         });
@@ -284,7 +331,13 @@ public class ReferralManager implements Listener {
             return;
         }
 
-        player.asBukkitPlayer().sendMessage(Component.text("§aYour mentee §e" + menteeUsername + "§a has reached total level " + MINIMUM_TOTAL_LEVEL_REWARD + "! You can claim your reward from §eSundering Hand Member§a."));
+        player.asBukkitPlayer().sendMessage(Component.text("Your mentee ", Color.SUCCESS.asColor())
+                .append(Component.text(menteeUsername, Color.ACCENT.asColor()))
+                .append(Component.text(" has reached total level ", Color.SUCCESS.asColor()))
+                .append(Component.text(MINIMUM_TOTAL_LEVEL_REWARD, Color.ACCENT.asColor()))
+                .append(Component.text("! You can claim your reward from ", Color.SUCCESS.asColor()))
+                .append(Component.text("Sundering Hand Member", Color.ACCENT.asColor()))
+                .append(Component.text(".", Color.SUCCESS.asColor())));
         SoundType.NOTIFICATION.play(player, false);
     }
 }
