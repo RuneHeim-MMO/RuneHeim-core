@@ -51,4 +51,8 @@ public class RunePlayerLevelUpEvent extends Event {
     public int getOldLevel() {
         return oldLevel;
     }
+
+    public int getLevelDelta() {
+        return this.getNewLevel() - this.getOldLevel();
+    }
 }

@@ -1,19 +1,22 @@
 package org.zuma.examplePlugin.domain.referral;
 
-import com.google.gson.Gson;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.hud.HudService;
+import org.zuma.examplePlugin.domain.item.ItemRecord;
+import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.referral.persistence.ReferralRepository;
 import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.events.player.RunePlayerLevelUpEvent;
 import org.zuma.examplePlugin.events.player.RunePlayerLoadedEvent;
+import org.zuma.examplePlugin.events.referral.ReferralReachedThresholdEvent;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,6 +26,9 @@ import java.util.function.Consumer;
 
 public class ReferralManager implements Listener {
     public static final int MINIMUM_TOTAL_LEVEL_REWARD = 25;
+    private static final List<ItemRecord> mentorRewards = List.of(new ItemRecord(ItemId.RECRUIT_TOKEN, 1));
+    private static final List<ItemRecord> menteeRewards = List.of(new ItemRecord(ItemId.COINS, 5000));
+
     private final ReferralRepository referralRepository;
 
     public ReferralManager(ReferralRepository referralRepository) {
@@ -33,7 +39,6 @@ public class ReferralManager implements Listener {
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
             try {
                 List<ReferralEntry> mentees = referralRepository.getMenteesForMentor(player.getUUID());
-                System.out.println("Mentees count: " + new Gson().toJson(mentees));
                 List<String> unclaimedUsernames = mentees.stream()
                         .filter(entry -> !entry.isMentorRewardClaimed() && entry.totalLevel() >= MINIMUM_TOTAL_LEVEL_REWARD)
                         .map(ReferralEntry::menteeUsername)
@@ -83,11 +88,43 @@ public class ReferralManager implements Listener {
             return;
         }
 
-        int total = player.getSkills().values().stream().mapToInt(Skill::getBaseLevel).sum();
+        int before = player.getSkills().values().stream()
+                .mapToInt(Skill::getBaseLevel)
+                .sum() - event.getLevelDelta();
 
-        if (total == MINIMUM_TOTAL_LEVEL_REWARD || ((event.getNewLevel() - event.getOldLevel() > 1) && total >= MINIMUM_TOTAL_LEVEL_REWARD)) {
-            HudService.sendInfoMessage(player, Component.text("§aYou have reached a total level of §e" + total + "§a! You can claim your reward from §eSundering Hand Member."));
+        int after = before + event.getLevelDelta();
+
+        if (before < MINIMUM_TOTAL_LEVEL_REWARD && after >= MINIMUM_TOTAL_LEVEL_REWARD) {
+            HudService.sendInfoMessage(
+                    player,
+                    Component.text("§aYou have reached a total level of §e" + after + "§a! You can claim your reward from §eSundering Hand Member.")
+            );
             SoundType.DAILY_REWARD_ADVANCE_STREAK.play(player, true);
+
+            Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
+                try {
+                    ReferralEntry mentorEntry = referralRepository.getMentorForMentee(player.getUUID());
+                    if (mentorEntry == null) {
+                        return;
+                    }
+
+                    Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+                        ReferralReachedThresholdEvent redisEvent = new ReferralReachedThresholdEvent(new ReferralReachedThresholdEvent.Payload(
+                                player.getUUID(),
+                                mentorEntry.mentorUUID(),
+                                player.asBukkitPlayer().getName()
+                        ));
+
+                        Bukkit.getServer().getPluginManager().callEvent(redisEvent);
+                    });
+
+                } catch (SQLException e) {
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN,
+                            "Failed to publish ReferralReachedThreshold event for player " + player.asBukkitPlayer().getName() + " due to a database error.",
+                            e
+                    );
+                }
+            });
         }
     }
 
@@ -127,6 +164,44 @@ public class ReferralManager implements Listener {
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                     cb.accept(null);
                 });
+            }
+        });
+    }
+
+    public void claimReward(RunePlayer claimedBy, UUID mentorUUID, UUID menteeUUID, Runnable finallyCb) {
+        Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
+            boolean isMentor = claimedBy.getUUID().equals(mentorUUID);
+
+            try {
+                if (isMentor) {
+                    referralRepository.claimMentorReward(mentorUUID, menteeUUID);
+                } else {
+                    referralRepository.claimMenteeReward(menteeUUID, mentorUUID);
+                }
+
+                Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+                    List<ItemRecord> rewards = isMentor ? mentorRewards : menteeRewards;
+                    rewards.forEach(claimedBy::giveItemOrDrop);
+
+                    HudService.sendInfoMessage(claimedBy,
+                            Component.text("§aYou have successfully claimed your reward!")
+                    );
+                    SoundType.DAILY_REWARD_CLAIM.play(claimedBy, false);
+                });
+            } catch (SQLException e) {
+                RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN,
+                        "Failed to claim " + (isMentor ? "mentor" : "mentee") + " reward for player " + claimedBy.asBukkitPlayer().getName() + " due to a database error.",
+                        e
+                );
+                Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+                    HudService.sendFailMessage(claimedBy, Component.text("§cAn error occurred while trying to claim your reward. Please try again later."));
+                });
+            } catch (IllegalStateException e) {
+                Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+                    HudService.sendFailMessage(claimedBy, Component.text(e.getMessage(), Color.ERROR.asColor()));
+                });
+            } finally {
+                finallyCb.run();
             }
         });
     }
@@ -202,5 +277,14 @@ public class ReferralManager implements Listener {
         });
     }
 
+    public void notifyMentorOfMenteeThreshold(UUID mentorUUID, String menteeUsername) {
+        RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(mentorUUID);
 
+        if (player == null) {
+            return;
+        }
+
+        player.asBukkitPlayer().sendMessage(Component.text("§aYour mentee §e" + menteeUsername + "§a has reached total level " + MINIMUM_TOTAL_LEVEL_REWARD + "! You can claim your reward from §eSundering Hand Member§a."));
+        SoundType.NOTIFICATION.play(player, false);
+    }
 }

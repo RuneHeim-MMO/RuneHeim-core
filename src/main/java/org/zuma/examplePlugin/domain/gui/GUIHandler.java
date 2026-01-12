@@ -151,7 +151,7 @@ public class GUIHandler {
 
         this.registry.register(InventoryId.BOT_VERIFICATION_MENU.asInt(), () -> new BotVerificationMenu(GUIOverlay.GENERIC_OVERLAY_6.asGlyph() + "§fAnti-Bot Verification", InventoryId.BOT_VERIFICATION_MENU.asInt()));
         this.registry.register(InventoryId.REFERRAL_REWARDS_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.SHOP_OVERLAY.asGlyph() + "§f" + Icon.GUILD.get() + "§f Referral Rewards Shop", InventoryId.REFERRAL_REWARDS_SHOP.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.REFERRAL_REWARDS_SHOP.asInt())));
-        this.registry.register(InventoryId.REFERRALS_MENU.asInt(), () -> new ReferralsMenu(GUIOverlay.GENERIC_OVERLAY_6.asGlyph() + "§f" + Icon.GUILD.get() + "§f Your Referrals", InventoryId.REFERRALS_MENU.asInt()));
+        this.registry.register(InventoryId.REFERRALS_MENU.asInt(), () -> new ReferralsMenu(GUIOverlay.REFERRALS_MENU_OVERLAY.asGlyph() + "§f" + Icon.GUILD.get() + "§f Referrals", InventoryId.REFERRALS_MENU.asInt()));
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
     }

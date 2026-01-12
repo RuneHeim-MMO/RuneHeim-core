@@ -144,7 +144,6 @@ public class ReferralRepository {
         return new ArrayList<>(mentees.values());
     }
 
-
     public UUID getPlayerUUIDByUsername(String partialUsername) throws SQLException, IllegalStateException {
         String sql = "SELECT uuid FROM players WHERE last_username LIKE ? LIMIT 1";
 
@@ -232,5 +231,49 @@ public class ReferralRepository {
 
 
         return null;
+    }
+
+    public void claimMentorReward(UUID mentorUUID, UUID menteeUUID) throws SQLException {
+        String sql = """
+                UPDATE player_referrals
+                SET mentor_reward_claimed = TRUE
+                WHERE mentor_uuid = ? AND mentee_uuid = ? AND mentor_reward_claimed = FALSE
+                """;
+
+        try (Connection conn = pool.getDataSource().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, mentorUUID.toString());
+            stmt.setString(2, menteeUUID.toString());
+            int rowsChanged = stmt.executeUpdate();
+
+            if (rowsChanged == 0) {
+                throw new IllegalStateException(
+                        "No mentorship found to claim reward from."
+                );
+            }
+        }
+    }
+
+    public void claimMenteeReward(UUID menteeUUID, UUID mentorUUID) throws SQLException {
+        String sql = """
+                UPDATE player_referrals
+                SET mentee_reward_claimed = TRUE
+                WHERE mentee_uuid = ? AND mentor_uuid = ? and mentee_reward_claimed = FALSE
+                """;
+
+        try (Connection conn = pool.getDataSource().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, menteeUUID.toString());
+            stmt.setString(2, mentorUUID.toString());
+            int rowsChanged = stmt.executeUpdate();
+
+            if (rowsChanged == 0) {
+                throw new IllegalStateException(
+                        "No mentorship found to claim reward from."
+                );
+            }
+        }
     }
 }
