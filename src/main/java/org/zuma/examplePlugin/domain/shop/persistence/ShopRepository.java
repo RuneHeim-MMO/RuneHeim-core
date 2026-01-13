@@ -308,7 +308,36 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.MITHRIL_PICKAXE.asInt(), 1, 1800, ItemId.MITHRIL_PICKAXE.getBuyPrice(), ItemId.MITHRIL_PICKAXE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.MITHRIL_AXE.asInt(), 1, 1800, ItemId.MITHRIL_AXE.getBuyPrice(), ItemId.MITHRIL_AXE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.MITHRIL_RING.asInt(), 1, 1800, ItemId.MITHRIL_RING.getBuyPrice(), ItemId.MITHRIL_RING.getSellPrice(), null, null)
+                ))), 1)),
+
+                new ShopConfig(ShopId.REFERRAL_REWARDS_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
+                        new ShopItemConfig(ItemId.SMALL_ITEM_BAG.asInt(), 5, 300, 1L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.MEDIUM_ITEM_BAG.asInt(), 3, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.LARGE_ITEM_BAG.asInt(), 2, 300, 3L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+
+                        new ShopItemConfig(ItemId.BRUTALITE_CORE.asInt(), 2, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.OBSIDIAN_BULWARK.asInt(), 2, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.BLADESTONE.asInt(), 2, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.ARCHERS_EMBER.asInt(), 2, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.FUSION_SCROLL.asInt(), 3, 300, 1L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+
+                        new ShopItemConfig(ItemId.FAIRY_ATTACK_UPGRADE.asInt(), 2, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.FAIRY_DEFENCE_UPGRADE.asInt(), 2, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.FAIRY_RANGE_UPGRADE.asInt(), 2, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.FAIRY_STRENGTH_UPGRADE.asInt(), 2, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.FAIRY_HITPOINTS_UPGRADE.asInt(), 2, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+
+                        new ShopItemConfig(ItemId.SNOW_WHITE_HORSE_MOUNT.asInt(), 2, 300, 1L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.DARK_BROWN_WARHORSE_MOUNT.asInt(), 1, 300, 3L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+
+                        new ShopItemConfig(ItemId.BULK_10_GENIE_XP_LAMP.asInt(), 8, 300, 1L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.BULK_10_PLATINUM_TOKEN.asInt(), 8, 300, 1L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.BULK_3_OVERLOAD_POTION.asInt(), 8, 300, 1L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.BULK_3_DRAGONS_MIGHT_POTION.asInt(), 8, 300, 1L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.BULK_3_ETHEREAL_RESTORATION.asInt(), 8, 300, 1L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.BULK_3_ULTIMATE_POWER_POTION.asInt(), 8, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null)
                 ))), 1))
+
 
         );
 

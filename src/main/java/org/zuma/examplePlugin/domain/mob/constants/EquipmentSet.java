@@ -160,6 +160,13 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.OFFHAND, new ItemStack(Material.SHIELD), 100)
     ))),
 
+    SUNDERING_HAND_WARRIOR(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.OFFHAND, new ItemStack(Material.SHIELD), 100),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.RUNE_CHAINBODY), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.RUNE_PLATELEGS), 100),
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNE_SWORD), 100)
+    ))),
+
     AUCTIONEER(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.COINS, 10000), 1),
             new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.COINS, 1000), 5),

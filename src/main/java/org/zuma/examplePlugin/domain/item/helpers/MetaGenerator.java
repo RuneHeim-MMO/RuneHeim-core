@@ -27,6 +27,7 @@ import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.item.constants.ItemType;
 import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.item.helpers.lore.*;
+import org.zuma.examplePlugin.domain.item.impl.BulkItem;
 import org.zuma.examplePlugin.domain.item.impl.EmptyContainer;
 import org.zuma.examplePlugin.domain.item.impl.Mount;
 import org.zuma.examplePlugin.domain.item.impl.StorageItem;
@@ -122,6 +123,10 @@ public class MetaGenerator {
 
         if (itemType instanceof Food food) {
             lore.addAll(new FoodLore(food).getLore());
+        }
+
+        if (itemType instanceof BulkItem bulkItem) {
+            lore.addAll(new BulkItemLore(bulkItem).getLore());
         }
 
         if (itemType instanceof Potion potion) {

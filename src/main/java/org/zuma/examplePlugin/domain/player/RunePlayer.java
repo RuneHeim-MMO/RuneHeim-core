@@ -78,7 +78,7 @@ public class RunePlayer implements CombatEntity {
     private List<TemporaryEffect> activeEffects; // Potions, etc
     private long pouchCoins;
     private List<String> discoveredTerritoryIds, completedQuestIds;
-    private boolean isInCutscene, isDead, isInDialog, isDialogOptionChoosing, isNextMessageMegaphone, isBotVerificationPending;
+    private boolean isInCutscene, isDead, isInDialog, isDialogOptionChoosing, isNextMessageMegaphone, isBotVerificationPending, hasMentor;
     private HashMap<String, AbstractQuestStep> activeQuestSteps; // Quest id : step
     private @Nullable Location safeLocation; // is set when player is in spectator/cutscene mode.
     private @Nullable String trackedQuestId;
@@ -113,6 +113,7 @@ public class RunePlayer implements CombatEntity {
         this.bombsContainer = new PlayerBombsContainer(0, 0, 0, 0, 0, 0);
         this.trackedQuestId = null;
         this.isBotVerificationPending = false;
+        this.hasMentor = false;
 
         Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
             this.permissionAttachment = asBukkitPlayer().addAttachment(RuneQuestPlugin.getInstance());
@@ -589,5 +590,13 @@ public class RunePlayer implements CombatEntity {
 
     public QuiverHandler getQuiverHandler() {
         return quiverHandler;
+    }
+
+    public boolean hasMentor() {
+        return hasMentor;
+    }
+
+    public void setHasMentor(boolean hasMentor) {
+        this.hasMentor = hasMentor;
     }
 }

@@ -64,8 +64,28 @@ public class ItemFactory {
             case STORAGE_ITEM -> createStorageItem(meta, json);
             case INTERACTIVE_FURNITURE -> createInteractiveFurnitureItem(meta, json);
             case DECORATIVE_FURNITURE -> createDecorativeFurnitureItem(meta, json);
+            case BULK_ITEM -> createBulkItem(meta, json);
             default -> throw new IllegalArgumentException("Unknown item type: " + meta.type());
         };
+    }
+
+    private BulkItem createBulkItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create " + meta.type() + " " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                BulkItemMeta deserialized = new Gson().fromJson(json.meta(), BulkItemMeta.class);
+                BulkItem item = new BulkItem(meta);
+                item.setItems(deserialized.items());
+                item.setCustomModelData(deserialized.modelId());
+
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
     }
 
     private FurnitureItem createDecorativeFurnitureItem(AbstractItemMeta meta, @Nullable VersionedJson json) {

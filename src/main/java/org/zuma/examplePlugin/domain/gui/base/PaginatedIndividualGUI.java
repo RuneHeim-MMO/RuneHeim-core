@@ -230,4 +230,8 @@ public abstract class PaginatedIndividualGUI extends IndividualGUI {
     public abstract void handleInventoryClick(InventoryClickEvent event, int slot, RunePlayer player);
 
     public abstract int getPaginationControlsOffset();
+
+    protected int getPage(){
+        return page;
+    }
 }

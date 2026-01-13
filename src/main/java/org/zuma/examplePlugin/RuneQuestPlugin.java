@@ -37,6 +37,7 @@ import org.zuma.examplePlugin.domain.prayer.PrayerManager;
 import org.zuma.examplePlugin.domain.quest.QuestHandler;
 import org.zuma.examplePlugin.domain.recipe.RecipeHandler;
 import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
+import org.zuma.examplePlugin.domain.referral.ReferralManager;
 import org.zuma.examplePlugin.domain.shop.ShopRegistry;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneHandler;
 import org.zuma.examplePlugin.domain.territory.TerritoryHandler;
@@ -94,7 +95,8 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new ServerModifierModule(),
                         new DailyRewardModule(),
                         new PlayerHousingModule(),
-                        new HerbloreModule()
+                        new HerbloreModule(),
+                        new ReferralModule()
                 ), moduleContext);
     }
 
@@ -236,6 +238,10 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
     
     public static HerbloreManager getHerbloreManager() {
         return pluginInstance.moduleContext.get(HerbloreManager.class);
+    }
+
+    public static ReferralManager getReferralManager() {
+        return pluginInstance.moduleContext.get(ReferralManager.class);
     }
 
     @Override

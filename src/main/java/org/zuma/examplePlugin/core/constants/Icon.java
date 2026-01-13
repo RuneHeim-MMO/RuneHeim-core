@@ -18,6 +18,7 @@ public enum Icon {
     MYTHIC("⛧"),
     DIVINE("⟴"),
 
+    GUILD("⾯"),
     UPGRADE("⏭"),
     DOWNGRADE("ↇ"),
     ARROW_LEFT("⬓"),
@@ -120,6 +121,7 @@ public enum Icon {
     MOUNT("⺲"),
     REMAINS("⊪"),
     NAME_TAG("ↈ"),
+    QUESTION_MARK("？"),
 
     GREEN_GEM("⮩"),
 

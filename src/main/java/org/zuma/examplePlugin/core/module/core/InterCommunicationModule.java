@@ -15,11 +15,14 @@ import org.zuma.examplePlugin.domain.daily.DailyRewardHandler;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
 import org.zuma.examplePlugin.domain.modifier.scopes.server.ServerModifierHandler;
 import org.zuma.examplePlugin.domain.payments.handlers.DonationHandler;
-import org.zuma.examplePlugin.events.drops.DailyMegaRareClaimEvent;
+import org.zuma.examplePlugin.domain.referral.ReferralManager;
 import org.zuma.examplePlugin.events.core.NetworkRestartEvent;
+import org.zuma.examplePlugin.events.drops.DailyMegaRareClaimEvent;
 import org.zuma.examplePlugin.events.drops.RareDropEvent;
 import org.zuma.examplePlugin.events.inventory.RuneStorageInventoryOpenEvent;
 import org.zuma.examplePlugin.events.payment.*;
+import org.zuma.examplePlugin.events.referral.ReferralReachedThresholdEvent;
+import org.zuma.examplePlugin.events.referral.ReferralSetEvent;
 
 import java.util.List;
 
@@ -49,6 +52,8 @@ public class InterCommunicationModule implements PluginModule {
             GlobalEventHandler.registerEvent(SupportLevelUpgradeEvent.class, SupportLevelUpgradeEvent.Payload.class);
             GlobalEventHandler.registerEvent(DailyMegaRareClaimEvent.class, DailyMegaRareClaimEvent.Payload.class);
             GlobalEventHandler.registerEvent(RareDropEvent.class, RareDropEvent.Payload.class);
+            GlobalEventHandler.registerEvent(ReferralReachedThresholdEvent.class, ReferralReachedThresholdEvent.Payload.class);
+            GlobalEventHandler.registerEvent(ReferralSetEvent.class, ReferralSetEvent.Payload.class);
 
             GlobalEventHandler.addListener(NetworkRestartEvent.class, e -> ScheduledRestartHandler.scheduleRestart(e.restartAt, e.reason));
             GlobalEventHandler.addListener(RuneStorageInventoryOpenEvent.class, e -> context.get(GUIHandler.class).onStorageContainerOpenGlobalEvent(e.containerUUID));
@@ -63,6 +68,13 @@ public class InterCommunicationModule implements PluginModule {
             });
             GlobalEventHandler.addListener(DailyMegaRareClaimEvent.class, p -> {
                 context.get(DailyRewardHandler.class).handleMegaRareClaim(p);
+            });
+            GlobalEventHandler.addListener(ReferralReachedThresholdEvent.class, p -> {
+                context.get(ReferralManager.class).notifyMentorOfMenteeThreshold(p.mentorUUID, p.menteeUsername);
+            });
+
+            GlobalEventHandler.addListener(ReferralSetEvent.class, p -> {
+                context.get(ReferralManager.class).notifyMentorOfNewMentee(p.mentorUUID, p.menteeUsername);
             });
 
 

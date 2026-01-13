@@ -1583,7 +1583,7 @@ public class SpawnZoneRepository {
                         new SpawnZoneMobRecord(MobType.CITY_CITIZEN_WOMAN, 3, 100)
                 ), 50, false, true), 1)),
 
-                // Murkwatch guards // TODO: citizens
+                // Murkwatch guards
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(222, SpawnZoneType.POINT, 20, 1,
                         new Location(Bukkit.getWorld("world"), -1031, 69, 450)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.CITY_GUARD_STATIC, 1, 100)
@@ -2338,10 +2338,39 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(340, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), 1126, 72.5, -371)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.THORNBARK_HERBLORE_SHOP, 1, 100)
-                ), false, MarkerType.HERBLORE_SHOP, "Herblore Shop"), 1))
+                ), false, MarkerType.HERBLORE_SHOP, "Herblore Shop"), 1)),
+
+                // Drakkar sundering members
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(341, SpawnZoneType.AREA, 20, 1,
+                        new Location(Bukkit.getWorld("world"), 195, 73, -84)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SUNDERING_HAND_WARRIOR_1, 1, 100),
+                        new SpawnZoneMobRecord(MobType.SUNDERING_HAND_WARRIOR_2, 1, 100)
+                ), 30, false, true), 1)),
+
+                // Sakurmeer sundering members
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(342, SpawnZoneType.AREA, 20, 1,
+                        new Location(Bukkit.getWorld("world"), 928, 135, 191)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SUNDERING_HAND_WARRIOR_3, 1, 100),
+                        new SpawnZoneMobRecord(MobType.SUNDERING_HAND_WARRIOR_4, 1, 100)
+                ), 30, false, true), 1)),
+
+                // Aetheris sundering members
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(343, SpawnZoneType.AREA, 20, 1,
+                        new Location(Bukkit.getWorld("world"), -179, 78, 794)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SUNDERING_HAND_WARRIOR_2, 1, 100),
+                        new SpawnZoneMobRecord(MobType.SUNDERING_HAND_WARRIOR_5, 1, 100)
+                ), 30, false, true), 1)),
 
 
-                // last 340
+                // Saharijin sundering members
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(344, SpawnZoneType.AREA, 20, 1,
+                        new Location(Bukkit.getWorld("world"), -1226, 74, -816)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SUNDERING_HAND_WARRIOR_4, 1, 100),
+                        new SpawnZoneMobRecord(MobType.SUNDERING_HAND_WARRIOR_5, 1, 100)
+                ), 30, false, true), 1))
+
+
+                // last 344
 
 
         );
