@@ -59,6 +59,10 @@ public class TextUtils {
         return result;
     }
 
+    public static String clearFormatting(String text) {
+        return text.replaceAll("§.", "");
+    }
+
     public static String centerText(String text, int width) {
         String plainText = text.replaceAll("§.", "");
         int textLength = plainText.length();

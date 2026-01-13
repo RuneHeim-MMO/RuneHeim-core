@@ -1,7 +1,6 @@
 package org.zuma.examplePlugin.domain.block;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -21,7 +20,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class BlockManager {
-    private final Map<Chunk, List<AbstractInteractableBlock>> blocksByChunk = new HashMap<>();
+    private final Map<Long, List<AbstractInteractableBlock>> blocksByChunk = new HashMap<>();
     private final HashMap<Location, AbstractInteractableBlock> blocks = new HashMap<>();
     private final HashMap<Location, ModelledInteractableBlock> modelledBlocks = new HashMap<>();
     private final HashMap<DespawnableBlock, Long> despawnableQueue = new HashMap<>();
@@ -106,7 +105,7 @@ public class BlockManager {
     }
 
 
-    public Map<Chunk, List<AbstractInteractableBlock>> getBlocksByChunk() {
+    public Map<Long, List<AbstractInteractableBlock>> getBlocksByChunk() {
         return this.blocksByChunk;
     }
 
@@ -147,7 +146,7 @@ public class BlockManager {
             }
 
             blocks.put(blockLocation, block);
-            blocksByChunk.computeIfAbsent(blockLocation.getChunk(), k -> new ArrayList<>()).add(block);
+            blocksByChunk.computeIfAbsent(blockLocation.getChunk().getChunkKey(), k -> new ArrayList<>()).add(block);
         });
     }
 
@@ -164,10 +163,12 @@ public class BlockManager {
         blocks.get(blockLocation).onDisable();
         blocks.remove(blockLocation, block);
 
-        List<AbstractInteractableBlock> list = blocksByChunk.get(block.getLocation().getChunk());
+        Long chunkKey = block.getLocation().getChunk().getChunkKey();
+        List<AbstractInteractableBlock> list = blocksByChunk.get(chunkKey);
+
         if (list != null) {
             list.remove(block);
-            if (list.isEmpty()) blocksByChunk.remove(block.getLocation().getChunk());
+            if (list.isEmpty()) blocksByChunk.remove(chunkKey);
         }
     }
 
@@ -177,7 +178,13 @@ public class BlockManager {
 
     public void onDisable() {
         synchronized (this.blocks) {
-            this.blocks.values().forEach(AbstractInteractableBlock::onDisable);
+            this.blocks.values().forEach(b -> {
+                try {
+                    b.onDisable();
+                } catch (Exception e) {
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Error while disabling block at " + b.getLocation() + ": " + e.getMessage());
+                }
+            });
             this.blocks.clear();
         }
 

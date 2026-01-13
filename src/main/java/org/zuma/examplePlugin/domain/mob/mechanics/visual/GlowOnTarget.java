@@ -31,8 +31,6 @@ public class GlowOnTarget implements MobMechanic {
 
     @Override
     public void execute(LivingEntity target) {
-        if (mob == null || mob.getEntity() == null) return;
-
         if (glowTask != null) {
             glowTask.cancel();
             glowTask = null;
@@ -40,6 +38,13 @@ public class GlowOnTarget implements MobMechanic {
 
 
         glowTask = Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), () -> {
+            if (mob == null || mob.getEntity() == null || mob.getEntity().isDead() || !mob.getEntity().isValid()) {
+                if (glowTask != null) {
+                    glowTask.cancel();
+                    glowTask = null;
+                }
+                return;
+            }
             Location loc = mob.getEntity().getLocation();
             loc.getWorld().spawnParticle(Particle.END_ROD, loc.add(0, 1, 0), 10, 0.5, 0.5, 0.5, 0.01);
         }, 0L, 5L);

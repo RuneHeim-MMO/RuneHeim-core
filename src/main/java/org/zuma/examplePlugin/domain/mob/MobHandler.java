@@ -17,6 +17,7 @@ import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.MathUtils;
+import org.zuma.examplePlugin.core.utils.TextUtils;
 import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.RareMobDropEffect;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -29,6 +30,7 @@ import org.zuma.examplePlugin.domain.mob.behavior.MobIdleBehaviorHandler;
 import org.zuma.examplePlugin.domain.mob.constants.MetadataKeys;
 import org.zuma.examplePlugin.domain.mob.constants.MobDataKey;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
+import org.zuma.examplePlugin.events.drops.RareDropEvent;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -100,7 +102,7 @@ public class MobHandler {
                     registry.removeMob(UUID.fromString(value));
                     registry.getDisguisedMobs().remove(mob);
 
-                    if(entity instanceof ArmorStand){
+                    if (entity instanceof ArmorStand) {
                         return;
                     }
 
@@ -179,6 +181,7 @@ public class MobHandler {
                 if (RARE_DROP_TIERS.contains(dropType.rarity)) {
                     EffectHandler.playAt(droppedItem.getLocation(), new RareMobDropEffect(droppedItem, killer, dropType.rarity, mob.getDisplayName()));
                     AnalyticsUtils.incrementServerAndPlayer(killer, AnalyticsKey.MOB_RARE_DROPS, 1);
+                    Bukkit.getPluginManager().callEvent(new RareDropEvent(new RareDropEvent.Payload(killer.asBukkitPlayer().getName(), TextUtils.clearFormatting(mob.getDisplayName()), dropType.displayName, dropType.rarity, droppedItem.getItemStack().getAmount())));
                 }
             }
         });

@@ -177,7 +177,13 @@ public class XPLampInventory extends IndividualGUI {
             return;
         }
 
-        PlayerUtils.subtractOneFromMainHand(player);
+        boolean success = PlayerUtils.subtractOneFromMainHand(player);
+
+        if(!success) {
+            HudService.sendFailMessage(player, Component.text("Failed to consume item from your hand!", Color.ERROR.asColor()));
+            return;
+        }
+
         player.addXp(selectedSkill, inHandLamp.getXpReward(), XpSource.XP_LAMP);
         player.asBukkitPlayer().closeInventory();
         SoundType.XP_LAMP_SKILL_SELECT.play(player, true);

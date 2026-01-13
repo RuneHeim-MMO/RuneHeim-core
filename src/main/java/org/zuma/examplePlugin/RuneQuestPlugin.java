@@ -20,6 +20,7 @@ import org.zuma.examplePlugin.domain.dialog.DialogHandler;
 import org.zuma.examplePlugin.domain.discord.DiscordVerificationHandler;
 import org.zuma.examplePlugin.domain.droptable.DropTableHandler;
 import org.zuma.examplePlugin.domain.gui.GUIHandler;
+import org.zuma.examplePlugin.domain.herblore.HerbloreManager;
 import org.zuma.examplePlugin.domain.housing.HousingManager;
 import org.zuma.examplePlugin.domain.item.ItemRegistry;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
@@ -31,10 +32,12 @@ import org.zuma.examplePlugin.domain.mount.MountHandler;
 import org.zuma.examplePlugin.domain.party.PartyManager;
 import org.zuma.examplePlugin.domain.payments.handlers.PaymentHandler;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
+import org.zuma.examplePlugin.domain.player.inventory.AdditionalGearSlotHandler;
 import org.zuma.examplePlugin.domain.prayer.PrayerManager;
 import org.zuma.examplePlugin.domain.quest.QuestHandler;
 import org.zuma.examplePlugin.domain.recipe.RecipeHandler;
 import org.zuma.examplePlugin.domain.recipe.RecipeRegistry;
+import org.zuma.examplePlugin.domain.referral.ReferralManager;
 import org.zuma.examplePlugin.domain.shop.ShopRegistry;
 import org.zuma.examplePlugin.domain.spawnzone.SpawnZoneHandler;
 import org.zuma.examplePlugin.domain.territory.TerritoryHandler;
@@ -91,7 +94,9 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
                         new PartyModule(),
                         new ServerModifierModule(),
                         new DailyRewardModule(),
-                        new PlayerHousingModule()
+                        new PlayerHousingModule(),
+                        new HerbloreModule(),
+                        new ReferralModule()
                 ), moduleContext);
     }
 
@@ -225,6 +230,18 @@ public final class RuneQuestPlugin extends JavaPlugin implements Listener {
 
     public static DiscordVerificationHandler getDiscordVerificationHandler() {
         return pluginInstance.moduleContext.get(DiscordVerificationHandler.class);
+    }
+
+    public static AdditionalGearSlotHandler getAdditionalGearSlotHandler() {
+        return pluginInstance.moduleContext.get(AdditionalGearSlotHandler.class);
+    }
+    
+    public static HerbloreManager getHerbloreManager() {
+        return pluginInstance.moduleContext.get(HerbloreManager.class);
+    }
+
+    public static ReferralManager getReferralManager() {
+        return pluginInstance.moduleContext.get(ReferralManager.class);
     }
 
     @Override

@@ -14,6 +14,7 @@ import org.zuma.examplePlugin.domain.block.meta.v1.LightableBlockMeta;
 import org.zuma.examplePlugin.domain.droptable.DropTableId;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.housing.records.HouseSlot;
+import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.StatsEffect;
 import org.zuma.examplePlugin.domain.item.constants.*;
 import org.zuma.examplePlugin.domain.item.impl.EmptyContainer;
@@ -147,7 +148,7 @@ public class ItemRepository {
                 // ADMIN STICK! REMOVE BEFORE ALPHA!
                 new ItemEntity(new AbstractItemMeta(ItemType.MELEE_WEAPON, ItemId.ADMIN_OP_STICK.asInt(), Material.STICK, ItemRarity.COMMON, "Admin Stick", List.of("Bronze dagger, quick and light."), null, true, 1.0),
                         toVersionedJson(
-                                new EquipableWeaponTypeMeta(WeaponSpeed.VERY_FAST, List.of(new SkillModifier(SkillType.HITPOINTS, 50)),
+                                new EquipableWeaponTypeMeta(WeaponSpeed.VERY_FAST, List.of(new SkillModifier(SkillType.HITPOINTS, 50, null)),
                                         List.of(
                                                 new Modifier(ModifierType.ATTACK_STAB, 999999),
                                                 new Modifier(ModifierType.STRENGTH_BONUS, 999999),
@@ -159,7 +160,104 @@ public class ItemRepository {
                                 , 1)
                 ),
 
+
+                new ItemEntity(new AbstractItemMeta(ItemType.BULK_ITEM, ItemId.BULK_10_GENIE_XP_LAMP.asInt(), Material.IRON_INGOT, ItemRarity.LEGENDARY, "10x Genie Lamp", List.of("Box, containing a bulk of items."), null, false, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new BulkItemMeta(List.of(new ItemRecord(ItemId.GENIE_XP_LAMP, 10)), CustomModelId.BULK_GENIE_LAMP), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.BULK_ITEM, ItemId.BULK_10_PLATINUM_TOKEN.asInt(), Material.IRON_INGOT, ItemRarity.LEGENDARY, "10x Platinum Tokens", List.of("Box, containing a bulk of items."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new BulkItemMeta(List.of(new ItemRecord(ItemId.PLATINUM_TOKEN, 10)), CustomModelId.BULK_PLATINUM_TOKEN), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.BULK_ITEM, ItemId.BULK_3_OVERLOAD_POTION.asInt(), Material.IRON_INGOT, ItemRarity.LEGENDARY, "3x Overload Potions", List.of("Box, containing a bulk of items."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new BulkItemMeta(List.of(new ItemRecord(ItemId.OVERLOAD_POTION, 3)), CustomModelId.BULK_OVERLOAD), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.BULK_ITEM, ItemId.BULK_3_ETHEREAL_RESTORATION.asInt(), Material.IRON_INGOT, ItemRarity.LEGENDARY, "3x Ethereal Restoration Potions", List.of("Box, containing a bulk of items."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new BulkItemMeta(List.of(new ItemRecord(ItemId.ETHEREAL_RESTORATION, 3)), CustomModelId.BULK_ETHEREAL_RESTORATION), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.BULK_ITEM, ItemId.BULK_3_DRAGONS_MIGHT_POTION.asInt(), Material.IRON_INGOT, ItemRarity.LEGENDARY, "3x Dragons Might Potions", List.of("Box, containing a bulk of items."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new BulkItemMeta(List.of(new ItemRecord(ItemId.DRAGONS_MIGHT_POTION, 3)), CustomModelId.BULK_DRAGONS_MIGHT), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.BULK_ITEM, ItemId.BULK_3_ULTIMATE_POWER_POTION.asInt(), Material.IRON_INGOT, ItemRarity.MYTHIC, "3x Ultimate Power Potions", List.of("Box, containing a bulk of items."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new BulkItemMeta(List.of(new ItemRecord(ItemId.ULTIMATE_POWER_POTION, 3)), CustomModelId.BULK_ULTIMATE_POWER), 1)),
+
+                // Herblore
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.DEWLEAF_ESSENCE.asInt(), Material.COAL, ItemRarity.COMMON, "Dewleaf Essence", List.of("A fresh essence used in restorative and healing potions."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.SUNROOT_ESSENCE.asInt(), Material.COAL, ItemRarity.COMMON, "Sunroot Essence", List.of("A warm essence that empowers attack and gathering brews."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MOONSHADE_ESSENCE.asInt(), Material.COAL, ItemRarity.COMMON, "Moonshade Essence", List.of("A shadowed essence tied to strength and skill enhancement."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.VITALITY_ESSENCE.asInt(), Material.COAL, ItemRarity.COMMON, "Vitality Essence", List.of("A stabilizing essence commonly used in defensive potions."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BALANCE_ESSENCE.asInt(), Material.COAL, ItemRarity.COMMON, "Balance Essence", List.of("A precise essence favored in ranged and control brews."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.CRIMSON_ESSENCE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Crimson Essence", List.of("A potent essence that amplifies raw combat power."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.FROST_ESSENCE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Frost Essence", List.of("A chilling essence used in endurance and recovery brews."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.GLOW_ESSENCE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Glow Essence", List.of("A radiant essence linked to focus and spiritual restoration."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.GUARDIAN_ESSENCE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Guardian Essence", List.of("A steadfast essence prized for powerful defensive potions."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.PRECISION_ESSENCE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Precision Essence", List.of("A refined essence that enhances accuracy and efficiency."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.STORM_ESSENCE.asInt(), Material.COAL, ItemRarity.RARE, "Storm Essence", List.of("A volatile essence infused with raw elemental force."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BLOOD_ESSENCE.asInt(), Material.COAL, ItemRarity.RARE, "Blood Essence", List.of("A dangerous essence used in powerful life-altering brews."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.DRAGON_ESSENCE.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Dragon Essence", List.of("An ancient essence radiating overwhelming combat power."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ETHEREAL_ESSENCE.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Ethereal Essence", List.of("A rare essence that bends vitality beyond mortal limits."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new MaterialMeta(0), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.DEWLEAF.asInt(), Material.COAL, ItemRarity.COMMON, "Dewleaf", List.of("A small bluish-green leaf, still glistening with morning dew."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(50), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.SUNROOT.asInt(), Material.COAL, ItemRarity.COMMON, "Sunroot", List.of("A thick golden root that stores the warmth of the sun."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(140), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.MOONSHADE.asInt(), Material.COAL, ItemRarity.COMMON, "Moonshade", List.of("Pale silver leaves that seem to shimmer under moonlight."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(40), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.CRIMSON_THISTLE.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Crimson Thistle", List.of("A red, spiky flower with jagged green leaves and tiny thorns."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(200), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.FROSTCAP.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Frostcap", List.of("A blue-capped mushroom speckled with frost."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(150), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.GLOWFERN.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Glowfern", List.of("Delicate fern fronds that emit a faint blue glow in the dark."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(150), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.STORMVINE.asInt(), Material.COAL, ItemRarity.RARE, "Stormvine", List.of("Dark twisting vines that tingle with the energy of storms."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(400), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.BLOODORCHID.asInt(), Material.COAL, ItemRarity.RARE, "Blood Orchid", List.of("A deep red orchid with thick jagged leaves, rumored to hold regenerative powers."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(400), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.DRAGONS_BREATH.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Dragons Breath", List.of("Spiky orange-red petals that seem to radiate heat and energy."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(1400), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.ETHEREAL_BLOOM.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Ethereal Bloom", List.of("A shimmering multicolor flower that glows faintly and seems almost unreal."), null, true, 1.0),
+                        toVersionedJson(new MaterialMeta(1500), 1)),
+
+
                 // Furniture
+                new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.BREWING_CAULDRON_FURNITURE.asInt(), Material.CAULDRON, ItemRarity.RARE, "Brewing Cauldron", List.of("Used for essence extraction and potion breweing."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.INTERACTIVE, BlockType.InventoryOpener, toVersionedJson(new InventoryOpenerMeta(InventoryId.BREWING_CAULDRON.asInt(), Material.DIAMOND_BLOCK, null, null, null, "Brewing Cauldron", Icon.HERBLORE.get()), 1)), 1)
+                ),
                 new ItemEntity(new AbstractItemMeta(ItemType.INTERACTIVE_FURNITURE, ItemId.COMBAT_DUMMY_FURNITURE.asInt(), Material.ARMOR_STAND, ItemRarity.RARE, "Combat Dummy", List.of("Used to track your max hit."), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
                                 new InteractiveFurnitureMeta(HouseSlot.HouseSlotType.INTERACTIVE, BlockType.CombatDummyFurniture, null), 1)
@@ -692,6 +790,7 @@ public class ItemRepository {
                 // Currency
                 new ItemEntity(new AbstractItemMeta(ItemType.COINS, ItemId.COINS.asInt(), Material.COAL, ItemRarity.NOT_APPLICABLE, "Coins", List.of("Shiny gold!"), null, true, 1.0), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.CURRENCY, ItemId.PLATINUM_TOKEN.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Platinum Token", List.of("A Platinum token that is worth approximately 1k gold pieces."), null, true, 1.0), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.CURRENCY, ItemId.RECRUIT_TOKEN.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Recruit Token", List.of("A Recruit Token is proof of persuasion. Whether through charm, promise, or necessity", "You convinced another to step into the fray. The Guild does not ask how.", "It only records that the world has grown more crowded."), null, false, 1.0), null),
 
                 // Arrows
                 new ItemEntity(new AbstractItemMeta(ItemType.ARROW, ItemId.BRONZE_ARROW.asInt(), Material.ARROW, ItemRarity.COMMON, "Bronze Arrow", List.of("A basic bronze-tipped arrow.", "Useful for training ranged skills."), null, true, CRAFTED_ITEM_MULTIPLIER), toVersionedJson(
@@ -1004,8 +1103,8 @@ public class ItemRepository {
                                 new EmptyContainer.EmptyContainerConfig(EmptyContainer.InputType.LAVA, ItemId.VIAL_OF_LAVA.asInt())
                         )), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.VIAL_OF_WATER.asInt(), Material.COAL, ItemRarity.COMMON, "Vial of water", List.of("A vial filled with water."), null, true, 1.0), null),
-                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.VIAL_OF_LAVA.asInt(), Material.COAL, ItemRarity.COMMON, "Vial of lava", List.of("A vial filled with lava."), null, true, 1.0), null),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.VIAL_OF_WATER.asInt(), Material.COAL, ItemRarity.COMMON, "Vial of water", List.of("A vial filled with water."), null, true, 1.0), toVersionedJson(new MaterialMeta(60), 1)),
+                new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL, ItemId.VIAL_OF_LAVA.asInt(), Material.COAL, ItemRarity.COMMON, "Vial of lava", List.of("A vial filled with lava."), null, true, 1.0), toVersionedJson(new MaterialMeta(80), 1)),
 
                 // Fairy food
                 new ItemEntity(new AbstractItemMeta(ItemType.FAIRY_FOOD, ItemId.REGULAR_FAIRY_RATION.asInt(), Material.COAL, ItemRarity.RARE, "Fairy Ration", List.of("Regular food for fairies.", "Keeps them strong and energized."), null, true, 1.0),
@@ -1037,23 +1136,23 @@ public class ItemRepository {
                 // Fairy Upgrade
                 new ItemEntity(new AbstractItemMeta(ItemType.FAIRY_FRUIT, ItemId.FAIRY_ATTACK_UPGRADE.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Blazing Apple",
                         List.of("A crisp red apple with a fiery aura.", "Empowers your fairy to enhance your Attack."), null, true, 1.0),
-                        toVersionedJson(new FairyFruitMeta(null, List.of(new SkillModifier(SkillType.ATTACK, 1))), 1)),
+                        toVersionedJson(new FairyFruitMeta(null, List.of(new SkillModifier(SkillType.ATTACK, 1, null))), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.FAIRY_FRUIT, ItemId.FAIRY_DEFENCE_UPGRADE.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Stoneblue Berry",
                         List.of("A cluster of enchanted blueberries, dense with magic.", "Strengthens your Defence through your fairy's help."), null, true, 1.0),
-                        toVersionedJson(new FairyFruitMeta(null, List.of(new SkillModifier(SkillType.DEFENCE, 1))), 1)),
+                        toVersionedJson(new FairyFruitMeta(null, List.of(new SkillModifier(SkillType.DEFENCE, 1, null))), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.FAIRY_FRUIT, ItemId.FAIRY_STRENGTH_UPGRADE.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Inferno Dragonfruit",
                         List.of("A rare dragonfruit pulsing with raw power.", "Bolsters your Strength using your bonded fairy."), null, true, 1.0),
-                        toVersionedJson(new FairyFruitMeta(null, List.of(new SkillModifier(SkillType.STRENGTH, 1))), 1)),
+                        toVersionedJson(new FairyFruitMeta(null, List.of(new SkillModifier(SkillType.STRENGTH, 1, null))), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.FAIRY_FRUIT, ItemId.FAIRY_HITPOINTS_UPGRADE.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Golden Marmelade",
                         List.of("A jar of radiant marmelade, sweet and soothing.", "Boosts your Hitpoints through your fairy’s magic."), null, true, 1.0),
-                        toVersionedJson(new FairyFruitMeta(null, List.of(new SkillModifier(SkillType.HITPOINTS, 1))), 1)),
+                        toVersionedJson(new FairyFruitMeta(null, List.of(new SkillModifier(SkillType.HITPOINTS, 1, null))), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.FAIRY_FRUIT, ItemId.FAIRY_RANGE_UPGRADE.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Whispering Grapes",
                         List.of("A bunch of shimmering grapes that hum with energy.", "Improves your Ranged skill via fairy essence."), null, true, 1.0),
-                        toVersionedJson(new FairyFruitMeta(null, List.of(new SkillModifier(SkillType.RANGED, 1))), 1)),
+                        toVersionedJson(new FairyFruitMeta(null, List.of(new SkillModifier(SkillType.RANGED, 1, null))), 1)),
 
                 // Scrolls
                 new ItemEntity(new AbstractItemMeta(ItemType.MATERIAL_SCROLL, ItemId.FUSION_SCROLL.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Fusion Scroll", List.of("A mystical scroll used to embed gems into gear.", "Essential for upgrading equipment with gem-based attributes."), null, true, 1.0), null),
@@ -1140,45 +1239,100 @@ public class ItemRepository {
                 // Potions
                 new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.DEFENCE_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.UNCOMMON, "Defence Potion I",
                         List.of("Increases your defense temporarily.", "Brewed by skilled alchemists."), null, true, 1.0), toVersionedJson(new PotionMeta(2, 2,
-                        new StatsEffect("defence-potion", 120, List.of(), List.of(new SkillModifier(SkillType.DEFENCE, 3))), CustomModelId.GREEN_POTION_SMALL), 1)),
+                        new StatsEffect("defence-potion", 120, List.of(), List.of(new SkillModifier(SkillType.DEFENCE, 3, null))), CustomModelId.DEFENCE_POTION_I), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.ATTACK_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.UNCOMMON, "Attack Potion I",
                         List.of("Boosts your attack power.", "Unleash your fury in battle."), null, true, 1.0), toVersionedJson(new PotionMeta(2, 2,
-                        new StatsEffect("attack-potion", 120, List.of(), List.of(new SkillModifier(SkillType.ATTACK, 3))), CustomModelId.BLUE_POTION_SMALL), 1)),
+                        new StatsEffect("attack-potion", 120, List.of(), List.of(new SkillModifier(SkillType.ATTACK, 3, null))), CustomModelId.ATTACK_POTION_I), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.RANGED_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.UNCOMMON, "Ranged Potion I",
                         List.of("Enhances your ranged abilities.", "A favorite among archers."), null, true, 1.0), toVersionedJson(new PotionMeta(2, 2,
-                        new StatsEffect("ranged-potion", 120, List.of(), List.of(new SkillModifier(SkillType.RANGED, 3))), CustomModelId.PURPLE_POTION_SMALL), 1)),
+                        new StatsEffect("ranged-potion", 120, List.of(), List.of(new SkillModifier(SkillType.RANGED, 3, null))), CustomModelId.RANGED_POTION_I), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.HEALTH_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.UNCOMMON, "Max Health Potion I",
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.MAX_HEALTH_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.UNCOMMON, "Max Health Potion I",
                         List.of("Boosts small amount of your maximum health.", "Always good to have a few."), null, true, 1.0), toVersionedJson(new PotionMeta(2, 2,
-                        new StatsEffect("max-health-potion", 120, List.of(), List.of(new SkillModifier(SkillType.HITPOINTS, 3))), CustomModelId.RED_POTION_SMALL), 1)),
+                        new StatsEffect("max-health-potion", 120, List.of(), List.of(new SkillModifier(SkillType.HITPOINTS, 3, null))), CustomModelId.MAX_HP_POTION_I), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.STRENGTH_POTION_I.asInt(), Material.MILK_BUCKET, ItemRarity.UNCOMMON, "Strength Potion I",
                         List.of("Temporarily increases strength.", "Tear through enemies with ease."), null, true, 1.0), toVersionedJson(new PotionMeta(2, 2,
-                        new StatsEffect("strength-potion", 120, List.of(), List.of(new SkillModifier(SkillType.STRENGTH, 3))), CustomModelId.YELLOW_POTION_SMALL), 1)),
+                        new StatsEffect("strength-potion", 120, List.of(), List.of(new SkillModifier(SkillType.STRENGTH, 3, null))), CustomModelId.STRENGTH_POTION_I), 1)),
 
 
                 new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.DEFENCE_POTION_II.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Defence Potion II",
                         List.of("Increases your defense temporarily.", "Brewed by skilled alchemists."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
-                        new StatsEffect("defence-potion", 300, List.of(), List.of(new SkillModifier(SkillType.DEFENCE, 3))), CustomModelId.GREEN_POTION_MEDIUM), 1)),
+                        new StatsEffect("defence-potion", 240, List.of(), List.of(new SkillModifier(SkillType.DEFENCE, 5, null))), CustomModelId.DEFENCE_POTION_II), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.ATTACK_POTION_II.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Attack Potion II",
                         List.of("Boosts your attack power.", "Unleash your fury in battle."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
-                        new StatsEffect("attack-potion", 300, List.of(), List.of(new SkillModifier(SkillType.ATTACK, 3))), CustomModelId.BLUE_POTION_MEDIUM), 1)),
+                        new StatsEffect("attack-potion", 240, List.of(), List.of(new SkillModifier(SkillType.ATTACK, 5, null))), CustomModelId.ATTACK_POTION_II), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.RANGED_POTION_II.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Ranged Potion II",
                         List.of("Enhances your ranged abilities.", "A favorite among archers."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
-                        new StatsEffect("ranged-potion", 300, List.of(), List.of(new SkillModifier(SkillType.RANGED, 3))), CustomModelId.PURPLE_POTION_MEDIUM), 1)),
+                        new StatsEffect("ranged-potion", 240, List.of(), List.of(new SkillModifier(SkillType.RANGED, 5, null))), CustomModelId.RANGED_POTION_II), 1)),
 
-                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.HEALTH_POTION_II.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Max Health Potion II",
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.MAX_HEALTH_POTION_II.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Max Health Potion II",
                         List.of("Boosts small amount of your maximum health.", "Always good to have a few."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
-                        new StatsEffect("max-health-potion", 300, List.of(), List.of(new SkillModifier(SkillType.HITPOINTS, 3))), CustomModelId.RED_POTION_MEDIUM), 1)),
+                        new StatsEffect("max-health-potion", 240, List.of(), List.of(new SkillModifier(SkillType.HITPOINTS, 5, null))), CustomModelId.HEALTH_POTION_II), 1)),
 
                 new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.STRENGTH_POTION_II.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Strength Potion II",
                         List.of("Temporarily increases strength.", "Tear through enemies with ease."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
-                        new StatsEffect("strength-potion", 300, List.of(), List.of(new SkillModifier(SkillType.STRENGTH, 3))), CustomModelId.YELLOW_POTION_MEDIUM), 1)),
+                        new StatsEffect("strength-potion", 240, List.of(), List.of(new SkillModifier(SkillType.STRENGTH, 5, null))), CustomModelId.STRENGTH_POTION_II), 1)),
 
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.MINOR_HEALING_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.COMMON, "Minor Healing Potion",
+                        List.of("Restores a small amount of health.", "Basic healing for minor wounds."), null, true, 1.0), toVersionedJson(new PotionMeta(1, 1,
+                        new StatsEffect("healing-potion", 10, List.of(new Modifier(ModifierType.HEALTH_REGENERATION, 1)), List.of()), CustomModelId.MINOR_HEALING_POTION), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.SUPREME_ATTACK_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.EPIC, "Supreme Attack Potion",
+                        List.of("Greatly boosts your attack power.", "Unleash supreme fury in battle."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
+                        new StatsEffect("attack-potion", 300, List.of(), List.of(new SkillModifier(SkillType.ATTACK, 0, 10.0))), CustomModelId.SUPREME_ATTACK_POTION), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.SUPREME_STRENGTH_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.EPIC, "Supreme Strength Potion",
+                        List.of("Greatly increases strength temporarily.", "Tear through enemies with supreme power."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
+                        new StatsEffect("strength-potion", 300, List.of(), List.of(new SkillModifier(SkillType.STRENGTH, 0, 10.0))), CustomModelId.SUPREME_STRENGTH_POTION), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.SUPREME_DEFENCE_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.EPIC, "Supreme Defence Potion",
+                        List.of("Greatly increases your defence temporarily.", "Brewed by master alchemists."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
+                        new StatsEffect("defence-potion", 300, List.of(), List.of(new SkillModifier(SkillType.DEFENCE, 0, 10.0))), CustomModelId.SUPREME_DEFENCE_POTION), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.SUPREME_HEALTH_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.EPIC, "Supreme Health Potion",
+                        List.of("Boosts a large amount of your maximum health.", "The pinnacle of health enhancement."), null, true, 1.0), toVersionedJson(new PotionMeta(2, 2,
+                        new StatsEffect("healing-potion", 5, List.of(new Modifier(ModifierType.HEALTH_REGENERATION, 10)), List.of()), CustomModelId.SUPREME_HEALTH_POTION), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.SUPREME_RANGED_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.EPIC, "Supreme Ranged Potion",
+                        List.of("Greatly enhances your ranged abilities.", "For the ultimate archer."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
+                        new StatsEffect("ranged-potion", 300, List.of(new Modifier(ModifierType.ARROW_RECOVERY_PERCENT, 30)), List.of(new SkillModifier(SkillType.RANGED, 0, 10.0))), CustomModelId.SUPREME_RANGED_POTION), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.DRAGONS_MIGHT_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.EPIC, "Dragon's Might Potion",
+                        List.of("Harnesses the power of dragons.", "Feel the might of ancient beasts."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
+                        new StatsEffect("overload-potion", 300, List.of(), List.of(new SkillModifier(SkillType.ATTACK, 0, 20.0), new SkillModifier(SkillType.STRENGTH, 0, 20.0))), CustomModelId.DRAGONS_MIGHT_POTION), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.ETHEREAL_RESTORATION.asInt(), Material.MILK_BUCKET, ItemRarity.EPIC, "Ethereal Restoration",
+                        List.of("Restores energy from the ethereal plane.", "A mystical concoction."), null, true, 1.0), toVersionedJson(new PotionMeta(2, 2,
+                        new StatsEffect("healing-potion", 120, List.of(new Modifier(ModifierType.HEALTH_REGENERATION, 3)), List.of()), CustomModelId.ETHEREAL_RESTORATION), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.OVERLOAD_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.LEGENDARY, "Overload Potion",
+                        List.of("Overloads your combat abilities.", "Pushes your limits beyond normal."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
+                        new StatsEffect("overload-potion", 240, List.of(new Modifier(ModifierType.COMBAT_XP_BONUS_ADDITIVE, 0.10)), List.of(new SkillModifier(SkillType.ATTACK, 0, 15.0), new SkillModifier(SkillType.STRENGTH, 0, 15.0), new SkillModifier(SkillType.DEFENCE, 0, 15.0), new SkillModifier(SkillType.RANGED, 0, 15.0))), CustomModelId.OVERLOAD_POTION), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.ULTIMATE_POWER_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.MYTHIC, "Ultimate Power Potion",
+                        List.of("Unleashes ultimate power.", "The peak of alchemical achievement."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
+                        new StatsEffect("overload-potion", 300, List.of(new Modifier(ModifierType.COMBAT_XP_BONUS_ADDITIVE, 0.15)), List.of(new SkillModifier(SkillType.ATTACK, 0, 20.0), new SkillModifier(SkillType.STRENGTH, 0, 20.0), new SkillModifier(SkillType.DEFENCE, 0, 20.0), new SkillModifier(SkillType.RANGED, 0, 20.0))), CustomModelId.ULTIMATE_POWER_POTION), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.GATHERING_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Gathering Potion",
+                        List.of("Enhances your gathering abilities.", "Useful for resource collection."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
+                        new StatsEffect("gathering-potion", 300, List.of(new Modifier(ModifierType.GATHERING_LUCK, 25)), List.of()), CustomModelId.GATHERING_POTION), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.SKILLING_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Skilling Potion",
+                        List.of("Enchances your skilling learning abilities"), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
+                        new StatsEffect("skilling-potion", 300, List.of(new Modifier(ModifierType.SKILLING_XP_BONUS_ADDITIVE, 0.25)), List.of()), CustomModelId.SKILLING_POTION), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.COMBAT_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Combat Potion",
+                        List.of("Enhances your combat learning abilities."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
+                        new StatsEffect("combat-potion", 300, List.of(new Modifier(ModifierType.COMBAT_XP_BONUS_ADDITIVE, 0.25)), List.of()), CustomModelId.COMBAT_POTION), 1)),
+
+                new ItemEntity(new AbstractItemMeta(ItemType.POTION, ItemId.PRAYER_POTION.asInt(), Material.MILK_BUCKET, ItemRarity.RARE, "Prayer Potion",
+                        List.of("Restores prayer points.", "For the devout warrior."), null, true, 1.0), toVersionedJson(new PotionMeta(3, 3,
+                        new StatsEffect("prayer-potion", 5, List.of(new Modifier(ModifierType.PRAYER_REGENERATION, 8)), List.of()), CustomModelId.PRAYER_POTION), 1)),
 
                 // Tools
                 new ItemEntity(new AbstractItemMeta(ItemType.TOOL, ItemId.BRONZE_PICKAXE.asInt(), Material.WOODEN_PICKAXE, ItemRarity.COMMON, "Bronze Pickaxe", List.of("Bronze pickaxe, basic mining tool."), null, true, CRAFTED_ITEM_MULTIPLIER),

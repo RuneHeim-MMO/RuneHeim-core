@@ -35,6 +35,8 @@ import org.zuma.examplePlugin.domain.player.actions.ReactionBarAction;
 import org.zuma.examplePlugin.domain.recipe.IngredientRecord;
 import org.zuma.examplePlugin.domain.recipe.constants.RecipeType;
 import org.zuma.examplePlugin.domain.recipe.meta.AbstractRecipeMeta;
+import org.zuma.examplePlugin.domain.shop.ItemPriceCalculator;
+import org.zuma.examplePlugin.domain.shop.PriceRecord;
 import org.zuma.examplePlugin.domain.skill.SkillRequirement;
 import org.zuma.examplePlugin.domain.skill.SkillXpRecord;
 import org.zuma.examplePlugin.events.recipe.PlayerCraftingFinishEvent;
@@ -212,10 +214,22 @@ public abstract class AbstractRecipe implements Restrictable {
 
         if (ConfigManager.environment.equals(EnvironmentType.DEVELOPMENT)) {
             itemLore.add(Component.empty());
-            itemLore.add(Component.text("Dev status:", Color.SUCCESS.asColor()));
+            itemLore.add(Component.text("DEV ONLY:", Color.SUCCESS.asColor()));
             this.successXp.forEach(re -> {
                 itemLore.add(Component.text("+ " + re.xp() + " " + re.type().getLabel() + " XP", Color.SUCCESS.asColor()));
             });
+
+            itemLore.add(Component.empty());
+            if (successResult != null) {
+                PriceRecord price = ItemPriceCalculator.getPrice(successResult.getItemId());
+                if (price != null) {
+                    if (price.buyPrice() != null)
+                        itemLore.add(Component.text("Buy: ", Color.SUCCESS.asColor()).append(CurrencyUtils.getCoinsCurrencyComponent(price.buyPrice())));
+                    if (price.sellPrice() != null)
+                        itemLore.add(Component.text("Sell: ", Color.SUCCESS.asColor()).append(CurrencyUtils.getCoinsCurrencyComponent(price.sellPrice())));
+
+                }
+            }
         }
 
         meta.lore(itemLore.stream().map(lore -> lore.decoration(TextDecoration.ITALIC, false)).toList());

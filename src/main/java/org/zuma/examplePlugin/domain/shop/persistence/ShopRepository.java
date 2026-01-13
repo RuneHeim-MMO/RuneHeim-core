@@ -269,19 +269,37 @@ public class ShopRepository {
                 new ShopConfig(ShopId.DRAKKAR_TANNER_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, TANNER_SHOP)), 1)),
 
                 new ShopConfig(ShopId.ZARALI_HERBLORE_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
-                        new ShopItemConfig(ItemId.ATTACK_POTION_I.asInt(), 5, 120, 500L, null, null, null),
-                        new ShopItemConfig(ItemId.STRENGTH_POTION_I.asInt(), 5, 120, 500L, null, null, null),
-                        new ShopItemConfig(ItemId.RANGED_POTION_I.asInt(), 5, 120, 500L, null, null, null),
-                        new ShopItemConfig(ItemId.HEALTH_POTION_I.asInt(), 5, 120, 400L, null, null, null),
-                        new ShopItemConfig(ItemId.DEFENCE_POTION_I.asInt(), 5, 120, 400L, null, null, null)
+                        new ShopItemConfig(ItemId.SHEARS.asInt(), 8, 30, 35L, 10L, null, null),
+                        new ShopItemConfig(ItemId.KNIFE.asInt(), 4, 30, ItemId.KNIFE.getBuyPrice(), ItemId.KNIFE.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.EMPTY_VIAL.asInt(), 32, 30, ItemId.EMPTY_VIAL.getBuyPrice(), ItemId.EMPTY_VIAL.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.MOONSHADE.asInt(), 4, 120, ItemId.MOONSHADE.getBuyPrice(), ItemId.MOONSHADE.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.CRIMSON_THISTLE.asInt(), 2, 120, ItemId.CRIMSON_THISTLE.getBuyPrice(), ItemId.CRIMSON_THISTLE.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.SUNROOT_ESSENCE.asInt(), 3, 120, ItemId.SUNROOT_ESSENCE.getBuyPrice(), ItemId.SUNROOT_ESSENCE.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.MINOR_HEALING_POTION.asInt(), 5, 120, ItemId.MINOR_HEALING_POTION.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.DEFENCE_POTION_I.asInt(), 5, 120, ItemId.DEFENCE_POTION_I.getBuyPrice(), null, null, null)
                 ))), 1)),
 
                 new ShopConfig(ShopId.SWAMP_ISLAND_HERBLORE_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
-                        new ShopItemConfig(ItemId.ATTACK_POTION_I.asInt(), 5, 120, 500L, null, null, null),
-                        new ShopItemConfig(ItemId.STRENGTH_POTION_I.asInt(), 5, 120, 500L, null, null, null),
-                        new ShopItemConfig(ItemId.RANGED_POTION_I.asInt(), 5, 120, 500L, null, null, null),
-                        new ShopItemConfig(ItemId.HEALTH_POTION_I.asInt(), 5, 120, 400L, null, null, null),
-                        new ShopItemConfig(ItemId.DEFENCE_POTION_I.asInt(), 5, 120, 400L, null, null, null)
+                        new ShopItemConfig(ItemId.SHEARS.asInt(), 8, 30, 35L, 10L, null, null),
+                        new ShopItemConfig(ItemId.KNIFE.asInt(), 4, 30, ItemId.KNIFE.getBuyPrice(), ItemId.KNIFE.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.EMPTY_VIAL.asInt(), 16, 30, ItemId.EMPTY_VIAL.getBuyPrice(), ItemId.EMPTY_VIAL.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.SUNROOT.asInt(), 2, 120, ItemId.SUNROOT.getBuyPrice(), ItemId.SUNROOT.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.MOONSHADE_ESSENCE.asInt(), 3, 120, ItemId.MOONSHADE_ESSENCE.getBuyPrice(), ItemId.MOONSHADE_ESSENCE.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.VITALITY_ESSENCE.asInt(), 3, 120, ItemId.VITALITY_ESSENCE.getBuyPrice(), ItemId.VITALITY_ESSENCE.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.ATTACK_POTION_I.asInt(), 5, 120, ItemId.ATTACK_POTION_I.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.STRENGTH_POTION_I.asInt(), 5, 120, ItemId.STRENGTH_POTION_I.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.MAX_HEALTH_POTION_I.asInt(), 5, 120, ItemId.MAX_HEALTH_POTION_I.getBuyPrice(), null, null, null)
+                ))), 1)),
+                new ShopConfig(ShopId.THORNBARK_HERBLORE_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
+                        new ShopItemConfig(ItemId.SHEARS.asInt(), 8, 30, 35L, 10L, null, null),
+                        new ShopItemConfig(ItemId.KNIFE.asInt(), 4, 30, ItemId.KNIFE.getBuyPrice(), ItemId.KNIFE.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.EMPTY_VIAL.asInt(), 64, 30, ItemId.EMPTY_VIAL.getBuyPrice(), ItemId.EMPTY_VIAL.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.VITALITY_ESSENCE.asInt(), 3, 120, ItemId.VITALITY_ESSENCE.getBuyPrice(), ItemId.VITALITY_ESSENCE.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.GLOW_ESSENCE.asInt(), 2, 240, ItemId.GLOW_ESSENCE.getBuyPrice(), ItemId.GLOW_ESSENCE.getSellPrice(), null, null),
+                        new ShopItemConfig(ItemId.STRENGTH_POTION_I.asInt(), 5, 120, ItemId.STRENGTH_POTION_I.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.RANGED_POTION_I.asInt(), 5, 120, ItemId.RANGED_POTION_I.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.MINOR_HEALING_POTION.asInt(), 5, 120, ItemId.MINOR_HEALING_POTION.getBuyPrice(), null, null, null),
+                        new ShopItemConfig(ItemId.DEFENCE_POTION_I.asInt(), 5, 120, ItemId.DEFENCE_POTION_I.getBuyPrice(), null, null, null)
                 ))), 1)),
 
                 new ShopConfig(ShopId.DRAKKAR_SMELTERY_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
@@ -290,7 +308,36 @@ public class ShopRepository {
                         new ShopItemConfig(ItemId.MITHRIL_PICKAXE.asInt(), 1, 1800, ItemId.MITHRIL_PICKAXE.getBuyPrice(), ItemId.MITHRIL_PICKAXE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.MITHRIL_AXE.asInt(), 1, 1800, ItemId.MITHRIL_AXE.getBuyPrice(), ItemId.MITHRIL_AXE.getSellPrice(), null, null),
                         new ShopItemConfig(ItemId.MITHRIL_RING.asInt(), 1, 1800, ItemId.MITHRIL_RING.getBuyPrice(), ItemId.MITHRIL_RING.getSellPrice(), null, null)
+                ))), 1)),
+
+                new ShopConfig(ShopId.REFERRAL_REWARDS_SHOP.asInt(), new VersionedJson(gson.toJson(new ShopMeta(false, List.of(
+                        new ShopItemConfig(ItemId.SMALL_ITEM_BAG.asInt(), 5, 300, 1L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.MEDIUM_ITEM_BAG.asInt(), 3, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.LARGE_ITEM_BAG.asInt(), 2, 300, 3L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+
+                        new ShopItemConfig(ItemId.BRUTALITE_CORE.asInt(), 2, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.OBSIDIAN_BULWARK.asInt(), 2, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.BLADESTONE.asInt(), 2, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.ARCHERS_EMBER.asInt(), 2, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.FUSION_SCROLL.asInt(), 3, 300, 1L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+
+                        new ShopItemConfig(ItemId.FAIRY_ATTACK_UPGRADE.asInt(), 2, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.FAIRY_DEFENCE_UPGRADE.asInt(), 2, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.FAIRY_RANGE_UPGRADE.asInt(), 2, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.FAIRY_STRENGTH_UPGRADE.asInt(), 2, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.FAIRY_HITPOINTS_UPGRADE.asInt(), 2, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+
+                        new ShopItemConfig(ItemId.SNOW_WHITE_HORSE_MOUNT.asInt(), 2, 300, 1L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.DARK_BROWN_WARHORSE_MOUNT.asInt(), 1, 300, 3L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+
+                        new ShopItemConfig(ItemId.BULK_10_GENIE_XP_LAMP.asInt(), 8, 300, 1L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.BULK_10_PLATINUM_TOKEN.asInt(), 8, 300, 1L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.BULK_3_OVERLOAD_POTION.asInt(), 8, 300, 1L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.BULK_3_DRAGONS_MIGHT_POTION.asInt(), 8, 300, 1L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.BULK_3_ETHEREAL_RESTORATION.asInt(), 8, 300, 1L, null, ItemId.RECRUIT_TOKEN.asInt(), null),
+                        new ShopItemConfig(ItemId.BULK_3_ULTIMATE_POWER_POTION.asInt(), 8, 300, 2L, null, ItemId.RECRUIT_TOKEN.asInt(), null)
                 ))), 1))
+
 
         );
 

@@ -98,6 +98,7 @@ public class GUIHandler {
         this.registry.register(InventoryId.DRAKKAR_FOOD_STALL.asInt(), () -> new ShopInventory(GUIOverlay.FOOD_SHOP_OVERLAY.asGlyph() + "§f" + Icon.FRUIT.get() + "§f Food Stall", InventoryId.DRAKKAR_FOOD_STALL.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_BASIC_FOOD_STALL.asInt())));
         this.registry.register(InventoryId.DRAKKAR_GUARD_ARCHERY_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.ARCHERY_SHOP_OVERLAY.asGlyph() + "§f" + Icon.FRUIT.get() + "§f Town Archer", InventoryId.DRAKKAR_GUARD_ARCHERY_SHOP.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_GUARD_ARCHER_MERCHANT.asInt())));
         this.registry.register(InventoryId.QUESTS_LIST.asInt(), () -> new QuestsInventory(GUIOverlay.QUESTS_INVENTORY_OVERLAY.asGlyph() + "§f" + Icon.BOOK.get() + "§f Quests", InventoryId.QUESTS_LIST.asInt()));
+        this.registry.register(InventoryId.BREWING_CAULDRON.asInt(), () -> new BrewingCauldronInventory(GUIOverlay.BREWING_CAULDRON_OVERLAY.asGlyph() + "§f" + Icon.HERBLORE.get() + "§f Brewing Cauldron", InventoryId.BREWING_CAULDRON.asInt()));
 
 
         this.registry.register(InventoryId.MURKWATCH_ARCHERY_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.ARCHERY_SHOP_OVERLAY.asGlyph() + "§f" + Icon.ARROW.get() + "§f Archery Shop", InventoryId.MURKWATCH_ARCHERY_SHOP.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.MURKWATCH_ARCHERY_MERCHANT.asInt())));
@@ -128,6 +129,7 @@ public class GUIHandler {
         this.registry.register(InventoryId.DRAKKAR_TANNER_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.TANNER_SHOP_OVERLAY.asGlyph() + "§f" + Icon.LEATHER.get() + "§f Tanner Shop", InventoryId.DRAKKAR_TANNER_SHOP.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.DRAKKAR_TANNER_SHOP.asInt())));
         this.registry.register(InventoryId.ZARALI_HERBLORE_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.HERBLORE_SHOP_OVERLAY.asGlyph() + "§f" + Icon.HERBLORE.get() + "§f Herblore Shop", InventoryId.ZARALI_HERBLORE_SHOP.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.ZARALI_HERBLORE_SHOP.asInt())));
         this.registry.register(InventoryId.SWAMP_ISLAND_HERBLORE_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.HERBLORE_SHOP_OVERLAY.asGlyph() + "§f" + Icon.HERBLORE.get() + "§f Herblore Shop", InventoryId.SWAMP_ISLAND_HERBLORE_SHOP.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.SWAMP_ISLAND_HERBLORE_SHOP.asInt())));
+        this.registry.register(InventoryId.THORNBARK_HERBLORE_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.HERBLORE_SHOP_OVERLAY.asGlyph() + "§f" + Icon.HERBLORE.get() + "§f Herblore Shop", InventoryId.THORNBARK_HERBLORE_SHOP.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.THORNBARK_HERBLORE_SHOP.asInt())));
 
         this.registry.register(InventoryId.PRAYER_MENU.asInt(), () -> new PrayerMenu(GUIOverlay.PRAYER_MENU_OVERLAY.asGlyph() + "§f" + Icon.PRAYER.get() + "§b Prayer", InventoryId.PRAYER_MENU.asInt()));
         this.registry.register(InventoryId.PARTY_MENU.asInt(), () -> new PartyMenu(GUIOverlay.PARTY_MENU_OVERLAY.asGlyph() + "§f" + Icon.PARTY.get() + "§f Party", InventoryId.PARTY_MENU.asInt()));
@@ -148,6 +150,8 @@ public class GUIHandler {
         this.registry.register(InventoryId.HOUSE_SLOT_EDITOR.asInt(), () -> new HouseSlotEditor(GUIOverlay.HOUSE_SLOT_EDITOR_OVERLAY.asGlyph() + "§fEdit Slot", InventoryId.HOUSE_SLOT_EDITOR.asInt()));
 
         this.registry.register(InventoryId.BOT_VERIFICATION_MENU.asInt(), () -> new BotVerificationMenu(GUIOverlay.GENERIC_OVERLAY_6.asGlyph() + "§fAnti-Bot Verification", InventoryId.BOT_VERIFICATION_MENU.asInt()));
+        this.registry.register(InventoryId.REFERRAL_REWARDS_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.SHOP_OVERLAY.asGlyph() + "§f" + Icon.GUILD.get() + "§f Referral Rewards Shop", InventoryId.REFERRAL_REWARDS_SHOP.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.REFERRAL_REWARDS_SHOP.asInt())));
+        this.registry.register(InventoryId.REFERRALS_MENU.asInt(), () -> new ReferralsMenu(GUIOverlay.REFERRALS_MENU_OVERLAY.asGlyph() + "§f" + Icon.GUILD.get() + "§f Referrals", InventoryId.REFERRALS_MENU.asInt()));
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
     }

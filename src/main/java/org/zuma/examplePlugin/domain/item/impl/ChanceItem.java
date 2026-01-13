@@ -1,8 +1,10 @@
 package org.zuma.examplePlugin.domain.item.impl;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
@@ -39,7 +41,12 @@ public class ChanceItem extends AbstractItemType {
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player, StateManager itemStateManager) {
-        PlayerUtils.subtractOneFromMainHand(player);
+        boolean success = PlayerUtils.subtractOneFromMainHand(player);
+
+        if (!success) {
+            HudService.sendFailMessage(player, Component.text("Failed to consume item from your hand!", Color.ERROR.asColor()));
+            return;
+        }
 
         if (openSound != null) {
             openSound.play(player, true);

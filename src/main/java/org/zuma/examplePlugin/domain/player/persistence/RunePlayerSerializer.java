@@ -79,7 +79,8 @@ public class RunePlayerSerializer {
                 quiverData,
                 runePlayer.getBombsContainer(),
                 runePlayer.getSettings(),
-                runePlayer.getTrackedQuestId()
+                runePlayer.getTrackedQuestId(),
+                runePlayer.hasMentor()
         );
     }
 
@@ -119,6 +120,7 @@ public class RunePlayerSerializer {
                 player.setSettings(container.settings());
                 player.setTrackedQuestId(container.trackedQuestId());
                 player.setBotVerificationPending(playerDataDeserializedJsonContainer.isBotVerificationPending());
+                player.setHasMentor(container.hasMentor());
 
                 List<ItemStackSlotPair> inventory = ItemContainerContentSerializer.deserializeItemContainerContentSync(inventoryData);
                 List<ItemStackSlotPair> quiver = ItemContainerContentSerializer.deserializeItemContainerContentSync(quiverData);

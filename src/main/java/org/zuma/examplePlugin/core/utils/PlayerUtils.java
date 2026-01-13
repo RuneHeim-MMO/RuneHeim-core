@@ -243,22 +243,23 @@ public class PlayerUtils {
     }
 
 
-    public static void subtractOneFromMainHand(RunePlayer player) {
+    public static boolean subtractOneFromMainHand(RunePlayer player) {
         ItemStack item = player.asBukkitPlayer().getInventory().getItemInMainHand();
 
         if (item.getType().isAir()) {
-            return;
+            return false;
         }
 
         int amount = item.getAmount();
 
         if (amount <= 1) {
             player.asBukkitPlayer().getInventory().setItemInMainHand(null);
-            return;
+            return true;
         }
 
         item.setAmount(amount - 1);
         player.asBukkitPlayer().getInventory().setItemInMainHand(item);
+        return true;
 
     }
 

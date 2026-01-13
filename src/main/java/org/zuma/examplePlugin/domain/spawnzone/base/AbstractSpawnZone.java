@@ -52,6 +52,18 @@ public abstract class AbstractSpawnZone {
 
     }
 
+    public void handleChunkLoad() {
+        this.lastWaveAttemptOccurred = 0L;
+        this.lastWaveSpawnedAmount = 0;
+        clearAliveEntities();
+    }
+
+    public void handleChunkUnload() {
+        this.lastWaveAttemptOccurred = 0L;
+        this.lastWaveSpawnedAmount = 0;
+        clearAliveEntities();
+    }
+
     // IS MUTATED BY HANDLER!
     public Set<UUID> getSpawnedAndLoadedEntities() {
         return spawnedAndLoadedEntities;
@@ -87,19 +99,16 @@ public abstract class AbstractSpawnZone {
 
         while (iterator.hasNext()) {
             UUID uuid = iterator.next();
+            iterator.remove(); // Remove from set first to avoid concurrent modification
+
             Entity entity = Bukkit.getEntity(uuid);
-
-            iterator.remove();
-
             if (entity == null) {
                 continue;
             }
 
-            if (entity.isValid() || !entity.isDead()) {
+            if (entity.isValid() && !entity.isDead()) {
                 entity.remove();
             }
-
-
         }
     }
 
@@ -159,9 +168,16 @@ public abstract class AbstractSpawnZone {
                     continue;
                 }
 
-                this.lastWaveSpawnedAmount++;
-                spawnedEntity.getPersistentDataContainer().set(SpawnZoneHandler.ZONE_KEY, PersistentDataType.INTEGER, this.id);
-                spawnedAndLoadedEntities.add(spawnedEntity.getUniqueId());
+
+                if (spawnedEntity.isValid() && !spawnedEntity.isDead()) {
+                    this.lastWaveSpawnedAmount++;
+                    spawnedEntity.getPersistentDataContainer().set(SpawnZoneHandler.ZONE_KEY, PersistentDataType.INTEGER, this.id);
+
+                    // Double-check the entity is still valid before adding to tracking set
+                    if (spawnedEntity.isValid()) {
+                        spawnedAndLoadedEntities.add(spawnedEntity.getUniqueId());
+                    }
+                }
             }
         });
 
@@ -188,7 +204,10 @@ public abstract class AbstractSpawnZone {
         while (iterator.hasNext()) {
             UUID uuid = iterator.next();
             Entity entity = Bukkit.getEntity(uuid);
-            if (entity == null) continue;
+            if (entity == null) {
+                iterator.remove();
+                continue;
+            }
 
             if (!entity.isValid() || entity.isDead()) {
                 iterator.remove();

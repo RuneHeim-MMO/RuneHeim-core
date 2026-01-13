@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.housing.instance;
 
 import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -9,6 +10,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
@@ -19,6 +21,7 @@ import org.zuma.examplePlugin.domain.housing.HousingManager;
 import org.zuma.examplePlugin.domain.housing.records.HouseFurnitureEntry;
 import org.zuma.examplePlugin.domain.housing.records.HouseSlot;
 import org.zuma.examplePlugin.domain.housing.template.TemplateMeta;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.FurnitureItem;
@@ -142,7 +145,14 @@ public class HouseEditModeManager {
         );
 
         RuneQuestPlugin.getHousingManager().getInstanceCreator().placeFurnitureItem(clickedSlot, instance, face, furniture.id, slotIndex);
-        PlayerUtils.subtractOneFromMainHand(player);
+
+        boolean success = PlayerUtils.subtractOneFromMainHand(player);
+
+        if (!success) {
+            HudService.sendFailMessage(player, Component.text("Failed to consume item from your hand!", Color.ERROR.asColor()));
+            return;
+        }
+
         furnitureMap.put(slotIndex, newEntry);
         SoundType.PLACE_BLOCK_GENERIC.play(player, true);
         clickedHologram.delete();

@@ -102,7 +102,7 @@ public class Shop {
             throw new IllegalStateException("This item is untradeable!");
         }
 
-        if (!this.buyAll && !stock.containsKey(type.id)) {
+        if (!type.isSellableToShop() || (!this.buyAll && !stock.containsKey(type.id))) {
             throw new IllegalStateException("You cannot sell this item to this shop!");
         }
 
@@ -111,7 +111,7 @@ public class Shop {
         if (this.buyAll && !stock.containsKey(type.id)) {
             PriceRecord algorithmicSellPrice = ItemPriceCalculator.getPrice(type);
 
-            if (algorithmicSellPrice == null || algorithmicSellPrice.sellPrice() == null) {
+            if (algorithmicSellPrice == null || algorithmicSellPrice.sellPrice() == null || algorithmicSellPrice.sellPrice() <= 0) {
                 throw new IllegalStateException("You cannot sell this item to this shop!");
             }
         } else {
@@ -214,12 +214,6 @@ public class Shop {
         }
 
         long totalOrderPrice = item.getBuyPrice() * amount;
-        item.setCurrentStock(item.getCurrentStock() - amount);
-
-        if (item.isTemporaryItem() && item.getCurrentStock() == 0) {
-            // Remove temporary item from shop when out of stock
-            stock.remove(item.getItemId());
-        }
 
         if (item.getBuyCurrency() != null) {
             boolean currencyDeductSuccess = PlayerUtils.removeItems(player, List.of(new ItemRecord(item.getBuyCurrency().id, Math.toIntExact(totalOrderPrice))));
@@ -236,6 +230,13 @@ public class Shop {
 
             player.setPouchCoins(player.getPouchCoins() - totalOrderPrice, false);
             AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.COINS_SPENT, totalOrderPrice);
+        }
+
+        item.setCurrentStock(item.getCurrentStock() - amount);
+
+        if (item.isTemporaryItem() && item.getCurrentStock() == 0) {
+            // Remove temporary item from shop when out of stock
+            stock.remove(item.getItemId());
         }
 
         player.giveItemOrDrop(type.createItemStackOfType(amount));

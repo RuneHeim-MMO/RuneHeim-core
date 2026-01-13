@@ -41,6 +41,7 @@ public class PlayerXpHandler {
     @Nullable
     private SkillType lastXPGainedSkillType;
     private BukkitTask debouncedXPBubbleTask;
+
     public PlayerXpHandler(RunePlayer player) {
         this.player = player;
         this.lastXPGainedSkillType = null;
@@ -209,16 +210,9 @@ public class PlayerXpHandler {
         if (nextXp >= XpUtils.getXpForLevel(skill.getBaseLevel() + 1)) {
             availableRecipesBeforeLevelUp = RuneQuestPlugin.getRecipeHandler().getAvailableRecipesNumber(player);
             leveledUp = true;
-
-            RunePlayerLevelUpEvent levelUpEvent = new RunePlayerLevelUpEvent(player, type, XpUtils.getCappedLevel(skill.getBaseLevel() + 1), source);
-            Bukkit.getServer().getPluginManager().callEvent(levelUpEvent);
-
-            if (levelUpEvent.isCancelled()) {
-                return;
-            }
         }
 
-
+        int oldLevel = skill.getBaseLevel();
         scheduleXPBubble(type, xp, source, totalMultiplier);
         skill.addXp(xp);
 
@@ -241,6 +235,9 @@ public class PlayerXpHandler {
             EffectHandler.playAt(() -> player.asBukkitPlayer().getLocation(), new LevelUpEffect(player.asBukkitPlayer(), skill));
             player.setCombatLvl(XpUtils.getCombatLevelFromSkills(player.getSkills()));
             player.getActionBar().showLevelUp(skill, availableRecipesAfterLevelUp - availableRecipesBeforeLevelUp);
+            RunePlayerLevelUpEvent levelUpEvent = new RunePlayerLevelUpEvent(player, type, oldLevel, XpUtils.getCappedLevel(skill.getBaseLevel()), source);
+            Bukkit.getServer().getPluginManager().callEvent(levelUpEvent);
+
         }
 
         HudService.updateVanillaGUI(player);

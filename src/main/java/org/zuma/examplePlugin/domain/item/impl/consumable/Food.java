@@ -1,9 +1,11 @@
 package org.zuma.examplePlugin.domain.item.impl.consumable;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
@@ -51,7 +53,13 @@ public class Food extends AbstractItemType {
             return;
         }
 
-        PlayerUtils.subtractOneFromMainHand(player);
+        boolean success = PlayerUtils.subtractOneFromMainHand(player);
+
+        if (!success) {
+            HudService.sendFailMessage(player, Component.text("Failed to consume item from your hand!", Color.ERROR.asColor()));
+            return;
+        }
+
         player.setHealth(healthAfterEating, RunePlayerHealthChangedEvent.Cause.HEALING);
         HudService.showHealBubble(player, healedAmount);
         AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.FOOD_CONSUMED, 1);

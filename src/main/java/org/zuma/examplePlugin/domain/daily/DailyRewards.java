@@ -18,7 +18,7 @@ import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.constants.ItemRarity;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-import org.zuma.examplePlugin.events.DailyMegaRareClaimEvent;
+import org.zuma.examplePlugin.events.drops.DailyMegaRareClaimEvent;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -80,7 +80,7 @@ public class DailyRewards {
 
         if (MEGA_RARE_TIERS.contains(type.rarity)) {
             EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new DailyRarePrizeClaim(player));
-            Bukkit.getPluginManager().callEvent(new DailyMegaRareClaimEvent(new DailyMegaRareClaimEvent.Payload(player.asBukkitPlayer().getName(), type.displayName, type.rarity, amount)));
+            Bukkit.getPluginManager().callEvent(new DailyMegaRareClaimEvent(new DailyMegaRareClaimEvent.Payload(player.asBukkitPlayer().getName(), type.displayName, type.rarity, amount, currentStreak)));
             AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.DAILY_MEGA_RARES_CLAIMED, 1);
         }
 

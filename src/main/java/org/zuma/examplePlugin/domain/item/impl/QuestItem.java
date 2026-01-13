@@ -18,6 +18,7 @@ public class QuestItem extends AbstractItemType {
     public QuestItem(AbstractItemMeta meta) {
         super(meta);
         super.setTypeLore("Quest Item", Icon.BOOK.get());
+        this.setSellableToShop(false);
     }
 
     public void setQuestId(String id) {

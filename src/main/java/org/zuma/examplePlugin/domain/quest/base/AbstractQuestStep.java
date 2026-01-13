@@ -63,6 +63,30 @@ public abstract class AbstractQuestStep implements Listener {
         this.handleStepCompletion();
     }
 
+
+    public void forceFinishQuest() {
+        if (owner == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot advance " + parentQuest.getId() + " quest. Owner is not present.");
+            return;
+        }
+
+        Player bukkitPlayer = plugin.getServer().getPlayer(owner);
+
+        if (bukkitPlayer == null || !bukkitPlayer.isOnline()) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot advance " + parentQuest.getId() + " quest. Owner is offline.");
+            return;
+        }
+
+        RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(bukkitPlayer);
+
+        if (runePlayer == null) {
+            RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Cannot advance " + parentQuest.getId() + " quest. Owners RunePlayer instance is null (Still loading?).");
+            return;
+        }
+
+        parentQuest.handleCompletion(runePlayer);
+    }
+
     protected void handleStepCompletion() {
         HandlerList.unregisterAll(this);
 

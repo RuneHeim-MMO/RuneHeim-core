@@ -15,7 +15,7 @@ import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.territory.Territory;
-import org.zuma.examplePlugin.events.DailyMegaRareClaimEvent;
+import org.zuma.examplePlugin.events.drops.DailyMegaRareClaimEvent;
 
 import javax.annotation.Nullable;
 import java.util.List;

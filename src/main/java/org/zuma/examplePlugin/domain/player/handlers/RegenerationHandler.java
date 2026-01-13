@@ -10,6 +10,7 @@ import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
+import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.events.player.RunePlayerHealthChangedEvent;
 
 import java.util.HashMap;
@@ -17,22 +18,23 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
-public class HPRegenerationHandler {
-    private final static int LOOP_TICK_DELAY_SECONDS = 3;
+public class RegenerationHandler {
+    private final static int HP_LOOP_TICK_DELAY_SECONDS = 3;
     private final static int HEAL_DELAY_SECONDS = 5;
 
     private final HashMap<UUID, Long> lastHeals;
     private final RunePlayerManager manager;
     private BukkitTask loop;
 
-    public HPRegenerationHandler(RunePlayerManager manager) {
+    public RegenerationHandler(RunePlayerManager manager) {
         this.lastHeals = new HashMap<>();
         this.manager = manager;
     }
 
     public void startLoop() {
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "HP Regeneration loop started.");
-        loop = Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::loopTick, 0L, LOOP_TICK_DELAY_SECONDS * 20L);
+        loop = Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::loopTick, 0L, HP_LOOP_TICK_DELAY_SECONDS * 20L);
+        Bukkit.getScheduler().runTaskTimer(RuneQuestPlugin.getInstance(), this::modifierTick, 0L, 20L);
     }
 
     public void cleanUp() {
@@ -40,6 +42,30 @@ public class HPRegenerationHandler {
             loop.cancel();
             loop = null;
             RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "HP Regeneration loop stopped.");
+        }
+    }
+
+    private void modifierTick() {
+        for (RunePlayer player : manager.getOnlinePlayers()) {
+            if (player.getModifiers().containsKey(ModifierType.HEALTH_REGENERATION)) {
+                double amount = player.getModifiers().get(ModifierType.HEALTH_REGENERATION).amount();
+
+                if (player.getHealth() < player.getMaxHealth()) {
+                    int newHp = (int) Math.min(player.getHealth() + amount, player.getMaxHealth());
+                    player.setHealth(newHp, RunePlayerHealthChangedEvent.Cause.REGENERATION);
+                    AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.HP_RESTORED, amount);
+                }
+
+            }
+
+            if (player.getModifiers().containsKey(ModifierType.PRAYER_REGENERATION)) {
+                double amount = player.getModifiers().get(ModifierType.PRAYER_REGENERATION).amount();
+
+                if (player.getPrayerEnergy() < player.getSkill(SkillType.PRAYER).getLevelWithBonuses()) {
+                    double newPrayer = Math.min(player.getPrayerEnergy() + amount, player.getSkill(SkillType.PRAYER).getLevelWithBonuses());
+                    player.setPrayerEnergy(newPrayer);
+                }
+            }
         }
     }
 

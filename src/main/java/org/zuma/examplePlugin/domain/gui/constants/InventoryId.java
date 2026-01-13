@@ -71,7 +71,11 @@ public enum InventoryId {
     QUIVER_INVENTORY(59), // Not used within GUI system, but kept here to avoid ID conflicts
     SAHARIJIN_JEWELER(60),
     GLACIEM_AXE_SHOP(61),
-    GLACIEM_WEAPON_SHOP(62);
+    GLACIEM_WEAPON_SHOP(62),
+    BREWING_CAULDRON(63),
+    THORNBARK_HERBLORE_SHOP(64),
+    REFERRAL_REWARDS_SHOP(65),
+    REFERRALS_MENU(66);
 
 
     private final int id;

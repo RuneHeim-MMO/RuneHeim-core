@@ -21,6 +21,7 @@ import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.states.TravelMode;
 import org.zuma.examplePlugin.domain.player.states.TravelStateHandler;
+import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 import org.zuma.examplePlugin.events.dialog.QuestStepToBeCompleted;
 
@@ -103,8 +104,19 @@ public class ScriptedActionHandler {
                     Bukkit.getServer().getPluginManager().callEvent(new QuestStepToBeCompleted(player.getUUID(), stableId));
 
                 }
+                case FORCE_FINISH_QUEST -> {
+                    String id = args.get("id");
+                    AbstractQuestStep questsStep = player.getActiveQuestSteps().get(id);
+
+                    if (questsStep == null) {
+                        throw new IllegalStateException("Cannot finish " + player.asBukkitPlayer().getName() + " quest! No active steps with that ID found.");
+                    }
+
+                    questsStep.forceFinishQuest();
+                }
                 case CLEAR_INVENTORY -> {
                     player.asBukkitPlayer().getInventory().clear();
+                    RuneQuestPlugin.getAdditionalGearSlotHandler().checkReservedSlotsValidity(player);
                 }
                 case TRAVEL_SEQUENCE -> {
                     World world = Bukkit.getWorld(args.get("world"));

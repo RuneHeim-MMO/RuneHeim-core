@@ -38,6 +38,7 @@ public abstract class AbstractItemType {
     public final List<Component> typeLore;
     public final List<String> descriptionLore;
     public final boolean isTradeable;
+    private boolean isSellableToShop;
     @Nullable
     public final String headTexture;
     public final NamespacedKey untradeableOwnerUUIDKey = PersistenceDataKey.UNTRADEABLE_OWNER_UUID.key(RuneQuestPlugin.getInstance());
@@ -65,6 +66,7 @@ public abstract class AbstractItemType {
         this.stateType = null;
         this.typeLore = new ArrayList<>();
         this.descriptionLore = new ArrayList<>();
+        this.isSellableToShop = true;
 
         if (meta.lore() != null) {
             this.descriptionLore.addAll(meta.lore());
@@ -214,5 +216,13 @@ public abstract class AbstractItemType {
 
     public double getCraftPriceMultiplier() {
         return craftPriceMultiplier;
+    }
+
+    public boolean isSellableToShop() {
+        return isSellableToShop;
+    }
+
+    public void setSellableToShop(boolean sellableToShop) {
+        isSellableToShop = sellableToShop;
     }
 }

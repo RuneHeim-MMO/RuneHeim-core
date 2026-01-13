@@ -1,5 +1,6 @@
 package org.zuma.examplePlugin.domain.item.impl;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -8,9 +9,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.RayTraceResult;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
@@ -28,6 +31,7 @@ public class EmptyContainer extends AbstractItemType {
     public EmptyContainer(AbstractItemMeta meta, List<EmptyContainerConfig> config) {
         super(meta);
         super.setTypeLore("Container", Icon.BUCKET.get());
+        this.setBasePrice(50);
 
         config.forEach(entry -> resultMap.put(entry.type, entry.resultItemId));
     }
@@ -51,7 +55,13 @@ public class EmptyContainer extends AbstractItemType {
             return;
         }
 
-        PlayerUtils.subtractOneFromMainHand(player);
+        boolean success = PlayerUtils.subtractOneFromMainHand(player);
+
+        if (!success) {
+            HudService.sendFailMessage(player, Component.text("Failed to consume item from your hand!", Color.ERROR.asColor()));
+            return;
+        }
+
         ItemStack newItem = filled.createItemStackOfType();
         player.giveItemOrDrop(newItem);
     }

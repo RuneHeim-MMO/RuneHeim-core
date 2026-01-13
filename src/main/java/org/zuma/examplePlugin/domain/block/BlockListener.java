@@ -9,13 +9,13 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.InventoryHolder;
 import org.zuma.examplePlugin.RuneQuestPlugin;
-import org.zuma.examplePlugin.core.handlers.game.BotVerificationHandler;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.base.ModelledInteractableBlock;
@@ -130,7 +130,7 @@ public class BlockListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onChunkLoad(ChunkLoadEvent event) {
-        List<AbstractInteractableBlock> blocks = this.manager.getBlocksByChunk().get(event.getChunk());
+        List<AbstractInteractableBlock> blocks = this.manager.getBlocksByChunk().get(event.getChunk().getChunkKey());
 
         if (blocks != null) {
             blocks.forEach(block -> {
@@ -140,5 +140,14 @@ public class BlockListener implements Listener {
             });
         }
 
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onBlockPhysics(BlockPhysicsEvent event) {
+        Block block = event.getBlock();
+
+        if (block.hasMetadata("no_physics")) {
+            event.setCancelled(true);
+        }
     }
 }
