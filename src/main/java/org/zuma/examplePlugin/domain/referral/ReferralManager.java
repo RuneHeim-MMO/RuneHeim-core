@@ -233,9 +233,11 @@ public class ReferralManager implements Listener {
             int menteeTotalLevel = mentee.getSkills().values().stream().mapToInt(Skill::getBaseLevel).sum();
 
             if (menteeTotalLevel >= MENTEE_REWARD_THRESHOLD_LEVEL) {
-                HudService.sendFailMessage(mentee, Component.text("You cannot set a mentor after reaching total level ", Color.ERROR.asColor())
-                        .append(Component.text(MENTEE_REWARD_THRESHOLD_LEVEL, Color.ACCENT.asColor()))
-                        .append(Component.text(".", Color.ERROR.asColor())));
+                Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
+                    HudService.sendFailMessage(mentee, Component.text("You cannot set a mentor after reaching total level ", Color.ERROR.asColor())
+                            .append(Component.text(MENTEE_REWARD_THRESHOLD_LEVEL, Color.ACCENT.asColor()))
+                            .append(Component.text(".", Color.ERROR.asColor())));
+                });
                 return;
             }
 

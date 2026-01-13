@@ -229,8 +229,6 @@ public class ReferralsMenu extends PaginatedIndividualGUI {
 
         String menuValue = getMenuValueStr(currentItem);
 
-        System.out.println(menuValue);
-
         if (menuValue == null) {
             return;
         }
