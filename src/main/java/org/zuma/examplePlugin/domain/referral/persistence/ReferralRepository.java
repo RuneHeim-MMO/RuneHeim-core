@@ -3,6 +3,7 @@ package org.zuma.examplePlugin.domain.referral.persistence;
 import org.zuma.examplePlugin.core.database.HikariPool;
 import org.zuma.examplePlugin.core.utils.XpUtils;
 import org.zuma.examplePlugin.domain.referral.ReferralEntry;
+import org.zuma.examplePlugin.domain.referral.ReferralManager;
 
 import javax.annotation.Nullable;
 import java.sql.Connection;
@@ -240,6 +241,12 @@ public class ReferralRepository {
                 WHERE mentor_uuid = ? AND mentee_uuid = ? AND mentor_reward_claimed = FALSE
                 """;
 
+        int totalLevel = this.getPlayerTotalLevel(menteeUUID);
+
+        if (totalLevel < ReferralManager.MENTEE_REWARD_THRESHOLD_LEVEL) {
+            throw new IllegalStateException("Mentee did not reach threshold level.");
+        }
+
         try (Connection conn = pool.getDataSource().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -261,6 +268,12 @@ public class ReferralRepository {
                 SET mentee_reward_claimed = TRUE
                 WHERE mentee_uuid = ? AND mentor_uuid = ? and mentee_reward_claimed = FALSE
                 """;
+
+        int totalLevel = this.getPlayerTotalLevel(menteeUUID);
+
+        if (totalLevel < ReferralManager.MENTEE_REWARD_THRESHOLD_LEVEL) {
+            throw new IllegalStateException("Mentee did not reach threshold level.");
+        }
 
         try (Connection conn = pool.getDataSource().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

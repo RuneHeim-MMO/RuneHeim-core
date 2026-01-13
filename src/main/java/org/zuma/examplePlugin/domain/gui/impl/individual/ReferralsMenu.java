@@ -1,6 +1,7 @@
 package org.zuma.examplePlugin.domain.gui.impl.individual;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -17,6 +18,9 @@ import org.zuma.examplePlugin.domain.gui.base.PaginatedIndividualGUI;
 import org.zuma.examplePlugin.domain.gui.constants.GUIControl;
 import org.zuma.examplePlugin.domain.head.HeadGenerator;
 import org.zuma.examplePlugin.domain.hud.HudService;
+import org.zuma.examplePlugin.domain.item.ItemRecord;
+import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.referral.ReferralEntry;
 import org.zuma.examplePlugin.domain.referral.ReferralManager;
@@ -24,7 +28,6 @@ import org.zuma.examplePlugin.domain.skill.Skill;
 
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class ReferralsMenu extends PaginatedIndividualGUI {
@@ -34,7 +37,28 @@ public class ReferralsMenu extends PaginatedIndividualGUI {
     private boolean isLoading = true;
 
     public ReferralsMenu(String title, int id) {
-        super(title, id, 6, Set.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56));
+        super(title, id, 6, Set.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56));
+    }
+
+    private List<Component> getRewards(List<ItemRecord> rewards) {
+        List<Component> rewardComponents = new ArrayList<>();
+        if (rewards.isEmpty()) {
+            rewardComponents.add(Component.text("No rewards available.", Color.ITEM_LORE_DESCRIPTION.asColor()));
+            return rewardComponents;
+        }
+
+        for (ItemRecord reward : rewards) {
+            AbstractItemType type = RuneQuestPlugin.getItemRegistry().getType(reward.getItemId());
+
+
+            if (type == null) {
+                continue;
+            }
+
+            TextColor color = reward.getItemId() == ItemId.COINS.asInt() ? Color.ACCENT.asColor() : TextColor.fromHexString(type.rarity.getHexColor());
+            rewardComponents.add(Component.text("- " + reward.getAmount() + "x " + type.displayName, color));
+        }
+        return rewardComponents;
     }
 
     private void updateInventory(RunePlayer player, Runnable onFail, Runnable onSuccess) {
@@ -45,19 +69,28 @@ public class ReferralsMenu extends PaginatedIndividualGUI {
             RuneQuestPlugin.getReferralManager().getMenteesForMentor(player.getUUID(), (mentees) -> {
                 RuneQuestPlugin.getReferralManager().getPlayersMentor(player, mentorEntry -> {
                     HashMap<Integer, ItemStack> overrides = new HashMap<>();
-                    this.playersMentor = mentorEntry;
-
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy HH:mm");
-
                     List<ItemStack> items = new ArrayList<>();
-                    AtomicInteger index = new AtomicInteger(8); // Starting row for mentees
+                    this.playersMentor = mentorEntry;
 
                     mentees.forEach(mentee -> {
                         Player menteePlayer = Bukkit.getPlayer(mentee.menteeUUID());
                         boolean isOnline = menteePlayer != null && menteePlayer.isOnline();
-                        boolean menteeReachedLevel = mentee.totalLevel() > ReferralManager.MINIMUM_TOTAL_LEVEL_REWARD; // Player who is a mentee has reached the reward claim condition
+                        boolean menteeReachedLevel = mentee.totalLevel() >= ReferralManager.MENTEE_REWARD_THRESHOLD_LEVEL; // Player who is a mentee has reached the reward claim condition
+                        boolean canClaimReward = menteeReachedLevel && !mentee.isMentorRewardClaimed();
 
-                        ItemStack item = isOnline ? HeadGenerator.getPlayerHead(menteePlayer) : new ItemStack(Material.SKELETON_SKULL);
+                        ItemStack item;
+
+                        if (canClaimReward) {
+                            item = GUIControl.CLAIM_BUTTON.asItemstack();
+                        } else {
+                            if (!isOnline) {
+                                item = new ItemStack(Material.SKELETON_SKULL);
+                            } else {
+                                item = HeadGenerator.getPlayerHead(menteePlayer);
+                            }
+                        }
+
                         ItemMeta meta = item.getItemMeta();
                         meta.displayName(Component.text(mentee.menteeUsername(), Color.SUCCESS.asColor()).decoration(TextDecoration.ITALIC, false));
 
@@ -66,32 +99,45 @@ public class ReferralsMenu extends PaginatedIndividualGUI {
                         lore.add(Component.empty());
                         lore.add(Icon.LEVEL.asComponent().append(Component.text("Total Level: ").append(Component.text(mentee.totalLevel(), Color.ACCENT.asColor()))));
                         lore.add(Icon.AGE.asComponent().append(Component.text("Started mentoring at: ").append(Component.text(mentee.creationDate().toLocalDateTime().format(formatter), Color.ACCENT.asColor()))));
-                        meta.lore(lore.stream().map(c -> c.decoration(TextDecoration.ITALIC, false)).toList());
-                        item.setItemMeta(meta);
-
-
-                        ItemStack actionButton = null;
-
 
                         if (!menteeReachedLevel) {
-                            actionButton = GUIControl.NO.asItemstack(Component.text("Ineligible for Reward", Color.ERROR.asColor()), List.of(Component.text("This mentee has not reached the required total level of " + ReferralManager.MINIMUM_TOTAL_LEVEL_REWARD + " yet.", Color.ITEM_LORE_DESCRIPTION.asColor())));
+                            lore.add(Icon.QUESTION_MARK.asComponent().append(Component.text("Status: ").append(Component.text("Ineligible for Reward", Color.ERROR.asColor()))));
+
+                            lore.add(Component.empty());
+                            lore.add(Component.text("Rewards at the threshold: ", Color.ITEM_LORE_DESCRIPTION.asColor()));
+                            lore.addAll(getRewards(ReferralManager.MENTORING_REWARDS));
+
+                            lore.add(Component.empty());
+                            lore.add(Component.text("This mentee has not reached the required total level of " + ReferralManager.MENTEE_REWARD_THRESHOLD_LEVEL + " yet.", Color.ITEM_LORE_DESCRIPTION.asColor()));
                         }
 
-                        if (menteeReachedLevel && !mentee.isMentorRewardClaimed()) {
-                            actionButton = GUIControl.YES.asItemstack(Icon.GREEN_GEM.asComponent().append(Component.text("Claim Reward", Color.SUCCESS.asColor())), List.of(Component.text("Click to claim your reward for", Color.ITEM_LORE_DESCRIPTION.asColor()), Component.text(mentee.menteeUsername() + "'s referral.", Color.ITEM_LORE_DESCRIPTION.asColor())));
-                            assignMenuValue(actionButton, "claim_mentor_reward_" + mentee.menteeUUID());
+                        if (canClaimReward) {
+                            lore.add(Icon.QUESTION_MARK.asComponent().append(Component.text("Status: ").append(Component.text("Claim Reward", Color.SUCCESS.asColor()))));
+
+                            lore.add(Component.empty());
+                            lore.add(Component.text("Unclaimed rewards: ", Color.ITEM_LORE_DESCRIPTION.asColor()));
+                            lore.addAll(getRewards(ReferralManager.MENTORING_REWARDS));
+
+                            lore.add(Component.empty());
+                            lore.addAll(List.of(Component.text("Click to claim your reward for", Color.ITEM_LORE_DESCRIPTION.asColor()), Component.text(mentee.menteeUsername() + "'s referral.", Color.ITEM_LORE_DESCRIPTION.asColor())));
                         }
 
                         if (menteeReachedLevel && mentee.isMentorRewardClaimed()) {
-                            actionButton = GUIControl.NO.asItemstack(Component.text("Reward Claimed", Color.SUCCESS.asColor()), List.of(Component.text("You have already claimed your reward for", Color.ITEM_LORE_DESCRIPTION.asColor()), Component.text(mentee.menteeUsername() + "'s referral.", Color.ITEM_LORE_DESCRIPTION.asColor())));
+                            lore.add(Icon.QUESTION_MARK.asComponent().append(Component.text("Status: ").append(Component.text("Reward Claimed", Color.SUCCESS.asColor()))));
+
+                            lore.add(Component.empty());
+                            lore.addAll(List.of(Component.text("You have already claimed your reward for", Color.ITEM_LORE_DESCRIPTION.asColor()), Component.text(mentee.menteeUsername() + "'s referral.", Color.ITEM_LORE_DESCRIPTION.asColor())));
                         }
 
 
-                        // TODO: FIX overflowing bug!
-                        items.add(item);
-                        index.getAndIncrement();
-                        overrides.put(index.get() + 9, actionButton);
+                        meta.lore(lore.stream().map(c -> c.decoration(TextDecoration.ITALIC, false)).toList());
+                        item.setItemMeta(meta);
 
+                        if (canClaimReward) {
+                            assignMenuValue(item, "claim_mentor_reward_" + mentee.menteeUUID());
+                        }
+
+                        items.add(item);
                     });
 
                     ItemStack item = HeadGenerator.getPlayerHead(player.asBukkitPlayer());
@@ -108,11 +154,15 @@ public class ReferralsMenu extends PaginatedIndividualGUI {
                         lore.add(Icon.AGE.asComponent().append(Component.text("Obtained mentorship: ").append(Component.text(playersMentor.creationDate().toLocalDateTime().format(formatter), Color.ACCENT.asColor()))));
 
                         if (!playersMentor.isMenteeRewardClaimed()) {
-                            ItemStack claimMentorRewardButton = GUIControl.YES.asItemstack(Component.text("Claim Reward", Color.SUCCESS.asColor()), List.of(Component.text("Click to claim your reward.", Color.ITEM_LORE_DESCRIPTION.asColor())));
+                            ItemStack claimMentorRewardButton = GUIControl.CLAIM_BUTTON.asItemstack(Component.text("Claim Reward", Color.SUCCESS.asColor()), List.of(Component.text("Click to claim your reward.", Color.ITEM_LORE_DESCRIPTION.asColor())));
                             assignMenuValue(claimMentorRewardButton, "claim_mentee_reward");
                             overrides.put(PLAYER_BUTTON_SLOT, claimMentorRewardButton);
 
                             lore.add(Component.empty());
+                            lore.add(Component.text("Unclaimed rewards: ", Color.ITEM_LORE_DESCRIPTION.asColor()));
+                            lore.addAll(getRewards(ReferralManager.MENTEE_REWARDS));
+                            lore.add(Component.empty());
+
                             lore.add(Icon.GREEN_GEM.asComponent().append(Component.text("You have a reward to claim!", Color.SUCCESS.asColor())));
                         } else {
                             lore.add(Component.empty());
@@ -152,8 +202,8 @@ public class ReferralsMenu extends PaginatedIndividualGUI {
     public boolean attemptOpenInventory(RunePlayer player, Runnable onFail) {
         int totalLevel = player.getSkills().values().stream().mapToInt(Skill::getBaseLevel).sum();
 
-        if (totalLevel < ReferralManager.MINIMUM_TOTAL_LEVEL_REWARD) {
-            HudService.sendFailMessage(player, Component.text("You need a total level of at least " + ReferralManager.MINIMUM_TOTAL_LEVEL_REWARD + " to access the be able to refer players."));
+        if (totalLevel < ReferralManager.MENTEE_REWARD_THRESHOLD_LEVEL) {
+            HudService.sendFailMessage(player, Component.text("You need a total level of at least " + ReferralManager.MENTEE_REWARD_THRESHOLD_LEVEL + " to be able to refer players."));
             return false;
         }
 
@@ -178,6 +228,8 @@ public class ReferralsMenu extends PaginatedIndividualGUI {
         }
 
         String menuValue = getMenuValueStr(currentItem);
+
+        System.out.println(menuValue);
 
         if (menuValue == null) {
             return;

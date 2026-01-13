@@ -121,6 +121,7 @@ public enum Icon {
     MOUNT("⺲"),
     REMAINS("⊪"),
     NAME_TAG("ↈ"),
+    QUESTION_MARK("？"),
 
     GREEN_GEM("⮩"),
 

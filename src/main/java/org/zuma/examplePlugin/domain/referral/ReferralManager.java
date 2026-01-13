@@ -17,6 +17,7 @@ import org.zuma.examplePlugin.domain.skill.Skill;
 import org.zuma.examplePlugin.events.player.RunePlayerLevelUpEvent;
 import org.zuma.examplePlugin.events.player.RunePlayerLoadedEvent;
 import org.zuma.examplePlugin.events.referral.ReferralReachedThresholdEvent;
+import org.zuma.examplePlugin.events.referral.ReferralSetEvent;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,9 +26,15 @@ import java.util.UUID;
 import java.util.function.Consumer;
 
 public class ReferralManager implements Listener {
-    public static final int MINIMUM_TOTAL_LEVEL_REWARD = 25;
-    private static final List<ItemRecord> mentorRewards = List.of(new ItemRecord(ItemId.RECRUIT_TOKEN, 1));
-    private static final List<ItemRecord> menteeRewards = List.of(new ItemRecord(ItemId.COINS, 5000));
+    public static final int MENTEE_REWARD_THRESHOLD_LEVEL = 150;
+
+    public static final List<ItemRecord> MENTORING_REWARDS = List.of(
+            new ItemRecord(ItemId.RECRUIT_TOKEN, 1), new ItemRecord(ItemId.COINS, 2500));
+
+    public static final List<ItemRecord> MENTEE_REWARDS = List.of(
+            new ItemRecord(ItemId.COINS, 5000),
+            new ItemRecord(ItemId.COMBAT_POTION, 2),
+            new ItemRecord(ItemId.SKILLING_POTION, 2));
 
     private final ReferralRepository referralRepository;
 
@@ -40,7 +47,7 @@ public class ReferralManager implements Listener {
             try {
                 List<ReferralEntry> mentees = referralRepository.getMenteesForMentor(player.getUUID());
                 List<String> unclaimedUsernames = mentees.stream()
-                        .filter(entry -> !entry.isMentorRewardClaimed() && entry.totalLevel() >= MINIMUM_TOTAL_LEVEL_REWARD)
+                        .filter(entry -> !entry.isMentorRewardClaimed() && entry.totalLevel() >= MENTEE_REWARD_THRESHOLD_LEVEL)
                         .map(ReferralEntry::menteeUsername)
                         .toList();
 
@@ -48,7 +55,7 @@ public class ReferralManager implements Listener {
                     String menteeList = String.join(", ", unclaimedUsernames);
                     Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                         HudService.sendSuccessMessage(player, Component.text("You have referral rewards to claim for the following mentees who reached total level ", Color.SUCCESS.asColor())
-                                .append(Component.text(MINIMUM_TOTAL_LEVEL_REWARD, Color.ACCENT.asColor()))
+                                .append(Component.text(MENTEE_REWARD_THRESHOLD_LEVEL, Color.ACCENT.asColor()))
                                 .append(Component.text(": ", Color.SUCCESS.asColor()))
                                 .append(Component.text(menteeList, Color.ACCENT.asColor()))
                                 .append(Component.text(". Please visit ", Color.SUCCESS.asColor()))
@@ -62,10 +69,10 @@ public class ReferralManager implements Listener {
                 if (playersMentor != null && !playersMentor.isMenteeRewardClaimed()) {
                     int playerTotalLevel = player.getSkills().values().stream().mapToInt(Skill::getBaseLevel).sum();
 
-                    if (playerTotalLevel >= MINIMUM_TOTAL_LEVEL_REWARD) {
+                    if (playerTotalLevel >= MENTEE_REWARD_THRESHOLD_LEVEL) {
                         Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                             HudService.sendSuccessMessage(player, Component.text("You have an unclaimed reward for reaching total level ", Color.SUCCESS.asColor())
-                                    .append(Component.text(MINIMUM_TOTAL_LEVEL_REWARD, Color.ACCENT.asColor()))
+                                    .append(Component.text(MENTEE_REWARD_THRESHOLD_LEVEL, Color.ACCENT.asColor()))
                                     .append(Component.text(". Please visit ", Color.SUCCESS.asColor()))
                                     .append(Component.text("Sundering Hand Member", Color.ACCENT.asColor()))
                                     .append(Component.text(" to claim it.", Color.SUCCESS.asColor())));
@@ -104,7 +111,7 @@ public class ReferralManager implements Listener {
 
         int after = before + event.getLevelDelta();
 
-        if (before < MINIMUM_TOTAL_LEVEL_REWARD && after >= MINIMUM_TOTAL_LEVEL_REWARD) {
+        if (before < MENTEE_REWARD_THRESHOLD_LEVEL && after >= MENTEE_REWARD_THRESHOLD_LEVEL) {
             HudService.sendSuccessMessage(
                     player,
                     Component.text("You have reached a total level of ", Color.SUCCESS.asColor())
@@ -145,35 +152,11 @@ public class ReferralManager implements Listener {
     public void getMenteesForMentor(UUID mentorUUID, Consumer<List<ReferralEntry>> cb) {
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
             try {
-                List<ReferralEntry> pagination = new ArrayList<>();
                 List<ReferralEntry> mentees = referralRepository.getMenteesForMentor(mentorUUID);
-
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
-                pagination.addAll(mentees);
 
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
                     List<ReferralEntry> sortedMentees = mentees.stream().sorted((a, b) -> Boolean.compare(a.isMentorRewardClaimed(), b.isMentorRewardClaimed())).toList();
-                    cb.accept(pagination);
+                    cb.accept(sortedMentees);
                 });
             } catch (SQLException e) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN,
@@ -219,7 +202,7 @@ public class ReferralManager implements Listener {
                 }
 
                 Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), () -> {
-                    List<ItemRecord> rewards = isMentor ? mentorRewards : menteeRewards;
+                    List<ItemRecord> rewards = isMentor ? MENTORING_REWARDS : MENTEE_REWARDS;
                     rewards.forEach(claimedBy::giveItemOrDrop);
 
                     HudService.sendSuccessMessage(claimedBy,
@@ -240,7 +223,7 @@ public class ReferralManager implements Listener {
                     HudService.sendFailMessage(claimedBy, Component.text(e.getMessage()));
                 });
             } finally {
-                finallyCb.run();
+                Bukkit.getScheduler().runTask(RuneQuestPlugin.getInstance(), finallyCb::run);
             }
         });
     }
@@ -249,9 +232,9 @@ public class ReferralManager implements Listener {
         Bukkit.getScheduler().runTaskAsynchronously(RuneQuestPlugin.getInstance(), () -> {
             int menteeTotalLevel = mentee.getSkills().values().stream().mapToInt(Skill::getBaseLevel).sum();
 
-            if (menteeTotalLevel >= MINIMUM_TOTAL_LEVEL_REWARD) {
+            if (menteeTotalLevel >= MENTEE_REWARD_THRESHOLD_LEVEL) {
                 HudService.sendFailMessage(mentee, Component.text("You cannot set a mentor after reaching total level ", Color.ERROR.asColor())
-                        .append(Component.text(MINIMUM_TOTAL_LEVEL_REWARD, Color.ACCENT.asColor()))
+                        .append(Component.text(MENTEE_REWARD_THRESHOLD_LEVEL, Color.ACCENT.asColor()))
                         .append(Component.text(".", Color.ERROR.asColor())));
                 return;
             }
@@ -269,8 +252,8 @@ public class ReferralManager implements Listener {
 
                 int totalLevel = referralRepository.getPlayerTotalLevel(matchingPlayer);
 
-                if (totalLevel < MINIMUM_TOTAL_LEVEL_REWARD) {
-                    throw new IllegalStateException("The player " + mentorUsername + " does not meet the minimum total level requirement of " + MINIMUM_TOTAL_LEVEL_REWARD + " to be a mentor.");
+                if (totalLevel < MENTEE_REWARD_THRESHOLD_LEVEL) {
+                    throw new IllegalStateException("The player " + mentorUsername + " does not meet the minimum total level requirement of " + MENTEE_REWARD_THRESHOLD_LEVEL + " to be a mentor.");
                 }
 
                 referralRepository.addPlayerAsMentor(matchingPlayer, mentee.getUUID());
@@ -280,9 +263,17 @@ public class ReferralManager implements Listener {
                             Component.text("You have successfully set ", Color.SUCCESS.asColor())
                                     .append(Component.text(mentorUsername, Color.ACCENT.asColor()))
                                     .append(Component.text(" as your mentor! You can now earn rewards when you reach total level ", Color.SUCCESS.asColor()))
-                                    .append(Component.text(MINIMUM_TOTAL_LEVEL_REWARD, Color.ACCENT.asColor()))
+                                    .append(Component.text(MENTEE_REWARD_THRESHOLD_LEVEL, Color.ACCENT.asColor()))
                                     .append(Component.text(".", Color.SUCCESS.asColor()))
                     );
+
+                    ReferralSetEvent redisEvent = new ReferralSetEvent(new ReferralSetEvent.Payload(
+                            mentee.getUUID(),
+                            matchingPlayer,
+                            mentee.asBukkitPlayer().getName()
+                    ));
+
+                    Bukkit.getPluginManager().callEvent(redisEvent);
                 });
             } catch (SQLException e) {
                 RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN,
@@ -331,13 +322,33 @@ public class ReferralManager implements Listener {
             return;
         }
 
-        player.asBukkitPlayer().sendMessage(Component.text("Your mentee ", Color.SUCCESS.asColor())
+        HudService.sendSuccessMessage(player, Component.text("Your mentee ", Color.SUCCESS.asColor())
                 .append(Component.text(menteeUsername, Color.ACCENT.asColor()))
                 .append(Component.text(" has reached total level ", Color.SUCCESS.asColor()))
-                .append(Component.text(MINIMUM_TOTAL_LEVEL_REWARD, Color.ACCENT.asColor()))
+                .append(Component.text(MENTEE_REWARD_THRESHOLD_LEVEL, Color.ACCENT.asColor()))
                 .append(Component.text("! You can claim your reward from ", Color.SUCCESS.asColor()))
                 .append(Component.text("Sundering Hand Member", Color.ACCENT.asColor()))
                 .append(Component.text(".", Color.SUCCESS.asColor())));
+
+        SoundType.NOTIFICATION.play(player, false);
+    }
+
+    public void notifyMentorOfNewMentee(UUID mentorUUID, String menteeUsername) {
+        RunePlayer player = RuneQuestPlugin.getPlayerManager().getRunePlayer(mentorUUID);
+
+        if (player == null) {
+            return;
+        }
+
+        HudService.sendSuccessMessage(player, Component.text("").append(
+                Component.text(menteeUsername, Color.ACCENT.asColor())
+                        .append(Component.text(" has chosen you as their ", Color.SUCCESS.asColor()))
+                        .append(Component.text("mentor", Color.ACCENT.asColor()))
+                        .append(Component.text("! Help them learn the game. Once they reach total level ", Color.SUCCESS.asColor()))
+                        .append(Component.text(MENTEE_REWARD_THRESHOLD_LEVEL, Color.ACCENT.asColor()))
+                        .append(Component.text(", you will both receive rewards.", Color.SUCCESS.asColor())))
+        );
+
         SoundType.NOTIFICATION.play(player, false);
     }
 }
