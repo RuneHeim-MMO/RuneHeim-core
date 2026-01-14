@@ -75,6 +75,7 @@ public class ResourceNode extends AbstractInteractableBlock {
         this.origin = meta.location();
         this.manager = manager;
         this.perfectStrikeCooldownHandler = new CooldownHandler();
+        this.isPersistent = true;
     }
 
     @Override
