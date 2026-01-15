@@ -24,6 +24,7 @@ import org.zuma.examplePlugin.domain.combat.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.combat.constants.ProjectileType;
 import org.zuma.examplePlugin.domain.mob.MobRegistry;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
+import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.territory.Territory;
@@ -89,8 +90,15 @@ public class HitListener implements Listener {
     public void onEntityAttackEntityMelee(EntityDamageByEntityEvent event) {
         Entity defenderEntity = event.getEntity();
         double initialDamage = event.getDamage();
+
         event.setDamage(0);
 
+        AbstractMob abstractMob = RuneQuestPlugin.getMobRegistry().getMob(defenderEntity);
+
+        if (abstractMob instanceof CombatantMob combatant && combatant.isInvulnerable()) {
+            event.setCancelled(true);
+            return;
+        }
 
         if (event.getDamager() instanceof Player attackerPlayer && (defenderEntity instanceof ArmorStand || !(defenderEntity instanceof LivingEntity))) {
             boolean isAllowed = PlayerUtils.canPlayerManipulateWorld(attackerPlayer);
@@ -147,6 +155,13 @@ public class HitListener implements Listener {
         }
 
         event.setDamage(0);
+
+        AbstractMob abstractMob = RuneQuestPlugin.getMobRegistry().getMob(defenderEntity);
+
+        if (abstractMob instanceof CombatantMob combatant && combatant.isInvulnerable()) {
+            event.setCancelled(true);
+            return;
+        }
 
         if (defenderEntity instanceof AbstractHorse horse && !horse.getPassengers().isEmpty()) {
             defenderEntity = horse.getPassengers().getFirst();

@@ -37,10 +37,10 @@ public class HerbloreManager {
         if (lastPopTime == null) {
             return true;
         }
-        
+
         long timeSinceLastPop = currentTimeTicks - lastPopTime;
         boolean canRepopulate = timeSinceLastPop >= CHUNK_REPOPULATION_INTERVAL_TICKS;
-        
+
         return canRepopulate;
     }
 
@@ -93,6 +93,7 @@ public class HerbloreManager {
     public void populateChunk(Chunk chunk) {
         FertileBlock[] validBlocks = getValidBlocksForGrowth(chunk);
         int plantAmount = chunkPopulatedBlocks.computeIfAbsent(chunk.getChunkKey(), k -> new ArrayList<>()).size();
+        List<PopulatedBlock> populatedBlockList = populator.populateChunk(chunk, validBlocks, plantCandidates, this::deletePopulatedBlock, plantAmount);
 
         for (PopulatedBlock populatedBlock : populatedBlockList) {
             chunkPopulatedBlocks.computeIfAbsent(chunk.getChunkKey(), k -> new ArrayList<>()).add(populatedBlock.key());
@@ -102,6 +103,8 @@ public class HerbloreManager {
     public void deletePopulatedBlock(long chunkKey, String blockKey) {
         if (chunkPopulatedBlocks.containsKey(chunkKey)) {
             List<String> storedKeys = chunkPopulatedBlocks.computeIfAbsent(chunkKey, k -> new ArrayList<>());
+            storedKeys.remove(blockKey);
+        }
     }
 
     private FertileBlock[] getValidBlocksForGrowth(Chunk chunk) {

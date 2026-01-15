@@ -44,6 +44,7 @@ public class CityGuardMob extends GenericCombatant {
         setPlayerDisguise("guard_1");
         setMaxWalkDistance(walkingDistance);
         setBaseEntity(EntityType.IRON_GOLEM);
+        setInvulnerable(true);
         setSilent(false);
         disengage();
     }
