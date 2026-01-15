@@ -5,9 +5,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.zuma.examplePlugin.RuneQuestPlugin;
+import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
@@ -196,6 +198,7 @@ public class ReferralManager implements Listener {
 
             try {
                 if (isMentor) {
+                    AnalyticsUtils.incrementServerAndPlayer(claimedBy, AnalyticsKey.MENTOR_REWARDS_CLAIMED, 1);
                     referralRepository.claimMentorReward(mentorUUID, menteeUUID);
                 } else {
                     referralRepository.claimMenteeReward(menteeUUID, mentorUUID);
