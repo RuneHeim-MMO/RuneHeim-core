@@ -84,7 +84,6 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         }
     }
 
-
     public CombatantMob overrideBaseToSkeleton() {
         this.setBaseEntity(EntityType.SKELETON);
         setClearDefaultHandsEquipment(false); // Keep bow in hand

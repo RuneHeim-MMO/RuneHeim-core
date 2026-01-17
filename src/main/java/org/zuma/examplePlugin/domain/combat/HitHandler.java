@@ -19,6 +19,7 @@ import org.zuma.examplePlugin.domain.effect.EffectHandler;
 import org.zuma.examplePlugin.domain.effect.effects.SpecialAttackSmokeEffect;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
+import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.events.combat.RuneEntityDamageEntityEvent;
@@ -90,8 +91,8 @@ public class HitHandler {
         for (Entity entity : nearbyEntities) {
             AbstractMob matchingMob = RuneQuestPlugin.getMobRegistry().getMob(entity);
 
-
             if (!(matchingMob instanceof CombatEntity combatMob)) continue;
+            if (matchingMob.isInvulnerable()) continue;
             if (combatMob.equals(originalDefender)) continue; // skip original target
 
             Vector toEntity = entity.getLocation().toVector().subtract(eyeLocation.toVector());

@@ -14,7 +14,7 @@ import java.util.*;
 import java.util.function.Function;
 
 public class HerbloreManager {
-    private final static long CHUNK_REPOPULATION_INTERVAL_TICKS = 60 * 20L * 10; // 10 minutes in ticks
+    private final static long CHUNK_REPOPULATION_INTERVAL_TICKS = 10 * 20L * 60; // 10 minutes in ticks
     public final ChunkPlantPopulator populator;
 
     private final Map<Long, FertileBlock[]> validGrowthBlocks;
@@ -34,7 +34,14 @@ public class HerbloreManager {
         Long lastPopTime = populator.getChunkLastPopulationTime(chunk); // stored in ticks
         long currentTimeTicks = System.currentTimeMillis() / 50L; // ms -> ticks
 
-        return lastPopTime == null || (currentTimeTicks - lastPopTime) >= CHUNK_REPOPULATION_INTERVAL_TICKS;
+        if (lastPopTime == null) {
+            return true;
+        }
+
+        long timeSinceLastPop = currentTimeTicks - lastPopTime;
+        boolean canRepopulate = timeSinceLastPop >= CHUNK_REPOPULATION_INTERVAL_TICKS;
+
+        return canRepopulate;
     }
 
     private void tryPopulateActiveChunks() {

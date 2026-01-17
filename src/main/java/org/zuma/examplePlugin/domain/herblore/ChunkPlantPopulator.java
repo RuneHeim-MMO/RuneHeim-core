@@ -65,7 +65,8 @@ public class ChunkPlantPopulator {
     public List<PopulatedBlock> populateChunk(Chunk chunk, FertileBlock[] validBlocks, List<PlantRecord> candidates, BiConsumer<Long, String> handleDelete, int inChunk) {
         List<PopulatedBlock> populatedBlocks = new java.util.ArrayList<>();
         double chunkNoise = noiseGen.GetNoise(chunk.getX() * 5f, chunk.getZ() * 5f);
-        lastChunkPopulationTimes.put(chunk.getChunkKey(), System.currentTimeMillis());
+        // Store time in ticks to match the comparison in HerbloreManager
+        lastChunkPopulationTimes.put(chunk.getChunkKey(), System.currentTimeMillis() / 50L);
 
         if (inChunk >= MAX_PLANTS_PER_CHUNK) {
             return populatedBlocks;

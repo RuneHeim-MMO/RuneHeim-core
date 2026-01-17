@@ -89,8 +89,13 @@ public class HitListener implements Listener {
     public void onEntityAttackEntityMelee(EntityDamageByEntityEvent event) {
         Entity defenderEntity = event.getEntity();
         double initialDamage = event.getDamage();
+
         event.setDamage(0);
 
+        if (defenderEntity.isInvulnerable()) {
+            event.setCancelled(true);
+            return;
+        }
 
         if (event.getDamager() instanceof Player attackerPlayer && (defenderEntity instanceof ArmorStand || !(defenderEntity instanceof LivingEntity))) {
             boolean isAllowed = PlayerUtils.canPlayerManipulateWorld(attackerPlayer);
@@ -147,6 +152,11 @@ public class HitListener implements Listener {
         }
 
         event.setDamage(0);
+
+        if (defenderEntity.isInvulnerable()) {
+            event.setCancelled(true);
+            return;
+        }
 
         if (defenderEntity instanceof AbstractHorse horse && !horse.getPassengers().isEmpty()) {
             defenderEntity = horse.getPassengers().getFirst();
