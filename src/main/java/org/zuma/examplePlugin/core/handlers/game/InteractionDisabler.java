@@ -90,7 +90,8 @@ public class InteractionDisabler implements Listener {
             "/youtube",
             "/support",
             "/map",
-            "/togglelock"
+            "/togglelock",
+            "/mentor"
     };
 
     public void disableTourViewPermission() {
