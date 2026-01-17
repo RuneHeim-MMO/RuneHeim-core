@@ -4,7 +4,10 @@ package org.zuma.examplePlugin.features.admin.commands;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -148,23 +151,12 @@ public class AdminCommand implements BasicCommand {
             item.getMetaGenerator().updatePresentationLayer(itemStack);
         }
 
-
-        if (args.length == 1 && Objects.equals(args[0], "chunk")) {
-            Chunk playerChunk = player.getChunk();
-            int playerChunkX = playerChunk.getX();
-            int playerChunkZ = playerChunk.getZ();
-            int radius = 10; // Adjust radius to get ~50 chunks
-
-            for (int dx = -radius; dx <= radius; dx++) {
-                for (int dz = -radius; dz <= radius; dz++) {
-                    Chunk chunk = player.getWorld().getChunkAt(playerChunkX + dx, playerChunkZ + dz);
-                    RuneQuestPlugin.getHerbloreManager().populateChunk(chunk);
-                }
-            }
+        if (args.length == 1 && Objects.equals(args[0], "nearby")) {
+            player.sendMessage(RuneQuestPlugin.getHerbloreManager().getPlantsInRadius(player.getChunk(), 2) + " plants in 5x5 chunks.");
         }
 
-        if (args.length == 1 && Objects.equals(args[0], "growthblocks")) {
-            RuneQuestPlugin.getHerbloreManager().printGrowthBlocksAmount();
+        if (args.length == 1 && Objects.equals(args[0], "plants")) {
+            player.sendMessage("Tracking total " + RuneQuestPlugin.getHerbloreManager().getTotalPlants() + " plants.");
         }
 
         if (args.length == 2 && Objects.equals(args[0], "pouch") && TypeUtils.isInteger(args[1])) {

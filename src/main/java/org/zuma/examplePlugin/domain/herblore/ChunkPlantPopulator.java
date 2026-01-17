@@ -24,6 +24,8 @@ import java.util.function.BiConsumer;
 
 public class ChunkPlantPopulator {
     private static final int MAX_PLANTS_PER_CHUNK = 1;
+    public final static int MAX_PLANTS_IN_NEIGHBORS = 2; // Max plants in 5x5 chunk area (Kind of broken, overlaps with other chunks, but prevents overpopulation)
+
     private final FastNoiseLite noiseGen;
     private final HashMap<Long, Long> lastChunkPopulationTimes;
 
@@ -69,6 +71,12 @@ public class ChunkPlantPopulator {
         lastChunkPopulationTimes.put(chunk.getChunkKey(), System.currentTimeMillis() / 50L);
 
         if (inChunk >= MAX_PLANTS_PER_CHUNK) {
+            return populatedBlocks;
+        }
+
+        int totalPlants = RuneQuestPlugin.getHerbloreManager().getPlantsInRadius(chunk, 2); // 5x5 area
+
+        if (totalPlants >= MAX_PLANTS_IN_NEIGHBORS) {
             return populatedBlocks;
         }
 
