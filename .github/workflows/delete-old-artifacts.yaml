@@ -1,0 +1,51 @@
+name: Delete Old Artifacts
+
+on:
+  schedule:
+    - cron: '0 0 * * 0' # every Sunday at midnight UTC
+  workflow_dispatch:
+    branches:
+      - main
+      - development
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete Old Artifacts Except Latest
+        uses: actions/github-script@v6
+        with:
+          script: |
+            // List all artifacts
+            const res = await github.rest.actions.listArtifactsForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })
+
+            const artifacts = res.data.artifacts
+
+            if (artifacts.length <= 1) {
+              console.log("Nothing to delete, only one or zero artifacts exist.")
+            } else {
+              // Sort by creation date descending (latest first)
+              artifacts.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+
+              // Skip the first one (latest), delete the rest
+              const toDelete = artifacts.slice(1)
+
+              await Promise.all(
+                toDelete.map(({ id, name }) => 
+                  github.rest.actions.deleteArtifact({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    artifact_id: id,
+                  }).then(() => console.log(`Deleted artifact: ${name}`))
+                )
+              )
+
+              console.log(`Deleted ${toDelete.length} old artifact(s).`)
+            }
