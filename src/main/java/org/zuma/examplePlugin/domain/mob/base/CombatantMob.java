@@ -46,7 +46,7 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
     private RuneProjectile projectileType = new RuneProjectile(ProjectileType.RANGED, EntityType.ARROW, 2);
     private int health, maxHealth;
     private long lastDamagedAt;
-    private boolean isSpecialAttacking, isInvulnerable;
+    private boolean isSpecialAttacking;
 
     public CombatantMob(CombatantMobMeta meta) {
         super(new AbstractMobMeta(true, true, false, Component.empty(), meta.baseEntity()));
@@ -82,16 +82,6 @@ public abstract class CombatantMob extends AbstractMob implements CombatEntity {
         if (meta.disguiseType() != null) {
             setDisguise(meta.disguiseType());
         }
-    }
-
-    @Override
-    public boolean isInvulnerable() {
-        return isInvulnerable;
-    }
-
-    @Override
-    public void setInvulnerable(boolean invulnerable) {
-        isInvulnerable = invulnerable;
     }
 
     public CombatantMob overrideBaseToSkeleton() {

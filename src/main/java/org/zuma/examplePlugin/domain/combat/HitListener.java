@@ -24,7 +24,6 @@ import org.zuma.examplePlugin.domain.combat.constants.PersistenceDataKey;
 import org.zuma.examplePlugin.domain.combat.constants.ProjectileType;
 import org.zuma.examplePlugin.domain.mob.MobRegistry;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
-import org.zuma.examplePlugin.domain.mob.base.CombatantMob;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.domain.territory.Territory;
@@ -93,9 +92,7 @@ public class HitListener implements Listener {
 
         event.setDamage(0);
 
-        AbstractMob abstractMob = RuneQuestPlugin.getMobRegistry().getMob(defenderEntity);
-
-        if (abstractMob instanceof CombatantMob combatant && combatant.isInvulnerable()) {
+        if (defenderEntity.isInvulnerable()) {
             event.setCancelled(true);
             return;
         }
@@ -156,9 +153,7 @@ public class HitListener implements Listener {
 
         event.setDamage(0);
 
-        AbstractMob abstractMob = RuneQuestPlugin.getMobRegistry().getMob(defenderEntity);
-
-        if (abstractMob instanceof CombatantMob combatant && combatant.isInvulnerable()) {
+        if (defenderEntity.isInvulnerable()) {
             event.setCancelled(true);
             return;
         }

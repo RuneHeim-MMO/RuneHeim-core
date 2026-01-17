@@ -92,7 +92,7 @@ public class HitHandler {
             AbstractMob matchingMob = RuneQuestPlugin.getMobRegistry().getMob(entity);
 
             if (!(matchingMob instanceof CombatEntity combatMob)) continue;
-            if (matchingMob instanceof CombatantMob combatant && combatant.isInvulnerable()) continue;
+            if (matchingMob.isInvulnerable()) continue;
             if (combatMob.equals(originalDefender)) continue; // skip original target
 
             Vector toEntity = entity.getLocation().toVector().subtract(eyeLocation.toVector());
