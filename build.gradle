@@ -35,7 +35,6 @@ repositories {
 build.dependsOn shadowJar
 
 dependencies {
-    compileOnly group: 'me.libraryaddict.disguises', name: 'libsdisguises', version: '11.0.9'
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
     compileOnly("com.github.decentsoftware-eu:decentholograms:2.8.17")
     compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.3.11'
@@ -49,6 +48,7 @@ dependencies {
     compileOnly files('libs/ProtocolLib.jar')
     compileOnly files('libs/ModelEngine-4.0.8.jar')
     compileOnly files("libs/ServerTours-2.1.8.jar")
+    compileOnly files("libs/LibsDisguises-11.0.14.jar")
 }
 
 
