@@ -25,6 +25,7 @@ public class ReactionBarAction implements InteractiveActionStrategy, Listener {
     private boolean isCancelled, isSuccess;
     private int arrowPosition = -1;
     private UUID uuid = null;
+
     public ReactionBarAction() {
         this.isCancelled = false;
     }
@@ -36,7 +37,7 @@ public class ReactionBarAction implements InteractiveActionStrategy, Listener {
 
         int redSegments = 6;
         int yellowSegments = 2;
-        int greenSegments = random.nextInt((2 - 1) + 1) + 1;
+        int greenSegments = 3;
         int totalSegments = redSegments + yellowSegments + greenSegments;
         int stepDurationTicks = random.nextInt((7 - 4) + 1) + 4; // 4..7 inclusive
         int randomOffset = random.nextInt(totalSegments); // 0..totalSegments-1
