@@ -8,7 +8,7 @@ import org.zuma.examplePlugin.domain.recipe.meta.AbstractRecipeMeta;
 
 public class SpinningWheelRecipe extends AbstractRecipe {
     public SpinningWheelRecipe(ItemStack displayItemstack, AbstractRecipeMeta meta) {
-        super(displayItemstack, new AbstractRecipeMeta(meta.id(), RecipeType.SPINNING_WHEEL_RECIPE, meta.craftTimeMs(), meta.requirements(), meta.ingredients(), meta.successResult(), meta.failResult(), meta.successXp(), meta.cost()));
+        super(displayItemstack, new AbstractRecipeMeta(meta.id(), RecipeType.SPINNING_WHEEL_RECIPE, meta.craftTimeMs(), meta.requirements(), meta.ingredients(), meta.successResult(), meta.failResult(), meta.successXp(), meta.cost(), meta.requiredStartedQuestIds(), meta.requiredCompletedQuestIds()));
     }
 
     @Override
