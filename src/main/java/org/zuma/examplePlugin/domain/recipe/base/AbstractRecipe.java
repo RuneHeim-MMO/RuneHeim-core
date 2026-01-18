@@ -360,6 +360,7 @@ public abstract class AbstractRecipe implements Restrictable {
         Optional<Component> blockReason = getCraftBlockReason(player, times);
         if (blockReason.isPresent()) {
             if (player.hasPendingActions()) player.cancelActionTask(true);
+            handleRecipeCraftingAborted(player);
             HudService.sendFailMessage(player, blockReason.get());
             return;
         }
