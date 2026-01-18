@@ -149,6 +149,12 @@ public abstract class AbstractItemType {
         customModelData = id.asInt();
     }
 
+    public void setItemStackCustomModelData(ItemStack item, CustomModelId id) {
+        ItemMeta meta = item.getItemMeta();
+        meta.setCustomModelData(id.asInt());
+        item.setItemMeta(meta);
+    }
+
     public boolean isTradeable() {
         return this.isTradeable;
     }

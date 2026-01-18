@@ -46,6 +46,7 @@ public enum GUIOverlay {
     QUIVER_OVERLAY("⟠"),
     BREWING_CAULDRON_OVERLAY("⤈"),
     REFERRALS_MENU_OVERLAY("ⓔ"),
+    STONE_OF_PRAY_OVERLAY("⨍"),
 
     GENERIC_OVERLAY_1("⼮"),
     GENERIC_OVERLAY_2("⌱"),

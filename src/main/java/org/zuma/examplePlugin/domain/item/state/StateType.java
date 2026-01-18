@@ -6,4 +6,5 @@ public enum StateType {
     FAIRY_STATE,
     MOUNT_STATE,
     STORAGE_ITEM_UUID_STATE,
+    STONE_OF_PRAY_STATE
 }

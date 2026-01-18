@@ -10,9 +10,12 @@ import org.zuma.examplePlugin.core.interfaces.Stateful;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.domain.item.ItemHandler;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.item.constants.PersistenceDataKey;
+import org.zuma.examplePlugin.domain.item.impl.utility.StoneOfPray;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
 import org.zuma.examplePlugin.domain.item.state.meta.AbstractStateMeta;
+import org.zuma.examplePlugin.domain.item.state.states.StoneOfPrayState;
 import org.zuma.examplePlugin.events.state.StateCreatedDefaultEvent;
 import org.zuma.examplePlugin.events.state.StateLoadedEvent;
 
@@ -22,7 +25,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class StateManager {
-    private final ConcurrentHashMap<UUID, AbstractState> itemStates = new ConcurrentHashMap<>(); // TODO: PERSISTENCE! delete states on item despawn & handle lifecycle properly
+    private final ConcurrentHashMap<UUID, AbstractState> itemStates = new ConcurrentHashMap<>();
     private final StateFactory factory;
     private final ItemHandler itemHandler;
     private final StateRepository repository;
@@ -178,6 +181,15 @@ public class StateManager {
         if (matchingKey == null) {
             RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "Cannot save state " + state.getStateType() + "! State is not in the registry.");
             return;
+        }
+
+        // Special handling for Stone of Pray deactivation
+        if(clearCache && state instanceof StoneOfPrayState) {
+           AbstractItemType item = RuneQuestPlugin.getItemRegistry().getType(ItemId.STONE_OF_PRAY);
+
+           if(item instanceof StoneOfPray stoneOfPray) {
+               stoneOfPray.deactivateStone(matchingKey);
+           }
         }
 
         if (runAsync) {

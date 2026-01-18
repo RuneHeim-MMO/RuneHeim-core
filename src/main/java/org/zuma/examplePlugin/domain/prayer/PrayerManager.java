@@ -123,8 +123,8 @@ public class PrayerManager implements Listener {
     public void setPrayer(RunePlayer player, Prayer prayer, boolean active) {
         List<Prayer> prayers = activePrayers.getOrDefault(player.getUUID(), new ArrayList<>());
 
-        if (prayer.getLevelRequirement() > player.getSkill(SkillType.PRAYER).getLevelWithBonuses()) {
-            throw new IllegalArgumentException("You do not meet the level requirement for this prayer.");
+        if (active && prayer.getLevelRequirement() > player.getSkill(SkillType.PRAYER).getLevelWithBonuses()) {
+            throw new IllegalArgumentException("You do not meet the level requirement for " + prayer.getName() + ".");
         }
 
         // collect conflicts without modifying the list while iterating

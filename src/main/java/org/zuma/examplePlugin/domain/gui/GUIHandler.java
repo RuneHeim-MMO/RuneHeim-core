@@ -153,6 +153,8 @@ public class GUIHandler {
         this.registry.register(InventoryId.REFERRAL_REWARDS_SHOP.asInt(), () -> new ShopInventory(GUIOverlay.SHOP_OVERLAY.asGlyph() + "§f" + Icon.GUILD.get() + "§f Referral Rewards Shop", InventoryId.REFERRAL_REWARDS_SHOP.asInt(), RuneQuestPlugin.getShopRegistry().getShop(ShopId.REFERRAL_REWARDS_SHOP.asInt())));
         this.registry.register(InventoryId.REFERRALS_MENU.asInt(), () -> new ReferralsMenu(GUIOverlay.REFERRALS_MENU_OVERLAY.asGlyph() + "§f" + Icon.GUILD.get() + "§f Referrals", InventoryId.REFERRALS_MENU.asInt()));
 
+        this.registry.register(InventoryId.STONE_OF_PRAY_MENU.asInt(), () -> new StoneOfPrayMenu(GUIOverlay.STONE_OF_PRAY_OVERLAY.asGlyph() + "§f" + Icon.PRAYER.get() + "§f Stone of Pray", InventoryId.STONE_OF_PRAY_MENU.asInt()));
+
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
     }
 
