@@ -277,7 +277,7 @@ public class Party {
         double personalXp = xp - contributedXp; // XP contributor keeps
 
         // Give contributor their personal XP
-        contributor.addXp(type, personalXp, XpSource.PARTY);
+        contributor.addXp(type, personalXp, XpSource.PERSONAL);
 
         // Track contribution
         contributorMember.addXpContribution(type, Math.round(contributedXp));
@@ -286,6 +286,7 @@ public class Party {
         // Get other online members
         List<RunePlayer> others = this.getOnlinePlayers().stream()
                 .filter(m -> !m.getUUID().equals(contributor.getUUID()))
+                .filter(p -> p.getSkill(type).getBaseLevel() != 99) // Exclude max level players
                 .toList();
 
         // Split contributed XP among others
