@@ -37,6 +37,7 @@ import org.zuma.examplePlugin.domain.item.impl.fairy.Fairy;
 import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFood;
 import org.zuma.examplePlugin.domain.item.impl.utility.StoneOfPray;
 import org.zuma.examplePlugin.domain.item.state.base.AbstractState;
+import org.zuma.examplePlugin.domain.item.state.states.ChargesState;
 import org.zuma.examplePlugin.domain.item.state.states.GearGemSocketsState;
 import org.zuma.examplePlugin.domain.item.state.states.MultiConsumableState;
 import org.zuma.examplePlugin.events.state.StateCreatedDefaultEvent;
@@ -164,6 +165,11 @@ public class MetaGenerator {
         if (itemType instanceof StoneOfPray) {
             lore.addAll(new StoneOfPrayLore(item).getLore());
         }
+
+        if (itemType instanceof Stateful && RuneQuestPlugin.getItemStateManager().getItemState(item) instanceof ChargesState state) {
+            lore.addAll(new ChargesStateLore(state).getLore());
+        }
+
 
         lore.add(Component.empty());
         lore.addAll(itemType.typeLore);

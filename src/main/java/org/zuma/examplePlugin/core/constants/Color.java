@@ -24,6 +24,7 @@ public enum Color {
     INTERACTABLE_ENTITY("#ffe6b8"),
     DEPLETED_RESOURCE("#636363"),
     ACCENT("#ebc934"),
+    CHARGES("#f2a42e"),
     FAIRY_STAMINA("#42d7f5"),
     PRAYER_ENERGY("#03cffc"),
 

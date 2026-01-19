@@ -35,7 +35,8 @@ public enum ItemType {
     INTERACTIVE_FURNITURE(31),
     BULK_ITEM(32),
     UTILITY_ITEM(33),
-    STONE_OF_PRAY(34);
+    STONE_OF_PRAY(34),
+    BONE_CRUSHER(35);
 
     private final int key;
 

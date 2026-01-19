@@ -9,6 +9,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
@@ -20,6 +21,8 @@ import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.impl.utility.BoneCrusher;
+import org.zuma.examplePlugin.domain.item.state.states.ChargesState;
 import org.zuma.examplePlugin.domain.map.MarkerType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.actions.ActionParams;
@@ -96,6 +99,44 @@ public class Altar extends AbstractInteractableBlock implements POIMarkerable {
     @Override
     public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItemType itemInHand) {
         event.setCancelled(true);
+        ItemStack inHand = player.asBukkitPlayer().getInventory().getItemInMainHand();
+        AbstractItemType inHandType = RuneQuestPlugin.getItemRegistry().getType(inHand);
+
+        if (inHandType instanceof BoneCrusher boneCrusher) {
+            ChargesState state = boneCrusher.getState(inHand);
+
+            if (state == null) return;
+            if (state.getCharges() >= boneCrusher.getMaxCharges()) {
+                HudService.sendFailMessage(player, Component.text("Your bone crusher is already fully charged!"));
+                return;
+            }
+
+            double chargesDelta = Math.max(1.0, boneCrusher.getMaxCharges() - state.getCharges());
+
+            ActionParams params = new ActionParams.Builder()
+                    .durationMs((int) (chargesDelta / 25.0) * 1000) // 25 charges per second
+                    .actionLabel("Charging...")
+                    .successActionLabel(inHandType.displayName + " recharged!")
+                    .stepSound(SoundType.ALTAR_PRAYING_LAYER_1)
+                    .stepSoundEveryNth(3)
+                    .successSound(SoundType.ALTAR_PRAYING_LAYER_2)
+                    .onSuccess(() -> {
+                        state.setCharges(boneCrusher.getMaxCharges());
+                        inHandType.getMetaGenerator().updatePresentationLayer(inHand);
+                        SoundType.ALTAR_PRAYING_LAYER_2.play(player.asBukkitPlayer().getLocation(), null, 0.05f);
+                        SoundType.ALTAR_PRAYING_LAYER_2.play(player.asBukkitPlayer().getLocation(), null, 0.10f);
+                        SoundType.ALTAR_PRAYING_LAYER_2.play(player.asBukkitPlayer().getLocation(), null, 0.15f);
+                        SoundType.ALTAR_PRAYING_LAYER_2.play(player.asBukkitPlayer().getLocation(), null, 0.20f);
+                        SoundType.ALTAR_PRAYING_LAYER_2.play(player.asBukkitPlayer().getLocation(), null, 0.25f);
+                    })
+                    .build();
+
+            player.queueOrStartAction(new ProgressBarAction(false, false), params, false);
+
+            return;
+        }
+
+
         int maxPrayerLevel = player.getSkill(SkillType.PRAYER).getLevelWithBonuses();
 
         if (player.getPrayerEnergy() == maxPrayerLevel) {
