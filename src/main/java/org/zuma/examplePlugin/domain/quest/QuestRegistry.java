@@ -23,7 +23,8 @@ public class QuestRegistry {
     public QuestRegistry() {
         this.quests = new HashMap<>();
 
-        Quest sheepShearer = new Quest(QuestId.SHEEP_SHEARER.getId(), "Sheep Shearer", QuestDifficulty.EASY, false, new Quest.Coordinates(45, 68, -162));
+        Quest sheepShearer = new Quest(QuestId.SHEEP_SHEARER.getId(), "Sheep Shearer", QuestDifficulty.EASY, false, new Quest.Coordinates(45, 68, -162))
+                .setRewards(new QuestReward(List.of(new ItemRecord(ItemId.BALL_OF_WOOL, 10)), null, 100));;
         registerQuest(sheepShearer.addSteps(List.of(
                 new CollectionStep(RuneQuestPlugin.getInstance(), sheepShearer, "Collect §620 wool§f and spin them into balls of wool.", "sheep-shearer.wool-collect", List.of(new ItemRecord(ItemId.BALL_OF_WOOL, 20)), null),
                 new DialogStep(RuneQuestPlugin.getInstance(), sheepShearer, "Bring §620 balls of wool§f to §6Shepherd.", "sheep-shearer.wool-collected", null)
@@ -165,7 +166,7 @@ public class QuestRegistry {
 
         registerQuest(threadsOfAid.addSteps(List.of(
                 new CollectionStep(RuneQuestPlugin.getInstance(), threadsOfAid, "Obtain §616x Spider Silk.", "threads-of-aid.obtain-silk", List.of(new ItemRecord(ItemId.SPIDER_SILK, 16)), null),
-                new CollectionStep(RuneQuestPlugin.getInstance(), threadsOfAid, "Obtain §61x Max Health Potion.", "threads-of-aid.obtain-potion", List.of(new ItemRecord(ItemId.MAX_HEALTH_POTION_I, 1)), null),
+                new CollectionStep(RuneQuestPlugin.getInstance(), threadsOfAid, "Obtain §61x Max Health Potion I.", "threads-of-aid.obtain-potion", List.of(new ItemRecord(ItemId.MAX_HEALTH_POTION_I, 1)), null),
                 new DialogStep(RuneQuestPlugin.getInstance(), threadsOfAid, "Bring §616x Spider Silk & §61x Health Potion to §6Doctor Bram", "threads-of-aid.bring-ingredients", null)
         )));
 

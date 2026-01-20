@@ -452,7 +452,11 @@ public enum ItemId {
     BULK_3_OVERLOAD_POTION(4102),
     BULK_3_ETHEREAL_RESTORATION(4103),
     BULK_3_DRAGONS_MIGHT_POTION(4104),
-    BULK_3_ULTIMATE_POWER_POTION(4105);
+    BULK_3_ULTIMATE_POWER_POTION(4105),
+
+    STONE_OF_PRAY(4200),
+    // Reserved 4201 is the active version's custom model id
+    BONE_CRUSHER(4202);
 
     private final int id;
 

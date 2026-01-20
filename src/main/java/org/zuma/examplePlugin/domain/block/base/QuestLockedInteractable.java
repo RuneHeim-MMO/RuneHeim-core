@@ -5,6 +5,7 @@ import org.bukkit.Sound;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.zuma.examplePlugin.core.constants.Color;
+import org.zuma.examplePlugin.core.interfaces.QuestLocked;
 import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.block.meta.v1.QuestLockedMeta;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public abstract class QuestLockedInteractable extends AbstractInteractableBlock {
+public abstract class QuestLockedInteractable extends AbstractInteractableBlock implements QuestLocked {
     private final @Nullable String lockedMessage;
     private final List<String> requiredCompletedQuestIds, requiredStartedQuestIds, requiredQuestStepActive;
 
@@ -36,15 +37,17 @@ public abstract class QuestLockedInteractable extends AbstractInteractableBlock 
     }
 
     @Override
+    public boolean playerMeetsQuestRequirements(RunePlayer player) {
+        return new HashSet<>(player.getCompletedQuestIds()).containsAll(requiredCompletedQuestIds) // Completed quests check
+                && player.getActiveQuestSteps().keySet().containsAll(requiredStartedQuestIds) // Started quests check
+                && (requiredQuestStepActive.isEmpty() || player.getActiveQuestSteps().values().stream().anyMatch(step -> requiredQuestStepActive.contains(step.getStableId()))); // Active quest steps check
+    }
+
+    @Override
     public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItemType itemInHand) {
         event.setCancelled(true);
 
-
-        boolean allowed = new HashSet<>(player.getCompletedQuestIds()).containsAll(requiredCompletedQuestIds) // Completed quests check
-                && player.getActiveQuestSteps().keySet().containsAll(requiredStartedQuestIds) // Started quests check
-                && (requiredQuestStepActive.isEmpty() || player.getActiveQuestSteps().values().stream().anyMatch(step -> requiredQuestStepActive.contains(step.getStableId()))); // Active quest steps check
-
-        if (!allowed) {
+        if (!this.playerMeetsQuestRequirements(player)) {
             player.asBukkitPlayer().playSound(getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1f, 1f);
 
             if (lockedMessage != null) {

@@ -33,7 +33,10 @@ public enum ItemType {
     STORAGE_ITEM(29),
     DECORATIVE_FURNITURE(30),
     INTERACTIVE_FURNITURE(31),
-    BULK_ITEM(32);
+    BULK_ITEM(32),
+    UTILITY_ITEM(33),
+    STONE_OF_PRAY(34),
+    BONE_CRUSHER(35);
 
     private final int key;
 

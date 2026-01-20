@@ -55,7 +55,7 @@ public class ResourceNodeCrop extends ResourceNode {
             if (!super.isPersistent()) {
                 blockUnder.setType(this.previousMaterial);
             } else {
-                if (needsFarmland) getLocation().getBlock().setType(Material.DIRT);
+                if (needsFarmland) getLocation().getBlock().getRelative(0, -1, 0).setType(Material.DIRT);
             }
 
         }

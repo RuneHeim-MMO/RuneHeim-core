@@ -2,8 +2,11 @@ package org.zuma.examplePlugin.domain.item;
 
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.jspecify.annotations.Nullable;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.handlers.ownership.ItemPickupHandler;
@@ -58,6 +61,15 @@ public class ItemHandler {
         }
 
         item.onPlayerPickupItem(event, player, itemStateManager);
+    }
+
+    @Nullable // MUST RETURN MODIFIED/ORIGINAL ITEM STACK TO MARK AS INTERCEPTED, NULL TO MARK AS IGNORED
+    public ItemStack onOtherItemPickupWhileHaving(EntityPickupItemEvent event, AbstractItemType item, ItemStack thisItemStack, RunePlayer player, StateManager itemStateManager) {
+        if (event.isCancelled()) {
+            return null;
+        }
+
+        return item.onOtherItemPickupWhileHaving(event, thisItemStack, player, itemStateManager);
     }
 
 

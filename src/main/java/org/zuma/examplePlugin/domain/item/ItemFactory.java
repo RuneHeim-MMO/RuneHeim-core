@@ -14,6 +14,8 @@ import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFood;
 import org.zuma.examplePlugin.domain.item.impl.fairy.FairyFruit;
 import org.zuma.examplePlugin.domain.item.impl.furniture.DecorationFurniture;
 import org.zuma.examplePlugin.domain.item.impl.furniture.InteractiveFurniture;
+import org.zuma.examplePlugin.domain.item.impl.utility.BoneCrusher;
+import org.zuma.examplePlugin.domain.item.impl.utility.StoneOfPray;
 import org.zuma.examplePlugin.domain.item.meta.AbstractItemMeta;
 import org.zuma.examplePlugin.domain.item.meta.v1.*;
 import org.zuma.examplePlugin.domain.item.state.meta.v1.FairyStateMeta;
@@ -65,8 +67,41 @@ public class ItemFactory {
             case INTERACTIVE_FURNITURE -> createInteractiveFurnitureItem(meta, json);
             case DECORATIVE_FURNITURE -> createDecorativeFurnitureItem(meta, json);
             case BULK_ITEM -> createBulkItem(meta, json);
+            case UTILITY_ITEM -> createUtilityItem(meta, json);
+            case STONE_OF_PRAY -> new StoneOfPray(meta);
+            case BONE_CRUSHER -> createBoneCrusher(meta, json);
             default -> throw new IllegalArgumentException("Unknown item type: " + meta.type());
         };
+    }
+
+    private UtilityItem createBoneCrusher(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create " + meta.type() + " " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                BoneCrusherMeta deserialized = new Gson().fromJson(json.meta(), BoneCrusherMeta.class);
+                BoneCrusher item = new BoneCrusher(meta, deserialized);
+                return item;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
+    }
+
+    private UtilityItem createUtilityItem(AbstractItemMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create " + meta.type() + " " + meta.displayName() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                return new UtilityItem(meta);
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
     }
 
     private BulkItem createBulkItem(AbstractItemMeta meta, @Nullable VersionedJson json) {

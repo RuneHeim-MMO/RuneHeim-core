@@ -17,6 +17,7 @@ import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.core.handlers.game.BotVerificationHandler;
 import org.zuma.examplePlugin.core.handlers.game.IllegalItemWatchdog;
+import org.zuma.examplePlugin.core.interfaces.QuestLocked;
 import org.zuma.examplePlugin.core.interfaces.Restrictable;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
@@ -32,6 +33,8 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.actions.ActionParams;
 import org.zuma.examplePlugin.domain.player.actions.ProgressBarAction;
 import org.zuma.examplePlugin.domain.player.actions.ReactionBarAction;
+import org.zuma.examplePlugin.domain.quest.Quest;
+import org.zuma.examplePlugin.domain.quest.constants.QuestStatus;
 import org.zuma.examplePlugin.domain.recipe.IngredientRecord;
 import org.zuma.examplePlugin.domain.recipe.constants.RecipeType;
 import org.zuma.examplePlugin.domain.recipe.meta.AbstractRecipeMeta;
@@ -43,17 +46,19 @@ import org.zuma.examplePlugin.events.recipe.PlayerCraftingFinishEvent;
 import org.zuma.examplePlugin.events.recipe.PlayerCraftingStartEvent;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
 import static org.zuma.examplePlugin.core.utils.ItemUtils.multiplyItemRecords;
 
-public abstract class AbstractRecipe implements Restrictable {
+public abstract class AbstractRecipe implements Restrictable, QuestLocked {
     private final int id;
     private final RecipeType type;
     private final ItemStack displayItemstack;
     private final List<SkillRequirement> requirements;
     private final List<IngredientRecord> ingredients;
+    private final List<String> requiredStartedQuestIds, requiredCompletedQuestIds;
     private final int craftTimeMs;
 
     @Nullable
@@ -64,7 +69,6 @@ public abstract class AbstractRecipe implements Restrictable {
 
     private final ItemRecord successResult;
     private final List<SkillXpRecord> successXp;
-
 
     public AbstractRecipe(ItemStack displayItemstack, AbstractRecipeMeta meta) {
         this.id = meta.id();
@@ -77,6 +81,14 @@ public abstract class AbstractRecipe implements Restrictable {
         this.failResult = meta.failResult();
         this.successXp = meta.successXp();
         this.cost = meta.cost();
+        this.requiredStartedQuestIds = meta.requiredStartedQuestIds() != null ? meta.requiredStartedQuestIds() : List.of();
+        this.requiredCompletedQuestIds = meta.requiredCompletedQuestIds() != null ? meta.requiredCompletedQuestIds() : List.of();
+    }
+
+    @Override
+    public boolean playerMeetsQuestRequirements(RunePlayer player) {
+        return new HashSet<>(player.getCompletedQuestIds()).containsAll(requiredCompletedQuestIds) // Completed quests check
+                && player.getActiveQuestSteps().keySet().containsAll(requiredStartedQuestIds); // Started quests check
     }
 
     public @NotNull List<SkillRequirement> getSkillRequirements() {
@@ -183,7 +195,6 @@ public abstract class AbstractRecipe implements Restrictable {
             });
         }
 
-
         if (!requirements.isEmpty()) {
             itemLore.add(Component.empty());
             itemLore.add(Component.text("Requirements: ", Color.ITEM_CATEGORY_LABEL.asColor()));
@@ -196,6 +207,24 @@ public abstract class AbstractRecipe implements Restrictable {
                         Component.text(" " + requirement.minimumLevel() + " " + requirement.type().getLabel()).color(color.asColor())));
             });
 
+        }
+
+        if (!requiredStartedQuestIds.isEmpty()) {
+            itemLore.add(Component.empty());
+            itemLore.add(Component.text("Started quests: ", Color.ITEM_CATEGORY_LABEL.asColor()));
+            requiredStartedQuestIds.forEach(questId -> {
+                Quest quest = RuneQuestPlugin.getQuestHandler().getRegistry().getQuestById(questId);
+                if(quest != null) itemLore.add(Component.text(quest.getName(), quest.getPlayerQuestStatus(player).equals(QuestStatus.STARTED) ? Color.SUCCESS.asColor() : Color.ERROR.asColor()));
+            });
+        }
+
+        if (!requiredCompletedQuestIds.isEmpty()) {
+            itemLore.add(Component.empty());
+            itemLore.add(Component.text("Completed quests: ", Color.ITEM_CATEGORY_LABEL.asColor()));
+            requiredCompletedQuestIds.forEach(questId -> {
+                Quest quest = RuneQuestPlugin.getQuestHandler().getRegistry().getQuestById(questId);
+                if(quest != null) itemLore.add(Component.text(quest.getName(), quest.getPlayerQuestStatus(player).equals(QuestStatus.COMPLETED) ? Color.SUCCESS.asColor() : Color.ERROR.asColor()));
+            });
         }
 
 
@@ -283,6 +312,10 @@ public abstract class AbstractRecipe implements Restrictable {
                     .append(CurrencyUtils.getCoinsCurrencyComponent(getRecipeCost() * times)).append(Component.text(" coins.")));
         }
 
+        if (!this.playerMeetsQuestRequirements(player)) {
+            return Optional.of(Component.text("You do not meet quest requirements to " + type.getVerb().toLowerCase() + " ").append(resultComponent));
+        }
+
         if (!player.meetsRequirements(this)) {
             return Optional.of(Component.text("You do not meet requirements to " + type.getVerb().toLowerCase() + " ").append(resultComponent));
         }
@@ -360,6 +393,7 @@ public abstract class AbstractRecipe implements Restrictable {
         Optional<Component> blockReason = getCraftBlockReason(player, times);
         if (blockReason.isPresent()) {
             if (player.hasPendingActions()) player.cancelActionTask(true);
+            handleRecipeCraftingAborted(player);
             HudService.sendFailMessage(player, blockReason.get());
             return;
         }

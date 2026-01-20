@@ -75,7 +75,8 @@ public enum InventoryId {
     BREWING_CAULDRON(63),
     THORNBARK_HERBLORE_SHOP(64),
     REFERRAL_REWARDS_SHOP(65),
-    REFERRALS_MENU(66);
+    REFERRALS_MENU(66),
+    STONE_OF_PRAY_MENU(67);
 
 
     private final int id;

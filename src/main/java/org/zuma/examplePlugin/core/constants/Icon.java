@@ -141,6 +141,7 @@ public enum Icon {
     MOUNT_BADGE_ACTIVE("ↀ"),
     LOGO("◾"),
     LOGO_FULL("⍗"),
+    CHARGE("⡣"),
 
 
     // Reaction bar segments

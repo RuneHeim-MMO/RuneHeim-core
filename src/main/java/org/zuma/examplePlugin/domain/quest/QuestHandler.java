@@ -30,7 +30,7 @@ public class QuestHandler {
     }
 
     private void startTicker() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(RuneQuestPlugin.getInstance(), this::tickTickables, 0L, 20L * 5); // Runs every 5 seconds
+        Bukkit.getScheduler().runTaskTimerAsynchronously(RuneQuestPlugin.getInstance(), this::tickTickables, 0L, 20L * 2); // Runs every 2 seconds
     }
 
     private void tickTickables() {
@@ -44,6 +44,10 @@ public class QuestHandler {
 
 
         for (Tickable tickable : tickableList) {
+            if (tickable instanceof AbstractQuestStep step) {
+                if (step.getOwner() == null)
+                    continue;
+            }
             tickable.tick();
         }
     }

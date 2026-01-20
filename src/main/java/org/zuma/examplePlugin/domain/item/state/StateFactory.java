@@ -26,12 +26,44 @@ public class StateFactory {
             case MOUNT_STATE -> newState = createMountState(abstractStateMeta, abstractStateMeta.json());
             case STORAGE_ITEM_UUID_STATE ->
                     newState = createStorageItemState(abstractStateMeta, abstractStateMeta.json());
+            case STONE_OF_PRAY_STATE -> newState = createStoneOfPrayState(abstractStateMeta, abstractStateMeta.json());
+            case CHARGES_STATE -> newState = createChargesMeta(abstractStateMeta, abstractStateMeta.json());
             default -> {
             }
         }
 
         newState.setCreatedAt(input.getKey());
         return newState;
+    }
+
+    private ChargesState createChargesMeta(AbstractStateMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create " + meta.type() + " state required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                ChargesStateMeta deserialized = gson.fromJson(json.meta(), ChargesStateMeta.class);
+                return new ChargesState(deserialized);
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
+    }
+
+    private StoneOfPrayState createStoneOfPrayState(AbstractStateMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create " + meta.type() + " state required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                StoneOfPrayMeta deserialized = gson.fromJson(json.meta(), StoneOfPrayMeta.class);
+                return new StoneOfPrayState(deserialized);
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
+
     }
 
     private StorageItemState createStorageItemState(AbstractStateMeta meta, @Nullable VersionedJson json) {

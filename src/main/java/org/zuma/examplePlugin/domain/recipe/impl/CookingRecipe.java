@@ -16,7 +16,7 @@ public class CookingRecipe extends AbstractRecipe {
     private final SkillRequirement mainRequirement;
 
     public CookingRecipe(ItemStack displayItemstack, AbstractRecipeMeta meta) {
-        super(displayItemstack, new AbstractRecipeMeta(meta.id(), RecipeType.COOKING_RECIPE, meta.craftTimeMs(), meta.requirements(), meta.ingredients(), meta.successResult(), meta.failResult(), meta.successXp(), meta.cost()));
+        super(displayItemstack, new AbstractRecipeMeta(meta.id(), RecipeType.COOKING_RECIPE, meta.craftTimeMs(), meta.requirements(), meta.ingredients(), meta.successResult(), meta.failResult(), meta.successXp(), meta.cost(), meta.requiredStartedQuestIds(), meta.requiredCompletedQuestIds()));
 
         mainRequirement = super.getSkillRequirements().stream()
                 .filter(req -> req.type() == SkillType.COOKING)

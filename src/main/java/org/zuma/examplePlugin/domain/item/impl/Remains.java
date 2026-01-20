@@ -43,20 +43,21 @@ public class Remains extends Material {
                 .successActionLabel("")
                 .stepSound(SoundType.BONES_BURY_DIG)
                 .stepSoundEveryNth(3)
-                .onSuccess(() -> handleBury(player))
+                .onSuccess(() -> handleBury(player, 1, 1))
                 .build();
 
         player.queueOrStartAction(new ProgressBarAction(true, false), params, false);
     }
 
-    private void handleBury(RunePlayer player) {
-        if (!PlayerUtils.removeItems(player, List.of(new ItemRecord(this.id, 1)))) {
+    public void handleBury(RunePlayer player, int amount, double rewardPercent) {
+        if (!PlayerUtils.removeItems(player, List.of(new ItemRecord(this.id, amount)))) {
             return;
         }
 
         SoundType.BONES_BURY_FINISH.play(player, false);
         SoundType.BONES_BURY_DIG.play(player, true);
-        player.distributeXp(SkillType.PRAYER, buryXPReward);
+        double xp = (buryXPReward * amount) * rewardPercent;
+        player.distributeXp(SkillType.PRAYER, xp);
         AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.BONES_BURIED, 1);
     }
 

@@ -9,15 +9,13 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.*;
 import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.Color;
 import org.zuma.examplePlugin.core.constants.Icon;
@@ -31,12 +29,12 @@ import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.item.base.EquipableItemType;
 import org.zuma.examplePlugin.domain.item.constants.EquipableType;
 import org.zuma.examplePlugin.domain.item.handlers.LockedItemHandler;
-import org.zuma.examplePlugin.domain.item.impl.CoinsItem;
 import org.zuma.examplePlugin.domain.item.state.StateManager;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.RunePlayerManager;
 import org.zuma.examplePlugin.events.item.PlayerArmorEquipEvent;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
 
 public class ItemListener implements Listener {
@@ -186,6 +184,34 @@ public class ItemListener implements Listener {
         });
     }
 
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void onPlayerPickupOtherItem(EntityPickupItemEvent event) {
+        if (!(event.getEntity() instanceof Player bukkitPlayer)) {
+            return;
+        }
+        AtomicBoolean intercepted = new AtomicBoolean(false);
+        PlayerInventory inv = bukkitPlayer.getInventory();
+
+        for (int slot = 0; slot < inv.getSize(); slot++) {
+            ItemStack stack = inv.getItem(slot);
+            if (stack == null) continue;
+
+            int finalSlot = slot;
+            withItemAndPlayer(bukkitPlayer, stack, (item, player) -> {
+                if (intercepted.get()) {
+                    return;
+                }
+
+                ItemStack updatedStack = itemHandler.onOtherItemPickupWhileHaving(event, item, stack, player, itemStateManager);
+
+                if (updatedStack != null) {
+                    intercepted.set(true);
+                    inv.setItem(finalSlot, updatedStack); // set the updated stack back in the inventory
+                }
+            });
+        }
+
+    }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onBaseBukkitWearArmorClick(InventoryClickEvent event) {

@@ -5,6 +5,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -149,6 +150,12 @@ public abstract class AbstractItemType {
         customModelData = id.asInt();
     }
 
+    public void setItemStackCustomModelData(ItemStack item, CustomModelId id) {
+        ItemMeta meta = item.getItemMeta();
+        meta.setCustomModelData(id.asInt());
+        item.setItemMeta(meta);
+    }
+
     public boolean isTradeable() {
         return this.isTradeable;
     }
@@ -204,6 +211,11 @@ public abstract class AbstractItemType {
 
     public void onPlayerPickupItem(PlayerAttemptPickupItemEvent event, RunePlayer player, StateManager itemStateManager) {
 
+    }
+
+    @Nullable
+    public ItemStack onOtherItemPickupWhileHaving(EntityPickupItemEvent event, ItemStack thisItemStack, RunePlayer player, StateManager itemStateManager) {
+        return null;
     }
 
     public MetaGenerator getMetaGenerator() {

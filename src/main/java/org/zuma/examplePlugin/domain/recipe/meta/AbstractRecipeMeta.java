@@ -13,5 +13,6 @@ public record AbstractRecipeMeta(
         int id,
         RecipeType type, int craftTimeMs, List<SkillRequirement> requirements,
         List<IngredientRecord> ingredients, @Nullable ItemRecord successResult,
-        @Nullable ItemRecord failResult, List<SkillXpRecord> successXp, @Nullable Long cost) {
+        @Nullable ItemRecord failResult, List<SkillXpRecord> successXp, @Nullable Long cost,
+        @Nullable List<String> requiredStartedQuestIds, @Nullable List<String> requiredCompletedQuestIds) {
 }
