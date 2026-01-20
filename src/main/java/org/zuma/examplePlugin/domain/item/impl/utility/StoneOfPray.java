@@ -64,6 +64,11 @@ public class StoneOfPray extends UtilityItem implements Stateful {
             return;
         }
 
+        if (player.getPrayerEnergy() <= 0){
+            HudService.sendFailMessage(player, Component.text("You don't have enough prayer energy to activate the Stone of Pray!"));
+            return;
+        }
+
         activeStones.add(stateUUID);
         SoundType.STONE_OF_PRAY_ACTIVATE.play(player, false);
         AtomicBoolean canActivateAll = new AtomicBoolean(true);
@@ -74,7 +79,11 @@ public class StoneOfPray extends UtilityItem implements Stateful {
                 canActivateAll.set(false);
                 toRemove.add(prayer);
             } else {
-                RuneQuestPlugin.getPrayerManager().setPrayer(player, prayer, true);
+                try {
+                    RuneQuestPlugin.getPrayerManager().setPrayer(player, prayer, true);
+                } catch (Exception e) {
+                    HudService.sendFailMessage(player, Component.text(e.getMessage()));
+                }
             }
         });
 
