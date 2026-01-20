@@ -49,7 +49,7 @@ public class RecipeHandler {
     }
 
     public int getAvailableRecipesNumber(RunePlayer player) {
-        Collection<AbstractRecipe> recipes = registry.getAllRecipes().stream().filter(r -> !r.playerMeetsQuestRequirements(player)).toList();
+        Collection<AbstractRecipe> recipes = registry.getAllRecipes().stream().filter(r -> r.playerMeetsQuestRequirements(player)).toList();
         int availableRecipes = 0;
 
         for (AbstractRecipe recipe : recipes) {
