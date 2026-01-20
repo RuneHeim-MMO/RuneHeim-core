@@ -29,8 +29,9 @@ public class CollectionStep extends AbstractQuestStep implements Tickable {
         this.requiredItems = requiredItems;
         this.acquiredItems = new HashMap<>();
 
+        System.out.println("New instance: " + this.getOwner() + " | " + this.getStableId());
+
         requiredItems.forEach(required -> acquiredItems.put(required.getItemId(), 0));
-        this.tick();
     }
 
     public float getProgressPercentage() {

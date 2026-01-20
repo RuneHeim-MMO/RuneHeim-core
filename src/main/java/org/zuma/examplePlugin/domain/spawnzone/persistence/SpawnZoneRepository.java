@@ -935,11 +935,11 @@ public class SpawnZoneRepository {
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(120, SpawnZoneType.AREA, 10, 50,
                         new Location(Bukkit.getWorld("world"), 2574, 111, 2423)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.GOBLIN_1_BASE_1, 3, 100),
-                        new SpawnZoneMobRecord(MobType.GOBLIN_2_BASE_1, 3, 100),
-                        new SpawnZoneMobRecord(MobType.GOBLIN_3_BASE_1, 3, 100),
-                        new SpawnZoneMobRecord(MobType.GOBLIN_4_BASE_1, 3, 100),
-                        new SpawnZoneMobRecord(MobType.GOBLIN_5_BASE_1, 3, 100)
+                        new SpawnZoneMobRecord(MobType.GOBLIN_1_BASE_1, 4, 100),
+                        new SpawnZoneMobRecord(MobType.GOBLIN_2_BASE_1, 4, 100),
+                        new SpawnZoneMobRecord(MobType.GOBLIN_3_BASE_1, 4, 100),
+                        new SpawnZoneMobRecord(MobType.GOBLIN_4_BASE_1, 4, 100),
+                        new SpawnZoneMobRecord(MobType.GOBLIN_5_BASE_1, 4, 100)
                 ), 20, false, true), 1)),
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(121, SpawnZoneType.POINT, 10, 20,
