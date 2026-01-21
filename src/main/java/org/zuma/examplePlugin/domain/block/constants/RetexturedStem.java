@@ -2,6 +2,8 @@ package org.zuma.examplePlugin.domain.block.constants;
 
 import org.bukkit.Material;
 
+// //replacenear 2000 wheat[age=0|1|2|3|4],potatoes[age=0|2|4],carrots[age=0|2] air
+
 public enum RetexturedStem {
     DEWLEAF(0, Material.WHEAT, false),
     SUNROOT(1, Material.WHEAT, false),

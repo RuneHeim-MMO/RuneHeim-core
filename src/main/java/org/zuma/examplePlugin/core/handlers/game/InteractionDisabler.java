@@ -91,7 +91,8 @@ public class InteractionDisabler implements Listener {
             "/support",
             "/map",
             "/togglelock",
-            "/mentor"
+            "/mentor",
+            "/trade"
     };
 
     public void disableTourViewPermission() {

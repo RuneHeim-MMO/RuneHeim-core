@@ -87,6 +87,11 @@ public class AdminCommand implements BasicCommand {
             RuneQuestPlugin.getDropTableHandler().getByID(Integer.parseInt(args[1])).simulateRolls(runePlayer, Integer.parseInt(args[2]));
         }
 
+        if (Objects.equals(args[0], "unregister_herbs")) {
+            RuneQuestPlugin.getBlockManager().clearRandomBlocks();
+            runePlayer.asBukkitPlayer().sendMessage(Component.text("Unregistered all random blocks.").color(Color.SUCCESS.asColor()));
+        }
+
         if (args.length == 2 && Objects.equals(args[0], "base")) {
             int baseLevel;
 

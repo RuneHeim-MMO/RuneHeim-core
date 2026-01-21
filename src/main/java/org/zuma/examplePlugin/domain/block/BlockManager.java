@@ -12,6 +12,7 @@ import org.zuma.examplePlugin.domain.block.base.ModelledInteractableBlock;
 import org.zuma.examplePlugin.domain.block.handlers.TriggeredBlocksHandler;
 import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerRegularBlock;
 import org.zuma.examplePlugin.domain.block.impl.ResourceNode;
+import org.zuma.examplePlugin.domain.block.impl.ResourceNodeCrop;
 import org.zuma.examplePlugin.domain.gui.IDHolder;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
@@ -179,6 +180,25 @@ public class BlockManager {
     public void onDisable() {
         synchronized (this.blocks) {
             this.blocks.values().forEach(b -> {
+                try {
+                    b.onDisable();
+                } catch (Exception e) {
+                    RuneQuestPlugin.getRuneLogger().log(LogLevel.WARN, "Error while disabling block at " + b.getLocation() + ": " + e.getMessage());
+                }
+            });
+            this.blocks.clear();
+        }
+
+        RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "All interactable blocks unmounted.");
+    }
+
+    public void clearRandomBlocks() {
+        synchronized (this.blocks) {
+            this.blocks.values().forEach(b -> {
+                if(!(b instanceof ResourceNodeCrop)) {
+                    return;
+                }
+
                 try {
                     b.onDisable();
                 } catch (Exception e) {
