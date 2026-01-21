@@ -34,7 +34,7 @@ public class ModifiersCommand implements BasicCommand {
         if (runePlayer.isInCutscene()) return;
         if (runePlayer.isDead()) return;
 
-        RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.PLAYER_MODIFIERS.asInt(), runePlayer, null);
+        RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.PLAYER_MODIFIERS.asInt(), runePlayer, null,null);
     }
 
     @Override

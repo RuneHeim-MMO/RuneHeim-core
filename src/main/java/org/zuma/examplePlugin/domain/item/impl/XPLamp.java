@@ -23,7 +23,7 @@ public class XPLamp extends AbstractItemType {
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player, StateManager itemStateManager) {
-        RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.XP_LAMP.asInt(), player, null);
+        RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.XP_LAMP.asInt(), player, null,null);
     }
 
     public List<SkillType> getDisabledSkills() {

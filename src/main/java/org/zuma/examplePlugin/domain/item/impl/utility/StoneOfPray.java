@@ -133,7 +133,7 @@ public class StoneOfPray extends UtilityItem implements Stateful {
         }
 
         if (player.asBukkitPlayer().isSneaking()) {
-            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.STONE_OF_PRAY_MENU.asInt(), player, null);
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.STONE_OF_PRAY_MENU.asInt(), player, null,null);
             SoundType.STONE_OF_PRAY_OPEN.play(player, false);
             return;
         }

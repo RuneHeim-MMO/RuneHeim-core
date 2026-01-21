@@ -23,6 +23,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public abstract class AbstractGUI implements Listener {
@@ -150,6 +151,9 @@ public abstract class AbstractGUI implements Listener {
 
     }
 
+    public void onPopulate(Map<String, String> data){
+
+    }
 
     public UUID getUUID() {
         return uuid;

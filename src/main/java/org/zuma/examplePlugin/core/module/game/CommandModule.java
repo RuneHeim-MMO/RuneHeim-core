@@ -49,6 +49,9 @@ public class CommandModule implements PluginModule {
                 event -> event.registrar().register("modifiers", new ModifiersCommand()));
 
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                event -> event.registrar().register("item", new ItemCommand()));
+
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
                 event -> event.registrar().register("stuck", new StuckCommand()));
 
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,

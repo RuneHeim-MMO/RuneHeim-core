@@ -54,7 +54,7 @@ public class ScriptedActionHandler {
                     }
                 }
                 case OPEN_INVENTORY ->
-                        RuneQuestPlugin.getGUIHandler().openInventory(Integer.parseInt(args.get("id")), player, callback);
+                        RuneQuestPlugin.getGUIHandler().openInventory(Integer.parseInt(args.get("id")), player, callback,null);
                 case GIVE_ITEM ->
                         player.giveItemOrDrop(new ItemRecord(Integer.parseInt(args.get("id")), Integer.parseInt(args.get("amount"))));
                 case ROLL_DROP_TABLE -> {

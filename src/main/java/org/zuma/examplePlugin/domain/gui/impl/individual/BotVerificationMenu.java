@@ -193,7 +193,7 @@ public class BotVerificationMenu extends IndividualGUI {
             if (!player.isOnline()) return;
             if (lockLocation != null) player.asBukkitPlayer().teleport(lockLocation);
 
-            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.BOT_VERIFICATION_MENU.asInt(), player, null, null, null, true);
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.BOT_VERIFICATION_MENU.asInt(), player, null, null, null, true, null);
         }, 5L);
 
     }

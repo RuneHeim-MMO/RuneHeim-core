@@ -31,7 +31,7 @@ public class BombsCommand implements BasicCommand {
             return;
         }
 
-        RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.BOMBS_MENU.asInt(), runePlayer, null);
+        RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.BOMBS_MENU.asInt(), runePlayer, null,null);
 
     }
 
