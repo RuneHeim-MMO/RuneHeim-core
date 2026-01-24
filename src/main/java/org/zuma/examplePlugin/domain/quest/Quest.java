@@ -35,6 +35,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Consumer;
 
 
 public class Quest implements Restrictable {
@@ -44,11 +45,14 @@ public class Quest implements Restrictable {
     private final boolean silent; // If true, no start/completion effects or messages - used for internal tracking of player state.
     private final @Nullable Coordinates startLocation;
     private @Nullable String countinationQuestId;
+    private @Nullable Consumer<RunePlayer> onCompleteCallback;
+
     private QuestDuration duration;
     private QuestReward reward;
     // Starting conditions
     private List<SkillRequirement> requirements;
     private List<String> requiredCompletedQuests;
+
     public Quest(String id, String name, QuestDifficulty difficulty, boolean silent, @Nullable Coordinates startLocation) {
         this.id = id;
         this.name = name;
@@ -61,6 +65,16 @@ public class Quest implements Restrictable {
         this.reward = new QuestReward(null, null, null);
         this.startLocation = startLocation;
         this.countinationQuestId = null;
+    }
+
+    @Nullable
+    public Consumer<RunePlayer> getOnCompleteCallback() {
+        return onCompleteCallback;
+    }
+
+    public Quest setOnCompleteCallback(@Nullable Consumer<RunePlayer> onCompleteCallback) {
+        this.onCompleteCallback = onCompleteCallback;
+        return this;
     }
 
     public Quest setCountinationQuestId(@Nullable String questId) {
@@ -340,6 +354,7 @@ public class Quest implements Restrictable {
             if (!player.isOnline()) return;
 
             reward.applyRewards(player);
+            if (this.onCompleteCallback != null) onCompleteCallback.accept(player);
         }, 10L);
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {

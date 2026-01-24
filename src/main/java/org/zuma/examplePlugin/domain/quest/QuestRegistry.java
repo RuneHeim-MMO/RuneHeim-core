@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.quest;
 
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
@@ -24,7 +25,8 @@ public class QuestRegistry {
         this.quests = new HashMap<>();
 
         Quest sheepShearer = new Quest(QuestId.SHEEP_SHEARER.getId(), "Sheep Shearer", QuestDifficulty.EASY, false, new Quest.Coordinates(45, 68, -162))
-                .setRewards(new QuestReward(List.of(new ItemRecord(ItemId.BALL_OF_WOOL, 10)), null, 100));;
+                .setRewards(new QuestReward(List.of(new ItemRecord(ItemId.BALL_OF_WOOL, 10)), null, 100));
+        ;
         registerQuest(sheepShearer.addSteps(List.of(
                 new CollectionStep(RuneQuestPlugin.getInstance(), sheepShearer, "Collect §620 wool§f and spin them into balls of wool.", "sheep-shearer.wool-collect", List.of(new ItemRecord(ItemId.BALL_OF_WOOL, 20)), null),
                 new DialogStep(RuneQuestPlugin.getInstance(), sheepShearer, "Bring §620 balls of wool§f to §6Shepherd.", "sheep-shearer.wool-collected", null)
@@ -43,7 +45,8 @@ public class QuestRegistry {
                         new ItemRecord(ItemId.COOKED_HERRING, 20),
                         new ItemRecord(ItemId.GENIE_XP_LAMP, 1)
                 ), null, 500))
-                .setCountinationQuestId(QuestId.WELCOME_TO_DRAKKAR_I.getId());
+                .setCountinationQuestId(QuestId.WELCOME_TO_DRAKKAR_I.getId())
+                .setOnCompleteCallback(HudService::sendTutorialCompletionAnnouncement);
 
         registerQuest(tutorialQuest.addSteps(List.of(
                 new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Talk to the §6Blacksmith.", "tutorial.blacksmith-talk-to", null),
