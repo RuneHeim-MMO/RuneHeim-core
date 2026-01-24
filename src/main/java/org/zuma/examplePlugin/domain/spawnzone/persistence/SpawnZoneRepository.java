@@ -1311,11 +1311,10 @@ public class SpawnZoneRepository {
                 ), 10, false, false), 1)),
 
 
-                new SpawnZoneRecord(new AbstractSpawnZoneMeta(184, SpawnZoneType.AREA, 300, 50,
-                        new Location(Bukkit.getWorld("world"), -217, 80, -1090)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
-                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_60_1, 3, 10),
-                        new SpawnZoneMobRecord(MobType.BANDIT_BASE_60_2, 3, 10)
-                ), 10, false, false), 1)),
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(184, SpawnZoneType.POINT, 30, 50,
+                        new Location(Bukkit.getWorld("world"), -219, 81, -1079)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.MORVANE_PRIEST, 1, 100)
+                ), false, null, null), 1)),
 
 
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(185, SpawnZoneType.AREA, 600, 50,
@@ -2367,10 +2366,22 @@ public class SpawnZoneRepository {
                         new Location(Bukkit.getWorld("world"), -1226, 74, -816)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.SUNDERING_HAND_WARRIOR_4, 1, 100),
                         new SpawnZoneMobRecord(MobType.SUNDERING_HAND_WARRIOR_5, 1, 100)
-                ), 30, false, true), 1))
+                ), 30, false, true), 1)),
 
 
-                // last 344
+                // Marlinus the hermit
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(345, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 1173, 65, -676)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.MARLINUS_HERMIT, 1, 100)
+                ), false, null, null), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(346, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -79, 71, -1082)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.GHOSTLING, 1, 100)
+                ), false, null, null), 1))
+
+
+                // last 345
 
 
         );

@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Mob;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.XpSource;
@@ -18,6 +19,7 @@ import org.zuma.examplePlugin.domain.housing.instance.HouseInstance;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehavior;
+import org.zuma.examplePlugin.domain.mob.impl.ToggleableCombatant;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.player.states.TravelMode;
 import org.zuma.examplePlugin.domain.player.states.TravelStateHandler;
@@ -46,6 +48,17 @@ public class ScriptedActionHandler {
                 case DIALOG_HOLDER_FORWARD_INTERACTION -> {
                     holder.handleInteraction(player);
                 }
+                case DIALOG_HOLDER_TARGET_PLAYER -> {
+                    if (!(holder instanceof ToggleableCombatant combatant)) {
+                        throw new IllegalStateException("[SCRIPT] Cannot run " + input + " action on non-toggleable combatant mob!");
+                    }
+
+                    combatant.setAggressive(true);
+
+                    if (holder.getEntity() instanceof Mob mob) {
+                        mob.setTarget(player.asBukkitPlayer());
+                    }
+                }
                 case KILL_PLAYER -> {
                     if (player.asBukkitPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
                         player.killPlayer(null);
@@ -54,7 +67,7 @@ public class ScriptedActionHandler {
                     }
                 }
                 case OPEN_INVENTORY ->
-                        RuneQuestPlugin.getGUIHandler().openInventory(Integer.parseInt(args.get("id")), player, callback,null);
+                        RuneQuestPlugin.getGUIHandler().openInventory(Integer.parseInt(args.get("id")), player, callback, null);
                 case GIVE_ITEM ->
                         player.giveItemOrDrop(new ItemRecord(Integer.parseInt(args.get("id")), Integer.parseInt(args.get("amount"))));
                 case ROLL_DROP_TABLE -> {
@@ -158,8 +171,8 @@ public class ScriptedActionHandler {
         }
     }
 
-    private static @org.jetbrains.annotations.Nullable AbstractMob getHolder(String input, @org.jetbrains.annotations.Nullable Dialog parentDialog, ScriptedAction action) {
-        List<ScriptedAction> typesRequireDialogHolder = List.of(ScriptedAction.DIALOG_HOLDER_SOUND, ScriptedAction.DIALOG_HOLDER_FORWARD_INTERACTION);
+    private static @Nullable AbstractMob getHolder(String input, @Nullable Dialog parentDialog, ScriptedAction action) {
+        List<ScriptedAction> typesRequireDialogHolder = List.of(ScriptedAction.DIALOG_HOLDER_SOUND, ScriptedAction.DIALOG_HOLDER_FORWARD_INTERACTION, ScriptedAction.DIALOG_HOLDER_TARGET_PLAYER);
         AbstractMob holder = null;
 
         if (typesRequireDialogHolder.contains(action)) {

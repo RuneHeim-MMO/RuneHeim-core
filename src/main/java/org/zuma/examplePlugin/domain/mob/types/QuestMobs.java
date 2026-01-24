@@ -9,6 +9,11 @@ import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.mob.impl.DialogMob;
 import org.zuma.examplePlugin.domain.mob.impl.InventoryOpenerMob;
+import org.zuma.examplePlugin.domain.mob.impl.ToggleableCombatant;
+
+import java.util.List;
+
+import static org.zuma.examplePlugin.domain.mob.MobTypesLoader.getBaseSkills;
 
 public class QuestMobs {
 
@@ -44,6 +49,17 @@ public class QuestMobs {
         // Drakkar mayor
         registry.register(MobType.DRAKKAR_MAYOR.getId(), () -> new DialogMob("Drakkar Mayor", EquipmentSet.PAPER_IN_HAND,
                 MobBehaviors.VILLAGER_MAN_2.getBehavior(), "drakkar_mayor", null, 0, Dialogs.drakkarMayorDialog));
+
+        // bones of leviathan quest
+        registry.register(MobType.MORVANE_PRIEST.getId(), () -> new ToggleableCombatant("Morvane", EquipmentSet.ADAMANT_DAGGER,
+                getBaseSkills(45, 0.5), null, MobBehaviors.MORVANE.getBehavior(), "morvane",
+                0.25, 60, List.of(), false, Dialogs.movanePriest, 100, 1500));
+
+        registry.register(MobType.MARLINUS_HERMIT.getId(), () -> new DialogMob("Marlinus the Hermit", null,
+                MobBehaviors.VILLAGER_MAN_2.getBehavior(), "marlinus", null, 30, Dialogs.marlinusTheHermit));
+
+        registry.register(MobType.GHOSTLING.getId(), () -> new DialogMob("Ghost", null,
+                MobBehaviors.GHOST.getBehavior(), null, "ghostling", 100, Dialogs.ghostlingDialog));
 
     }
 }

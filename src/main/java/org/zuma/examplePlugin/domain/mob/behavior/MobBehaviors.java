@@ -131,6 +131,15 @@ public enum MobBehaviors {
             List.of(SoundType.VILLAGER_MAN_DEATH_5)
     )),
 
+    MORVANE((pitchModifier) -> new MobBehavior(
+            pitchModifier,
+            List.of(SoundType.MORVANE_AMBIENT),
+            List.of(SoundType.MORVANE_CELEBRATE),
+            List.of(SoundType.MORVANE_ATTACK, SoundType.MORVANE_CALL),
+            List.of(SoundType.MORVANE_HURT),
+            List.of(SoundType.MORVANE_DEATH)
+    )),
+
     // WOMAN variations
     VILLAGER_WOMAN_1((pitchModifier) -> new MobBehavior(
             pitchModifier, List.of(SoundType.VILLAGER_WOMAN_AMBIENT_1),
@@ -472,6 +481,27 @@ public enum MobBehaviors {
             List.of(SoundType.BANDIT_NO_1),
             List.of(SoundType.BANDIT_HURT_1),
             List.of(SoundType.BANDIT_DEATH_1)
+    )),
+
+    GHOST((pitchModifier) -> new MobBehavior(
+            pitchModifier,
+            List.of(
+                    SoundType.GHOST_AMBIENT_1,
+                    SoundType.GHOST_AMBIENT_2
+            ),
+            List.of(
+                    SoundType.GHOST_CELEBRATE_1
+            ),
+            List.of(
+                    SoundType.GHOST_NO_1
+            ),
+            List.of(
+                    SoundType.GHOST_HURT_1,
+                    SoundType.GHOST_HURT_2
+            ),
+            List.of(
+                    SoundType.GHOST_DEATH_1
+            )
     ));
 
 

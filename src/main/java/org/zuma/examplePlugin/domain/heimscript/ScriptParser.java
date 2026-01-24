@@ -32,24 +32,26 @@ public class ScriptParser {
         HashMap<String, String> result = new HashMap<>();
 
         for (String inner : splitArgs) {
-            // split on the last underscore — template may contain underscores, value may contain '-' or underscores
-            int sep = inner.lastIndexOf('_');
-            if (sep <= 0) {
-                throw new MalformedParametersException("Invalid argument format in " + trigger + " actions: {" + inner + "}. Expected '<template>_<value>'.");
+            // Try to match the longest template from argsTemplates at the start of 'inner'
+            String templateCandidate = null;
+            String value = null;
+            for (String template : argsTemplates) {
+                if (inner.startsWith(template + "_")) {
+                    templateCandidate = template;
+                    value = inner.substring(template.length() + 1);
+                    break;
+                }
             }
-
-            String templateCandidate = inner.substring(0, sep);
-            String value = inner.substring(sep + 1);
-
+            if (templateCandidate == null || value == null) {
+                throw new MalformedParametersException("Invalid argument format in " + trigger + " actions: {" + inner + "}. Expected one of " + String.join(", ", argsTemplates) + " as template.");
+            }
             if (!argsTemplates.contains(templateCandidate)) {
                 throw new MalformedParametersException("Invalid argument found in " + trigger + " actions. {" + inner + "} — template '"
                         + templateCandidate + "' does not exist in " + String.join(", ", argsTemplates) + ".");
             }
-
             if (value.isEmpty()) {
                 throw new MalformedParametersException("Invalid argument found in " + trigger + " actions. {" + inner + "} — value is empty.");
             }
-
             result.put(templateCandidate, value);
         }
 

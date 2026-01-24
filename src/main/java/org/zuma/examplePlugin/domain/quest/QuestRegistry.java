@@ -173,6 +173,22 @@ public class QuestRegistry {
                 new DialogStep(RuneQuestPlugin.getInstance(), threadsOfAid, "Bring §616x Spider Silk & §61x Health Potion to §6Doctor Bram", "threads-of-aid.bring-ingredients", null)
         )));
 
+        Quest bonesOfLeviathan = new Quest(QuestId.BONES_OF_LEVIATHAN.getId(), "Bones of Leviathan", QuestDifficulty.MEDIUM, false, new Quest.Coordinates(-219, 81, -1079))
+                .setRequirements(List.of(new SkillRequirement(SkillType.PRAYER, 30), new SkillRequirement(SkillType.ATTACK, 30), new SkillRequirement(SkillType.STRENGTH, 30), new SkillRequirement(SkillType.DEFENCE, 30)))
+        .setRewards(new QuestReward(null, Map.of(SkillType.PRAYER, 3800.0), 250));
+
+        registerQuest(bonesOfLeviathan.addSteps(List.of(
+                new DialogStep(RuneQuestPlugin.getInstance(), bonesOfLeviathan, "Find §6hermit§f living in a ribcage of a big fish.", "bones-of-leviathan.find-hermit", null),
+                new CollectionStep(RuneQuestPlugin.getInstance(), bonesOfLeviathan, "Obtain §63 Big Bones.", "bones-of-leviathan.obtain-bones", List.of(new ItemRecord(ItemId.BIG_BONES, 3)), null),
+                new CollectionStep(RuneQuestPlugin.getInstance(), bonesOfLeviathan, "Obtain §61 Iron Amulet.", "bones-of-leviathan.obtain-chain", List.of(new ItemRecord(ItemId.IRON_AMULET, 1)), null),
+                new DialogStep(RuneQuestPlugin.getInstance(), bonesOfLeviathan, "Bring §63 Big Bones§f & §61x Iron Amulet§f to §6Marlinus The Hermit.", "bones-of-leviathan.bring-ingredients", null),
+                new DialogStep(RuneQuestPlugin.getInstance(), bonesOfLeviathan, "Talk to the ghost in abandoned building at §6Rogue's Haven.", "bones-of-leviathan.talk-ghost", null),
+                new DialogStep(RuneQuestPlugin.getInstance(), bonesOfLeviathan, "Talk to the §6Morvane.", "bones-of-leviathan.talk-morvane", null),
+                new DialogStep(RuneQuestPlugin.getInstance(), bonesOfLeviathan, "Talk to the §6Marlinus§f at §6Infernak beach.", "bones-of-leviathan.talk-hermit", null)
+
+
+        )));
+
 
     }
 

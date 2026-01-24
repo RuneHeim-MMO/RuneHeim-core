@@ -4,6 +4,11 @@ public enum MobType {
     DRAKKAR_MAYOR,
     DRAKKAR_SMELTERY_WORKER,
 
+    // bones of leviathan quest
+    MORVANE_PRIEST,
+    MARLINUS_HERMIT,
+    GHOSTLING,
+
     // The sick camels quest
     RAFIQ_CAMEL_TRADER,
     SHAMIRA_SHAMAN,

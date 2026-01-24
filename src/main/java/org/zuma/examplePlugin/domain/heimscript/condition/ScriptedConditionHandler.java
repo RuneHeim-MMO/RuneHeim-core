@@ -8,6 +8,8 @@ import org.zuma.examplePlugin.domain.heimscript.ScriptParser;
 import org.zuma.examplePlugin.domain.housing.HousingRegion;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
+import org.zuma.examplePlugin.domain.modifier.Modifier;
+import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.quest.Quest;
 import org.zuma.examplePlugin.domain.quest.base.AbstractQuestStep;
@@ -58,6 +60,16 @@ public class ScriptedConditionHandler {
                 }
                 case COINS_GREATER_THAN_EQUALS -> {
                     result = player.getPouchCoins() >= Integer.parseInt(args.get("amount"));
+                }
+                case MODIFIER_GREATER_THAN_EQUALS -> {
+                    String modifierId = args.get("id_modifier");
+                    double amount = Double.parseDouble(args.get("amount"));
+                    ModifierType modifierType = ModifierType.valueOf(modifierId.toUpperCase());
+                    Modifier modifier = player.getModifiers().get(modifierType);
+
+                    if (modifier != null && modifier.amount() >= amount) {
+                        result = true;
+                    }
                 }
                 case COINS_LESS_THAN -> {
                     result = player.getPouchCoins() < Integer.parseInt(args.get("amount"));

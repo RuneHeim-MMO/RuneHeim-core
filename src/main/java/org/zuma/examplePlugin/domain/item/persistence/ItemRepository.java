@@ -160,6 +160,11 @@ public class ItemRepository {
                                 , 1)
                 ),
 
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.GHOST_SPEAK_AMULET.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Ghostspeak Amulet", List.of("Amulet that enables the wearer to talk to ghosts."), null, false, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new EquipableTypeMeta(null, null, null,
+                                List.of(new Modifier(ModifierType.GHOST_SPEAKING, 1), new Modifier(ModifierType.PRAYER_USAGE_REDUCTION, 10)), List.of(new SkillRequirement(SkillType.PRAYER, 15)), null), 1)),
+
+
                 new ItemEntity(new AbstractItemMeta(ItemType.STONE_OF_PRAY, ItemId.STONE_OF_PRAY.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Stone of Pray", List.of("Set and activate prayer presets instantly.", "Sneak + Right-Click to configure."), null, false, CRAFTED_ITEM_MULTIPLIER), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.BONE_CRUSHER, ItemId.BONE_CRUSHER.asInt(), Material.COAL, ItemRarity.RARE, "Bone Crusher", List.of("A dark relic that grinds fallen bones into dust, offering them silently to the gods.", "Can be recharged by right-clicking an altar."), null, false, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new BoneCrusherMeta(0.33, 500), 1)),

@@ -24,6 +24,7 @@ public enum ScriptedAction implements ScriptedStatement {
     TAKE_POUCH_COINS("take_pouch_coins", "amount"),
     DIALOG_HOLDER_SOUND("dialog_holder_sound", "sound"),
     DIALOG_HOLDER_FORWARD_INTERACTION("dialog_holder_forward_interaction"),
+    DIALOG_HOLDER_TARGET_PLAYER("dialog_holder_target_player"),
     TAKE_INVENTORY_ITEM("take_inventory_item", "item_id", "amount"),
     QUEST_STEP_FINISH("quest_step_finish", "stable_id"),
     CLEAR_INVENTORY("clear_inventory"),

@@ -456,7 +456,9 @@ public enum ItemId {
 
     STONE_OF_PRAY(4200),
     // Reserved 4201 is the active version's custom model id
-    BONE_CRUSHER(4202);
+    BONE_CRUSHER(4202),
+    GHOST_SPEAK_AMULET(4203);
+
 
     private final int id;
 

@@ -11,6 +11,8 @@ import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
 import org.zuma.examplePlugin.core.constants.SoundType;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
 import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
+import org.zuma.examplePlugin.domain.modifier.Modifier;
+import org.zuma.examplePlugin.domain.modifier.constants.ModifierType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.skill.constants.SkillType;
 
@@ -44,6 +46,14 @@ public class PrayerManager implements Listener {
             double drainAmount = prayers.stream()
                     .mapToDouble(Prayer::getDrainRatePerTick)
                     .sum();
+
+            Modifier prayerReduction = player.getModifiers().get(ModifierType.PRAYER_USAGE_REDUCTION);
+
+            if (prayerReduction != null) {
+                double reductionPercent = prayerReduction.amount();
+                drainAmount = Math.max(0.0, drainAmount * (1 - reductionPercent / 100.0));
+            }
+
 
             player.setPrayerEnergy(player.getPrayerEnergy() - drainAmount);
             AnalyticsUtils.incrementServerAndPlayer(player, AnalyticsKey.PRAYER_POINTS_WASTED, drainAmount);

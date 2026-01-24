@@ -62,6 +62,10 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.PAPER), 100)
     ))),
 
+    ADAMANT_DAGGER(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.ADAMANT_DAGGER), 100)
+    ))),
+
     MUSHROOM_STEW(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.MUSHROOM_STEW), 100)
     ))),

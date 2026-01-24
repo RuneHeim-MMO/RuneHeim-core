@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.utils.MobUtils;
 import org.zuma.examplePlugin.domain.mob.MobRegistry;
 import org.zuma.examplePlugin.domain.mob.base.AbstractMob;
+import org.zuma.examplePlugin.domain.mob.impl.ToggleableCombatant;
 
 import java.util.*;
 
@@ -40,6 +41,10 @@ public class MobIdleBehaviorHandler {
 
         if (isFrozen) {
             mobInstance.unfreezeMob();
+        }
+
+        if (mobInstance instanceof ToggleableCombatant combatant) {
+            combatant.setAggressive(false);
         }
 
         MobUtils.moveToWithCallback(entity, homeLocation, 10 * 20L,
