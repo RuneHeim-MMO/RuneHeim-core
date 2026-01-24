@@ -22,6 +22,8 @@ import java.util.Map;
 public class ItemContainerContentSerializer {
     private static final Gson gson = new Gson();
 
+    // WARNING: Although method is named Sync, ItemSerializer may perform async actions internally.
+    // DO NOT modify without understanding ItemSerializer implementation.
     public static String serializeItemSlotPairsSync(List<ItemStackSlotPair> pairs, boolean clearStateCache) throws IllegalArgumentException {
         Map<String, String> serialized = new HashMap<>();
 

@@ -44,6 +44,8 @@ public enum Permission {
             "litebans.mutelist", "litebans.warnlist", "litebans.checkban",
             "litebans.checkmute", "litebans.checkwarn", "litebans.notify")),
 
+    STAFF_CHAT(List.of("runeheim.admin.chat")),
+
     PLAYER_DEFAULTS(List.of(
             "essentials.silentjoin", "essentials.silentquit", "runeheim.msg"));
 

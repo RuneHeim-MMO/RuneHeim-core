@@ -208,7 +208,7 @@ public class AdminCommand implements BasicCommand {
         }
 
         if (Objects.equals(args[0], "map")) {
-            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.TERRITORY_INVENTORY.asInt(), runePlayer, null,null);
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.TERRITORY_INVENTORY.asInt(), runePlayer, null, null);
         }
 
         if (Objects.equals(args[0], "combat-debug")) {
@@ -341,15 +341,15 @@ public class AdminCommand implements BasicCommand {
 
 
         if (Objects.equals(args[0], "node")) {
-            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_NODE_CREATE.asInt(), runePlayer, null,null);
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_NODE_CREATE.asInt(), runePlayer, null, null);
         }
 
         if (Objects.equals(args[0], "opener")) {
-            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), runePlayer, null,null);
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_INTERACTABLE_BLOCK_CREATE.asInt(), runePlayer, null, null);
         }
 
         if (Objects.equals(args[0], "model_opener")) {
-            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_MODELLED_INTERACTABLE_BLOCK_CREATE.asInt(), runePlayer, null,null);
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_MODELLED_INTERACTABLE_BLOCK_CREATE.asInt(), runePlayer, null, null);
         }
 
         if (Objects.equals(args[0], "shop")) {
@@ -357,7 +357,7 @@ public class AdminCommand implements BasicCommand {
         }
 
         if (Objects.equals(args[0], "house")) {
-            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.DRAKKAR_HOUSE_DISCOVERER.asInt(), runePlayer, null,null);
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.DRAKKAR_HOUSE_DISCOVERER.asInt(), runePlayer, null, null);
         }
 
         if (Objects.equals(args[0], "des")) {
@@ -372,13 +372,41 @@ public class AdminCommand implements BasicCommand {
 
         // Items without page
         if (args.length == 1 && Objects.equals(args[0], "items")) {
-            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_ITEM_REGISTRY.asInt(), runePlayer, null,null);
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_ITEM_REGISTRY.asInt(), runePlayer, null, null);
         }
 
 
         // without page
         if (args.length == 1 && Objects.equals(args[0], "recipes")) {
-            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_RECIPE_REGISTRY.asInt(), runePlayer, null,null);
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.ADMIN_RECIPE_REGISTRY.asInt(), runePlayer, null, null);
+        }
+
+        if (args.length == 1 && Objects.equals(args[0], "scatter")) {
+            int AREA_RADIUS = 1250; // half of 2.5k
+            int MAX_ATTEMPTS = 10;
+            Random random = new Random();
+            World world = Bukkit.getWorld("world");
+
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                boolean teleported = false;
+                for (int attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+                    int x = random.nextInt(AREA_RADIUS * 2) - AREA_RADIUS;
+                    int z = random.nextInt(AREA_RADIUS * 2) - AREA_RADIUS;
+
+                    int y = world.getHighestBlockYAt(x, z); // safe surface
+                    if (y > 0) {
+                        Location loc = new Location(world, x + 0.5, y + 1, z + 0.5);
+                        p.teleport(loc);
+                        teleported = true;
+                        break;
+                    }
+                }
+
+                if (!teleported) {
+                    player.sendMessage("Failed to find a safe location. Staying put.");
+                }
+            }
+
         }
 
 

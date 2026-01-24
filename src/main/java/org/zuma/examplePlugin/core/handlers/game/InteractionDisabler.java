@@ -59,6 +59,7 @@ public class InteractionDisabler implements Listener {
             "/checkmute",
             "/checkwarn",
             "/warnlist",
+            "/s",
 
 
             // PLAYER_DEFAULTS
