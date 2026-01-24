@@ -138,11 +138,11 @@ public class Quest implements Restrictable {
     private QuestDuration getQuestDuration() {
         int size = steps.size();
 
-        if (size <= 10) {
+        if (size <= 5) {
             return QuestDuration.SHORT;
-        } else if (size <= 15) {
+        } else if (size <= 10) {
             return QuestDuration.MEDIUM;
-        } else if (size <= 30) {
+        } else if (size <= 20) {
             return QuestDuration.LONG;
         } else {
             return QuestDuration.VERY_LONG;

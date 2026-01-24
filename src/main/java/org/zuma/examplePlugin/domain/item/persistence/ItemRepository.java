@@ -1769,6 +1769,17 @@ public class ItemRepository {
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 40)),
                                         null), null, 1), 1)
                 ),
+                new ItemEntity(
+                        new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MONK_ROBE_TOP.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Monk Robe Top", List.of("A finely crafted robe favored by ascetic monks.", "Protects against physical attacks and conserves spiritual energy."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new EquipableTypeMeta(EquipmentSlot.CHEST, "monk_robe_top", null, List.of(
+                                        new Modifier(ModifierType.DEFENCE_STAB, 3),
+                                        new Modifier(ModifierType.DEFENCE_SLASH, 3),
+                                        new Modifier(ModifierType.DEFENCE_CRUSH, 3),
+                                        new Modifier(ModifierType.PRAYER_USAGE_REDUCTION, 20)
+                                ), null, null), 1)
+                ),
+
 
                 // Armor -- chainbody
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.BRONZE_CHAINBODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Bronze Chainbody", List.of("Basic bronze chainbody offering minimal protection."), null, true, CRAFTED_ITEM_MULTIPLIER),
@@ -1969,6 +1980,16 @@ public class ItemRepository {
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 40)),
                                         null), null, 1)
                                 , 1)
+                ),
+                new ItemEntity(
+                        new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MONK_ROBE_BOTTOM.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Monk Robe Bottom", List.of("A finely crafted robe favored by ascetic monks.", "Protects against physical attacks and conserves spiritual energy."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new EquipableTypeMeta(EquipmentSlot.LEGS, "monk_robe_bottom", null, List.of(
+                                        new Modifier(ModifierType.DEFENCE_STAB, 2),
+                                        new Modifier(ModifierType.DEFENCE_SLASH, 2),
+                                        new Modifier(ModifierType.DEFENCE_CRUSH, 2),
+                                        new Modifier(ModifierType.PRAYER_USAGE_REDUCTION, 15)
+                                ), null, null), 1)
                 ),
 
                 // Armor - Boots
