@@ -11,6 +11,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -33,6 +34,32 @@ public class BlockListener implements Listener {
     public BlockListener(BlockManager manager, ItemRegistry itemRegistry) {
         this.manager = manager;
         this.itemRegistry = itemRegistry;
+
+    }
+
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    public void onPlayerEntityInteract(PlayerInteractEntityEvent event) {
+
+        // guard for main hand only
+        if (event.getHand() != EquipmentSlot.HAND) {
+            return;
+        }
+
+        Player player = event.getPlayer();
+        Block dumbBlock = event.getRightClicked().getLocation().getBlock();
+        RunePlayer runePlayer = RuneQuestPlugin.getPlayerManager().getRunePlayer(player);
+        AbstractInteractableBlock block = manager.getAbstractInteractableBlock(dumbBlock);
+
+        if (runePlayer == null || block == null || block.isDisabled()) {
+            return;
+        }
+
+        if (block.getEntityChildUUID() == null || !block.getEntityChildUUID().equals(event.getRightClicked().getUniqueId())) {
+            return;
+        }
+
+        AbstractItemType itemInHand = itemRegistry.getType(PlayerUtils.getItemStackInHand(player));
+        block.onPlayerInteractEntityEvent(runePlayer, event.getRightClicked(), event, itemInHand);
 
     }
 
@@ -150,4 +177,5 @@ public class BlockListener implements Listener {
             event.setCancelled(true);
         }
     }
+
 }

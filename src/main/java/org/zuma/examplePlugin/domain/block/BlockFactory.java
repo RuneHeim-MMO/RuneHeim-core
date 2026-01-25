@@ -33,8 +33,25 @@ public class BlockFactory {
             case CommandBlock -> createCommandBlock(meta, json);
             case LightableBlock -> createLightableBlock(meta, json);
             case CombatDummyFurniture -> createCombatDummyFurniture(meta, json);
+            case ItemSpawn -> createItemSpawner(meta, json);
             default -> throw new IllegalArgumentException("Unknown interactable block type: " + meta.type());
         };
+    }
+
+    private ItemSpawnBlock createItemSpawner(AbstractInteractableBlockMeta meta, @Nullable VersionedJson json) {
+        if (json == null) {
+            throw new UnsupportedOperationException("Cannot create resource node block " + meta.type() + " required json is null!");
+        }
+
+        switch (json.version()) {
+            case 1 -> {
+                ItemSpawnBlockMeta deserialized = new Gson().fromJson(json.meta(), ItemSpawnBlockMeta.class);
+                ItemSpawnBlock block = new ItemSpawnBlock(meta);
+                block.initializeBlock(deserialized.item(), deserialized.respawnDurationSeconds());
+                return block;
+            }
+            default -> throw new UnsupportedJsonVersionException(meta.type().name(), json.version());
+        }
     }
 
     private ResourceNodeCrop createCropResourceNode(BlockManager manager, AbstractInteractableBlockMeta meta, @Nullable VersionedJson json, BlockLoader loader) {

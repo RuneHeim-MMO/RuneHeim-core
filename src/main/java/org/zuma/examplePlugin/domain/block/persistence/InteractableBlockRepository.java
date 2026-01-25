@@ -174,6 +174,34 @@ public class InteractableBlockRepository {
                             "&6No Items Lost On Death"
                     ), MarkerType.DUNGEON, "Spider Dungeon")), 1)));
 
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9982, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), -222, 81, -1080), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.MONK_ROBE_TOP, 1), 120)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9981, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), 164, 77, -124), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.BONES, 1), 120)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9980, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), 164, 77, -126), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.COINS, 3), 120)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9980, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), -105, 84, 745), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.BONES, 1), 120)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9979, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), -105, 84, 747), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.COINS, 2), 120)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9978, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), -832, 84, -399), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.BIG_BONES, 1), 120)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9977, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), -1210, 75, -763), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.COINS, 102), 600)), 1)));
+
 
         } catch (Exception e) {
             throw new RuntimeException("Failed to fetch block entities", e);

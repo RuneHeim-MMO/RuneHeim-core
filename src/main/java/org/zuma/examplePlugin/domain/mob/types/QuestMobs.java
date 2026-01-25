@@ -51,7 +51,7 @@ public class QuestMobs {
                 MobBehaviors.VILLAGER_MAN_2.getBehavior(), "drakkar_mayor", null, 0, Dialogs.drakkarMayorDialog));
 
         // bones of leviathan quest
-        registry.register(MobType.MORVANE_PRIEST.getId(), () -> new ToggleableCombatant("Morvane", EquipmentSet.ADAMANT_DAGGER,
+        registry.register(MobType.MORVANE_PRIEST.getId(), () -> new ToggleableCombatant("Morvane", EquipmentSet.MORVANE_PRIEST,
                 getBaseSkills(45, 0.5), null, MobBehaviors.MORVANE.getBehavior(), "morvane",
                 0.25, 60, List.of(), false, Dialogs.movanePriest, 100, 1500));
 
