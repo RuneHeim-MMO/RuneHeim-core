@@ -1,6 +1,5 @@
 package org.zuma.examplePlugin.domain.block.impl;
 
-import eu.decentsoftware.holograms.api.DHAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
@@ -20,10 +19,6 @@ import org.zuma.examplePlugin.domain.block.meta.AbstractInteractableBlockMeta;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class ItemSpawnBlock extends AbstractInteractableBlock {
     private ItemRecord itemRecord;
@@ -61,6 +56,13 @@ public class ItemSpawnBlock extends AbstractInteractableBlock {
         }
 
         Location location = getLocation();
+
+        for (Entity entity : location.getWorld().getNearbyEntities(location, 1, 1, 1)) {
+            if (entity instanceof ItemFrame frame) {
+                frame.remove();
+                break;
+            }
+        }
 
         ItemFrame frame = location.getWorld().spawn(location, ItemFrame.class, f -> {
             f.setFacingDirection(BlockFace.UP, true);
