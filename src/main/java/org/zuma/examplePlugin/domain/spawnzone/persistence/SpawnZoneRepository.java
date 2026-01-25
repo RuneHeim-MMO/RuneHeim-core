@@ -2378,8 +2378,38 @@ public class SpawnZoneRepository {
                 new SpawnZoneRecord(new AbstractSpawnZoneMeta(346, SpawnZoneType.POINT, 30, 20,
                         new Location(Bukkit.getWorld("world"), -79, 71, -1082)), toVersionedJson(new PointSpawnZoneMeta(List.of(
                         new SpawnZoneMobRecord(MobType.GHOSTLING, 1, 100)
-                ), false, null, null), 1))
+                ), false, null, null), 1)),
 
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(347, SpawnZoneType.AREA, 15, 20,
+                        new Location(Bukkit.getWorld("world"), -2302, 148, -2420)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SHIP_WANDERING_GHOST_CITIZEN, 8, 100)
+                ), 40, false, false), 1)),
+
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(348, SpawnZoneType.AREA, 15, 20,
+                        new Location(Bukkit.getWorld("world"), -2302, 136, -2420)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SHIP_WANDERING_GHOST_CITIZEN, 4, 100)
+                ), 40, false, false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(349, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), 840, 95, -371)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.SAILORS_SPIRIT, 1, 100)
+                ), false, null, null), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(350, SpawnZoneType.AREA, 30, 50,
+                        new Location(Bukkit.getWorld("world"), -2310, 132, -2421)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.UNDEAD_SAILOR_BASE_40, 4, 100)
+                ), 10, false, false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(351, SpawnZoneType.AREA, 30, 50,
+                        new Location(Bukkit.getWorld("world"), -2323, 132, -2421)), toVersionedJson(new AreaSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.UNDEAD_SAILOR_BASE_40, 4, 100)
+                ), 10, false, false), 1)),
+
+                new SpawnZoneRecord(new AbstractSpawnZoneMeta(352, SpawnZoneType.POINT, 30, 20,
+                        new Location(Bukkit.getWorld("world"), -2281, 136, -2422)), toVersionedJson(new PointSpawnZoneMeta(List.of(
+                        new SpawnZoneMobRecord(MobType.UNDEAD_CAPTAIN_BASE_50, 1, 100)
+                ), false, null, null), 1))
 
                 // last 345
 

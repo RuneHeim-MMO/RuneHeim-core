@@ -1,9 +1,6 @@
 package org.zuma.examplePlugin.domain.heimscript.action;
 
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Mob;
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.analytics.AnalyticsKey;
@@ -13,6 +10,8 @@ import org.zuma.examplePlugin.core.utils.AnalyticsUtils;
 import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.domain.dialog.Dialog;
 import org.zuma.examplePlugin.domain.droptable.DropTable;
+import org.zuma.examplePlugin.domain.effect.EffectHandler;
+import org.zuma.examplePlugin.domain.effect.effects.DreamStart;
 import org.zuma.examplePlugin.domain.heimscript.ScriptParser;
 import org.zuma.examplePlugin.domain.housing.HousingRegion;
 import org.zuma.examplePlugin.domain.housing.instance.HouseInstance;
@@ -42,6 +41,39 @@ public class ScriptedActionHandler {
             AbstractMob holder = getHolder(input, parentDialog, action);
 
             switch (action) {
+                case PLAY_PLAYER_EFFECT -> {
+                    String effectName = args.get("effect");
+
+                    switch (effectName) {
+                        case "dream" -> {
+                            EffectHandler.playAt(player.asBukkitPlayer().getLocation(), new DreamStart(player), 1);
+                        }
+                        default -> throw new IllegalArgumentException("[SCRIPT] Unknown effect name: " + effectName);
+                    }
+
+                }
+                case SET_PLAYER_WEATHER -> {
+                    String weather = args.get("weather").toLowerCase();
+
+                    switch (weather) {
+                        case "clear" -> player.asBukkitPlayer().setPlayerWeather(WeatherType.CLEAR);
+                        case "rain" -> player.asBukkitPlayer().setPlayerWeather(WeatherType.DOWNFALL);
+                        case "storm" -> {
+                            player.asBukkitPlayer().setPlayerWeather(WeatherType.DOWNFALL);
+                        }
+                        default -> throw new IllegalArgumentException("[SCRIPT] Unknown weather type: " + weather);
+                    }
+                }
+                case RESET_PLAYER_WEATHER -> {
+                    player.asBukkitPlayer().resetPlayerWeather();
+                }
+                case SET_PLAYER_TIME -> {
+                    long time = Long.parseLong(args.get("time"));
+                    player.asBukkitPlayer().setPlayerTime(time, false);
+                }
+                case RESET_PLAYER_TIME -> {
+                    player.asBukkitPlayer().resetPlayerTime();
+                }
                 case DIALOG_HOLDER_SOUND -> {
                     holder.playSound(MobBehavior.MobSoundType.valueOf(args.get("sound").toUpperCase()));
                 }
@@ -89,11 +121,19 @@ public class ScriptedActionHandler {
                     player.addXp(type, Double.parseDouble(args.get("xp")), XpSource.PERSONAL);
                 }
                 case TELEPORT_PLAYER -> {
-                    Location loc = new Location(Bukkit.getWorld(args.get("world")), Integer.parseInt(args.get("x")), Integer.parseInt(args.get("y")), Integer.parseInt(args.get("z")));
-                    player.asBukkitPlayer().teleport(loc);
+                    int delayTicks = args.get("delay_ticks") != null ? Integer.parseInt(args.get("delay_ticks")) : 0;
 
-                    HouseInstance visiting = RuneQuestPlugin.getHousingManager().getVisitingHouse(player);
-                    if (visiting != null) visiting.removeFromVisitors(player);
+                    Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+                        float yaw = args.get("yaw") != null ? Float.parseFloat(args.get("yaw")) : 0f;
+                        Location loc = new Location(Bukkit.getWorld(args.get("world")), Double.parseDouble(args.get("x")), Double.parseDouble(args.get("y")), Double.parseDouble(args.get("z")));
+                        loc.setYaw(yaw);
+                        player.asBukkitPlayer().teleport(loc);
+
+                        HouseInstance visiting = RuneQuestPlugin.getHousingManager().getVisitingHouse(player);
+                        if (visiting != null) visiting.removeFromVisitors(player);
+                    }, delayTicks);
+                    return;
+
                 }
                 case TAKE_POUCH_COINS -> {
                     long coins = Long.parseLong(args.get("amount"));
@@ -104,7 +144,7 @@ public class ScriptedActionHandler {
                     PlayerUtils.removeItems(player, List.of(new ItemRecord(Integer.parseInt(args.get("item_id")), Integer.parseInt(args.get("amount")))));
                 }
                 case TELEPORT_TO_HOUSE -> {
-                    HousingRegion region = HousingRegion.valueOf(args.get("region"));
+                    HousingRegion region = HousingRegion.valueOf(args.get("region").toUpperCase());
                     RuneQuestPlugin.getHousingManager().teleportToOwnHouse(player, region);
                 }
                 case QUEST_STEP_FINISH -> {
@@ -147,8 +187,11 @@ public class ScriptedActionHandler {
 
                 }
                 case START_TOUR -> {
-                    String tourName = args.get("tour_name");
-                    RuneQuestPlugin.getTourHandler().startTour(player, tourName, callback);
+                    int delayTicks = args.get("delay_ticks") != null ? Integer.parseInt(args.get("delay_ticks")) : 0;
+                    Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+                        String tourName = args.get("tour_name");
+                        RuneQuestPlugin.getTourHandler().startTour(player, tourName, callback);
+                    }, delayTicks);
                 }
                 default ->
                         RuneQuestPlugin.getRuneLogger().log(LogLevel.CRITICAL, "[SCRIPT] Unknown action " + action + " in " + input + "!");

@@ -11,6 +11,7 @@ public enum Color {
     ERROR_LIGHT("#fc5677"),
     SUCCESS("#0bd69d"),
     HEALTH("#c20037"),
+    DANGER("#d60b33"),
 
     SHOP_DESCRIPTION("#42cfa9"),
 

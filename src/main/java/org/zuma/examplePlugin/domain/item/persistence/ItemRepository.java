@@ -1637,6 +1637,11 @@ public class ItemRepository {
                                         null), null, 1), 1)
                 ),
 
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.SAILORS_HAT.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.UNCOMMON, "Sailors Hat", List.of("A crisp, white sailor’s hat with a neatly embroidered emblem"), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new EquipableTypeMeta(EquipmentSlot.HEAD, "sailors_hat", List.of(new SkillModifier(SkillType.FISHING,1,null)),
+                                        null, null, null), 1)
+                ),
 
                 // Armor - Chestplates
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.LEATHER_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Leather Body", List.of("Basic leather torso armor."), null, true, CRAFTED_ITEM_MULTIPLIER),

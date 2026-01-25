@@ -4,6 +4,13 @@ public enum MobType {
     DRAKKAR_MAYOR,
     DRAKKAR_SMELTERY_WORKER,
 
+    SHIP_WANDERING_GHOST_CITIZEN,
+
+    // Saltbound sleep quest
+    SAILORS_SPIRIT,
+    UNDEAD_SAILOR_BASE_40,
+    UNDEAD_CAPTAIN_BASE_50,
+
     // bones of leviathan quest
     MORVANE_PRIEST,
     MARLINUS_HERMIT,

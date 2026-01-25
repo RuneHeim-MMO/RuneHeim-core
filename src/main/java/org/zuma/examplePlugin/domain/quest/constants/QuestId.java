@@ -14,7 +14,9 @@ public enum QuestId {
 
     HOT_MESS_AT_THE_SMELTERY("smelters-assistant"),
     THREADS_OF_AID("threads-of-aid"),
-    BONES_OF_LEVIATHAN("bones-of-leviathan");
+    BONES_OF_LEVIATHAN("bones-of-leviathan"),
+
+    SALTBOUND_SLEEP("saltbound-sleep");
 
     private final String id;
 

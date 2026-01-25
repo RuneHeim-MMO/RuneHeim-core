@@ -202,6 +202,23 @@ public class InteractableBlockRepository {
                     new AbstractInteractableBlockMeta(9977, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), -1210, 75, -763), HologramSide.TOP),
                     new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.COINS, 102), 600)), 1)));
 
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9976, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), 1032, 79, -657), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.SMITHING_HAMMER, 1), 120)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9975, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), -298, 41, -330), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.SPIDER_SILK, 1), 120)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9974, BlockType.TeleportDoor, BlockFace.WEST, new Location(Bukkit.getWorld("world"), -2333, 146, -2422), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new TeleportDoorMeta("haunted-ship-wake-up", "Exit Dream", "world", 835, 96, -371, -90, Door.Hinge.LEFT,
+                            new QuestLockedMeta("You are not ready yet.", null, null, List.of("saltbound-sleep.talk-sailor-ghost-finish")))), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9973, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), 839, 103, -374), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.SAILORS_HAT, 1), 1200)), 1)));
+
 
         } catch (Exception e) {
             throw new RuntimeException("Failed to fetch block entities", e);

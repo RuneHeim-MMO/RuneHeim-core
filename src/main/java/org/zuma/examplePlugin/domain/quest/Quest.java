@@ -241,6 +241,17 @@ public class Quest implements Restrictable {
         lore.add(Icon.CONTRACT_SKULL.asComponent().append(Component.text("Difficulty: ", Color.ITEM_LORE_DESCRIPTION.asColor()).append(Component.text(this.difficulty.getLabel()))));
         lore.add(Icon.CLOCK.asComponent().append(Component.text("Duration: ", Color.ITEM_LORE_DESCRIPTION.asColor()).append(Component.text(this.duration.getLabel()))));
 
+        if (!this.getRequiredCompletedQuests().isEmpty()) {
+            lore.add(Component.empty());
+            lore.add(Icon.BOOK.asComponent().append(Component.text("Quest requirements: ", Color.ITEM_LORE_DESCRIPTION.asColor())));
+            for (String reqQuestId : this.getRequiredCompletedQuests()) {
+                Quest reqQuest = RuneQuestPlugin.getQuestHandler().getRegistry().getQuestById(reqQuestId);
+                if (reqQuest != null) {
+                    lore.add(Component.text("    • " + reqQuest.getName(), Color.ITEM_LORE_DESCRIPTION.asColor()));
+                }
+            }
+        }
+
         if (this.startLocation != null) {
             lore.add(Component.empty());
             lore.add(Icon.MAP.asComponent()

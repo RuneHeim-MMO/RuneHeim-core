@@ -20,7 +20,7 @@ public enum ScriptedAction implements ScriptedStatement {
     SPAWN_MOB("spawn_mob", "type", "world", "x", "y", "z"),
     GIVE_DISTRIBUTED_XP("give_distributed_xp", "skill", "xp"),
     GIVE_PERSONAL_XP("give_personal_xp", "skill", "xp"),
-    TELEPORT_PLAYER("teleport_player", "world", "x", "y", "z"),
+    TELEPORT_PLAYER("teleport_player", "world", "x", "y", "z", "delay_ticks", "yaw"),
     TAKE_POUCH_COINS("take_pouch_coins", "amount"),
     DIALOG_HOLDER_SOUND("dialog_holder_sound", "sound"),
     DIALOG_HOLDER_FORWARD_INTERACTION("dialog_holder_forward_interaction"),
@@ -29,10 +29,16 @@ public enum ScriptedAction implements ScriptedStatement {
     QUEST_STEP_FINISH("quest_step_finish", "stable_id"),
     CLEAR_INVENTORY("clear_inventory"),
     TRAVEL_SEQUENCE("travel_sequence", "duration_seconds", "world", "dest_x", "dest_y", "dest_z", "dest_yaw", "buffer_x", "buffer_y", "buffer_z", "buffer_yaw", "mode"),
-    START_TOUR("start_tour", "tour_name"),
+    START_TOUR("start_tour", "tour_name", "delay_ticks"),
     KILL_PLAYER("kill_player"),
     TELEPORT_TO_HOUSE("teleport_to_house", "region"),
-    FORCE_FINISH_QUEST("force_finish_quest", "id");
+    FORCE_FINISH_QUEST("force_finish_quest", "id"),
+    SET_PLAYER_TIME("set_player_time", "time"),
+    RESET_PLAYER_TIME("reset_player_time"),
+    SET_PLAYER_WEATHER("set_player_weather", "weather"),
+    RESET_PLAYER_WEATHER("reset_player_weather"),
+    PLAY_PLAYER_EFFECT("set_player_effect", "effect");
+
 
     private final String trigger;
     private final List<String> argsTemplates;

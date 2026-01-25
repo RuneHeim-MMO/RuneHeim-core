@@ -2,12 +2,14 @@ package org.zuma.examplePlugin.domain.mob.types;
 
 import org.zuma.examplePlugin.core.constants.Icon;
 import org.zuma.examplePlugin.domain.dialog.Dialogs;
+import org.zuma.examplePlugin.domain.droptable.DropTableId;
 import org.zuma.examplePlugin.domain.gui.constants.InventoryId;
 import org.zuma.examplePlugin.domain.mob.MobTypeRegistry;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehaviors;
 import org.zuma.examplePlugin.domain.mob.constants.EquipmentSet;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
 import org.zuma.examplePlugin.domain.mob.impl.DialogMob;
+import org.zuma.examplePlugin.domain.mob.impl.GenericCombatant;
 import org.zuma.examplePlugin.domain.mob.impl.InventoryOpenerMob;
 import org.zuma.examplePlugin.domain.mob.impl.ToggleableCombatant;
 
@@ -60,6 +62,21 @@ public class QuestMobs {
 
         registry.register(MobType.GHOSTLING.getId(), () -> new DialogMob("Ghost", null,
                 MobBehaviors.GHOST.getBehavior(), null, "ghostling", 100, Dialogs.ghostlingDialog));
+
+        // Saltbound sleep quest
+        registry.register(MobType.SAILORS_SPIRIT.getId(), () -> new DialogMob("Sailors Spirit", null,
+                MobBehaviors.GHOST.getBehavior(), null, "ghostling", 50, Dialogs.sailorGhost));
+
+        registry.register(MobType.UNDEAD_SAILOR_BASE_40.getId(), () -> new GenericCombatant(
+                "Undead Sailor", null, getBaseSkills(40, 0.5),
+                null, MobBehaviors.RAVAGER.getBehavior(),
+                0.30, false, true, 40, "undead_sailor", null, null,
+                List.of(DropTableId.BONES.asInt(), DropTableId.COINS_SMALL.asInt()),
+                false).setMaxWalkDistance(500));
+
+        registry.register(MobType.UNDEAD_CAPTAIN_BASE_50.getId(), () -> new ToggleableCombatant("Undead Captain", EquipmentSet.RUNE_SWORD,
+                getBaseSkills(50, 0.5), null, MobBehaviors.MORVANE.getBehavior(), "undead_captain",
+                0.32, 80, List.of(DropTableId.BIG_BONES.asInt()), false, Dialogs.ghostCaptain, 10, 1500));
 
     }
 }

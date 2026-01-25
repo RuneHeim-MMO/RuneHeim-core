@@ -24,10 +24,10 @@ public class ScriptParser {
             splitArgs.add(matcher.group(1)); // capture group 1 = contents without braces
         }
 
-        if (splitArgs.size() != argsTemplates.size()) {
+       /* for backward compatibility if (splitArgs.size() != argsTemplates.size()) {
             throw new MalformedParametersException("Invalid amount of arguments found in " + trigger + " actions. Expected "
                     + String.join(", ", argsTemplates) + ", found " + splitArgs.size() + " args (" + String.join(", ", splitArgs) + ").");
-        }
+        }*/
 
         HashMap<String, String> result = new HashMap<>();
 
@@ -55,9 +55,9 @@ public class ScriptParser {
             result.put(templateCandidate, value);
         }
 
-        if (result.size() != argsTemplates.size()) {
+        /*for backward compatibility if (result.size() != argsTemplates.size()) {
             throw new MalformedParametersException("Parsed arguments count differs from the actions template count for " + trigger + ".");
-        }
+        }*/
 
         return result;
     }
@@ -83,9 +83,7 @@ public class ScriptParser {
         actions.sort((a, b) -> Integer.compare(b.getTrigger().length(), a.getTrigger().length()));
 
         for (T action : actions) {
-            long argCount = input.chars().filter(c -> c == '{').count();
-
-            if (input.startsWith(action.getTrigger()) && argCount == action.getArgsTemplates().size()) {
+            if (input.startsWith(action.getTrigger())) {
                 return action;
             }
         }

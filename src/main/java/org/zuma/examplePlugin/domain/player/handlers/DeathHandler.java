@@ -51,6 +51,9 @@ public class DeathHandler {
         Location playerLocation = player.getLocation();
         long pouchCoins = runePlayer.getPouchCoins();
 
+        player.resetPlayerTime();
+        player.resetPlayerWeather();
+
         for (Entity entity : player.getNearbyEntities(50, 50, 50)) {
             if (entity instanceof Mob mob) {
                 if (mob.getTarget() != null && mob.getTarget().getUniqueId().equals(player.getUniqueId())) {
