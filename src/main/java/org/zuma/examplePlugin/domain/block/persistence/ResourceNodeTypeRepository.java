@@ -120,7 +120,7 @@ public class ResourceNodeTypeRepository {
                         List.of(new SkillRequirement(SkillType.WOODCUTTING, 1)),
                         ModifierType.WOODCUTTING_BOOST, 6000, 30,
                         List.of(DropTableId.TREE_NODE.asInt(), DropTableId.WOODCUTTING_RARE_DROPTABLE.asInt()), ItemId.LOG.asInt(),
-                        "You need a hatchet to cut that!", "Woodcutting",
+                        "You need a hatchet to cut that!", "Cutting",
                         SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
                         List.of(new SkillXpRecord(SkillType.WOODCUTTING, 25.0)), 1, 1),
 
@@ -129,7 +129,7 @@ public class ResourceNodeTypeRepository {
                         List.of(new SkillRequirement(SkillType.WOODCUTTING, 15)),
                         ModifierType.WOODCUTTING_BOOST, 8000, 40,
                         List.of(DropTableId.BIRCH_TREE_NODE.asInt(), DropTableId.WOODCUTTING_RARE_DROPTABLE.asInt()), ItemId.BIRCH_LOG.asInt(),
-                        "You need a hatchet to cut that!", "Woodcutting",
+                        "You need a hatchet to cut that!", "Cutting",
                         SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
                         List.of(new SkillXpRecord(SkillType.WOODCUTTING, 37.5)), 1, 1),
 
@@ -138,7 +138,7 @@ public class ResourceNodeTypeRepository {
                         List.of(new SkillRequirement(SkillType.WOODCUTTING, 30)),
                         ModifierType.WOODCUTTING_BOOST, 9000, 50,
                         List.of(DropTableId.MAPLE_TREE_NODE.asInt(), DropTableId.WOODCUTTING_RARE_DROPTABLE.asInt()), ItemId.MAPLE_LOG.asInt(),
-                        "You need a hatchet to cut that!", "Woodcutting",
+                        "You need a hatchet to cut that!", "Cutting",
                         SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
                         List.of(new SkillXpRecord(SkillType.WOODCUTTING, 70)), 1, 1),
 
@@ -147,7 +147,7 @@ public class ResourceNodeTypeRepository {
                         List.of(new SkillRequirement(SkillType.WOODCUTTING, 45)),
                         ModifierType.WOODCUTTING_BOOST, 11000, 55,
                         List.of(DropTableId.MAHOGANY_TREE_NODE.asInt(), DropTableId.WOODCUTTING_RARE_DROPTABLE.asInt()), ItemId.MAHOGANY_LOG.asInt(),
-                        "You need a hatchet to cut that!", "Woodcutting",
+                        "You need a hatchet to cut that!", "Cutting",
                         SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
                         List.of(new SkillXpRecord(SkillType.WOODCUTTING, 100.0)), 1, 1),
 
@@ -156,7 +156,7 @@ public class ResourceNodeTypeRepository {
                         List.of(new SkillRequirement(SkillType.WOODCUTTING, 60)),
                         ModifierType.WOODCUTTING_BOOST, 13000, 60,
                         List.of(DropTableId.YEW_TREE_NODE.asInt(), DropTableId.WOODCUTTING_RARE_DROPTABLE.asInt()), ItemId.YEW_LOG.asInt(),
-                        "You need a hatchet to cut that!", "Woodcutting",
+                        "You need a hatchet to cut that!", "Cutting",
                         SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
                         List.of(new SkillXpRecord(SkillType.WOODCUTTING, 135.0)), 1, 1),
 
@@ -165,7 +165,7 @@ public class ResourceNodeTypeRepository {
                         List.of(new SkillRequirement(SkillType.WOODCUTTING, 75)),
                         ModifierType.WOODCUTTING_BOOST, 15000, 70,
                         List.of(DropTableId.MAGIC_TREE_NODE.asInt(), DropTableId.WOODCUTTING_RARE_DROPTABLE.asInt()), ItemId.MAGIC_LOG.asInt(),
-                        "You need a hatchet to cut that!", "Woodcutting",
+                        "You need a hatchet to cut that!", "Cutting",
                         SoundType.WOODCUTTING_START, SoundType.WOODCUTTING_STEP, SoundType.WOODCUTTING_SUCCESS,
                         List.of(new SkillXpRecord(SkillType.WOODCUTTING, 160.0)), 1, 1),
 
