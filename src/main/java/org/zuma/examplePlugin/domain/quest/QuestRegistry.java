@@ -202,7 +202,7 @@ public class QuestRegistry {
                 new KillMobStep(RuneQuestPlugin.getInstance(), saltboundSleep, "Kill §610x Undead Sailors§f.", "saltbound-sleep.kill-sailors",
                         List.of(new KillMobStep.KillMobStepEntry(List.of(MobType.UNDEAD_SAILOR_BASE_40.getId()), 10, "Undead Sailors")), null),
                 new DialogStep(RuneQuestPlugin.getInstance(), saltboundSleep, "Talk to the §6Undead Captain.", "saltbound-sleep.talk-captain", null),
-                new KillMobStep(RuneQuestPlugin.getInstance(), saltboundSleep, "Kill §6Undead Captain..", "saltbound-sleep.kill-captain",
+                new KillMobStep(RuneQuestPlugin.getInstance(), saltboundSleep, "Kill §6Undead Captain.", "saltbound-sleep.kill-captain",
                         List.of(new KillMobStep.KillMobStepEntry(List.of(MobType.UNDEAD_CAPTAIN_BASE_50.getId()), 1, "Undead Captain")), null),
                 new VisitStep(RuneQuestPlugin.getInstance(), saltboundSleep, "§4WAKE UP!", "saltbound-sleep.wake-up", new VisitStep.VisitStepEntry(new Quest.Coordinates(-2333, 146, -2421), 3), null),
                 new DialogStep(RuneQuestPlugin.getInstance(), saltboundSleep, "Report back to the §6Sailors Ghost.", "saltbound-sleep.talk-sailor-ghost-finish", null))));

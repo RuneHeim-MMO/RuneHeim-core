@@ -2411,7 +2411,7 @@ public class SpawnZoneRepository {
                         new SpawnZoneMobRecord(MobType.UNDEAD_CAPTAIN_BASE_50, 1, 100)
                 ), false, null, null), 1))
 
-                // last 345
+                // last 352
 
 
         );
