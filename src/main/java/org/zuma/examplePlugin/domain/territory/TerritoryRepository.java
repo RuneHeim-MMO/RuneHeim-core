@@ -329,7 +329,19 @@ public class TerritoryRepository {
                         "§2Wilderness",
                         "",
                         null,
+                        1, 1, false, false, true, 255, true),
+
+
+                new Territory("haunted-ship",
+                        new Location(Bukkit.getWorld("world"), -2305, 143, -2421),
+                        new Location(Bukkit.getWorld("world"), 6.5, 71, -981),
+                        70,
+                        "§9Your Imagination",
+                        "",
+                        ".",
                         1, 1, false, false, true, 255, true)
+                        .setFirstVisitTourId("haunted-ship-intro")
+                        .setAmbientMusic(MusicType.HAUNTED_SHIP_THEME)
 
 
         );

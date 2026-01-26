@@ -154,17 +154,18 @@ public class GUIHandler {
         this.registry.register(InventoryId.REFERRALS_MENU.asInt(), () -> new ReferralsMenu(GUIOverlay.REFERRALS_MENU_OVERLAY.asGlyph() + "§f" + Icon.GUILD.get() + "§f Referrals", InventoryId.REFERRALS_MENU.asInt()));
 
         this.registry.register(InventoryId.STONE_OF_PRAY_MENU.asInt(), () -> new StoneOfPrayMenu(GUIOverlay.STONE_OF_PRAY_OVERLAY.asGlyph() + "§f" + Icon.PRAYER.get() + "§f Stone of Pray", InventoryId.STONE_OF_PRAY_MENU.asInt()));
+        this.registry.register(InventoryId.ITEM_EXPLORER.asInt(), () -> new ItemExplorerMenu(GUIOverlay.ITEM_EXPLORER_OVERLAY.asGlyph() + "§f" + Icon.BOOK.get() + "§f Item Explorer", InventoryId.ITEM_EXPLORER.asInt()));
 
         RuneQuestPlugin.getRuneLogger().log(LogLevel.INFO, "Initialized " + this.registry.getAllInventoryIds().size() + " inventories.");
     }
 
     @Nullable
-    public UUID openInventory(int id, RunePlayer player, @Nullable Runnable onClose) {
-        return openInventory(id, player, onClose, null, null, false);
+    public UUID openInventory(int id, RunePlayer player, @Nullable Runnable onClose, @Nullable Map<String, String> data) {
+        return openInventory(id, player, onClose, null, null, false, data);
     }
 
     @Nullable
-    public UUID openInventory(int id, RunePlayer player, @Nullable Runnable onClose, @Nullable AbstractInventoryOpener mobHolder, @Nullable InventoryOpenerBlock blockHolder, boolean skipCooldown) {
+    public UUID openInventory(int id, RunePlayer player, @Nullable Runnable onClose, @Nullable AbstractInventoryOpener mobHolder, @Nullable InventoryOpenerBlock blockHolder, boolean skipCooldown, @Nullable Map<String, String> data) {
         if (!skipCooldown && inventoryOpenCooldownHandler.isCooldownInProgress(player)) {
             return null;
         }
@@ -196,6 +197,7 @@ public class GUIHandler {
         UUID instanceUUID = matchingGUI.getUUID();
         matchingGUI.setMobHolder(mobHolder);
         matchingGUI.setBlockHolder(blockHolder);
+        if (data != null) matchingGUI.onPopulate(data);
 
         RuneInventoryOpenEvent event = new RuneInventoryOpenEvent(player, matchingGUI, inventoryViewers.get(instanceUUID));
         Bukkit.getServer().getPluginManager().callEvent(event);

@@ -2,6 +2,7 @@ package org.zuma.examplePlugin.domain.quest;
 
 import org.zuma.examplePlugin.RuneQuestPlugin;
 import org.zuma.examplePlugin.core.logger.constants.LogLevel;
+import org.zuma.examplePlugin.domain.hud.HudService;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
@@ -24,7 +25,8 @@ public class QuestRegistry {
         this.quests = new HashMap<>();
 
         Quest sheepShearer = new Quest(QuestId.SHEEP_SHEARER.getId(), "Sheep Shearer", QuestDifficulty.EASY, false, new Quest.Coordinates(45, 68, -162))
-                .setRewards(new QuestReward(List.of(new ItemRecord(ItemId.BALL_OF_WOOL, 10)), null, 100));;
+                .setRewards(new QuestReward(List.of(new ItemRecord(ItemId.BALL_OF_WOOL, 10)), null, 100));
+        ;
         registerQuest(sheepShearer.addSteps(List.of(
                 new CollectionStep(RuneQuestPlugin.getInstance(), sheepShearer, "Collect §620 wool§f and spin them into balls of wool.", "sheep-shearer.wool-collect", List.of(new ItemRecord(ItemId.BALL_OF_WOOL, 20)), null),
                 new DialogStep(RuneQuestPlugin.getInstance(), sheepShearer, "Bring §620 balls of wool§f to §6Shepherd.", "sheep-shearer.wool-collected", null)
@@ -43,7 +45,8 @@ public class QuestRegistry {
                         new ItemRecord(ItemId.COOKED_HERRING, 20),
                         new ItemRecord(ItemId.GENIE_XP_LAMP, 1)
                 ), null, 500))
-                .setCountinationQuestId(QuestId.WELCOME_TO_DRAKKAR_I.getId());
+                .setCountinationQuestId(QuestId.WELCOME_TO_DRAKKAR_I.getId())
+                .setOnCompleteCallback(HudService::sendTutorialCompletionAnnouncement);
 
         registerQuest(tutorialQuest.addSteps(List.of(
                 new DialogStep(RuneQuestPlugin.getInstance(), tutorialQuest, "Talk to the §6Blacksmith.", "tutorial.blacksmith-talk-to", null),
@@ -127,7 +130,9 @@ public class QuestRegistry {
         )));
 
         Quest welcomeToDrakkarII = new Quest(QuestId.WELCOME_TO_DRAKKAR_II.getId(), "Welcome to Drakkar II", QuestDifficulty.EASY, false, null)
-                .setRewards(new QuestReward(List.of(new ItemRecord(ItemId.COOKED_CHICKEN, 20), new ItemRecord(ItemId.GENIE_XP_LAMP, 1)), null, 500));
+                .setRewards(new QuestReward(List.of(new ItemRecord(ItemId.COOKED_CHICKEN, 20), new ItemRecord(ItemId.GENIE_XP_LAMP, 1)), null, 500))
+                .setRequiredCompletedQuests(List.of(QuestId.WELCOME_TO_DRAKKAR_I.getId()));
+        ;
 
         registerQuest(welcomeToDrakkarII.addSteps(List.of(
                 new VisitStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarII, "Visit §6Amber Farm§f at §6(X:244, Z:-270).", "welcome-to-drakkarii.visit.amber_farm", new VisitStep.VisitStepEntry(new Quest.Coordinates(244, 70, -270), 50), null),
@@ -142,7 +147,10 @@ public class QuestRegistry {
 
 
         Quest welcomeToDrakkarIII = new Quest(QuestId.WELCOME_TO_DRAKKAR_III.getId(), "Welcome to Drakkar III", QuestDifficulty.EASY, false, new Quest.Coordinates(195, 73, -53))
-                .setRewards(new QuestReward(List.of(new ItemRecord(ItemId.BRONZE_BODY, 1)), null, 250));
+                .setRewards(new QuestReward(List.of(new ItemRecord(ItemId.BRONZE_BODY, 1)), null, 250))
+                .setRequiredCompletedQuests(List.of(QuestId.WELCOME_TO_DRAKKAR_II.getId()));
+        ;
+
 
         registerQuest(welcomeToDrakkarIII.addSteps(List.of(
                 new VisitStep(RuneQuestPlugin.getInstance(), welcomeToDrakkarIII, "Visit §6Drakkar's Lake§f at §6(X:55, Z:-75).", "welcome-to-drakkariii.visit.lake", new VisitStep.VisitStepEntry(new Quest.Coordinates(55, 66, -74), 15), null),
@@ -170,7 +178,34 @@ public class QuestRegistry {
                 new DialogStep(RuneQuestPlugin.getInstance(), threadsOfAid, "Bring §616x Spider Silk & §61x Health Potion to §6Doctor Bram", "threads-of-aid.bring-ingredients", null)
         )));
 
+        Quest bonesOfLeviathan = new Quest(QuestId.BONES_OF_LEVIATHAN.getId(), "Bones of Leviathan", QuestDifficulty.MEDIUM, false, new Quest.Coordinates(-219, 81, -1079))
+                .setRequirements(List.of(new SkillRequirement(SkillType.PRAYER, 30), new SkillRequirement(SkillType.ATTACK, 30), new SkillRequirement(SkillType.STRENGTH, 30), new SkillRequirement(SkillType.DEFENCE, 30)))
+                .setRewards(new QuestReward(null, Map.of(SkillType.PRAYER, 2800.0), 250));
 
+        registerQuest(bonesOfLeviathan.addSteps(List.of(
+                new DialogStep(RuneQuestPlugin.getInstance(), bonesOfLeviathan, "Find §6hermit§f living in a ribcage of a big fish.", "bones-of-leviathan.find-hermit", null),
+                new CollectionStep(RuneQuestPlugin.getInstance(), bonesOfLeviathan, "Obtain §63 Big Bones.", "bones-of-leviathan.obtain-bones", List.of(new ItemRecord(ItemId.BIG_BONES, 3)), null),
+                new CollectionStep(RuneQuestPlugin.getInstance(), bonesOfLeviathan, "Obtain §61 Iron Amulet.", "bones-of-leviathan.obtain-chain", List.of(new ItemRecord(ItemId.IRON_AMULET, 1)), null),
+                new DialogStep(RuneQuestPlugin.getInstance(), bonesOfLeviathan, "Bring §63 Big Bones§f & §61x Iron Amulet§f to §6Marlinus The Hermit.", "bones-of-leviathan.bring-ingredients", null),
+                new DialogStep(RuneQuestPlugin.getInstance(), bonesOfLeviathan, "Talk to the ghost in abandoned building at §6Rogue's Haven.", "bones-of-leviathan.talk-ghost", null),
+                new DialogStep(RuneQuestPlugin.getInstance(), bonesOfLeviathan, "Talk to the §6Morvane.", "bones-of-leviathan.talk-morvane", null),
+                new DialogStep(RuneQuestPlugin.getInstance(), bonesOfLeviathan, "Talk to the §6Marlinus§f at §6Infernak beach.", "bones-of-leviathan.talk-hermit", null)
+        )));
+
+        Quest saltboundSleep = new Quest(QuestId.SALTBOUND_SLEEP.getId(), "Saltbound Sleep", QuestDifficulty.HARD, false, new Quest.Coordinates(839, 95, -371))
+                .setRequiredCompletedQuests(List.of(QuestId.BONES_OF_LEVIATHAN.getId()))
+                .setRewards(new QuestReward(List.of(new ItemRecord(ItemId.BONE_CRUSHER, 1)), Map.of(SkillType.PRAYER, 3200.0), 500));
+
+        registerQuest(saltboundSleep.addSteps(List.of(
+                new DialogStep(RuneQuestPlugin.getInstance(), saltboundSleep, "Talk to the §6Sailors Ghost.", "saltbound-sleep.talk-sailor-ghost", null),
+                new DialogStep(RuneQuestPlugin.getInstance(), saltboundSleep, "Figure out what happened", "saltbound-sleep.explore-ship", null),
+                new KillMobStep(RuneQuestPlugin.getInstance(), saltboundSleep, "Kill §610x Undead Sailors§f.", "saltbound-sleep.kill-sailors",
+                        List.of(new KillMobStep.KillMobStepEntry(List.of(MobType.UNDEAD_SAILOR_BASE_40.getId()), 10, "Undead Sailors")), null),
+                new DialogStep(RuneQuestPlugin.getInstance(), saltboundSleep, "Talk to the §6Undead Captain.", "saltbound-sleep.talk-captain", null),
+                new KillMobStep(RuneQuestPlugin.getInstance(), saltboundSleep, "Kill §6Undead Captain.", "saltbound-sleep.kill-captain",
+                        List.of(new KillMobStep.KillMobStepEntry(List.of(MobType.UNDEAD_CAPTAIN_BASE_50.getId()), 1, "Undead Captain")), null),
+                new VisitStep(RuneQuestPlugin.getInstance(), saltboundSleep, "§4WAKE UP!", "saltbound-sleep.wake-up", new VisitStep.VisitStepEntry(new Quest.Coordinates(-2333, 146, -2421), 3), null),
+                new DialogStep(RuneQuestPlugin.getInstance(), saltboundSleep, "Report back to the §6Sailors Ghost.", "saltbound-sleep.talk-sailor-ghost-finish", null))));
     }
 
     @Nullable

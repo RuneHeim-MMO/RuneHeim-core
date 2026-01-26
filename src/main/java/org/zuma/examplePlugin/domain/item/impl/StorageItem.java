@@ -52,7 +52,7 @@ public class StorageItem extends AbstractItemType implements Stateful {
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player, StateManager itemStateManager) {
-        RuneQuestPlugin.getGUIHandler().openInventory(inventoryId.asInt(), player, null);
+        RuneQuestPlugin.getGUIHandler().openInventory(inventoryId.asInt(), player, null,null);
     }
 
 

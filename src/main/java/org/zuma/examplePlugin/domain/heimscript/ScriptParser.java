@@ -24,38 +24,40 @@ public class ScriptParser {
             splitArgs.add(matcher.group(1)); // capture group 1 = contents without braces
         }
 
-        if (splitArgs.size() != argsTemplates.size()) {
+       /* for backward compatibility if (splitArgs.size() != argsTemplates.size()) {
             throw new MalformedParametersException("Invalid amount of arguments found in " + trigger + " actions. Expected "
                     + String.join(", ", argsTemplates) + ", found " + splitArgs.size() + " args (" + String.join(", ", splitArgs) + ").");
-        }
+        }*/
 
         HashMap<String, String> result = new HashMap<>();
 
         for (String inner : splitArgs) {
-            // split on the last underscore — template may contain underscores, value may contain '-' or underscores
-            int sep = inner.lastIndexOf('_');
-            if (sep <= 0) {
-                throw new MalformedParametersException("Invalid argument format in " + trigger + " actions: {" + inner + "}. Expected '<template>_<value>'.");
+            // Try to match the longest template from argsTemplates at the start of 'inner'
+            String templateCandidate = null;
+            String value = null;
+            for (String template : argsTemplates) {
+                if (inner.startsWith(template + "_")) {
+                    templateCandidate = template;
+                    value = inner.substring(template.length() + 1);
+                    break;
+                }
             }
-
-            String templateCandidate = inner.substring(0, sep);
-            String value = inner.substring(sep + 1);
-
+            if (templateCandidate == null || value == null) {
+                throw new MalformedParametersException("Invalid argument format in " + trigger + " actions: {" + inner + "}. Expected one of " + String.join(", ", argsTemplates) + " as template.");
+            }
             if (!argsTemplates.contains(templateCandidate)) {
                 throw new MalformedParametersException("Invalid argument found in " + trigger + " actions. {" + inner + "} — template '"
                         + templateCandidate + "' does not exist in " + String.join(", ", argsTemplates) + ".");
             }
-
             if (value.isEmpty()) {
                 throw new MalformedParametersException("Invalid argument found in " + trigger + " actions. {" + inner + "} — value is empty.");
             }
-
             result.put(templateCandidate, value);
         }
 
-        if (result.size() != argsTemplates.size()) {
+        /*for backward compatibility if (result.size() != argsTemplates.size()) {
             throw new MalformedParametersException("Parsed arguments count differs from the actions template count for " + trigger + ".");
-        }
+        }*/
 
         return result;
     }
@@ -81,9 +83,7 @@ public class ScriptParser {
         actions.sort((a, b) -> Integer.compare(b.getTrigger().length(), a.getTrigger().length()));
 
         for (T action : actions) {
-            long argCount = input.chars().filter(c -> c == '{').count();
-
-            if (input.startsWith(action.getTrigger()) && argCount == action.getArgsTemplates().size()) {
+            if (input.startsWith(action.getTrigger())) {
                 return action;
             }
         }

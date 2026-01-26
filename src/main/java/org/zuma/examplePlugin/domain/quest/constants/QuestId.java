@@ -13,7 +13,10 @@ public enum QuestId {
     WELCOME_TO_DRAKKAR_III("welcome-to-drakkar-iii"),
 
     HOT_MESS_AT_THE_SMELTERY("smelters-assistant"),
-    THREADS_OF_AID("threads-of-aid");
+    THREADS_OF_AID("threads-of-aid"),
+    BONES_OF_LEVIATHAN("bones-of-leviathan"),
+
+    SALTBOUND_SLEEP("saltbound-sleep");
 
     private final String id;
 

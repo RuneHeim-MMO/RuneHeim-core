@@ -22,7 +22,7 @@ public class Territory implements Restrictable {
     private boolean temporary;
 
     @Nullable
-    private String entryDenyMessage;
+    private String entryDenyMessage, firstVisitTourId;
 
     @Nullable
     private MusicType ambientMusic;
@@ -48,6 +48,15 @@ public class Territory implements Restrictable {
         this.maxHeight = maxHeight;
         this.disableStuckCmd = disableStuckCmd;
         this.temporary = false;
+    }
+
+    public @Nullable String getFirstVisitTourId() {
+        return firstVisitTourId;
+    }
+
+    public Territory setFirstVisitTourId(@Nullable String firstVisitTourId) {
+        this.firstVisitTourId = firstVisitTourId;
+        return this;
     }
 
     public boolean isDisableStuckCmd() {

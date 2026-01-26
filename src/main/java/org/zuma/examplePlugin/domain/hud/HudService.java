@@ -4,6 +4,7 @@ import eu.decentsoftware.holograms.api.DHAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -55,6 +56,18 @@ public class HudService {
         if (activeModifiers.isEmpty()) return;
         Component body = Component.text(String.join("\n", activeModifiers.stream().map(m -> "§f" + Icon.DOWNGRADE.get() + " §7" + m.label() + " has expired!").toList()));
         player.asBukkitPlayer().sendMessage(body);
+    }
+
+    public static void sendTutorialCompletionAnnouncement(RunePlayer completedBy) {
+        RuneQuestPlugin.getPlayerManager().getOnlinePlayers().forEach(player -> {
+            player.asBukkitPlayer().sendMessage(
+                    Component.text()
+                            .append(Component.text(completedBy.asBukkitPlayer().getName(), NamedTextColor.GOLD, TextDecoration.BOLD))
+                            .append(Component.text(" has arrived to the ", NamedTextColor.WHITE))
+                            .append(Component.text("Drakkar", NamedTextColor.AQUA, TextDecoration.ITALIC))
+                            .append(Component.text(" for the first time!", NamedTextColor.WHITE))
+            );
+        });
     }
 
     public static void sendQuestRewards(RunePlayer player, Quest quest) {

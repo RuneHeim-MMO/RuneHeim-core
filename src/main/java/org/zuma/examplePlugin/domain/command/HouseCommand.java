@@ -48,7 +48,7 @@ public class HouseCommand implements BasicCommand {
         }
 
         if (args.length == 0) {
-            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.HOUSE_SETTINGS.asInt(), runePlayer, null);
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.HOUSE_SETTINGS.asInt(), runePlayer, null,null);
             SoundType.CONTROL_PANEL_OPEN.play(runePlayer, false);
             return;
         }

@@ -76,7 +76,8 @@ public enum InventoryId {
     THORNBARK_HERBLORE_SHOP(64),
     REFERRAL_REWARDS_SHOP(65),
     REFERRALS_MENU(66),
-    STONE_OF_PRAY_MENU(67);
+    STONE_OF_PRAY_MENU(67),
+    ITEM_EXPLORER(68);
 
 
     private final int id;

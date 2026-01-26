@@ -15,7 +15,8 @@ public enum BlockType {
     LightableBlock(9, Material.REDSTONE_LAMP),
     CombatDummyFurniture(10, Material.ARMOR_STAND),
     CropResourceNode(11, Material.WHEAT),
-    ButtonTrigger(12, Material.STONE_BUTTON);
+    ButtonTrigger(12, Material.STONE_BUTTON),
+    ItemSpawn(13, Material.AIR);
 
     private final int id;
     private final Material material;

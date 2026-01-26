@@ -174,6 +174,51 @@ public class InteractableBlockRepository {
                             "&6No Items Lost On Death"
                     ), MarkerType.DUNGEON, "Spider Dungeon")), 1)));
 
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9982, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), -222, 81, -1080), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.MONK_ROBE_TOP, 1), 120)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9981, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), 164, 77, -124), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.BONES, 1), 120)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9980, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), 164, 77, -126), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.COINS, 3), 120)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9979, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), -105, 84, 745), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.BONES, 1), 120)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9978, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), -105, 84, 747), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.COINS, 2), 120)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9977, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), -832, 84, -399), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.BIG_BONES, 1), 120)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9976, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), -1210, 75, -763), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.COINS, 102), 600)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9975, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), 1032, 79, -657), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.SMITHING_HAMMER, 1), 120)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9974, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), -298, 41, -330), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.SPIDER_SILK, 1), 120)), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9973, BlockType.TeleportDoor, BlockFace.WEST, new Location(Bukkit.getWorld("world"), -2333, 146, -2422), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new TeleportDoorMeta("haunted-ship-wake-up", "Exit Dream", "world", 835, 96, -371, -90, Door.Hinge.LEFT,
+                            new QuestLockedMeta("You are not ready yet.", null, null, List.of("saltbound-sleep.talk-sailor-ghost-finish")))), 1)));
+
+            result.add(new BlockEntity(
+                    new AbstractInteractableBlockMeta(9972, BlockType.ItemSpawn, BlockFace.WEST, new Location(Bukkit.getWorld("world"), 839, 103, -374), HologramSide.TOP),
+                    new VersionedJson(new Gson().toJson(new ItemSpawnBlockMeta(new ItemRecord(ItemId.SAILORS_HAT, 1), 1200)), 1)));
+
 
         } catch (Exception e) {
             throw new RuntimeException("Failed to fetch block entities", e);

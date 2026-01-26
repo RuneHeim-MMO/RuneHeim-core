@@ -47,7 +47,9 @@ public enum ModifierType {
 
     MAX_HIT_PENALTY("Max Hit Reduction", "Reduces the maximum possible hit you can deal.", Icon.SPECIAL_ATTACK.get(), "%", null, false),
     HEALTH_REGENERATION("Health Regeneration", "Regenerates health over time.", Icon.HEART.get(), "/sec", null, false),
-    PRAYER_REGENERATION("Prayer Regeneration", "Regenerates prayer over time.", Icon.PRAYER.get(), "/sec", null, false);
+    PRAYER_REGENERATION("Prayer Regeneration", "Regenerates prayer over time.", Icon.PRAYER.get(), "/sec", null, false),
+    PRAYER_USAGE_REDUCTION("Prayer Conservation", "Decreases the amount of prayer consumed when using prayers.", Icon.PRAYER.get(), "%", null, false),
+    GHOST_SPEAKING("Ghost Speaking", "Allows communication with ghost entities.", Icon.BOOK.get(), null, null, true);
 
 
     private final String label, description, symbol, numSuffix, numPrefix;

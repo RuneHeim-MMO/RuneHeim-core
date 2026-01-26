@@ -25,6 +25,8 @@ public enum ScriptedCondition implements ScriptedStatement {
     COINS_GREATER_THAN_EQUALS("coins_gte", "amount"),
     COINS_LESS_THAN("coins_lt", "amount"),
 
+    MODIFIER_GREATER_THAN_EQUALS("modifier_gte", "id_modifier", "amount"),
+
     INVENTORY_CONTAINS("inventory_contains_one_of", "item_id", "amount"),
     INVENTORY_CONTAINS_ANY_OF("inventory_contains_any_of", "item_ids", "amounts"),
     REMOVE_INVENTORY_ITEM_SUCCESSFUL("remove_inventory_item_successful", "item_id", "amount"),

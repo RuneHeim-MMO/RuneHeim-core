@@ -220,6 +220,12 @@ public class TerritoryHandler {
             SoundType.PVP_TERRITORY_LEAVE.play(player, false);
         }
 
+        if (isFirstDiscovery) {
+            if (territory.getFirstVisitTourId() != null) {
+                RuneQuestPlugin.getTourHandler().startTour(runePlayer, territory.getFirstVisitTourId(), null);
+            }
+        }
+
         if (territory.isSilent()) return; // If territory is silent, do not send any messages
 
         if (!isFirstDiscovery) {

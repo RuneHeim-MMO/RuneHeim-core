@@ -35,6 +35,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Consumer;
 
 
 public class Quest implements Restrictable {
@@ -44,11 +45,14 @@ public class Quest implements Restrictable {
     private final boolean silent; // If true, no start/completion effects or messages - used for internal tracking of player state.
     private final @Nullable Coordinates startLocation;
     private @Nullable String countinationQuestId;
+    private @Nullable Consumer<RunePlayer> onCompleteCallback;
+
     private QuestDuration duration;
     private QuestReward reward;
     // Starting conditions
     private List<SkillRequirement> requirements;
     private List<String> requiredCompletedQuests;
+
     public Quest(String id, String name, QuestDifficulty difficulty, boolean silent, @Nullable Coordinates startLocation) {
         this.id = id;
         this.name = name;
@@ -61,6 +65,16 @@ public class Quest implements Restrictable {
         this.reward = new QuestReward(null, null, null);
         this.startLocation = startLocation;
         this.countinationQuestId = null;
+    }
+
+    @Nullable
+    public Consumer<RunePlayer> getOnCompleteCallback() {
+        return onCompleteCallback;
+    }
+
+    public Quest setOnCompleteCallback(@Nullable Consumer<RunePlayer> onCompleteCallback) {
+        this.onCompleteCallback = onCompleteCallback;
+        return this;
     }
 
     public Quest setCountinationQuestId(@Nullable String questId) {
@@ -124,11 +138,11 @@ public class Quest implements Restrictable {
     private QuestDuration getQuestDuration() {
         int size = steps.size();
 
-        if (size <= 10) {
+        if (size <= 5) {
             return QuestDuration.SHORT;
-        } else if (size <= 15) {
+        } else if (size <= 10) {
             return QuestDuration.MEDIUM;
-        } else if (size <= 30) {
+        } else if (size <= 20) {
             return QuestDuration.LONG;
         } else {
             return QuestDuration.VERY_LONG;
@@ -226,6 +240,17 @@ public class Quest implements Restrictable {
         lore.add(Component.empty());
         lore.add(Icon.CONTRACT_SKULL.asComponent().append(Component.text("Difficulty: ", Color.ITEM_LORE_DESCRIPTION.asColor()).append(Component.text(this.difficulty.getLabel()))));
         lore.add(Icon.CLOCK.asComponent().append(Component.text("Duration: ", Color.ITEM_LORE_DESCRIPTION.asColor()).append(Component.text(this.duration.getLabel()))));
+
+        if (!this.getRequiredCompletedQuests().isEmpty()) {
+            lore.add(Component.empty());
+            lore.add(Icon.BOOK.asComponent().append(Component.text("Quest requirements: ", Color.ITEM_LORE_DESCRIPTION.asColor())));
+            for (String reqQuestId : this.getRequiredCompletedQuests()) {
+                Quest reqQuest = RuneQuestPlugin.getQuestHandler().getRegistry().getQuestById(reqQuestId);
+                if (reqQuest != null) {
+                    lore.add(Component.text("    • " + reqQuest.getName(), Color.ITEM_LORE_DESCRIPTION.asColor()));
+                }
+            }
+        }
 
         if (this.startLocation != null) {
             lore.add(Component.empty());
@@ -340,6 +365,7 @@ public class Quest implements Restrictable {
             if (!player.isOnline()) return;
 
             reward.applyRewards(player);
+            if (this.onCompleteCallback != null) onCompleteCallback.accept(player);
         }, 10L);
 
         Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {

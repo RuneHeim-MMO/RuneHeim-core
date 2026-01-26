@@ -3,3 +3,4 @@
 - [ ] Did you push the game world changes?
 - [ ] Are new blocks added?
 - [ ] Are new commands whitelisted?
+- [ ] Did you add all untradeables to AxTrade blacklist?

@@ -160,6 +160,11 @@ public class ItemRepository {
                                 , 1)
                 ),
 
+                new ItemEntity(new AbstractItemMeta(ItemType.ACCESSORY_AMULET, ItemId.GHOST_SPEAK_AMULET.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Ghostspeak Amulet", List.of("Amulet that enables the wearer to talk to ghosts."), null, false, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(new EquipableTypeMeta(null, null, null,
+                                List.of(new Modifier(ModifierType.GHOST_SPEAKING, 1), new Modifier(ModifierType.PRAYER_USAGE_REDUCTION, 10)), List.of(new SkillRequirement(SkillType.PRAYER, 15)), null), 1)),
+
+
                 new ItemEntity(new AbstractItemMeta(ItemType.STONE_OF_PRAY, ItemId.STONE_OF_PRAY.asInt(), Material.COAL, ItemRarity.LEGENDARY, "Stone of Pray", List.of("Set and activate prayer presets instantly.", "Sneak + Right-Click to configure."), null, false, CRAFTED_ITEM_MULTIPLIER), null),
                 new ItemEntity(new AbstractItemMeta(ItemType.BONE_CRUSHER, ItemId.BONE_CRUSHER.asInt(), Material.COAL, ItemRarity.RARE, "Bone Crusher", List.of("A dark relic that grinds fallen bones into dust, offering them silently to the gods.", "Can be recharged by right-clicking an altar."), null, false, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(new BoneCrusherMeta(0.33, 500), 1)),
@@ -1632,6 +1637,11 @@ public class ItemRepository {
                                         null), null, 1), 1)
                 ),
 
+                new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.SAILORS_HAT.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.UNCOMMON, "Sailors Hat", List.of("A crisp, white sailor’s hat with a neatly embroidered emblem"), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new EquipableTypeMeta(EquipmentSlot.HEAD, "sailors_hat", List.of(new SkillModifier(SkillType.FISHING,1,null)),
+                                        null, null, null), 1)
+                ),
 
                 // Armor - Chestplates
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.LEATHER_BODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Leather Body", List.of("Basic leather torso armor."), null, true, CRAFTED_ITEM_MULTIPLIER),
@@ -1764,6 +1774,17 @@ public class ItemRepository {
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 40)),
                                         null), null, 1), 1)
                 ),
+                new ItemEntity(
+                        new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MONK_ROBE_TOP.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Monk Robe Top", List.of("A finely crafted robe favored by ascetic monks.", "Protects against physical attacks and conserves spiritual energy."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new EquipableTypeMeta(EquipmentSlot.CHEST, "monk_robe_top", null, List.of(
+                                        new Modifier(ModifierType.DEFENCE_STAB, 3),
+                                        new Modifier(ModifierType.DEFENCE_SLASH, 3),
+                                        new Modifier(ModifierType.DEFENCE_CRUSH, 3),
+                                        new Modifier(ModifierType.PRAYER_USAGE_REDUCTION, 20)
+                                ), null, null), 1)
+                ),
+
 
                 // Armor -- chainbody
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.BRONZE_CHAINBODY.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Bronze Chainbody", List.of("Basic bronze chainbody offering minimal protection."), null, true, CRAFTED_ITEM_MULTIPLIER),
@@ -1964,6 +1985,16 @@ public class ItemRepository {
                                         List.of(new SkillRequirement(SkillType.DEFENCE, 40)),
                                         null), null, 1)
                                 , 1)
+                ),
+                new ItemEntity(
+                        new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.MONK_ROBE_BOTTOM.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.COMMON, "Monk Robe Bottom", List.of("A finely crafted robe favored by ascetic monks.", "Protects against physical attacks and conserves spiritual energy."), null, true, CRAFTED_ITEM_MULTIPLIER),
+                        toVersionedJson(
+                                new EquipableTypeMeta(EquipmentSlot.LEGS, "monk_robe_bottom", null, List.of(
+                                        new Modifier(ModifierType.DEFENCE_STAB, 2),
+                                        new Modifier(ModifierType.DEFENCE_SLASH, 2),
+                                        new Modifier(ModifierType.DEFENCE_CRUSH, 2),
+                                        new Modifier(ModifierType.PRAYER_USAGE_REDUCTION, 15)
+                                ), null, null), 1)
                 ),
 
                 // Armor - Boots

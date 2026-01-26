@@ -282,6 +282,6 @@ public class HouseEditModeManager {
 
     public void openSlotEditMenu(Integer editingSlotIndex, RunePlayer player) {
         this.editingSlotIndex = editingSlotIndex;
-        RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.HOUSE_SLOT_EDITOR.asInt(), player, null);
+        RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.HOUSE_SLOT_EDITOR.asInt(), player, null,null);
     }
 }

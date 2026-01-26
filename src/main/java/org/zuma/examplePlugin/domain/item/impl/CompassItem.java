@@ -16,7 +16,7 @@ public class CompassItem extends Tool {
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event, RunePlayer player, StateManager itemStateManager) {
-        RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.TERRITORY_INVENTORY.asInt(), player, null);
+        RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.TERRITORY_INVENTORY.asInt(), player, null,null);
     }
 
 }

@@ -10,8 +10,10 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.zuma.examplePlugin.RuneQuestPlugin;
@@ -24,6 +26,7 @@ import org.zuma.examplePlugin.domain.player.RunePlayer;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.UUID;
 
 
 public abstract class AbstractInteractableBlock implements POIMarkerable {
@@ -32,12 +35,10 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
     private Location location, hologramLocation;
     private Hologram hologram;
 
-    @Nullable
-    private BlockFace face;
-    @Nullable
-    private MarkerType markerType;
-    @Nullable
-    private String markerLabel;
+    private @Nullable BlockFace face;
+    private @Nullable MarkerType markerType;
+    private @Nullable String markerLabel;
+    private @Nullable UUID entityChildUUID;
 
     private boolean disabled = false;
 
@@ -53,7 +54,7 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
 
     public void spawn(Material material) {
         Block block = location.getBlock();
-        block.setType(material,false);
+        block.setType(material, false);
         block.setMetadata("no_physics", new FixedMetadataValue(RuneQuestPlugin.getInstance(), true));
 
         BlockData data = Bukkit.createBlockData(material);
@@ -132,6 +133,19 @@ public abstract class AbstractInteractableBlock implements POIMarkerable {
 
     public void setFace(@Nullable BlockFace face) {
         this.face = face;
+    }
+
+    @Nullable
+    public UUID getEntityChildUUID() {
+        return entityChildUUID;
+    }
+
+    public void setEntityChildUUID(@Nullable UUID entityChildUUID) {
+        this.entityChildUUID = entityChildUUID;
+    }
+
+    public void onPlayerInteractEntityEvent(RunePlayer player, Entity entity, PlayerInteractEntityEvent event, AbstractItemType itemInHand) {
+
     }
 
     public void onPlayerInteractEvent(RunePlayer player, Action action, PlayerInteractEvent event, AbstractItemType itemInHand) {

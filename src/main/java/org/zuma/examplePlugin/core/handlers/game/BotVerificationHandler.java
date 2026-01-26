@@ -25,7 +25,7 @@ public class BotVerificationHandler implements Listener {
 
     public static void logSuccessfulAction(RunePlayer player) {
         if (player.isBotVerificationPending()) {
-            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.BOT_VERIFICATION_MENU.asInt(), player, null, null, null, true);
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.BOT_VERIFICATION_MENU.asInt(), player, null, null, null, true, null);
             return;
         }
 
@@ -35,7 +35,7 @@ public class BotVerificationHandler implements Listener {
         if (actionsSinceLastVerification.get(player.getUUID()) >= ACTIONS_BOT_CHECK_THRESHOLD * thresholdMultiplier) {
             player.setBotVerificationPending(true);
             SoundType.BOT_VERIFICATION_ALERT.play(player, false);
-            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.BOT_VERIFICATION_MENU.asInt(), player, null, null, null, true);
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.BOT_VERIFICATION_MENU.asInt(), player, null, null, null, true, null);
             actionsSinceLastVerification.put(player.getUUID(), 0);
         }
 
@@ -48,7 +48,7 @@ public class BotVerificationHandler implements Listener {
         }
 
         HudService.sendFailMessage(player, Component.text("You must complete the bot verification to continue this action."));
-        RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.BOT_VERIFICATION_MENU.asInt(), player, null);
+        RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.BOT_VERIFICATION_MENU.asInt(), player, null,null);
 
         if (!alertCooldown.isCooldownInProgress(player)) {
             alertCooldown.startCooldown(player, 10000L); // 10 seconds cooldown
@@ -81,7 +81,7 @@ public class BotVerificationHandler implements Listener {
             if (event.getPlayer() == null || !event.getPlayer().isOnline()) {
                 return;
             }
-            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.BOT_VERIFICATION_MENU.asInt(), event.getPlayer(), null, null, null, true);
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.BOT_VERIFICATION_MENU.asInt(), event.getPlayer(), null, null, null, true, null);
         }, 10L);
 
     }

@@ -62,6 +62,16 @@ public enum EquipmentSet {
             new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.PAPER), 100)
     ))),
 
+    RUNE_SWORD(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.RUNE_SWORD), 100)
+    ))),
+
+    MORVANE_PRIEST(new MobEquipmentMeta(List.of(
+            new EquipmentSetRecord(EquipmentSlot.HAND, getRuneItem(ItemId.ADAMANT_DAGGER), 100),
+            new EquipmentSetRecord(EquipmentSlot.CHEST, getRuneItem(ItemId.MONK_ROBE_TOP), 100),
+            new EquipmentSetRecord(EquipmentSlot.LEGS, getRuneItem(ItemId.MONK_ROBE_BOTTOM), 100)
+    ))),
+
     MUSHROOM_STEW(new MobEquipmentMeta(List.of(
             new EquipmentSetRecord(EquipmentSlot.HAND, new ItemStack(Material.MUSHROOM_STEW), 100)
     ))),

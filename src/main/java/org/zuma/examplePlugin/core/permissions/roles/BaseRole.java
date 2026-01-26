@@ -10,8 +10,8 @@ import java.util.List;
 
 public enum BaseRole implements Role {
     OWNER(0, 5, 5, true, Icon.RANK_BADGE_OWNER, List.of(Permission.INTERACTABLE_SPAWN), List.of()),
-    ADMIN(1, 5, 5, false, Icon.RANK_BADGE_ADMIN, List.of(Permission.JOIN_LOCKDOWN_SERVER, Permission.STAFF_MOVEMENT, Permission.COOLDOWN_BYPASS, Permission.WORLD_MANIPULATION, Permission.ITEM_WATCHDOG_BYPASS, Permission.DEBUG_COMMAND, Permission.STAFF_ITEM_SPAWN, Permission.BLOCKED_CMD_BYPASS, Permission.CHAT_PROFANITY_BYPASS), List.of()),
-    MODERATOR(2, 5, 5, false, Icon.RANK_BADGE_MOD, List.of(Permission.STAFF_ALERTS, Permission.JOIN_STAGING_SERVER, Permission.CHAT_COOLDOWN_BYPASS, Permission.STAFF_MODERATION, Permission.STAFF_MESSAGING, Permission.CHAT_SPY), List.of()),
+    ADMIN(1, 10, 7, false, Icon.RANK_BADGE_ADMIN, List.of(Permission.JOIN_LOCKDOWN_SERVER, Permission.STAFF_MOVEMENT, Permission.COOLDOWN_BYPASS, Permission.WORLD_MANIPULATION, Permission.ITEM_WATCHDOG_BYPASS, Permission.DEBUG_COMMAND, Permission.STAFF_ITEM_SPAWN, Permission.BLOCKED_CMD_BYPASS, Permission.CHAT_PROFANITY_BYPASS), List.of()),
+    MODERATOR(2, 10, 7, false, Icon.RANK_BADGE_MOD, List.of(Permission.STAFF_CHAT, Permission.STAFF_ALERTS, Permission.JOIN_STAGING_SERVER, Permission.CHAT_COOLDOWN_BYPASS, Permission.STAFF_MODERATION, Permission.STAFF_MESSAGING, Permission.CHAT_SPY), List.of()),
     PILOT(999, 10, 7, false, Icon.RANK_BADGE_PILOT, List.of(Permission.TOGGLE_STAFF_PREFIX), List.of()),
     PLAYER(1000, 5, 5, false, null, List.of(Permission.PLAYER_DEFAULTS), List.of());
 

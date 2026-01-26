@@ -55,6 +55,7 @@ public enum ItemId {
     MITHRIL_FULLHELM(311),
     ADAMANT_FULLHELM(312),
     RUNE_FULLHELM(313),
+    SAILORS_HAT(314),
 
     BRONZE_BODY(400),
     IRON_BODY(401),
@@ -72,6 +73,7 @@ public enum ItemId {
     MITHRIL_CHAINBODY(413),
     ADAMANT_CHAINBODY(414),
     RUNE_CHAINBODY(415),
+    MONK_ROBE_TOP(416),
 
     BRONZE_PLATELEGS(500),
     IRON_PLATELEGS(501),
@@ -83,6 +85,7 @@ public enum ItemId {
     HARD_LEATHER_LEGGINGS(507), //
     STUDDED_LEATHER_LEGGINGS(508), //
     GREEN_DHIDE_LEGGINGS(509), //
+    MONK_ROBE_BOTTOM(510),
 
     BRONZE_BOOTS(600),
     IRON_BOOTS(601),
@@ -456,7 +459,9 @@ public enum ItemId {
 
     STONE_OF_PRAY(4200),
     // Reserved 4201 is the active version's custom model id
-    BONE_CRUSHER(4202);
+    BONE_CRUSHER(4202),
+    GHOST_SPEAK_AMULET(4203);
+
 
     private final int id;
 

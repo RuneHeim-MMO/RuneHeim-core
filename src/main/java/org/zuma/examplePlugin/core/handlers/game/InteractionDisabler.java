@@ -59,6 +59,9 @@ public class InteractionDisabler implements Listener {
             "/checkmute",
             "/checkwarn",
             "/warnlist",
+            "/banlist",
+            "/mutelist",
+            "/s",
 
 
             // PLAYER_DEFAULTS
@@ -92,7 +95,8 @@ public class InteractionDisabler implements Listener {
             "/map",
             "/togglelock",
             "/mentor",
-            "/trade"
+            "/trade",
+            "/item"
     };
 
     public void disableTourViewPermission() {

@@ -103,19 +103,19 @@ public class AdditionalGearSlotHandler {
         }
 
         if (slot == PRAYER_SLOT) {
-            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.PRAYER_MENU.asInt(), player, null);
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.PRAYER_MENU.asInt(), player, null, null);
             SoundType.UI_CLICK.play(player, false);
             return;
         }
 
         if (slot == PARTY_SLOT) {
-            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.PARTY_MENU.asInt(), player, null);
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.PARTY_MENU.asInt(), player, null, null);
             SoundType.UI_CLICK.play(player, false);
             return;
         }
 
         if (slot == MAP_SLOT) {
-            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.TERRITORY_INVENTORY.asInt(), player, null);
+            RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.TERRITORY_INVENTORY.asInt(), player, null, null);
             SoundType.UI_CLICK.play(player, false);
         }
 
@@ -132,11 +132,11 @@ public class AdditionalGearSlotHandler {
 
         if (slot == INFO_SLOT || slot == SETTINGS_SLOT || slot == QUIVER_SLOT) {
             if (slot == INFO_SLOT) {
-                RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.QUESTS_LIST.asInt(), player, null);
+                RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.QUESTS_LIST.asInt(), player, null, null);
             }
 
             if (slot == SETTINGS_SLOT) {
-                RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.PLAYER_SETTINGS_MENU.asInt(), player, null);
+                RuneQuestPlugin.getGUIHandler().openInventory(InventoryId.PLAYER_SETTINGS_MENU.asInt(), player, null, null);
             }
 
             if (slot == QUIVER_SLOT) {

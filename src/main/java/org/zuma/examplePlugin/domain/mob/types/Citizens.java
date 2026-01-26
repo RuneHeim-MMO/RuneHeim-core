@@ -1,9 +1,11 @@
 package org.zuma.examplePlugin.domain.mob.types;
 
 import org.zuma.examplePlugin.domain.dialog.DialogBuilder;
+import org.zuma.examplePlugin.domain.dialog.Dialogs;
 import org.zuma.examplePlugin.domain.mob.MobTypeRegistry;
 import org.zuma.examplePlugin.domain.mob.behavior.MobBehaviors;
 import org.zuma.examplePlugin.domain.mob.constants.MobType;
+import org.zuma.examplePlugin.domain.mob.impl.DialogMob;
 import org.zuma.examplePlugin.domain.mob.impl.RandomDialogCitizen;
 
 import java.util.List;
@@ -17,6 +19,10 @@ public class Citizens {
     }
 
     public static void registerMobs(MobTypeRegistry registry) {
+        registry.register(MobType.SHIP_WANDERING_GHOST_CITIZEN.getId(), () -> new DialogMob("Ghost", null,
+                MobBehaviors.GHOST.getBehavior(), null, "ghostling", 0, Dialogs.wanderingShipGhost));
+
+
         registry.register(MobType.CITY_CITIZEN_MAN.getId(), () -> new RandomDialogCitizen(
                 "Citizen", null,
                 List.of("man_1", "man_3", "man_4", "man_5", "man_6", "man_7", "man_8", "man_9", "man_10", "man_11", "man_12", "man_13", "man_14", "man_15"),
