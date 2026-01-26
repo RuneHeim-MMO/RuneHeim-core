@@ -16,7 +16,6 @@ public class ShopItemLore implements LoreCreator {
     public ShopItemLore(ShopItem item) {
         boolean isInStock = item.getCurrentStock() > 0;
 
-
         lore.add(Component.empty());
 
         if (!isInStock && item.isBuyable()) {
@@ -33,7 +32,8 @@ public class ShopItemLore implements LoreCreator {
         }
 
         if (item.isSellable()) {
-            lore.add(Component.text("Sell 1x for ", Color.SHOP_DESCRIPTION.asColor()).append(CurrencyUtils.getCustomCurrencyComponent(item.getSellCurrency(), item.getSellPrice())).append(Component.text(" (Click in own inventory)", Color.SHOP_DESCRIPTION.asColor())));
+            long sellPrice = (long) (item.getBaseSellPrice() * ShopItem.getSellPriceMultiplier(item.getItemId(), item.getCurrentStock(), 1));
+            lore.add(Component.text("Sell 1x for ", Color.SHOP_DESCRIPTION.asColor()).append(CurrencyUtils.getCustomCurrencyComponent(item.getSellCurrency(), sellPrice)).append(Component.text(" (Click in own inventory)", Color.SHOP_DESCRIPTION.asColor())));
         }
 
 

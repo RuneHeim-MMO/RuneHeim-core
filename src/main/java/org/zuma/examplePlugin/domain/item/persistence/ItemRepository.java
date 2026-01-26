@@ -791,7 +791,7 @@ public class ItemRepository {
 
 
                 // Lotteries
-                new ItemEntity(new AbstractItemMeta(ItemType.CHANCE_ITEM, ItemId.SCRATCH_CARD.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Scratch card", List.of("A mysterious ticket covered in silvery foil.", "Scratch away the surface to reveal your fortune.", "Win up to §62000§r coins - if luck’s on your side!"), null, true, 103), toVersionedJson(
+                new ItemEntity(new AbstractItemMeta(ItemType.CHANCE_ITEM, ItemId.SCRATCH_CARD.asInt(), Material.COAL, ItemRarity.UNCOMMON, "Scratch card", List.of("A mysterious ticket covered in silvery foil.", "Scratch away the surface to reveal your fortune.", "Win up to §62000§r coins - if luck’s on your side!"), null, true, CRAFTED_ITEM_MULTIPLIER), toVersionedJson(
                         new ChanceItemMeta(List.of(DropTableId.SCRATCH_CARD_COINS_UNDER_2K_COINS.asInt()), SoundType.SCRATCH_TICKET_START, SoundType.SCRATCH_TICKET_FINISH), 1)),
 
 

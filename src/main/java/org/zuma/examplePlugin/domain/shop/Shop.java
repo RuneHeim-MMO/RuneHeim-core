@@ -9,18 +9,20 @@ import org.zuma.examplePlugin.core.utils.PlayerUtils;
 import org.zuma.examplePlugin.core.utils.Throttler;
 import org.zuma.examplePlugin.domain.item.ItemRecord;
 import org.zuma.examplePlugin.domain.item.base.AbstractItemType;
+import org.zuma.examplePlugin.domain.item.constants.ItemId;
 import org.zuma.examplePlugin.domain.item.handlers.LockedItemHandler;
 import org.zuma.examplePlugin.domain.item.impl.QuestItem;
 import org.zuma.examplePlugin.domain.player.RunePlayer;
 import org.zuma.examplePlugin.domain.shop.persistence.ShopItemConfig;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 public class Shop {
+    public final static int MAX_STOCK_PER_ITEM = 512;
+    public final static double SELL_PRICE_FLOOR_MULTIPLIER = 0.2; // 20% of buy price
+    public final static Set<Integer> STATIC_SELL_PRICE_ITEMS = Set.of(ItemId.PLATINUM_TOKEN.asInt());
+
     private final int id;
     private final boolean buyAll;
     private final LinkedHashMap<Integer, ShopItem> stock = new LinkedHashMap<>(); // Preserves order
@@ -80,7 +82,7 @@ public class Shop {
 
         ShopItem shopItem = stock.get(type.id);
 
-        if (shopItem == null || shopItem.getSellPrice() == null) {
+        if (shopItem == null || shopItem.getBaseSellPrice() == null) {
             return null;
         }
 
@@ -121,7 +123,7 @@ public class Shop {
         }
 
 
-        if (shopItem != null && shopItem.getCurrentStock() + item.getAmount() >= 512) {
+        if (shopItem != null && shopItem.getCurrentStock() + item.getAmount() >= MAX_STOCK_PER_ITEM) {
             throw new IllegalStateException("This shop is full and can't accept more of this item.");
         }
 
@@ -141,7 +143,7 @@ public class Shop {
 
         ShopItem shopItem = stock.get(type.id);
 
-        if (!buyAll && (shopItem == null || shopItem.getSellPrice() == null)) {
+        if (!buyAll && (shopItem == null || shopItem.getBaseSellPrice() == null)) {
             throw new IllegalStateException("This item cannot be sold to this shop!");
         }
 
@@ -174,11 +176,28 @@ public class Shop {
             stock.put(type.id, shopItem);
         }
 
-        if (shopItem.getSellPrice() == null) {
+        if (shopItem.getBaseSellPrice() == null) {
             throw new IllegalStateException("This item cannot be sold to this shop!");
         }
 
-        long totalOrderPrice = item.getAmount() * shopItem.getSellPrice();
+        Long totalOrderPrice = 0L;
+        int baseStock = shopItem.getCurrentStock();
+
+        for (int i = 0; i < item.getAmount(); i++) {
+            if (shopItem.getBaseSellPrice() == null) {
+                totalOrderPrice = null;
+                break;
+            }
+
+            double multiplier = ShopItem.getSellPriceMultiplier(type.id, baseStock, i);
+            long itemSellPrice = Math.round(shopItem.getBaseSellPrice() * multiplier);
+            totalOrderPrice += itemSellPrice;
+        }
+
+        if (totalOrderPrice == null) {
+            throw new IllegalStateException("This item cannot be sold to this shop!");
+        }
+
         shopItem.setCurrentStock(shopItem.getCurrentStock() + item.getAmount());
 
         if (shopItem.getSellCurrency() != null) {

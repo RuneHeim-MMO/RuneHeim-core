@@ -136,7 +136,7 @@ public class ShopItem {
     }
 
     @Nullable
-    public Long getSellPrice() {
+    public Long getBaseSellPrice() {
         return sellPrice;
     }
 
@@ -162,5 +162,12 @@ public class ShopItem {
 
     public boolean isTemporaryItem() {
         return temporaryItem;
+    }
+
+    public static double getSellPriceMultiplier(int itemId, int stock, int amount) {
+        if (Shop.STATIC_SELL_PRICE_ITEMS.contains(itemId)) {
+            return 1.0;
+        }
+        return Math.max(Shop.SELL_PRICE_FLOOR_MULTIPLIER, 1.0 - ((double) (stock + amount) / Shop.MAX_STOCK_PER_ITEM) * (1 - Shop.SELL_PRICE_FLOOR_MULTIPLIER));
     }
 }
