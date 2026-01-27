@@ -47,6 +47,13 @@ public class ItemCommand implements BasicCommand {
 
             String search = joined.toLowerCase();
             Optional<AbstractItemType> matchingItem = RuneQuestPlugin.getItemRegistry().getAllItems().stream()
+                    .sorted((a,b) -> {
+                        boolean aStarts = a.displayName.toLowerCase().startsWith(search);
+                        boolean bStarts = b.displayName.toLowerCase().startsWith(search);
+                        if (aStarts && !bStarts) return -1;
+                        if (!aStarts && bStarts) return 1;
+                        return a.displayName.compareToIgnoreCase(b.displayName);
+                    })
                     .filter(i -> i.displayName.toLowerCase().contains(search)).findFirst();
 
             if (matchingItem.isPresent()) {
