@@ -1468,6 +1468,7 @@ public class ItemRepository {
                         List.of("A sturdy rod designed for challenging catches like sharks and other deepwater fish."), null, true, CRAFTED_ITEM_MULTIPLIER), toVersionedJson(
                         new EquipableTypeMeta(null, null, null,
                                 List.of(
+                                        new Modifier(ModifierType.REGULAR_FISHING, 1.15),
                                         new Modifier(ModifierType.ADVANCED_FISHING, 1)
                                 ),
                                 List.of(
@@ -1639,7 +1640,7 @@ public class ItemRepository {
 
                 new ItemEntity(new AbstractItemMeta(ItemType.EQUIPMENT, ItemId.SAILORS_HAT.asInt(), Material.LEATHER_CHESTPLATE, ItemRarity.UNCOMMON, "Sailors Hat", List.of("A crisp, white sailor’s hat with a neatly embroidered emblem"), null, true, CRAFTED_ITEM_MULTIPLIER),
                         toVersionedJson(
-                                new EquipableTypeMeta(EquipmentSlot.HEAD, "sailors_hat", List.of(new SkillModifier(SkillType.FISHING,1,null)),
+                                new EquipableTypeMeta(EquipmentSlot.HEAD, "sailors_hat", List.of(new SkillModifier(SkillType.FISHING, 1, null)),
                                         null, null, null), 1)
                 ),
 
