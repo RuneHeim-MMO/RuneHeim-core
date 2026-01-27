@@ -40,8 +40,10 @@ public class ItemSpawnBlock extends AbstractInteractableBlock {
         this.itemRecord = itemRecord;
         this.respawnDurationSeconds = respawnDurationSeconds;
 
+        this.getLocation().getChunk().load();
         spawnFrame();
         super.spawn(Material.AIR);
+
     }
 
     public void spawnFrame() {
@@ -55,29 +57,31 @@ public class ItemSpawnBlock extends AbstractInteractableBlock {
             return;
         }
 
-        Location location = getLocation();
+        Bukkit.getScheduler().runTaskLater(RuneQuestPlugin.getInstance(), () -> {
+            Location location = getLocation();
 
-        for (Entity entity : location.getWorld().getNearbyEntities(location, 1, 1, 1)) {
-            if (entity instanceof ItemFrame frame) {
-                frame.remove();
-                break;
+            for (Entity entity : location.getWorld().getNearbyEntities(location, 1, 2.5, 1)) {
+                if (entity instanceof ItemFrame frame) {
+                    frame.remove();
+                    break;
+                }
             }
-        }
 
-        ItemFrame frame = location.getWorld().spawn(location, ItemFrame.class, f -> {
-            f.setFacingDirection(BlockFace.UP, true);
-            ItemStack stack = type.createItemStackOfType(itemRecord.getAmount());
-            ItemMeta meta = stack.getItemMeta();
+            ItemFrame frame = location.getWorld().spawn(location, ItemFrame.class, f -> {
+                f.setFacingDirection(BlockFace.UP, true);
+                ItemStack stack = type.createItemStackOfType(itemRecord.getAmount());
+                ItemMeta meta = stack.getItemMeta();
 
-            if (meta.displayName() != null)
-                meta.displayName(Component.text(itemRecord.getAmount() + "x ", TextColor.fromHexString(type.rarity.getHexColor())).append(meta.displayName()));
-            stack.setItemMeta(meta);
+                if (meta.displayName() != null)
+                    meta.displayName(Component.text(itemRecord.getAmount() + "x ", TextColor.fromHexString(type.rarity.getHexColor())).append(meta.displayName()));
+                stack.setItemMeta(meta);
 
-            f.setItem(stack);
-            f.setRotation(Rotation.NONE);
-        });
+                f.setItem(stack);
+                f.setRotation(Rotation.NONE);
+            });
 
-        super.setEntityChildUUID(frame.getUniqueId());
+            super.setEntityChildUUID(frame.getUniqueId());
+        }, 1L);
     }
 
     @Override
