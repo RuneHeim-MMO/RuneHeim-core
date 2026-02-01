@@ -50,7 +50,7 @@ public class HelpCommand implements BasicCommand {
         sendCommand(8, sender, "/map", "View the server map online.");
         sendCommand(9, sender, "/rules", "View the server rules.");
         sendCommand(10, sender, "/item", "View and explore items in the game.");
-        sendCommand(11, sender, "/staffhelp <message>", "Send mesage to online staff members.");
+        sendCommand(11, sender, "/staffhelp <message>", "Send message to online staff members.");
         sendCommand(12, sender, "/togglelock", "Lock/unlock item in hand to prevent accidental drops.");
 
         sender.sendMessage(line);

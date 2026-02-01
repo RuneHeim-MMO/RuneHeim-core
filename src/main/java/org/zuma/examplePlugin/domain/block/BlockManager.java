@@ -196,7 +196,7 @@ public class BlockManager {
     public void clearRandomBlocks() {
         synchronized (this.blocks) {
             this.blocks.values().forEach(b -> {
-                if (!(b instanceof ResourceNodeCrop | b instanceof ItemSpawnBlock)) {
+                if (!(b instanceof ResourceNodeCrop || b instanceof ItemSpawnBlock)) {
                     return;
                 }
 
