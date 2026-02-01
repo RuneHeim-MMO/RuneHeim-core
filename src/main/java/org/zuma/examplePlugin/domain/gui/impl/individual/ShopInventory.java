@@ -74,6 +74,8 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
             }
 
         }
+
+        updateConfirmButton();
     }
 
     @Nullable
@@ -195,6 +197,7 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
     private List<Component> generateInvoice(List<ItemStack> toBeSold) {
         AtomicLong salePrice = new AtomicLong();
         Map<Integer, Long> customCurrencies = new HashMap<>();
+        Map<Integer, Integer> cumulativeStock = new HashMap<>();
 
         List<Component> invoice = new ArrayList<>(toBeSold.stream().map(itemStack -> {
             ShopItem item = shop.getShopItem(itemStack);
@@ -229,11 +232,32 @@ public class ShopInventory extends IndividualGUI implements ShopSubscriber {
                 );
             }
 
-            if (item == null || item.getSellPrice() == null) {
+            if (item == null || item.getBaseSellPrice() == null) {
                 return Component.text("Unknown Item");
             }
 
-            long itemPrice = item.getSellPrice() * itemStack.getAmount();
+            Long itemPrice = 0L;
+
+            int baseStock = item.getCurrentStock();
+            int alreadySold = cumulativeStock.getOrDefault(item.getItemId(), 0);
+            int amount = itemStack.getAmount();
+
+            for (int i = 0; i < itemStack.getAmount(); i++) {
+                if (item.getBaseSellPrice() == null) {
+                    itemPrice = null;
+                    break;
+                }
+                double multiplier = ShopItem.getSellPriceMultiplier(item.getItemId(), baseStock, alreadySold + i);
+                long itemSellPrice = Math.round(item.getBaseSellPrice() * multiplier);
+                itemPrice += itemSellPrice;
+            }
+
+            cumulativeStock.put(item.getItemId(), alreadySold + amount);
+
+            if (itemPrice == null) {
+                return Component.text("Unknown Item");
+            }
+
             @Nullable AbstractItemType currency = item.getSellCurrency();
 
             if (currency == null) {

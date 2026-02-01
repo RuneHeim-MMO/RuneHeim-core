@@ -11,6 +11,7 @@ import org.zuma.examplePlugin.domain.block.base.AbstractInteractableBlock;
 import org.zuma.examplePlugin.domain.block.base.ModelledInteractableBlock;
 import org.zuma.examplePlugin.domain.block.handlers.TriggeredBlocksHandler;
 import org.zuma.examplePlugin.domain.block.impl.InventoryOpenerRegularBlock;
+import org.zuma.examplePlugin.domain.block.impl.ItemSpawnBlock;
 import org.zuma.examplePlugin.domain.block.impl.ResourceNode;
 import org.zuma.examplePlugin.domain.block.impl.ResourceNodeCrop;
 import org.zuma.examplePlugin.domain.gui.IDHolder;
@@ -195,7 +196,7 @@ public class BlockManager {
     public void clearRandomBlocks() {
         synchronized (this.blocks) {
             this.blocks.values().forEach(b -> {
-                if(!(b instanceof ResourceNodeCrop)) {
+                if (!(b instanceof ResourceNodeCrop || b instanceof ItemSpawnBlock)) {
                     return;
                 }
 

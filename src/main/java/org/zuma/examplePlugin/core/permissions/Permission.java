@@ -47,7 +47,7 @@ public enum Permission {
     STAFF_CHAT(List.of("runeheim.admin.chat")),
 
     PLAYER_DEFAULTS(List.of(
-            "essentials.silentjoin", "essentials.silentquit", "runeheim.msg"));
+            "essentials.silentjoin", "essentials.silentquit", "runeheim.msg", "runeheim.chat.staffhelp"));
 
 
     private final List<String> nodes;
